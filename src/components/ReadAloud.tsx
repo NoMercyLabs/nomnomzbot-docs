@@ -7,6 +7,7 @@ import { create } from 'zustand';
 import { t } from '../lib/i18n';
 import { chunkSentence, joinCommandBangs } from '../lib/readAloudChunks';
 import { createClipCache } from '../lib/readAloudClip';
+import { isLabelCell } from '../lib/readAloudLabels';
 import { pickVoice } from '../lib/readAloudVoice';
 
 // Read aloud with the browser's own speech engine: no service, no key, and
@@ -92,11 +93,19 @@ function textOf(element: HTMLElement): string {
   return (copy.textContent ?? '').replace(/\s+/g, ' ').trim();
 }
 
+function isLabel(element: HTMLElement): boolean {
+  const row = element.closest('tr');
+  if (!row) return false;
+  const cells = [...row.children];
+  return isLabelCell(element.tagName, cells.indexOf(element), cells.length);
+}
+
 function collect(): HTMLElement[] {
   const main = document.getElementById('main-content');
   if (!main) return [];
   return [...main.querySelectorAll<HTMLElement>(BLOCKS)].filter(
     element => !element.closest(SKIP)
+      && !isLabel(element)
       && !element.querySelector(INNER)
       && element.getClientRects().length > 0
       && textOf(element) !== '',
