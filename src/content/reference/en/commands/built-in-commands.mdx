@@ -40,7 +40,7 @@ A default of 0 seconds means no cooldown.
 
 | Command | What it does | **Who can use it** | Chat cooldown | Per-person cooldown |
 | --- | --- | --- | --- | --- |
-| `!accountage` | Answers how old the caller's Twitch account is. | Everyone | 15 s | 0 s |
+| `!accountage` | Answers how old the caller's Twitch account is. | Everyone | 0 s | 30 s |
 | `!allow` | `!allow massban` lets a held mass ban run now (see [Bans and blocked terms](/reference/moderation/bans-and-blocked-terms)). | Lead moderators | 3 s | 0 s |
 | `!banger` | Adds the playing song to the channel's banger playlist. | Everyone | 5 s | 0 s |
 | `!bansong` | Blocks the playing song from later requests. | Everyone | 5 s | 0 s |
@@ -51,35 +51,35 @@ A default of 0 seconds means no cooldown.
 | `!dice` | Plays a dice roll for a bet in channel currency. | Everyone | 0 s | 0 s |
 | `!disallow` | `!disallow massban` stops a held mass ban. | Lead moderators | 3 s | 0 s |
 | `!discord` | Answers an invite link to the channel's Discord server (see [Discord](/reference/integrations/discord)). | Everyone | 30 s | 0 s |
-| `!followage` | Answers how long the caller has followed the channel. | Everyone | 15 s | 0 s |
+| `!followage` | Answers how long the caller has followed the channel. | Everyone | 0 s | 30 s |
 | `!forgetme` | Removes the caller's own data, after a second confirm. Data-rights command. | Everyone | 0 s | 0 s |
 | `!gdpr` | `!gdpr status`, `!gdpr forget` and `!gdpr export`. Data-rights command. | Everyone | 0 s | 0 s |
 | `!help` | Answers how to use a command, for example `!help sr`. | Everyone | 15 s | 0 s |
 | `!leaderboard` | Answers the top of the channel's leaderboard (see [Leaderboards and games](/reference/economy/leaderboards-and-games)). | Everyone | 10 s | 0 s |
-| `!lurk` | Marks the caller as lurking (watching without chatting). | Everyone | 5 s | 0 s |
+| `!lurk` | Marks the caller as lurking (watching without chatting). | Everyone | 0 s | 30 s |
 | `!media` | Sends a clip or video link to media share (see [Media share](/reference/audio/media-share)). | Everyone | 0 s | 0 s |
 | `!mydata` | Asks for a copy of the caller's own data. Data-rights command. | Everyone | 0 s | 0 s |
 | `!openqueue` | Takes new song requests again. | Everyone | 5 s | 0 s |
 | `!pause` | Pauses the music. | Everyone | 5 s | 0 s |
 | `!permit` | Gives a viewer a role or a right for a time. Always on. | Moderators | 0 s | 0 s |
 | `!playlist` | Answers the link to the channel's banger playlist. | Everyone | 10 s | 0 s |
-| `!profile` | The same answer as `!stats`. | Everyone | 5 s | 0 s |
-| `!queue` | Lists the song queue, or the caller's own requests. | Everyone | 10 s | 0 s |
+| `!profile` | The same answer as `!stats`. | Everyone | 0 s | 10 s |
+| `!queue` | Lists the song queue, or the caller's own requests. | Everyone | 0 s | 10 s |
 | `!quote` | Shows a random quote, or a quote by number. It also adds, edits and deletes quotes (see [Quotes](/reference/commands/quotes)). | Everyone | 5 s | 0 s |
 | `!resume` | Plays the music again. | Everyone | 5 s | 0 s |
 | `!skip` | Skips the playing song. A viewer can skip only a song they requested. With a number, it removes the caller's own queued request. | Everyone | 5 s | 0 s |
 | `!slots` | Plays the slots for a bet in channel currency. | Everyone | 0 s | 0 s |
 | `!song` | Answers which song plays now. | Everyone | 10 s | 0 s |
 | `!sr` | Requests a song for the queue (see [Song requests](/reference/music/song-requests)). | Everyone | 0 s | 5 s |
-| `!stats` | Answers a viewer's channel stats. | Everyone | 5 s | 0 s |
-| `!unlurk` | Clears the caller's lurking mark. | Everyone | 5 s | 0 s |
+| `!stats` | Answers a viewer's channel stats. | Everyone | 0 s | 10 s |
+| `!unlurk` | Clears the caller's lurking mark. | Everyone | 0 s | 30 s |
 | `!unpermit` | Takes a given role or right back. Always on. | Moderators | 0 s | 0 s |
 | `!unwhitelist` | Takes back the standing that `!whitelist` gives. | Only you | 0 s | 0 s |
-| `!update` | Reads the caller's Twitch name and avatar again. A moderator may name another viewer. | Everyone | 30 s | 0 s |
+| `!update` | Reads the caller's Twitch name and avatar again. A moderator may name another viewer. | Everyone | 0 s | 60 s |
 | `!uptime` | Answers how long the stream has been live. | Everyone | 30 s | 0 s |
-| `!voice` | Lets a viewer pick their own text-to-speech voice (see [Text to speech](/reference/audio/text-to-speech)). | Everyone | 5 s | 0 s |
+| `!voice` | Lets a viewer pick their own text-to-speech voice (see [Text to speech](/reference/audio/text-to-speech)). | Everyone | 0 s | 5 s |
 | `!volume` | Answers or sets the music volume. | Everyone | 5 s | 0 s |
-| `!whisper` | Sends a viewer a private message from the bot. | Moderators | 3 s | 0 s |
+| `!whisper` | Sends a viewer a private message from the bot. | Moderators | 0 s | 3 s |
 | `!whitelist` | Gives a viewer the standing of a subscriber, VIP or moderator for commands. | Only you | 0 s | 0 s |
 | `!wrongsong` | Takes back the caller's own song request. | Everyone | 0 s | 5 s |
 
