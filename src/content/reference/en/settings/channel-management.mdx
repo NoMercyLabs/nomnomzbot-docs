@@ -1,0 +1,134 @@
+---
+title: Channel management
+description: Let the bot join or leave your channel, reset the channel settings, delete the channel and bring it back.
+---
+
+You manage the bot's place in your channel on the **Channel management** page in the settings sidebar.
+Here you let the bot join or leave, reset the settings, and delete the channel.
+A deleted channel can be brought back for a while.
+
+| Card | What it does |
+| --- | --- |
+| **The bot in your channel** | Shows whether the bot is in the channel, and lets it join or leave. |
+| **Reset the channel settings** | Puts the settings of this channel back to the defaults. |
+| **Delete this channel** | Removes the channel and everything in it from the bot. |
+
+## Who can use this page
+
+The **Broadcaster** may open the page and use every button on it.
+The roles are explained on [Permissions](/reference/settings/permissions).
+The way around the dashboard is on the [Dashboard tour](/reference/getting-started/dashboard-tour).
+
+## Let the bot join or leave
+
+The card **The bot in your channel** shows one of two states.
+
+| State | Text under it | Button |
+| --- | --- | --- |
+| **The bot is in your channel** | "It joined on" and the date and time. | **Make the bot leave** |
+| **The bot is not in your channel** | "It does not answer chat or follow events until you let it join." | **Let the bot join** |
+
+To let the bot join, choose **Let the bot join**.
+The state changes to **The bot is in your channel**.
+
+To make the bot leave:
+
+1. Choose **Make the bot leave**.
+   The dialog **Make the bot leave your channel?** opens.
+2. Read the two results it lists.
+   The bot stops answering commands in your chat.
+   The bot stops listening to your channel events, so event responses do not run.
+3. Choose **Make the bot leave**.
+   The state changes to **The bot is not in your channel**.
+
+You can let the bot join again at any time.
+Your settings stay as they are.
+
+## Reset the channel settings
+
+A reset clears the stored settings of the channel.
+The channel keeps its commands, viewers and history.
+A reset cannot be undone.
+
+1. Choose **Reset settings** on the card **Reset the channel settings**.
+   The dialog **Reset the settings of** your channel name opens.
+2. Read the list of what the reset clears, with a count for each kind.
+3. Type the channel name in **Type the channel name to confirm**.
+   The confirm button stays off until the name matches exactly.
+4. Choose **Reset settings**.
+   The settings go back to the defaults.
+
+| Kind in the list | What it holds |
+| --- | --- |
+| **chat settings** | The chat settings of the channel. |
+| **text-to-speech settings** | The text to speech settings. |
+| **moderation settings** | The moderation settings. |
+| **music settings** | The music settings. |
+| **raid settings** | The raid settings. |
+| **saved keys and sign-ins** | Saved keys and sign-ins. |
+| **other settings** | Every other stored setting. |
+
+When nothing is stored, the list shows "No settings are stored. A reset changes nothing."
+
+## Delete the channel
+
+A delete removes the channel and everything in it from the bot.
+The bot stops serving the channel at once.
+You can bring the channel back for 30 days.
+
+1. Choose **Delete channel** on the card **Delete this channel**.
+   The dialog **Delete** your channel name opens.
+2. Read the list of what the delete removes.
+   Each line is a count and a kind, such as commands, timers or widgets.
+3. Read the lines about what stops outside the bot.
+   Each line starts with a count, such as "2 overlay sources in OBS go blank".
+4. Type the channel name in **Type the channel name to confirm**.
+5. Choose **Delete channel**.
+   The card now shows **The channel is deleted** with the date until which you can bring it back.
+
+When nothing else depends on the channel, the list shows "Nothing else depends on this channel."
+Some lists end with "These numbers are a minimum. Some links can only be counted when they run."
+
+<details>
+<summary>What stops outside the bot</summary>
+
+| Line in the dialog, after the count |
+| --- |
+| channel point rewards on Twitch stop working |
+| overlay sources in OBS go blank |
+| Twitch event subscriptions are removed |
+| Discord notifications stop |
+| outbound webhooks stop sending |
+| connected accounts are disconnected |
+
+Each line starts with a count.
+The dialog shows a line only when its count is above zero.
+
+</details>
+
+## Bring a deleted channel back
+
+After a delete, the card **Delete this channel** shows the deleted channel.
+It says "You can bring it back until" and the date.
+After that date, the channel is gone for good.
+
+1. Choose **Bring the channel back**.
+2. The channel and everything in it come back.
+
+The card also lists the other channels you own that are deleted and can still come back.
+Each one has its own **Bring the channel back** button.
+Only the owner of a channel sees it in this list.
+
+::Troubleshooting
+
+**Bring the channel back shows an error.**
+The 30 days are over.
+The channel cannot come back.
+
+::
+
+## Related pages
+
+- [Your data and privacy](/reference/settings/your-data-and-privacy)
+- [Permissions](/reference/settings/permissions)
+- [Dashboard tour](/reference/getting-started/dashboard-tour)
