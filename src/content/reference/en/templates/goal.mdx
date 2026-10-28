@@ -1,0 +1,30 @@
+---
+title: Goal helpers
+description: Lists 14 template helpers, each with what it gives and an example.
+---
+
+Helpers on this page: `{goal.*}`.
+
+These helpers read the channel goals, such as follower goals and sub goals.
+Use them to show progress in chat, on an overlay or read aloud.
+
+Each row is its own example, so the rows on this page do not all come from one moment.
+
+| Helper | What it gives | Example |
+| --- | --- | --- |
+| `{goal.followers.bar}` | A bar of how far the follower goal is: ████████░░ 82% | `████████░░ 82%` |
+| `{goal.followers.current}` | The followers counted for the follower goal: 1,234 | `1,234` |
+| `{goal.followers.description}` | The description the streamer gave the follower goal: Road to 1.5k | `Road to 1.5k` |
+| `{goal.followers.percent}` | How far the follower goal is: 82% | `82%` |
+| `{goal.followers.remaining}` | The followers still needed for the goal: 266 | `266` |
+| `{goal.followers.target}` | The target of the follower goal: 1,500 | `1,500` |
+| `{goal.list}` | Every active goal with its progress: followers 82%, subs 80% | `followers 82%, subs 80%` |
+| `{goal.newSubs.current}` | The new subscriptions counted for the new-subscription goal: 6 | `6` |
+| `{goal.newSubs.percent}` | How far the new-subscription goal is: 30% | `30%` |
+| `{goal.subs.bar}` | A bar of how far the subscription goal is: ████████░░ 80% | `████████░░ 80%` |
+| `{goal.subs.current}` | The subscriptions counted for the subscription goal: 80 | `80` |
+| `{goal.subs.percent}` | How far the subscription goal is: 80% | `80%` |
+| `{goal.subs.remaining}` | The subscriptions still needed for the goal: 20 | `20` |
+| `{goal.subs.target}` | The target of the subscription goal: 100 | `100` |
+
+Back to [Template helpers](/reference/templates/overview). For the places helpers work, special characters and HTML, read [Variables and templates](/reference/commands/variables-and-templates).

@@ -1,0 +1,51 @@
+---
+title: Channel helpers
+description: Lists 34 template helpers, each with what it gives and an example.
+---
+
+Helpers on this page: `{channel}`, `{channel.*}`, `{streamer}`, `{status}`.
+
+These helpers describe the channel: its name, links, followers and settings.
+Use the channel, channel.display, channel.id and streamer helpers in any reply that names the channel.
+A row marked "Discord seed alias" works only in a Discord notification, which fills in the value itself when it sends the message. In a command or an event response it stays as typed.
+
+Each row is its own example, so the rows on this page do not all come from one moment.
+
+| Helper | What it gives | Example |
+| --- | --- | --- |
+| `{channel}` | The channel login name | `example_channel` |
+| `{channel.age}` | How old the channel account is, in words: 6 years, 2 months | `6 years, 2 months` |
+| `{channel.avatar}` | The link to the streamer profile picture (Discord seed alias) | `https://static-cdn.jtvnw.net/jtv_user_pictures/example_channel.png` |
+| `{channel.ccls}` | The content labels of the channel, empty when it has none | `MatureGame` |
+| `{channel.display}` | The channel display name | `Example_Channel` |
+| `{channel.editors.count}` | How many editors the channel has | `2` |
+| `{channel.followers}` | How many followers the channel has | `1,234` |
+| `{channel.followers.compact}` | How many followers the channel has, short: 1.2k | `1.2k` |
+| `{channel.game}` | The stream current game/category (Discord seed alias) | `Just Chatting` |
+| `{channel.id}` | The channel platform ID | `123456789` |
+| `{channel.isBranded}` | Whether the stream is marked as branded content: true or false | `false` |
+| `{channel.language}` | The language of the channel | `en` |
+| `{channel.localTime}` | The time now in the channel time zone | `15:30` |
+| `{channel.login}` | The channel login name used in links (Discord seed alias) | `example_channel` |
+| `{channel.mention}` | The channel name with an @, to mention it in chat | `@SampleChannel` |
+| `{channel.mods.count}` | How many moderators the channel has | `6` |
+| `{channel.name}` | The channel display name (Discord seed alias) | `Example_Channel` |
+| `{channel.personality}` | The personality the bot uses in this channel | `Informative` |
+| `{channel.prefix}` | The command prefix of the channel | `!` |
+| `{channel.raids.inCount}` | How many times a given channel raided this channel | `{channel.raids.inCount:otherstreamer}` gives `5` |
+| `{channel.raids.lastIn.at}` | The date another channel raided this channel last | `2026-10-24` |
+| `{channel.raids.lastOut}` | The channel this channel raided last | `OtherStreamer` |
+| `{channel.raids.outCount}` | How many times the channel raided a given channel | `{channel.raids.outCount:otherstreamer}` gives `3` |
+| `{channel.subs}` | How many subscribers the channel has | `80` |
+| `{channel.tags}` | The tags of the channel, as a list | `English, Coding` |
+| `{channel.team}` | The name of the channel team | `SampleTeam` |
+| `{channel.timezone}` | The time zone of the channel | `Europe/Amsterdam` |
+| `{channel.title}` | The stream current title (Discord seed alias) | `Cozy coding night` |
+| `{channel.url}` | The link to the channel on its platform (Discord seed alias) | `https://www.twitch.tv/example_channel` |
+| `{channel.vips.count}` | How many VIPs the channel has | `4` |
+| `{channel.vod.latest}` | The link to the latest past broadcast | `https://www.twitch.tv/videos/123` |
+| `{channel.vod.latest.title}` | The title of the latest past broadcast | `Chill Saturday` |
+| `{status}` | The stream live status (live or offline) | `live` |
+| `{streamer}` | The channel owner display name | `Example_Channel` |
+
+Back to [Template helpers](/reference/templates/overview). For the places helpers work, special characters and HTML, read [Variables and templates](/reference/commands/variables-and-templates).

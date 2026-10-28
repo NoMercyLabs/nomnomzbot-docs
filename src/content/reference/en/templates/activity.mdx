@@ -1,0 +1,35 @@
+---
+title: Chat activity helpers
+description: Lists 19 template helpers, each with what it gives and an example.
+---
+
+Helpers on this page: `{activity.*}`.
+
+These helpers count chat activity, such as messages per minute and active chatters.
+They can also name the top chatter and a random chatter.
+
+Each row is its own example, so the rows on this page do not all come from one moment.
+
+| Helper | What it gives | Example |
+| --- | --- | --- |
+| `{activity.busiestDay}` | The busiest day of the week in chat over the last 90 days: Friday | `Friday` |
+| `{activity.busiestHour}` | The busiest hour of the day in chat over the last 90 days, in the channel time zone: 21:00 | `21:00` |
+| `{activity.chatters.active}` | Different people who chatted in the last minutes, for example activity.chatters.active:10 (1 to 60): 12 | `{activity.chatters.active:10}` gives `12` |
+| `{activity.chatters.lurkers}` | People connected to chat who have not chatted: 18 | `18` |
+| `{activity.chatters.now}` | People connected to chat right now: 51 | `51` |
+| `{activity.chatters.unique}` | Different people who have chatted since the bot joined: 33 | `33` |
+| `{activity.commands.stream}` | Commands that ran successfully since the bot joined the channel this session. The count does not restart when a stream starts | `88` |
+| `{activity.last.chatter}` | The last person who chatted, other than the person who triggered this | `ViewerTwo` |
+| `{activity.last.message.ago}` | How long ago the last chat activity was: 4s | `4s` |
+| `{activity.messages.hour}` | Chat messages in the last hour: 1,080 | `1,080` |
+| `{activity.messages.stream}` | Chat messages in this stream: 2,430 | `2,430` |
+| `{activity.messages.today}` | Chat messages today (channel day): 2,610 | `2,610` |
+| `{activity.mpm}` | Chat messages per minute over the last minute; activity.mpm:5 averages the last 5 minutes (1 to 60): 18 | `18` |
+| `{activity.random.recent}` | A random person who chatted in the last minutes, for example activity.random.recent:5 (1 to 60) | `ViewerTwo` |
+| `{activity.top.hour}` | The person who chatted most in the last hour | `ViewerTwo` |
+| `{activity.top.list}` | The top chatters of this stream with their counts, for example activity.top.list:3 (1 to 25): ViewerOne 140, ViewerTwo 96 | `{activity.top.list:3}` gives `ViewerOne 140, ViewerTwo 96, ViewerThree 40` |
+| `{activity.top.stream}` | The person who chatted most this stream, with the count: ViewerOne (140) | `ViewerOne (140)` |
+| `{activity.top.today}` | The person who chatted most today | `ViewerOne` |
+| `{activity.top.today.count}` | How many messages the top chatter of today sent: 140 | `140` |
+
+Back to [Template helpers](/reference/templates/overview). For the places helpers work, special characters and HTML, read [Variables and templates](/reference/commands/variables-and-templates).

@@ -1,0 +1,33 @@
+---
+title: Date and time helpers
+description: Lists 17 template helpers, each with what it gives and an example.
+---
+
+Helpers on this page: `{date}`, `{date*}`, `{time}`, `{time.*}`.
+
+These helpers give the time and the date, in any format and time zone.
+Use them to count down to a moment or to show the channel time.
+
+Each row is its own example, so the rows on this page do not all come from one moment.
+
+| Helper | What it gives | Example |
+| --- | --- | --- |
+| `{date}` | Today date | `{date}` gives `2026-10-26` |
+| `{date:<source>}` | A date you can calculate with and format. The source is now (channel time), utc, a date such as 2026-12-25 or 2026-12-25T20:00, or a variable that holds a date (e.g. `{date:{stream.startedAt}}`) | `{date:2026-12-25\|format:dd/MM/yyyy HH:mm}` gives `25/12/2026 00:00` |
+| `{date:<source>\|<+/-amount><unit>}` | Adds or subtracts time: y years, mo months, w weeks, d days, h hours, m minutes, s seconds. Chain them, e.g. +1y-2mo\|+3d | `{date:now\|+1d}` gives `2026-10-27 15:30` |
+| `{date:<source>\|diff:<date>[:<unit>]}` | The difference to another date, as a total (411 days) or a breakdown (1 year, 1 month, 16 days) | `{date:2026-03-29T00:00\|diff:2026-03-30T00:00:hours}` gives `23 hours` |
+| `{date:<source>\|end:<unit>}` | Moves to the end of the day, week, month or year (23:59:59) | `{date:now\|end:day\|format:yyyy-MM-dd HH:mm:ss}` gives `2026-10-26 23:59:59` |
+| `{date:<source>\|format:<pattern>}` | Formats the date with a .NET pattern (e.g. dddd d MMMM yyyy) or a standard letter (d, D, t, T, f, F, g, G, s). Write [o] for the ordinal day | `{date:now\|format:yyyy-MM-dd HH:mm}` gives `2026-10-26 15:30` |
+| `{date:<source>\|lang:<language>}` | Uses another language for month and day names, e.g. lang:en | `{date:now\|lang:en\|format:MMMM}` gives `October` |
+| `{date:<source>\|next:<weekday>}` | Moves to the next weekday after the date, e.g. next:friday | `{date:now\|next:friday\|format:yyyy-MM-dd HH:mm}` gives `2026-10-30 15:30` |
+| `{date:<source>\|ordinal}` | The day of the month as an ordinal, e.g. 26th | `{date:now\|ordinal}` gives `26th` |
+| `{date:<source>\|prev:<weekday>}` | Moves to the previous weekday before the date, e.g. prev:monday | `{date:now\|prev:monday\|format:yyyy-MM-dd}` gives `2026-10-19` |
+| `{date:<source>\|relative}` | The date as relative text, e.g. 3 days ago or 2 hours from now | `{date:now\|-3d\|relative}` gives `3 days ago` |
+| `{date:<source>\|since[:<unit>]}` | Time passed since the date until now. Unit: years, months, weeks, days, hours, minutes, seconds, breakdown or human (the default) | `{date:now\|-90m\|since:minutes}` gives `90 minutes` |
+| `{date:<source>\|start:<unit>}` | Moves to the start of the day, week (Monday), month or year | `{date:now\|start:day\|format:yyyy-MM-dd HH:mm:ss}` gives `2026-10-26 00:00:00` |
+| `{date:<source>\|tz:<zone>}` | Shows the same moment in another time zone, e.g. tz:America/New_York | `{date:now\|tz:America/New_York\|format:HH:mm}` gives `10:30` |
+| `{date:<source>\|until[:<unit>]}` | Countdown from now until the date. Unit: years, months, weeks, days, hours, minutes, seconds, breakdown or human (the default) | `{date:2026-12-25\|until:days}` gives `59 days` |
+| `{time}` | The current local time | `20:15:00` |
+| `{time.utc}` | The current UTC time | `18:15:00 UTC` |
+
+Back to [Template helpers](/reference/templates/overview). For the places helpers work, special characters and HTML, read [Variables and templates](/reference/commands/variables-and-templates).

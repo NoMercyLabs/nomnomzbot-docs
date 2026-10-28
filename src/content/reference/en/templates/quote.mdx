@@ -1,0 +1,23 @@
+---
+title: Quote helpers
+description: Lists 7 template helpers, each with what it gives and an example.
+---
+
+Helpers on this page: `{quote}`, `{quote.*}`.
+
+These helpers read the quotes the channel saved.
+Use them to show a quote by its number, or its author, date and game.
+
+Each row is its own example, so the rows on this page do not all come from one moment.
+
+| Helper | What it gives | Example |
+| --- | --- | --- |
+| `{quote}` | One quote of the channel by its number, for example #12 "text": `{quote:12}` | `#12 "that was close"` |
+| `{quote.author}` | Who said a quote, by its number: `{quote.author:12}` | `{quote.author:12}` gives `ViewerTwo` |
+| `{quote.count}` | How many quotes the channel has: `{quote.count}` | `48` |
+| `{quote.date}` | The day a quote was said, in the channel's time zone: `{quote.date:12}` | `{quote.date:12}` gives `2026-03-01` |
+| `{quote.game}` | The game that was on when a quote was said, by its number: `{quote.game:12}` | `{quote.game:12}` gives `Just Chatting` |
+| `{quote.latest}` | The newest quote of the channel with its number: `{quote.latest}` | `#48 "chat is wild"` |
+| `{quote.text}` | The words of a quote by its number: `{quote.text:12}` | `{quote.text:12}` gives `that was close` |
+
+Back to [Template helpers](/reference/templates/overview). For the places helpers work, special characters and HTML, read [Variables and templates](/reference/commands/variables-and-templates).

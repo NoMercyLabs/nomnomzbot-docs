@@ -1,0 +1,123 @@
+---
+title: Target helpers
+description: Lists 46 template helpers, each with what it gives and an example.
+---
+
+Helpers on this page: `{target}`, `{target.*}`.
+
+The target is the person a command names, such as `@someone` in `!hug @someone`.
+These helpers give the target's name, pronouns, account, stats and live status, such as `{target.name}` and `{target.subject}`.
+Use them in a reply that talks about another person, such as a hug or a shoutout.
+
+## Where pronouns come from
+
+The target's pronouns come from the same place as a viewer's pronouns.
+The bot looks up a person's pronouns on the alejo.io pronoun API and saves them when that person chats in any channel the bot is in.
+The saved pronouns are the same in every channel.
+A reply about the target reads the saved pronouns. It does not look them up again.
+A target the bot has never seen chat, and who never picked pronouns in the bot, gets "they".
+Pronouns set by a command that runs the Set pronoun action stay set.
+Read [Where pronouns come from](/reference/templates/user#where-pronouns-come-from) for the full list of words.
+
+## Write correct sentences about the target
+
+Use the `target.` helpers when a line talks about the person a command names.
+Do not type "he", "she" or "his" for the target.
+The bot picks the right word for each target.
+
+- `{target.subject}` gives he, she or they.
+- `{target.object}` gives him, her or them.
+- `{target.possessive}` gives his, her or their.
+- `{target.presentTense}` gives is or are.
+- `{target.tense}` gives is or are while live, and was or were when offline. In a shoutout it follows the target's stream. Everywhere else it follows your channel's stream.
+- `{target.verb:plays|play}` gives the first form for he and she, and the second form for they.
+
+Write the first letter of the helper name in upper case to start a sentence.
+`{Target.Subject}` gives He, She or They.
+
+For example, type `Say hi to {target.displayname}! {Target.Subject} {target.presentTense} new here, so help {target.object} feel at home.`
+For he, the bot writes "Say hi to Alex! He is new here, so help him feel at home."
+For they, it writes "Say hi to Alex! They are new here, so help them feel at home."
+
+If the bot has no pronouns for the target, it uses they, them, their, person, are and were.
+Read [Write correct sentences](/reference/templates/user#write-correct-sentences) for the verb rules, the capital letter and more examples.
+
+Each row is its own example, so the rows on this page do not all come from one moment.
+
+## Pronouns and grammar
+
+| Helper | What it gives | Example |
+| --- | --- | --- |
+| `{target.genderedTerm}` | A gendered term for the @mention target | `person` |
+| `{target.object}` | The object-case pronoun for the @mention target | `them` |
+| `{target.possessive}` | The possessive pronoun for the @mention target | `their` |
+| `{target.presentTense}` | The present-tense to-be form for the @mention target | `are` |
+| `{target.subject}` | The subject-case pronoun for the @mention target | `they` |
+| `{target.tense}` | The live/offline-aware tense for the @mention target | `are` |
+| `{target.verb:<sing\|plur>}` | A singular/plural verb agreeing with the @mention target (e.g. `{target.verb:plays\|play}`) | `{target.verb:has\|have}` gives `have` |
+
+## Names and links
+
+| Helper | What it gives | Example |
+| --- | --- | --- |
+| `{target}` | The @mention target login name | `example_viewer` |
+| `{target.avatar}` | The link to the profile picture of the @mentioned viewer | `https://static-cdn.jtvnw.net/jtv_user_pictures/viewertwo.png` |
+| `{target.bio}` | The profile description of the @mentioned viewer | `I build castles` |
+| `{target.color}` | The chat color of the @mentioned viewer | `#FF4500` |
+| `{target.displayname}` | The @mention target's stored display name, or the typed text when the user is unknown | `Example_Viewer` |
+| `{target.id}` | The @mention target platform ID | `123456789` |
+| `{target.known}` | Whether the @mention target matches a user the bot knows (true or false) | `true` |
+| `{target.link}` | A profile link for the @mention target | `twitch.tv/example_viewer` |
+| `{target.mention}` | The @mentioned viewer, as an @mention | `@ViewerTwo` |
+| `{target.name}` | The @mention target login name | `example_viewer` |
+| `{target.shoutoutLink}` | The link to the channel of the @mentioned viewer | `https://twitch.tv/viewertwo` |
+
+## Account, follow and subscription
+
+| Helper | What it gives | Example |
+| --- | --- | --- |
+| `{target.accountAge}` | How old the account of the @mentioned viewer is, in years and months | `7 years, 5 months` |
+| `{target.createdAt}` | The date the account of the @mentioned viewer was created | `2019-05-02` |
+| `{target.followAge}` | How long the @mention target has followed the channel | `1 year` |
+| `{target.isFollower}` | Whether the @mentioned viewer follows the channel: true or false | `true` |
+| `{target.isSub}` | Whether the @mentioned viewer is a subscriber: true or false | `false` |
+
+## The target's own channel
+
+| Helper | What it gives | Example |
+| --- | --- | --- |
+| `{target.game}` | The category the @mentioned channel set | `Minecraft` |
+| `{target.isLive}` | Whether the @mentioned viewer is live now: true or false | `false` |
+| `{target.title}` | The stream title the @mentioned channel set | `Building castles` |
+| `{target.viewers}` | How many viewers the @mentioned channel has now | `18` |
+
+## Points and saved data
+
+| Helper | What it gives | Example |
+| --- | --- | --- |
+| `{target.data.<key>}` | A per-viewer data field for the @mention target (e.g. `{target.data.key}`) | `{target.data.deaths}` gives `5` |
+| `{target.points}` | The channel points of the @mentioned viewer | `800` |
+| `{target.points.rank}` | The place of the @mentioned viewer on the channel points ranking | `17` |
+
+## Chat and watch stats
+
+| Helper | What it gives | Example |
+| --- | --- | --- |
+| `{target.activity.level}` | How active the @mentioned viewer is in this channel (new, casual, regular or veteran), from the viewer's message count and the channel's own steps | `veteran` |
+| `{target.avgperday}` | The @mention target average chat messages per day since first seen | `8` |
+| `{target.botpercent}` | The @mention target share of chat messages that were commands, as a whole percent | `5` |
+| `{target.commands}` | The @mention target total commands used | `40` |
+| `{target.days}` | The @mention target whole days since first seen (at least 1 once seen) | `30` |
+| `{target.firstseen}` | When the @mention target was first seen in chat | `2025-03-01` |
+| `{target.lastmessage}` | The @mention target most recent chat message | `see you tomorrow` |
+| `{target.lastmessage.full}` | The @mention target most recent chat message, never cut short | `see you tomorrow` |
+| `{target.messages}` | The @mention target total chat message count | `250` |
+| `{target.randommessage}` | A random older chat message of the @mention target, fit to quote | `nice play` |
+| `{target.redemptions}` | The @mention target total channel point redemption count | `8` |
+| `{target.songrequests}` | The @mention target total song request count | `3` |
+| `{target.stats.bits}` | The bits the @mentioned viewer cheered in this channel | `0` |
+| `{target.stats.lastSeen}` | The date the @mentioned viewer was last seen in the channel | `2026-10-25` |
+| `{target.stats.streak}` | The current attendance streak of the @mentioned viewer | `2` |
+| `{target.watchtime}` | The @mention target total watch time | `12h 0m` |
+
+Back to [Template helpers](/reference/templates/overview). For the places helpers work, special characters and HTML, read [Variables and templates](/reference/commands/variables-and-templates).

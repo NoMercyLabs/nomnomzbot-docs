@@ -1,0 +1,243 @@
+---
+title: User helpers
+description: Lists 75 template helpers, each with what it gives and an example.
+---
+
+Helpers on this page: `{user}`, `{user.*}`, `{viewer.*}`, `{engagement.*}`, `{name}`, `{link}`, `{subject}`, `{object}`, `{possessive}`, `{tense}`, `{presentTense}`, `{genderedTerm}`, `{verb:*}`.
+
+These helpers are about the person who used the command, such as `{user}`, `{user.points}` and `{user.followAge}`.
+They also hold that person's pronouns and the words that go with them, such as `{user.subject}` and `{user.possessive}`.
+The bare helpers `{name}`, `{link}`, `{subject}`, `{object}`, `{possessive}`, `{tense}`, `{presentTense}`, `{genderedTerm}` and `{verb:plays|play}` are here too.
+Use them to greet a viewer, to show their stats, or to write a reply that fits their pronouns.
+
+`{user}` is the display name, written the way the viewer writes it.
+In a chat reply, the bot writes the display name only when it matches the login apart from letter case. Otherwise, for example for a name in another alphabet, it writes the login.
+`{user.name}` is the login name, in lower case.
+
+## Where pronouns come from
+
+The bot reads pronouns from the alejo.io pronoun API, the same source the Twitch pronoun chat plugins use.
+It loads the list of pronouns from `https://api.pronouns.alejo.io/v1/pronouns`.
+It looks up one viewer at `https://api.pronouns.alejo.io/v1/users/` followed by the viewer's Twitch login name.
+The lookup uses Twitch logins only, so it finds Twitch viewers.
+
+The API lists the base pronouns, such as he, she and they.
+Pairs such as he/they come from the bot's own bundled set.
+If the API is down, the bot uses that bundled set.
+Pronouns set by a command that runs the Set pronoun action stay set. The API does not overwrite them.
+
+The bot adds the words that go with each pronoun.
+The words below are the ones the three common pronouns give.
+
+| Helper | he | she | they |
+| --- | --- | --- | --- |
+| Subject | he | she | they |
+| Object | him | her | them |
+| Possessive | his | her | their |
+| Present tense | is | is | are |
+| Past tense | was | was | were |
+| Gendered term | guy | gal | person |
+
+Other pronouns, such as xe and zie, bring their own possessive words, and their gendered term is "person".
+Only "they" takes the plural verb.
+
+## Write correct sentences
+
+One reply goes to many viewers.
+If you type "he" or "his" in it, the line is wrong for every viewer who uses other pronouns.
+Use the pronoun helpers instead.
+The bot fills in the right word for the person in the line.
+
+### Pick the helper
+
+- `{subject}` gives he, she or they. Use it where a sentence needs "he", "she" or "they".
+- `{object}` gives him, her or them. Use it after a verb or a word like "to" and "for".
+- `{possessive}` gives his, her or their. Use it before a noun, as in "their cat".
+- `{genderedTerm}` gives guy, gal or person.
+- `{presentTense}` gives is or are. It does not change with the stream.
+- `{tense}` gives is or are while your channel's stream is live, and was or were when it is offline. In a shoutout it follows the target's stream.
+- `{verb:plays|play}` gives the first form for he and she, and the second form for they.
+
+Use `{tense}` when you need was or were.
+
+### Pick the person
+
+A bare helper such as `{subject}` follows the person the command names.
+If the command names nobody, it follows the person who used the command.
+In `!hug @someone`, `{subject}` is about the person named, and in `!lurk` it is about the person who typed it.
+
+Add `user.` or `target.` to choose a side yourself.
+`{user.subject}` is always about the person who used the command.
+`{target.subject}` is always about the person the command names.
+The same works for the other helpers, such as `{user.possessive}`, `{target.object}`, `{target.verb:plays|play}` and `{target.tense}`.
+
+### Start a sentence with a capital
+
+Write the first letter of the helper name in upper case to get a capital first letter.
+`{Subject}` gives He, She or They.
+`{Target.Subject}`, `{User.Possessive}` and `{Tense}` work the same way.
+Use it at the start of a sentence.
+A verb form from `{verb:plays|play}` does not get a capital.
+
+### Make the verb agree
+
+A verb must match the pronoun.
+"He plays" and "they play" use different forms.
+Do not type the verb after `{subject}`.
+Use `{verb:singular|plural}` and type the two forms with a pipe between them.
+The first form is for he and she, and the second form is for they.
+Without a pipe, the bot leaves the text as you typed it.
+
+For the verb "to be", use `{presentTense}` or `{tense}`.
+They give is or are.
+
+### When a viewer has no pronouns
+
+If the bot has no pronouns for a person, it uses they, them, their, person, are and were.
+This also holds when the pronouns are "any" or "other", because those name a choice, not words for a sentence.
+The pronoun helpers never show as raw text.
+The verb takes the plural form, so the line reads "they play".
+The bot never swaps in the person's name.
+If you want the name, use `{user}` for the person who used the command or `{target.displayname}` for the person the command names.
+
+### Examples
+
+Each line below is the same reply for three viewers.
+The first line of each example is what you type.
+
+**A shoutout.**
+Typed: `Shoutout to {target.displayname}! {Target.Subject} {target.presentTense} a great streamer. Go follow {target.object}!`
+
+- he: `Shoutout to Alex! He is a great streamer. Go follow him!`
+- she: `Shoutout to Alex! She is a great streamer. Go follow her!`
+- they: `Shoutout to Alex! They are a great streamer. Go follow them!`
+
+Without helpers, the same line written for "he" reads wrong for she and they.
+
+**A verb that must agree.**
+Typed: `{target.displayname} is live. Say hi to {target.object} and see what {target.subject} {target.verb:plays|play}.`
+
+- he: `Alex is live. Say hi to him and see what he plays.`
+- she: `Alex is live. Say hi to her and see what she plays.`
+- they: `Alex is live. Say hi to them and see what they play.`
+
+**A possessive and a term.**
+Typed: `{user} loves {user.possessive} cat. {user} is a good {user.genderedTerm}.`
+
+- he: `Alex loves his cat. Alex is a good guy.`
+- she: `Alex loves her cat. Alex is a good gal.`
+- they: `Alex loves their cat. Alex is a good person.`
+
+**A line that follows the stream.**
+Typed: `{Target.Subject} {target.tense} streaming Tetris.`
+
+- he, live: `He is streaming Tetris.`
+- she, offline: `She was streaming Tetris.`
+- they, live: `They are streaming Tetris.`
+- they, offline: `They were streaming Tetris.`
+
+In a shoutout, the live state is the live state of the person you shout out. Everywhere else it is the live state of your channel.
+
+Each row is its own example, so the rows on this page do not all come from one moment.
+
+## Pronouns and grammar
+
+| Helper | What it gives | Example |
+| --- | --- | --- |
+| `{genderedTerm}` | A gendered term matching the person pronouns (e.g. guy/gal) | `person` |
+| `{object}` | The object-case pronoun (e.g. them) | `them` |
+| `{possessive}` | The possessive pronoun (e.g. their) | `their` |
+| `{presentTense}` | The present-tense to-be form (e.g. is/are) | `are` |
+| `{subject}` | The subject-case pronoun (e.g. they) | `they` |
+| `{tense}` | The live/offline-aware tense (is/was) | `is` |
+| `{user.genderedTerm}` | A gendered term for the triggering user | `person` |
+| `{user.object}` | The object-case pronoun for the triggering user | `them` |
+| `{user.possessive}` | The possessive pronoun for the triggering user | `their` |
+| `{user.presentTense}` | The present-tense to-be form for the triggering user | `are` |
+| `{user.pronouns}` | The triggering user recorded pronouns | `they/them` |
+| `{user.subject}` | The subject-case pronoun for the triggering user | `they` |
+| `{user.tense}` | The live/offline-aware tense for the triggering user | `are` |
+| `{user.verb:<sing\|plur>}` | A singular/plural verb agreeing with the triggering user (e.g. `{user.verb:plays\|play}`) | `{user.verb:has\|have}` gives `has` |
+| `{verb:<sing\|plur>}` | A singular/plural verb agreeing with the mirrored subject (e.g. `{verb:plays\|play}`) | `{subject} {verb:plays\|play}` gives `he plays` |
+
+## Names and links
+
+| Helper | What it gives | Example |
+| --- | --- | --- |
+| `{link}` | A profile link - the @mention target if present, otherwise the triggering user | `twitch.tv/example_viewer` |
+| `{name}` | The name shown - the @mention target if present, otherwise the triggering user | `Example_Viewer` |
+| `{user}` | The name of the person who used the command, as they write it (the display name). A chat reply uses the login when the two differ by more than letter case | `Example_Viewer` |
+| `{user.avatar}` | The link to the profile picture of the viewer | `https://static-cdn.jtvnw.net/jtv_user_pictures/viewerone.png` |
+| `{user.bio}` | The profile description of the viewer | `I like bots` |
+| `{user.color}` | The chat color of the viewer | `#1E90FF` |
+| `{user.display}` | The display name of the viewer who triggered this | `ViewerOne` |
+| `{user.id}` | The triggering user platform ID | `123456789` |
+| `{user.link}` | A profile link for the triggering user | `twitch.tv/example_viewer` |
+| `{user.login}` | The login name of the viewer who triggered this | `viewerone` |
+| `{user.mention}` | The viewer who triggered this, as an @mention | `@ViewerOne` |
+| `{user.name}` | The login name of the person who used the command, in lower case | `example_viewer` |
+| `{user.platform}` | The platform the viewer is on, in lower case | `twitch` |
+| `{user.platform.name}` | The platform the viewer is on, as a name | `Twitch` |
+| `{user.provider}` | The platform the triggering user connected from (e.g. twitch) | `twitch` |
+| `{viewer.name}` | The viewer's display name (engagement triggers) | `Example_Viewer` |
+
+## Account, follow and subscription
+
+| Helper | What it gives | Example |
+| --- | --- | --- |
+| `{user.accountAge}` | How long ago the triggering user account was created | `3 years` |
+| `{user.accountAge.days}` | How many days old the account of the viewer is | `1534` |
+| `{user.createdAt}` | The date the account of the viewer was created | `2022-08-14` |
+| `{user.followAge}` | How long the triggering user has followed the channel | `1 year` |
+| `{user.followAge.days}` | How many days the viewer has followed | `411` |
+| `{user.followedAt}` | The date the viewer started following | `2025-09-10` |
+| `{user.isFollower}` | Whether the viewer follows the channel: true or false | `true` |
+| `{user.isSub}` | Whether the viewer is a subscriber: true or false | `true` |
+| `{user.subTier}` | The subscription tier of the viewer as a number | `1` |
+| `{user.subTier.name}` | The subscription tier of the viewer as a name | `Tier 1` |
+
+## Points and saved data
+
+| Helper | What it gives | Example |
+| --- | --- | --- |
+| `{user.data.<key>}` | A value stored for the viewer, with an optional default after a colon | `{user.data.color}` gives `blue` |
+| `{user.points}` | The channel points of the viewer, with a thousands separator | `2,500` |
+| `{user.points.name}` | The name of the points currency of the channel | `nomz` |
+| `{user.points.nextRank.gap}` | How many points the viewer needs to pass the next place | `300` |
+| `{user.points.nextRank.name}` | The viewer one place above on the points ranking | `ViewerThree` |
+| `{user.points.rank}` | The place of the viewer on the channel points ranking | `4` |
+| `{user.points.rank.ordinal}` | The place of the viewer on the points ranking as an ordinal: 4th | `4th` |
+| `{user.points.raw}` | The channel points of the viewer as a plain number | `2500` |
+| `{user.quotes.count}` | How many quotes the viewer said | `3` |
+| `{viewer.data.<key>}` | A per-viewer data field for the triggering user (e.g. `{viewer.data.key}`) | `{viewer.data.deaths}` gives `12` |
+
+## Chat, watch and visit stats
+
+| Helper | What it gives | Example |
+| --- | --- | --- |
+| `{engagement.daysSinceLastSeen}` | Days since this viewer was last seen chatting | `14` |
+| `{engagement.months}` | How many months this moderator has moderated the channel | `18` |
+| `{engagement.streak}` | The viewer's current watch-streak count | `5` |
+| `{engagement.years}` | The same anniversary in years, rounded for reading aloud | `1` |
+| `{user.activity.level}` | How active the viewer is in this channel (new, casual, regular or veteran), from the viewer's message count and the channel's own steps | `veteran` |
+| `{user.lastmessage}` | The triggering user most recent chat message | `see you tomorrow` |
+| `{user.messageCount}` | The triggering user total chat message count | `250` |
+| `{user.stats.bits}` | The bits the viewer cheered in this channel | `2,300` |
+| `{user.stats.firstSeen.relative}` | How long ago the viewer was first seen in the channel | `one year ago` |
+| `{user.stats.lastSeen}` | The date the viewer was last seen in the channel | `2026-10-24` |
+| `{user.stats.lastSeen.relative}` | How long ago the viewer was last seen in the channel | `2 days ago` |
+| `{user.stats.streak}` | The current attendance streak of the viewer, in streams | `5` |
+| `{user.stats.streak.best}` | The best attendance streak of the viewer, in streams | `9` |
+| `{user.stats.watchTime.hours}` | The watch time of the viewer in hours | `12.5` |
+| `{user.stats.watchTime.long}` | The watch time of the viewer in words | `12 hours, 30 minutes` |
+| `{viewer.avgperday}` | The triggering user average chat messages per day since first seen | `8` |
+| `{viewer.botpercent}` | The triggering user share of chat messages that were commands, as a whole percent | `5` |
+| `{viewer.commands}` | The triggering user total commands used | `40` |
+| `{viewer.days}` | The triggering user whole days since first seen (at least 1 once seen) | `30` |
+| `{viewer.firstseen}` | When the triggering user was first seen in chat | `2025-03-01` |
+| `{viewer.messages}` | The triggering user total chat message count | `250` |
+| `{viewer.redemptions}` | The triggering user total channel point redemption count | `8` |
+| `{viewer.songrequests}` | The triggering user total song request count | `3` |
+| `{viewer.watchtime}` | The triggering user total watch time | `12h 0m` |
+
+Back to [Template helpers](/reference/templates/overview). For the places helpers work, special characters and HTML, read [Variables and templates](/reference/commands/variables-and-templates).

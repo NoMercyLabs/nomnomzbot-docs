@@ -5,5 +5,11 @@ dist/
 !.yarn/releases
 !.yarn/plugins
 *.log
+# NomNomzBot has no Kotlin or Gradle code; the KMP app is gone (2026-10-21).
+*.kt
+*.kts
+*.gradle
+*.gradle.kts
+src/examples-kmp/
 # Built by `yarn build:search` from src/content.
 public/searchIndex.json

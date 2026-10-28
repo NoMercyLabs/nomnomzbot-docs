@@ -1,0 +1,51 @@
+---
+title: Event helpers
+description: Lists 33 template helpers, each with what it gives and an example.
+---
+
+Helpers on this page: `{followed_at}`, `{tier}`, `{months}`, `{streak}`, `{message}`, `{also_said}`, `{count}`, `{anonymous}`, `{bits}`, `{gifter*}`, `{viewers}`, `{reward*}`, `{redemption*}`, `{moderator}`, `{duration}`, `{broadcaster}`, `{title}`, `{game}`, `{supporter.*}`, `{provider}`, `{cost}`, `{input}`, `{reason}`, `{obs.event.*}`, `{vts.event.*}`.
+
+These helpers carry the values of an event, such as the tier of a sub or the bits of a cheer.
+Use them in an event response.
+The events `stream.online` and `stream.offline` fire when the channel goes live and when it goes offline.
+A row marked "Discord seed alias" is a value that the Discord go-live notification fills in itself when it sends the message.
+
+Each row is its own example, so the rows on this page do not all come from one moment.
+
+| Helper | What it gives | Example |
+| --- | --- | --- |
+| `{also_said}` | "They also said: ..." followed by the resub message, pre-formatted with a lead-in and quotes; empty when the resubscriber didn't write one | `They also said: "Great stream!"` |
+| `{anonymous}` | Whether the sender chose to stay anonymous ("true"/"false") | `false` |
+| `{bits}` | How many bits were cheered | `100` |
+| `{broadcaster}` | The broadcaster display name (stream.online/.offline and the Discord go-live seed alias) | `Example_Channel` |
+| `{cost}` | The channel-points reward's cost | `500` |
+| `{count}` | How many were gifted (gift subscriptions) | `12` |
+| `{duration}` | "permanent" for a ban, a length like "10 minutes" for a timeout, or the finished stream's length | `10 minutes` |
+| `{followed_at}` | When the follow happened | `2026-10-06T18:30:00.0000000+00:00` |
+| `{game}` | The stream game/category (stream.online and the Discord seed alias) | `Just Chatting` |
+| `{gifter}` | Who gifted the sub to this viewer ("Anonymous" when the gifter stayed anonymous) | `Example_Supporter` |
+| `{gifter.id}` | The gifter's platform user id; empty when the gifter stayed anonymous | `987654321` |
+| `{input}` | The viewer's text input on the redemption, if any | `Hello chat` |
+| `{message}` | The message attached to the event (a resub or cheer message) | `Great stream!` |
+| `{moderator}` | The moderator's display name (falls back to their ID) | `Example_Moderator` |
+| `{months}` | Cumulative months subscribed | `12` |
+| `{obs.event.<field>}` | A field from the OBS event's own payload (e.g. `{obs.event.sceneName}`) | `{obs.event.sceneName}` gives `Scene 1` |
+| `{provider}` | The platform that delivered the event (e.g. twitch or kick) | `twitch` |
+| `{reason}` | The moderation action's reason, if one was given | `Spam` |
+| `{redemption.id}` | The redemption's unique ID | `e5f6a7b8` |
+| `{reward}` | The channel-points reward's title | `Hydrate` |
+| `{reward.id}` | The channel-points reward's Twitch ID | `a1b2c3d4` |
+| `{streak}` | Consecutive months subscribed | `6` |
+| `{supporter.amount}` | The supporter amount, in major currency units (e.g. "12.34") | `5` |
+| `{supporter.currency}` | The supporter amount's currency code | `EUR` |
+| `{supporter.kind}` | The kind of supporter event (tip, membership, merch, charity) | `tip` |
+| `{supporter.message}` | The message the supporter attached, if any | `Keep it up!` |
+| `{supporter.name}` | The supporter's display name | `Example_Supporter` |
+| `{supporter.quantity}` | How many of the item the supporter gave, if applicable | `1` |
+| `{supporter.tier}` | The supporter's membership tier, if any | `Gold` |
+| `{tier}` | The subscription tier (e.g. "Tier 1") | `Tier 1` |
+| `{title}` | The stream title (stream.online and the Discord seed alias) | `Cozy coding night` |
+| `{viewers}` | The viewer count carried over by a raid | `25` |
+| `{vts.event.<field>}` | A field from the VTube Studio event's own payload (e.g. `{vts.event.modelName}`) | `{vts.event.modelName}` gives `Model 1` |
+
+Back to [Template helpers](/reference/templates/overview). For the places helpers work, special characters and HTML, read [Variables and templates](/reference/commands/variables-and-templates).

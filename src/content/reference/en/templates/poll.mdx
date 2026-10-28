@@ -1,0 +1,74 @@
+---
+title: Poll and prediction helpers
+description: Lists 51 template helpers, each with what it gives and an example.
+---
+
+Helpers on this page: `{poll.*}`, `{prediction.*}`.
+
+These helpers read the current or last poll and prediction.
+Use them to announce a result in chat, on an overlay or read aloud.
+
+Each row is its own example, so the rows on this page do not all come from one moment.
+
+## Polls
+
+| Helper | What it gives | Example |
+| --- | --- | --- |
+| `{poll.choices}` | Every poll choice, separated by commas | `Pizza, Pasta` |
+| `{poll.duration}` | How long the poll runs, as text (e.g. "5 minutes") | `5 minutes` |
+| `{poll.endsAt}` | The time the running poll ends, in the channel time zone: 15:32 | `15:32` |
+| `{poll.id}` | The poll ID | `ed961efd-8a3f-4cf5-a9d0-e616c590cd2a` |
+| `{poll.isActive}` | true while a Twitch poll is running, false when none is | `true` |
+| `{poll.isTie}` | true when two or more options share the most votes | `false` |
+| `{poll.last.question}` | The question of the last poll that finished | `Best snack?` |
+| `{poll.last.winner}` | The winning option of the last poll that finished | `chips` |
+| `{poll.leading}` | The option with the most votes; empty before the first vote | `chips` |
+| `{poll.leading.percent}` | The share of the votes of the leading option: 60% | `60%` |
+| `{poll.leading.votes}` | The votes of the leading option | `12` |
+| `{poll.option}` | The text of one option, by its number, for example 2 | `{poll.option:2}` gives `cookies` |
+| `{poll.option.percent}` | The share of the votes of one option, by its number, for example 2 | `{poll.option.percent:2}` gives `40%` |
+| `{poll.option.votes}` | The votes of one option, by its number, for example 2 | `{poll.option.votes:2}` gives `8` |
+| `{poll.options}` | All options of the running poll: chips, cookies | `chips, cookies` |
+| `{poll.options.numbered}` | All options of the running poll with their numbers: 1. chips 2. cookies | `1. chips 2. cookies` |
+| `{poll.question}` | The question of the Twitch poll that is running now; empty when no poll is running | `Best snack?` |
+| `{poll.results}` | Every choice with its votes and share, separated by \| | `Pizza: 28 (56%) \| Pasta: 22 (44%)` |
+| `{poll.results.bars}` | Each option with a bar and its share of the votes | `chips ██████░░░░ 60% · cookies ████░░░░░░ 40%` |
+| `{poll.status}` | How the poll ended (completed, terminated or archived) | `completed` |
+| `{poll.timeLeft}` | How long the running poll has left: 1m 30s | `1m 30s` |
+| `{poll.title}` | The poll question | `What next?` |
+| `{poll.votes.total}` | The total number of votes in the running poll | `20` |
+| `{poll.winner}` | The winning choice | `Pizza` |
+| `{poll.winner.percentage}` | The winning share as text, like (68%), or nothing when no one voted | `{poll.winner}{poll.winner.percentage}` gives `Pizza (56%)` |
+| `{poll.winner.votes}` | The number of votes the winning choice got | `28` |
+
+## Predictions
+
+| Helper | What it gives | Example |
+| --- | --- | --- |
+| `{prediction.id}` | The prediction ID | `4de1a8b0-c3a0-4ed0-8b6f-7d1f0d1c2a11` |
+| `{prediction.isActive}` | true while bets are open on a prediction, false otherwise | `true` |
+| `{prediction.last.winner}` | The winning outcome of the last prediction that finished | `Yes` |
+| `{prediction.leading}` | The outcome with the most points; empty before the first bet | `Yes` |
+| `{prediction.leading.percent}` | The share of all points on the leading outcome: 75% | `75%` |
+| `{prediction.leading.points}` | The channel points on the leading outcome: 3,000 | `3,000` |
+| `{prediction.outcome}` | The text of one outcome, by its number, for example 2 | `{prediction.outcome:2}` gives `No` |
+| `{prediction.outcome.odds}` | The payout ratio of one outcome, by its number: 1:4 | `{prediction.outcome.odds:2}` gives `1:4` |
+| `{prediction.outcome.percent}` | The share of all points on one outcome, by its number | `{prediction.outcome.percent:2}` gives `25%` |
+| `{prediction.outcome.points}` | The channel points on one outcome, by its number | `{prediction.outcome.points:2}` gives `1,000` |
+| `{prediction.outcomes}` | Every outcome, separated by commas | `Yes, No` |
+| `{prediction.outcomes.list}` | All outcomes of the prediction: Yes, No | `Yes, No` |
+| `{prediction.points.total}` | All channel points bet on the prediction: 4,000 | `4,000` |
+| `{prediction.question}` | The question of the Twitch prediction that is in progress; empty when none is | `Win?` |
+| `{prediction.status}` | How the prediction ended (resolved or canceled) | `resolved` |
+| `{prediction.status.now}` | The status of the prediction in progress: open or locked | `open` |
+| `{prediction.timeLeft}` | How long bets stay open: 45s; empty once the prediction is locked | `45s` |
+| `{prediction.title}` | The prediction question | `Will we win?` |
+| `{prediction.topPredictor}` | The person who bet the most points, with that amount: ViewerOne (1,000) | `ViewerOne (1,000)` |
+| `{prediction.total_points}` | All channel points predicted so far | `5000` |
+| `{prediction.users.total}` | How many people bet on the prediction | `12` |
+| `{prediction.window}` | How many seconds viewers can predict | `120` |
+| `{prediction.winner}` | The winning outcome, or nothing when canceled | `Yes` |
+| `{prediction.winner.points}` | The channel points predicted on the winning outcome | `3200` |
+| `{prediction.winner.users}` | The number of viewers who predicted the winning outcome | `41` |
+
+Back to [Template helpers](/reference/templates/overview). For the places helpers work, special characters and HTML, read [Variables and templates](/reference/commands/variables-and-templates).

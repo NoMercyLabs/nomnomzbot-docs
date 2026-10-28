@@ -1,0 +1,35 @@
+---
+title: Math helpers
+description: Lists 20 template helpers, each with what it gives and an example.
+---
+
+Helpers on this page: `{math}`, `{math.*}`, `{meter}`, `{meter.*}`.
+
+These helpers do math with numbers, and draw a number as a meter.
+
+Each row is its own example, so the rows on this page do not all come from one moment.
+
+| Helper | What it gives | Example |
+| --- | --- | --- |
+| `{math}` | Calculates an expression: numbers, + - * / % ^, brackets and sqrt, abs, floor, ceil, pow, log | `{math:2+3*4}` gives `14` |
+| `{math.abs}` | Absolute value of a number | `{math.abs:-4}` gives `4` |
+| `{math.add}` | Adds two numbers | `{math.add:2\|3}` gives `5` |
+| `{math.avg}` | Average of the numbers | `{math.avg:1\|2\|6}` gives `3` |
+| `{math.ceil}` | Rounds a number up to a whole number | `{math.ceil:2.1}` gives `3` |
+| `{math.div}` | Divides the first number by the second (no answer when the second is 0) | `{math.div:7\|2}` gives `3.5` |
+| `{math.div.int}` | Divides and drops the fraction | `{math.div.int:7\|2}` gives `3` |
+| `{math.floor}` | Rounds a number down to a whole number | `{math.floor:2.7}` gives `2` |
+| `{math.log}` | Logarithm of a number, with your own base or the natural base | `{math.log:100\|10}` gives `2` |
+| `{math.median}` | Middle value of the numbers | `{math.median:1\|9\|3}` gives `3` |
+| `{math.mod}` | Remainder of the first number divided by the second | `{math.mod:7\|2}` gives `1` |
+| `{math.mul}` | Multiplies two numbers | `{math.mul:4\|3}` gives `12` |
+| `{math.pow}` | First number to the power of the second | `{math.pow:3\|3}` gives `27` |
+| `{math.sqrt}` | Square root of a number | `{math.sqrt:81}` gives `9` |
+| `{math.sub}` | Subtracts the second number from the first | `{math.sub:5\|3}` gives `2` |
+| `{math.sum}` | Adds all the numbers | `{math.sum:1\|2\|3}` gives `6` |
+| `{meter}` | A progress bar from a percentage, with its number; width and marks are optional | `{meter:60}` gives `██████░░░░ 60%` |
+| `{meter.hearts}` | Five hearts that show a percentage | `{meter.hearts:60}` gives `❤️❤️❤️🖤🖤` |
+| `{meter.plain}` | A progress bar from a percentage, without the number | `{meter.plain:60}` gives `██████░░░░` |
+| `{meter.stars}` | Stars that show a value out of a maximum | `{meter.stars:3\|5}` gives `★★★☆☆` |
+
+Back to [Template helpers](/reference/templates/overview). For the places helpers work, special characters and HTML, read [Variables and templates](/reference/commands/variables-and-templates).

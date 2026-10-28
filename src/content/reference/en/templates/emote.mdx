@@ -1,0 +1,46 @@
+---
+title: Emote helpers
+description: Lists 30 template helpers, each with what it gives and an example.
+---
+
+Helpers on this page: `{emote}`, `{emote.*}`.
+
+These helpers show emotes from the channel and from 7TV, BTTV and FFZ.
+They can also count and pick emotes.
+
+Each row is its own example, so the rows on this page do not all come from one moment.
+
+| Helper | What it gives | Example |
+| --- | --- | --- |
+| `{emote}` | An emote by name when the channel has it, else the fallback text (or nothing): catJAM | `{emote:catJAM}` gives `catJAM` |
+| `{emote.channel.top}` | The emote chat used most, over the last 5,000 chat lines: KEKW | `KEKW` |
+| `{emote.channel.top.stream}` | The emote chat used most this stream, over the last 5,000 chat lines: catJAM | `catJAM` |
+| `{emote.cheermote}` | The cheermote for an amount of Bits, the biggest tier that fits: Cheer100 | `{emote.cheermote:100}` gives `Cheer100` |
+| `{emote.count.7tv}` | How many emotes the channel 7TV set has: 48 | `48` |
+| `{emote.count.bttv}` | How many emotes the channel BTTV set has: 20 | `20` |
+| `{emote.count.channel}` | How many Twitch emotes the channel has: 12 | `12` |
+| `{emote.count.ffz}` | How many emotes the channel FFZ set has: 9 | `9` |
+| `{emote.image}` | The picture link of an emote of the channel: https://cdn.7tv.app/emote/catjam01/2x.webp | `{emote.image:catJAM}` gives `https://cdn.7tv.app/emote/<emote id>/2x.webp` |
+| `{emote.list.7tv}` | Every emote of the channel 7TV set, one space apart: catJAM KEKW | `catJAM KEKW` |
+| `{emote.list.bttv}` | Every emote of the channel BTTV set, one space apart: catJAM | `catJAM` |
+| `{emote.list.channel}` | Every Twitch emote of the channel, one space apart: sampleHype sampleLove sampleWave | `sampleHype sampleLove sampleWave` |
+| `{emote.list.ffz}` | Every emote of the channel FFZ set, one space apart: monkaS | `monkaS` |
+| `{emote.message.count}` | How many emotes the message holds, repeats counted: 3 | `3` |
+| `{emote.message.first}` | The first emote in the message: KEKW | `KEKW` |
+| `{emote.provider}` | The network an emote comes from: 7TV, BTTV, FFZ or Twitch | `{emote.provider:catJAM}` gives `7TV` |
+| `{emote.random}` | A random emote from the channel Twitch emotes: sampleHype | `sampleHype` |
+| `{emote.random.7tv}` | A random emote from the channel 7TV set: catJAM | `catJAM` |
+| `{emote.random.any}` | A random emote from every network the channel uses: catJAM | `catJAM` |
+| `{emote.random.bits}` | A random Bits tier emote of the channel: sampleBits | `sampleBits` |
+| `{emote.random.bttv}` | A random emote from the channel BTTV set: catJAM | `catJAM` |
+| `{emote.random.ffz}` | A random emote from the channel FFZ set: monkaS | `monkaS` |
+| `{emote.random.follower}` | A random follower emote of the channel: sampleWave | `sampleWave` |
+| `{emote.random.global}` | A random Twitch global emote: Kappa | `Kappa` |
+| `{emote.random.sub}` | A random subscriber emote of the channel: sampleLove | `sampleLove` |
+| `{emote.repeat}` | An emote repeated a number of times, from 1 to 50: catJAM catJAM catJAM | `{emote.repeat:catJAM\|3}` gives `catJAM catJAM catJAM` |
+| `{emote.user.favorite}` | The newest favorite emote of the channel owner: catJAM | `catJAM` |
+| `{emote.user.top}` | The emote the viewer used most, over the last 5,000 chat lines: KEKW | `KEKW` |
+| `{emote.user.top.count}` | How many times the viewer used their top emote: 212 | `212` |
+| `{emote.wall}` | A wall of one emote with rows and columns, rows split by a slash: catJAM catJAM / catJAM catJAM | `{emote.wall:catJAM\|2\|2}` gives `catJAM catJAM / catJAM catJAM` |
+
+Back to [Template helpers](/reference/templates/overview). For the places helpers work, special characters and HTML, read [Variables and templates](/reference/commands/variables-and-templates).

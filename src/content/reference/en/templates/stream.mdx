@@ -1,0 +1,91 @@
+---
+title: Stream helpers
+description: Lists 62 template helpers, each with what it gives and an example.
+---
+
+Helpers on this page: `{stream.*}`.
+
+These helpers describe the stream right now, the last stream, and the counts of a stream.
+Use them in an uptime command, a "what are we playing" command, or an end-of-stream recap.
+A row marked "Discord seed alias" works only in a Discord notification, which fills in the value itself when it sends the message. In a command or an event response it stays as typed.
+
+Each row is its own example, so the rows on this page do not all come from one moment.
+
+## Live now
+
+| Helper | What it gives | Example |
+| --- | --- | --- |
+| `{stream.game}` | The stream current game/category | `Just Chatting` |
+| `{stream.game.boxart}` | The box art picture link of the current category | `https://static-cdn.jtvnw.net/ttv-boxart/509670-285x380.jpg` |
+| `{stream.game.link}` | The Twitch directory link of the current category | `https://twitch.tv/directory/category/software-and-game-development` |
+| `{stream.game.short}` | The category name, cut to 40 characters | `Software and Game Development` |
+| `{stream.id}` | The Twitch id of the running stream | `40123456789` |
+| `{stream.isLive}` | Whether the stream is currently live | `true` |
+| `{stream.startedAt}` | The timestamp the stream went live | `2026-10-06T18:00:00.0000000+00:00` |
+| `{stream.startedAt.local}` | The time the stream went live, in the channel time zone | `13:15` |
+| `{stream.startedAt.relative}` | How long ago the stream went live: 2 hours ago | `2 hours ago` |
+| `{stream.status}` | live or offline | `live` |
+| `{stream.thumbnail}` | The link to the live stream preview picture, empty when the platform has none (Discord seed alias) | `https://static-cdn.jtvnw.net/previews-ttv/live_user_example_channel-1280x720.jpg` |
+| `{stream.title}` | The stream current title | `Cozy coding night` |
+| `{stream.title.short}` | The stream title cut to a number of characters, closed with an ellipsis | `{stream.title.short:8}` gives `Building…` |
+| `{stream.uptime}` | How long the stream has been live | `2h 15m` |
+| `{stream.uptime.clock}` | How long the stream has been live as a clock: 2:15:00 | `2:15:00` |
+| `{stream.uptime.hours}` | How many hours the stream has been live, with decimals | `2.25` |
+| `{stream.uptime.long}` | How long the stream has been live, in words: 2 hours, 15 minutes | `2 hours, 15 minutes` |
+| `{stream.uptime.minutes}` | How many minutes the stream has been live | `135` |
+| `{stream.uptime.since}` | The time the stream went live in the channel time zone: live since 13:15 | `live since 13:15` |
+| `{stream.url}` | The link to the live stream on its platform (Discord seed alias) | `https://www.twitch.tv/example_channel` |
+| `{stream.viewers}` | The current viewer count | `42` |
+| `{stream.viewers.compact}` | The current viewer count, short: 1.2k | `42` |
+| `{stream.viewers.peak}` | The highest viewer count of this stream | `57` |
+
+## The last stream
+
+| Helper | What it gives | Example |
+| --- | --- | --- |
+| `{stream.last.duration}` | How long the last finished stream lasted: 4h 10m | `4h 10m` |
+| `{stream.last.endedAt}` | The date the last finished stream ended | `2026-10-24` |
+| `{stream.last.followers}` | How many people followed during the last finished stream | `9` |
+| `{stream.last.game}` | The category of the last finished stream | `Just Chatting` |
+| `{stream.last.messages}` | How many chat messages the last finished stream had | `3,102` |
+| `{stream.last.peak}` | The highest viewer count of the last finished stream | `61` |
+| `{stream.last.relative}` | How long ago the last finished stream ended, rounded: 2 days ago | `2 days ago` |
+| `{stream.last.since}` | How long ago the last finished stream ended, in words | `1 day, 16 hours` |
+| `{stream.last.subs}` | How many people subscribed during the last finished stream | `4` |
+| `{stream.last.title}` | The title of the last finished stream | `Chill Saturday` |
+
+## Counts and top lists
+
+| Helper | What it gives | Example |
+| --- | --- | --- |
+| `{stream.bits.top}` | The top cheerer of this stream with the bits they gave | `ViewerOne (500)` |
+| `{stream.bits.total}` | All bits cheered this stream | `1,250` |
+| `{stream.chatters.unique}` | How many different people chatted this stream | `33` |
+| `{stream.commandsRun}` | How many commands ran this stream | `88` |
+| `{stream.count}` | How many streams the channel has done | `214` |
+| `{stream.count.month}` | How many streams the channel started this month | `11` |
+| `{stream.followers.latest}` | The latest person who followed during this stream | `ViewerTwo` |
+| `{stream.followers.new}` | How many people followed during this stream | `6` |
+| `{stream.followers.newList}` | The names of the people who followed during this stream | `ViewerOne, ViewerTwo` |
+| `{stream.games.history}` | The latest categories you streamed, newest first, as many as you ask for | `Software and Game Development, Just Chatting, Minecraft` |
+| `{stream.hours.month}` | How many hours the channel streamed this month | `46h` |
+| `{stream.hypetrains}` | How many hype trains this stream had | `1` |
+| `{stream.hypetrains.topLevel}` | The highest hype train level of this stream | `3` |
+| `{stream.messages}` | How many chat messages this stream has | `2,430` |
+| `{stream.number}` | The number of this stream: stream #214 | `stream #214` |
+| `{stream.raids.in}` | How many raids came in this stream | `1` |
+| `{stream.raids.lastRaider}` | The channel of the biggest raid this stream | `OtherStreamer` |
+| `{stream.raids.lastRaiderViewers}` | The viewer count of the biggest raid this stream | `25` |
+| `{stream.redemptions}` | How many channel point rewards were redeemed this stream | `14` |
+| `{stream.songRequesters}` | How many people requested a song this stream | `4` |
+| `{stream.subs.gifted}` | How many gifted subscriptions this stream has | `5` |
+| `{stream.subs.new}` | How many new subscribers this stream has | `3` |
+| `{stream.subs.resubs}` | How many resubscriptions this stream has | `2` |
+| `{stream.subs.selfSubs}` | How many people subscribed for themselves this stream | `1` |
+| `{stream.subs.topGifter}` | Who gifted the most subscriptions this stream | `ViewerTwo` |
+| `{stream.subs.total}` | All subscription events of this stream | `10` |
+| `{stream.topChatter}` | The chatter with the most messages this stream | `ViewerOne (140)` |
+| `{stream.topChatters}` | The top chatters of this stream, as many as you ask for | `{stream.topChatters:3}` gives `ViewerOne, ViewerTwo, ViewerThree` |
+| `{stream.topCommand}` | The command that ran most this stream, with its count | `!hug (31)` |
+
+Back to [Template helpers](/reference/templates/overview). For the places helpers work, special characters and HTML, read [Variables and templates](/reference/commands/variables-and-templates).

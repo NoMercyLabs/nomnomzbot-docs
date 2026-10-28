@@ -1,0 +1,24 @@
+---
+title: Charity helpers
+description: Lists 8 template helpers, each with what it gives and an example.
+---
+
+Helpers on this page: `{charity.*}`.
+
+These helpers read a charity campaign: its name, target and the amount raised.
+Use them to show progress in chat, on an overlay or read aloud.
+
+Each row is its own example, so the rows on this page do not all come from one moment.
+
+| Helper | What it gives | Example |
+| --- | --- | --- |
+| `{charity.bar}` | A bar of how far the campaign is: ████░░░░░░ 42% | `████░░░░░░ 42%` |
+| `{charity.donations.count}` | How many donations the campaign has: 17 | `17` |
+| `{charity.donations.latest}` | The newest donation, with the donor and the amount: ViewerOne (€10.00) | `ViewerOne (€10.00)` |
+| `{charity.link}` | The website of the charity: https://www.samplecharity.org | `https://www.samplecharity.org` |
+| `{charity.name}` | The name of the charity of the running campaign: Sample Charity | `Sample Charity` |
+| `{charity.percent}` | How far the campaign is towards its target: 42% | `42%` |
+| `{charity.raised}` | The money raised so far, with its currency: €420.00 | `€420.00` |
+| `{charity.target}` | The money target of the campaign, with its currency: €1,000.00 | `€1,000.00` |
+
+Back to [Template helpers](/reference/templates/overview). For the places helpers work, special characters and HTML, read [Variables and templates](/reference/commands/variables-and-templates).

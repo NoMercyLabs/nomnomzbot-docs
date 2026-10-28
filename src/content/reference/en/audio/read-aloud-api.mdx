@@ -1,0 +1,76 @@
+---
+title: Read aloud for a page
+description: Let a web page read its text aloud in the bot's own voice, with one request per sentence.
+---
+
+The bot can read a short piece of text aloud for a visitor of a web page.
+The visitor hears the same neural voice as the bot, not the voice of their browser.
+The dashboard uses this on its Privacy Policy and Terms of Service pages.
+A site that you build can use the same request.
+
+This is a request that a page sends to your bot.
+It is not a setting in the dashboard.
+To make the bot speak on stream, see [Text to speech](/reference/audio/text-to-speech).
+
+## Send a request
+
+Send one request for each piece of text.
+
+```http
+POST /api/v1/public/read-aloud
+Content-Type: application/json
+
+{ "text": "Welcome to the stream.", "locale": "en" }
+```
+
+| Field | What it holds |
+| --- | --- |
+| `text` | The text to speak. 1 to 500 characters. |
+| `locale` | The language of the page: `en`, `nl`, or a locale such as `nl-NL`. |
+
+The request needs no sign-in.
+A good answer is audio in the `audio/mpeg` format (MP3).
+Play it in an audio element.
+
+## Pick one sentence at a time
+
+The limit of 500 characters is for a sentence, not for a page.
+Split the page into sentences and send one request for each sentence.
+Ask for the next sentence while the current one plays, so the voice never waits.
+Keep each clip until the reading stops, so a repeat is free.
+
+The dashboard does this in `dashboard/src/composables/useReadAloud.ts`.
+It reads headings, paragraphs and list items, and it skips code, menus and hidden text.
+
+## Which voice speaks
+
+| Language | Voice |
+| --- | --- |
+| English | The bot's default voice. |
+| Any other language | The first voice of that language in the Edge voice list. A voice from the main country of the language comes first, for example `nl-NL` for `nl`. |
+| A language with no voice | The bot's default voice. |
+
+The same page always sounds the same, because the choice does not change between requests.
+
+## Answers and limits
+
+| Answer | Meaning |
+| --- | --- |
+| 200 | Audio, in the `audio/mpeg` format. |
+| 400 | The text is empty or longer than 500 characters. |
+| 429 | The visitor sent too many requests. The limit is 120 requests each minute for each IP address. |
+| 503 | The voice cannot speak right now. The page should stop and tell the visitor. |
+
+The bot keeps the audio of every sentence it has already made, so the same text costs one synthesis.
+That cache lives in the memory of the bot, and a restart clears it.
+
+## Use it from another site
+
+A page on another site needs the bot to allow its address.
+Add the address to the `Cors:Origins` setting of the bot, written exactly as the browser shows it, with the scheme, the host and the port.
+Without the setting, the browser blocks the answer.
+
+## Related
+
+- [Text to speech](/reference/audio/text-to-speech)
+- [Install with Docker](/reference/self-hosting/install-with-docker)

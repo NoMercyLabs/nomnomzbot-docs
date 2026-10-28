@@ -1,0 +1,38 @@
+---
+title: Bot helpers
+description: Lists 22 template helpers, each with what it gives and an example.
+---
+
+Helpers on this page: `{bot.*}`, `{botname}`.
+
+These helpers describe the bot: its name, version, uptime and commands.
+Use them in a help or "about the bot" command.
+
+Each row is its own example, so the rows on this page do not all come from one moment.
+
+| Helper | What it gives | Example |
+| --- | --- | --- |
+| `{bot.channel.loadedAgo}` | How long ago the bot loaded this channel: 2h 20m | `2h 20m` |
+| `{bot.commands.count}` | How many commands are on in this channel: 5 | `5` |
+| `{bot.commands.list}` | Every command that is on in this channel, as typed in chat: !hug !lurk !so !uptime !sr | `!hug !lurk !so !uptime !sr` |
+| `{bot.commands.list.builtin}` | The built-in commands that are on in this channel: !so !uptime !sr | `!so !uptime !sr` |
+| `{bot.commands.list.custom}` | The custom commands of this channel: !hug !lurk | `!hug !lurk` |
+| `{bot.commands.list.forUser}` | The commands the person who typed the command may run: !hug !lurk !sr | `!hug !lurk !sr` |
+| `{bot.dashboard}` | The link to the dashboard of this channel. Empty when no public address is set up | `https://nomnomz.bot/app/u/samplechannel` |
+| `{bot.isMod}` | true when the bot can moderate this chat, false when it cannot. Empty when this is not known yet | `true` |
+| `{bot.language}` | The language code of this channel: en | `en` |
+| `{bot.lastRestart.relative}` | How long ago the bot started: 3 days ago | `3 days ago` |
+| `{bot.license}` | The license of the bot source code: PolyForm-Noncommercial-1.0.0 | `PolyForm-Noncommercial-1.0.0` |
+| `{bot.mention}` | The bot name as a mention: @SampleBot | `@SampleBot` |
+| `{bot.name}` | The name of the bot in chat: SampleBot | `SampleBot` |
+| `{bot.personality}` | The personality of the bot in this channel: Informative | `Informative` |
+| `{bot.prefix}` | The character that starts a command in this channel: ! | `!` |
+| `{bot.sourceCode}` | The address of the bot source code: https://github.com/NoMercyLabs/nomnomzbot | `https://github.com/NoMercyLabs/nomnomzbot` |
+| `{bot.startedAt}` | When the bot started, in the channel time zone: 2026-10-23 12:30 | `2026-10-23 12:30` |
+| `{bot.timers.count}` | How many timers of this channel are on: 5 | `5` |
+| `{bot.uptime}` | How long the bot has been running, short: 3d 4h | `3d 4h` |
+| `{bot.uptime.long}` | How long the bot has been running, in words: 3 days, 4 hours | `3 days, 4 hours` |
+| `{bot.version}` | The version of the running bot: 1.42.0 | `1.42.0` |
+| `{botname}` | The bot display name | `NomNomzBot` |
+
+Back to [Template helpers](/reference/templates/overview). For the places helpers work, special characters and HTML, read [Variables and templates](/reference/commands/variables-and-templates).

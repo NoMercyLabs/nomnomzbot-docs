@@ -1,0 +1,41 @@
+---
+title: Platform helpers
+description: Lists 25 template helpers, each with what it gives and an example.
+---
+
+Helpers on this page: `{platform.*}`.
+
+These helpers read the platforms the channel streams to, such as Twitch, Kick and YouTube.
+Use them to show viewers and links for every platform.
+
+Each row is its own example, so the rows on this page do not all come from one moment.
+
+| Helper | What it gives | Example |
+| --- | --- | --- |
+| `{platform.chatters.stream}` | The different chatters on one platform since the stream started, for example youtube: 6 | `{platform.chatters.stream:youtube}` gives `6` |
+| `{platform.connected}` | The platforms the streamer connected: Twitch, Kick, YouTube | `Twitch, Kick, YouTube` |
+| `{platform.count}` | How many platforms the streamer connected: 3 | `3` |
+| `{platform.event}` | The platform the event came from: twitch | `twitch` |
+| `{platform.followers.twitch}` | The Twitch follower count: 1,234 | `1,234` |
+| `{platform.isLive}` | true when the platform is live now, for example youtube: true | `{platform.isLive:youtube}` gives `true` |
+| `{platform.link.kick}` | The link to the Kick channel: https://kick.com/samplechannel | `https://kick.com/samplechannel` |
+| `{platform.link.twitch}` | The link to the Twitch channel: https://twitch.tv/samplechannel | `https://twitch.tv/samplechannel` |
+| `{platform.link.youtube}` | The link to the YouTube channel: https://youtube.com/channel/UCsample | `https://youtube.com/channel/UCsample` |
+| `{platform.link.youtube.live}` | The link to the YouTube stream that is live now: https://youtube.com/watch?v=sample | `https://youtube.com/watch?v=sample` |
+| `{platform.links}` | The links to every connected channel, without https: twitch.tv/samplechannel · kick.com/samplechannel | `twitch.tv/samplechannel · kick.com/samplechannel · youtube.com/channel/UCsample` |
+| `{platform.live.count}` | How many platforms are live now: 3 | `3` |
+| `{platform.live.list}` | The platforms that are live now: Twitch, Kick, YouTube | `Twitch, Kick, YouTube` |
+| `{platform.messages.stream}` | The chat messages on one platform since the stream started, for example kick: 120 | `{platform.messages.stream:kick}` gives `120` |
+| `{platform.title}` | The stream title on one platform, for example youtube: Building a bot | `{platform.title:youtube}` gives `Building a bot` |
+| `{platform.top}` | The live platform with the most viewers: Twitch | `Twitch` |
+| `{platform.user}` | The platform of the person who typed the command: twitch | `twitch` |
+| `{platform.user.icon}` | The icon of that platform: a purple, green or red dot | `🟣` |
+| `{platform.user.name}` | The display name of that platform: Twitch | `Twitch` |
+| `{platform.viewers.breakdown}` | The viewers per live platform: Twitch 42 · Kick 10 · YouTube 8 | `Twitch 42 · Kick 10 · YouTube 8` |
+| `{platform.viewers.kick}` | The viewers on Kick now: 10. Empty when Kick is not connected or not live | `10` |
+| `{platform.viewers.share}` | The share of all viewers on one platform, for example kick: 17% | `{platform.viewers.share:kick}` gives `17%` |
+| `{platform.viewers.total}` | The viewers on every live platform together: 60 | `60` |
+| `{platform.viewers.twitch}` | The viewers on Twitch now: 42. Empty when Twitch is not live | `42` |
+| `{platform.viewers.youtube}` | The viewers on YouTube now: 8. Empty when YouTube is not connected or not live | `8` |
+
+Back to [Template helpers](/reference/templates/overview). For the places helpers work, special characters and HTML, read [Variables and templates](/reference/commands/variables-and-templates).

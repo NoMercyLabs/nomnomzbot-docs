@@ -1,0 +1,31 @@
+---
+title: Ad break helpers
+description: Lists 15 template helpers, each with what it gives and an example.
+---
+
+Helpers on this page: `{ad.*}`.
+
+These helpers read the ad breaks of the channel.
+Use them to tell chat when the next ad starts.
+
+Each row is its own example, so the rows on this page do not all come from one moment.
+
+| Helper | What it gives | Example |
+| --- | --- | --- |
+| `{ad.automatic}` | Whether the ad break was automatic ("true") or requester-triggered ("false") | `true` |
+| `{ad.duration}` | The ad break length (e.g. "3 minutes") | `3 minutes` |
+| `{ad.isScheduled}` | true while an ad break is planned, false when none is | `true` |
+| `{ad.last.ago}` | How long ago the last ad break ran: 48m | `48m` |
+| `{ad.last.at}` | The clock time of the last ad break in the channel time zone: 14:42 | `14:42` |
+| `{ad.next.at}` | The clock time of the next ad break in the channel time zone: 15:42 | `15:42` |
+| `{ad.next.duration}` | How long the next ad break lasts: 1m 30s | `1m 30s` |
+| `{ad.next.in}` | How long until the next ad break, rounded to the minute: 12m | `12m` |
+| `{ad.next.in.long}` | How long until the next ad break in words: 12 minutes | `12 minutes` |
+| `{ad.next.seconds}` | How many seconds until the next ad break: 720 | `720` |
+| `{ad.prerollFree}` | How much pre-roll free time is left: 20m | `20m` |
+| `{ad.seconds}` | The length of the coming ad break in seconds (e.g. "90") | `300` |
+| `{ad.snoozes.left}` | How many ad snoozes are left: 2 | `2` |
+| `{ad.snoozes.refreshIn}` | How long until the ad snoozes are refilled: 34m | `34m` |
+| `{ad.when}` | When the next ad starts (e.g. "in ~3 minutes") | `in ~5 minutes` |
+
+Back to [Template helpers](/reference/templates/overview). For the places helpers work, special characters and HTML, read [Variables and templates](/reference/commands/variables-and-templates).

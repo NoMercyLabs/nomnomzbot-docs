@@ -1,0 +1,33 @@
+---
+title: Schedule helpers
+description: Lists 17 template helpers, each with what it gives and an example.
+---
+
+Helpers on this page: `{schedule.*}`.
+
+These helpers read the channel's stream schedule.
+Use them to tell viewers when the next stream starts.
+
+Each row is its own example, so the rows on this page do not all come from one moment.
+
+| Helper | What it gives | Example |
+| --- | --- | --- |
+| `{schedule.ical}` | The link to the channel schedule as a calendar file (iCalendar) | `https://api.twitch.tv/helix/schedule/icalendar?broadcaster_id=123456` |
+| `{schedule.link}` | The link to the channel schedule page | `https://twitch.tv/samplechannel/schedule` |
+| `{schedule.list}` | The next scheduled streams with their start times, for example schedule.list:3: Fri 20:00 Bot night · Sun 14:00 Chill | `{schedule.list:3}` gives `Fri 20:00 Bot night · Sun 14:00 Chill · Tue 20:00 Bot night` |
+| `{schedule.next.at}` | The day and start time of the next scheduled stream: Friday 20:00 | `Friday 20:00` |
+| `{schedule.next.date}` | The day and date of the next scheduled stream: Friday 30 October | `Friday 30 October` |
+| `{schedule.next.duration}` | How long the next scheduled stream lasts: 3h | `3h` |
+| `{schedule.next.full}` | The next scheduled stream in one line: next stream in 4 days, Friday 20:00 | `next stream in 4 days, Friday 20:00` |
+| `{schedule.next.game}` | The category of the next scheduled stream | `Software and Game Development` |
+| `{schedule.next.in}` | How long until the next scheduled stream: 4 days | `4 days` |
+| `{schedule.next.isRecurring}` | true when the next scheduled stream repeats every week, false when it is a one-off | `true` |
+| `{schedule.next.relative}` | How long until the next scheduled stream, as a phrase: in 4 days | `in 4 days` |
+| `{schedule.next.title}` | The title of the next scheduled stream | `Bot night` |
+| `{schedule.next.viewerTime}` | The day and start time of the next scheduled stream in another time zone, for example schedule.next.viewerTime:America/New_York: Fri 15:00 | `{schedule.next.viewerTime:America/New_York}` gives `Fri 15:00` |
+| `{schedule.today}` | The scheduled streams of today with their start times; empty when there is none: 21:00 Quick one | `20:00 Bot night` |
+| `{schedule.vacation}` | The schedule break that is planned or running; empty when there is none: Fri 6 Nov - Sun 15 Nov | `Fri 6 Nov - Sun 15 Nov` |
+| `{schedule.vacation.until}` | The day the schedule break ends; empty when there is no break: Sunday 15 November | `Sunday 15 November` |
+| `{schedule.week}` | The days this week (Monday to Sunday) with a scheduled stream: Fri, Sun | `Fri, Sun` |
+
+Back to [Template helpers](/reference/templates/overview). For the places helpers work, special characters and HTML, read [Variables and templates](/reference/commands/variables-and-templates).

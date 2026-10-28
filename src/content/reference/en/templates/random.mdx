@@ -1,0 +1,40 @@
+---
+title: Random helpers
+description: Lists 23 template helpers, each with what it gives and an example.
+---
+
+Helpers on this page: `{random.*}`, `{pick}`, `{pick.*}`, `{chance*}`, `{roll.*}`.
+
+These helpers pick a random value, number, item or roll.
+They give a different value each time, so the example shows one possible result.
+Use them for a random answer or a giveaway pick.
+
+Each row is its own example, so the rows on this page do not all come from one moment.
+
+| Helper | What it gives | Example |
+| --- | --- | --- |
+| `{chance}` | Shows the first text with the given chance in percent, else the second: `{chance:10\|then\|else}` | `{chance:50\|yes\|no}` gives `yes` |
+| `{pick}` | Picks one of the texts at random, never the same twice in a row: `{pick:a\|b\|c}` | `{pick:solo}` gives `solo` |
+| `{pick.inline}` | Picks one item of a list written with semicolons, so an item may hold a pipe: `{pick.inline:a;b;c}` | `{pick.inline:solo}` gives `solo` |
+| `{pick.n}` | Picks a number of different texts at random: `{pick.n:2\|a\|b\|c}` | `{pick.n:2\|a\|b\|c}` gives `b, c` |
+| `{pick.shuffle}` | Lists all texts in a random order: `{pick.shuffle:a\|b\|c}` | `c, a, b` |
+| `{pick.weighted}` | Picks one text at random, a bigger weight is more likely: `{pick.weighted:1=rare\|9=common}` | `{pick.weighted:1=rare\|9=common}` gives `common` |
+| `{random.bool}` | Randomly true or false, for use inside `{if:...}` | `true` |
+| `{random.chatter}` | A random viewer who has chatted this stream: `{random.chatter}` | `ViewerOne` |
+| `{random.chatter.mention}` | A random chatter this stream with an @ in front, so they get a mention: `{random.chatter.mention}` | `@ViewerOne` |
+| `{random.chatter.notMe}` | A random chatter this stream, never the viewer who triggered it: `{random.chatter.notMe}` | `ViewerTwo` |
+| `{random.color}` | A random color as a hex code, such as #3FA7D6 | `#3FA7D6` |
+| `{random.decimal}` | A random number with decimals: `{random.decimal:min\|max\|places}` | `{random.decimal:2\|2\|2}` gives `2.00` |
+| `{random.letter}` | A random letter from A to Z | `K` |
+| `{random.number}` | A random whole number: `{random.number:6}` is 1 to 6, `{random.number:10\|50\|10}` is 10, 20 up to 50 | `{random.number:1}` gives `1` |
+| `{random.number.<min>.<max>[.<step>]}` | A random whole number between a minimum and a maximum, with an optional step (e.g. `{random.number.50.990.10}`) | `{random.number.50.990.10}` gives `430` |
+| `{random.number.<n>}` | A random whole number from 1 up to N (e.g. `{random.number.100}`) | `{random.number.1}` gives `1` |
+| `{random.percent}` | A random percent from 0% to 100% | `37%` |
+| `{random.pick.<a.b.c>}` | A random pick from a dot-separated list (e.g. `{random.pick.a.b.c}`) | `{random.pick.red.green.blue}` gives `green` |
+| `{random.quote}` | A random quote of the channel with its number, author and date: `{random.quote}` | `#12 "that was close" (ViewerTwo, 2026-03-01)` |
+| `{random.user}` | A random chatter currently in the channel | `example_viewer` |
+| `{roll.<name>}` | The value of a named roll again, so one roll can show in many places (e.g. `{roll.pct}`) | `{roll.pct.60.98} and {roll.pct}` gives `73 and 73` |
+| `{roll.<name>.<min>.<max>[.<step>]}` | A named random roll, drawn once per message: name, minimum, maximum and an optional step (e.g. `{roll.pct.60.98}`) | `{roll.pct.60.98}` gives `73` |
+| `{roll.<name>.complement}` | 100 minus a named roll, for two percentages that add up to 100 (e.g. `{roll.pct.complement}`) | `{roll.pct.60.98} and {roll.pct.complement}` gives `73 and 27` |
+
+Back to [Template helpers](/reference/templates/overview). For the places helpers work, special characters and HTML, read [Variables and templates](/reference/commands/variables-and-templates).

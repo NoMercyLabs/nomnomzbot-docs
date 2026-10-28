@@ -1,0 +1,23 @@
+---
+title: Variable helpers
+description: Lists 7 template helpers, each with what it gives and an example.
+---
+
+Helpers on this page: `{var.*}`, `{set}`, `{custom.*}`, `{include.*}`, `{transform.*}`.
+
+These helpers keep a value for the rest of a reply, read custom data, or put another command's reply inside this one.
+Use them to keep a long reply short.
+
+Each row is its own example, so the rows on this page do not all come from one moment.
+
+| Helper | What it gives | Example |
+| --- | --- | --- |
+| `{custom.<name>.<field>}` | A field from an ingested custom data source (e.g. `{custom.mysource.field}`) | `{custom.heartrate.bpm}` gives `128` |
+| `{include.builtin}` | Prints the reply of a built-in command that only reads information any viewer may see, for example uptime: `{include.builtin:uptime}` | `{include.builtin:uptime}` gives `The stream has been live for 2h 5m.` |
+| `{include.cmd}` | Prints the reply of another command of the channel, filled in for the same viewer: `{include.cmd:name}` | `{include.cmd:hug}` gives `ViewerOne sends a hug` |
+| `{include.list}` | Prints one entry of a pick list by its position, counted from 1: `{include.list:name\|position}` | `{include.list:snacks\|2}` gives `cookies` |
+| `{set}` | Keeps a value under a name for the rest of this reply and prints nothing. Read it with `{name}` or `{var.name}`: `{set:name=value}` | - |
+| `{transform.<name>:<text>}` | Applies a text transform (upper/lower/title/reverse/etc.) to the wrapped text | `{transform.upper:hi}` gives `HI` |
+| `{var.<name>}` | Reads a value that `{set:name=value}` kept earlier in this reply: `{var.name}` | `{set:x=5}{var.x}` gives `5` |
+
+Back to [Template helpers](/reference/templates/overview). For the places helpers work, special characters and HTML, read [Variables and templates](/reference/commands/variables-and-templates).

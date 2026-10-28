@@ -1,0 +1,42 @@
+---
+title: Condition helpers
+description: Lists 26 template helpers, each with what it gives and an example.
+---
+
+Helpers on this page: `{if}`, `{if.*}`, `{switch*}`, `{coalesce*}`, `{default*}`, `{literal*}`, `{chars.*}`.
+
+These helpers choose a text by a condition, or give a fallback when a value is empty.
+Use them when a reply must change with the situation.
+
+Each row is its own example, so the rows on this page do not all come from one moment.
+
+| Helper | What it gives | Example |
+| --- | --- | --- |
+| `{chars.newline}` | A line break (for Discord and webhooks; chat shows a space) | - |
+| `{chars.nothing}` | Nothing at all, for an empty branch that reads clearly | - |
+| `{chars.pipe}` | The pipe character, which would otherwise split arguments | `\|` |
+| `{chars.space}` | A space | - |
+| `{chars.zws}` | A zero-width space, which stops a mention such as @everyone from working | `​` |
+| `{coalesce}` | The first value that is not empty: `{coalesce:a\|b\|c}` | `ViewerTwo` |
+| `{default}` | The value, or the fallback when the value is empty: `{default:value\|fallback}` | `Software and Game Development` |
+| `{if}` | Shows the first text when the value is set (not empty, false, 0 or no), else the second: `{if:value\|then\|else}` | `thanks sub!` |
+| `{if.<path>}` | Shows the first text when a helper such as stream.live is set, else the second: `{if.stream.live:then\|else}` | `{if.stream.live:on\|off}` gives `on` |
+| `{if.<path>.contains}` | Tests that a helper contains a text: `{if.args.all.contains:text:then\|else}` | `{if.args.all.contains:hello:hi back\|}` gives `hi back` |
+| `{if.<path>.endswith}` | Tests that a helper ends with a text: `{if.args.all.endswith:text:then\|else}` | `{if.args.all.endswith:world:yes\|no}` gives `yes` |
+| `{if.<path>.equals}` | Tests that a helper equals a text, exactly: `{if.user.login.equals:text:then\|else}` | `{if.user.login.equals:viewerone:hi me\|hi}` gives `hi me` |
+| `{if.<path>.gt}` | Tests that a helper is a number greater than a number: `{if.count.deaths.gt:10:then\|else}` | `{if.count.deaths.gt:10:rough day\|ok}` gives `rough day` |
+| `{if.<path>.gte}` | Tests that a helper is a number greater than or equal to a number: `{if.user.months.gte:6:then\|else}` | `{if.user.months.gte:6:veteran\|new}` gives `veteran` |
+| `{if.<path>.iequals}` | Tests that a helper equals a text, ignoring upper and lower case: `{if.user.login.iequals:text:then\|else}` | `{if.user.login.iequals:VIEWERONE:yes\|no}` gives `yes` |
+| `{if.<path>.lt}` | Tests that a helper is a number less than a number: `{if.stream.viewers.lt:10:then\|else}` | `{if.stream.viewers.lt:10:cozy\|busy}` gives `busy` |
+| `{if.<path>.lte}` | Tests that a helper is a number less than or equal to a number: `{if.count.wins.lte:3:then\|else}` | `{if.count.wins.lte:3:keep going\|great}` gives `keep going` |
+| `{if.<path>.matches}` | Tests that a helper matches a regular expression: `{if.args.2.matches:pattern:then\|else}` | `{if.args.2.matches:^h:h-word\|other}` gives `h-word` |
+| `{if.<path>.startswith}` | Tests that a helper starts with a text: `{if.args.1.startswith:text:then\|else}` | `{if.args.1.startswith:@:mention\|word}` gives `mention` |
+| `{if.all}` | Shows the first text when both values are set, else the second: `{if.all:a\|b\|then\|else}` | `both` |
+| `{if.any}` | Shows the first text when at least one value is set, else the second: `{if.any:a\|b\|then\|else}` | `yes` |
+| `{if.empty}` | Shows the first text when the value is empty, else the second: `{if.empty:value\|then\|else}` | `who?` |
+| `{if.not}` | Shows the first text when the value is not set, else the second: `{if.not:value\|then\|else}` | `not a mod` |
+| `{literal}` | The text as written, with nothing inside it resolved: `{literal:{user}}` shows `{user}` | `{literal:a\|b}` gives `a\|b` |
+| `{switch}` | Picks the text of the first case that equals the value, else the last text: `{switch:value\|case=text\|case=text\|else}` | `{switch:they/them\|she/her=queen\|he/him=king\|royal}` gives `royal` |
+| `{switch.range}` | Picks the text of the first limit that is at least the number, else the last text: `{switch.range:number\|limit=text\|limit=text\|else}` | `{switch.range:7\|5=fine\|10=hmm\|oof}` gives `hmm` |
+
+Back to [Template helpers](/reference/templates/overview). For the places helpers work, special characters and HTML, read [Variables and templates](/reference/commands/variables-and-templates).

@@ -1,0 +1,73 @@
+---
+title: Template helpers
+description: Find any of the 908 template helpers, with one page for each type of helper.
+---
+
+A template helper is a name in braces.
+The bot puts the real value in its place wherever a viewer sees or hears the text: in chat, on an overlay or read aloud.
+For example, `{user}` becomes the name of the person who used the command.
+
+Type the helper in a reply, an event response or a timer, with the braces.
+A helper can hold another helper.
+
+A helper that the bot does not know stays in the line exactly as you wrote it.
+The **Reply** field warns you about an unknown helper before you save.
+
+Each place has its own set of helpers.
+Read [Variables and templates](/reference/commands/variables-and-templates) for the places, special characters and HTML.
+
+### Find a helper by its type
+
+The type of a helper is the first word of its name.
+All `{user.*}` helpers are on the user page, and all `{text.*}` helpers are on the text page.
+Pronoun and grammar helpers such as `{subject}` and `{verb:plays|play}` are on the user page too.
+A word with only a few helpers joins the type it belongs to.
+For example, the prediction helpers are on the poll page.
+
+### Give a helper input
+
+Some helpers take input.
+Type the input after a colon, as in `{text.upper:hello}`.
+Separate more than one input with a pipe, as in `{text.repeat:3|ha}`.
+A few helpers name an input, as in `{text.cut:hello world|max=8}`.
+The Example column shows a typed example and what it gives.
+
+### Write correct sentences
+
+The pronoun and grammar helpers let one reply fit every viewer.
+They give the right pronoun, verb and tense for he, she, they and other pronouns.
+Read [Write correct sentences](/reference/templates/user#write-correct-sentences) to build a line that reads right for everyone.
+
+## All helper pages
+
+- [User helpers](/reference/templates/user): 75 helpers
+- [Target helpers](/reference/templates/target): 46 helpers
+- [Channel helpers](/reference/templates/channel): 34 helpers
+- [Stream helpers](/reference/templates/stream): 62 helpers
+- [Chat message helpers](/reference/templates/chat): 29 helpers
+- [Command word helpers](/reference/templates/args): 64 helpers
+- [Chat activity helpers](/reference/templates/activity): 19 helpers
+- [Event helpers](/reference/templates/event): 33 helpers
+- [Poll and prediction helpers](/reference/templates/poll): 51 helpers
+- [Hype train helpers](/reference/templates/hypetrain): 17 helpers
+- [Goal helpers](/reference/templates/goal): 14 helpers
+- [Charity helpers](/reference/templates/charity): 8 helpers
+- [Schedule helpers](/reference/templates/schedule): 17 helpers
+- [Ad break helpers](/reference/templates/ad): 15 helpers
+- [Bot helpers](/reference/templates/bot): 22 helpers
+- [List and counter helpers](/reference/templates/list): 18 helpers
+- [Quote helpers](/reference/templates/quote): 7 helpers
+- [Variable helpers](/reference/templates/var): 7 helpers
+- [Music helpers](/reference/templates/music): 54 helpers
+- [Date and time helpers](/reference/templates/date): 17 helpers
+- [Condition helpers](/reference/templates/if): 26 helpers
+- [Random helpers](/reference/templates/random): 23 helpers
+- [Fun helpers](/reference/templates/fun): 26 helpers
+- [Text helpers](/reference/templates/text): 103 helpers
+- [Number format helpers](/reference/templates/num): 36 helpers
+- [Math helpers](/reference/templates/math): 20 helpers
+- [Platform helpers](/reference/templates/platform): 25 helpers
+- [Emote helpers](/reference/templates/emote): 30 helpers
+- [Lookup helpers](/reference/templates/lookup): 10 helpers
+
+Back to [Template helpers](/reference/templates/overview). For the places helpers work, special characters and HTML, read [Variables and templates](/reference/commands/variables-and-templates).

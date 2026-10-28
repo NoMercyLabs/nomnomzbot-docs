@@ -1,0 +1,132 @@
+---
+title: Text helpers
+description: Lists 103 template helpers, each with what it gives and an example.
+---
+
+Helpers on this page: `{text.*}`.
+
+These helpers change a text: letter case, style, words, length, replacing, encoding and plurals.
+Put the text after a colon, as in `{text.upper:hello}`.
+Separate more than one input with a pipe.
+
+Each row is its own example, so the rows on this page do not all come from one moment.
+
+## Letter case and styles
+
+| Helper | What it gives | Example |
+| --- | --- | --- |
+| `{text.alternating}` | Alternates upper and lower case, starting with upper | `{text.alternating:hello}` gives `HeLlO` |
+| `{text.bold}` | The text in bold letters | `{text.bold:hi}` gives `𝐡𝐢` |
+| `{text.bubble}` | The text in circled letters | `{text.bubble:hi}` gives `ⓗⓘ` |
+| `{text.camel}` | The text in camelCase | `{text.camel:hello big world}` gives `helloBigWorld` |
+| `{text.capitalize}` | Capitalizes the first letter and keeps the rest as written | `{text.capitalize:hello world}` gives `Hello world` |
+| `{text.clap}` | The words of the text with a clap between them | `{text.clap:big world}` gives `big 👏 world` |
+| `{text.decapitalize}` | Lowercases the first letter and keeps the rest as written | `{text.decapitalize:Hello}` gives `hello` |
+| `{text.fullwidth}` | The text in wide full-width letters | `{text.fullwidth:hi}` gives `ｈｉ` |
+| `{text.hashtag}` | The text as a #Hashtag | `{text.hashtag:big world}` gives `#BigWorld` |
+| `{text.italic}` | The text in italic letters | `{text.italic:hi}` gives `𝘩𝘪` |
+| `{text.kebab}` | The text in kebab-case | `{text.kebab:Hello Big World}` gives `hello-big-world` |
+| `{text.leet}` | The text in leet speak | `{text.leet:leet}` gives `l337` |
+| `{text.lower}` | Makes the text lowercase | `{text.lower:HeLLo}` gives `hello` |
+| `{text.mocking}` | Alternates lower and upper case, starting with lower | `{text.mocking:hello}` gives `hElLo` |
+| `{text.monospace}` | The text in monospace letters | `{text.monospace:hi}` gives `𝚑𝚒` |
+| `{text.pascal}` | The text in PascalCase | `{text.pascal:hello big world}` gives `HelloBigWorld` |
+| `{text.plain}` | Fancy letters turned back to plain letters | `{text.plain:𝐡𝐢 ⓗⓘ}` gives `hi hi` |
+| `{text.rot13}` | The text with every letter moved 13 places (ROT13) | `{text.rot13:hello}` gives `uryyb` |
+| `{text.script}` | The text in script letters | `{text.script:hi}` gives `𝒽𝒾` |
+| `{text.sentence}` | Lowercases the text and capitalizes the start of each sentence | `{text.sentence:hello WORLD. bye}` gives `Hello world. Bye` |
+| `{text.slug}` | The text as a web-safe slug, like hello-big-world | `{text.slug:Hello Big World!}` gives `hello-big-world` |
+| `{text.smallcaps}` | The text in small capitals | `{text.smallcaps:hello}` gives `ʜᴇʟʟᴏ` |
+| `{text.snake}` | The text in snake_case | `{text.snake:Hello Big World}` gives `hello_big_world` |
+| `{text.spaced}` | Puts a space, or your own separator, between every character | `{text.spaced:hype}` gives `h y p e` |
+| `{text.spongecase}` | Alternates lower and upper case across the letters, like a mocking meme | `{text.spongecase:hello world}` gives `hElLo WoRlD` |
+| `{text.squared}` | The text in squared capital letters | `{text.squared:HI}` gives `🄷🄸` |
+| `{text.strike}` | The text with a line through it | `{text.strike:hi}` gives `h̶i̶` |
+| `{text.stutter}` | The text with a stuttered first letter | `{text.stutter:hello}` gives `h-hello` |
+| `{text.superscript}` | The text in small raised letters | `{text.superscript:hi}` gives `ʰⁱ` |
+| `{text.swapcase}` | Swaps upper and lower case letter by letter | `{text.swapcase:Hello}` gives `hELLO` |
+| `{text.title}` | Capitalizes every word and lowercases the rest | `{text.title:big world}` gives `Big World` |
+| `{text.underline}` | The text with an underline | `{text.underline:hi}` gives `h̲i̲` |
+| `{text.upper}` | Makes the text UPPERCASE | `{text.upper:hello}` gives `HELLO` |
+| `{text.upsidedown}` | The text turned upside down | `{text.upsidedown:hello}` gives `ollǝɥ` |
+| `{text.uwu}` | The text in uwu speak | `{text.uwu:really}` gives `weawwy` |
+| `{text.yell}` | The text in capitals with an exclamation mark | `{text.yell:hello}` gives `HELLO!` |
+
+## Words, letters and length
+
+| Helper | What it gives | Example |
+| --- | --- | --- |
+| `{text.center}` | Pads both sides of the text to a width with a character (a space by default) | `{text.center:hi\|6\|*}` gives `**hi**` |
+| `{text.chars.count}` | Counts the characters in the text | `{text.chars.count:hello}` gives `5` |
+| `{text.chars.shuffle}` | The characters in a random order | `{text.chars.shuffle:abc}` gives `bca` |
+| `{text.count}` | Counts how many times a text appears in the text | `{text.count:banana\|a}` gives `3` |
+| `{text.cut}` | Cuts the text to a maximum length, the ending included: text, max=number, end=text | `{text.cut:hello world\|max=8\|end=...}` gives `hello...` |
+| `{text.cut.words}` | Keeps the first number of words and adds an ellipsis when it cut | `{text.cut.words:hello big world\|2}` gives `hello big…` |
+| `{text.first}` | The first characters of the text | `{text.first:3\|hello}` gives `hel` |
+| `{text.initials}` | The first letter of every word, in capitals | `{text.initials:big world}` gives `BW` |
+| `{text.last}` | The last characters of the text | `{text.last:3\|hello}` gives `llo` |
+| `{text.length.fit}` | The text cut to a length, with no ending mark | `{text.length.fit:hello\|3}` gives `hel` |
+| `{text.letters}` | Only the letters of the text | `{text.letters:a1b2}` gives `ab` |
+| `{text.letters.count}` | Counts only the letters in the text | `{text.letters.count:a1 b2}` gives `2` |
+| `{text.lines.count}` | Counts the lines in the text. Type a backslash and n where a line ends | `{text.lines.count:a\nb}` gives `2` |
+| `{text.lines.first}` | The first line of the text. Type a backslash and n where a line ends | `{text.lines.first:a\nb}` gives `a` |
+| `{text.lines.join}` | The lines of the text joined with a separator, one space when you give none. Type a backslash and n where a line ends, then a pipe and the separator | `{text.lines.join:a\nb\|\s/\s}` gives `a / b` |
+| `{text.lines.wrap}` | Wraps the text at a width and joins the lines with a slash | `{text.lines.wrap:aaa bbb ccc\|7}` gives `aaa bbb / ccc` |
+| `{text.pad.left}` | Pads the start of the text to a width with a character (a space by default) | `{text.pad.left:7\|3\|0}` gives `007` |
+| `{text.pad.right}` | Pads the end of the text to a width with a character (a space by default) | `{text.pad.right:ab\|4\|.}` gives `ab..` |
+| `{text.repeat}` | Repeats the text a number of times, with an optional separator | `{text.repeat:3\|ha}` gives `hahaha` |
+| `{text.reverse}` | Reverses the text character by character | `{text.reverse:abc}` gives `cba` |
+| `{text.reverse.words}` | Reverses the order of the words | `{text.reverse.words:hello big world}` gives `world big hello` |
+| `{text.squish}` | Trims the text and turns every run of spaces into one space | `{text.squish:a    b  c}` gives `a b c` |
+| `{text.substring}` | A part of the text from a position, with a length | `{text.substring:2\|3\|hello}` gives `ell` |
+| `{text.trim}` | Removes spaces from the start and the end | `{text.trim:  hi  }` gives `hi` |
+| `{text.truncate}` | Cuts the text to a number of characters and adds an ellipsis when it cut | `{text.truncate:5\|hello world}` gives `hello…` |
+| `{text.word}` | The word at a position, counting from 1 | `{text.word:2\|hello big world}` gives `big` |
+| `{text.word.first}` | The first word of the text | `{text.word.first:hello big world}` gives `hello` |
+| `{text.word.last}` | The last word of the text | `{text.word.last:hello big world}` gives `world` |
+| `{text.word.longest}` | The longest word of the text | `{text.word.longest:hi hello yo}` gives `hello` |
+| `{text.word.random}` | One random word of the text | `b` |
+| `{text.words.count}` | Counts the words in the text | `{text.words.count:hello big world}` gives `3` |
+| `{text.words.first}` | The first number of words | `{text.words.first:2\|hello big world}` gives `hello big` |
+| `{text.words.from}` | All words from a position to the end, counting from 1 | `{text.words.from:2\|hello big world}` gives `big world` |
+| `{text.words.last}` | The last number of words | `{text.words.last:2\|hello big world}` gives `big world` |
+| `{text.words.range}` | The words from one position to another, both included | `{text.words.range:1\|2\|hello big world}` gives `hello big` |
+| `{text.words.shuffle}` | The words in a random order | `{text.words.shuffle:a b c}` gives `c a b` |
+| `{text.words.sort}` | The words in alphabetical order | `{text.words.sort:c a b}` gives `a b c` |
+| `{text.words.unique}` | The words with repeated words removed | `{text.words.unique:a b a}` gives `a b` |
+
+## Replace, encode and grammar
+
+| Helper | What it gives | Example |
+| --- | --- | --- |
+| `{text.article}` | A word with a or an in front (English only) | `{text.article:apple}` gives `an apple` |
+| `{text.base64.decode}` | A base64 text turned back to plain text | `{text.base64.decode:aGk=}` gives `hi` |
+| `{text.base64.encode}` | The text encoded as base64 | `{text.base64.encode:hi}` gives `aGk=` |
+| `{text.censor}` | The text with a word replaced by stars | `{text.censor:you noob\|noob}` gives `you ****` |
+| `{text.digits}` | Only the digits of the text | `{text.digits:a1b22}` gives `122` |
+| `{text.escape.chat}` | The text made safe so chat does not run it as a command | `{text.escape.chat:/ban x}` gives `⁄ban x` |
+| `{text.html.strip}` | The text without HTML tags | `{text.html.strip:<b>hi</b>}` gives `hi` |
+| `{text.join.and}` | A list of items joined with commas and the word and | `{text.join.and:a\|b\|c}` gives `a, b and c` |
+| `{text.join.or}` | A list of items joined with commas and the word or | `{text.join.or:a\|b\|c}` gives `a, b or c` |
+| `{text.links.strip}` | The text without links | `{text.links.strip:see https://a.b now}` gives `see now` |
+| `{text.mask}` | The text with all but the last characters replaced by stars | `{text.mask:secret\|2}` gives `****et` |
+| `{text.mentions.strip}` | The text without @mentions | `{text.mentions.strip:@ViewerTwo hi}` gives `hi` |
+| `{text.paren}` | Puts the text between parentheses | `{text.paren:hi}` gives `(hi)` |
+| `{text.path.encode}` | The text escaped for one part of a link path | `{text.path.encode:a/b c}` gives `a%2Fb%20c` |
+| `{text.plural}` | The singular word for one, the plural word for any other number | `{text.plural:3\|sub\|subs}` gives `subs` |
+| `{text.plural.auto}` | A word in its plural form, unless the number is one | `{text.plural.auto:2\|box}` gives `boxes` |
+| `{text.plural.count}` | The number with its singular or plural word | `{text.plural.count:3\|sub\|subs}` gives `3 subs` |
+| `{text.possessive}` | A name in its possessive form, like James' or Anna's | `{text.possessive:James}` gives `James'` |
+| `{text.query.encode}` | The text escaped for a link query, with + for spaces | `{text.query.encode:a b}` gives `a+b` |
+| `{text.quote}` | Puts the text between double quotes | `"hi"` |
+| `{text.remove}` | Removes every match of a text | `{text.remove:hello world\|o}` gives `hell wrld` |
+| `{text.replace}` | Replaces every match of a text with another text | `{text.replace:hello world\|world\|chat}` gives `hello chat` |
+| `{text.replace.first}` | Replaces only the first match of a text with another text | `{text.replace.first:a a a\|a\|b}` gives `b a a` |
+| `{text.replace.icase}` | Replaces every match of a text with another text, ignoring case | `{text.replace.icase:Hello\|hello\|bye}` gives `bye` |
+| `{text.singular}` | A word in its singular form | `{text.singular:boxes}` gives `box` |
+| `{text.url.decode}` | A link-escaped text turned back to plain text | `{text.url.decode:a%20b}` gives `a b` |
+| `{text.url.encode}` | The text escaped for use in a link | `{text.url.encode:a b&c}` gives `a%20b%26c` |
+| `{text.vowels.remove}` | The text without vowels | `{text.vowels.remove:hello}` gives `hll` |
+| `{text.wrap}` | Puts a left mark before the text and a right mark after it | `{text.wrap:hi\|[\|]}` gives `[hi]` |
+
+Back to [Template helpers](/reference/templates/overview). For the places helpers work, special characters and HTML, read [Variables and templates](/reference/commands/variables-and-templates).

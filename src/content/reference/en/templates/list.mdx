@@ -1,0 +1,34 @@
+---
+title: List and counter helpers
+description: Lists 18 template helpers, each with what it gives and an example.
+---
+
+Helpers on this page: `{list.*}`, `{count.*}`.
+
+These helpers read the channel's lists and named counters.
+Use them to pick a list item or to show a count, such as a death count.
+
+Each row is its own example, so the rows on this page do not all come from one moment.
+
+| Helper | What it gives | Example |
+| --- | --- | --- |
+| `{count.<key>}` | A named counter current value (e.g. `{count.deaths}`) | `{count.deaths}` gives `12` |
+| `{list.contains}` | Whether a pick list holds an entry: true or false | `{list.contains:snacks\|chips}` gives `true` |
+| `{list.count}` | How many pick lists the channel has | `7` |
+| `{list.first}` | The first entry of a pick list | `{list.first:snacks}` gives `chips` |
+| `{list.indexOf}` | The position of an entry in a pick list, or 0 when it is not there | `{list.indexOf:snacks\|fruit}` gives `3` |
+| `{list.inline.item}` | The entry of an inline list a;b;c at a position | `{list.inline.item:2\|a;b;c}` gives `b` |
+| `{list.inline.join}` | An inline list a;b;c joined with your own separator. Type the separator first, then a pipe and the list; use a backslash and s for a space | `{list.inline.join:\s+\s\|a;b}` gives `a + b` |
+| `{list.inline.length}` | How many entries an inline list a;b;c has | `{list.inline.length:a;b;c}` gives `3` |
+| `{list.item}` | The entry of a pick list at a position, counting from 1 | `{list.item:snacks\|2}` gives `cookies` |
+| `{list.join}` | All entries of a pick list, joined with a comma or your own separator | `{list.join:snacks}` gives `chips, cookies, fruit` |
+| `{list.join.and}` | All entries of a pick list as a sentence: a, b and c | `{list.join.and:snacks}` gives `chips, cookies and fruit` |
+| `{list.last}` | The last entry of a pick list | `{list.last:snacks}` gives `fruit` |
+| `{list.length}` | How many entries a pick list has | `{list.length:snacks}` gives `3` |
+| `{list.pick}` | One random entry of a pick list | `chips` |
+| `{list.pick.<name>}` | One random entry of a pick list | `{list.pick.snacks}` gives `cookies` |
+| `{list.random.index}` | A random position inside a pick list | `2` |
+| `{list.shuffle}` | All entries of a pick list in a random order | `fruit, chips, cookies` |
+| `{list.sorted}` | All entries of a pick list in alphabetical order | `{list.sorted:snacks}` gives `chips, cookies, fruit` |
+
+Back to [Template helpers](/reference/templates/overview). For the places helpers work, special characters and HTML, read [Variables and templates](/reference/commands/variables-and-templates).

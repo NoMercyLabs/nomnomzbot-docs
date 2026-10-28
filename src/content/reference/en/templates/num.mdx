@@ -1,0 +1,51 @@
+---
+title: Number format helpers
+description: Lists 36 template helpers, each with what it gives and an example.
+---
+
+Helpers on this page: `{num.*}`.
+
+These helpers format a number: round it, add separators, or write it as a currency or a duration.
+
+Each row is its own example, so the rows on this page do not all come from one moment.
+
+| Helper | What it gives | Example |
+| --- | --- | --- |
+| `{num.abs}` | Absolute value of a number | `{num.abs:-5}` gives `5` |
+| `{num.bar}` | A bar from a value and its maximum | `{num.bar:6\|10}` gives `██████░░░░` |
+| `{num.between}` | True when a number is inside a range, ends included | `{num.between:5\|1\|10}` gives `true` |
+| `{num.binary}` | A whole number in binary | `{num.binary:5}` gives `101` |
+| `{num.bytes}` | A size in bytes as KB, MB or GB | `{num.bytes:1536}` gives `1.5 KB` |
+| `{num.clamp}` | Keeps a number between a minimum and a maximum | `{num.clamp:120\|0\|100}` gives `100` |
+| `{num.compact}` | Short form of a big number: 1.2k, 3.4M, 2.1B | `{num.compact:1234}` gives `1.2k` |
+| `{num.convert}` | Converts length, weight, volume or temperature between units | `{num.convert:10\|km\|mi}` gives `6.21` |
+| `{num.currency}` | An amount of money with a currency code, for example 5 and USD | `{num.currency:5\|USD}` gives `$5.00` |
+| `{num.currency.compact}` | A short money amount with a currency code: $1.5k | `{num.currency.compact:1500\|USD}` gives `$1.5k` |
+| `{num.dec}` | A number minus one | `{num.dec:4}` gives `3` |
+| `{num.diff}` | Difference between two numbers, always positive | `{num.diff:2800\|2500}` gives `300` |
+| `{num.digitSum}` | Sum of the digits of a whole number | `{num.digitSum:123}` gives `6` |
+| `{num.digits}` | How many digits a whole number has | `{num.digits:12345}` gives `5` |
+| `{num.duration}` | Seconds as a short time: 2h 15m | `{num.duration:8100}` gives `2h 15m` |
+| `{num.duration.clock}` | Seconds as a clock: 1:23 | `{num.duration.clock:83}` gives `1:23` |
+| `{num.duration.long}` | Seconds as a time in words: 2 hours, 15 minutes | `{num.duration.long:8100}` gives `2 hours, 15 minutes` |
+| `{num.format}` | Writes a number with group marks in the channel language, with optional decimals | `{num.format:1234}` gives `1,234` |
+| `{num.fromRoman}` | A Roman numeral as a number | `{num.fromRoman:XIV}` gives `14` |
+| `{num.hex}` | A whole number in hexadecimal | `{num.hex:255}` gives `FF` |
+| `{num.inc}` | A number plus one | `{num.inc:4}` gives `5` |
+| `{num.isEven}` | True when a whole number is even, false when it is odd | `{num.isEven:7}` gives `false` |
+| `{num.max}` | Largest of the numbers | `{num.max:4\|9\|2}` gives `9` |
+| `{num.min}` | Smallest of the numbers | `{num.min:4\|9\|2}` gives `2` |
+| `{num.ordinal}` | Ordinal of a whole number: 3rd (3e in a Dutch channel) | `{num.ordinal:3}` gives `3rd` |
+| `{num.ordinal.words}` | Ordinal of a whole number in words: third | `{num.ordinal.words:3}` gives `third` |
+| `{num.parity}` | The word odd or even, in the channel language | `{num.parity:7}` gives `odd` |
+| `{num.parse}` | Reads a short number such as 1.2k or 3M as a plain number | `{num.parse:1.2k}` gives `1200` |
+| `{num.percent}` | Part of a whole as a percentage, with optional decimals | `{num.percent:1234\|1500}` gives `82%` |
+| `{num.percentOf}` | A percentage of a number | `{num.percentOf:10\|250}` gives `25` |
+| `{num.ratio}` | Ratio of two whole numbers in lowest terms | `{num.ratio:3\|12}` gives `1:4` |
+| `{num.roman}` | A whole number from 1 to 3999 as a Roman numeral | `{num.roman:2026}` gives `MMXXVI` |
+| `{num.round}` | Rounds a number to a number of decimals (default 0), halves away from zero | `{num.round:2.456\|2}` gives `2.46` |
+| `{num.sign}` | A number with a plus sign when it is positive | `{num.sign:5}` gives `+5` |
+| `{num.truncate}` | Cuts the decimals off a number | `{num.truncate:2.9}` gives `2` |
+| `{num.words}` | A whole number in words, in the channel language: forty-two | `{num.words:42}` gives `forty-two` |
+
+Back to [Template helpers](/reference/templates/overview). For the places helpers work, special characters and HTML, read [Variables and templates](/reference/commands/variables-and-templates).

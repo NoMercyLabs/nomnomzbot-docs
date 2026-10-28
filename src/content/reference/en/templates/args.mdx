@@ -1,0 +1,88 @@
+---
+title: Command word helpers
+description: Lists 64 template helpers, each with what it gives and an example.
+---
+
+Helpers on this page: `{args}`, `{args.*}`.
+
+These helpers read the words a viewer typed after the command, such as the first word or the second word.
+Use them to take a word, a number or a duration from the command.
+They can also read a person from a word, such as `{args.1.user.points}`, and give facts about that person.
+
+Each row is its own example, so the rows on this page do not all come from one moment.
+
+## Person named in the message
+
+| Helper | What it gives | Example |
+| --- | --- | --- |
+| `{args.<n>.user.accountAge}` | How old the account of the viewer typed as the n-th word is, in years and months | `{args.1.user.accountAge}` gives `7 years, 5 months` |
+| `{args.<n>.user.accountAge.days}` | How many days old the account of the viewer typed as the n-th word is | `{args.1.user.accountAge.days}` gives `1534` |
+| `{args.<n>.user.activity.level}` | How active the viewer typed as the n-th word is in this channel (new, casual, regular or veteran) | `{args.1.user.activity.level}` gives `veteran` |
+| `{args.<n>.user.avatar}` | The link to the profile picture of the viewer typed as the n-th word | `{args.1.user.avatar}` gives `https://static-cdn.jtvnw.net/jtv_user_pictures/viewertwo.png` |
+| `{args.<n>.user.bio}` | The profile description of the viewer typed as the n-th word | `{args.1.user.bio}` gives `I build castles` |
+| `{args.<n>.user.color}` | The chat color of the viewer typed as the n-th word | `{args.1.user.color}` gives `#FF4500` |
+| `{args.<n>.user.createdAt}` | The date the account of the viewer typed as the n-th word was created | `{args.1.user.createdAt}` gives `2019-05-02` |
+| `{args.<n>.user.data.<key>}` | A value stored for the viewer typed as the n-th word, with an optional default after a colon | `{args.1.user.data.food:none}` gives `none` |
+| `{args.<n>.user.display}` | The display name of the viewer typed as the n-th word | `{args.1.user.display}` gives `ViewerOne` |
+| `{args.<n>.user.followAge}` | How long the viewer typed as the n-th word has followed, in words | `{args.1.user.followAge}` gives `9 months and 24 days` |
+| `{args.<n>.user.followAge.days}` | How many days the viewer typed as the n-th word has followed | `{args.1.user.followAge.days}` gives `411` |
+| `{args.<n>.user.followedAt}` | The date the viewer typed as the n-th word started following | `{args.1.user.followedAt}` gives `2025-09-10` |
+| `{args.<n>.user.game}` | The category the channel of the n-th word set | `{args.1.user.game}` gives `Minecraft` |
+| `{args.<n>.user.isFollower}` | Whether the viewer typed as the n-th word follows the channel: true or false | `{args.1.user.isFollower}` gives `true` |
+| `{args.<n>.user.isLive}` | Whether the viewer typed as the n-th word is live now: true or false | `{args.1.user.isLive}` gives `false` |
+| `{args.<n>.user.isSub}` | Whether the viewer typed as the n-th word is a subscriber: true or false | `{args.1.user.isSub}` gives `false` |
+| `{args.<n>.user.login}` | The login name of the viewer typed as the n-th word | `{args.1.user.login}` gives `viewerone` |
+| `{args.<n>.user.mention}` | The viewer typed as the n-th word, as an @mention | `{args.1.user.mention}` gives `@ViewerTwo` |
+| `{args.<n>.user.platform}` | The platform of the viewer typed as the n-th word, in lower case | `{args.1.user.platform}` gives `twitch` |
+| `{args.<n>.user.platform.name}` | The platform of the viewer typed as the n-th word, as a name | `{args.1.user.platform.name}` gives `Twitch` |
+| `{args.<n>.user.points}` | The channel points of the viewer typed as the n-th word, with a thousands separator | `{args.1.user.points}` gives `800` |
+| `{args.<n>.user.points.name}` | The name of the channel points currency | `{args.1.user.points.name}` gives `nomz` |
+| `{args.<n>.user.points.nextRank.gap}` | How many points the viewer typed as the n-th word needs to pass the next place | `{args.1.user.points.nextRank.gap}` gives `300` |
+| `{args.<n>.user.points.nextRank.name}` | The viewer one place above the viewer typed as the n-th word | `{args.1.user.points.nextRank.name}` gives `ViewerThree` |
+| `{args.<n>.user.points.rank}` | The place of the viewer typed as the n-th word on the channel points ranking | `{args.1.user.points.rank}` gives `17` |
+| `{args.<n>.user.points.rank.ordinal}` | The ranking place of the viewer typed as the n-th word as an ordinal: 4th | `{args.1.user.points.rank.ordinal}` gives `4th` |
+| `{args.<n>.user.points.raw}` | The channel points of the viewer typed as the n-th word, as a plain number | `{args.1.user.points.raw}` gives `2500` |
+| `{args.<n>.user.quotes.count}` | How many quotes the viewer typed as the n-th word has said | `{args.1.user.quotes.count}` gives `3` |
+| `{args.<n>.user.shoutoutLink}` | The link to the channel of the viewer typed as the n-th word | `{args.1.user.shoutoutLink}` gives `https://twitch.tv/viewertwo` |
+| `{args.<n>.user.stats.bits}` | The bits the viewer typed as the n-th word cheered in this channel | `{args.1.user.stats.bits}` gives `0` |
+| `{args.<n>.user.stats.firstSeen.relative}` | How long ago the viewer typed as the n-th word was first seen | `{args.1.user.stats.firstSeen.relative}` gives `one year ago` |
+| `{args.<n>.user.stats.lastSeen}` | The date the viewer typed as the n-th word was last seen | `{args.1.user.stats.lastSeen}` gives `2026-10-25` |
+| `{args.<n>.user.stats.lastSeen.relative}` | How long ago the viewer typed as the n-th word was last seen | `{args.1.user.stats.lastSeen.relative}` gives `2 days ago` |
+| `{args.<n>.user.stats.streak}` | The current attendance streak of the viewer typed as the n-th word | `{args.1.user.stats.streak}` gives `2` |
+| `{args.<n>.user.stats.streak.best}` | The best attendance streak of the viewer typed as the n-th word | `{args.1.user.stats.streak.best}` gives `9` |
+| `{args.<n>.user.stats.watchTime.hours}` | The watch time of the viewer typed as the n-th word, in hours | `{args.1.user.stats.watchTime.hours}` gives `12.5` |
+| `{args.<n>.user.stats.watchTime.long}` | The watch time of the viewer typed as the n-th word, in words | `{args.1.user.stats.watchTime.long}` gives `12 hours, 30 minutes` |
+| `{args.<n>.user.subTier}` | The subscription tier of the viewer typed as the n-th word, as a number | `{args.1.user.subTier}` gives `1` |
+| `{args.<n>.user.subTier.name}` | The subscription tier of the viewer typed as the n-th word, as a name | `{args.1.user.subTier.name}` gives `Tier 1` |
+| `{args.<n>.user.title}` | The stream title the channel of the n-th word set | `{args.1.user.title}` gives `Building castles` |
+| `{args.<n>.user.viewers}` | How many viewers the channel of the n-th word has now | `{args.1.user.viewers}` gives `18` |
+
+## Words after the command
+
+| Helper | What it gives | Example |
+| --- | --- | --- |
+| `{args}` | Everything typed after the command, as one text | `hello world` |
+| `{args.<a>-<b>}` | The words from the a-th to the b-th, for example args.2-3 | `{args.2-3}` gives `hello big` |
+| `{args.<n>}` | Command argument N (e.g. `{args.1}` is the first word after the command) | `{args.1}` gives `@ViewerTwo` |
+| `{args.<n>+}` | Every word from the n-th one to the end, for example args.2+ | `{args.2+}` gives `hello big world` |
+| `{args.<n>.clean}` | The n-th word without a leading @ | `{args.1.clean}` gives `ViewerTwo` |
+| `{args.<n>.isMention}` | True when the n-th word is an @mention | `{args.1.isMention}` gives `true` |
+| `{args.<n>.isNumber}` | True when the n-th word is a number | `{args.1.isNumber}` gives `false` |
+| `{args.<n>.length}` | How many characters the n-th word has | `{args.2.length}` gives `5` |
+| `{args.<n>.number}` | The n-th word when it is a number, else the default after the colon or nothing | `{args.3.number:1}` gives `1` |
+| `{args.<n>.upper}` | The n-th word in UPPERCASE | `{args.2.upper}` gives `HELLO` |
+| `{args.<n>.urlEncoded}` | The n-th word made safe for a web address | `{args.2.urlEncoded}` gives `hello` |
+| `{args.<n>:<default>}` | The n-th word, or the default after the colon when the command has fewer words | `{args.5:nobody}` gives `nobody` |
+| `{args.all.quoted}` | All arguments in double quotes | `{args.all.quoted}` gives `"@ViewerTwo hello big world"` |
+| `{args.all.urlEncoded}` | All arguments made safe for a web address | `{args.all.urlEncoded}` gives `%40ViewerTwo%20hello%20big%20world` |
+| `{args.count}` | How many words follow the command | `{args.count}` gives `4` |
+| `{args.duration}` | Reads the word at a position as a time (5m, 1h30m, 90) and gives it in seconds. Type the position after a colon: when the second word is 5m, 2 gives 300 | `{args.duration:2}` gives `300` |
+| `{args.first}` | The first word after the command, as written | `{args.first}` gives `@ViewerTwo` |
+| `{args.isEmpty}` | True when the command has no arguments, false when it has some | `{args.isEmpty}` gives `false` |
+| `{args.last}` | The last word after the command | `{args.last}` gives `world` |
+| `{args.mentions}` | Every @mention in the arguments | `{args.mentions}` gives `@ViewerTwo` |
+| `{args.mentions.count}` | How many @mentions are in the arguments | `{args.mentions.count}` gives `1` |
+| `{args.numbers}` | Every word that is a number | `{args.numbers}` gives `42 7` |
+| `{args.rest}` | Every word after the first one | `{args.rest}` gives `hello big world` |
+
+Back to [Template helpers](/reference/templates/overview). For the places helpers work, special characters and HTML, read [Variables and templates](/reference/commands/variables-and-templates).

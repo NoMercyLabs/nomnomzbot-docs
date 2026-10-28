@@ -1,0 +1,33 @@
+---
+title: Hype train helpers
+description: Lists 17 template helpers, each with what it gives and an example.
+---
+
+Helpers on this page: `{hypetrain*}`, `{hype_train*}`.
+
+These helpers read a hype train: its level, progress, and the people who took part.
+Use them to show progress in chat, on an overlay or read aloud.
+
+Each row is its own example, so the rows on this page do not all come from one moment.
+
+| Helper | What it gives | Example |
+| --- | --- | --- |
+| `{hype_train.goal}` | The points needed for the next level | `8000` |
+| `{hype_train.id}` | The hype train ID | `1b0AsbInCHZW2SQFQkCzqN07Ib2` |
+| `{hype_train.level}` | The hype train level | `3` |
+| `{hype_train.total}` | The total points the hype train collected | `6400` |
+| `{hypetrain.bar}` | A bar of how far the train is towards the next level: ██████░░░░ 60% | `██████░░░░ 60%` |
+| `{hypetrain.goal}` | The points needed to finish the current level: 3,000 | `3,000` |
+| `{hypetrain.isActive}` | Whether a Hype Train runs now, as true or false, for if and switch | `false` |
+| `{hypetrain.isGolden}` | Whether the running train is a Golden Kappa train, as true or false, for if and switch | `false` |
+| `{hypetrain.isShared}` | Whether the running train is shared with other channels, as true or false, for if and switch | `false` |
+| `{hypetrain.level}` | The level of the running Hype Train: 3 | `3` |
+| `{hypetrain.percent}` | How far the train is towards the next level: 60% | `60%` |
+| `{hypetrain.progress}` | The points earned towards the next level: 1,800 | `1,800` |
+| `{hypetrain.record.level}` | The highest level the channel ever reached: 5 | `5` |
+| `{hypetrain.remaining}` | The points still needed for the next level: 1,200 | `1,200` |
+| `{hypetrain.timeLeft}` | The time left before the train ends: 4m 10s | `4m 10s` |
+| `{hypetrain.topContributor}` | The name of the biggest contributor to the train: ViewerOne | `ViewerOne` |
+| `{hypetrain.total}` | The total points of the running train: 5,400 | `5,400` |
+
+Back to [Template helpers](/reference/templates/overview). For the places helpers work, special characters and HTML, read [Variables and templates](/reference/commands/variables-and-templates).

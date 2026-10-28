@@ -1,0 +1,3043 @@
+{
+ "meta": {
+  "rows": 1053,
+  "found": 607
+ },
+ "examples": {
+  "activity.busiestDay": {
+   "typed": "{activity.busiestDay}",
+   "result": "Friday",
+   "source": "server/tests/NomNomzBot.Infrastructure.Tests/Platform/Templating/Helpers/Broadcast/ActivityHelpersTableTests.cs:43"
+  },
+  "activity.busiestHour": {
+   "typed": "{activity.busiestHour}",
+   "result": "21:00",
+   "source": "server/tests/NomNomzBot.Infrastructure.Tests/Platform/Templating/Helpers/Broadcast/ActivityHelpersTableTests.cs:42"
+  },
+  "activity.chatters.active": {
+   "typed": "{activity.chatters.active:10}",
+   "result": "12",
+   "source": "server/tests/NomNomzBot.Infrastructure.Tests/Platform/Templating/Helpers/Broadcast/ActivityHelpersTableTests.cs:25"
+  },
+  "activity.chatters.lurkers": {
+   "typed": "{activity.chatters.lurkers}",
+   "result": "18",
+   "source": "server/tests/NomNomzBot.Infrastructure.Tests/Platform/Templating/Helpers/Broadcast/ActivityHelpersTableTests.cs:41"
+  },
+  "activity.chatters.now": {
+   "typed": "{activity.chatters.now}",
+   "result": "51",
+   "source": "server/tests/NomNomzBot.Infrastructure.Tests/Platform/Templating/Helpers/Broadcast/ActivityHelpersTableTests.cs:40"
+  },
+  "activity.chatters.unique": {
+   "typed": "{activity.chatters.unique}",
+   "result": "33",
+   "source": "server/tests/NomNomzBot.Infrastructure.Tests/Platform/Templating/Helpers/Broadcast/ActivityHelpersTableTests.cs:33"
+  },
+  "activity.commands.stream": {
+   "typed": "{activity.commands.stream}",
+   "result": "88",
+   "source": "server/tests/NomNomzBot.Infrastructure.Tests/Platform/Templating/Helpers/Broadcast/ActivityHelpersTableTests.cs:35"
+  },
+  "activity.last.chatter": {
+   "typed": "{activity.last.chatter}",
+   "result": "ViewerTwo",
+   "source": "server/tests/NomNomzBot.Infrastructure.Tests/Platform/Templating/Helpers/Broadcast/ActivityHelpersTableTests.cs:27"
+  },
+  "activity.last.message.ago": {
+   "typed": "{activity.last.message.ago}",
+   "result": "4s",
+   "source": "server/tests/NomNomzBot.Infrastructure.Tests/Platform/Templating/Helpers/Broadcast/ActivityHelpersTableTests.cs:34"
+  },
+  "activity.messages.hour": {
+   "typed": "{activity.messages.hour}",
+   "result": "1,080",
+   "source": "server/tests/NomNomzBot.Infrastructure.Tests/Platform/Templating/Helpers/Broadcast/ActivityHelpersTableTests.cs:24"
+  },
+  "activity.messages.stream": {
+   "typed": "{activity.messages.stream}",
+   "result": "2,430",
+   "source": "server/tests/NomNomzBot.Infrastructure.Tests/Platform/Templating/Helpers/Broadcast/ActivityHelpersTableTests.cs:29"
+  },
+  "activity.messages.today": {
+   "typed": "{activity.messages.today}",
+   "result": "2,610",
+   "source": "server/tests/NomNomzBot.Infrastructure.Tests/Platform/Templating/Helpers/Broadcast/ActivityHelpersTableTests.cs:37"
+  },
+  "activity.mpm": {
+   "typed": "{activity.mpm}",
+   "result": "18",
+   "source": "server/tests/NomNomzBot.Infrastructure.Tests/Platform/Templating/Helpers/Broadcast/ActivityHelpersTableTests.cs:22"
+  },
+  "activity.top.hour": {
+   "typed": "{activity.top.hour}",
+   "result": "ViewerTwo",
+   "source": "server/tests/NomNomzBot.Infrastructure.Tests/Platform/Templating/Helpers/Broadcast/ActivityHelpersTableTests.cs:26"
+  },
+  "activity.top.list": {
+   "typed": "{activity.top.list:3}",
+   "result": "ViewerOne 140, ViewerTwo 96, ViewerThree 40",
+   "source": "server/tests/NomNomzBot.Infrastructure.Tests/Platform/Templating/Helpers/Broadcast/ActivityHelpersTableTests.cs:31"
+  },
+  "activity.top.stream": {
+   "typed": "{activity.top.stream}",
+   "result": "ViewerOne (140)",
+   "source": "server/tests/NomNomzBot.Infrastructure.Tests/Platform/Templating/Helpers/Broadcast/ActivityHelpersTableTests.cs:30"
+  },
+  "activity.top.today": {
+   "typed": "{activity.top.today}",
+   "result": "ViewerOne",
+   "source": "server/tests/NomNomzBot.Infrastructure.Tests/Platform/Templating/Helpers/Broadcast/ActivityHelpersTableTests.cs:38"
+  },
+  "activity.top.today.count": {
+   "typed": "{activity.top.today.count}",
+   "result": "140",
+   "source": "server/tests/NomNomzBot.Infrastructure.Tests/Platform/Templating/Helpers/Broadcast/ActivityHelpersTableTests.cs:39"
+  },
+  "ad.isScheduled": {
+   "typed": "{ad.isScheduled}",
+   "result": "true",
+   "source": "server/tests/NomNomzBot.Infrastructure.Tests/Platform/Templating/Helpers/Broadcast/AdScheduleHelpersTableTests.cs:32"
+  },
+  "ad.last.ago": {
+   "typed": "{ad.last.ago}",
+   "result": "48m",
+   "source": "server/tests/NomNomzBot.Infrastructure.Tests/Platform/Templating/Helpers/Broadcast/AdScheduleHelpersTableTests.cs:27"
+  },
+  "ad.last.at": {
+   "typed": "{ad.last.at}",
+   "result": "14:42",
+   "source": "server/tests/NomNomzBot.Infrastructure.Tests/Platform/Templating/Helpers/Broadcast/AdScheduleHelpersTableTests.cs:28"
+  },
+  "ad.next.at": {
+   "typed": "{ad.next.at}",
+   "result": "15:42",
+   "source": "server/tests/NomNomzBot.Infrastructure.Tests/Platform/Templating/Helpers/Broadcast/AdScheduleHelpersTableTests.cs:24"
+  },
+  "ad.next.duration": {
+   "typed": "{ad.next.duration}",
+   "result": "1m 30s",
+   "source": "server/tests/NomNomzBot.Infrastructure.Tests/Platform/Templating/Helpers/Broadcast/AdScheduleHelpersTableTests.cs:26"
+  },
+  "ad.next.in": {
+   "typed": "{ad.next.in}",
+   "result": "12m",
+   "source": "server/tests/NomNomzBot.Infrastructure.Tests/Platform/Templating/Helpers/Broadcast/AdScheduleHelpersTableTests.cs:22"
+  },
+  "ad.next.in.long": {
+   "typed": "{ad.next.in.long}",
+   "result": "12 minutes",
+   "source": "server/tests/NomNomzBot.Infrastructure.Tests/Platform/Templating/Helpers/Broadcast/AdScheduleHelpersTableTests.cs:23"
+  },
+  "ad.next.seconds": {
+   "typed": "{ad.next.seconds}",
+   "result": "720",
+   "source": "server/tests/NomNomzBot.Infrastructure.Tests/Platform/Templating/Helpers/Broadcast/AdScheduleHelpersTableTests.cs:25"
+  },
+  "ad.prerollFree": {
+   "typed": "{ad.prerollFree}",
+   "result": "20m",
+   "source": "server/tests/NomNomzBot.Infrastructure.Tests/Platform/Templating/Helpers/Broadcast/AdScheduleHelpersTableTests.cs:31"
+  },
+  "ad.snoozes.left": {
+   "typed": "{ad.snoozes.left}",
+   "result": "2",
+   "source": "server/tests/NomNomzBot.Infrastructure.Tests/Platform/Templating/Helpers/Broadcast/AdScheduleHelpersTableTests.cs:29"
+  },
+  "ad.snoozes.refreshIn": {
+   "typed": "{ad.snoozes.refreshIn}",
+   "result": "34m",
+   "source": "server/tests/NomNomzBot.Infrastructure.Tests/Platform/Templating/Helpers/Broadcast/AdScheduleHelpersTableTests.cs:30"
+  },
+  "args": {
+   "typed": "{args}",
+   "result": "@ViewerTwo hello big world",
+   "source": "server/tests/NomNomzBot.Infrastructure.Tests/Platform/Templating/Helpers/Arguments/ArgumentHelpersTableTests.cs:33"
+  },
+  "args.<a>-<b>": {
+   "typed": "{args.2-3}",
+   "result": "hello big",
+   "source": "server/tests/NomNomzBot.Infrastructure.Tests/Platform/Templating/Helpers/Arguments/ArgumentHelpersTableTests.cs:37"
+  },
+  "args.<n>": {
+   "typed": "{args.1}",
+   "result": "@ViewerTwo",
+   "source": "server/tests/NomNomzBot.Infrastructure.Tests/Platform/Templating/Helpers/Arguments/ArgumentHelpersTableTests.cs:34"
+  },
+  "args.<n>+": {
+   "typed": "{args.2+}",
+   "result": "hello big world",
+   "source": "server/tests/NomNomzBot.Infrastructure.Tests/Platform/Templating/Helpers/Arguments/ArgumentHelpersTableTests.cs:36"
+  },
+  "args.<n>.clean": {
+   "typed": "{args.1.clean}",
+   "result": "ViewerTwo",
+   "source": "server/tests/NomNomzBot.Infrastructure.Tests/Platform/Templating/Helpers/Arguments/ArgumentHelpersTableTests.cs:40"
+  },
+  "args.<n>.length": {
+   "typed": "{args.2.length}",
+   "result": "5",
+   "source": "server/tests/NomNomzBot.Infrastructure.Tests/Platform/Templating/Helpers/Arguments/ArgumentHelpersTableTests.cs:48"
+  },
+  "args.<n>.number": {
+   "typed": "{args.3.number:1}",
+   "result": "1",
+   "source": "server/tests/NomNomzBot.Infrastructure.Tests/Platform/Templating/Helpers/Arguments/ArgumentHelpersTableTests.cs:42"
+  },
+  "args.<n>.upper": {
+   "typed": "{args.2.upper}",
+   "result": "HELLO",
+   "source": "server/tests/NomNomzBot.Infrastructure.Tests/Platform/Templating/Helpers/Arguments/ArgumentHelpersTableTests.cs:47"
+  },
+  "args.<n>.urlEncoded": {
+   "typed": "{args.2.urlEncoded}",
+   "result": "hello",
+   "source": "server/tests/NomNomzBot.Infrastructure.Tests/Platform/Templating/Helpers/Arguments/ArgumentHelpersTableTests.cs:51"
+  },
+  "args.<n>:<default>": {
+   "typed": "{args.5:nobody}",
+   "result": "nobody",
+   "source": "server/tests/NomNomzBot.Infrastructure.Tests/Platform/Templating/Helpers/Arguments/ArgumentHelpersTableTests.cs:45"
+  },
+  "args.all.urlEncoded": {
+   "typed": "{args.all.urlEncoded}",
+   "result": "%40ViewerTwo%20hello%20big%20world",
+   "source": "server/tests/NomNomzBot.Infrastructure.Tests/Platform/Templating/Helpers/Arguments/ArgumentHelpersTableTests.cs:50"
+  },
+  "args.count": {
+   "typed": "{args.count}",
+   "result": "4",
+   "source": "server/tests/NomNomzBot.Infrastructure.Tests/Platform/Templating/Helpers/Arguments/ArgumentHelpersTableTests.cs:32"
+  },
+  "args.first": {
+   "typed": "{args.first}",
+   "result": "@ViewerTwo",
+   "source": "server/tests/NomNomzBot.Infrastructure.Tests/Platform/Templating/Helpers/Arguments/ArgumentHelpersTableTests.cs:39"
+  },
+  "args.last": {
+   "typed": "{args.last}",
+   "result": "world",
+   "source": "server/tests/NomNomzBot.Infrastructure.Tests/Platform/Templating/Helpers/Arguments/ArgumentHelpersTableTests.cs:38"
+  },
+  "args.mentions": {
+   "typed": "{args.mentions}",
+   "result": "@ViewerTwo",
+   "source": "server/tests/NomNomzBot.Infrastructure.Tests/Platform/Templating/Helpers/Arguments/ArgumentHelpersTableTests.cs:53"
+  },
+  "args.mentions.count": {
+   "typed": "{args.mentions.count}",
+   "result": "1",
+   "source": "server/tests/NomNomzBot.Infrastructure.Tests/Platform/Templating/Helpers/Arguments/ArgumentHelpersTableTests.cs:54"
+  },
+  "args.rest": {
+   "typed": "{args.rest}",
+   "result": "hello big world",
+   "source": "server/tests/NomNomzBot.Infrastructure.Tests/Platform/Templating/Helpers/Arguments/ArgumentHelpersTableTests.cs:35"
+  },
+  "bot.channel.loadedAgo": {
+   "typed": "{bot.channel.loadedAgo}",
+   "result": "2h 20m",
+   "source": "server/tests/NomNomzBot.Infrastructure.Tests/Platform/Templating/Helpers/Bot/BotHelpersTableTests.cs:32"
+  },
+  "bot.commands.count": {
+   "typed": "{bot.commands.count}",
+   "result": "5",
+   "source": "server/tests/NomNomzBot.Infrastructure.Tests/Platform/Templating/Helpers/Bot/BotHelpersTableTests.cs:39"
+  },
+  "bot.commands.list": {
+   "typed": "{bot.commands.list}",
+   "result": "!hug !lurk !so !uptime !sr",
+   "source": "server/tests/NomNomzBot.Infrastructure.Tests/Platform/Templating/Helpers/Bot/BotHelpersTableTests.cs:35"
+  },
+  "bot.commands.list.builtin": {
+   "typed": "{bot.commands.list.builtin}",
+   "result": "!so !uptime !sr",
+   "source": "server/tests/NomNomzBot.Infrastructure.Tests/Platform/Templating/Helpers/Bot/BotHelpersTableTests.cs:37"
+  },
+  "bot.commands.list.custom": {
+   "typed": "{bot.commands.list.custom}",
+   "result": "!hug !lurk",
+   "source": "server/tests/NomNomzBot.Infrastructure.Tests/Platform/Templating/Helpers/Bot/BotHelpersTableTests.cs:36"
+  },
+  "bot.commands.list.forUser": {
+   "typed": "{bot.commands.list.forUser}",
+   "result": "!hug !lurk !sr",
+   "source": "server/tests/NomNomzBot.Infrastructure.Tests/Platform/Templating/Helpers/Bot/BotHelpersTableTests.cs:38"
+  },
+  "bot.dashboard": {
+   "typed": "{bot.dashboard}",
+   "result": "https://nomnomz.bot/app/u/samplechannel",
+   "source": "server/tests/NomNomzBot.Infrastructure.Tests/Platform/Templating/Helpers/Bot/BotHelpersTableTests.cs:43"
+  },
+  "bot.language": {
+   "typed": "{bot.language}",
+   "result": "en",
+   "source": "server/tests/NomNomzBot.Infrastructure.Tests/Platform/Templating/Helpers/Bot/BotHelpersTableTests.cs:42"
+  },
+  "bot.lastRestart.relative": {
+   "typed": "{bot.lastRestart.relative}",
+   "result": "3 days ago",
+   "source": "server/tests/NomNomzBot.Infrastructure.Tests/Platform/Templating/Helpers/Bot/BotHelpersTableTests.cs:31"
+  },
+  "bot.license": {
+   "typed": "{bot.license}",
+   "result": "PolyForm-Noncommercial-1.0.0",
+   "source": "server/tests/NomNomzBot.Infrastructure.Tests/Platform/Templating/Helpers/Bot/BotHelpersTableTests.cs:45"
+  },
+  "bot.mention": {
+   "typed": "{bot.mention}",
+   "result": "@SampleBot",
+   "source": "server/tests/NomNomzBot.Infrastructure.Tests/Platform/Templating/Helpers/Bot/BotHelpersTableTests.cs:26"
+  },
+  "bot.name": {
+   "typed": "{bot.name}",
+   "result": "SampleBot",
+   "source": "server/tests/NomNomzBot.Infrastructure.Tests/Platform/Templating/Helpers/Bot/BotHelpersTableTests.cs:25"
+  },
+  "bot.personality": {
+   "typed": "{bot.personality}",
+   "result": "Informative",
+   "source": "server/tests/NomNomzBot.Infrastructure.Tests/Platform/Templating/Helpers/Bot/BotHelpersTableTests.cs:41"
+  },
+  "bot.prefix": {
+   "typed": "{bot.prefix}",
+   "result": "!",
+   "source": "server/tests/NomNomzBot.Infrastructure.Tests/Platform/Templating/Helpers/Bot/BotHelpersTableTests.cs:34"
+  },
+  "bot.sourceCode": {
+   "typed": "{bot.sourceCode}",
+   "result": "https://github.com/NoMercyLabs/nomnomzbot",
+   "source": "server/tests/NomNomzBot.Infrastructure.Tests/Platform/Templating/Helpers/Bot/BotHelpersTableTests.cs:44"
+  },
+  "bot.startedAt": {
+   "typed": "{bot.startedAt}",
+   "result": "2026-10-23 12:30",
+   "source": "server/tests/NomNomzBot.Infrastructure.Tests/Platform/Templating/Helpers/Bot/BotHelpersTableTests.cs:30"
+  },
+  "bot.timers.count": {
+   "typed": "{bot.timers.count}",
+   "result": "5",
+   "source": "server/tests/NomNomzBot.Infrastructure.Tests/Platform/Templating/Helpers/Bot/BotHelpersTableTests.cs:40"
+  },
+  "bot.uptime": {
+   "typed": "{bot.uptime}",
+   "result": "3d 4h",
+   "source": "server/tests/NomNomzBot.Infrastructure.Tests/Platform/Templating/Helpers/Bot/BotHelpersTableTests.cs:28"
+  },
+  "bot.uptime.long": {
+   "typed": "{bot.uptime.long}",
+   "result": "3 days, 4 hours",
+   "source": "server/tests/NomNomzBot.Infrastructure.Tests/Platform/Templating/Helpers/Bot/BotHelpersTableTests.cs:29"
+  },
+  "bot.version": {
+   "typed": "{bot.version}",
+   "result": "1.42.0",
+   "source": "server/tests/NomNomzBot.Infrastructure.Tests/Platform/Templating/Helpers/Bot/BotHelpersTableTests.cs:27"
+  },
+  "chance": {
+   "typed": "{chance:50|yes|no}",
+   "result": "yes",
+   "source": "server/tests/NomNomzBot.Infrastructure.Tests/Platform/Templating/Helpers/Logic/LogicHelpersSeededTests.cs:33"
+  },
+  "channel.age": {
+   "typed": "{channel.age}",
+   "result": "6 years, 2 months",
+   "source": "server/tests/NomNomzBot.Infrastructure.Tests/Platform/Templating/Helpers/Stream/StreamHelpersTableTests.cs:118"
+  },
+  "channel.ccls": {
+   "typed": "{channel.ccls}",
+   "result": "MatureGame",
+   "source": "server/tests/NomNomzBot.Infrastructure.Tests/Platform/Templating/Helpers/Stream/StreamHelpersTableTests.cs:159"
+  },
+  "channel.editors.count": {
+   "typed": "{channel.editors.count}",
+   "result": "2",
+   "source": "server/tests/NomNomzBot.Infrastructure.Tests/Platform/Templating/Helpers/Stream/StreamHelpersTableTests.cs:109"
+  },
+  "channel.followers": {
+   "typed": "{channel.followers}",
+   "result": "1,234",
+   "source": "server/tests/NomNomzBot.Infrastructure.Tests/Platform/Templating/Helpers/Stream/StreamHelpersTableTests.cs:96"
+  },
+  "channel.followers.compact": {
+   "typed": "{channel.followers.compact}",
+   "result": "1.2k",
+   "source": "server/tests/NomNomzBot.Infrastructure.Tests/Platform/Templating/Helpers/Stream/StreamHelpersTableTests.cs:97"
+  },
+  "channel.isBranded": {
+   "typed": "{channel.isBranded}",
+   "result": "false",
+   "source": "server/tests/NomNomzBot.Infrastructure.Tests/Platform/Templating/Helpers/Stream/StreamHelpersTableTests.cs:106"
+  },
+  "channel.language": {
+   "typed": "{channel.language}",
+   "result": "en",
+   "source": "server/tests/NomNomzBot.Infrastructure.Tests/Platform/Templating/Helpers/Stream/StreamHelpersTableTests.cs:99"
+  },
+  "channel.localTime": {
+   "typed": "{channel.localTime}",
+   "result": "15:30",
+   "source": "server/tests/NomNomzBot.Infrastructure.Tests/Platform/Templating/Helpers/Stream/StreamHelpersTableTests.cs:101"
+  },
+  "channel.mention": {
+   "typed": "{channel.mention}",
+   "result": "@SampleChannel",
+   "source": "server/tests/NomNomzBot.Infrastructure.Tests/Platform/Templating/Helpers/Stream/StreamHelpersTableTests.cs:95"
+  },
+  "channel.mods.count": {
+   "typed": "{channel.mods.count}",
+   "result": "6",
+   "source": "server/tests/NomNomzBot.Infrastructure.Tests/Platform/Templating/Helpers/Stream/StreamHelpersTableTests.cs:110"
+  },
+  "channel.personality": {
+   "typed": "{channel.personality}",
+   "result": "Informative",
+   "source": "server/tests/NomNomzBot.Infrastructure.Tests/Platform/Templating/Helpers/Stream/StreamHelpersTableTests.cs:102"
+  },
+  "channel.prefix": {
+   "typed": "{channel.prefix}",
+   "result": "!",
+   "source": "server/tests/NomNomzBot.Infrastructure.Tests/Platform/Templating/Helpers/Stream/StreamHelpersTableTests.cs:103"
+  },
+  "channel.raids.inCount": {
+   "typed": "{channel.raids.inCount:otherstreamer}",
+   "result": "5",
+   "source": "server/tests/NomNomzBot.Infrastructure.Tests/Platform/Templating/Helpers/Stream/StreamHelpersTableTests.cs:115"
+  },
+  "channel.raids.lastIn.at": {
+   "typed": "{channel.raids.lastIn.at}",
+   "result": "2026-10-24",
+   "source": "server/tests/NomNomzBot.Infrastructure.Tests/Platform/Templating/Helpers/Stream/StreamHelpersTableTests.cs:117"
+  },
+  "channel.raids.lastOut": {
+   "typed": "{channel.raids.lastOut}",
+   "result": "OtherStreamer",
+   "source": "server/tests/NomNomzBot.Infrastructure.Tests/Platform/Templating/Helpers/Stream/StreamHelpersTableTests.cs:116"
+  },
+  "channel.raids.outCount": {
+   "typed": "{channel.raids.outCount:otherstreamer}",
+   "result": "3",
+   "source": "server/tests/NomNomzBot.Infrastructure.Tests/Platform/Templating/Helpers/Stream/StreamHelpersTableTests.cs:114"
+  },
+  "channel.subs": {
+   "typed": "{channel.subs}",
+   "result": "80",
+   "source": "server/tests/NomNomzBot.Infrastructure.Tests/Platform/Templating/Helpers/Stream/StreamHelpersTableTests.cs:98"
+  },
+  "channel.tags": {
+   "typed": "{channel.tags}",
+   "result": "English, Coding",
+   "source": "server/tests/NomNomzBot.Infrastructure.Tests/Platform/Templating/Helpers/Stream/StreamHelpersTableTests.cs:104"
+  },
+  "channel.team": {
+   "typed": "{channel.team}",
+   "result": "SampleTeam",
+   "source": "server/tests/NomNomzBot.Infrastructure.Tests/Platform/Templating/Helpers/Stream/StreamHelpersTableTests.cs:108"
+  },
+  "channel.timezone": {
+   "typed": "{channel.timezone}",
+   "result": "Europe/Amsterdam",
+   "source": "server/tests/NomNomzBot.Infrastructure.Tests/Platform/Templating/Helpers/Stream/StreamHelpersTableTests.cs:100"
+  },
+  "channel.vips.count": {
+   "typed": "{channel.vips.count}",
+   "result": "4",
+   "source": "server/tests/NomNomzBot.Infrastructure.Tests/Platform/Templating/Helpers/Stream/StreamHelpersTableTests.cs:111"
+  },
+  "channel.vod.latest": {
+   "typed": "{channel.vod.latest}",
+   "result": "https://www.twitch.tv/videos/123",
+   "source": "server/tests/NomNomzBot.Infrastructure.Tests/Platform/Templating/Helpers/Stream/StreamHelpersTableTests.cs:112"
+  },
+  "channel.vod.latest.title": {
+   "typed": "{channel.vod.latest.title}",
+   "result": "Chill Saturday",
+   "source": "server/tests/NomNomzBot.Infrastructure.Tests/Platform/Templating/Helpers/Stream/StreamHelpersTableTests.cs:113"
+  },
+  "charity.bar": {
+   "typed": "{charity.bar}",
+   "result": "████░░░░░░ 42%",
+   "source": "server/tests/NomNomzBot.Infrastructure.Tests/Platform/Templating/Helpers/LiveEvents/CharityHelpersTests.cs:28"
+  },
+  "charity.donations.count": {
+   "typed": "{charity.donations.count}",
+   "result": "17",
+   "source": "server/tests/NomNomzBot.Infrastructure.Tests/Platform/Templating/Helpers/LiveEvents/CharityHelpersTests.cs:30"
+  },
+  "charity.donations.latest": {
+   "typed": "{charity.donations.latest}",
+   "result": "ViewerOne (€10.00)",
+   "source": "server/tests/NomNomzBot.Infrastructure.Tests/Platform/Templating/Helpers/LiveEvents/CharityHelpersTests.cs:31"
+  },
+  "charity.link": {
+   "typed": "{charity.link}",
+   "result": "https://www.samplecharity.org",
+   "source": "server/tests/NomNomzBot.Infrastructure.Tests/Platform/Templating/Helpers/LiveEvents/CharityHelpersTests.cs:29"
+  },
+  "charity.name": {
+   "typed": "{charity.name}",
+   "result": "Sample Charity",
+   "source": "server/tests/NomNomzBot.Infrastructure.Tests/Platform/Templating/Helpers/LiveEvents/CharityHelpersTests.cs:24"
+  },
+  "charity.percent": {
+   "typed": "{charity.percent}",
+   "result": "42%",
+   "source": "server/tests/NomNomzBot.Infrastructure.Tests/Platform/Templating/Helpers/LiveEvents/CharityHelpersTests.cs:27"
+  },
+  "charity.raised": {
+   "typed": "{charity.raised}",
+   "result": "€420.00",
+   "source": "server/tests/NomNomzBot.Infrastructure.Tests/Platform/Templating/Helpers/LiveEvents/CharityHelpersTests.cs:25"
+  },
+  "charity.target": {
+   "typed": "{charity.target}",
+   "result": "€1,000.00",
+   "source": "server/tests/NomNomzBot.Infrastructure.Tests/Platform/Templating/Helpers/LiveEvents/CharityHelpersTests.cs:26"
+  },
+  "chat.fit": {
+   "typed": "{chat.fit:short text}",
+   "result": "short text",
+   "source": "server/tests/NomNomzBot.Infrastructure.Tests/Platform/Templating/Helpers/Chat/ChatHelpersTableTests.cs:23"
+  },
+  "chat.fit.words": {
+   "typed": "{chat.fit.words:short text}",
+   "result": "short text",
+   "source": "server/tests/NomNomzBot.Infrastructure.Tests/Platform/Templating/Helpers/Chat/ChatHelpersTableTests.cs:25"
+  },
+  "chat.isShared": {
+   "typed": "{chat.isShared}",
+   "result": "false",
+   "source": "server/tests/NomNomzBot.Infrastructure.Tests/Platform/Templating/Helpers/Chat/ChatHelpersTableTests.cs:40"
+  },
+  "chat.limit": {
+   "typed": "{chat.limit}",
+   "result": "500",
+   "source": "server/tests/NomNomzBot.Infrastructure.Tests/Platform/Templating/Helpers/Chat/ChatHelpersTableTests.cs:22"
+  },
+  "chat.me": {
+   "typed": "{chat.me:dances}",
+   "result": "/me dances",
+   "source": "server/tests/NomNomzBot.Infrastructure.Tests/Platform/Templating/Helpers/Chat/ChatHelpersTableTests.cs:33"
+  },
+  "chat.mention": {
+   "typed": "{chat.mention:ViewerTwo}",
+   "result": "@ViewerTwo",
+   "source": "server/tests/NomNomzBot.Infrastructure.Tests/Platform/Templating/Helpers/Chat/ChatHelpersTableTests.cs:27"
+  },
+  "chat.mention.off": {
+   "typed": "{chat.mention.off:ViewerTwo}",
+   "result": "ViewerTwo",
+   "source": "server/tests/NomNomzBot.Infrastructure.Tests/Platform/Templating/Helpers/Chat/ChatHelpersTableTests.cs:29"
+  },
+  "chat.mention.soft": {
+   "typed": "{chat.mention.soft:ViewerTwo}",
+   "result": "V​iewerTwo",
+   "source": "server/tests/NomNomzBot.Infrastructure.Tests/Platform/Templating/Helpers/Chat/ChatHelpersTableTests.cs:31"
+  },
+  "chat.mention.user": {
+   "typed": "{chat.mention.user}",
+   "result": "@ViewerOne",
+   "source": "server/tests/NomNomzBot.Infrastructure.Tests/Platform/Templating/Helpers/Chat/ChatHelpersTableTests.cs:32"
+  },
+  "chat.message": {
+   "typed": "{chat.message}",
+   "result": "hello big world",
+   "source": "server/tests/NomNomzBot.Infrastructure.Tests/Platform/Templating/Helpers/Chat/ChatHelpersTableTests.cs:35"
+  },
+  "chat.message.bits": {
+   "typed": "{chat.message.bits}",
+   "result": "0",
+   "source": "server/tests/NomNomzBot.Infrastructure.Tests/Platform/Templating/Helpers/Chat/ChatHelpersTableTests.cs:38"
+  },
+  "chat.message.length": {
+   "typed": "{chat.message.length}",
+   "result": "15",
+   "source": "server/tests/NomNomzBot.Infrastructure.Tests/Platform/Templating/Helpers/Chat/ChatHelpersTableTests.cs:36"
+  },
+  "chat.message.noCommand": {
+   "typed": "{chat.message.noCommand}",
+   "result": "hello big world",
+   "source": "server/tests/NomNomzBot.Infrastructure.Tests/Platform/Templating/Helpers/Chat/ChatHelpersTableTests.cs:37"
+  },
+  "chat.pinned": {
+   "typed": "{chat.pinned}",
+   "result": "Welcome to the stream",
+   "source": "server/tests/NomNomzBot.Infrastructure.Tests/Platform/Templating/Helpers/Chat/ChatHelpersTableTests.cs:49"
+  },
+  "chat.settings.followersOnly": {
+   "typed": "{chat.settings.followersOnly}",
+   "result": "10m",
+   "source": "server/tests/NomNomzBot.Infrastructure.Tests/Platform/Templating/Helpers/Chat/ChatHelpersTableTests.cs:45"
+  },
+  "chat.settings.slow": {
+   "typed": "{chat.settings.slow}",
+   "result": "3s",
+   "source": "server/tests/NomNomzBot.Infrastructure.Tests/Platform/Templating/Helpers/Chat/ChatHelpersTableTests.cs:44"
+  },
+  "chat.settings.subOnly": {
+   "typed": "{chat.settings.subOnly}",
+   "result": "false",
+   "source": "server/tests/NomNomzBot.Infrastructure.Tests/Platform/Templating/Helpers/Chat/ChatHelpersTableTests.cs:46"
+  },
+  "date": {
+   "typed": "{date:now|format:yyyy-MM-dd HH:mm}",
+   "result": "2026-10-26 15:30",
+   "source": "server/tests/NomNomzBot.Infrastructure.Tests/Platform/Templating/TemplateResolverDateExpressionTests.cs:87"
+  },
+  "date:<source>|diff:<date>[:<unit>]": {
+   "typed": "{date:2026-03-29T00:00|diff:2026-03-30T00:00:hours}",
+   "result": "23 hours",
+   "source": "server/tests/NomNomzBot.Infrastructure.Tests/Platform/Templating/TemplateResolverDateExpressionTests.cs:158"
+  },
+  "date:<source>|end:<unit>": {
+   "typed": "{date:now|end:day|format:yyyy-MM-dd HH:mm:ss}",
+   "result": "2026-10-26 23:59:59",
+   "source": "server/tests/NomNomzBot.Infrastructure.Tests/Platform/Templating/TemplateResolverDateExpressionTests.cs:169"
+  },
+  "date:<source>|format:<pattern>": {
+   "typed": "{date:now|format:yyyy-MM-dd HH:mm}",
+   "result": "2026-10-26 15:30",
+   "source": "server/tests/NomNomzBot.Infrastructure.Tests/Platform/Templating/TemplateResolverDateExpressionTests.cs:87"
+  },
+  "date:<source>|lang:<language>": {
+   "typed": "{date:now|lang:en|format:MMMM}",
+   "result": "October",
+   "source": "server/tests/NomNomzBot.Infrastructure.Tests/Platform/Templating/TemplateResolverDateExpressionTests.cs:250"
+  },
+  "date:<source>|next:<weekday>": {
+   "typed": "{date:now|next:friday|format:yyyy-MM-dd HH:mm}",
+   "result": "2026-10-30 15:30",
+   "source": "server/tests/NomNomzBot.Infrastructure.Tests/Platform/Templating/TemplateResolverDateExpressionTests.cs:182"
+  },
+  "date:<source>|ordinal": {
+   "typed": "{date:now|ordinal}",
+   "result": "26th",
+   "source": "server/tests/NomNomzBot.Infrastructure.Tests/Platform/Templating/TemplateResolverDateExpressionTests.cs:228"
+  },
+  "date:<source>|prev:<weekday>": {
+   "typed": "{date:now|prev:monday|format:yyyy-MM-dd}",
+   "result": "2026-10-19",
+   "source": "server/tests/NomNomzBot.Infrastructure.Tests/Platform/Templating/TemplateResolverDateExpressionTests.cs:184"
+  },
+  "date:<source>|relative": {
+   "typed": "{date:now|-3d|relative}",
+   "result": "3 days ago",
+   "source": "server/tests/NomNomzBot.Infrastructure.Tests/Platform/Templating/TemplateResolverDateExpressionTests.cs:226"
+  },
+  "date:<source>|since[:<unit>]": {
+   "typed": "{date:now|-90m|since:minutes}",
+   "result": "90 minutes",
+   "source": "server/tests/NomNomzBot.Infrastructure.Tests/Platform/Templating/TemplateResolverDateExpressionTests.cs:216"
+  },
+  "date:<source>|start:<unit>": {
+   "typed": "{date:now|start:day|format:yyyy-MM-dd HH:mm:ss}",
+   "result": "2026-10-26 00:00:00",
+   "source": "server/tests/NomNomzBot.Infrastructure.Tests/Platform/Templating/TemplateResolverDateExpressionTests.cs:168"
+  },
+  "date:<source>|tz:<zone>": {
+   "typed": "{date:now|tz:America/New_York|format:HH:mm}",
+   "result": "10:30",
+   "source": "server/tests/NomNomzBot.Infrastructure.Tests/Platform/Templating/TemplateResolverDateExpressionTests.cs:232"
+  },
+  "date:<source>|until[:<unit>]": {
+   "typed": "{date:2026-12-25|until:days}",
+   "result": "59 days",
+   "source": "server/tests/NomNomzBot.Infrastructure.Tests/Platform/Templating/TemplateResolverDateExpressionTests.cs:210"
+  },
+  "emote": {
+   "typed": "{emote:catJAM}",
+   "result": "catJAM",
+   "source": "server/tests/NomNomzBot.Infrastructure.Tests/Platform/Templating/Helpers/Emotes/EmoteHelpersTableTests.cs:22"
+  },
+  "emote.channel.top": {
+   "typed": "{emote.channel.top}",
+   "result": "KEKW",
+   "source": "server/tests/NomNomzBot.Infrastructure.Tests/Platform/Templating/Helpers/Emotes/EmoteHelpersTableTests.cs:51"
+  },
+  "emote.channel.top.stream": {
+   "typed": "{emote.channel.top.stream}",
+   "result": "catJAM",
+   "source": "server/tests/NomNomzBot.Infrastructure.Tests/Platform/Templating/Helpers/Emotes/EmoteHelpersTableTests.cs:52"
+  },
+  "emote.cheermote": {
+   "typed": "{emote.cheermote:100}",
+   "result": "Cheer100",
+   "source": "server/tests/NomNomzBot.Infrastructure.Tests/Platform/Templating/Helpers/Emotes/EmoteHelpersTableTests.cs:61"
+  },
+  "emote.count.7tv": {
+   "typed": "{emote.count.7tv}",
+   "result": "3",
+   "source": "server/tests/NomNomzBot.Infrastructure.Tests/Platform/Templating/Helpers/Emotes/EmoteHelpersTableTests.cs:47"
+  },
+  "emote.count.bttv": {
+   "typed": "{emote.count.bttv}",
+   "result": "2",
+   "source": "server/tests/NomNomzBot.Infrastructure.Tests/Platform/Templating/Helpers/Emotes/EmoteHelpersTableTests.cs:48"
+  },
+  "emote.count.channel": {
+   "typed": "{emote.count.channel}",
+   "result": "4",
+   "source": "server/tests/NomNomzBot.Infrastructure.Tests/Platform/Templating/Helpers/Emotes/EmoteHelpersTableTests.cs:46"
+  },
+  "emote.count.ffz": {
+   "typed": "{emote.count.ffz}",
+   "result": "1",
+   "source": "server/tests/NomNomzBot.Infrastructure.Tests/Platform/Templating/Helpers/Emotes/EmoteHelpersTableTests.cs:49"
+  },
+  "emote.image": {
+   "typed": "{emote.image:catJAM}",
+   "result": "https://cdn.7tv.app/catJAM/2x.webp",
+   "source": "server/tests/NomNomzBot.Infrastructure.Tests/Platform/Templating/Helpers/Emotes/EmoteHelpersTableTests.cs:31"
+  },
+  "emote.list.7tv": {
+   "typed": "{emote.list.7tv}",
+   "result": "catJAM KEKW PepeLaugh",
+   "source": "server/tests/NomNomzBot.Infrastructure.Tests/Platform/Templating/Helpers/Emotes/EmoteHelpersTableTests.cs:43"
+  },
+  "emote.list.bttv": {
+   "typed": "{emote.list.bttv}",
+   "result": "peepoHappy widepeepo",
+   "source": "server/tests/NomNomzBot.Infrastructure.Tests/Platform/Templating/Helpers/Emotes/EmoteHelpersTableTests.cs:44"
+  },
+  "emote.list.channel": {
+   "typed": "{emote.list.channel}",
+   "result": "sampleHype sampleLove sampleWave sampleBits",
+   "source": "server/tests/NomNomzBot.Infrastructure.Tests/Platform/Templating/Helpers/Emotes/EmoteHelpersTableTests.cs:42"
+  },
+  "emote.list.ffz": {
+   "typed": "{emote.list.ffz}",
+   "result": "monkaS",
+   "source": "server/tests/NomNomzBot.Infrastructure.Tests/Platform/Templating/Helpers/Emotes/EmoteHelpersTableTests.cs:45"
+  },
+  "emote.message.count": {
+   "typed": "{emote.message.count}",
+   "result": "3",
+   "source": "server/tests/NomNomzBot.Infrastructure.Tests/Platform/Templating/Helpers/Emotes/EmoteHelpersTableTests.cs:56"
+  },
+  "emote.message.first": {
+   "typed": "{emote.message.first}",
+   "result": "KEKW",
+   "source": "server/tests/NomNomzBot.Infrastructure.Tests/Platform/Templating/Helpers/Emotes/EmoteHelpersTableTests.cs:57"
+  },
+  "emote.provider": {
+   "typed": "{emote.provider:catJAM}",
+   "result": "7TV",
+   "source": "server/tests/NomNomzBot.Infrastructure.Tests/Platform/Templating/Helpers/Emotes/EmoteHelpersTableTests.cs:36"
+  },
+  "emote.repeat": {
+   "typed": "{emote.repeat:catJAM|3}",
+   "result": "catJAM catJAM catJAM",
+   "source": "server/tests/NomNomzBot.Infrastructure.Tests/Platform/Templating/Helpers/Emotes/EmoteHelpersTableTests.cs:27"
+  },
+  "emote.user.favorite": {
+   "typed": "{emote.user.favorite}",
+   "result": "catJAM",
+   "source": "server/tests/NomNomzBot.Infrastructure.Tests/Platform/Templating/Helpers/Emotes/EmoteHelpersTableTests.cs:59"
+  },
+  "emote.user.top": {
+   "typed": "{emote.user.top}",
+   "result": "KEKW",
+   "source": "server/tests/NomNomzBot.Infrastructure.Tests/Platform/Templating/Helpers/Emotes/EmoteHelpersTableTests.cs:53"
+  },
+  "emote.user.top.count": {
+   "typed": "{emote.user.top.count}",
+   "result": "4",
+   "source": "server/tests/NomNomzBot.Infrastructure.Tests/Platform/Templating/Helpers/Emotes/EmoteHelpersTableTests.cs:54"
+  },
+  "emote.wall": {
+   "typed": "{emote.wall:catJAM|2|2}",
+   "result": "catJAM catJAM / catJAM catJAM",
+   "source": "server/tests/NomNomzBot.Infrastructure.Tests/Platform/Templating/Helpers/Emotes/EmoteHelpersTableTests.cs:29"
+  },
+  "fun.card": {
+   "typed": "{fun.card}",
+   "result": "K♠",
+   "source": "server/tests/NomNomzBot.Infrastructure.Tests/Platform/Templating/Helpers/Fun/FunHelpersTableTests.cs:45"
+  },
+  "fun.coin": {
+   "typed": "{fun.coin}",
+   "result": "heads",
+   "source": "server/tests/NomNomzBot.Infrastructure.Tests/Platform/Templating/Helpers/Fun/FunHelpersTableTests.cs:35"
+  },
+  "fun.coin.emoji": {
+   "typed": "{fun.coin.emoji}",
+   "result": "🪙 heads",
+   "source": "server/tests/NomNomzBot.Infrastructure.Tests/Platform/Templating/Helpers/Fun/FunHelpersTableTests.cs:36"
+  },
+  "fun.countdown": {
+   "typed": "{fun.countdown:3}",
+   "result": "3… 2… 1…",
+   "source": "server/tests/NomNomzBot.Infrastructure.Tests/Platform/Templating/Helpers/Fun/FunHelpersTableTests.cs:31"
+  },
+  "fun.dice": {
+   "typed": "{fun.dice}",
+   "result": "2",
+   "source": "server/tests/NomNomzBot.Infrastructure.Tests/Platform/Templating/Helpers/Fun/FunHelpersTableTests.cs:37"
+  },
+  "fun.dice.detail": {
+   "typed": "{fun.dice.detail:2d6}",
+   "result": "2 + 1 = 3",
+   "source": "server/tests/NomNomzBot.Infrastructure.Tests/Platform/Templating/Helpers/Fun/FunHelpersTableTests.cs:40"
+  },
+  "fun.dice.emoji": {
+   "typed": "{fun.dice.emoji}",
+   "result": "⚁",
+   "source": "server/tests/NomNomzBot.Infrastructure.Tests/Platform/Templating/Helpers/Fun/FunHelpersTableTests.cs:41"
+  },
+  "fun.flip": {
+   "typed": "{fun.flip:table}",
+   "result": "(╯°□°)╯︵ ǝlqɐʇ",
+   "source": "server/tests/NomNomzBot.Infrastructure.Tests/Platform/Templating/Helpers/Fun/FunHelpersTableTests.cs:30"
+  },
+  "fun.lenny": {
+   "typed": "{fun.lenny}",
+   "result": "( ͡° ͜ʖ ͡°)",
+   "source": "server/tests/NomNomzBot.Infrastructure.Tests/Platform/Templating/Helpers/Fun/FunHelpersTableTests.cs:29"
+  },
+  "fun.love": {
+   "typed": "{fun.love:solo}",
+   "result": "{fun.love:solo}",
+   "source": "server/tests/NomNomzBot.Infrastructure.Tests/Platform/Templating/Helpers/Fun/FunHelpersTableTests.cs:69"
+  },
+  "fun.meter": {
+   "typed": "{fun.meter:60}",
+   "result": "██████░░░░ 60%",
+   "source": "server/tests/NomNomzBot.Infrastructure.Tests/Platform/Templating/Helpers/Fun/FunHelpersTableTests.cs:33"
+  },
+  "fun.percent": {
+   "typed": "{fun.percent:luck}",
+   "result": "8%",
+   "source": "server/tests/NomNomzBot.Infrastructure.Tests/Platform/Templating/Helpers/Fun/FunHelpersTableTests.cs:55"
+  },
+  "fun.random.animal": {
+   "typed": "{fun.random.animal}",
+   "result": "🐶 dog",
+   "source": "server/tests/NomNomzBot.Infrastructure.Tests/Platform/Templating/Helpers/Fun/FunHelpersTableTests.cs:49"
+  },
+  "fun.random.color.name": {
+   "typed": "{fun.random.color.name}",
+   "result": "blue",
+   "source": "server/tests/NomNomzBot.Infrastructure.Tests/Platform/Templating/Helpers/Fun/FunHelpersTableTests.cs:51"
+  },
+  "fun.random.emoji": {
+   "typed": "{fun.random.emoji}",
+   "result": "🔥",
+   "source": "server/tests/NomNomzBot.Infrastructure.Tests/Platform/Templating/Helpers/Fun/FunHelpersTableTests.cs:48"
+  },
+  "fun.random.food": {
+   "typed": "{fun.random.food}",
+   "result": "🌮 taco",
+   "source": "server/tests/NomNomzBot.Infrastructure.Tests/Platform/Templating/Helpers/Fun/FunHelpersTableTests.cs:50"
+  },
+  "fun.rate": {
+   "typed": "{fun.rate:pizza}",
+   "result": "8/10",
+   "source": "server/tests/NomNomzBot.Infrastructure.Tests/Platform/Templating/Helpers/Fun/FunHelpersTableTests.cs:54"
+  },
+  "fun.roulette": {
+   "typed": "{fun.roulette}",
+   "result": "click",
+   "source": "server/tests/NomNomzBot.Infrastructure.Tests/Platform/Templating/Helpers/Fun/FunHelpersTableTests.cs:47"
+  },
+  "fun.rps": {
+   "typed": "{fun.rps}",
+   "result": "🪨 rock",
+   "source": "server/tests/NomNomzBot.Infrastructure.Tests/Platform/Templating/Helpers/Fun/FunHelpersTableTests.cs:43"
+  },
+  "fun.rps.vs": {
+   "typed": "{fun.rps.vs:rock}",
+   "result": "rock — a draw",
+   "source": "server/tests/NomNomzBot.Infrastructure.Tests/Platform/Templating/Helpers/Fun/FunHelpersTableTests.cs:44"
+  },
+  "fun.ship": {
+   "typed": "{fun.ship:a|}",
+   "result": "{fun.ship:a|}",
+   "source": "server/tests/NomNomzBot.Infrastructure.Tests/Platform/Templating/Helpers/Fun/FunHelpersTableTests.cs:70"
+  },
+  "fun.slots": {
+   "typed": "{fun.slots}",
+   "result": "🍋 🍒 🔔",
+   "source": "server/tests/NomNomzBot.Infrastructure.Tests/Platform/Templating/Helpers/Fun/FunHelpersTableTests.cs:46"
+  },
+  "fun.unflip": {
+   "typed": "{fun.unflip}",
+   "result": "┬─┬ノ( º _ ºノ)",
+   "source": "server/tests/NomNomzBot.Infrastructure.Tests/Platform/Templating/Helpers/Fun/FunHelpersTableTests.cs:27"
+  },
+  "goal.followers.bar": {
+   "typed": "{goal.followers.bar}",
+   "result": "████████░░ 82%",
+   "source": "server/tests/NomNomzBot.Infrastructure.Tests/Platform/Templating/Helpers/LiveEvents/GoalHelpersTests.cs:28"
+  },
+  "goal.followers.current": {
+   "typed": "{goal.followers.current}",
+   "result": "1,234",
+   "source": "server/tests/NomNomzBot.Infrastructure.Tests/Platform/Templating/Helpers/LiveEvents/GoalHelpersTests.cs:24"
+  },
+  "goal.followers.description": {
+   "typed": "{goal.followers.description}",
+   "result": "Road to 1.5k",
+   "source": "server/tests/NomNomzBot.Infrastructure.Tests/Platform/Templating/Helpers/LiveEvents/GoalHelpersTests.cs:29"
+  },
+  "goal.followers.percent": {
+   "typed": "{goal.followers.percent}",
+   "result": "82%",
+   "source": "server/tests/NomNomzBot.Infrastructure.Tests/Platform/Templating/Helpers/LiveEvents/GoalHelpersTests.cs:26"
+  },
+  "goal.followers.remaining": {
+   "typed": "{goal.followers.remaining}",
+   "result": "266",
+   "source": "server/tests/NomNomzBot.Infrastructure.Tests/Platform/Templating/Helpers/LiveEvents/GoalHelpersTests.cs:27"
+  },
+  "goal.followers.target": {
+   "typed": "{goal.followers.target}",
+   "result": "1,500",
+   "source": "server/tests/NomNomzBot.Infrastructure.Tests/Platform/Templating/Helpers/LiveEvents/GoalHelpersTests.cs:25"
+  },
+  "goal.list": {
+   "typed": "{goal.list}",
+   "result": "followers 82%, subs 80%",
+   "source": "server/tests/NomNomzBot.Infrastructure.Tests/Platform/Templating/Helpers/LiveEvents/GoalHelpersTests.cs:35"
+  },
+  "goal.newSubs.current": {
+   "typed": "{goal.newSubs.current}",
+   "result": "6",
+   "source": "server/tests/NomNomzBot.Infrastructure.Tests/Platform/Templating/Helpers/LiveEvents/GoalHelpersTests.cs:41"
+  },
+  "goal.newSubs.percent": {
+   "typed": "{goal.newSubs.percent}",
+   "result": "30%",
+   "source": "server/tests/NomNomzBot.Infrastructure.Tests/Platform/Templating/Helpers/LiveEvents/GoalHelpersTests.cs:42"
+  },
+  "goal.subs.bar": {
+   "typed": "{goal.subs.bar}",
+   "result": "████████░░ 80%",
+   "source": "server/tests/NomNomzBot.Infrastructure.Tests/Platform/Templating/Helpers/LiveEvents/GoalHelpersTests.cs:34"
+  },
+  "goal.subs.current": {
+   "typed": "{goal.subs.current}",
+   "result": "80",
+   "source": "server/tests/NomNomzBot.Infrastructure.Tests/Platform/Templating/Helpers/LiveEvents/GoalHelpersTests.cs:30"
+  },
+  "goal.subs.percent": {
+   "typed": "{goal.subs.percent}",
+   "result": "80%",
+   "source": "server/tests/NomNomzBot.Infrastructure.Tests/Platform/Templating/Helpers/LiveEvents/GoalHelpersTests.cs:32"
+  },
+  "goal.subs.remaining": {
+   "typed": "{goal.subs.remaining}",
+   "result": "20",
+   "source": "server/tests/NomNomzBot.Infrastructure.Tests/Platform/Templating/Helpers/LiveEvents/GoalHelpersTests.cs:33"
+  },
+  "goal.subs.target": {
+   "typed": "{goal.subs.target}",
+   "result": "100",
+   "source": "server/tests/NomNomzBot.Infrastructure.Tests/Platform/Templating/Helpers/LiveEvents/GoalHelpersTests.cs:31"
+  },
+  "hypetrain.bar": {
+   "typed": "{hypetrain.bar}",
+   "result": "██████░░░░ 60%",
+   "source": "server/tests/NomNomzBot.Infrastructure.Tests/Platform/Templating/Helpers/LiveEvents/HypeTrainHelpersTests.cs:29"
+  },
+  "hypetrain.goal": {
+   "typed": "{hypetrain.goal}",
+   "result": "3,000",
+   "source": "server/tests/NomNomzBot.Infrastructure.Tests/Platform/Templating/Helpers/LiveEvents/HypeTrainHelpersTests.cs:27"
+  },
+  "hypetrain.level": {
+   "typed": "{hypetrain.level}",
+   "result": "3",
+   "source": "server/tests/NomNomzBot.Infrastructure.Tests/Platform/Templating/Helpers/LiveEvents/HypeTrainHelpersTests.cs:25"
+  },
+  "hypetrain.percent": {
+   "typed": "{hypetrain.percent}",
+   "result": "60%",
+   "source": "server/tests/NomNomzBot.Infrastructure.Tests/Platform/Templating/Helpers/LiveEvents/HypeTrainHelpersTests.cs:28"
+  },
+  "hypetrain.progress": {
+   "typed": "{hypetrain.progress}",
+   "result": "1,800",
+   "source": "server/tests/NomNomzBot.Infrastructure.Tests/Platform/Templating/Helpers/LiveEvents/HypeTrainHelpersTests.cs:26"
+  },
+  "hypetrain.record.level": {
+   "typed": "{hypetrain.record.level}",
+   "result": "5",
+   "source": "server/tests/NomNomzBot.Infrastructure.Tests/Platform/Templating/Helpers/LiveEvents/HypeTrainHelpersTests.cs:34"
+  },
+  "hypetrain.remaining": {
+   "typed": "{hypetrain.remaining}",
+   "result": "1,200",
+   "source": "server/tests/NomNomzBot.Infrastructure.Tests/Platform/Templating/Helpers/LiveEvents/HypeTrainHelpersTests.cs:30"
+  },
+  "hypetrain.timeLeft": {
+   "typed": "{hypetrain.timeLeft}",
+   "result": "4m 10s",
+   "source": "server/tests/NomNomzBot.Infrastructure.Tests/Platform/Templating/Helpers/LiveEvents/HypeTrainHelpersTests.cs:31"
+  },
+  "hypetrain.topContributor": {
+   "typed": "{hypetrain.topContributor}",
+   "result": "ViewerOne",
+   "source": "server/tests/NomNomzBot.Infrastructure.Tests/Platform/Templating/Helpers/LiveEvents/HypeTrainHelpersTests.cs:33"
+  },
+  "hypetrain.total": {
+   "typed": "{hypetrain.total}",
+   "result": "5,400",
+   "source": "server/tests/NomNomzBot.Infrastructure.Tests/Platform/Templating/Helpers/LiveEvents/HypeTrainHelpersTests.cs:32"
+  },
+  "include.builtin": {
+   "typed": "{include.builtin:uptime}",
+   "result": "The stream has been live for 2h 5m.",
+   "source": "server/tests/NomNomzBot.Infrastructure.Tests/Platform/Templating/Helpers/Composing/ComposingHelpersTableTests.cs:81"
+  },
+  "include.cmd": {
+   "typed": "{include.cmd:hug}",
+   "result": "ViewerOne sends a hug",
+   "source": "server/tests/NomNomzBot.Infrastructure.Tests/Platform/Templating/Helpers/Composing/ComposingHelpersTableTests.cs:66"
+  },
+  "include.list": {
+   "typed": "{include.list:snacks|2}",
+   "result": "cookies",
+   "source": "server/tests/NomNomzBot.Infrastructure.Tests/Platform/Templating/Helpers/Composing/ComposingHelpersTableTests.cs:93"
+  },
+  "link.bluesky": {
+   "typed": "{link.bluesky:Live now}",
+   "result": "https://bsky.app/intent/compose?text=Live%20now",
+   "source": "server/tests/NomNomzBot.Infrastructure.Tests/Platform/Templating/Helpers/Chat/ChatHelpersTableTests.cs:67"
+  },
+  "link.threads": {
+   "typed": "{link.threads:Live now}",
+   "result": "https://www.threads.net/intent/post?text=Live%20now",
+   "source": "server/tests/NomNomzBot.Infrastructure.Tests/Platform/Templating/Helpers/Chat/ChatHelpersTableTests.cs:68"
+  },
+  "list.contains": {
+   "typed": "{list.contains:snacks|chips}",
+   "result": "true",
+   "source": "server/tests/NomNomzBot.Infrastructure.Tests/Platform/Templating/Helpers/Counters/ListHelpersTableTests.cs:34"
+  },
+  "list.count": {
+   "typed": "{list.count}",
+   "result": "7",
+   "source": "server/tests/NomNomzBot.Infrastructure.Tests/Platform/Templating/Helpers/Counters/ListHelpersTableTests.cs:42"
+  },
+  "list.first": {
+   "typed": "{list.first:snacks}",
+   "result": "chips",
+   "source": "server/tests/NomNomzBot.Infrastructure.Tests/Platform/Templating/Helpers/Counters/ListHelpersTableTests.cs:28"
+  },
+  "list.indexOf": {
+   "typed": "{list.indexOf:snacks|fruit}",
+   "result": "3",
+   "source": "server/tests/NomNomzBot.Infrastructure.Tests/Platform/Templating/Helpers/Counters/ListHelpersTableTests.cs:37"
+  },
+  "list.inline.item": {
+   "typed": "{list.inline.item:2|a;b;c}",
+   "result": "b",
+   "source": "server/tests/NomNomzBot.Infrastructure.Tests/Platform/Templating/Helpers/Counters/ListHelpersTableTests.cs:40"
+  },
+  "list.inline.length": {
+   "typed": "{list.inline.length:a;b;c}",
+   "result": "3",
+   "source": "server/tests/NomNomzBot.Infrastructure.Tests/Platform/Templating/Helpers/Counters/ListHelpersTableTests.cs:39"
+  },
+  "list.item": {
+   "typed": "{list.item:snacks|2}",
+   "result": "cookies",
+   "source": "server/tests/NomNomzBot.Infrastructure.Tests/Platform/Templating/Helpers/Counters/ListHelpersTableTests.cs:27"
+  },
+  "list.join": {
+   "typed": "{list.join:snacks}",
+   "result": "chips, cookies, fruit",
+   "source": "server/tests/NomNomzBot.Infrastructure.Tests/Platform/Templating/Helpers/Counters/ListHelpersTableTests.cs:30"
+  },
+  "list.join.and": {
+   "typed": "{list.join.and:snacks}",
+   "result": "chips, cookies and fruit",
+   "source": "server/tests/NomNomzBot.Infrastructure.Tests/Platform/Templating/Helpers/Counters/ListHelpersTableTests.cs:32"
+  },
+  "list.last": {
+   "typed": "{list.last:snacks}",
+   "result": "fruit",
+   "source": "server/tests/NomNomzBot.Infrastructure.Tests/Platform/Templating/Helpers/Counters/ListHelpersTableTests.cs:29"
+  },
+  "list.length": {
+   "typed": "{list.length:snacks}",
+   "result": "3",
+   "source": "server/tests/NomNomzBot.Infrastructure.Tests/Platform/Templating/Helpers/Counters/ListHelpersTableTests.cs:26"
+  },
+  "list.sorted": {
+   "typed": "{list.sorted:snacks}",
+   "result": "chips, cookies, fruit",
+   "source": "server/tests/NomNomzBot.Infrastructure.Tests/Platform/Templating/Helpers/Counters/ListHelpersTableTests.cs:33"
+  },
+  "literal": {
+   "typed": "{literal:a|b}",
+   "result": "a|b",
+   "source": "server/tests/NomNomzBot.Infrastructure.Tests/Platform/Templating/Helpers/Logic/LogicHelpersTableTests.cs:92"
+  },
+  "lookup.currency": {
+   "typed": "{lookup.currency:10|EUR|USD}",
+   "result": "10 EUR = 11.62 USD",
+   "source": "server/tests/NomNomzBot.Infrastructure.Tests/Platform/Templating/Helpers/Lookups/LookupHelpersTableTests.cs:68"
+  },
+  "lookup.currency.date": {
+   "typed": "{lookup.currency.date}",
+   "result": "2026-10-26",
+   "source": "server/tests/NomNomzBot.Infrastructure.Tests/Platform/Templating/Helpers/Lookups/LookupHelpersTableTests.cs:71"
+  },
+  "lookup.currency.rate": {
+   "typed": "{lookup.currency.rate:EUR|USD}",
+   "result": "1.162",
+   "source": "server/tests/NomNomzBot.Infrastructure.Tests/Platform/Templating/Helpers/Lookups/LookupHelpersTableTests.cs:70"
+  },
+  "lookup.game.top": {
+   "typed": "{lookup.game.top}",
+   "result": "Just Chatting",
+   "source": "server/tests/NomNomzBot.Infrastructure.Tests/Platform/Templating/Helpers/Lookups/LookupHelpersTableTests.cs:51"
+  },
+  "lookup.time": {
+   "typed": "{lookup.time:Tokyo}",
+   "result": "23:30",
+   "source": "server/tests/NomNomzBot.Infrastructure.Tests/Platform/Templating/Helpers/Lookups/LookupHelpersTableTests.cs:63"
+  },
+  "lookup.translate": {
+   "typed": "{lookup.translate:nl|good morning}",
+   "result": "goedemorgen",
+   "source": "server/tests/NomNomzBot.Infrastructure.Tests/Platform/Templating/Helpers/Lookups/LookupHelpersTableTests.cs:74"
+  },
+  "lookup.twitch": {
+   "typed": "{lookup.twitch:viewertwo.game}",
+   "result": "Minecraft",
+   "source": "server/tests/NomNomzBot.Infrastructure.Tests/Platform/Templating/Helpers/Lookups/LookupHelpersTableTests.cs:22"
+  },
+  "lookup.weather": {
+   "typed": "{lookup.weather:Amsterdam}",
+   "result": "Amsterdam: 12 °C, light rain",
+   "source": "server/tests/NomNomzBot.Infrastructure.Tests/Platform/Templating/Helpers/Lookups/LookupHelpersTableTests.cs:53"
+  },
+  "math": {
+   "typed": "{math:2+3*4}",
+   "result": "14",
+   "source": "server/tests/NomNomzBot.Infrastructure.Tests/Platform/Templating/Helpers/Numbers/NumberHelpersTableTests.cs:42"
+  },
+  "math.abs": {
+   "typed": "{math.abs:-4}",
+   "result": "4",
+   "source": "server/tests/NomNomzBot.Infrastructure.Tests/Platform/Templating/Helpers/Numbers/NumberHelpersTableTests.cs:49"
+  },
+  "math.add": {
+   "typed": "{math.add:2|3}",
+   "result": "5",
+   "source": "server/tests/NomNomzBot.Infrastructure.Tests/Platform/Templating/Helpers/Numbers/NumberHelpersTableTests.cs:54"
+  },
+  "math.avg": {
+   "typed": "{math.avg:1|2|6}",
+   "result": "3",
+   "source": "server/tests/NomNomzBot.Infrastructure.Tests/Platform/Templating/Helpers/Numbers/NumberHelpersTableTests.cs:61"
+  },
+  "math.ceil": {
+   "typed": "{math.ceil:2.1}",
+   "result": "3",
+   "source": "server/tests/NomNomzBot.Infrastructure.Tests/Platform/Templating/Helpers/Numbers/NumberHelpersTableTests.cs:51"
+  },
+  "math.div": {
+   "typed": "{math.div:7|2}",
+   "result": "3.5",
+   "source": "server/tests/NomNomzBot.Infrastructure.Tests/Platform/Templating/Helpers/Numbers/NumberHelpersTableTests.cs:57"
+  },
+  "math.div.int": {
+   "typed": "{math.div.int:7|2}",
+   "result": "3",
+   "source": "server/tests/NomNomzBot.Infrastructure.Tests/Platform/Templating/Helpers/Numbers/NumberHelpersTableTests.cs:58"
+  },
+  "math.floor": {
+   "typed": "{math.floor:2.7}",
+   "result": "2",
+   "source": "server/tests/NomNomzBot.Infrastructure.Tests/Platform/Templating/Helpers/Numbers/NumberHelpersTableTests.cs:50"
+  },
+  "math.log": {
+   "typed": "{math.log:100|10}",
+   "result": "2",
+   "source": "server/tests/NomNomzBot.Infrastructure.Tests/Platform/Templating/Helpers/Numbers/NumberHelpersTableTests.cs:53"
+  },
+  "math.median": {
+   "typed": "{math.median:1|9|3}",
+   "result": "3",
+   "source": "server/tests/NomNomzBot.Infrastructure.Tests/Platform/Templating/Helpers/Numbers/NumberHelpersTableTests.cs:62"
+  },
+  "math.mod": {
+   "typed": "{math.mod:7|2}",
+   "result": "1",
+   "source": "server/tests/NomNomzBot.Infrastructure.Tests/Platform/Templating/Helpers/Numbers/NumberHelpersTableTests.cs:59"
+  },
+  "math.mul": {
+   "typed": "{math.mul:4|3}",
+   "result": "12",
+   "source": "server/tests/NomNomzBot.Infrastructure.Tests/Platform/Templating/Helpers/Numbers/NumberHelpersTableTests.cs:56"
+  },
+  "math.pow": {
+   "typed": "{math.pow:3|3}",
+   "result": "27",
+   "source": "server/tests/NomNomzBot.Infrastructure.Tests/Platform/Templating/Helpers/Numbers/NumberHelpersTableTests.cs:52"
+  },
+  "math.sqrt": {
+   "typed": "{math.sqrt:81}",
+   "result": "9",
+   "source": "server/tests/NomNomzBot.Infrastructure.Tests/Platform/Templating/Helpers/Numbers/NumberHelpersTableTests.cs:48"
+  },
+  "math.sub": {
+   "typed": "{math.sub:5|3}",
+   "result": "2",
+   "source": "server/tests/NomNomzBot.Infrastructure.Tests/Platform/Templating/Helpers/Numbers/NumberHelpersTableTests.cs:55"
+  },
+  "math.sum": {
+   "typed": "{math.sum:1|2|3}",
+   "result": "6",
+   "source": "server/tests/NomNomzBot.Infrastructure.Tests/Platform/Templating/Helpers/Numbers/NumberHelpersTableTests.cs:60"
+  },
+  "meter": {
+   "typed": "{meter:60}",
+   "result": "██████░░░░ 60%",
+   "source": "server/tests/NomNomzBot.Infrastructure.Tests/Platform/Templating/Helpers/Numbers/NumberHelpersTableTests.cs:116"
+  },
+  "meter.hearts": {
+   "typed": "{meter.hearts:60}",
+   "result": "❤️❤️❤️🖤🖤",
+   "source": "server/tests/NomNomzBot.Infrastructure.Tests/Platform/Templating/Helpers/Numbers/NumberHelpersTableTests.cs:120"
+  },
+  "meter.plain": {
+   "typed": "{meter.plain:60}",
+   "result": "██████░░░░",
+   "source": "server/tests/NomNomzBot.Infrastructure.Tests/Platform/Templating/Helpers/Numbers/NumberHelpersTableTests.cs:119"
+  },
+  "meter.stars": {
+   "typed": "{meter.stars:3|5}",
+   "result": "★★★☆☆",
+   "source": "server/tests/NomNomzBot.Infrastructure.Tests/Platform/Templating/Helpers/Numbers/NumberHelpersTableTests.cs:121"
+  },
+  "music.history.count.stream": {
+   "typed": "{music.history.count.stream}",
+   "result": "21",
+   "source": "server/tests/NomNomzBot.Infrastructure.Tests/Platform/Templating/Helpers/Music/MusicHelpersTableTests.cs:66"
+  },
+  "music.history.last": {
+   "typed": "{music.history.last}",
+   "result": "Song Z by Artist Z",
+   "source": "server/tests/NomNomzBot.Infrastructure.Tests/Platform/Templating/Helpers/Music/MusicHelpersTableTests.cs:64"
+  },
+  "music.history.list": {
+   "typed": "{music.history.list:3}",
+   "result": "Song Z, Song Y, Song X",
+   "source": "server/tests/NomNomzBot.Infrastructure.Tests/Platform/Templating/Helpers/Music/MusicHelpersTableTests.cs:65"
+  },
+  "music.history.topArtist.stream": {
+   "typed": "{music.history.topArtist.stream}",
+   "result": "Artist A",
+   "source": "server/tests/NomNomzBot.Infrastructure.Tests/Platform/Templating/Helpers/Music/MusicHelpersTableTests.cs:68"
+  },
+  "music.history.topRequester.stream": {
+   "typed": "{music.history.topRequester.stream}",
+   "result": "ViewerTwo (4)",
+   "source": "server/tests/NomNomzBot.Infrastructure.Tests/Platform/Templating/Helpers/Music/MusicHelpersTableTests.cs:67"
+  },
+  "music.now": {
+   "typed": "{music.now}",
+   "result": "Song A by Artist A",
+   "source": "server/tests/NomNomzBot.Infrastructure.Tests/Platform/Templating/Helpers/Music/MusicHelpersTableTests.cs:22"
+  },
+  "music.now.album": {
+   "typed": "{music.now.album}",
+   "result": "Album A",
+   "source": "server/tests/NomNomzBot.Infrastructure.Tests/Platform/Templating/Helpers/Music/MusicHelpersTableTests.cs:25"
+  },
+  "music.now.artist": {
+   "typed": "{music.now.artist}",
+   "result": "Artist A",
+   "source": "server/tests/NomNomzBot.Infrastructure.Tests/Platform/Templating/Helpers/Music/MusicHelpersTableTests.cs:24"
+  },
+  "music.now.bar": {
+   "typed": "{music.now.bar}",
+   "result": "▬▬▬▬🔘▬▬▬▬▬▬ 1:23 / 3:30",
+   "source": "server/tests/NomNomzBot.Infrastructure.Tests/Platform/Templating/Helpers/Music/MusicHelpersTableTests.cs:35"
+  },
+  "music.now.cover": {
+   "typed": "{music.now.cover}",
+   "result": "https://i.scdn.co/image/sample",
+   "source": "server/tests/NomNomzBot.Infrastructure.Tests/Platform/Templating/Helpers/Music/MusicHelpersTableTests.cs:26"
+  },
+  "music.now.duration": {
+   "typed": "{music.now.duration}",
+   "result": "3:30",
+   "source": "server/tests/NomNomzBot.Infrastructure.Tests/Platform/Templating/Helpers/Music/MusicHelpersTableTests.cs:31"
+  },
+  "music.now.link": {
+   "typed": "{music.now.link}",
+   "result": "https://open.spotify.com/track/sample",
+   "source": "server/tests/NomNomzBot.Infrastructure.Tests/Platform/Templating/Helpers/Music/MusicHelpersTableTests.cs:27"
+  },
+  "music.now.percent": {
+   "typed": "{music.now.percent}",
+   "result": "40%",
+   "source": "server/tests/NomNomzBot.Infrastructure.Tests/Platform/Templating/Helpers/Music/MusicHelpersTableTests.cs:34"
+  },
+  "music.now.progress": {
+   "typed": "{music.now.progress}",
+   "result": "1:23",
+   "source": "server/tests/NomNomzBot.Infrastructure.Tests/Platform/Templating/Helpers/Music/MusicHelpersTableTests.cs:32"
+  },
+  "music.now.remaining": {
+   "typed": "{music.now.remaining}",
+   "result": "2:07",
+   "source": "server/tests/NomNomzBot.Infrastructure.Tests/Platform/Templating/Helpers/Music/MusicHelpersTableTests.cs:33"
+  },
+  "music.now.requester": {
+   "typed": "{music.now.requester}",
+   "result": "ViewerTwo",
+   "source": "server/tests/NomNomzBot.Infrastructure.Tests/Platform/Templating/Helpers/Music/MusicHelpersTableTests.cs:28"
+  },
+  "music.now.requester.mention": {
+   "typed": "{music.now.requester.mention}",
+   "result": "@ViewerTwo",
+   "source": "server/tests/NomNomzBot.Infrastructure.Tests/Platform/Templating/Helpers/Music/MusicHelpersTableTests.cs:29"
+  },
+  "music.now.status": {
+   "typed": "{music.now.status}",
+   "result": "playing",
+   "source": "server/tests/NomNomzBot.Infrastructure.Tests/Platform/Templating/Helpers/Music/MusicHelpersTableTests.cs:38"
+  },
+  "music.now.title": {
+   "typed": "{music.now.title}",
+   "result": "Song A",
+   "source": "server/tests/NomNomzBot.Infrastructure.Tests/Platform/Templating/Helpers/Music/MusicHelpersTableTests.cs:23"
+  },
+  "music.provider": {
+   "typed": "{music.provider}",
+   "result": "Spotify",
+   "source": "server/tests/NomNomzBot.Infrastructure.Tests/Platform/Templating/Helpers/Music/MusicHelpersTableTests.cs:42"
+  },
+  "music.queue.cost.total": {
+   "typed": "{music.queue.cost.total}",
+   "result": "1,500",
+   "source": "server/tests/NomNomzBot.Infrastructure.Tests/Platform/Templating/Helpers/Music/MusicHelpersTableTests.cs:52"
+  },
+  "music.queue.duration": {
+   "typed": "{music.queue.duration}",
+   "result": "17m 20s",
+   "source": "server/tests/NomNomzBot.Infrastructure.Tests/Platform/Templating/Helpers/Music/MusicHelpersTableTests.cs:45"
+  },
+  "music.queue.item": {
+   "typed": "{music.queue.item:2}",
+   "result": "Song C by Artist C",
+   "source": "server/tests/NomNomzBot.Infrastructure.Tests/Platform/Templating/Helpers/Music/MusicHelpersTableTests.cs:48"
+  },
+  "music.queue.length": {
+   "typed": "{music.queue.length}",
+   "result": "5",
+   "source": "server/tests/NomNomzBot.Infrastructure.Tests/Platform/Templating/Helpers/Music/MusicHelpersTableTests.cs:44"
+  },
+  "music.queue.list": {
+   "typed": "{music.queue.list:3}",
+   "result": "1. Song B, 2. Song C, 3. Song D",
+   "source": "server/tests/NomNomzBot.Infrastructure.Tests/Platform/Templating/Helpers/Music/MusicHelpersTableTests.cs:49"
+  },
+  "music.queue.mine.code": {
+   "typed": "{music.queue.mine.code}",
+   "result": "K7QM",
+   "source": "server/tests/NomNomzBot.Infrastructure.Tests/Platform/Templating/Helpers/Music/MusicHelpersTableTests.cs:60"
+  },
+  "music.queue.mine.count": {
+   "typed": "{music.queue.mine.count}",
+   "result": "2",
+   "source": "server/tests/NomNomzBot.Infrastructure.Tests/Platform/Templating/Helpers/Music/MusicHelpersTableTests.cs:58"
+  },
+  "music.queue.mine.next": {
+   "typed": "{music.queue.mine.next}",
+   "result": "Song C",
+   "source": "server/tests/NomNomzBot.Infrastructure.Tests/Platform/Templating/Helpers/Music/MusicHelpersTableTests.cs:61"
+  },
+  "music.queue.mine.titles": {
+   "typed": "{music.queue.mine.titles}",
+   "result": "Song C, Song E",
+   "source": "server/tests/NomNomzBot.Infrastructure.Tests/Platform/Templating/Helpers/Music/MusicHelpersTableTests.cs:59"
+  },
+  "music.queue.next": {
+   "typed": "{music.queue.next}",
+   "result": "Song B by Artist B",
+   "source": "server/tests/NomNomzBot.Infrastructure.Tests/Platform/Templating/Helpers/Music/MusicHelpersTableTests.cs:46"
+  },
+  "music.queue.next.requester": {
+   "typed": "{music.queue.next.requester}",
+   "result": "ViewerThree",
+   "source": "server/tests/NomNomzBot.Infrastructure.Tests/Platform/Templating/Helpers/Music/MusicHelpersTableTests.cs:47"
+  },
+  "music.queue.position": {
+   "typed": "{music.queue.position}",
+   "result": "3",
+   "source": "server/tests/NomNomzBot.Infrastructure.Tests/Platform/Templating/Helpers/Music/MusicHelpersTableTests.cs:54"
+  },
+  "music.queue.position.ordinal": {
+   "typed": "{music.queue.position.ordinal}",
+   "result": "3rd",
+   "source": "server/tests/NomNomzBot.Infrastructure.Tests/Platform/Templating/Helpers/Music/MusicHelpersTableTests.cs:55"
+  },
+  "music.queue.requesters": {
+   "typed": "{music.queue.requesters}",
+   "result": "4",
+   "source": "server/tests/NomNomzBot.Infrastructure.Tests/Platform/Templating/Helpers/Music/MusicHelpersTableTests.cs:50"
+  },
+  "music.queue.target.count": {
+   "typed": "{music.queue.target.count}",
+   "result": "1",
+   "source": "server/tests/NomNomzBot.Infrastructure.Tests/Platform/Templating/Helpers/Music/MusicHelpersTableTests.cs:62"
+  },
+  "music.queue.wait": {
+   "typed": "{music.queue.wait}",
+   "result": "7m 40s",
+   "source": "server/tests/NomNomzBot.Infrastructure.Tests/Platform/Templating/Helpers/Music/MusicHelpersTableTests.cs:56"
+  },
+  "music.queue.wait.at": {
+   "typed": "{music.queue.wait.at}",
+   "result": "about 15:38",
+   "source": "server/tests/NomNomzBot.Infrastructure.Tests/Platform/Templating/Helpers/Music/MusicHelpersTableTests.cs:57"
+  },
+  "music.repeat": {
+   "typed": "{music.repeat}",
+   "result": "off",
+   "source": "server/tests/NomNomzBot.Infrastructure.Tests/Platform/Templating/Helpers/Music/MusicHelpersTableTests.cs:41"
+  },
+  "music.requests.maxDuration": {
+   "typed": "{music.requests.maxDuration}",
+   "result": "6:00",
+   "source": "server/tests/NomNomzBot.Infrastructure.Tests/Platform/Templating/Helpers/Music/MusicHelpersTableTests.cs:78"
+  },
+  "music.requests.maxPerUser": {
+   "typed": "{music.requests.maxPerUser}",
+   "result": "3",
+   "source": "server/tests/NomNomzBot.Infrastructure.Tests/Platform/Templating/Helpers/Music/MusicHelpersTableTests.cs:77"
+  },
+  "music.shuffle": {
+   "typed": "{music.shuffle}",
+   "result": "off",
+   "source": "server/tests/NomNomzBot.Infrastructure.Tests/Platform/Templating/Helpers/Music/MusicHelpersTableTests.cs:40"
+  },
+  "music.user.lastRequest": {
+   "typed": "{music.user.lastRequest}",
+   "result": "Song C",
+   "source": "server/tests/NomNomzBot.Infrastructure.Tests/Platform/Templating/Helpers/Music/MusicHelpersTableTests.cs:71"
+  },
+  "music.user.requests.stream": {
+   "typed": "{music.user.requests.stream}",
+   "result": "2",
+   "source": "server/tests/NomNomzBot.Infrastructure.Tests/Platform/Templating/Helpers/Music/MusicHelpersTableTests.cs:70"
+  },
+  "music.user.requests.total": {
+   "typed": "{music.user.requests.total}",
+   "result": "9",
+   "source": "server/tests/NomNomzBot.Infrastructure.Tests/Platform/Templating/Helpers/Music/MusicHelpersTableTests.cs:69"
+  },
+  "music.volume": {
+   "typed": "{music.volume}",
+   "result": "60%",
+   "source": "server/tests/NomNomzBot.Infrastructure.Tests/Platform/Templating/Helpers/Music/MusicHelpersTableTests.cs:39"
+  },
+  "num.abs": {
+   "typed": "{num.abs:-5}",
+   "result": "5",
+   "source": "server/tests/NomNomzBot.Infrastructure.Tests/Platform/Templating/Helpers/Numbers/NumberHelpersTableTests.cs:97"
+  },
+  "num.bar": {
+   "typed": "{num.bar:6|10}",
+   "result": "██████░░░░",
+   "source": "server/tests/NomNomzBot.Infrastructure.Tests/Platform/Templating/Helpers/Numbers/NumberHelpersTableTests.cs:115"
+  },
+  "num.between": {
+   "typed": "{num.between:5|1|10}",
+   "result": "true",
+   "source": "server/tests/NomNomzBot.Infrastructure.Tests/Platform/Templating/Helpers/Numbers/NumberHelpersTableTests.cs:100"
+  },
+  "num.binary": {
+   "typed": "{num.binary:5}",
+   "result": "101",
+   "source": "server/tests/NomNomzBot.Infrastructure.Tests/Platform/Templating/Helpers/Numbers/NumberHelpersTableTests.cs:107"
+  },
+  "num.bytes": {
+   "typed": "{num.bytes:1536}",
+   "result": "1.5 KB",
+   "source": "server/tests/NomNomzBot.Infrastructure.Tests/Platform/Templating/Helpers/Numbers/NumberHelpersTableTests.cs:91"
+  },
+  "num.clamp": {
+   "typed": "{num.clamp:120|0|100}",
+   "result": "100",
+   "source": "server/tests/NomNomzBot.Infrastructure.Tests/Platform/Templating/Helpers/Numbers/NumberHelpersTableTests.cs:66"
+  },
+  "num.compact": {
+   "typed": "{num.compact:1234}",
+   "result": "1.2k",
+   "source": "server/tests/NomNomzBot.Infrastructure.Tests/Platform/Templating/Helpers/Numbers/NumberHelpersTableTests.cs:79"
+  },
+  "num.convert": {
+   "typed": "{num.convert:10|km|mi}",
+   "result": "6.21",
+   "source": "server/tests/NomNomzBot.Infrastructure.Tests/Platform/Templating/Helpers/Numbers/NumberHelpersTableTests.cs:109"
+  },
+  "num.currency": {
+   "typed": "{num.currency:5|USD}",
+   "result": "$5.00",
+   "source": "server/tests/NomNomzBot.Infrastructure.Tests/Platform/Templating/Helpers/Numbers/NumberHelpersTableTests.cs:89"
+  },
+  "num.currency.compact": {
+   "typed": "{num.currency.compact:1500|USD}",
+   "result": "$1.5k",
+   "source": "server/tests/NomNomzBot.Infrastructure.Tests/Platform/Templating/Helpers/Numbers/NumberHelpersTableTests.cs:90"
+  },
+  "num.dec": {
+   "typed": "{num.dec:4}",
+   "result": "3",
+   "source": "server/tests/NomNomzBot.Infrastructure.Tests/Platform/Templating/Helpers/Numbers/NumberHelpersTableTests.cs:105"
+  },
+  "num.diff": {
+   "typed": "{num.diff:2800|2500}",
+   "result": "300",
+   "source": "server/tests/NomNomzBot.Infrastructure.Tests/Platform/Templating/Helpers/Numbers/NumberHelpersTableTests.cs:75"
+  },
+  "num.digitSum": {
+   "typed": "{num.digitSum:123}",
+   "result": "6",
+   "source": "server/tests/NomNomzBot.Infrastructure.Tests/Platform/Templating/Helpers/Numbers/NumberHelpersTableTests.cs:103"
+  },
+  "num.digits": {
+   "typed": "{num.digits:12345}",
+   "result": "5",
+   "source": "server/tests/NomNomzBot.Infrastructure.Tests/Platform/Templating/Helpers/Numbers/NumberHelpersTableTests.cs:102"
+  },
+  "num.duration": {
+   "typed": "{num.duration:8100}",
+   "result": "2h 15m",
+   "source": "server/tests/NomNomzBot.Infrastructure.Tests/Platform/Templating/Helpers/Numbers/NumberHelpersTableTests.cs:92"
+  },
+  "num.duration.clock": {
+   "typed": "{num.duration.clock:83}",
+   "result": "1:23",
+   "source": "server/tests/NomNomzBot.Infrastructure.Tests/Platform/Templating/Helpers/Numbers/NumberHelpersTableTests.cs:94"
+  },
+  "num.duration.long": {
+   "typed": "{num.duration.long:8100}",
+   "result": "2 hours, 15 minutes",
+   "source": "server/tests/NomNomzBot.Infrastructure.Tests/Platform/Templating/Helpers/Numbers/NumberHelpersTableTests.cs:93"
+  },
+  "num.format": {
+   "typed": "{num.format:1234}",
+   "result": "1,234",
+   "source": "server/tests/NomNomzBot.Infrastructure.Tests/Platform/Templating/Helpers/Numbers/NumberHelpersTableTests.cs:77"
+  },
+  "num.fromRoman": {
+   "typed": "{num.fromRoman:XIV}",
+   "result": "14",
+   "source": "server/tests/NomNomzBot.Infrastructure.Tests/Platform/Templating/Helpers/Numbers/NumberHelpersTableTests.cs:87"
+  },
+  "num.hex": {
+   "typed": "{num.hex:255}",
+   "result": "FF",
+   "source": "server/tests/NomNomzBot.Infrastructure.Tests/Platform/Templating/Helpers/Numbers/NumberHelpersTableTests.cs:106"
+  },
+  "num.inc": {
+   "typed": "{num.inc:4}",
+   "result": "5",
+   "source": "server/tests/NomNomzBot.Infrastructure.Tests/Platform/Templating/Helpers/Numbers/NumberHelpersTableTests.cs:104"
+  },
+  "num.isEven": {
+   "typed": "{num.isEven:7}",
+   "result": "false",
+   "source": "server/tests/NomNomzBot.Infrastructure.Tests/Platform/Templating/Helpers/Numbers/NumberHelpersTableTests.cs:168"
+  },
+  "num.max": {
+   "typed": "{num.max:4|9|2}",
+   "result": "9",
+   "source": "server/tests/NomNomzBot.Infrastructure.Tests/Platform/Templating/Helpers/Numbers/NumberHelpersTableTests.cs:65"
+  },
+  "num.min": {
+   "typed": "{num.min:4|9|2}",
+   "result": "2",
+   "source": "server/tests/NomNomzBot.Infrastructure.Tests/Platform/Templating/Helpers/Numbers/NumberHelpersTableTests.cs:64"
+  },
+  "num.ordinal": {
+   "typed": "{num.ordinal:3}",
+   "result": "3rd",
+   "source": "server/tests/NomNomzBot.Infrastructure.Tests/Platform/Templating/Helpers/Numbers/NumberHelpersTableTests.cs:83"
+  },
+  "num.ordinal.words": {
+   "typed": "{num.ordinal.words:3}",
+   "result": "third",
+   "source": "server/tests/NomNomzBot.Infrastructure.Tests/Platform/Templating/Helpers/Numbers/NumberHelpersTableTests.cs:84"
+  },
+  "num.parity": {
+   "typed": "{num.parity:7}",
+   "result": "odd",
+   "source": "server/tests/NomNomzBot.Infrastructure.Tests/Platform/Templating/Helpers/Numbers/NumberHelpersTableTests.cs:98"
+  },
+  "num.parse": {
+   "typed": "{num.parse:1.2k}",
+   "result": "1200",
+   "source": "server/tests/NomNomzBot.Infrastructure.Tests/Platform/Templating/Helpers/Numbers/NumberHelpersTableTests.cs:101"
+  },
+  "num.percent": {
+   "typed": "{num.percent:1234|1500}",
+   "result": "82%",
+   "source": "server/tests/NomNomzBot.Infrastructure.Tests/Platform/Templating/Helpers/Numbers/NumberHelpersTableTests.cs:71"
+  },
+  "num.percentOf": {
+   "typed": "{num.percentOf:10|250}",
+   "result": "25",
+   "source": "server/tests/NomNomzBot.Infrastructure.Tests/Platform/Templating/Helpers/Numbers/NumberHelpersTableTests.cs:73"
+  },
+  "num.ratio": {
+   "typed": "{num.ratio:3|12}",
+   "result": "1:4",
+   "source": "server/tests/NomNomzBot.Infrastructure.Tests/Platform/Templating/Helpers/Numbers/NumberHelpersTableTests.cs:74"
+  },
+  "num.roman": {
+   "typed": "{num.roman:2026}",
+   "result": "MMXXVI",
+   "source": "server/tests/NomNomzBot.Infrastructure.Tests/Platform/Templating/Helpers/Numbers/NumberHelpersTableTests.cs:86"
+  },
+  "num.round": {
+   "typed": "{num.round:2.456|2}",
+   "result": "2.46",
+   "source": "server/tests/NomNomzBot.Infrastructure.Tests/Platform/Templating/Helpers/Numbers/NumberHelpersTableTests.cs:67"
+  },
+  "num.sign": {
+   "typed": "{num.sign:5}",
+   "result": "+5",
+   "source": "server/tests/NomNomzBot.Infrastructure.Tests/Platform/Templating/Helpers/Numbers/NumberHelpersTableTests.cs:96"
+  },
+  "num.truncate": {
+   "typed": "{num.truncate:2.9}",
+   "result": "2",
+   "source": "server/tests/NomNomzBot.Infrastructure.Tests/Platform/Templating/Helpers/Numbers/NumberHelpersTableTests.cs:69"
+  },
+  "num.words": {
+   "typed": "{num.words:42}",
+   "result": "forty-two",
+   "source": "server/tests/NomNomzBot.Infrastructure.Tests/Platform/Templating/Helpers/Numbers/NumberHelpersTableTests.cs:85"
+  },
+  "pick": {
+   "typed": "{pick:solo}",
+   "result": "solo",
+   "source": "server/tests/NomNomzBot.Infrastructure.Tests/Platform/Templating/Helpers/Logic/LogicHelpersTableTests.cs:104"
+  },
+  "pick.inline": {
+   "typed": "{pick.inline:solo}",
+   "result": "solo",
+   "source": "server/tests/NomNomzBot.Infrastructure.Tests/Platform/Templating/Helpers/Logic/LogicHelpersTableTests.cs:105"
+  },
+  "pick.n": {
+   "typed": "{pick.n:2|a|b|c}",
+   "result": "b, c",
+   "source": "server/tests/NomNomzBot.Infrastructure.Tests/Platform/Templating/Helpers/Logic/LogicHelpersSeededTests.cs:36"
+  },
+  "pick.weighted": {
+   "typed": "{pick.weighted:1=rare|9=common}",
+   "result": "common",
+   "source": "server/tests/NomNomzBot.Infrastructure.Tests/Platform/Templating/Helpers/Logic/LogicHelpersSeededTests.cs:35"
+  },
+  "platform.chatters.stream": {
+   "typed": "{platform.chatters.stream:youtube}",
+   "result": "6",
+   "source": "server/tests/NomNomzBot.Infrastructure.Tests/Platform/Templating/Helpers/Platforms/PlatformHelpersTableTests.cs:50"
+  },
+  "platform.connected": {
+   "typed": "{platform.connected}",
+   "result": "Twitch, Kick, YouTube",
+   "source": "server/tests/NomNomzBot.Infrastructure.Tests/Platform/Templating/Helpers/Platforms/PlatformHelpersTableTests.cs:52"
+  },
+  "platform.count": {
+   "typed": "{platform.count}",
+   "result": "3",
+   "source": "server/tests/NomNomzBot.Infrastructure.Tests/Platform/Templating/Helpers/Platforms/PlatformHelpersTableTests.cs:53"
+  },
+  "platform.event": {
+   "typed": "{platform.event}",
+   "result": "twitch",
+   "source": "server/tests/NomNomzBot.Infrastructure.Tests/Platform/Templating/Helpers/Platforms/PlatformHelpersTableTests.cs:25"
+  },
+  "platform.followers.twitch": {
+   "typed": "{platform.followers.twitch}",
+   "result": "1,234",
+   "source": "server/tests/NomNomzBot.Infrastructure.Tests/Platform/Templating/Helpers/Platforms/PlatformHelpersTableTests.cs:48"
+  },
+  "platform.isLive": {
+   "typed": "{platform.isLive:youtube}",
+   "result": "true",
+   "source": "server/tests/NomNomzBot.Infrastructure.Tests/Platform/Templating/Helpers/Platforms/PlatformHelpersTableTests.cs:36"
+  },
+  "platform.link.kick": {
+   "typed": "{platform.link.kick}",
+   "result": "https://kick.com/samplechannel",
+   "source": "server/tests/NomNomzBot.Infrastructure.Tests/Platform/Templating/Helpers/Platforms/PlatformHelpersTableTests.cs:40"
+  },
+  "platform.link.twitch": {
+   "typed": "{platform.link.twitch}",
+   "result": "https://twitch.tv/samplechannel",
+   "source": "server/tests/NomNomzBot.Infrastructure.Tests/Platform/Templating/Helpers/Platforms/PlatformHelpersTableTests.cs:39"
+  },
+  "platform.link.youtube": {
+   "typed": "{platform.link.youtube}",
+   "result": "https://youtube.com/channel/UCsample",
+   "source": "server/tests/NomNomzBot.Infrastructure.Tests/Platform/Templating/Helpers/Platforms/PlatformHelpersTableTests.cs:41"
+  },
+  "platform.link.youtube.live": {
+   "typed": "{platform.link.youtube.live}",
+   "result": "https://youtube.com/watch?v=sample",
+   "source": "server/tests/NomNomzBot.Infrastructure.Tests/Platform/Templating/Helpers/Platforms/PlatformHelpersTableTests.cs:42"
+  },
+  "platform.live.count": {
+   "typed": "{platform.live.count}",
+   "result": "3",
+   "source": "server/tests/NomNomzBot.Infrastructure.Tests/Platform/Templating/Helpers/Platforms/PlatformHelpersTableTests.cs:35"
+  },
+  "platform.live.list": {
+   "typed": "{platform.live.list}",
+   "result": "Twitch, Kick, YouTube",
+   "source": "server/tests/NomNomzBot.Infrastructure.Tests/Platform/Templating/Helpers/Platforms/PlatformHelpersTableTests.cs:34"
+  },
+  "platform.messages.stream": {
+   "typed": "{platform.messages.stream:kick}",
+   "result": "120",
+   "source": "server/tests/NomNomzBot.Infrastructure.Tests/Platform/Templating/Helpers/Platforms/PlatformHelpersTableTests.cs:49"
+  },
+  "platform.title": {
+   "typed": "{platform.title:youtube}",
+   "result": "Building a bot",
+   "source": "server/tests/NomNomzBot.Infrastructure.Tests/Platform/Templating/Helpers/Platforms/PlatformHelpersTableTests.cs:54"
+  },
+  "platform.top": {
+   "typed": "{platform.top}",
+   "result": "Twitch",
+   "source": "server/tests/NomNomzBot.Infrastructure.Tests/Platform/Templating/Helpers/Platforms/PlatformHelpersTableTests.cs:51"
+  },
+  "platform.user": {
+   "typed": "{platform.user}",
+   "result": "twitch",
+   "source": "server/tests/NomNomzBot.Infrastructure.Tests/Platform/Templating/Helpers/Platforms/PlatformHelpersTableTests.cs:22"
+  },
+  "platform.user.icon": {
+   "typed": "{platform.user.icon}",
+   "result": "🟣",
+   "source": "server/tests/NomNomzBot.Infrastructure.Tests/Platform/Templating/Helpers/Platforms/PlatformHelpersTableTests.cs:24"
+  },
+  "platform.user.name": {
+   "typed": "{platform.user.name}",
+   "result": "Twitch",
+   "source": "server/tests/NomNomzBot.Infrastructure.Tests/Platform/Templating/Helpers/Platforms/PlatformHelpersTableTests.cs:23"
+  },
+  "platform.viewers.breakdown": {
+   "typed": "{platform.viewers.breakdown}",
+   "result": "Twitch 42 · Kick 10 · YouTube 8",
+   "source": "server/tests/NomNomzBot.Infrastructure.Tests/Platform/Templating/Helpers/Platforms/PlatformHelpersTableTests.cs:31"
+  },
+  "platform.viewers.kick": {
+   "typed": "{platform.viewers.kick}",
+   "result": "10",
+   "source": "server/tests/NomNomzBot.Infrastructure.Tests/Platform/Templating/Helpers/Platforms/PlatformHelpersTableTests.cs:29"
+  },
+  "platform.viewers.share": {
+   "typed": "{platform.viewers.share:kick}",
+   "result": "17%",
+   "source": "server/tests/NomNomzBot.Infrastructure.Tests/Platform/Templating/Helpers/Platforms/PlatformHelpersTableTests.cs:32"
+  },
+  "platform.viewers.total": {
+   "typed": "{platform.viewers.total}",
+   "result": "60",
+   "source": "server/tests/NomNomzBot.Infrastructure.Tests/Platform/Templating/Helpers/Platforms/PlatformHelpersTableTests.cs:27"
+  },
+  "platform.viewers.twitch": {
+   "typed": "{platform.viewers.twitch}",
+   "result": "42",
+   "source": "server/tests/NomNomzBot.Infrastructure.Tests/Platform/Templating/Helpers/Platforms/PlatformHelpersTableTests.cs:28"
+  },
+  "platform.viewers.youtube": {
+   "typed": "{platform.viewers.youtube}",
+   "result": "8",
+   "source": "server/tests/NomNomzBot.Infrastructure.Tests/Platform/Templating/Helpers/Platforms/PlatformHelpersTableTests.cs:30"
+  },
+  "poll.endsAt": {
+   "typed": "{poll.endsAt}",
+   "result": "15:32",
+   "source": "server/tests/NomNomzBot.Infrastructure.Tests/Platform/Templating/Helpers/LiveEvents/PollHelpersTableTests.cs:36"
+  },
+  "poll.isActive": {
+   "typed": "{poll.isActive}",
+   "result": "true",
+   "source": "server/tests/NomNomzBot.Infrastructure.Tests/Platform/Templating/Helpers/LiveEvents/PollHelpersTableTests.cs:24"
+  },
+  "poll.last.question": {
+   "typed": "{poll.last.question}",
+   "result": "Best snack?",
+   "source": "server/tests/NomNomzBot.Infrastructure.Tests/Platform/Templating/Helpers/LiveEvents/PollHelpersTableTests.cs:39"
+  },
+  "poll.last.winner": {
+   "typed": "{poll.last.winner}",
+   "result": "chips",
+   "source": "server/tests/NomNomzBot.Infrastructure.Tests/Platform/Templating/Helpers/LiveEvents/PollHelpersTableTests.cs:38"
+  },
+  "poll.leading": {
+   "typed": "{poll.leading}",
+   "result": "chips",
+   "source": "server/tests/NomNomzBot.Infrastructure.Tests/Platform/Templating/Helpers/LiveEvents/PollHelpersTableTests.cs:27"
+  },
+  "poll.leading.percent": {
+   "typed": "{poll.leading.percent}",
+   "result": "60%",
+   "source": "server/tests/NomNomzBot.Infrastructure.Tests/Platform/Templating/Helpers/LiveEvents/PollHelpersTableTests.cs:29"
+  },
+  "poll.leading.votes": {
+   "typed": "{poll.leading.votes}",
+   "result": "12",
+   "source": "server/tests/NomNomzBot.Infrastructure.Tests/Platform/Templating/Helpers/LiveEvents/PollHelpersTableTests.cs:28"
+  },
+  "poll.option": {
+   "typed": "{poll.option:2}",
+   "result": "cookies",
+   "source": "server/tests/NomNomzBot.Infrastructure.Tests/Platform/Templating/Helpers/LiveEvents/PollHelpersTableTests.cs:31"
+  },
+  "poll.option.percent": {
+   "typed": "{poll.option.percent:2}",
+   "result": "40%",
+   "source": "server/tests/NomNomzBot.Infrastructure.Tests/Platform/Templating/Helpers/LiveEvents/PollHelpersTableTests.cs:33"
+  },
+  "poll.option.votes": {
+   "typed": "{poll.option.votes:2}",
+   "result": "8",
+   "source": "server/tests/NomNomzBot.Infrastructure.Tests/Platform/Templating/Helpers/LiveEvents/PollHelpersTableTests.cs:32"
+  },
+  "poll.options": {
+   "typed": "{poll.options}",
+   "result": "chips, cookies",
+   "source": "server/tests/NomNomzBot.Infrastructure.Tests/Platform/Templating/Helpers/LiveEvents/PollHelpersTableTests.cs:25"
+  },
+  "poll.options.numbered": {
+   "typed": "{poll.options.numbered}",
+   "result": "1. chips 2. cookies",
+   "source": "server/tests/NomNomzBot.Infrastructure.Tests/Platform/Templating/Helpers/LiveEvents/PollHelpersTableTests.cs:26"
+  },
+  "poll.question": {
+   "typed": "{poll.question}",
+   "result": "Best snack?",
+   "source": "server/tests/NomNomzBot.Infrastructure.Tests/Platform/Templating/Helpers/LiveEvents/PollHelpersTableTests.cs:22"
+  },
+  "poll.results.bars": {
+   "typed": "{poll.results.bars}",
+   "result": "chips ██████░░░░ 60% · cookies ████░░░░░░ 40%",
+   "source": "server/tests/NomNomzBot.Infrastructure.Tests/Platform/Templating/Helpers/LiveEvents/PollHelpersTableTests.cs:34"
+  },
+  "poll.timeLeft": {
+   "typed": "{poll.timeLeft}",
+   "result": "1m 30s",
+   "source": "server/tests/NomNomzBot.Infrastructure.Tests/Platform/Templating/Helpers/LiveEvents/PollHelpersTableTests.cs:35"
+  },
+  "poll.votes.total": {
+   "typed": "{poll.votes.total}",
+   "result": "20",
+   "source": "server/tests/NomNomzBot.Infrastructure.Tests/Platform/Templating/Helpers/LiveEvents/PollHelpersTableTests.cs:30"
+  },
+  "prediction.isActive": {
+   "typed": "{prediction.isActive}",
+   "result": "true",
+   "source": "server/tests/NomNomzBot.Infrastructure.Tests/Platform/Templating/Helpers/LiveEvents/PredictionHelpersTableTests.cs:24"
+  },
+  "prediction.last.winner": {
+   "typed": "{prediction.last.winner}",
+   "result": "Yes",
+   "source": "server/tests/NomNomzBot.Infrastructure.Tests/Platform/Templating/Helpers/LiveEvents/PredictionHelpersTableTests.cs:39"
+  },
+  "prediction.leading": {
+   "typed": "{prediction.leading}",
+   "result": "Yes",
+   "source": "server/tests/NomNomzBot.Infrastructure.Tests/Platform/Templating/Helpers/LiveEvents/PredictionHelpersTableTests.cs:27"
+  },
+  "prediction.leading.percent": {
+   "typed": "{prediction.leading.percent}",
+   "result": "75%",
+   "source": "server/tests/NomNomzBot.Infrastructure.Tests/Platform/Templating/Helpers/LiveEvents/PredictionHelpersTableTests.cs:29"
+  },
+  "prediction.leading.points": {
+   "typed": "{prediction.leading.points}",
+   "result": "3,000",
+   "source": "server/tests/NomNomzBot.Infrastructure.Tests/Platform/Templating/Helpers/LiveEvents/PredictionHelpersTableTests.cs:28"
+  },
+  "prediction.outcome": {
+   "typed": "{prediction.outcome:2}",
+   "result": "No",
+   "source": "server/tests/NomNomzBot.Infrastructure.Tests/Platform/Templating/Helpers/LiveEvents/PredictionHelpersTableTests.cs:32"
+  },
+  "prediction.outcome.odds": {
+   "typed": "{prediction.outcome.odds:2}",
+   "result": "1:4",
+   "source": "server/tests/NomNomzBot.Infrastructure.Tests/Platform/Templating/Helpers/LiveEvents/PredictionHelpersTableTests.cs:35"
+  },
+  "prediction.outcome.percent": {
+   "typed": "{prediction.outcome.percent:2}",
+   "result": "25%",
+   "source": "server/tests/NomNomzBot.Infrastructure.Tests/Platform/Templating/Helpers/LiveEvents/PredictionHelpersTableTests.cs:34"
+  },
+  "prediction.outcome.points": {
+   "typed": "{prediction.outcome.points:2}",
+   "result": "1,000",
+   "source": "server/tests/NomNomzBot.Infrastructure.Tests/Platform/Templating/Helpers/LiveEvents/PredictionHelpersTableTests.cs:33"
+  },
+  "prediction.outcomes.list": {
+   "typed": "{prediction.outcomes.list}",
+   "result": "Yes, No",
+   "source": "server/tests/NomNomzBot.Infrastructure.Tests/Platform/Templating/Helpers/LiveEvents/PredictionHelpersTableTests.cs:26"
+  },
+  "prediction.points.total": {
+   "typed": "{prediction.points.total}",
+   "result": "4,000",
+   "source": "server/tests/NomNomzBot.Infrastructure.Tests/Platform/Templating/Helpers/LiveEvents/PredictionHelpersTableTests.cs:30"
+  },
+  "prediction.question": {
+   "typed": "{prediction.question}",
+   "result": "Win?",
+   "source": "server/tests/NomNomzBot.Infrastructure.Tests/Platform/Templating/Helpers/LiveEvents/PredictionHelpersTableTests.cs:22"
+  },
+  "prediction.status.now": {
+   "typed": "{prediction.status.now}",
+   "result": "open",
+   "source": "server/tests/NomNomzBot.Infrastructure.Tests/Platform/Templating/Helpers/LiveEvents/PredictionHelpersTableTests.cs:25"
+  },
+  "prediction.timeLeft": {
+   "typed": "{prediction.timeLeft}",
+   "result": "45s",
+   "source": "server/tests/NomNomzBot.Infrastructure.Tests/Platform/Templating/Helpers/LiveEvents/PredictionHelpersTableTests.cs:38"
+  },
+  "prediction.topPredictor": {
+   "typed": "{prediction.topPredictor}",
+   "result": "ViewerOne (1,000)",
+   "source": "server/tests/NomNomzBot.Infrastructure.Tests/Platform/Templating/Helpers/LiveEvents/PredictionHelpersTableTests.cs:37"
+  },
+  "prediction.users.total": {
+   "typed": "{prediction.users.total}",
+   "result": "12",
+   "source": "server/tests/NomNomzBot.Infrastructure.Tests/Platform/Templating/Helpers/LiveEvents/PredictionHelpersTableTests.cs:31"
+  },
+  "quote": {
+   "typed": "{quote:99}",
+   "result": "{quote:99}",
+   "source": "server/tests/NomNomzBot.Infrastructure.Tests/Platform/Templating/Helpers/Composing/ComposingHelpersTableTests.cs:43"
+  },
+  "quote.author": {
+   "typed": "{quote.author:12}",
+   "result": "ViewerTwo",
+   "source": "server/tests/NomNomzBot.Infrastructure.Tests/Platform/Templating/Helpers/Composing/ComposingHelpersTableTests.cs:28"
+  },
+  "quote.count": {
+   "typed": "{quote.count}",
+   "result": "48",
+   "source": "server/tests/NomNomzBot.Infrastructure.Tests/Platform/Templating/Helpers/Composing/ComposingHelpersTableTests.cs:31"
+  },
+  "quote.date": {
+   "typed": "{quote.date:12}",
+   "result": "2026-03-01",
+   "source": "server/tests/NomNomzBot.Infrastructure.Tests/Platform/Templating/Helpers/Composing/ComposingHelpersTableTests.cs:30"
+  },
+  "quote.game": {
+   "typed": "{quote.game:12}",
+   "result": "Just Chatting",
+   "source": "server/tests/NomNomzBot.Infrastructure.Tests/Platform/Templating/Helpers/Composing/ComposingHelpersTableTests.cs:29"
+  },
+  "quote.text": {
+   "typed": "{quote.text:12}",
+   "result": "that was close",
+   "source": "server/tests/NomNomzBot.Infrastructure.Tests/Platform/Templating/Helpers/Composing/ComposingHelpersTableTests.cs:27"
+  },
+  "random.chatter": {
+   "typed": "{random.chatter:1}",
+   "result": "{random.chatter:1}",
+   "source": "server/tests/NomNomzBot.Infrastructure.Tests/Platform/Templating/Helpers/Composing/ComposingHelpersTableTests.cs:103"
+  },
+  "random.chatter.notMe": {
+   "typed": "{random.chatter.notMe}",
+   "result": "ViewerTwo",
+   "source": "server/tests/NomNomzBot.Infrastructure.Tests/Platform/Templating/Helpers/Composing/ComposingHelpersTableTests.cs:101"
+  },
+  "random.decimal": {
+   "typed": "{random.decimal:2|2|2}",
+   "result": "2.00",
+   "source": "server/tests/NomNomzBot.Infrastructure.Tests/Platform/Templating/Helpers/Logic/LogicHelpersTableTests.cs:109"
+  },
+  "random.number": {
+   "typed": "{random.number:1}",
+   "result": "1",
+   "source": "server/tests/NomNomzBot.Infrastructure.Tests/Platform/Templating/Helpers/Logic/LogicHelpersTableTests.cs:107"
+  },
+  "random.number.<n>": {
+   "typed": "{random.number.1}",
+   "result": "1",
+   "source": "server/tests/NomNomzBot.Infrastructure.Tests/Platform/Templating/Helpers/Logic/LogicHelpersTableTests.cs:119"
+  },
+  "schedule.link": {
+   "typed": "{schedule.link}",
+   "result": "https://twitch.tv/samplechannel/schedule",
+   "source": "server/tests/NomNomzBot.Infrastructure.Tests/Platform/Templating/Helpers/Broadcast/AdScheduleHelpersTableTests.cs:51"
+  },
+  "schedule.list": {
+   "typed": "{schedule.list:3}",
+   "result": "Fri 20:00 Bot night · Sun 14:00 Chill · Tue 20:00 Bot night",
+   "source": "server/tests/NomNomzBot.Infrastructure.Tests/Platform/Templating/Helpers/Broadcast/AdScheduleHelpersTableTests.cs:45"
+  },
+  "schedule.next.at": {
+   "typed": "{schedule.next.at}",
+   "result": "Friday 20:00",
+   "source": "server/tests/NomNomzBot.Infrastructure.Tests/Platform/Templating/Helpers/Broadcast/AdScheduleHelpersTableTests.cs:35"
+  },
+  "schedule.next.date": {
+   "typed": "{schedule.next.date}",
+   "result": "Friday 30 October",
+   "source": "server/tests/NomNomzBot.Infrastructure.Tests/Platform/Templating/Helpers/Broadcast/AdScheduleHelpersTableTests.cs:36"
+  },
+  "schedule.next.duration": {
+   "typed": "{schedule.next.duration}",
+   "result": "3h",
+   "source": "server/tests/NomNomzBot.Infrastructure.Tests/Platform/Templating/Helpers/Broadcast/AdScheduleHelpersTableTests.cs:42"
+  },
+  "schedule.next.full": {
+   "typed": "{schedule.next.full}",
+   "result": "next stream in 4 days, Friday 20:00",
+   "source": "server/tests/NomNomzBot.Infrastructure.Tests/Platform/Templating/Helpers/Broadcast/AdScheduleHelpersTableTests.cs:39"
+  },
+  "schedule.next.game": {
+   "typed": "{schedule.next.game}",
+   "result": "Software and Game Development",
+   "source": "server/tests/NomNomzBot.Infrastructure.Tests/Platform/Templating/Helpers/Broadcast/AdScheduleHelpersTableTests.cs:41"
+  },
+  "schedule.next.in": {
+   "typed": "{schedule.next.in}",
+   "result": "4 days",
+   "source": "server/tests/NomNomzBot.Infrastructure.Tests/Platform/Templating/Helpers/Broadcast/AdScheduleHelpersTableTests.cs:37"
+  },
+  "schedule.next.relative": {
+   "typed": "{schedule.next.relative}",
+   "result": "in 4 days",
+   "source": "server/tests/NomNomzBot.Infrastructure.Tests/Platform/Templating/Helpers/Broadcast/AdScheduleHelpersTableTests.cs:38"
+  },
+  "schedule.next.title": {
+   "typed": "{schedule.next.title}",
+   "result": "Bot night",
+   "source": "server/tests/NomNomzBot.Infrastructure.Tests/Platform/Templating/Helpers/Broadcast/AdScheduleHelpersTableTests.cs:40"
+  },
+  "schedule.next.viewerTime": {
+   "typed": "{schedule.next.viewerTime:America/New_York}",
+   "result": "Fri 15:00",
+   "source": "server/tests/NomNomzBot.Infrastructure.Tests/Platform/Templating/Helpers/Broadcast/AdScheduleHelpersTableTests.cs:44"
+  },
+  "schedule.week": {
+   "typed": "{schedule.week}",
+   "result": "Fri, Sun",
+   "source": "server/tests/NomNomzBot.Infrastructure.Tests/Platform/Templating/Helpers/Broadcast/AdScheduleHelpersTableTests.cs:47"
+  },
+  "set": {
+   "typed": "{set:x}",
+   "result": "{set:x}",
+   "source": "server/tests/NomNomzBot.Infrastructure.Tests/Platform/Templating/Helpers/Composing/ComposingHelpersTableTests.cs:60"
+  },
+  "stream.bits.top": {
+   "typed": "{stream.bits.top}",
+   "result": "ViewerOne (500)",
+   "source": "server/tests/NomNomzBot.Infrastructure.Tests/Platform/Templating/Helpers/Stream/StreamHelpersTableTests.cs:60"
+  },
+  "stream.bits.total": {
+   "typed": "{stream.bits.total}",
+   "result": "1,250",
+   "source": "server/tests/NomNomzBot.Infrastructure.Tests/Platform/Templating/Helpers/Stream/StreamHelpersTableTests.cs:59"
+  },
+  "stream.chatters.unique": {
+   "typed": "{stream.chatters.unique}",
+   "result": "33",
+   "source": "server/tests/NomNomzBot.Infrastructure.Tests/Platform/Templating/Helpers/Stream/StreamHelpersTableTests.cs:69"
+  },
+  "stream.commandsRun": {
+   "typed": "{stream.commandsRun}",
+   "result": "88",
+   "source": "server/tests/NomNomzBot.Infrastructure.Tests/Platform/Templating/Helpers/Stream/StreamHelpersTableTests.cs:70"
+  },
+  "stream.count": {
+   "typed": "{stream.count}",
+   "result": "214",
+   "source": "server/tests/NomNomzBot.Infrastructure.Tests/Platform/Templating/Helpers/Stream/StreamHelpersTableTests.cs:90"
+  },
+  "stream.count.month": {
+   "typed": "{stream.count.month}",
+   "result": "11",
+   "source": "server/tests/NomNomzBot.Infrastructure.Tests/Platform/Templating/Helpers/Stream/StreamHelpersTableTests.cs:91"
+  },
+  "stream.followers.latest": {
+   "typed": "{stream.followers.latest}",
+   "result": "ViewerTwo",
+   "source": "server/tests/NomNomzBot.Infrastructure.Tests/Platform/Templating/Helpers/Stream/StreamHelpersTableTests.cs:52"
+  },
+  "stream.followers.new": {
+   "typed": "{stream.followers.new}",
+   "result": "6",
+   "source": "server/tests/NomNomzBot.Infrastructure.Tests/Platform/Templating/Helpers/Stream/StreamHelpersTableTests.cs:50"
+  },
+  "stream.followers.newList": {
+   "typed": "{stream.followers.newList}",
+   "result": "ViewerOne, ViewerTwo",
+   "source": "server/tests/NomNomzBot.Infrastructure.Tests/Platform/Templating/Helpers/Stream/StreamHelpersTableTests.cs:51"
+  },
+  "stream.game.short": {
+   "typed": "{stream.game.short}",
+   "result": "Software and Game Development",
+   "source": "server/tests/NomNomzBot.Infrastructure.Tests/Platform/Templating/Helpers/Stream/StreamHelpersTableTests.cs:38"
+  },
+  "stream.hours.month": {
+   "typed": "{stream.hours.month}",
+   "result": "46h",
+   "source": "server/tests/NomNomzBot.Infrastructure.Tests/Platform/Templating/Helpers/Stream/StreamHelpersTableTests.cs:92"
+  },
+  "stream.hypetrains": {
+   "typed": "{stream.hypetrains}",
+   "result": "1",
+   "source": "server/tests/NomNomzBot.Infrastructure.Tests/Platform/Templating/Helpers/Stream/StreamHelpersTableTests.cs:64"
+  },
+  "stream.hypetrains.topLevel": {
+   "typed": "{stream.hypetrains.topLevel}",
+   "result": "3",
+   "source": "server/tests/NomNomzBot.Infrastructure.Tests/Platform/Templating/Helpers/Stream/StreamHelpersTableTests.cs:65"
+  },
+  "stream.id": {
+   "typed": "{stream.id}",
+   "result": "40123456789",
+   "source": "server/tests/NomNomzBot.Infrastructure.Tests/Platform/Templating/Helpers/Stream/StreamHelpersTableTests.cs:34"
+  },
+  "stream.last.duration": {
+   "typed": "{stream.last.duration}",
+   "result": "4h 10m",
+   "source": "server/tests/NomNomzBot.Infrastructure.Tests/Platform/Templating/Helpers/Stream/StreamHelpersTableTests.cs:79"
+  },
+  "stream.last.endedAt": {
+   "typed": "{stream.last.endedAt}",
+   "result": "2026-10-24",
+   "source": "server/tests/NomNomzBot.Infrastructure.Tests/Platform/Templating/Helpers/Stream/StreamHelpersTableTests.cs:76"
+  },
+  "stream.last.followers": {
+   "typed": "{stream.last.followers}",
+   "result": "9",
+   "source": "server/tests/NomNomzBot.Infrastructure.Tests/Platform/Templating/Helpers/Stream/StreamHelpersTableTests.cs:83"
+  },
+  "stream.last.game": {
+   "typed": "{stream.last.game}",
+   "result": "Just Chatting",
+   "source": "server/tests/NomNomzBot.Infrastructure.Tests/Platform/Templating/Helpers/Stream/StreamHelpersTableTests.cs:80"
+  },
+  "stream.last.messages": {
+   "typed": "{stream.last.messages}",
+   "result": "3,102",
+   "source": "server/tests/NomNomzBot.Infrastructure.Tests/Platform/Templating/Helpers/Stream/StreamHelpersTableTests.cs:85"
+  },
+  "stream.last.peak": {
+   "typed": "{stream.last.peak}",
+   "result": "61",
+   "source": "server/tests/NomNomzBot.Infrastructure.Tests/Platform/Templating/Helpers/Stream/StreamHelpersTableTests.cs:82"
+  },
+  "stream.last.relative": {
+   "typed": "{stream.last.relative}",
+   "result": "2 days ago",
+   "source": "server/tests/NomNomzBot.Infrastructure.Tests/Platform/Templating/Helpers/Stream/StreamHelpersTableTests.cs:78"
+  },
+  "stream.last.since": {
+   "typed": "{stream.last.since}",
+   "result": "1 day, 16 hours",
+   "source": "server/tests/NomNomzBot.Infrastructure.Tests/Platform/Templating/Helpers/Stream/StreamHelpersTableTests.cs:77"
+  },
+  "stream.last.subs": {
+   "typed": "{stream.last.subs}",
+   "result": "4",
+   "source": "server/tests/NomNomzBot.Infrastructure.Tests/Platform/Templating/Helpers/Stream/StreamHelpersTableTests.cs:84"
+  },
+  "stream.last.title": {
+   "typed": "{stream.last.title}",
+   "result": "Chill Saturday",
+   "source": "server/tests/NomNomzBot.Infrastructure.Tests/Platform/Templating/Helpers/Stream/StreamHelpersTableTests.cs:81"
+  },
+  "stream.messages": {
+   "typed": "{stream.messages}",
+   "result": "2,430",
+   "source": "server/tests/NomNomzBot.Infrastructure.Tests/Platform/Templating/Helpers/Stream/StreamHelpersTableTests.cs:68"
+  },
+  "stream.number": {
+   "typed": "{stream.number}",
+   "result": "stream #214",
+   "source": "server/tests/NomNomzBot.Infrastructure.Tests/Platform/Templating/Helpers/Stream/StreamHelpersTableTests.cs:93"
+  },
+  "stream.raids.in": {
+   "typed": "{stream.raids.in}",
+   "result": "1",
+   "source": "server/tests/NomNomzBot.Infrastructure.Tests/Platform/Templating/Helpers/Stream/StreamHelpersTableTests.cs:61"
+  },
+  "stream.raids.lastRaider": {
+   "typed": "{stream.raids.lastRaider}",
+   "result": "OtherStreamer",
+   "source": "server/tests/NomNomzBot.Infrastructure.Tests/Platform/Templating/Helpers/Stream/StreamHelpersTableTests.cs:62"
+  },
+  "stream.raids.lastRaiderViewers": {
+   "typed": "{stream.raids.lastRaiderViewers}",
+   "result": "25",
+   "source": "server/tests/NomNomzBot.Infrastructure.Tests/Platform/Templating/Helpers/Stream/StreamHelpersTableTests.cs:63"
+  },
+  "stream.redemptions": {
+   "typed": "{stream.redemptions}",
+   "result": "14",
+   "source": "server/tests/NomNomzBot.Infrastructure.Tests/Platform/Templating/Helpers/Stream/StreamHelpersTableTests.cs:66"
+  },
+  "stream.songRequesters": {
+   "typed": "{stream.songRequesters}",
+   "result": "4",
+   "source": "server/tests/NomNomzBot.Infrastructure.Tests/Platform/Templating/Helpers/Stream/StreamHelpersTableTests.cs:67"
+  },
+  "stream.startedAt.local": {
+   "typed": "{stream.startedAt.local}",
+   "result": "13:15",
+   "source": "server/tests/NomNomzBot.Infrastructure.Tests/Platform/Templating/Helpers/Stream/StreamHelpersTableTests.cs:31"
+  },
+  "stream.startedAt.relative": {
+   "typed": "{stream.startedAt.relative}",
+   "result": "2 hours ago",
+   "source": "server/tests/NomNomzBot.Infrastructure.Tests/Platform/Templating/Helpers/Stream/StreamHelpersTableTests.cs:32"
+  },
+  "stream.status": {
+   "typed": "{stream.status}",
+   "result": "live",
+   "source": "server/tests/NomNomzBot.Infrastructure.Tests/Platform/Templating/Helpers/Stream/StreamHelpersTableTests.cs:33"
+  },
+  "stream.subs.gifted": {
+   "typed": "{stream.subs.gifted}",
+   "result": "5",
+   "source": "server/tests/NomNomzBot.Infrastructure.Tests/Platform/Templating/Helpers/Stream/StreamHelpersTableTests.cs:55"
+  },
+  "stream.subs.new": {
+   "typed": "{stream.subs.new}",
+   "result": "3",
+   "source": "server/tests/NomNomzBot.Infrastructure.Tests/Platform/Templating/Helpers/Stream/StreamHelpersTableTests.cs:53"
+  },
+  "stream.subs.resubs": {
+   "typed": "{stream.subs.resubs}",
+   "result": "2",
+   "source": "server/tests/NomNomzBot.Infrastructure.Tests/Platform/Templating/Helpers/Stream/StreamHelpersTableTests.cs:54"
+  },
+  "stream.subs.selfSubs": {
+   "typed": "{stream.subs.selfSubs}",
+   "result": "1",
+   "source": "server/tests/NomNomzBot.Infrastructure.Tests/Platform/Templating/Helpers/Stream/StreamHelpersTableTests.cs:58"
+  },
+  "stream.subs.topGifter": {
+   "typed": "{stream.subs.topGifter}",
+   "result": "ViewerTwo",
+   "source": "server/tests/NomNomzBot.Infrastructure.Tests/Platform/Templating/Helpers/Stream/StreamHelpersTableTests.cs:57"
+  },
+  "stream.subs.total": {
+   "typed": "{stream.subs.total}",
+   "result": "10",
+   "source": "server/tests/NomNomzBot.Infrastructure.Tests/Platform/Templating/Helpers/Stream/StreamHelpersTableTests.cs:56"
+  },
+  "stream.title.short": {
+   "typed": "{stream.title.short:8}",
+   "result": "Building…",
+   "source": "server/tests/NomNomzBot.Infrastructure.Tests/Platform/Templating/Helpers/Stream/StreamHelpersTableTests.cs:36"
+  },
+  "stream.topChatter": {
+   "typed": "{stream.topChatter}",
+   "result": "ViewerOne (140)",
+   "source": "server/tests/NomNomzBot.Infrastructure.Tests/Platform/Templating/Helpers/Stream/StreamHelpersTableTests.cs:71"
+  },
+  "stream.topChatters": {
+   "typed": "{stream.topChatters:3}",
+   "result": "ViewerOne, ViewerTwo, ViewerThree",
+   "source": "server/tests/NomNomzBot.Infrastructure.Tests/Platform/Templating/Helpers/Stream/StreamHelpersTableTests.cs:72"
+  },
+  "stream.topCommand": {
+   "typed": "{stream.topCommand}",
+   "result": "!hug (31)",
+   "source": "server/tests/NomNomzBot.Infrastructure.Tests/Platform/Templating/Helpers/Stream/StreamHelpersTableTests.cs:74"
+  },
+  "stream.uptime.clock": {
+   "typed": "{stream.uptime.clock}",
+   "result": "2:15:00",
+   "source": "server/tests/NomNomzBot.Infrastructure.Tests/Platform/Templating/Helpers/Stream/StreamHelpersTableTests.cs:27"
+  },
+  "stream.uptime.hours": {
+   "typed": "{stream.uptime.hours}",
+   "result": "2.25",
+   "source": "server/tests/NomNomzBot.Infrastructure.Tests/Platform/Templating/Helpers/Stream/StreamHelpersTableTests.cs:29"
+  },
+  "stream.uptime.long": {
+   "typed": "{stream.uptime.long}",
+   "result": "2 hours, 15 minutes",
+   "source": "server/tests/NomNomzBot.Infrastructure.Tests/Platform/Templating/Helpers/Stream/StreamHelpersTableTests.cs:26"
+  },
+  "stream.uptime.minutes": {
+   "typed": "{stream.uptime.minutes}",
+   "result": "135",
+   "source": "server/tests/NomNomzBot.Infrastructure.Tests/Platform/Templating/Helpers/Stream/StreamHelpersTableTests.cs:28"
+  },
+  "stream.uptime.since": {
+   "typed": "{stream.uptime.since}",
+   "result": "live since 13:15",
+   "source": "server/tests/NomNomzBot.Infrastructure.Tests/Platform/Templating/Helpers/Stream/StreamHelpersTableTests.cs:30"
+  },
+  "stream.viewers.compact": {
+   "typed": "{stream.viewers.compact}",
+   "result": "42",
+   "source": "server/tests/NomNomzBot.Infrastructure.Tests/Platform/Templating/Helpers/Stream/StreamHelpersTableTests.cs:47"
+  },
+  "stream.viewers.peak": {
+   "typed": "{stream.viewers.peak}",
+   "result": "57",
+   "source": "server/tests/NomNomzBot.Infrastructure.Tests/Platform/Templating/Helpers/Stream/StreamHelpersTableTests.cs:48"
+  },
+  "switch": {
+   "typed": "{switch:they/them|she/her=queen|he/him=king|royal}",
+   "result": "royal",
+   "source": "server/tests/NomNomzBot.Infrastructure.Tests/Platform/Templating/Helpers/Logic/LogicHelpersTableTests.cs:83"
+  },
+  "switch.range": {
+   "typed": "{switch.range:7|5=fine|10=hmm|oof}",
+   "result": "hmm",
+   "source": "server/tests/NomNomzBot.Infrastructure.Tests/Platform/Templating/Helpers/Logic/LogicHelpersTableTests.cs:86"
+  },
+  "target.accountAge": {
+   "typed": "{target.accountAge}",
+   "result": "7 years, 5 months",
+   "source": "server/tests/NomNomzBot.Infrastructure.Tests/Platform/Templating/Helpers/People/PeopleHelpersTableTests.cs:74"
+  },
+  "target.activity.level": {
+   "typed": "{target.activity.level}",
+   "result": "veteran",
+   "source": "server/tests/NomNomzBot.Infrastructure.Tests/Platform/Templating/Helpers/People/PeopleHelpersTableTests.cs:43"
+  },
+  "target.avatar": {
+   "typed": "{target.avatar}",
+   "result": "https://static-cdn.jtvnw.net/jtv_user_pictures/viewertwo.png",
+   "source": "server/tests/NomNomzBot.Infrastructure.Tests/Platform/Templating/Helpers/People/PeopleHelpersTableTests.cs:68"
+  },
+  "target.bio": {
+   "typed": "{target.bio}",
+   "result": "I build castles",
+   "source": "server/tests/NomNomzBot.Infrastructure.Tests/Platform/Templating/Helpers/People/PeopleHelpersTableTests.cs:70"
+  },
+  "target.color": {
+   "typed": "{target.color}",
+   "result": "#FF4500",
+   "source": "server/tests/NomNomzBot.Infrastructure.Tests/Platform/Templating/Helpers/People/PeopleHelpersTableTests.cs:66"
+  },
+  "target.createdAt": {
+   "typed": "{target.createdAt}",
+   "result": "2019-05-02",
+   "source": "server/tests/NomNomzBot.Infrastructure.Tests/Platform/Templating/Helpers/People/PeopleHelpersTableTests.cs:72"
+  },
+  "target.game": {
+   "typed": "{target.game}",
+   "result": "Minecraft",
+   "source": "server/tests/NomNomzBot.Infrastructure.Tests/Platform/Templating/Helpers/People/PeopleHelpersTableTests.cs:78"
+  },
+  "target.mention": {
+   "typed": "{target.mention}",
+   "result": "@ViewerTwo",
+   "source": "server/tests/NomNomzBot.Infrastructure.Tests/Platform/Templating/Helpers/People/PeopleHelpersTableTests.cs:27"
+  },
+  "target.points": {
+   "typed": "{target.points}",
+   "result": "800",
+   "source": "server/tests/NomNomzBot.Infrastructure.Tests/Platform/Templating/Helpers/People/PeopleHelpersTableTests.cs:62"
+  },
+  "target.points.rank": {
+   "typed": "{target.points.rank}",
+   "result": "17",
+   "source": "server/tests/NomNomzBot.Infrastructure.Tests/Platform/Templating/Helpers/People/PeopleHelpersTableTests.cs:63"
+  },
+  "target.shoutoutLink": {
+   "typed": "{target.shoutoutLink}",
+   "result": "https://twitch.tv/viewertwo",
+   "source": "server/tests/NomNomzBot.Infrastructure.Tests/Platform/Templating/Helpers/People/PeopleHelpersTableTests.cs:28"
+  },
+  "target.stats.bits": {
+   "typed": "{target.stats.bits}",
+   "result": "0",
+   "source": "server/tests/NomNomzBot.Infrastructure.Tests/Platform/Templating/Helpers/People/PeopleHelpersTableTests.cs:45"
+  },
+  "target.stats.lastSeen": {
+   "typed": "{target.stats.lastSeen}",
+   "result": "2026-10-25",
+   "source": "server/tests/NomNomzBot.Infrastructure.Tests/Platform/Templating/Helpers/People/PeopleHelpersTableTests.cs:44"
+  },
+  "target.stats.streak": {
+   "typed": "{target.stats.streak}",
+   "result": "2",
+   "source": "server/tests/NomNomzBot.Infrastructure.Tests/Platform/Templating/Helpers/People/PeopleHelpersTableTests.cs:53"
+  },
+  "target.title": {
+   "typed": "{target.title}",
+   "result": "Building castles",
+   "source": "server/tests/NomNomzBot.Infrastructure.Tests/Platform/Templating/Helpers/People/PeopleHelpersTableTests.cs:79"
+  },
+  "target.viewers": {
+   "typed": "{target.viewers}",
+   "result": "0",
+   "source": "server/tests/NomNomzBot.Infrastructure.Tests/Platform/Templating/Helpers/People/PeopleHelpersTableTests.cs:77"
+  },
+  "text.alternating": {
+   "typed": "{text.alternating:hello}",
+   "result": "HeLlO",
+   "source": "server/tests/NomNomzBot.Infrastructure.Tests/Platform/Templating/Helpers/Text/TextHelpersTableTests.cs:46"
+  },
+  "text.article": {
+   "typed": "{text.article:apple}",
+   "result": "an apple",
+   "source": "server/tests/NomNomzBot.Infrastructure.Tests/Platform/Templating/Helpers/Text/TextHelpersTableA2Tests.cs:103"
+  },
+  "text.base64.decode": {
+   "typed": "{text.base64.decode:aGk=}",
+   "result": "hi",
+   "source": "server/tests/NomNomzBot.Infrastructure.Tests/Platform/Templating/Helpers/Text/TextHelpersTableA2Tests.cs:56"
+  },
+  "text.base64.encode": {
+   "typed": "{text.base64.encode:hi}",
+   "result": "aGk=",
+   "source": "server/tests/NomNomzBot.Infrastructure.Tests/Platform/Templating/Helpers/Text/TextHelpersTableA2Tests.cs:55"
+  },
+  "text.bold": {
+   "typed": "{text.bold:hi}",
+   "result": "𝐡𝐢",
+   "source": "server/tests/NomNomzBot.Infrastructure.Tests/Platform/Templating/Helpers/Text/TextHelpersTableA2Tests.cs:73"
+  },
+  "text.bubble": {
+   "typed": "{text.bubble:hi}",
+   "result": "ⓗⓘ",
+   "source": "server/tests/NomNomzBot.Infrastructure.Tests/Platform/Templating/Helpers/Text/TextHelpersTableA2Tests.cs:78"
+  },
+  "text.camel": {
+   "typed": "{text.camel:hello big world}",
+   "result": "helloBigWorld",
+   "source": "server/tests/NomNomzBot.Infrastructure.Tests/Platform/Templating/Helpers/Text/TextHelpersTableA2Tests.cs:46"
+  },
+  "text.capitalize": {
+   "typed": "{text.capitalize:hello world}",
+   "result": "Hello world",
+   "source": "server/tests/NomNomzBot.Infrastructure.Tests/Platform/Templating/Helpers/Text/TextHelpersTableTests.cs:41"
+  },
+  "text.censor": {
+   "typed": "{text.censor:you noob|noob}",
+   "result": "you ****",
+   "source": "server/tests/NomNomzBot.Infrastructure.Tests/Platform/Templating/Helpers/Text/TextHelpersTableA2Tests.cs:65"
+  },
+  "text.center": {
+   "typed": "{text.center:hi|6|*}",
+   "result": "**hi**",
+   "source": "server/tests/NomNomzBot.Infrastructure.Tests/Platform/Templating/Helpers/Text/TextHelpersTableTests.cs:58"
+  },
+  "text.chars.count": {
+   "typed": "{text.chars.count:hello}",
+   "result": "5",
+   "source": "server/tests/NomNomzBot.Infrastructure.Tests/Platform/Templating/Helpers/Text/TextHelpersTableTests.cs:70"
+  },
+  "text.clap": {
+   "typed": "{text.clap:big world}",
+   "result": "big 👏 world",
+   "source": "server/tests/NomNomzBot.Infrastructure.Tests/Platform/Templating/Helpers/Text/TextHelpersTableA2Tests.cs:88"
+  },
+  "text.count": {
+   "typed": "{text.count:banana|a}",
+   "result": "3",
+   "source": "server/tests/NomNomzBot.Infrastructure.Tests/Platform/Templating/Helpers/Text/TextHelpersTableTests.cs:74"
+  },
+  "text.cut": {
+   "typed": "{text.cut:hello world|max=8|end=...}",
+   "result": "hello...",
+   "source": "server/tests/NomNomzBot.Infrastructure.Tests/Platform/Templating/Helpers/Text/TextHelpersTableTests.cs:54"
+  },
+  "text.cut.words": {
+   "typed": "{text.cut.words:hello big world|2}",
+   "result": "hello big…",
+   "source": "server/tests/NomNomzBot.Infrastructure.Tests/Platform/Templating/Helpers/Text/TextHelpersTableTests.cs:55"
+  },
+  "text.decapitalize": {
+   "typed": "{text.decapitalize:Hello}",
+   "result": "hello",
+   "source": "server/tests/NomNomzBot.Infrastructure.Tests/Platform/Templating/Helpers/Text/TextHelpersTableTests.cs:42"
+  },
+  "text.digits": {
+   "typed": "{text.digits:a1b22}",
+   "result": "122",
+   "source": "server/tests/NomNomzBot.Infrastructure.Tests/Platform/Templating/Helpers/Text/TextHelpersTableA2Tests.cs:62"
+  },
+  "text.escape.chat": {
+   "typed": "{text.escape.chat:/ban x}",
+   "result": "⁄ban x",
+   "source": "server/tests/NomNomzBot.Infrastructure.Tests/Platform/Templating/Helpers/Text/TextHelpersTableA2Tests.cs:92"
+  },
+  "text.first": {
+   "typed": "{text.first:3|hello}",
+   "result": "hel",
+   "source": "server/tests/NomNomzBot.Infrastructure.Tests/Platform/Templating/Helpers/Text/TextHelpersTableA2Tests.cs:34"
+  },
+  "text.fullwidth": {
+   "typed": "{text.fullwidth:hi}",
+   "result": "ｈｉ",
+   "source": "server/tests/NomNomzBot.Infrastructure.Tests/Platform/Templating/Helpers/Text/TextHelpersTableA2Tests.cs:72"
+  },
+  "text.hashtag": {
+   "typed": "{text.hashtag:big world}",
+   "result": "#BigWorld",
+   "source": "server/tests/NomNomzBot.Infrastructure.Tests/Platform/Templating/Helpers/Text/TextHelpersTableA2Tests.cs:48"
+  },
+  "text.html.strip": {
+   "typed": "{text.html.strip:<b>hi</b>}",
+   "result": "hi",
+   "source": "server/tests/NomNomzBot.Infrastructure.Tests/Platform/Templating/Helpers/Text/TextHelpersTableA2Tests.cs:58"
+  },
+  "text.initials": {
+   "typed": "{text.initials:big world}",
+   "result": "BW",
+   "source": "server/tests/NomNomzBot.Infrastructure.Tests/Platform/Templating/Helpers/Text/TextHelpersTableA2Tests.cs:38"
+  },
+  "text.italic": {
+   "typed": "{text.italic:hi}",
+   "result": "𝘩𝘪",
+   "source": "server/tests/NomNomzBot.Infrastructure.Tests/Platform/Templating/Helpers/Text/TextHelpersTableA2Tests.cs:74"
+  },
+  "text.join.and": {
+   "typed": "{text.join.and:a|b|c}",
+   "result": "a, b and c",
+   "source": "server/tests/NomNomzBot.Infrastructure.Tests/Platform/Templating/Helpers/Text/TextHelpersTableA2Tests.cs:109"
+  },
+  "text.join.or": {
+   "typed": "{text.join.or:a|b|c}",
+   "result": "a, b or c",
+   "source": "server/tests/NomNomzBot.Infrastructure.Tests/Platform/Templating/Helpers/Text/TextHelpersTableA2Tests.cs:112"
+  },
+  "text.kebab": {
+   "typed": "{text.kebab:Hello Big World}",
+   "result": "hello-big-world",
+   "source": "server/tests/NomNomzBot.Infrastructure.Tests/Platform/Templating/Helpers/Text/TextHelpersTableA2Tests.cs:45"
+  },
+  "text.last": {
+   "typed": "{text.last:3|hello}",
+   "result": "llo",
+   "source": "server/tests/NomNomzBot.Infrastructure.Tests/Platform/Templating/Helpers/Text/TextHelpersTableA2Tests.cs:35"
+  },
+  "text.leet": {
+   "typed": "{text.leet:leet}",
+   "result": "l337",
+   "source": "server/tests/NomNomzBot.Infrastructure.Tests/Platform/Templating/Helpers/Text/TextHelpersTableA2Tests.cs:85"
+  },
+  "text.length.fit": {
+   "typed": "{text.length.fit:hello|3}",
+   "result": "hel",
+   "source": "server/tests/NomNomzBot.Infrastructure.Tests/Platform/Templating/Helpers/Text/TextHelpersTableA2Tests.cs:37"
+  },
+  "text.letters": {
+   "typed": "{text.letters:a1b2}",
+   "result": "ab",
+   "source": "server/tests/NomNomzBot.Infrastructure.Tests/Platform/Templating/Helpers/Text/TextHelpersTableA2Tests.cs:63"
+  },
+  "text.letters.count": {
+   "typed": "{text.letters.count:a1 b2}",
+   "result": "2",
+   "source": "server/tests/NomNomzBot.Infrastructure.Tests/Platform/Templating/Helpers/Text/TextHelpersTableTests.cs:71"
+  },
+  "text.lines.wrap": {
+   "typed": "{text.lines.wrap:aaa bbb ccc|7}",
+   "result": "aaa bbb / ccc",
+   "source": "server/tests/NomNomzBot.Infrastructure.Tests/Platform/Templating/Helpers/Text/TextHelpersTableTests.cs:68"
+  },
+  "text.links.strip": {
+   "typed": "{text.links.strip:see https://a.b now}",
+   "result": "see now",
+   "source": "server/tests/NomNomzBot.Infrastructure.Tests/Platform/Templating/Helpers/Text/TextHelpersTableA2Tests.cs:60"
+  },
+  "text.lower": {
+   "typed": "{text.lower:HeLLo}",
+   "result": "hello",
+   "source": "server/tests/NomNomzBot.Infrastructure.Tests/Platform/Templating/Helpers/Text/TextHelpersTableTests.cs:38"
+  },
+  "text.mask": {
+   "typed": "{text.mask:secret|2}",
+   "result": "****et",
+   "source": "server/tests/NomNomzBot.Infrastructure.Tests/Platform/Templating/Helpers/Text/TextHelpersTableA2Tests.cs:67"
+  },
+  "text.mentions.strip": {
+   "typed": "{text.mentions.strip:@ViewerTwo hi}",
+   "result": "hi",
+   "source": "server/tests/NomNomzBot.Infrastructure.Tests/Platform/Templating/Helpers/Text/TextHelpersTableA2Tests.cs:61"
+  },
+  "text.mocking": {
+   "typed": "{text.mocking:hello}",
+   "result": "hElLo",
+   "source": "server/tests/NomNomzBot.Infrastructure.Tests/Platform/Templating/Helpers/Text/TextHelpersTableTests.cs:47"
+  },
+  "text.monospace": {
+   "typed": "{text.monospace:hi}",
+   "result": "𝚑𝚒",
+   "source": "server/tests/NomNomzBot.Infrastructure.Tests/Platform/Templating/Helpers/Text/TextHelpersTableA2Tests.cs:75"
+  },
+  "text.pad.left": {
+   "typed": "{text.pad.left:7|3|0}",
+   "result": "007",
+   "source": "server/tests/NomNomzBot.Infrastructure.Tests/Platform/Templating/Helpers/Text/TextHelpersTableTests.cs:56"
+  },
+  "text.pad.right": {
+   "typed": "{text.pad.right:ab|4|.}",
+   "result": "ab..",
+   "source": "server/tests/NomNomzBot.Infrastructure.Tests/Platform/Templating/Helpers/Text/TextHelpersTableTests.cs:57"
+  },
+  "text.paren": {
+   "typed": "{text.paren:hi}",
+   "result": "(hi)",
+   "source": "server/tests/NomNomzBot.Infrastructure.Tests/Platform/Templating/Helpers/Text/TextHelpersTableTests.cs:67"
+  },
+  "text.pascal": {
+   "typed": "{text.pascal:hello big world}",
+   "result": "HelloBigWorld",
+   "source": "server/tests/NomNomzBot.Infrastructure.Tests/Platform/Templating/Helpers/Text/TextHelpersTableA2Tests.cs:47"
+  },
+  "text.path.encode": {
+   "typed": "{text.path.encode:a/b c}",
+   "result": "a%2Fb%20c",
+   "source": "server/tests/NomNomzBot.Infrastructure.Tests/Platform/Templating/Helpers/Text/TextHelpersTableA2Tests.cs:54"
+  },
+  "text.plain": {
+   "typed": "{text.plain:𝐡𝐢 ⓗⓘ}",
+   "result": "hi hi",
+   "source": "server/tests/NomNomzBot.Infrastructure.Tests/Platform/Templating/Helpers/Text/TextHelpersTableA2Tests.cs:83"
+  },
+  "text.plural": {
+   "typed": "{text.plural:3|sub|subs}",
+   "result": "subs",
+   "source": "server/tests/NomNomzBot.Infrastructure.Tests/Platform/Templating/Helpers/Text/TextHelpersTableA2Tests.cs:96"
+  },
+  "text.plural.auto": {
+   "typed": "{text.plural.auto:2|box}",
+   "result": "boxes",
+   "source": "server/tests/NomNomzBot.Infrastructure.Tests/Platform/Templating/Helpers/Text/TextHelpersTableA2Tests.cs:100"
+  },
+  "text.plural.count": {
+   "typed": "{text.plural.count:3|sub|subs}",
+   "result": "3 subs",
+   "source": "server/tests/NomNomzBot.Infrastructure.Tests/Platform/Templating/Helpers/Text/TextHelpersTableA2Tests.cs:98"
+  },
+  "text.possessive": {
+   "typed": "{text.possessive:James}",
+   "result": "James'",
+   "source": "server/tests/NomNomzBot.Infrastructure.Tests/Platform/Templating/Helpers/Text/TextHelpersTableA2Tests.cs:107"
+  },
+  "text.query.encode": {
+   "typed": "{text.query.encode:a b}",
+   "result": "a+b",
+   "source": "server/tests/NomNomzBot.Infrastructure.Tests/Platform/Templating/Helpers/Text/TextHelpersTableA2Tests.cs:53"
+  },
+  "text.remove": {
+   "typed": "{text.remove:hello world|o}",
+   "result": "hell wrld",
+   "source": "server/tests/NomNomzBot.Infrastructure.Tests/Platform/Templating/Helpers/Text/TextHelpersTableTests.cs:64"
+  },
+  "text.repeat": {
+   "typed": "{text.repeat:3|ha}",
+   "result": "hahaha",
+   "source": "server/tests/NomNomzBot.Infrastructure.Tests/Platform/Templating/Helpers/Text/TextHelpersTableTests.cs:59"
+  },
+  "text.replace": {
+   "typed": "{text.replace:hello world|world|chat}",
+   "result": "hello chat",
+   "source": "server/tests/NomNomzBot.Infrastructure.Tests/Platform/Templating/Helpers/Text/TextHelpersTableTests.cs:61"
+  },
+  "text.replace.first": {
+   "typed": "{text.replace.first:a a a|a|b}",
+   "result": "b a a",
+   "source": "server/tests/NomNomzBot.Infrastructure.Tests/Platform/Templating/Helpers/Text/TextHelpersTableTests.cs:62"
+  },
+  "text.replace.icase": {
+   "typed": "{text.replace.icase:Hello|hello|bye}",
+   "result": "bye",
+   "source": "server/tests/NomNomzBot.Infrastructure.Tests/Platform/Templating/Helpers/Text/TextHelpersTableTests.cs:63"
+  },
+  "text.reverse": {
+   "typed": "{text.reverse:abc}",
+   "result": "cba",
+   "source": "server/tests/NomNomzBot.Infrastructure.Tests/Platform/Templating/Helpers/Text/TextHelpersTableTests.cs:49"
+  },
+  "text.reverse.words": {
+   "typed": "{text.reverse.words:hello big world}",
+   "result": "world big hello",
+   "source": "server/tests/NomNomzBot.Infrastructure.Tests/Platform/Templating/Helpers/Text/TextHelpersTableTests.cs:50"
+  },
+  "text.rot13": {
+   "typed": "{text.rot13:hello}",
+   "result": "uryyb",
+   "source": "server/tests/NomNomzBot.Infrastructure.Tests/Platform/Templating/Helpers/Text/TextHelpersTableA2Tests.cs:86"
+  },
+  "text.script": {
+   "typed": "{text.script:hi}",
+   "result": "𝒽𝒾",
+   "source": "server/tests/NomNomzBot.Infrastructure.Tests/Platform/Templating/Helpers/Text/TextHelpersTableA2Tests.cs:76"
+  },
+  "text.sentence": {
+   "typed": "{text.sentence:hello WORLD. bye}",
+   "result": "Hello world. Bye",
+   "source": "server/tests/NomNomzBot.Infrastructure.Tests/Platform/Templating/Helpers/Text/TextHelpersTableTests.cs:40"
+  },
+  "text.singular": {
+   "typed": "{text.singular:boxes}",
+   "result": "box",
+   "source": "server/tests/NomNomzBot.Infrastructure.Tests/Platform/Templating/Helpers/Text/TextHelpersTableA2Tests.cs:102"
+  },
+  "text.slug": {
+   "typed": "{text.slug:Hello Big World!}",
+   "result": "hello-big-world",
+   "source": "server/tests/NomNomzBot.Infrastructure.Tests/Platform/Templating/Helpers/Text/TextHelpersTableA2Tests.cs:42"
+  },
+  "text.smallcaps": {
+   "typed": "{text.smallcaps:hello}",
+   "result": "ʜᴇʟʟᴏ",
+   "source": "server/tests/NomNomzBot.Infrastructure.Tests/Platform/Templating/Helpers/Text/TextHelpersTableA2Tests.cs:70"
+  },
+  "text.snake": {
+   "typed": "{text.snake:Hello Big World}",
+   "result": "hello_big_world",
+   "source": "server/tests/NomNomzBot.Infrastructure.Tests/Platform/Templating/Helpers/Text/TextHelpersTableA2Tests.cs:44"
+  },
+  "text.spaced": {
+   "typed": "{text.spaced:hype}",
+   "result": "h y p e",
+   "source": "server/tests/NomNomzBot.Infrastructure.Tests/Platform/Templating/Helpers/Text/TextHelpersTableTests.cs:44"
+  },
+  "text.spongecase": {
+   "typed": "{text.spongecase:hello world}",
+   "result": "hElLo WoRlD",
+   "source": "server/tests/NomNomzBot.Infrastructure.Tests/Platform/Templating/Helpers/Text/TextHelpersTableTests.cs:48"
+  },
+  "text.squared": {
+   "typed": "{text.squared:HI}",
+   "result": "🄷🄸",
+   "source": "server/tests/NomNomzBot.Infrastructure.Tests/Platform/Templating/Helpers/Text/TextHelpersTableA2Tests.cs:79"
+  },
+  "text.squish": {
+   "typed": "{text.squish:a    b  c}",
+   "result": "a b c",
+   "source": "server/tests/NomNomzBot.Infrastructure.Tests/Platform/Templating/Helpers/Text/TextHelpersTableTests.cs:52"
+  },
+  "text.strike": {
+   "typed": "{text.strike:hi}",
+   "result": "h̶i̶",
+   "source": "server/tests/NomNomzBot.Infrastructure.Tests/Platform/Templating/Helpers/Text/TextHelpersTableA2Tests.cs:80"
+  },
+  "text.stutter": {
+   "typed": "{text.stutter:hello}",
+   "result": "h-hello",
+   "source": "server/tests/NomNomzBot.Infrastructure.Tests/Platform/Templating/Helpers/Text/TextHelpersTableA2Tests.cs:90"
+  },
+  "text.substring": {
+   "typed": "{text.substring:2|3|hello}",
+   "result": "ell",
+   "source": "server/tests/NomNomzBot.Infrastructure.Tests/Platform/Templating/Helpers/Text/TextHelpersTableA2Tests.cs:36"
+  },
+  "text.superscript": {
+   "typed": "{text.superscript:hi}",
+   "result": "ʰⁱ",
+   "source": "server/tests/NomNomzBot.Infrastructure.Tests/Platform/Templating/Helpers/Text/TextHelpersTableA2Tests.cs:82"
+  },
+  "text.swapcase": {
+   "typed": "{text.swapcase:Hello}",
+   "result": "hELLO",
+   "source": "server/tests/NomNomzBot.Infrastructure.Tests/Platform/Templating/Helpers/Text/TextHelpersTableTests.cs:43"
+  },
+  "text.title": {
+   "typed": "{text.title:big world}",
+   "result": "Big World",
+   "source": "server/tests/NomNomzBot.Infrastructure.Tests/Platform/Templating/Helpers/Text/TextHelpersTableTests.cs:39"
+  },
+  "text.trim": {
+   "typed": "{text.trim:  hi  }",
+   "result": "hi",
+   "source": "server/tests/NomNomzBot.Infrastructure.Tests/Platform/Templating/Helpers/Text/TextHelpersTableTests.cs:51"
+  },
+  "text.truncate": {
+   "typed": "{text.truncate:5|hello world}",
+   "result": "hello…",
+   "source": "server/tests/NomNomzBot.Infrastructure.Tests/Platform/Templating/Helpers/Text/TextHelpersTableTests.cs:53"
+  },
+  "text.underline": {
+   "typed": "{text.underline:hi}",
+   "result": "h̲i̲",
+   "source": "server/tests/NomNomzBot.Infrastructure.Tests/Platform/Templating/Helpers/Text/TextHelpersTableA2Tests.cs:81"
+  },
+  "text.upper": {
+   "typed": "{text.upper:hello}",
+   "result": "HELLO",
+   "source": "server/tests/NomNomzBot.Infrastructure.Tests/Platform/Templating/Helpers/Text/TextHelpersTableTests.cs:37"
+  },
+  "text.upsidedown": {
+   "typed": "{text.upsidedown:hello}",
+   "result": "ollǝɥ",
+   "source": "server/tests/NomNomzBot.Infrastructure.Tests/Platform/Templating/Helpers/Text/TextHelpersTableA2Tests.cs:71"
+  },
+  "text.url.decode": {
+   "typed": "{text.url.decode:a%20b}",
+   "result": "a b",
+   "source": "server/tests/NomNomzBot.Infrastructure.Tests/Platform/Templating/Helpers/Text/TextHelpersTableA2Tests.cs:52"
+  },
+  "text.url.encode": {
+   "typed": "{text.url.encode:a b&c}",
+   "result": "a%20b%26c",
+   "source": "server/tests/NomNomzBot.Infrastructure.Tests/Platform/Templating/Helpers/Text/TextHelpersTableA2Tests.cs:51"
+  },
+  "text.uwu": {
+   "typed": "{text.uwu:really}",
+   "result": "weawwy",
+   "source": "server/tests/NomNomzBot.Infrastructure.Tests/Platform/Templating/Helpers/Text/TextHelpersTableA2Tests.cs:87"
+  },
+  "text.vowels.remove": {
+   "typed": "{text.vowels.remove:hello}",
+   "result": "hll",
+   "source": "server/tests/NomNomzBot.Infrastructure.Tests/Platform/Templating/Helpers/Text/TextHelpersTableA2Tests.cs:64"
+  },
+  "text.word": {
+   "typed": "{text.word:2|hello big world}",
+   "result": "big",
+   "source": "server/tests/NomNomzBot.Infrastructure.Tests/Platform/Templating/Helpers/Text/TextHelpersTableTests.cs:77"
+  },
+  "text.word.first": {
+   "typed": "{text.word.first:hello big world}",
+   "result": "hello",
+   "source": "server/tests/NomNomzBot.Infrastructure.Tests/Platform/Templating/Helpers/Text/TextHelpersTableTests.cs:75"
+  },
+  "text.word.last": {
+   "typed": "{text.word.last:hello big world}",
+   "result": "world",
+   "source": "server/tests/NomNomzBot.Infrastructure.Tests/Platform/Templating/Helpers/Text/TextHelpersTableTests.cs:76"
+  },
+  "text.word.longest": {
+   "typed": "{text.word.longest:hi hello yo}",
+   "result": "hello",
+   "source": "server/tests/NomNomzBot.Infrastructure.Tests/Platform/Templating/Helpers/Text/TextHelpersTableTests.cs:84"
+  },
+  "text.words.count": {
+   "typed": "{text.words.count:hello big world}",
+   "result": "3",
+   "source": "server/tests/NomNomzBot.Infrastructure.Tests/Platform/Templating/Helpers/Text/TextHelpersTableTests.cs:69"
+  },
+  "text.words.first": {
+   "typed": "{text.words.first:2|hello big world}",
+   "result": "hello big",
+   "source": "server/tests/NomNomzBot.Infrastructure.Tests/Platform/Templating/Helpers/Text/TextHelpersTableTests.cs:78"
+  },
+  "text.words.from": {
+   "typed": "{text.words.from:2|hello big world}",
+   "result": "big world",
+   "source": "server/tests/NomNomzBot.Infrastructure.Tests/Platform/Templating/Helpers/Text/TextHelpersTableTests.cs:80"
+  },
+  "text.words.last": {
+   "typed": "{text.words.last:2|hello big world}",
+   "result": "big world",
+   "source": "server/tests/NomNomzBot.Infrastructure.Tests/Platform/Templating/Helpers/Text/TextHelpersTableTests.cs:79"
+  },
+  "text.words.range": {
+   "typed": "{text.words.range:1|2|hello big world}",
+   "result": "hello big",
+   "source": "server/tests/NomNomzBot.Infrastructure.Tests/Platform/Templating/Helpers/Text/TextHelpersTableTests.cs:81"
+  },
+  "text.words.sort": {
+   "typed": "{text.words.sort:c a b}",
+   "result": "a b c",
+   "source": "server/tests/NomNomzBot.Infrastructure.Tests/Platform/Templating/Helpers/Text/TextHelpersTableTests.cs:82"
+  },
+  "text.words.unique": {
+   "typed": "{text.words.unique:a b a}",
+   "result": "a b",
+   "source": "server/tests/NomNomzBot.Infrastructure.Tests/Platform/Templating/Helpers/Text/TextHelpersTableTests.cs:83"
+  },
+  "text.wrap": {
+   "typed": "{text.wrap:hi|[|]}",
+   "result": "[hi]",
+   "source": "server/tests/NomNomzBot.Infrastructure.Tests/Platform/Templating/Helpers/Text/TextHelpersTableTests.cs:65"
+  },
+  "text.yell": {
+   "typed": "{text.yell:hello}",
+   "result": "HELLO!",
+   "source": "server/tests/NomNomzBot.Infrastructure.Tests/Platform/Templating/Helpers/Text/TextHelpersTableA2Tests.cs:91"
+  },
+  "tts.lexicon": {
+   "typed": "{tts.lexicon:gg}",
+   "result": "good game",
+   "source": "server/tests/NomNomzBot.Infrastructure.Tests/Platform/Templating/Helpers/Chat/ChatHelpersTableTests.cs:60"
+  },
+  "tts.numbers": {
+   "typed": "{tts.numbers:I have 3 cats}",
+   "result": "I have three cats",
+   "source": "server/tests/NomNomzBot.Infrastructure.Tests/Platform/Templating/Helpers/Chat/ChatHelpersTableTests.cs:57"
+  },
+  "tts.plain.keepEmotes": {
+   "typed": "{tts.plain.keepEmotes:hi KEKW}",
+   "result": "hi KEKW",
+   "source": "server/tests/NomNomzBot.Infrastructure.Tests/Platform/Templating/Helpers/Chat/ChatHelpersTableTests.cs:55"
+  },
+  "user.accountAge.days": {
+   "typed": "{user.accountAge.days}",
+   "result": "1534",
+   "source": "server/tests/NomNomzBot.Infrastructure.Tests/Platform/Templating/Helpers/People/PeopleHelpersTableTests.cs:73"
+  },
+  "user.activity.level": {
+   "typed": "{user.activity.level}",
+   "result": "veteran",
+   "source": "server/tests/NomNomzBot.Infrastructure.Tests/Platform/Templating/Helpers/People/PeopleHelpersTableTests.cs:42"
+  },
+  "user.avatar": {
+   "typed": "{user.avatar}",
+   "result": "https://static-cdn.jtvnw.net/jtv_user_pictures/viewerone.png",
+   "source": "server/tests/NomNomzBot.Infrastructure.Tests/Platform/Templating/Helpers/People/PeopleHelpersTableTests.cs:67"
+  },
+  "user.bio": {
+   "typed": "{user.bio}",
+   "result": "I like bots",
+   "source": "server/tests/NomNomzBot.Infrastructure.Tests/Platform/Templating/Helpers/People/PeopleHelpersTableTests.cs:69"
+  },
+  "user.color": {
+   "typed": "{user.color}",
+   "result": "#1E90FF",
+   "source": "server/tests/NomNomzBot.Infrastructure.Tests/Platform/Templating/Helpers/People/PeopleHelpersTableTests.cs:65"
+  },
+  "user.createdAt": {
+   "typed": "{user.createdAt}",
+   "result": "2022-08-14",
+   "source": "server/tests/NomNomzBot.Infrastructure.Tests/Platform/Templating/Helpers/People/PeopleHelpersTableTests.cs:71"
+  },
+  "user.data.<key>": {
+   "typed": "{user.data.color}",
+   "result": "blue",
+   "source": "server/tests/NomNomzBot.Infrastructure.Tests/Platform/Templating/Helpers/People/PeopleHelpersTableTests.cs:81"
+  },
+  "user.display": {
+   "typed": "{user.display}",
+   "result": "ViewerOne",
+   "source": "server/tests/NomNomzBot.Infrastructure.Tests/Platform/Templating/Helpers/People/PeopleHelpersTableTests.cs:22"
+  },
+  "user.followAge.days": {
+   "typed": "{user.followAge.days}",
+   "result": "411",
+   "source": "server/tests/NomNomzBot.Infrastructure.Tests/Platform/Templating/Helpers/People/PeopleHelpersTableTests.cs:48"
+  },
+  "user.followedAt": {
+   "typed": "{user.followedAt}",
+   "result": "2025-09-10",
+   "source": "server/tests/NomNomzBot.Infrastructure.Tests/Platform/Templating/Helpers/People/PeopleHelpersTableTests.cs:47"
+  },
+  "user.login": {
+   "typed": "{user.login}",
+   "result": "viewerone",
+   "source": "server/tests/NomNomzBot.Infrastructure.Tests/Platform/Templating/Helpers/People/PeopleHelpersTableTests.cs:23"
+  },
+  "user.mention": {
+   "typed": "{user.mention}",
+   "result": "@ViewerOne",
+   "source": "server/tests/NomNomzBot.Infrastructure.Tests/Platform/Templating/Helpers/People/PeopleHelpersTableTests.cs:24"
+  },
+  "user.platform": {
+   "typed": "{user.platform}",
+   "result": "twitch",
+   "source": "server/tests/NomNomzBot.Infrastructure.Tests/Platform/Templating/Helpers/People/PeopleHelpersTableTests.cs:25"
+  },
+  "user.platform.name": {
+   "typed": "{user.platform.name}",
+   "result": "Twitch",
+   "source": "server/tests/NomNomzBot.Infrastructure.Tests/Platform/Templating/Helpers/People/PeopleHelpersTableTests.cs:26"
+  },
+  "user.points": {
+   "typed": "{user.points}",
+   "result": "2,500",
+   "source": "server/tests/NomNomzBot.Infrastructure.Tests/Platform/Templating/Helpers/People/PeopleHelpersTableTests.cs:55"
+  },
+  "user.points.nextRank.gap": {
+   "typed": "{user.points.nextRank.gap}",
+   "result": "300",
+   "source": "server/tests/NomNomzBot.Infrastructure.Tests/Platform/Templating/Helpers/People/PeopleHelpersTableTests.cs:60"
+  },
+  "user.points.nextRank.name": {
+   "typed": "{user.points.nextRank.name}",
+   "result": "ViewerThree",
+   "source": "server/tests/NomNomzBot.Infrastructure.Tests/Platform/Templating/Helpers/People/PeopleHelpersTableTests.cs:61"
+  },
+  "user.points.rank": {
+   "typed": "{user.points.rank}",
+   "result": "4",
+   "source": "server/tests/NomNomzBot.Infrastructure.Tests/Platform/Templating/Helpers/People/PeopleHelpersTableTests.cs:58"
+  },
+  "user.points.rank.ordinal": {
+   "typed": "{user.points.rank.ordinal}",
+   "result": "4th",
+   "source": "server/tests/NomNomzBot.Infrastructure.Tests/Platform/Templating/Helpers/People/PeopleHelpersTableTests.cs:59"
+  },
+  "user.points.raw": {
+   "typed": "{user.points.raw}",
+   "result": "2500",
+   "source": "server/tests/NomNomzBot.Infrastructure.Tests/Platform/Templating/Helpers/People/PeopleHelpersTableTests.cs:56"
+  },
+  "user.quotes.count": {
+   "typed": "{user.quotes.count}",
+   "result": "3",
+   "source": "server/tests/NomNomzBot.Infrastructure.Tests/Platform/Templating/Helpers/People/PeopleHelpersTableTests.cs:85"
+  },
+  "user.stats.bits": {
+   "typed": "{user.stats.bits}",
+   "result": "2,300",
+   "source": "server/tests/NomNomzBot.Infrastructure.Tests/Platform/Templating/Helpers/People/PeopleHelpersTableTests.cs:40"
+  },
+  "user.stats.firstSeen.relative": {
+   "typed": "{user.stats.firstSeen.relative}",
+   "result": "one year ago",
+   "source": "server/tests/NomNomzBot.Infrastructure.Tests/Platform/Templating/Helpers/People/PeopleHelpersTableTests.cs:37"
+  },
+  "user.stats.lastSeen": {
+   "typed": "{user.stats.lastSeen}",
+   "result": "2026-10-24",
+   "source": "server/tests/NomNomzBot.Infrastructure.Tests/Platform/Templating/Helpers/People/PeopleHelpersTableTests.cs:38"
+  },
+  "user.stats.lastSeen.relative": {
+   "typed": "{user.stats.lastSeen.relative}",
+   "result": "2 days ago",
+   "source": "server/tests/NomNomzBot.Infrastructure.Tests/Platform/Templating/Helpers/People/PeopleHelpersTableTests.cs:39"
+  },
+  "user.stats.streak": {
+   "typed": "{user.stats.streak}",
+   "result": "5",
+   "source": "server/tests/NomNomzBot.Infrastructure.Tests/Platform/Templating/Helpers/People/PeopleHelpersTableTests.cs:51"
+  },
+  "user.stats.streak.best": {
+   "typed": "{user.stats.streak.best}",
+   "result": "9",
+   "source": "server/tests/NomNomzBot.Infrastructure.Tests/Platform/Templating/Helpers/People/PeopleHelpersTableTests.cs:52"
+  },
+  "user.stats.watchTime.hours": {
+   "typed": "{user.stats.watchTime.hours}",
+   "result": "12.5",
+   "source": "server/tests/NomNomzBot.Infrastructure.Tests/Platform/Templating/Helpers/People/PeopleHelpersTableTests.cs:35"
+  },
+  "user.stats.watchTime.long": {
+   "typed": "{user.stats.watchTime.long}",
+   "result": "12 hours, 30 minutes",
+   "source": "server/tests/NomNomzBot.Infrastructure.Tests/Platform/Templating/Helpers/People/PeopleHelpersTableTests.cs:36"
+  },
+  "user.subTier": {
+   "typed": "{user.subTier}",
+   "result": "1",
+   "source": "server/tests/NomNomzBot.Infrastructure.Tests/Platform/Templating/Helpers/People/PeopleHelpersTableTests.cs:33"
+  },
+  "user.subTier.name": {
+   "typed": "{user.subTier.name}",
+   "result": "Tier 1",
+   "source": "server/tests/NomNomzBot.Infrastructure.Tests/Platform/Templating/Helpers/People/PeopleHelpersTableTests.cs:34"
+  },
+  "var.<name>": {
+   "typed": "{var.nope}",
+   "result": "{var.nope}",
+   "source": "server/tests/NomNomzBot.Infrastructure.Tests/Platform/Templating/Helpers/Composing/ComposingHelpersTableTests.cs:58"
+  }
+ }
+}

@@ -1,0 +1,45 @@
+---
+title: Chat message helpers
+description: Lists 29 template helpers, each with what it gives and an example.
+---
+
+Helpers on this page: `{chat.*}`, `{tts.*}`, `{link.*}`, `{raw.*}`.
+
+These helpers read the chat message that started the reply, and the chat settings.
+They also fit a reply to the chat length limit, share a message to a social site and prepare text for speech.
+
+Each row is its own example, so the rows on this page do not all come from one moment.
+
+| Helper | What it gives | Example |
+| --- | --- | --- |
+| `{chat.fit}` | The text cut to fit one chat line of the platform. A cut text ends in an ellipsis, or in your own end text after a pipe; a text that already fits stays whole | `{chat.fit:short text\|(more on the page)}` gives `short text` |
+| `{chat.fit.words}` | The text cut to fit one chat line, at the last whole word: short text | `{chat.fit.words:short text}` gives `short text` |
+| `{chat.isShared}` | true while the channel is in a shared chat session, false when not | `false` |
+| `{chat.limit}` | The most characters one chat line may hold on the platform that delivers it: 500 | `500` |
+| `{chat.me}` | The text as an action line on Twitch (/me), plain text elsewhere: /me dances | `{chat.me:dances}` gives `/me dances` |
+| `{chat.mention}` | A name with an @ in front so chat pings it: @ViewerTwo | `{chat.mention:ViewerTwo}` gives `@ViewerTwo` |
+| `{chat.mention.off}` | A name without the @, so nobody is pinged: ViewerTwo | `{chat.mention.off:ViewerTwo}` gives `ViewerTwo` |
+| `{chat.mention.soft}` | A name with an invisible space inside it, so it shows but does not ping: ViewerTwo | `{chat.mention.soft:ViewerTwo}` gives `V​iewerTwo` |
+| `{chat.mention.user}` | The viewer who triggered this, with an @ in front: @ViewerOne | `@ViewerOne` |
+| `{chat.message}` | The chat message that triggered this: hello big world | `hello big world` |
+| `{chat.message.bits}` | How many bits came with the trigger message: 0 | `0` |
+| `{chat.message.length}` | How many characters the trigger message has: 15 | `15` |
+| `{chat.message.noCommand}` | The trigger message without its command word (the first word, when it starts with the channel's command prefix): hello big world | `hello big world` |
+| `{chat.pinned}` | The text of the pinned chat message, empty when nothing is pinned: Welcome to the stream | `Welcome to the stream` |
+| `{chat.settings.emoteOnly}` | true while emote-only chat is on, false when not | `false` |
+| `{chat.settings.followersOnly}` | How long a viewer must follow before chatting (on when any follower may chat), or off: 10m | `10m` |
+| `{chat.settings.slow}` | The slow mode wait time, or off: 3s | `3s` |
+| `{chat.settings.subOnly}` | true while subscribers-only chat is on, false when not | `false` |
+| `{chat.shared.channels}` | The other channels in the shared chat session, separated by commas: OtherStreamer | `OtherStreamer` |
+| `{link.bluesky}` | A link that opens Bluesky with the text ready to post: https://bsky.app/intent/compose?text=Live%20now | `{link.bluesky:Live now}` gives `https://bsky.app/intent/compose?text=Live%20now` |
+| `{link.mastodon}` | A link that opens a Mastodon server with the text ready to post. Type the server host name first, then a pipe and the text | `{link.mastodon:mastodon.social\|Live now}` gives `https://mastodon.social/share?text=Live%20now` |
+| `{link.threads}` | A link that opens Threads with the text ready to post: https://www.threads.net/intent/post?text=Live%20now | `{link.threads:Live now}` gives `https://www.threads.net/intent/post?text=Live%20now` |
+| `{link.x}` | A link that opens X with the text ready to post: https://x.com/intent/post?text=Live%20now | `https://x.com/intent/post?text=Live%20now` |
+| `{raw.message}` | The raw triggering chat message (Discord pipeline seed alias) | `!hello world` |
+| `{tts.audioconnected}` | Whether an Audio widget page is open for the channel, so TTS can be heard (true or false) | `true` |
+| `{tts.lexicon}` | The text with the channel pronunciation list applied: good game | `{tts.lexicon:gg}` gives `good game` |
+| `{tts.numbers}` | Whole numbers in the text written as words, in the channel language: I have three cats | `{tts.numbers:I have 3 cats}` gives `I have three cats` |
+| `{tts.plain}` | Text made ready to be spoken: no links, no @, no emotes of the channel, fancy letters turned to plain ones: hi ViewerTwo hi | `hi ViewerTwo hi` |
+| `{tts.plain.keepEmotes}` | Text made ready to be spoken, with the emote names kept: hi KEKW | `{tts.plain.keepEmotes:hi KEKW}` gives `hi KEKW` |
+
+Back to [Template helpers](/reference/templates/overview). For the places helpers work, special characters and HTML, read [Variables and templates](/reference/commands/variables-and-templates).

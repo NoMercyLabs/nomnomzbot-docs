@@ -1,0 +1,87 @@
+---
+title: Music helpers
+description: Lists 54 template helpers, each with what it gives and an example.
+---
+
+Helpers on this page: `{music.*}`, `{track*}`, `{playlist*}`.
+
+These helpers read the song that plays now, the queue and song requests.
+Use them in a "song" or "queue" command.
+
+Each row is its own example, so the rows on this page do not all come from one moment.
+
+## Now playing
+
+| Helper | What it gives | Example |
+| --- | --- | --- |
+| `{music.now}` | The track that plays now, with its artist: Song A by Artist A | `Song A by Artist A` |
+| `{music.now.album}` | The album of the track that plays now | `Album A` |
+| `{music.now.artist}` | The artist of the track that plays now | `Artist A` |
+| `{music.now.bar}` | A progress bar of the track that plays now, with the clock. Add a width from 1 to 50 after a colon to get the bare bar of that many cells; the default width is 11 | `{music.now.bar:5}` gives `▬▬🔘▬▬` |
+| `{music.now.cover}` | The cover image address of the track that plays now | `https://i.scdn.co/image/sample` |
+| `{music.now.duration}` | The length of the track that plays now: 3:30 | `3:30` |
+| `{music.now.isPlaying}` | Whether music is playing, as true or false, for if and switch | `true` |
+| `{music.now.link}` | A link that opens the track that plays now | `https://open.spotify.com/track/sample` |
+| `{music.now.percent}` | How far the track that plays now has come, in percent: 40% | `40%` |
+| `{music.now.progress}` | How far the track that plays now has come: 1:23 | `1:23` |
+| `{music.now.remaining}` | How much of the track that plays now is left: 2:07 | `2:07` |
+| `{music.now.requester}` | The viewer who requested the track that plays now | `ViewerTwo` |
+| `{music.now.requester.mention}` | The viewer who requested the track that plays now, as a mention: @ViewerTwo | `@ViewerTwo` |
+| `{music.now.status}` | The state of the player: playing, paused, starting, blocked or idle | `playing` |
+| `{music.now.title}` | The title of the track that plays now | `Song A` |
+| `{music.provider}` | The music service the channel uses: Spotify | `Spotify` |
+| `{playlist_id}` | The id of the playlist the track was added to | `37i9dQZF1DX` |
+| `{track_name}` | The name of the track that was added | `Blinding Lights` |
+
+## The queue
+
+| Helper | What it gives | Example |
+| --- | --- | --- |
+| `{music.queue.cost.total}` | The points spent on the songs that wait in the queue | `1,500` |
+| `{music.queue.duration}` | The total length of the request queue: 17m 20s | `17m 20s` |
+| `{music.queue.isEmpty}` | Whether the request queue is empty, as true or false, for if and switch | `false` |
+| `{music.queue.item}` | The song at a place in the queue, with its artist; the place is the argument | `{music.queue.item:2}` gives `Song C by Artist C` |
+| `{music.queue.length}` | How many songs wait in the request queue | `5` |
+| `{music.queue.list}` | The first songs of the queue as a numbered list; the number of songs is the argument | `{music.queue.list:3}` gives `1. Song B, 2. Song C, 3. Song D` |
+| `{music.queue.mine.code}` | The short code of the next song of the viewer, to name it in !wrongsong | `K7QM` |
+| `{music.queue.mine.count}` | How many songs of the viewer wait in the queue | `2` |
+| `{music.queue.mine.next}` | The title of the next song of the viewer in the queue | `Song C` |
+| `{music.queue.mine.titles}` | The titles of the songs of the viewer in the queue | `Song C, Song E` |
+| `{music.queue.next}` | The next song in the request queue, with its artist | `Song B by Artist B` |
+| `{music.queue.next.requester}` | The viewer who requested the next song | `ViewerThree` |
+| `{music.queue.position}` | The place of the next song of the viewer who typed the command | `3` |
+| `{music.queue.position.ordinal}` | The place of the next song of the viewer as an ordinal: 3rd | `3rd` |
+| `{music.queue.requesters}` | How many different viewers have a song in the queue | `4` |
+| `{music.queue.target.count}` | How many songs of the mentioned viewer wait in the queue | `1` |
+| `{music.queue.wait}` | How long until the next song of the viewer starts: 7m 40s | `7m 40s` |
+| `{music.queue.wait.at}` | At what time the next song of the viewer starts, in the channel time zone: about 15:38 | `about 15:38` |
+
+## History and favorites
+
+| Helper | What it gives | Example |
+| --- | --- | --- |
+| `{music.favorite.artist}` | The artist of the viewer’s most-requested track | `The Weeknd` |
+| `{music.favorite.count}` | How many times the viewer has requested that track | `12` |
+| `{music.favorite.outcome}` | What happened: queued, none, or unavailable | `queued` |
+| `{music.favorite.track}` | The name of the viewer’s most-requested track | `Blinding Lights` |
+| `{music.history.count.stream}` | How many songs were requested since the stream went live | `21` |
+| `{music.history.last}` | The last song that was requested, with its artist | `Song Z by Artist Z` |
+| `{music.history.list}` | The titles of the last requested songs; the number of songs is the argument | `{music.history.list:3}` gives `Song Z, Song Y, Song X` |
+| `{music.history.topArtist.stream}` | The artist requested most this stream | `Artist A` |
+| `{music.history.topRequester.stream}` | The viewer with the most requests this stream, with the count: ViewerTwo (4) | `ViewerTwo (4)` |
+| `{music.user.lastRequest}` | The title of the last song the viewer requested | `Song C` |
+| `{music.user.requests.stream}` | How many songs the viewer has requested this stream | `2` |
+| `{music.user.requests.total}` | How many songs the viewer has requested in this channel, all time | `9` |
+
+## Player and request settings
+
+| Helper | What it gives | Example |
+| --- | --- | --- |
+| `{music.repeat}` | The repeat mode: off, track or context | `off` |
+| `{music.requests.maxDuration}` | The longest song a viewer may request: 6:00 | `6:00` |
+| `{music.requests.maxPerUser}` | How many songs one viewer may have in the queue | `3` |
+| `{music.requests.open}` | Whether song requests are open, as true or false, for if and switch | `true` |
+| `{music.shuffle}` | Whether shuffle is on or off | `off` |
+| `{music.volume}` | The music volume in percent: 60% | `60%` |
+
+Back to [Template helpers](/reference/templates/overview). For the places helpers work, special characters and HTML, read [Variables and templates](/reference/commands/variables-and-templates).
