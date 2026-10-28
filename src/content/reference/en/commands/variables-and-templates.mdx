@@ -1,0 +1,305 @@
+---
+title: Variables and templates
+description: Put the channel, a viewer, the time and random values into a reply with helpers in braces.
+---
+
+A reply is a template: plain text with helpers in it (see [Create a command](/reference/commands/create-a-command)).
+A helper is a name in braces, such as `{user}`.
+The bot puts a value in its place before it types the line.
+
+```text
+Welcome {user}! Today we play {stream.game}.
+```
+
+The bot types this as "Welcome Example_Viewer! Today we play Just Chatting."
+It types the line in the channel's one bot voice.
+
+## How a template becomes the line in chat
+
+1. The bot reads the template once and finds every helper.
+2. It fetches only the values that the template names.
+3. It puts each value in the place of its helper.
+4. It types the result in chat.
+
+A helper that the bot does not know stays in the line exactly as you wrote it.
+So a typo such as `{usr}` shows in chat as `{usr}`.
+The **Reply** field warns you about this before you save (see [Create a command](/reference/commands/create-a-command)).
+
+In an [event response](/reference/automation/event-responses), a value that the event carries wins over a value the bot looks up itself.
+
+### Where a reply goes
+
+| **Send the reply to** | What the bot does with the template |
+| --- | --- |
+| **Twitch chat** | Fills it in once, as plain text, and types it in chat. |
+| **Chat overlay** | Fills it in for the overlay only. |
+| **Both** | A plain reply: fills it in once and shows the same text in both places. A reply with HTML: fills it in twice, plain text for chat and HTML for the overlay. |
+| **Nowhere** | Fills in nothing. |
+
+HTML is markup such as `<b>bold</b>` that styles text on the chat overlay; a plain reply does not need it.
+When a reply holds HTML, the values that come with the command (the name and the words after the command) are HTML-encoded.
+So a `<` in those values shows as the character `<`, not as the start of a tag.
+Values the bot looks up, such as a last chat message, are not encoded; the overlay keeps only its safe tags, such as `<b>`.
+
+### Names in chat and in speech
+
+Twitch pings a person in chat only by their login name.
+When a display name differs from the login by more than letter case, the chat line uses the login.
+
+This applies to `{user}`, `{target.name}`, `{target.displayname}` and `{name}` in chat.
+When the reply is also read aloud, the speech uses the display name again.
+
+### Special characters
+
+Put a backslash before a character to type it as itself: `\{`, `\}`, `\|`, `\:` and `\\`.
+A brace that is never closed, or empty braces, stay in the line as text.
+A helper can hold another helper, up to 8 levels deep.
+
+## Where you can use templates
+
+Each place has its own set of helpers.
+
+| Place | What it has |
+| --- | --- |
+| Command replies | Everything on this page, with the words after the command. |
+| [Event responses](/reference/automation/event-responses) | The channel and viewer helpers, and the values of the event (a raid, a sub, a cheer). No words after a command. |
+| [Timers](/reference/automation/timers-and-chat-triggers) | The channel, time, random, counter and list helpers. No person and no words after a command. |
+| [Pipeline steps](/reference/commands/pipelines) | Every helper that a command or an event response can use. |
+| [Discord notifications](/reference/integrations/discord) | The channel, time, random, counter and list helpers, and Discord-only helpers such as `{channel.url}`. |
+| [Webhook bodies](/reference/integrations/webhooks-and-event-feeds) | The channel, person, time, random, counter and list helpers. No event values and no words after a command. |
+
+## The channel and the stream
+
+The examples on this page belong to one moment: Tuesday 6 October 2026, 22:15 channel time, which is 20:15 UTC.
+Channel time is the clock of the **Timezone** you set on the **Bot basics** settings page.
+The stream went live at 18:00 UTC.
+
+| Helper | What it gives | Example result |
+| --- | --- | --- |
+| `{channel}` | The channel login name | `example_channel` |
+| `{channel.display}` | The channel display name | `Example_Channel` |
+| `{channel.id}` | The channel platform ID | `123456789` |
+| `{streamer}` | The channel owner display name | `Example_Channel` |
+| `{botname}` | The bot's name: `NomNomzBot` unless a name is stored for the bot | `NomNomzBot` |
+| `{stream.title}` | The current stream title | `Cozy coding night` |
+| `{stream.game}` | The current game or category | `Just Chatting` |
+| `{stream.uptime}` | How long the stream has been live | `2h 15m` |
+| `{stream.isLive}` | Whether the stream is live now | `true` |
+| `{stream.startedAt}` | The time the stream went live | `2026-10-06T18:00:00.0000000+00:00` |
+| `{status}` | Whether the stream is live or offline | `live` |
+| `{tense}` | The form of "to be" that fits live or offline and the person's [pronouns](#pronouns): is, are, was or were | `are` |
+| `{tts.audioconnected}` | Whether a **TTS caption** [widget](/reference/overlays/widgets-and-alerts) page is open for your channel, so [speech](/reference/audio/text-to-speech) can be heard | `true` |
+
+## The person who used the command
+
+| Helper | What it gives | Example result |
+| --- | --- | --- |
+| `{user}` | The name of the person who used the command | `Example_Viewer` |
+| `{user.name}` | Their login name | `example_viewer` |
+| `{user.id}` | Their platform ID | `123456789` |
+| `{user.provider}` | The platform they chat from | `twitch` |
+| `{user.accountAge}` | How long ago the bot first saw them | `3 years` |
+| `{user.followAge}` | How long they have followed the channel | `1 year` |
+| `{user.pronouns}` | Their pronouns | `they/them` |
+| `{user.messageCount}` | Their total chat message count, the same total as `{viewer.messages}` | `250` |
+| `{user.lastmessage}` | Their most recent chat message | `see you tomorrow` |
+| `{user.link}` | A link to their profile | `twitch.tv/example_viewer` |
+
+## The person a command names
+
+When chat types a name after the command, such as `!hug @someone`, that person is the target.
+
+| Helper | What it gives | Example result |
+| --- | --- | --- |
+| `{target}` | The target's login name, as typed | `example_viewer` |
+| `{target.name}` | The target's login name | `example_viewer` |
+| `{target.displayname}` | The target's stored display name, or the typed text when the bot does not know them | `Example_Viewer` |
+| `{target.known}` | Whether the target is a person the bot knows | `true` |
+| `{target.id}` | The target's platform ID | `123456789` |
+| `{target.followAge}` | How long the target has followed the channel | `1 year` |
+| `{target.lastmessage}` | The target's most recent chat message, cut to 80 characters | `see you tomorrow` |
+| `{target.randommessage}` | A random older chat message of the target, fit to quote | `nice play` |
+| `{target.link}` | A link to the target's profile | `twitch.tv/example_viewer` |
+
+Two helpers follow the target when there is one.
+Without a target, they follow the person who used the command.
+
+| Helper | What it gives | Example result |
+| --- | --- | --- |
+| `{name}` | The name to show | `Example_Viewer` |
+| `{link}` | A link to the profile | `twitch.tv/example_viewer` |
+
+## Words after the command
+
+| Helper | What it gives | Example result |
+| --- | --- | --- |
+| `{args}` | Everything typed after the command, as one text | `hello world` |
+| `{args.1}` | The first word after the command; `{args.2}` is the second, and so on | `hello` |
+
+## Pronouns
+
+These helpers follow the target when there is one.
+Without a target, they follow the person who used the command.
+Put `user.` or `target.` before the name to choose one person, for example `{user.subject}`.
+
+| Helper | What it gives | Example result |
+| --- | --- | --- |
+| `{subject}` | The subject pronoun | `they` |
+| `{object}` | The object pronoun | `them` |
+| `{possessive}` | The possessive pronoun | `their` |
+| `{presentTense}` | The form of "to be" that fits (is or are) | `are` |
+| `{genderedTerm}` | A gendered word that fits the pronouns | `person` |
+| `{verb:plays\|play}` | The first word for one person, the second for "they" | `play` |
+
+## Time and date
+
+| Helper | What it gives | Example result |
+| --- | --- | --- |
+| `{time}` | The current channel time | `22:15:00` |
+| `{time.utc}` | The current UTC time | `20:15:00 UTC` |
+| `{date}` | Today's date | `2026-10-06` |
+
+`{date:<source>}` starts a date that you can change and format.
+Add steps after the source, each after a `|`.
+Without a format step, the date shows as `2026-10-06 22:15`.
+
+| Source | The date it starts from |
+| --- | --- |
+| `now` | The current channel time |
+| `utc` | The current UTC time |
+| `2026-12-25` | That date, in channel time |
+| `{stream.startedAt}` | The date that a helper holds |
+
+<details>
+<summary>Every date step</summary>
+
+Each example starts from `{date:now}`, unless the row names another source.
+
+| Step | What it does | Example result |
+| --- | --- | --- |
+| `format:<pattern>` | Formats the date with a pattern, for example `format:dddd d MMMM yyyy` | `Tuesday 6 October 2026` |
+| `+1d` or `-2mo` | Adds or takes away time: `y` years, `mo` months, `w` weeks, `d` days, `h` hours, `m` minutes, `s` seconds | `+1d` gives `2026-10-07 22:15` |
+| `start:<unit>` | Moves to the start of the day, week (Monday), month or year | `start:month` gives `2026-10-01 00:00` |
+| `end:<unit>` | Moves to the end of the day, week, month or year | `end:month` gives `2026-10-31 23:59` |
+| `next:<weekday>` | Moves to the next weekday after the date | `next:friday` gives `2026-10-09 22:15` |
+| `prev:<weekday>` | Moves to the weekday before the date | `prev:monday` gives `2026-10-05 22:15` |
+| `tz:<zone>` | Shows the same moment in another time zone | `tz:America/New_York` gives `2026-10-06 16:15` |
+| `lang:<language>` | Uses another language for month and day names, used with a format step | `lang:nl\|format:dddd d MMMM yyyy` gives `dinsdag 6 oktober 2026` |
+| `relative` | The date as text relative to now | `{date:{stream.startedAt}\|relative}` gives `2 hours ago` |
+| `ordinal` | The day of the month as an ordinal | `6th` |
+| `until` | The time from now until the date | from `2026-12-25` with `until:days`: `79 days` |
+| `since` | The time from the date until now | from `2025-09-20` with `since:breakdown`: `1 year, 16 days, 22 hours, 15 minutes` |
+| `diff:<date>` | The time between the date and another date, never negative | `diff:2025-08-21:days` gives `411 days` |
+
+A pattern uses the .NET date letters.
+
+| Letters | What they show | Example |
+| --- | --- | --- |
+| `dddd` | The day name | `Tuesday` |
+| `d` | The day number | `6` |
+| `MMMM` | The month name | `October` |
+| `yyyy` | The year | `2026` |
+
+Put `[o]` in a pattern, with the brackets typed as written, for the day as an ordinal, such as `6th`.
+
+`until`, `since` and `diff` take a unit after a `:`.
+
+| Unit | What it shows |
+| --- | --- |
+| `years`, `months`, `weeks`, `days`, `hours`, `minutes`, `seconds` | The whole count in that one unit |
+| `breakdown` | Every unit from years to seconds that is not zero |
+| `human` | A rounded text in the two largest units (the default) |
+
+</details>
+
+## Random values, counters and lists
+
+| Helper | What it gives | Example result |
+| --- | --- | --- |
+| `{random.user}` | The display name of a random person who chatted this stream; with no chatters, the user's name | `Example_Viewer` |
+| `{random.number.100}` | A random whole number from 1 to 100 | `7` |
+| `{random.number.50.990.10}` | A random whole number from 50 to 990, in steps of 10 | `420` |
+| `{random.pick.a.b.c}` | One of the words between the dots | `b` |
+| `{count.deaths}` | The current value of the channel counter named `deaths` | `12` |
+| `{list.pick.food}` | One random entry of the [pick list](/reference/commands/pick-lists) named `food` | `Pizza` |
+| `{custom.mysource.field}` | The latest value of a field from a [custom event feed](/reference/integrations/webhooks-and-event-feeds) of the channel, or nothing when it is missing | `Blue` |
+
+A counter that was never set shows `0`.
+Counter names are lowercase, up to 50 characters.
+
+[Pipeline steps](/reference/commands/pipelines) set and change counters.
+
+<details>
+<summary>Named rolls</summary>
+
+A roll draws one random number per reply and keeps it under a name.
+
+| Helper | What it gives | Example result |
+| --- | --- | --- |
+| `{roll.pct.60.98}` | Draws a number from 60 to 98 under the name `pct` | `72` |
+| `{roll.pct}` | The number of the roll `pct` again | `72` |
+| `{roll.pct.complement}` | 100 minus the roll `pct` | `28` |
+
+</details>
+
+<details>
+<summary>Chat statistics for a person</summary>
+
+Each helper starts with `viewer.` for the person who used the command, or `target.` for the target.
+
+| Helper | What it gives | Example result |
+| --- | --- | --- |
+| `{viewer.messages}` | Total chat messages | `250` |
+| `{viewer.watchtime}` | Total watch time | `12h 0m` |
+| `{viewer.firstseen}` | When the person was first seen in chat, or `unknown` | `2026-09-06` |
+| `{viewer.redemptions}`, `{viewer.songrequests}`, `{viewer.commands}` | Total redemptions, song requests or commands | `8` |
+| `{viewer.days}` | Whole days since first seen (at least 1 once seen) | `30` |
+| `{viewer.avgperday}` | Average chat messages per day since first seen | `8` |
+| `{viewer.botpercent}` | The share of messages that were commands, as a whole percent | `3` |
+| `{viewer.data.key}` | A field of the per-viewer data stored for that person | `Blue` |
+
+`{target.lastmessage.full}` is the target's last message that is not a link, never cut short.
+
+</details>
+
+## Helper groups by name
+
+A helper name may hold dots, such as `text.upper`; a colon ends the name, and the text after it is the input, such as `{text.upper:hello}`.
+The **Reply** field lists every helper with an example, for the place you are writing in.
+
+| Group | What its helpers give |
+| --- | --- |
+| `if`, `default`, `switch`, `chance`, `pick` | Choices: show one text or another, for example `{if:value\|then\|else}` or `{default:value\|fallback}`. |
+| `set`, `var` | `{set:name=value}` keeps a value for the rest of the reply and prints nothing. |
+| `text` | Text changes, for example `{text.upper:hello}` gives `HELLO`. |
+| `math`, `num`, `meter` | Sums and number formats, for example `{math:...}`. |
+| `user`, `target` | More about a person, for example `{user.display}` and `{user.login}`. |
+| `stream`, `channel` | More about the stream, for example `{stream.uptime.long}` gives "2 hours, 15 minutes". |
+| `chat`, `tts`, `link` | Fitting a text in one chat line, text made ready to be spoken, and share links. |
+| `emote` | An emote of the channel by name. |
+| `fun` | Chat games: a coin, dice, rock paper scissors, cards, slots. |
+| `quote`, `random.chatter` | A channel quote by number, and a random chatter of this stream. |
+| `poll`, `prediction`, `hypetrain`, `goal`, `charity` | The poll, prediction, Hype Train, goal or charity drive running now. |
+| `ad`, `schedule`, `activity` | The next ad break, the stream schedule and recent activity. |
+| `music` | The track that plays now and the song queue. |
+| `lookup` | Facts from outside the reply: `lookup.twitch` (a Twitch user), `lookup.game` (a category), `lookup.currency` (a currency rate), `lookup.weather` (the weather in a place), `lookup.time` (the time in a place) and `lookup.translate` (a translation). |
+| `include` | Another command's reply, inside this one. |
+
+Scripts and widgets use the same helpers (see [SDK for widgets, actions and templates](/reference/code/sdk-widgets-actions-templates)).
+
+## Troubleshooting
+
+::Troubleshooting
+
+**Chat shows the name in braces, such as `{usr}`.**
+The bot does not know that helper, so it typed it as written.
+Check the spelling against the tables on this page.
+
+::
+
+
+## Related pages
+
+- [Create a command](/reference/commands/create-a-command)
+- [Pick lists](/reference/commands/pick-lists)
+- [SDK for widgets, actions and templates](/reference/code/sdk-widgets-actions-templates)
