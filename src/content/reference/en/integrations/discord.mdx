@@ -1,0 +1,229 @@
+---
+title: Discord
+description: Link a Discord server, post a message there for stream events, let viewers pick roles, and get a role while you are live.
+---
+
+You link a Discord server on the **Discord** page.
+Open **Settings** in the sidebar, then **Discord** in the **Connections** group.
+One linked server lets the bot do three things:
+
+| What the bot does | Section |
+| --- | --- |
+| Posts a message in a Discord channel for a stream event | [Notifications](#turn-on-notifications) |
+| Lets viewers pick a role with a button | [Self-assign roles](#add-a-self-assign-role) |
+| Gives you a role while you are live | [Live role](#set-up-the-live-role) |
+
+## Who can use this page
+
+| Role | What they may do |
+| --- | --- |
+| **Moderator** | See the server, the notifications, the roles, the live role and the recent posts. |
+| **Lead moderator**, **Editor** | Also set up, change and remove notifications, self-assign roles and the live role. |
+| **Broadcaster** | Also add the bot, turn posting on or off, withdraw approval and disconnect the server. |
+
+The roles are explained on [Permissions](/reference/settings/permissions).
+
+## Link a Discord server
+
+1. Open the **Discord** page.
+   The **Discord server** panel lists what the bot can do, and shows **Add the bot to your server**.
+2. Choose **Add the bot to your server**.
+   Discord's own page opens.
+3. Pick your server on Discord's page and accept the permissions.
+   Discord sends you back to the **Discord** page.
+4. The panel shows the server name and **Linked and ready**.
+5. Turn on **Post to this server**.
+   A new link starts with it off, and the bot posts nothing until it is on.
+
+The person who adds the bot on Discord's page approves the server for it.
+
+| Status | What it means |
+| --- | --- |
+| **Linked and ready** | The bot is in the server, and the server approved it. |
+| **Waiting for the server admin to approve** | The bot is in the server, but the server has not approved it, or its approval was withdrawn. |
+| **The bot is not in the server** | The link exists, but the bot is not in the server. |
+
+When the bot is not in the server, the panel shows **Add the bot to your server** and **Check again**.
+**Check again** asks Discord again if the bot is there.
+
+The bot posts only when the server approved it and **Post to this server** is on.
+A post that cannot go out for this reason shows as **Skipped** under **Recent posts**.
+
+The bot types every post in the channel's one bot voice.
+
+## Turn on notifications
+
+The **Notifications** panel has one row per event.
+Each row shows **Not set up**, **On** or **Off**.
+
+1. Choose **Set up** on the row of an event.
+   A panel opens with the event's name at the top.
+2. Check **Discord channel**.
+   The bot picks a channel whose name fits the event, for example a channel with "live" in its name for **Stream goes live**.
+   Pick another channel when you want.
+3. Pick a **Ping role**, or leave **No ping**.
+4. Change **Message** when you want.
+   The line under it lists the placeholders this event fills, such as `{user}`.
+5. Choose **Save**.
+   The row shows **On**.
+
+**Preview** saves the rule first, then shows the message as the bot fills it in.
+
+| Event | Placeholders the bot fills |
+| --- | --- |
+| **Stream goes live** | `{broadcaster}`, `{channel.name}`, `{title}`, `{game}`, `{channel.url}`, `{channel.avatar}`, `{stream.thumbnail}` |
+| **New follower** | `{user}`, `{channel.display}` |
+| **New subscriber (Twitch, Kick, YouTube)** | `{user}`, `{tier}`, `{channel.display}` |
+| **Gifted subs (Twitch, Kick, YouTube)** | `{user}`, `{count}`, `{tier}`, `{channel.display}` |
+| **Cheer** | `{user}`, `{bits}`, `{message}`, `{channel.display}` |
+| **Incoming raid** | `{user}`, `{viewers}`, `{channel.display}` |
+| **Stream ends** | `{broadcaster}`, `{duration}`, `{channel.name}` |
+| **Renewed subscription (Twitch, Kick, YouTube)** | `{user}`, `{tier}`, `{months}`, `{streak}`, `{message}`, `{channel.display}` |
+| **Poll ends** | `{poll.title}`, `{poll.winner}`, `{poll.winner.votes}`, `{poll.results}`, `{channel.display}` |
+| **Prediction resolved** | `{prediction.title}`, `{prediction.winner}`, `{prediction.winner.points}`, `{prediction.winner.users}`, `{channel.display}` |
+
+A new rule starts with a ready message for its event.
+For **Stream goes live**, the message is this line:
+
+```
+{channel.name} is live on Twitch streaming {game}, {title}. Come hang out: {channel.url}
+```
+
+### The embed
+
+The **Embed** box adds a card under the message.
+A new **Stream goes live** rule starts with a ready card.
+
+| Card part | Ready value for **Stream goes live** |
+| --- | --- |
+| **Title** | `{title}` |
+| **Title link** | `{channel.url}` |
+| **Author name** | `{channel.name} is now live on Twitch!` |
+| **Author icon link** | `{channel.avatar}` |
+| **Image link** | `{stream.thumbnail}` |
+| **Color** | `#9146FF` |
+| A field | **Game**, with the value `{game}` |
+| **Show the time** | On |
+| **Button label** | `Watch Stream` |
+| **Button link** | `{channel.url}` |
+
+The other card parts are **Description**, **Thumbnail link**, **Author link**, **Footer** and **Footer icon link**.
+**Add field** adds a **Field name** and **Field value** pair.
+A card with every part empty is not sent.
+
+### Change or remove a notification
+
+- To change a rule, choose **Edit** on its row, change it and choose **Save**.
+- To keep a rule but stop it, turn off **Send this notification** and choose **Save**.
+  The row shows **Off**.
+- To remove a rule, choose **Remove** on its row, then **Remove rule**.
+  Messages already sent stay in Discord.
+
+A pipeline can also send a notification you set up here, with its **Discord notification** step.
+[Event responses](/reference/automation/event-responses) explains pipelines that run on events.
+
+## Add a self-assign role
+
+A self-assign role is a Discord role that viewers take or leave with a button in Discord.
+
+1. In the **Self-assign roles** panel, choose **Add role**.
+   The **New role** panel opens.
+2. Pick the role in **Discord role**.
+   **Display name** fills in with the role's name.
+   Change it when you want.
+3. Leave **Viewers can pick this role** on.
+4. Choose **Save**.
+   The role shows in the list with "0 opted in".
+5. Choose **Edit** on the role.
+6. Pick a channel in **Button channel**, then choose **Post button**.
+   The bot posts the button in that channel.
+
+A viewer who presses the button gets the role, or loses it when they had it.
+Discord shows only that viewer a short line that says the role was added or removed.
+The list shows how many viewers opted in.
+
+| Setting | Default | What it does |
+| --- | --- | --- |
+| **Viewers can pick this role** | On | Off makes the button answer "Self-assign is currently disabled for this role." |
+| **Send a direct message** | Off | On sends a notification as a direct message to each viewer who opted in, when a notification pings this role. |
+
+The role you use as the live role cannot also be a self-assign role.
+A self-assign role cannot be the live role.
+
+To remove a self-assign role, choose **Edit**, then **Remove role**, then **Remove**.
+A viewer who presses its old button then sees "This button isn't active anymore."
+
+## Set up the live role
+
+The live role is a Discord role the bot gives to you while you are live.
+
+1. In the **Live role** panel, pick a role in **Role**.
+2. Leave **Give the role while live** on.
+3. Choose **Save**.
+
+The bot gives the role when the stream goes live, and takes it back when the stream ends.
+When the bot missed the end of a stream, it takes the role back when it starts again.
+While the role is on you, the panel shows **Applied right now**, and you cannot change the role.
+
+The role goes to your own Discord account, the one linked to your Twitch.
+The bot learns that account when you add the bot to your server.
+
+To remove the live role, choose **Remove rule**.
+**Remove rule** does not show while the role is on you.
+
+## Read the recent posts
+
+**Recent posts** lists what the bot sent to Discord lately, with the event and the time.
+
+| Status | What it means |
+| --- | --- |
+| **Posted** | The message is in Discord. |
+| **Failed** | Discord refused the message. The row shows the reason. |
+| **Skipped** | The bot did not send it, for example because posting is off. The row shows the reason. |
+| **Skipped, already posted** | The bot already posted this event once. |
+
+## Pause, withdraw or disconnect
+
+| Action | What happens |
+| --- | --- |
+| Turn off **Post to this server** | Every Discord message from this channel pauses. |
+| **Withdraw approval**, then **Withdraw approval** | Posting halts until the server is approved again. Nothing is deleted. |
+| **Disconnect server**, then **Disconnect** | The bot stops posting to this server. |
+
+To approve the server again, choose **Use another server** and pick the same server on Discord's page.
+
+Before you disconnect, the dialog lists the rules, roles and live-role settings that use this server.
+You can link a server again later.
+
+## Troubleshooting
+
+::Troubleshooting
+
+**The page shows "The bot was not added to your server".**
+The message under it says what went wrong.
+Choose **Try again** to start again, or **Dismiss** to close it.
+
+**The page says "The Discord app is not set up yet".**
+An admin of the bot server enters the Discord client ID and client secret first.
+
+**The pickers say "The Discord bot is not connected to your Discord server."**
+Add the bot to your server first.
+
+**The pickers say "The Discord bot is not set up on this bot server yet."**
+The person who runs the bot server must add the Discord bot token.
+
+**The editor says "The bot cannot post in" and names channels.**
+The bot gives itself access the first time it needs to.
+If it cannot, allow View Channel and Send Messages for the bot's role in that channel's Permissions in Discord.
+
+**The live role does not save, and asks for your Discord account.**
+In Discord, open User Settings, then Connections, and connect your Twitch account.
+Then add the bot to your server again.
+
+::
+
+## Related pages
+
+- [Connect platforms](/reference/getting-started/connect-platforms)
+- [Event responses](/reference/automation/event-responses)
+- [Permissions](/reference/settings/permissions)
