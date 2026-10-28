@@ -1,0 +1,154 @@
+---
+title: First-run setup
+description: Finish the setup page of a new bot, with the Twitch app, the optional bot account and the optional Spotify, Discord and YouTube keys.
+---
+
+A new self-hosted bot opens the setup page before anything else.
+You choose the Twitch app the bot uses, and you can add a bot account and the keys for other services.
+You sign in after the last step.
+
+You reach this page after you [install with Docker](/reference/self-hosting/install-with-docker) and open the bot in your browser.
+
+## The steps
+
+The page shows the steps in a row at the top, with the current step marked.
+On a narrow screen, the row shows "Step 1 of 6" and the name of the current step.
+
+| Step | Title on the card | Needed |
+| --- | --- | --- |
+| **Twitch app** | **Connect your Twitch application** | Yes |
+| **Bot account** | **Authorize the bot account (optional)** | No |
+| **Spotify** | **Spotify (optional)** | No |
+| **Discord** | **Discord (optional)** | No |
+| **YouTube** | **YouTube (optional)** | No |
+| **Finish setup** | **Finish setup** | Yes |
+
+Under each card, **Back** goes to the step before.
+On a needed step, **Next** stays off until the step is done.
+On an optional step that is not done, the button reads **Skip**.
+
+::Callout
+
+Finish the setup soon after you start the bot.
+Until you choose **Finish setup**, anyone who can open the bot's address can change the keys on this page.
+After that, only an admin of the bot can change them.
+
+::
+
+## 1. Choose the Twitch app
+
+The bot talks to Twitch through a Twitch app.
+You can register your own app, or use the shared NomNomzBot app.
+Your own app is encouraged.
+
+To use your own app:
+
+1. Open the Twitch Developer Console from the link on the card, and register a new application.
+2. Set the OAuth Redirect URL to the address the card shows.
+   Use the copy button beside the address, so the address matches exactly.
+3. Choose the "Chat Bot" category, create the app, and copy the Client ID.
+4. Paste it into **Client ID** and choose **Save**.
+   The step is now done, and **Next** turns on.
+
+**Client Secret (optional)** can stay empty.
+Without it, you sign in with a code.
+With it, you can also sign in with one tap.
+
+To use the shared app instead, choose **Use the shared NomNomzBot app**.
+You fill in no fields, and the step is done.
+
+Only a saved Client ID or a click on the shared app finishes this step.
+
+## 2. Add a bot account
+
+This step is optional.
+Skip it, and the broadcaster account types in chat as the bot.
+The [bot account](/reference/getting-started/bot-account) page explains which account the bot types from.
+
+To add a separate bot account:
+
+1. Sign in to Twitch as the bot's own account in this browser first.
+2. Choose **Authorize the bot account**.
+   Twitch opens in a new tab, and the card shows "Waiting for you to approve the account on Twitch…".
+3. Approve the chat permissions that Twitch asks for.
+   The card shows "Connected:" and the name of the account, and the step is done.
+
+While the card waits, it also shows the link to Twitch with a copy button.
+Use it when the bot account is signed in to another browser or profile.
+
+## 3. Add Spotify, Discord or YouTube
+
+These three steps are optional.
+Each one asks for a **Client ID** and a **Client Secret** from an app that you make at that service.
+The card links to the place where you make the app.
+
+| Step | What it turns on | Where you add the address the card shows |
+| --- | --- | --- |
+| **Spotify** | Song requests | The Redirect URI of a Spotify app |
+| **Discord** | Notifications and server sync | The OAuth2 Redirect of a Discord application |
+| **YouTube** | The YouTube music provider | The Authorized redirect URI of a Google OAuth credential |
+
+1. Make the app at the service, and add the address that the card shows.
+   Use the copy button beside the address.
+2. Copy the Client ID and the Client Secret into the two fields.
+3. Choose **Save**.
+   The step is done.
+
+You can also leave these out now.
+
+## 4. Finish setup
+
+The last card lists every step with **Done** or **Not set**.
+Below the list is the **Event feed** check.
+On a new bot it says "Sign in after you finish setup. Then this page can check that Twitch events reach the bot."
+
+Choose **Finish setup**.
+The bot opens the dashboard, and you [sign in](/reference/getting-started/sign-in).
+
+## Troubleshooting
+
+::Troubleshooting
+
+**The page says "This bot does not answer. Check that it runs, then try again."**
+The browser cannot reach the bot.
+In a terminal in the project folder, run the command for your setup:
+
+```bash
+docker compose -f docker-compose.lite.yml ps
+```
+
+For the full setup, run `docker compose ps`.
+The bot's row must show `Up` and `healthy`.
+If it does not, start the bot again with the command from [Install with Docker](/reference/self-hosting/install-with-docker), then choose **Try again**.
+
+::
+
+::Troubleshooting
+
+**Next stays off on the Twitch app step.**
+A Client ID that the bot already knows does not count.
+Choose **Save** with your own Client ID, or choose **Use the shared NomNomzBot app**.
+
+::
+
+::Troubleshooting
+
+**Saving shows "The bot could not save this. Check the values and try again."**
+Check the values you pasted.
+If the setup is already finished, only an admin of the bot can save new keys.
+
+::
+
+::Troubleshooting
+
+**Finish shows "The bot could not finish setup. Try again."**
+Choose **Finish setup** again.
+If the setup was already finished from another browser, only an admin of the bot can finish it again.
+
+::
+
+## Related pages
+
+- [Install with Docker](/reference/self-hosting/install-with-docker)
+- [Bot account](/reference/getting-started/bot-account)
+- [Sign in](/reference/getting-started/sign-in)
