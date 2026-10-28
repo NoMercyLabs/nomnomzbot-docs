@@ -1,0 +1,120 @@
+---
+title: VTube Studio
+description: Link VTube Studio to the bot, then load models, fire hotkeys and set expressions from the dashboard or a pipeline.
+---
+
+You link VTube Studio on the **VTube Studio** page in the sidebar, in the **Live** group.
+After the link, the bot can load a model, fire a hotkey and turn an expression on or off.
+The page has three tabs: **Connection**, **Hotkeys** and **Expressions**.
+
+## Who can use this page
+
+A **Moderator** or higher may open the page and see the link.
+A **Moderator** or higher may also load models, fire hotkeys and set expressions.
+Only the **Broadcaster** may change the link, approve it and rotate the bridge token.
+
+For anyone else, the **Connection** form shows but cannot be changed.
+The **Load model**, **Trigger**, **Activate** and **Deactivate** buttons show only to someone who may control the model.
+
+## Link VTube Studio
+
+1. Open **VTube Studio** in the sidebar.
+   The **Connection** tab opens.
+2. Switch on **Link to VTube Studio**.
+3. Leave **Connection type** at **Direct** and **Address** at `ws://localhost:8001`.
+   **Address** is one field that holds the whole address.
+   The default fits VTube Studio on the same computer as the bot, unless the streamer changed its address in VTube Studio.
+4. Choose **Save**.
+5. Choose **Authorize**.
+   The button shows **Waiting for approval**, and the page shows "Click Allow in VTube Studio. This waits up to a minute."
+6. In VTube Studio, click **Allow**.
+   **Approval** now shows "Approved. The bot keeps the key."
+
+The status at the top of the page and beside **VTube Studio** tells you the state of the link.
+
+| Status | Dot | What it means |
+| --- | --- | --- |
+| The link to VTube Studio is switched off | gray | **Link to VTube Studio** is off. |
+| Waiting for your approval in VTube Studio | orange | The link is on, but VTube Studio has not approved the bot. |
+| Approved, not connected yet | orange | VTube Studio approved the bot. The bot has not connected yet. |
+| Connected | green | The bot is connected. The other two tabs work. |
+| The link to VTube Studio failed | red | The bot could not reach VTube Studio. |
+
+When the bot has connected once, **Last connected** shows how long ago that was.
+
+## Settings on the Connection tab
+
+| Label | What it does | Default |
+| --- | --- | --- |
+| **Link to VTube Studio** | Switches the link on or off. When it is off, every VTube Studio action is refused. | Off |
+| **Connection type** | **Direct**: the bot dials VTube Studio itself at **Address**. **Bridge**: the bot reaches VTube Studio through a browser source in OBS on the streamer's computer. | **Direct** |
+| **Address** | The VTube Studio address for **Direct**. It starts with `ws://` or `wss://`. An empty box saves the default. | `ws://localhost:8001` |
+| **Events to listen to** | The VTube Studio events the bot listens to. | The first eight events |
+
+The events in **Events to listen to** are **Model loaded**, **Tracking status changed**, **Background changed**, **Model settings changed**, **Hotkey triggered**, **Model clicked**, **Items**, **Post processing**, **Model moved (high volume)**, **Model outline (high volume)** and **Model animation (high volume)**.
+The last three send many events per second, so they are off by default.
+
+## Load a model or fire a hotkey
+
+1. Open the **Hotkeys** tab.
+2. Pick a model in **Model** and choose **Load model**.
+   VTube Studio loads that model.
+3. Pick a hotkey in **Hotkey** and choose **Trigger**.
+   VTube Studio runs that hotkey.
+
+The **Hotkey** list holds the hotkeys of the model that is loaded now.
+Until the link shows **Connected**, the tab shows "This shows once VTube Studio is linked."
+
+## Turn an expression on or off
+
+1. Open the **Expressions** tab.
+2. Pick an expression in **Expression**.
+3. Choose **Activate** to turn it on, or **Deactivate** to turn it off.
+
+## Control the model from a pipeline
+
+A [pipeline](/reference/commands/pipelines) can control the model with the actions in the **VTube Studio** category.
+
+| Action | What it does |
+| --- | --- |
+| Load a VTube Studio model | Loads the model with the id you give. |
+| Trigger a VTube Studio hotkey | Runs a hotkey of the loaded model, by its id or name. |
+| Activate or deactivate a VTube Studio expression | Turns an expression on or off. Default: on. |
+| Move, rotate, or resize the VTube Studio model | Sets position, rotation or size. Give at least one of them. Default move time: 0.3 seconds. |
+| Apply a color tint to the VTube Studio model | Tints the whole model, or only the parts with a tag you give. Each color channel is 0 to 255. Default opacity: 255. |
+| Send a raw VTube Studio API request | Sends any VTube Studio request type with its data. |
+
+When an action fails, the pipeline step fails and the reason is kept in the `vts.last_error` variable.
+
+<details>
+<summary>Rotate the bridge token</summary>
+
+With **Connection type** set to **Bridge**, the **Rotate bridge token** button shows.
+Choose it, then choose **Rotate token** in the dialog.
+The bridge gets a new credential, and the old credential stops working at once.
+
+</details>
+
+## Troubleshooting
+
+::Troubleshooting
+
+**Authorize shows an error at once.**
+Switch on **Link to VTube Studio** and choose **Save** first.
+**Authorize** works only with **Connection type** set to **Direct**.
+Then check that VTube Studio is running at the **Address**.
+
+**A message says "VTube Studio did not answer. Check the connection."**
+The bot could not reach VTube Studio.
+Check that VTube Studio is running, and that the status shows **Connected**.
+
+**Authorize stops after a minute.**
+Nobody clicked **Allow** in VTube Studio in time.
+Choose **Authorize** again and click **Allow**.
+
+::
+
+## Related pages
+
+- [Pipelines](/reference/commands/pipelines)
+- [Dashboard tour](/reference/getting-started/dashboard-tour)
