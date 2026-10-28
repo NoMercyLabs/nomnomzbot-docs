@@ -1,0 +1,260 @@
+---
+title: Trust and escalation
+description: Tune how the bot scores a viewer's trust, and set the ladder of warn, timeout and ban steps for repeat offenders.
+---
+
+You tune two moderation policies on two settings pages.
+Both pages sit in the **Access** group of the settings sidebar.
+**Trust policy** sets how the bot scores each viewer's trust and heat.
+**Escalation** sets how the bot punishes a viewer who breaks the rules again and again.
+
+## Who can use these pages
+
+The table shows the default roles.
+You can change who may do what on [Permissions](/reference/settings/permissions).
+
+| Page | Who may open it | Who may change it |
+| --- | --- | --- |
+| **Trust policy** | A **Moderator**, **Lead moderator**, **Editor** or **Broadcaster** | The **Broadcaster** |
+| **Escalation** | A **Moderator**, **Lead moderator**, **Editor** or **Broadcaster** | A **Lead moderator**, **Editor** or **Broadcaster** |
+
+Someone who may only open a page sees every value but cannot change it.
+The **Save** and **Reset to defaults** buttons show only to someone who may change the page.
+
+## Change a policy
+
+Both pages work the same way.
+
+1. Open the page in the **Access** group of the settings sidebar.
+   Each field shows its default next to its name, for example "Default 168".
+2. Change one or more fields.
+   **Save** becomes active.
+3. Choose **Save**.
+   The bot stores all fields at once.
+
+If the bot refuses a value, the reason shows under the field it names.
+**Reset to defaults** puts every field back to its default.
+You still choose **Save** to store the reset.
+
+## Trust policy
+
+The bot keeps two numbers for each viewer in your channel: a trust score and heat.
+Both run from 0 to 100.
+The bot works them out again after each moderation action against the viewer.
+The profile dialog shows the score as **Trust score** under **Bot standing**.
+
+The **Trust policy** page holds every number behind the score and the heat.
+The fields sit in six panels.
+
+::Callout
+
+The trust score uses only five facts about a viewer today.
+They are how long the bot has known the viewer, the Twitch affiliate or partner status, a verified YouTube channel, the number of timeouts and the number of bans.
+The page shows more fields than these.
+Only the fields named below as used change the score today.
+
+::
+
+### How the score is made
+
+1. The bot takes how long it has known the viewer, in months.
+   **Account age growth** sets how fast this signal climbs to 100.
+   A higher number climbs faster.
+2. The bot multiplies the signal by the **Account age** weight.
+3. The bot multiplies the result by the **Not following multiplier**.
+   Today this happens for every viewer.
+4. The bot adds the **Affiliate boost** or **Partner boost** for a Twitch affiliate or partner, and the **Verified YouTube boost** for a verified YouTube channel.
+   The score does not go above 100.
+5. The bot takes off the **Timeout penalty** once for each timeout, and the **Ban penalty** once for each ban.
+   The score does not go below 0.
+
+With the defaults, a viewer with no special status and no punishments reaches at most 18.75.
+
+### Fields the score uses today
+
+| Field | Panel | Default |
+| --- | --- | --- |
+| **Account age** | Score weights | 0.25 |
+| **Account age growth** | Growth speed | 0.499 |
+| **Not following multiplier** | Boosts and multipliers | 0.75 |
+| **Affiliate boost** | Boosts and multipliers | 5 |
+| **Partner boost** | Boosts and multipliers | 10 |
+| **Verified YouTube boost** | Boosts and multipliers | 10 |
+| **Timeout penalty** | Penalties | 10 |
+| **Ban penalty** | Penalties | 30 |
+
+### Other fields on the page
+
+The page also shows these fields.
+The score does not use them today.
+
+| Field | Panel | Default |
+| --- | --- | --- |
+| **Request count** | Score weights | 0.25 |
+| **Content age** | Score weights | 0.3 |
+| **Content popularity** | Score weights | 0.2 |
+| **Request count growth** | Growth speed | 0.599 |
+| **Content age growth** | Growth speed | 0.999 |
+| **Content popularity growth** | Growth speed | 0.0003 |
+| **Reputation boost** | Boosts and multipliers | On |
+| **YouTube quality multiplier** | Boosts and multipliers | 0.75 |
+| **Skip penalty** | Penalties | 5 |
+| **Untrusted up to** | Tier ceilings | 25 |
+| **Low trust up to** | Tier ceilings | 50 |
+| **Standard up to** | Tier ceilings | 75 |
+
+### Allowed values
+
+Each weight is between 0 and 1.
+The four weights must add up to exactly 1.
+The **Score weights** panel shows the live total, for example "Total 1 of 1".
+Each growth speed is above 0 and at most 10.
+A boost is between 0 and 100 points.
+A multiplier is between 0 and 1.
+A penalty is between 0 and 100 points.
+Each tier ceiling is between 0 and 100, and higher than the one before it.
+
+### Heat
+
+Heat measures recent trouble.
+Each event in the table adds heat.
+Heat then fades by half for each half-life that passes.
+Heat never goes above 100.
+
+These fields sit in the **Heat** panel.
+
+| Field | Default |
+| --- | --- |
+| **Heat half-life (hours)** | 24 |
+| **Heat for a ban** | 40 |
+| **Heat for a timeout** | 15 |
+| **Heat for a confirmed report** | 10 |
+| **Heat for a denied AutoMod message** | 5 |
+| **Heat for a filter hit** | 5 |
+
+When a viewer's heat rises to 80 or more, the bot puts the viewer in the review queue on the Home page.
+A moderator then decides what to do.
+No field on this page changes the 80.
+
+The half-life is above 0 and at most one year (8760 hours).
+A heat amount is between 0 and 1000.
+A denied AutoMod message is a message that AutoMod holds back.
+A filter hit is a message that trips one of your [chat filters](/reference/moderation/automod-and-chat-filters).
+A confirmed report is explained on [Reports](/reference/moderation/reports).
+
+## Escalation
+
+The **Escalation** page sets the escalation ladder.
+The ladder counts each viewer's offenses.
+Each new offense moves the viewer one step up the ladder.
+Each step takes an action: a warning, a timeout or a ban.
+
+### What counts as an offense
+
+These events count as an offense:
+
+- A Twitch message trips a [chat filter](/reference/moderation/automod-and-chat-filters) whose action is **Step up the escalation ladder**.
+- With **Count AutoMod holds** on, AutoMod or spam defense would time out or ban the viewer.
+  The ladder step takes the place of that punishment, so the viewer is punished once.
+
+A timeout or ban that a moderator gives by hand does not count.
+
+### What each action does
+
+- **Warn** sends the viewer a Twitch warning with the reason.
+- **Timeout** times the viewer out for the step's length.
+- **Ban** bans the viewer.
+
+The bot takes the action in the name of the channel owner.
+
+### Policy
+
+| Field | What it does | Default |
+| --- | --- | --- |
+| **Escalation ladder** | Punishes repeat offenders with a stronger action each time. | Off |
+| **Count AutoMod holds** | AutoMod and spam defense actions count as offenses. | Off |
+| **Offense window (hours)** | How long a run of offenses lasts, counted from the first offense of the run. | 168 (one week) |
+| **Default timeout** | The length a timeout step takes when it has no length of its own. | 10:00 (10 minutes) |
+
+The ladder ships switched off.
+It punishes nobody until you switch on **Escalation ladder** and choose **Save**.
+**Count AutoMod holds** works only while **Escalation ladder** is on.
+
+The offense window is 1 to 8760 hours.
+
+The window starts at a viewer's first offense.
+Each offense inside the window adds 1 to the count.
+The first offense after the window ends sets the count back to 1 and starts a new window.
+
+### Type a length of time
+
+**Default timeout** and each **Timeout length** box take minutes and seconds.
+
+- Type minutes, a colon and two digits of seconds, for example `4:30` for four and a half minutes.
+- Or type a whole number, which counts as minutes, for example `1` for one minute.
+
+The shortest length is `0:01`, one second.
+The longest is `20160:00`, which is 14 days.
+A length outside that range, or text that is not a length, marks the box as invalid.
+
+The default next to **Default timeout** shows in seconds: "Default 600" is 10:00.
+
+### Ladder
+
+Each step starts at an offense number.
+The numbers must go up from step to step.
+
+| **At offense** | **Action** | **Timeout length** |
+| --- | --- | --- |
+| 1 | **Warn** | |
+| 2 | **Timeout** | 1:00 (one minute) |
+| 3 | **Timeout** | 10:00 (ten minutes) |
+| 4 | **Timeout** | 60:00 (one hour) |
+| 5 | **Timeout** | 1440:00 (one day) |
+| 6 | **Ban** | |
+
+The table shows the default ladder.
+When a viewer's offense count is past the last step, the last step applies again.
+
+### Edit the ladder
+
+1. Type a number in **At offense** to set where a step starts.
+2. Choose **Warn**, **Timeout** or **Ban** in **Action**.
+   A **Timeout** step shows a **Timeout length** box, filled with the **Default timeout**.
+3. To change the length, type it in the **Timeout length** box.
+   Use minutes and seconds, as in [Type a length of time](#type-a-length-of-time).
+4. Choose **Add step** to add a step at the bottom.
+   The new step starts one offense after the last step and is a **Warn** step.
+5. Choose **Remove step** on a row to delete that step.
+6. Choose **Save**.
+
+The ladder holds 1 to 50 steps.
+**Add step** is inactive at 50 steps.
+**Remove step** is inactive when only one step is left.
+
+The saved ladder applies from the next offense.
+A viewer keeps the offense count they already have.
+
+::Troubleshooting
+
+**The ladder does nothing.**
+**Escalation ladder** is off by default.
+Switch it on and choose **Save**.
+
+::
+
+::Troubleshooting
+
+**A viewer's old offenses are not counted.**
+The window started at the viewer's first offense, and it has ended.
+The next offense sets the count back to 1, as in [Policy](#policy).
+To count offenses for longer, set a higher **Offense window (hours)** and choose **Save**.
+
+::
+
+## Related pages
+
+- [Moderation overview](/reference/moderation/overview)
+- [AutoMod and chat filters](/reference/moderation/automod-and-chat-filters)
+- [Reports](/reference/moderation/reports)
+- [Permissions](/reference/settings/permissions)
