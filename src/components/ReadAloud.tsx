@@ -5,7 +5,8 @@ import { useEffect, useRef } from 'react';
 import { create } from 'zustand';
 
 import { t } from '../lib/i18n';
-import { chunkSentence } from '../lib/readAloudChunks';
+import { chunkSentence, joinCommandBangs } from '../lib/readAloudChunks';
+import { createClipCache } from '../lib/readAloudClip';
 import { pickVoice } from '../lib/readAloudVoice';
 
 // Read aloud with the browser's own speech engine: no service, no key, and
@@ -34,6 +35,29 @@ let sentenceIndex = 0;
 // Each speak() takes a new id; an utterance whose end arrives after a cancel
 // or a skip carries an old id and is ignored.
 let runId = 0;
+
+// The bot's own voice. A site that runs its own bot sets PUBLIC_READ_ALOUD_URL.
+const READ_ALOUD_URL
+  = import.meta.env.PUBLIC_READ_ALOUD_URL ?? 'https://dev.nomnomz.bot/api/v1/public/read-aloud';
+const clips = createClipCache(READ_ALOUD_URL, url => fetch(url));
+let player: HTMLAudioElement | null = null;
+
+function silence(): void {
+  if (player) {
+    player.onended = null;
+    player.onerror = null;
+    player.pause();
+    player = null;
+  }
+  window.speechSynthesis.cancel();
+}
+
+// The first sentence after the current one, so its clip can load while this one plays.
+function nextText(): string | undefined {
+  if (sentenceIndex + 1 < sentences.length) return sentences[sentenceIndex + 1];
+  const block = blocks[blockIndex + 1];
+  return block ? split(textOf(block))[0] : undefined;
+}
 
 export function readAloudSupported(): boolean {
   return typeof window !== 'undefined' && 'speechSynthesis' in window;
@@ -83,9 +107,10 @@ function split(text: string): string[] {
   const lang = document.documentElement.lang || 'en';
   if ('Segmenter' in Intl) {
     const segmenter = new Intl.Segmenter(lang, { granularity: 'sentence' });
-    return [...segmenter.segment(text)].flatMap(part => chunkSentence(part.segment));
+    const parts = [...segmenter.segment(text)].map(part => part.segment.trim()).filter(Boolean);
+    return joinCommandBangs(parts).flatMap(chunkSentence);
   }
-  return (text.match(/[^.!?]+[.!?]*/g) ?? [text]).flatMap(chunkSentence);
+  return joinCommandBangs((text.match(/[^.!?]+[.!?]*/g) ?? [text]).map(part => part.trim())).flatMap(chunkSentence);
 }
 
 function isSection(element: HTMLElement): boolean {
@@ -119,9 +144,49 @@ interface ReadAloudState {
 }
 
 export const useReadAloud = create<ReadAloudState>()((set, get) => {
+  function finished(id: number): void {
+    if (id !== runId) return;
+    if (sentenceIndex + 1 < sentences.length) {
+      sentenceIndex += 1;
+    }
+    else {
+      blockIndex += 1;
+      sentenceIndex = 0;
+    }
+    speak();
+  }
+
+  // The browser voice speaks a sentence the bot could not.
+  function speakWithBrowser(text: string, lang: string, id: number): void {
+    const utterance = new SpeechSynthesisUtterance(text);
+    utterance.lang = lang;
+    utterance.rate = get().rate;
+    const voice = pickVoice(window.speechSynthesis.getVoices(), lang, readVoiceName());
+    if (voice) utterance.voice = voice;
+    utterance.onend = () => finished(id);
+    utterance.onerror = (event) => {
+      if (id !== runId || event.error === 'interrupted' || event.error === 'canceled') return;
+      get().stop();
+    };
+    window.speechSynthesis.speak(utterance);
+  }
+
+  function playClip(clip: string, text: string, lang: string, id: number): void {
+    const audio = new Audio(clip);
+    audio.playbackRate = get().rate;
+    audio.onended = () => finished(id);
+    audio.onerror = () => {
+      if (id === runId) speakWithBrowser(text, lang, id);
+    };
+    player = audio;
+    audio.play().catch(() => {
+      if (id === runId) speakWithBrowser(text, lang, id);
+    });
+  }
+
   function speak(): void {
     const id = ++runId;
-    window.speechSynthesis.cancel();
+    silence();
     const block = blocks[blockIndex];
     if (!block) {
       get().stop();
@@ -129,27 +194,15 @@ export const useReadAloud = create<ReadAloudState>()((set, get) => {
     }
     if (sentenceIndex === 0 || sentences.length === 0) sentences = split(textOf(block));
     mark(block);
-    const utterance = new SpeechSynthesisUtterance(sentences[sentenceIndex] ?? '');
-    utterance.lang = document.documentElement.lang || 'en';
-    utterance.rate = get().rate;
-    const voice = pickVoice(window.speechSynthesis.getVoices(), utterance.lang, readVoiceName());
-    if (voice) utterance.voice = voice;
-    utterance.onend = () => {
+    const text = sentences[sentenceIndex] ?? '';
+    const lang = document.documentElement.lang || 'en';
+    const upcoming = nextText();
+    if (upcoming) void clips.clip(upcoming, lang);
+    void clips.clip(text, lang).then((clip) => {
       if (id !== runId) return;
-      if (sentenceIndex + 1 < sentences.length) {
-        sentenceIndex += 1;
-      }
-      else {
-        blockIndex += 1;
-        sentenceIndex = 0;
-      }
-      speak();
-    };
-    utterance.onerror = (event) => {
-      if (id !== runId || event.error === 'interrupted' || event.error === 'canceled') return;
-      get().stop();
-    };
-    window.speechSynthesis.speak(utterance);
+      if (clip) playClip(clip, text, lang, id);
+      else speakWithBrowser(text, lang, id);
+    });
   }
 
   function jumpTo(index: number): void {
@@ -167,6 +220,7 @@ export const useReadAloud = create<ReadAloudState>()((set, get) => {
       if (!readAloudSupported()) return;
       blocks = collect();
       if (blocks.length === 0) return;
+      clips.reset();
       // Start where the reader is looking, not at the top of the page.
       const first = blocks.findIndex(block => block.getBoundingClientRect().bottom > 96);
       blockIndex = Math.max(first, 0);
@@ -179,7 +233,7 @@ export const useReadAloud = create<ReadAloudState>()((set, get) => {
       const { status } = get();
       if (status === 'playing') {
         runId += 1;
-        window.speechSynthesis.cancel();
+        silence();
         set({ status: 'paused' });
       }
       else if (status === 'paused') {
@@ -189,7 +243,8 @@ export const useReadAloud = create<ReadAloudState>()((set, get) => {
     },
     stop: () => {
       runId += 1;
-      if (readAloudSupported()) window.speechSynthesis.cancel();
+      if (readAloudSupported()) silence();
+      clips.reset();
       mark(undefined);
       blocks = [];
       sentences = [];

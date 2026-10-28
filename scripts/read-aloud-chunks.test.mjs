@@ -12,7 +12,14 @@
 import assert from 'node:assert/strict';
 import { test } from 'node:test';
 
-import { MAX_UTTERANCE, chunkSentence } from '../src/lib/readAloudChunks.ts';
+import { MAX_UTTERANCE, chunkSentence, joinCommandBangs } from '../src/lib/readAloudChunks.ts';
+
+test('a chat command such as !uptime stays in its sentence, and a real exclamation still ends one', () => {
+  assert.deepEqual(
+    joinCommandBangs(['A command, such as !', 'uptime.', 'Wow!', 'Next one.']),
+    ['A command, such as !uptime.', 'Wow!', 'Next one.'],
+  );
+});
 
 test('a short sentence stays one chunk', () => {
   assert.deepEqual(chunkSentence('Type the trigger word.'), ['Type the trigger word.']);

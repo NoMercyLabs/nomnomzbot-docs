@@ -23,6 +23,18 @@ function cutPoint(text: string): number {
   return space > 0 ? space : MAX_UTTERANCE;
 }
 
+// A sentence splitter ends a sentence at "!", so "such as !uptime" comes apart
+// as "such as !" and "uptime." A "!" that follows a space is a chat command.
+export function joinCommandBangs(parts: string[]): string[] {
+  const joined: string[] = [];
+  for (const part of parts) {
+    const last = joined.at(-1);
+    if (last !== undefined && /\s!$/.test(last)) joined[joined.length - 1] = `${last}${part}`;
+    else joined.push(part);
+  }
+  return joined;
+}
+
 export function chunkSentence(sentence: string): string[] {
   const chunks: string[] = [];
   let rest = sentence.trim();
