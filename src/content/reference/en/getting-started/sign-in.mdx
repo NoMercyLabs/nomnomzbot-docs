@@ -1,0 +1,208 @@
+---
+title: Sign in
+description: Sign in to the dashboard as broadcaster, moderator or viewer, with a button or with a code, and read what a closed sign-in page shows.
+---
+
+You sign in to the dashboard with your account on a platform, such as Twitch.
+You can choose a button and approve on the platform, or you can sign in with a short code.
+When you finish, the dashboard opens.
+
+## Sign in with Twitch
+
+You sign in on the website of a bot.
+The person who runs the bot gives you its address, such as `bot.example.com`.
+The public NomNomzBot website has its sign-in closed (see [A closed sign-in page](#a-closed-sign-in-page)).
+
+Open the bot's address in the browser.
+When you are not signed in, any dashboard page sends you to the sign-in page.
+
+The sign-in page shows one box, the card, titled **Welcome**.
+The card has one Twitch button for each role: broadcaster, moderator and viewer.
+
+| Button | Choose it when |
+| --- | --- |
+| **Continue as broadcaster** | You own the channel and run the bot in it. |
+| **Continue as moderator** | You moderate a channel from the dashboard. |
+| **Continue as viewer** | You watch a channel. |
+
+Only **Continue as broadcaster** opens a channel for the bot.
+That means the bot starts to work in your Twitch channel.
+The other two buttons sign you in as yourself, with no channel of your own.
+
+1. Check the bot on the card.
+   The card shows the address of the bot on the card, with the text "The bot this page belongs to".
+   When that is not the address you were given, [choose a different bot](#choose-a-different-bot) first.
+2. Choose the button for your role.
+   The browser goes to Twitch.
+   Twitch asks you to approve the sign-in.
+3. Approve the sign-in on Twitch.
+   The browser comes back.
+   The dashboard opens.
+
+You can stop here.
+You are signed in.
+
+What each role may do in the dashboard is set by the channel.
+The [permissions page](/reference/settings/permissions) explains it.
+
+To connect the channel's platforms after you sign in, see [Connect platforms](/reference/getting-started/connect-platforms).
+
+### What Twitch is asked for
+
+Each button asks Twitch for only what that role uses.
+
+| Button | Twitch is asked to let the bot |
+| --- | --- |
+| **Continue as broadcaster** | read chat, type in chat, and list the channels you moderate |
+| **Continue as viewer** | read chat, send chat as you, and read your emotes |
+| **Continue as moderator** | read chat, send chat as you, and use the moderation tools |
+
+<details>
+<summary>Every permission a moderator sign-in asks for</summary>
+
+- read chat and send chat as you
+- read your emotes
+- list the channels you moderate
+- ban, time out and unban viewers
+- read and answer unban requests
+- read and change blocked terms
+- delete chat messages
+- read and change shield mode
+- warn viewers
+- manage suspicious users
+
+</details>
+
+You may sign in again while you are still signed in on this browser.
+Then the bot asks Twitch for every permission you gave it before, plus the ones your role needs.
+That sign-in never takes a permission away.
+
+## Sign in with another platform
+
+The person who runs the bot can switch on more platforms for sign-in.
+Each one shows a button such as **Continue with YouTube**.
+
+| Platform | Sign in with a button | Sign in with a code |
+| --- | --- | --- |
+| Twitch | Yes | Yes |
+| YouTube | Yes | Yes |
+| Kick | Yes | No |
+| Twitter / X | Yes | No |
+
+Twitch is always on.
+Another platform shows only when it is switched on and the bot has that platform's app details.
+These are the details the platform gives when the person who runs the bot registers the bot as an app there.
+
+When a platform is off, a line at the bottom of the card says so.
+For example: "Kick is off on this bot."
+
+## Sign in with a code
+
+A code is useful when the platform cannot send you back to this page.
+A code has no role choice.
+A Twitch code always signs you in as the broadcaster, so a moderator or a viewer uses a role button.
+
+1. Choose **Sign in with a code instead**.
+   When only one platform offers a code, the code appears at once.
+2. When more than one platform offers a code, the page asks "Which account do you want a code for?".
+   Choose a button such as **Get a Twitch code**.
+3. Read the code on the page.
+   Above it, the page says "Go to", the address of the platform's site, and "and enter this code."
+4. Choose the **Open** button under the code.
+   Its label ends with the same site address.
+   The site opens in a new tab.
+5. Enter the code on that site and approve the sign-in.
+   The sign-in page says "Waiting for you to approve. This page goes on by itself."
+   When you approve, the dashboard opens by itself.
+
+**Back** returns to the sign-in buttons.
+
+| Message | What it means |
+| --- | --- |
+| "The code ran out before it was used." | You did not enter the code in time. |
+| "You did not approve the sign-in on Twitch." | You refused it on the platform. |
+| "Twitch did not finish the sign-in." | The platform ended the sign-in with an error. |
+| "The bot could not start a sign-in with Twitch." | The bot could not get a code. |
+
+After each of these messages, choose **Get a new code**.
+
+### When the page offers only a code
+
+Some sign-in pages show only code buttons, and no role buttons.
+The page then shows one of these lines.
+
+| The page says | Why |
+| --- | --- |
+| "... has its own sign-in page. From here, you sign in with a code." | The bot on the card is not the bot this page belongs to. Where you see "...", the page shows that bot's address. |
+| "Platforms send you back only to a secure address. On this address, you sign in with a code." | The page address starts with `http://` and is not on this computer, for example `http://192.168.1.20:5080`. |
+
+A secure address starts with `https://`.
+
+## Choose a different bot
+
+You can change the bot on the card from the same page.
+
+1. Choose **Change** next to the bot on the card.
+   The **Choose a bot** card opens: "Pick the bot you want to sign in to."
+2. Pick a bot from the list, or type an address in **Bot address** and choose **Check**.
+   An address is a name such as `bot.example.com`, or a number such as `192.168.1.20`.
+   When the bot uses a port, add it after a colon, such as `192.168.1.20:5080`.
+3. Choose **Use this bot**.
+   The sign-in card comes back.
+   The new bot is now the bot on the card.
+
+| After **Check** the page says | Result |
+| --- | --- |
+| "... is a NomNomzBot. It is added and picked." | The bot is added to the list and picked. |
+| "Something answers at ..., but it does not say it is a NomNomzBot. It is added and picked." | The address is added and picked. |
+| "Nothing answers at .... Check that the bot runs, and that the address and port are right." | Nothing is added. Check the address, then choose **Check** again. |
+| "This page is secure (https) and ... is not (http). Browsers block calls between them, so this page cannot use it. Open ... in the browser instead." | Nothing is added. Type that address in the browser's address bar, and sign in on that bot's own page. |
+
+Where you see "...", the message shows the address you typed.
+
+A bot you added shows "Used on this browser".
+Beside it is a button with a cross and no text.
+It removes the bot from the list, and a screen reader names it **Forget** and the bot's address.
+
+## A closed sign-in page
+
+The public NomNomzBot website has its sign-in closed.
+Its card says **Sign-in is coming soon**: "Sign-in to the hosted NomNomzBot is not open yet."
+It shows a **Coming soon** button, the note "You can self-host your own bot today. It is free.", and **Back to the home page**.
+
+Running it for yourself, your friends and your community is free. You may not earn money with it: no selling it, and no paid hosting or paid service built on it.
+
+A bot you run yourself has its sign-in page open.
+The [first-run setup](/reference/self-hosting/first-run-setup) comes before your first sign-in.
+
+## Troubleshooting
+
+::Troubleshooting
+
+**The page says "This bot does not answer. Check that it runs, then try again."**
+The bot did not answer the page.
+When you run the bot yourself, start it, then choose **Try again**.
+
+::
+
+::Troubleshooting
+
+**The page says "This bot has no sign-in switched on yet. Its owner sets one up in the bot settings."**
+No platform is switched on for sign-in on this bot.
+Ask the person who runs the bot to switch one on.
+
+::
+
+::Troubleshooting
+
+**The page says "Too many sign-in tries."**
+The page counts the seconds down.
+**Try again** turns on when the count reaches 0.
+
+::
+
+## Related pages
+
+- [Connect platforms](/reference/getting-started/connect-platforms)
+- [Dashboard tour](/reference/getting-started/dashboard-tour)
+- [First-run setup](/reference/self-hosting/first-run-setup)
