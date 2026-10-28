@@ -1,0 +1,123 @@
+---
+title: Cooldowns and permissions
+description: Set who may run a command and how long it waits between uses, for all of chat and for each viewer.
+---
+
+You set who may run a channel command, and how often, in the command's editor.
+The editor opens when you choose a command on the **Commands** page (see [Create a command](/reference/commands/create-a-command)).
+
+| Setting | What it decides |
+| --- | --- |
+| **Who can use it** | The lowest role that may run the command. |
+| **Chat cooldown (seconds)** | How long the command waits after one use, for everyone except the broadcaster and moderators. 0 to 86400 seconds (24 hours). |
+| **Per-person cooldown (seconds)** | How long the same viewer waits to use it again. 0 to 86400 seconds (24 hours). |
+
+## Set who can use a command
+
+Command access is the role a viewer needs to run the command.
+**Who can use it** is the first field in the editor.
+The default is **Everyone**.
+
+The list holds 8 roles, lowest first:
+
+| Choice | Who may run the command |
+| --- | --- |
+| **Everyone** | Anyone in chat. |
+| **Twitch subscribers** | Subscribers and every role above them. |
+| **VIPs** | VIPs and every role above them. |
+| **Artists** | Artists and every role above them. |
+| **Moderators** | Moderators and every role above them. |
+| **Lead moderators** | Lead moderators and every role above them. |
+| **Editors** | Editors and every role above them. |
+| **Only you** | The broadcaster only. |
+
+A viewer runs the command when their role is the chosen role or higher.
+The roles and how people get them are on [Permissions](/reference/settings/permissions).
+
+1. Open the command in the editor.
+2. Choose a role in **Who can use it**.
+   The footer counts the change, for example "1 unsaved change".
+3. Choose **Save changes**.
+   The count leaves the footer and **Save changes** turns off.
+
+### When a viewer's role is too low
+
+The command does not run.
+By default the bot answers in chat, in the channel's one bot voice: "You don't have permission to use that command."
+
+When [text to speech](/reference/audio/text-to-speech) is on for your channel, the bot also reads the line aloud in the same bot voice.
+This does not follow the command's **Read it aloud** switch.
+For each viewer below moderator, it is read at most once every 30 seconds.
+
+Text to speech skips the line when your channel sets a minimum bits amount for text to speech, because the line carries 0 bits.
+
+## Set a cooldown
+
+A command cooldown is a wait after a use, in seconds, before the command runs again.
+Both cooldowns are in the editor's **Trigger and cooldowns** group.
+Each starts at 0, which means no cooldown.
+
+1. Open the command in the editor.
+2. Open **Trigger and cooldowns**.
+3. Type a number of seconds in **Chat cooldown (seconds)**, **Per-person cooldown (seconds)**, or both.
+   Each box steps in whole seconds and starts at 0.
+4. Choose **Save changes**.
+   The count leaves the footer and **Save changes** turns off.
+
+When the group is closed, its heading shows what is set.
+With a 30 second chat cooldown and a 10 second per-person cooldown, it reads "30 s chat · 10 s per person".
+With both at 0, it reads "No cooldown".
+
+### How the two cooldowns work
+
+| Cooldown | Who waits | When it starts |
+| --- | --- | --- |
+| **Chat cooldown** | Every viewer except the broadcaster and moderators. | Each time the command runs. |
+| **Per-person cooldown** | Only the viewer who ran the command. | Each time that viewer runs it. |
+
+When both are set, a viewer must be clear of both.
+A cooldown is checked after **Who can use it**.
+A viewer with too low a role gets the permission line, not the cooldown line.
+
+### Who is never held by a cooldown
+
+The broadcaster and moderators are exempt.
+Their uses run at once, every time.
+Their uses still start the chat cooldown for everyone else.
+
+### When a command is still cooling down
+
+The command does not run.
+By default the bot answers in chat, in the channel's one bot voice: "That command is still on cooldown."
+
+Cooldowns are held in the bot's memory.
+When the bot restarts, every running cooldown ends.
+
+## Reset to the preset
+
+A command made from a preset has **Reset to preset** in the footer (see [Create a command](/reference/commands/create-a-command)).
+**Who can use it**, **Chat cooldown (seconds)** and **Per-person cooldown (seconds)** are among the settings it puts back.
+The dialog lists each one that differs from the preset.
+
+## Troubleshooting
+
+::Troubleshooting
+
+**A viewer gets "You don't have permission to use that command."**
+Their role is below the one in **Who can use it**.
+Choose a lower role, or give the viewer a role on [Permissions](/reference/settings/permissions).
+
+**A moderator can spam a command that has a cooldown.**
+That is expected.
+The broadcaster and moderators are never held by a cooldown.
+
+**A command runs again sooner than its cooldown after a bot restart.**
+That is expected.
+A restart ends every running cooldown.
+
+::
+
+## Related pages
+
+- [Create a command](/reference/commands/create-a-command)
+- [Permissions](/reference/settings/permissions)
