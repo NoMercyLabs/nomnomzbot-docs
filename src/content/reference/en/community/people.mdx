@@ -1,0 +1,145 @@
+---
+title: People
+description: Browse the real viewers of your channel, find anyone by name, and open a person to see their profile and act on them.
+---
+
+You browse the people of your channel on the **People** page in the sidebar.
+The list holds real people the bot has seen in your chat, and real Twitch data.
+Pick a person to open their profile beside the list.
+
+## Who can use this page
+
+A **Moderator**, **Lead moderator**, **Editor** or **Broadcaster** may open the page.
+The roles are explained on [Permissions](/reference/settings/permissions).
+Some actions on a profile need a higher role (see [Act on a person](#act-on-a-person)).
+
+## Browse the list
+
+1. Open **People** in the sidebar.
+   The **All** tab shows everyone the bot has seen in your chat.
+2. Choose a tab above the list to see one group.
+   The line under **People** shows the count and what the tab holds.
+3. Choose **Last seen** or **A to Z** to change the order.
+   The page keeps your choice the next time you open it.
+4. Scroll down.
+   The next part of the list loads when you reach the end.
+
+| Tab | What it holds |
+| --- | --- |
+| **All** | Everyone the bot has seen in your chat. |
+| **Moderators** | People who moderate your channel. |
+| **VIPs** | People who hold the VIP badge on Twitch. |
+| **Twitch subscribers** | People who subscribe to your channel on Twitch. |
+| **Regulars** | People with at least 50 chat messages, first seen 30 days ago or more. |
+| **New** | People first seen in the last 90 days, from the part of the list loaded so far. |
+
+The **New** tab shows no count, because it counts only what is loaded.
+Scroll to load more people into it.
+
+Each row shows the avatar, the name, and **Last seen** with the time, or **Not seen yet**.
+
+| Mark on a row | Meaning |
+| --- | --- |
+| A gift icon | **Gifted Twitch subscription** |
+| A **Banned** badge | The person is banned. |
+| A shield icon | **Moderator** |
+| A gem icon | **VIP** |
+
+## Find a person
+
+1. Type a name in **Search people**.
+   The list changes to the matches, with name, avatar and login.
+2. Press Enter to open the first match, or choose a match.
+   The profile opens beside the list.
+
+The search looks at every person the bot knows, also from other channels.
+A match that your channel has never seen shows **Not in this channel**.
+When nothing matches, the list shows "Nobody matches" with your text.
+
+### Look up a name on Twitch
+
+The bot may not know a person yet.
+While you type, choose **Look up on Twitch** under the list.
+The bot asks Twitch for that exact name and opens the person.
+
+| Result | What you see |
+| --- | --- |
+| Twitch has no account with that name | "Twitch has no account named" with the name. |
+| Twitch did not answer | "Twitch could not be asked. Try again." |
+
+## Open a profile
+
+Choose a row to open the person's profile.
+On a wide screen it opens beside the list.
+On a phone it fills the screen, with **Back to the list** above it.
+
+To close it, choose the close button, press Escape, or go back in the browser.
+The address holds the person, so you can share a link that opens them.
+
+The same profile opens when you choose a name elsewhere in the dashboard, in a dialog.
+The dialog has **Open full page**, which opens the person on this page.
+
+| Profile tab | What it shows |
+| --- | --- |
+| **Overview** | The person at a glance. |
+| **Chat** | Their chat messages. |
+| **Emotes** | The emotes their own channel offers. |
+| **Moderation** | Notes, history, **Actions taken** counts, and **Ban history**. |
+| **Points** | Their points. Shows once the bot has a stored profile for them. |
+| **Data** | What the bot stores about them. Shows once the bot has a stored profile for them. |
+| **Settings** | How the bot treats them, and their text to speech voice. |
+
+**Ban history** lists each ban with its reason, who banned, the date, and the date it was lifted.
+With no bans, it shows "No bans stored for this person."
+
+## Act on a person
+
+The action buttons sit at the bottom of the profile.
+You see only the buttons your role may use.
+Your own channel's account has no action buttons.
+
+| Button | What it does | Who may use it |
+| --- | --- | --- |
+| **Shout out** | Sends a shoutout for the person. | A moderator and up |
+| **Warn** | Asks for a reason, then sends a Twitch warning. The person must accept it before they chat again. | A moderator and up |
+| **Timeout** | Opens **Time out for** with four lengths: 1 minute, 10 minutes, 1 hour and 1 day. | A moderator and up |
+| **Ban** | Asks you to confirm, then bans the person. | A moderator and up |
+| **Unban** | Lifts the ban. Shows in place of **Ban** for a banned person. | A moderator and up |
+| **Make VIP** or **Remove VIP** | Gives or takes the VIP badge on Twitch. | The broadcaster |
+| **Make moderator** or **Remove moderator** | Gives or takes the moderator role on Twitch. | The broadcaster |
+
+A message at the bottom of the screen confirms each result, such as "is now a moderator."
+**Warn**, **Timeout** and **Ban** never show on your own profile.
+On a moderator's profile they show only to the broadcaster.
+**Make VIP** is grayed out with **VIP status unknown** when Twitch could not tell the bot.
+
+### Ban a person
+
+1. Choose **Ban** on the profile.
+   A dialog asks "Ban" with the name, and says the person cannot chat until you unban them.
+2. Choose the **Ban** button with the name in the dialog.
+   The bot bans the person on Twitch.
+
+## Troubleshooting
+
+::Troubleshooting
+
+**The profile pane says "Nobody in the loaded lists has the login".**
+The person in the link is not in any loaded list.
+Type the name in **Search people**, or choose **Look up on Twitch**.
+
+::
+
+::Troubleshooting
+
+**The Twitch subscribers tab is empty.**
+It shows "Twitch lists no subscribers for your channel."
+The list comes from Twitch, so Twitch has no subscribers for the channel.
+
+::
+
+## Related pages
+
+- [Dashboard tour](/reference/getting-started/dashboard-tour)
+- [Viewer pages](/reference/community/viewer-pages)
+- [Moderation overview](/reference/moderation/overview)
