@@ -1,0 +1,211 @@
+---
+title: Text to speech
+description: Turn on text to speech, pick the channel voice, choose who is heard, add pronunciation rules, store your own voice key and read the history.
+---
+
+You set up text to speech on the **Text to speech** page in the sidebar.
+Text to speech is how the bot reads a line aloud on your stream.
+The page header shows "Text to speech is on" or "Text to speech is off".
+
+| Tab | What it holds |
+| --- | --- |
+| **Overview** | The **Spoken history** and a short summary of the **Settings**. |
+| **Voices** | The voice list, where you pick the channel voice. |
+| **Rules** | The **Speaking** settings, the **Message rules** and the **Rewards that speak**. |
+| **Pronunciation** | Rules that make the bot say a word another way. |
+| **Keys** | Your own voice provider keys, and how your channel name is spoken. |
+
+The speech plays through the speaker overlay.
+Add it to OBS from **Required overlays** on the **OBS** page.
+[OBS browser source](/reference/overlays/obs-browser-source) shows how.
+The **Speaker overlay** row on the **Overview** tab opens that place.
+
+## Who can use this page
+
+A **Moderator**, **Lead moderator**, **Editor** or **Broadcaster** may open the page and change the settings.
+The roles are explained on [Permissions](/reference/settings/permissions).
+
+The **Broadcaster** may also let a **VIP** open the page.
+A VIP then sees the settings, but cannot change them.
+The **Keys** tab shows only to someone who may change the settings.
+
+## Which voice speaks
+
+A line the bot writes, such as a command reply or an event response, is spoken in the channel voice by default.
+A **Read aloud (TTS)** step in a [pipeline](/reference/commands/pipelines) sets the text it reads.
+These settings on this page still apply to it: **Read messages aloud**, **Who may be heard**, **Minimum bits**, **Cooldown** for a viewer's lines, **Maximum characters**, **Censor profanity** and the pronunciation rules.
+
+A viewer's own words, such as a reward's typed text, are read in the viewer's own voice.
+A viewer picks it in chat with `!voice`, as [Built-in commands](/reference/commands/built-in-commands) shows.
+A viewer with no voice of their own gets a random voice the first time their words are read.
+The bot picks an English voice, or one that speaks many languages, from the channel's provider.
+The viewer keeps that voice.
+
+## Turn text to speech on or off
+
+1. Open **Text to speech** in the sidebar and choose the **Rules** tab.
+2. In **Speaking**, switch **Read messages aloud** on or off.
+   The header badge changes to "Text to speech is on" or "Text to speech is off".
+
+When it is off, the bot reads nothing aloud.
+A new channel starts with it on.
+
+## Pick the channel voice
+
+1. Open the **Voices** tab.
+2. Type in **Search voices**, or choose a language chip: **All**, **English**, **Dutch**, **German**, **French**, **Spanish** or **Other**.
+3. Choose the play button on a row to hear a sample of the voice.
+4. Click the row to make it the channel voice.
+   The **Channel voice** panel shows the voice you picked.
+
+**Load more voices** at the bottom adds the next part of the list.
+
+Until you pick a voice, the channel follows the platform voice.
+The **Channel voice** panel then says "This channel follows the platform voice until you pick one."
+To go back to it, switch **Follow the platform voice** on in **Message rules**.
+
+## Speaking settings
+
+The **Speaking** panel on the **Rules** tab sets when the bot reads aloud, and how much.
+Each row shows its default under the row.
+A change saves when you switch it, choose it, or leave the box.
+
+| Setting | What it does | Default |
+| --- | --- | --- |
+| **Read messages aloud** | Off: the bot stays silent. | On |
+| **Voice source** | **Free bot voice**, or **My own key** (see [Use your own voice key](#use-your-own-voice-key)). | **Free bot voice** |
+| **Voice provider** | The service that makes the speech. **Free bot voice** offers **Microsoft Edge**. **My own key** offers **Azure** and **ElevenLabs**. | **Microsoft Edge** |
+| **Who may be heard** | The lowest role that is read aloud: **Everyone**, **Twitch subscribers**, **VIPs**, **Moderators** or **Broadcaster**. | **Everyone** |
+| **Maximum characters** | The longest line, up to 500. | 500 characters |
+| **Cooldown** | Seconds a viewer waits between their spoken lines, from 0 to 3600. 0 means none. | 0 seconds |
+
+A bot line longer than **Maximum characters** is cut at the last whole word that fits.
+A viewer's own words that are too long are not read at all.
+
+A number outside its range is refused, and the row shows the reason in red, for example "The cooldown is between 0 and 3600 seconds."
+
+## Choose who is heard
+
+The **Message rules** panel on the **Rules** tab decides who is heard and what the bot reads aloud.
+
+| Setting | What it does | Default |
+| --- | --- | --- |
+| **Follow the platform voice** | Use the platform voice until you pick your own. | On |
+| **Viewers pick their own voice** | Viewers change their voice with `!voice`. Off: moderators only. | On |
+| **Censor profanity** | Mask mild swearing before it is spoken. | On |
+| **Minimum bits** | The bits a line needs to be read, from 0 to 1,000,000. 0 means none. | 0 |
+
+**Who may be heard**, **Minimum bits** and **Cooldown** do not apply to a channel-point reward.
+The viewer already paid for that line with channel points.
+
+When **Censor profanity** removes every word of a line, the bot reads nothing.
+
+### Reset the settings
+
+**Reset to defaults** sits at the bottom of the **Speaking** and **Message rules** panels.
+It puts every setting in both panels back to its default, except **Follow the platform voice**.
+
+The note beside it says "Keys, voice and pronunciation stay."
+The reset keeps your keys, the channel voice, your pronunciation rules and the viewers' own voices.
+
+## Rewards that speak
+
+The **Rewards that speak** panel on the **Rules** tab lists your channel-point rewards, each with its cost.
+Switch a reward on to have the bot read aloud the text the viewer types when they redeem it.
+The line is spoken in the viewer's own voice.
+
+A reward is made on [Channel-point rewards](/reference/automation/rewards).
+With no rewards, the panel says "No rewards yet. Create a reward first."
+
+## Add a pronunciation rule
+
+A pronunciation rule makes the bot say a replacement whenever a phrase appears in a line.
+
+1. Open the **Pronunciation** tab and choose **Add rule**.
+   The **Add a pronunciation rule** dialog opens.
+2. Type the phrase in **Phrase**, up to 100 characters.
+3. Type what the bot should say in **Say instead**, up to 200 characters.
+4. Choose **Match**: **Whole word, any case**, or **Exact text**.
+5. Choose **Add rule**.
+   The dialog closes and the rule shows in the list.
+
+**Add rule** stays grayed out until **Phrase** and **Say instead** both hold text.
+A second rule with the same phrase and match is refused with "A rule with this phrase and match already exists."
+
+Each row has a play button that reads the phrase in the channel voice, so you hear the rule at work.
+The pencil button opens **Edit the pronunciation rule**, where **Save rule** keeps your change.
+
+To delete a rule, choose its trash button.
+The **Delete this rule?** dialog opens, and **Delete rule** removes the row from the list.
+
+## Use your own voice key
+
+Your own key lets the bot speak with a paid provider voice, billed to your own provider account.
+Get the key from the provider's own site first.
+
+1. Open the **Keys** tab.
+2. Paste the key in **Azure speech key** or **ElevenLabs key**.
+3. For Azure, type the region of your key in **Azure region**.
+4. Choose **Save key**.
+   A "The key is stored." message shows, the box empties, and the badge changes to **Key stored**.
+5. Open the **Rules** tab and set **Voice source** to **My own key**.
+   Then pick **Azure** or **ElevenLabs** in **Voice provider**.
+
+The key is never shown again.
+The box then says "A key is stored. Type to replace it."
+To replace the key, paste the new one and choose **Save key**.
+
+**Remove key** deletes the stored key, and the badge changes to **No key**.
+For Azure, it also clears the region.
+
+## Set how your channel name is spoken
+
+The **Keys** tab also holds **How to say the channel name**.
+
+1. Type the spelling that sounds right, for example with spaces between the parts of the name.
+2. Choose **Preview** to hear it in the channel voice.
+3. Choose **Save spelling**.
+   A "The spelling is saved." message shows.
+
+Leave the box empty to read the name as it is written.
+
+## Read the speech history
+
+The **Spoken history** on the **Overview** tab lists the lines the bot read aloud, newest first.
+Each row shows the text, who asked for it, the voice and how long ago it played.
+**Show older messages** at the bottom loads the next 50 lines.
+
+A line spoken before the bot kept the text shows "Spoken before the bot kept the text."
+With nothing spoken yet, the panel says "Nothing has been read aloud yet. Messages show here as the bot speaks them."
+
+## Other places that speak
+
+Text to speech also runs from other places in the bot:
+
+- A command reply with **Read it aloud** switched on, on [Create a command](/reference/commands/create-a-command).
+- A speak step in a [pipeline](/reference/commands/pipelines).
+- A code script, with the calls on [Chat, music and voice](/reference/code/sdk-chat-music-voice).
+
+Each one goes through the same settings as a speak step, listed in [Which voice speaks](#which-voice-speaks).
+
+## Troubleshooting
+
+::Troubleshooting
+**A reward is redeemed, but nothing is read aloud.**
+Check that **Read messages aloud** is on, and that the reward is switched on in **Rewards that speak**.
+The viewer must type text when they redeem it.
+Check that the speaker overlay is in OBS.
+::
+
+::Troubleshooting
+**A viewer's long message is not read at all.**
+The message is longer than **Maximum characters**.
+A viewer's own words are not cut, so raise the limit or ask for a shorter line.
+::
+
+## Related pages
+
+- [Channel-point rewards](/reference/automation/rewards)
+- [OBS browser source](/reference/overlays/obs-browser-source)
+- [Built-in commands](/reference/commands/built-in-commands)
+- [Chat, music and voice](/reference/code/sdk-chat-music-voice)
