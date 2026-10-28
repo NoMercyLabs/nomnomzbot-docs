@@ -1,0 +1,132 @@
+---
+title: A worked example (Draft)
+description: Build one short script that answers a chat command, keeps a count in storage, and replies with the new count.
+---
+
+You build one script from start to end.
+A viewer types `!hugs` in chat, the script adds one to a stored count, and the bot replies with the new count.
+You use only calls from [Chat, music and voice](/reference/code/sdk-chat-music-voice) and [Data and storage](/reference/code/sdk-data-and-storage).
+
+::Callout
+**Draft**: this part of the guide is not finished yet.
+::
+
+## Before you start
+
+Custom Code must be on for the channel.
+It is off for a new channel.
+[Code scripts](/reference/code/scripts) shows where you switch it on.
+
+## The script
+
+```js
+const key = 'hugs.count';
+
+const stored = nnz.api.storage.get(key);
+const count = Number(stored || '0') + 1;
+
+const saved = nnz.api.storage.set(key, String(count));
+
+if (!saved) {
+  nnz.api.chat.reply('The count was not saved: ' + nnz.lastError.message);
+}
+
+nnz.api.chat.reply('Hugs given in this channel: ' + count);
+```
+
+| Line | What it does |
+| --- | --- |
+| `nnz.api.storage.get(key)` | Reads the stored count as text, or gives `null` when nothing is stored yet. |
+| `Number(stored \|\| '0') + 1` | Turns the text into a number and adds one. The first run gives 1. |
+| `nnz.api.storage.set(key, String(count))` | Stores the new count as text. It gives `true` when the value is stored, and `false` when it is refused. |
+| `nnz.api.chat.reply(...)` | Answers the viewer's `!hugs` message as a threaded reply. |
+
+The count belongs to the channel, so every viewer adds to the same number.
+When the store refuses the value, the script goes on.
+The first reply then says why.
+
+## 1. Create the script
+
+1. Open **Scripts** in the sidebar and choose **New script**.
+2. Type `hugs` in **Name** and choose **Create script**.
+   The new script opens beside the list.
+3. Choose **Edit code**.
+   The code editor opens.
+4. Replace the example code with the script above.
+5. Choose **Save & Compile**.
+   The bot checks and builds the code and saves it as the next version.
+
+When you save, the bot reads the calls the code names and keeps their grants with the version.
+This script gets three grants: `storage.get`, `storage.set` and `chat.reply`.
+It needs nothing more.
+
+## 2. Test run it
+
+1. On the script's **Test** card, leave **Trigger** at **No event**.
+2. Choose **Run test**.
+   The card shows **Worked** with the time in milliseconds.
+
+A test run is a dry run.
+Nothing it does reaches chat.
+The read of the count runs for real.
+The store and the reply are only recorded, so the stored count does not change.
+
+**Timeline** lists what the run did:
+
+| Step | What you see |
+| --- | --- |
+| **Started** | The run began. |
+| **Effect** | The `storage.set` call with its key and value. It was recorded, not stored. |
+| **Chat** | The reply line the bot would post. |
+
+## 3. Run it from chat
+
+1. Open **Commands** in the sidebar and choose **New command**.
+2. Type `hugs` in **Name**.
+3. Choose **Runs a code script** in **What it does**.
+4. Under **Script**, pick `hugs`.
+5. Choose **Create command**.
+   The command is switched on.
+
+A viewer now types `!hugs` in chat.
+The bot replies under that message with "Hugs given in this channel: 1".
+The next `!hugs` gives 2.
+
+## Follow one run through the bot
+
+1. A viewer types `!hugs` in chat.
+   The bot finds the command and sees that it runs a code script.
+   The command runs the script directly, with no pipeline in between.
+2. The bot keeps the id of the chat message, so a reply can answer it.
+3. The bot checks the script: it exists, it is switched on, the channel has script time left, and it has a version that passed its check.
+4. The bot checks the three grants of that version and allows only those.
+5. The script reads `hugs.count` from the channel's storage.
+6. The script stores the new count under the same key.
+7. The script calls `nnz.api.chat.reply`.
+   The bot posts the line as a threaded reply to the viewer's message, in the channel's one bot voice.
+   When the platform refuses the thread, the bot posts the line with a mention of the viewer instead.
+8. The bot saves the time of the run on the script.
+
+When the run does not end cleanly, the bot answers the viewer with one failure notice.
+By default it says "Sorry, that command hit a snag and didn't finish."
+The **Scripts** page then shows **Last run failed** with the error.
+
+## When a call fails
+
+These calls follow the rule in [Script basics](/reference/code/sdk-script-basics), "One rule for a bad value".
+A failed call gives back its empty result, and `nnz.lastError` says why.
+The script goes on after a failed call.
+A required value that is left out or `null` is not a failed call: it stops the whole run.
+
+| What goes wrong | What happens |
+| --- | --- |
+| The store is full or the value is too long | `storage.set` gives `false`. The script replies with the reason and goes on. |
+| The reply does not reach chat | A failed call with the code `upstream_failed`. The script goes on. |
+| A value the bot cannot use, such as empty text | A failed call with the code `invalid_argument`. The script goes on. |
+| A required value that is left out or `null` | The whole run stops. The error names the call and the value, for example "chat.reply needs a message". |
+
+## Related pages
+
+- [Code scripts](/reference/code/scripts)
+- [Chat, music and voice](/reference/code/sdk-chat-music-voice)
+- [Data and storage](/reference/code/sdk-data-and-storage)
