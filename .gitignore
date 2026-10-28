@@ -1,0 +1,9 @@
+node_modules/
+dist/
+.astro/
+.yarn/*
+!.yarn/releases
+!.yarn/plugins
+*.log
+# Built by `yarn build:search` from src/content.
+public/searchIndex.json

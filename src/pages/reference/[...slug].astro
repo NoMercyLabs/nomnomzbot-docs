@@ -1,0 +1,57 @@
+---
+// -----------------------------------------------------------------------------
+//  Copyright (c) NoMercy Labs.
+//
+//  This file is part of NomNomzBot, free software licensed under the GNU Affero
+//  General Public License v3.0 or later. You may redistribute and/or modify it
+//  under those terms. Distributed WITHOUT ANY WARRANTY. See LICENSE for details.
+//
+//  SPDX-License-Identifier: AGPL-3.0-or-later
+// -----------------------------------------------------------------------------
+
+import { getCollection, render } from 'astro:content';
+import MarkdownLayout from '../../layouts/MarkdownLayout.astro';
+import PageFooterNav from '../../components/PageFooterNav.astro';
+
+import * as mdxComponents from '../../components/protocol';
+
+export async function getStaticPaths() {
+  const docs = await getCollection('reference', ({ data }) => {
+    return data.draft !== true;
+  });
+
+  return docs
+    .filter(doc => !/^[a-z]{2}$/.test(doc.id) && doc.id.replace(/^[a-z]{2}\//, '').replace(/\.(md|mdx)$/, '') !== 'index')
+    .map(doc => ({
+      params: { slug: doc.id.replace(/^[a-z]{2}\//, '').replace(/\.(md|mdx)$/, '') },
+      props: { doc },
+    }));
+}
+
+interface Props {
+  doc: any;
+}
+
+const { doc } = Astro.props;
+const { Content, headings } = await render(doc);
+
+const sections = doc.data.sections || headings
+  .filter((h: any) => h.depth === 2)
+  .map((h: any) => ({
+    id: h.slug,
+    title: h.text,
+  }));
+---
+
+<MarkdownLayout
+  title={doc.data.title}
+  description={doc.data.description}
+  sections={sections}
+>
+  {/* `mdxComponents.wrapper` supplies the article and the Prose column, for
+      every page, so this page adds no wrapper of its own. */}
+  <Content components={mdxComponents} />
+  <div class="mx-auto w-full max-w-3xl lg:max-w-5xl">
+    <PageFooterNav pathname={Astro.url.pathname} />
+  </div>
+</MarkdownLayout>

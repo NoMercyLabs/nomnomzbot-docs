@@ -1,0 +1,117 @@
+---
+// -----------------------------------------------------------------------------
+//  Copyright (c) NoMercy Labs.
+//
+//  This file is part of NomNomzBot, free software licensed under the GNU Affero
+//  General Public License v3.0 or later. You may redistribute and/or modify it
+//  under those terms. Distributed WITHOUT ANY WARRANTY. See LICENSE for details.
+//
+//  SPDX-License-Identifier: AGPL-3.0-or-later
+// -----------------------------------------------------------------------------
+
+import MarkdownLayout from '../layouts/MarkdownLayout.astro';
+
+// The areas below follow the headings of the bot's README. Each line says what
+// the area does today and nothing more. The reference pages that go deeper are
+// generated from the bot's capability ledger and are added to the sidebar then.
+const areas = [
+  {
+    title: 'Chat and commands',
+    text: 'Make your own commands, from one line of text to a visual editor with steps and conditions. Set timers and chat triggers.',
+  },
+  {
+    title: 'Viewers and points',
+    text: 'See your real viewers. Give your channel its own currency, with a store and leaderboards. Run giveaways.',
+  },
+  {
+    title: 'Rewards',
+    text: 'Create and edit channel-point rewards. Fulfill or refund redemptions from a queue.',
+  },
+  {
+    title: 'Music',
+    text: 'Control Spotify or YouTube playback from the dashboard. Take song requests from chat.',
+  },
+  {
+    title: 'Voice',
+    text: 'Read chat aloud with text-to-speech. Play sound clips from commands.',
+  },
+  {
+    title: 'Overlays and widgets',
+    text: 'Add overlays to OBS. Show alerts for follows, subs, cheers, raids and gifts.',
+  },
+  {
+    title: 'Moderation',
+    text: 'Time out, ban and unban from one page. Set AutoMod levels, blocked terms and chat filters.',
+  },
+  {
+    title: 'Integrations',
+    text: 'Connect Discord, Spotify and YouTube. Send events in and out with webhooks and an automation API.',
+  },
+];
+---
+
+<MarkdownLayout
+  title="NomNomzBot Documentation"
+  description="NomNomzBot is a free, open-source chat bot for live streamers. Find out what it does and what you can expect from it."
+  landing={true}
+>
+  <div class="mx-auto w-full max-w-6xl py-16 sm:py-20">
+    <div class="max-w-2xl">
+      <h1 class="text-4xl font-bold tracking-tight text-foreground sm:text-5xl">
+        NomNomzBot
+      </h1>
+      <p class="mt-4 text-lg text-muted-foreground">
+        NomNomzBot is a free, open-source chat bot for live streamers.
+        You run it on your own computer or server.
+        You control it from a web dashboard.
+      </p>
+      <p class="mt-4 text-lg text-muted-foreground">
+        One channel can connect Twitch, Kick, YouTube and X Live at the same time.
+      </p>
+      <div class="mt-8 flex flex-wrap items-center gap-3">
+        <a
+          href="/reference/overview"
+          class="inline-flex h-10 items-center rounded-lg bg-primary px-4 text-sm font-semibold text-primary-foreground transition hover:opacity-90"
+        >
+          Open the reference
+        </a>
+        <a
+          href="https://github.com/NoMercyLabs/nomnomzbot"
+          class="inline-flex h-10 items-center rounded-lg border border-border px-4 text-sm font-semibold text-foreground transition hover:bg-muted"
+        >
+          Source on GitHub
+        </a>
+      </div>
+    </div>
+
+    <h2 class="mt-16 text-2xl font-semibold tracking-tight text-foreground">
+      What you can do
+    </h2>
+    <ul role="list" class="mt-6 grid grid-cols-1 gap-6 sm:grid-cols-2 lg:grid-cols-4">
+      {areas.map((area) => (
+        <li class="flex h-full flex-col rounded-2xl border border-border bg-card p-6">
+          <span
+            role="heading"
+            aria-level="3"
+            class="block text-base font-semibold text-foreground"
+          >
+            {area.title}
+          </span>
+          <p class="mt-2 flex-auto text-sm text-muted-foreground">
+            {area.text}
+          </p>
+        </li>
+      ))}
+    </ul>
+
+    <h2 class="mt-16 text-2xl font-semibold tracking-tight text-foreground">
+      What to expect
+    </h2>
+    <ul class="mt-4 max-w-2xl list-disc space-y-2 pl-5 text-muted-foreground">
+      <li>NomNomzBot is pre-release software. Expect changes.</li>
+      <li>Self-hosting your own bot is always free.</li>
+      <li>Running NomNomzBot as a hosted service for other people is against the project license. That right is reserved to NoMercy Labs.</li>
+      <li>The reference pages are not written yet. They will be generated from the bot's own list of capabilities, so they match what the bot does.</li>
+    </ul>
+  </div>
+</MarkdownLayout>

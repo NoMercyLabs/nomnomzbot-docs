@@ -1,0 +1,95 @@
+---
+// Next / previous page navigation at the bottom of every docs page.
+// Prev/Next stay WITHIN the current product — never cross into another product —
+// and the list is deduped so a page can never link to itself.
+
+import { getNavigation } from '../lib/navigation';
+import { t } from '../lib/i18n';
+
+interface Props {
+  pathname: string;
+}
+
+const { pathname } = Astro.props;
+const locale = Astro.currentLocale ?? 'en';
+const { sections } = await getNavigation();
+
+const normalize = (path: string) => path.replace(/\/+$/, '') || '/';
+const normalized = normalize(pathname);
+
+// The current product = first path segment (e.g. /nomercy-video-player/...).
+const productPrefix = '/' + (normalized.split('/').filter(Boolean)[0] ?? '');
+const section = sections.find((candidate) => candidate.href.startsWith(productPrefix + '/'));
+
+// Flatten ONLY this product's pages, in sidebar order, deduped by href. The
+// product landing (/overview) already appears as a group link, so we don't add
+// section.href separately — that was the source of self-referencing prev/next.
+type FlatPage = { href: string; title: string; sectionTitle: string };
+const flat: FlatPage[] = [];
+const seen = new Set<string>();
+
+for (const group of section?.groups ?? []) {
+  for (const link of group.links) {
+    const key = normalize(link.href);
+    if (seen.has(key)) continue;
+    seen.add(key);
+    flat.push({ href: link.href, title: link.title, sectionTitle: group.title });
+  }
+}
+
+const idx = flat.findIndex((page) => normalize(page.href) === normalized);
+
+const prev = idx > 0 ? flat[idx - 1] : null;
+const next = idx >= 0 && idx < flat.length - 1 ? flat[idx + 1] : null;
+---
+
+{(prev || next) && (
+  <nav class="mt-16 grid gap-4 border-t border-zinc-200 pt-8 sm:grid-cols-2 dark:border-zinc-800" aria-label={t('layout.pageNavigation', undefined, locale)}>
+    {prev ? (
+      <a
+        href={prev.href}
+        class="group flex flex-col rounded-lg border border-zinc-200 px-4 py-3 transition hover:border-emerald-400 hover:bg-zinc-50 dark:border-zinc-800 dark:hover:border-emerald-400 dark:hover:bg-zinc-800/50"
+      >
+        <span class="text-xs uppercase tracking-wide text-zinc-500 dark:text-zinc-400">
+          <span aria-hidden="true">← </span>{t('layout.prevPage', undefined, locale)}
+        </span>
+        <span class="mt-1 text-sm font-semibold text-zinc-900 group-hover:text-emerald-600 dark:text-zinc-100 dark:group-hover:text-emerald-400">
+          {prev.title}
+        </span>
+        <span class="text-xs text-zinc-500 dark:text-zinc-500">{prev.sectionTitle}</span>
+      </a>
+    ) : (
+      <span
+        aria-disabled="true"
+        class="flex cursor-not-allowed flex-col rounded-lg border border-dashed border-zinc-200 px-4 py-3 opacity-50 dark:border-zinc-800"
+      >
+        <span class="text-xs uppercase tracking-wide text-zinc-400 dark:text-zinc-600">
+          <span aria-hidden="true">← </span>{t('layout.prevPage', undefined, locale)}
+        </span>
+      </span>
+    )}
+    {next ? (
+      <a
+        href={next.href}
+        class="group flex flex-col items-end rounded-lg border border-zinc-200 px-4 py-3 text-right transition hover:border-emerald-400 hover:bg-zinc-50 dark:border-zinc-800 dark:hover:border-emerald-400 dark:hover:bg-zinc-800/50"
+      >
+        <span class="text-xs uppercase tracking-wide text-zinc-500 dark:text-zinc-400">
+          {t('layout.nextPage', undefined, locale)}<span aria-hidden="true"> →</span>
+        </span>
+        <span class="mt-1 text-sm font-semibold text-zinc-900 group-hover:text-emerald-600 dark:text-zinc-100 dark:group-hover:text-emerald-400">
+          {next.title}
+        </span>
+        <span class="text-xs text-zinc-500 dark:text-zinc-500">{next.sectionTitle}</span>
+      </a>
+    ) : (
+      <span
+        aria-disabled="true"
+        class="flex cursor-not-allowed flex-col items-end rounded-lg border border-dashed border-zinc-200 px-4 py-3 text-right opacity-50 dark:border-zinc-800"
+      >
+        <span class="text-xs uppercase tracking-wide text-zinc-400 dark:text-zinc-600">
+          {t('layout.nextPage', undefined, locale)}<span aria-hidden="true"> →</span>
+        </span>
+      </span>
+    )}
+  </nav>
+)}

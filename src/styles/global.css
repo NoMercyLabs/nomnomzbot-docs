@@ -1,0 +1,599 @@
+@import 'tailwindcss';
+/* The two reading faces the settings menu offers, bundled so no request leaves this origin. */
+@import '@fontsource/atkinson-hyperlegible/400.css';
+@import '@fontsource/atkinson-hyperlegible/700.css';
+@import '@fontsource-variable/lexend';
+@plugin '@tailwindcss/typography';
+@config '../typography.ts';
+@custom-variant dark (&:where(.dark, .dark *));
+
+@theme {
+  --text-2xs: 0.75rem;
+  --text-2xs--line-height: 1.25rem;
+  --text-xs: 0.8125rem;
+  --text-xs--line-height: 1.5rem;
+  --text-sm: 0.875rem;
+  --text-sm--line-height: 1.5rem;
+  --text-base: 1rem;
+  --text-base--line-height: 1.75rem;
+  --text-lg: 1.125rem;
+  --text-lg--line-height: 1.75rem;
+  --text-xl: 1.25rem;
+  --text-xl--line-height: 1.75rem;
+  --text-2xl: 1.5rem;
+  --text-2xl--line-height: 2rem;
+  --text-3xl: 1.875rem;
+  --text-3xl--line-height: 2.25rem;
+  --text-4xl: 2.25rem;
+  --text-4xl--line-height: 2.5rem;
+  --text-5xl: 3rem;
+  --text-5xl--line-height: 1;
+  --text-6xl: 3.75rem;
+  --text-6xl--line-height: 1;
+  --text-7xl: 4.5rem;
+  --text-7xl--line-height: 1;
+  --text-8xl: 6rem;
+  --text-8xl--line-height: 1;
+  --text-9xl: 8rem;
+  --text-9xl--line-height: 1;
+
+  --shadow-glow: 0 0 4px rgb(0 0 0 / 0.1);
+
+  --container-lg: 33rem;
+  --container-2xl: 40rem;
+  --container-3xl: 50rem;
+  --container-5xl: 66rem;
+}
+
+/* The dashboard's shadcn tokens, copied from dashboard/src/styles/tokens.css:
+   `:root` holds its `:root.light` values, `.dark` its default (dark) values.
+   Tailwind reads them through the `--color-*` names below, so a class such as
+   `text-primary` follows the reader's theme. */
+@theme inline {
+  --color-background: var(--background);
+  --color-foreground: var(--foreground);
+  --color-card: var(--card);
+  --color-muted: var(--muted);
+  --color-muted-foreground: var(--muted-foreground);
+  --color-primary: var(--primary);
+  --color-primary-foreground: var(--primary-foreground);
+  --color-border: var(--border);
+  --color-ring: var(--ring);
+  --color-sidebar-accent: var(--sidebar-accent);
+}
+
+@layer base {
+  :root {
+    --background: oklch(1 0 0);
+    --foreground: oklch(0.145 0 0);
+    --card: oklch(1 0 0);
+    --muted: oklch(0.97 0 0);
+    --muted-foreground: oklch(0.5 0 0);
+    --primary: oklch(0.205 0 0);
+    --primary-foreground: oklch(0.985 0 0);
+    --border: oklch(0.922 0 0);
+    --ring: oklch(0.708 0 0);
+    --sidebar-accent: oklch(0.97 0 0);
+
+    /* The accent every interactive surface uses: the sidebar's active page,
+       a hovered link, a prose link, a selected setting. It is the dashboard's
+       primary token, so the docs and the dashboard share one accent. */
+    --color-accent: var(--primary);
+    --color-accent-soft: var(--sidebar-accent);
+  }
+
+  :root:has(.dark),
+  .dark {
+    --background: oklch(0.177638 0 0);
+    --foreground: oklch(0.949119 0 0);
+    --card: oklch(0.213423 0 0);
+    --muted: oklch(0.251965 0 0);
+    --muted-foreground: oklch(0.773104 0 0);
+    --primary: oklch(0.692953 0.114282 309.045);
+    --primary-foreground: oklch(0 0 0);
+    --border: oklch(0.239292 0 0);
+    --ring: oklch(0.692953 0.114282 309.045);
+    --sidebar-accent: oklch(0.232614 0.04334 304.159);
+  }
+
+  /* Shiki dual-theme: One Light (default) + One Dark Pro via --shiki-dark.
+     `defaultColor: 'light'` paints span styles with One Light hex; in dark mode
+     we swap to the --shiki-dark var the renderer also emits. The pre keeps its
+     data-language attribute (the `shiki` class is dropped by the Astro MDX `pre`
+     override), so we hook on that. */
+  /* Shiki writes the light color as an inline style and every other theme as
+     a CSS variable beside it, so a palette is a variable swap and no JavaScript
+     touches a token. An inline style beats a stylesheet, which is why each
+     override carries `!important`; One Light is the inline color itself and so
+     needs no rule at all.
+
+     The target list is spelled out rather than wrapped in `:where()`. `:where()`
+     contributes no specificity, so a themed rule written that way loses to the
+     plain `.dark` rule below it and only the fenced blocks would change color. */
+  .dark pre[data-language] span,
+  .dark code[data-inline-highlighted] span { color: var(--shiki-dark) !important; }
+
+  html[data-syntax='github'] pre[data-language] span,
+  html[data-syntax='github'] code[data-inline-highlighted] span { color: var(--shiki-ghLight) !important; }
+  html[data-syntax='contrast'] pre[data-language] span,
+  html[data-syntax='contrast'] code[data-inline-highlighted] span { color: var(--shiki-hcLight) !important; }
+  html[data-syntax='vitesse'] pre[data-language] span,
+  html[data-syntax='vitesse'] code[data-inline-highlighted] span { color: var(--shiki-vtLight) !important; }
+
+  html.dark[data-syntax='github'] pre[data-language] span,
+  html.dark[data-syntax='github'] code[data-inline-highlighted] span { color: var(--shiki-ghDark) !important; }
+  html.dark[data-syntax='contrast'] pre[data-language] span,
+  html.dark[data-syntax='contrast'] code[data-inline-highlighted] span { color: var(--shiki-hcDark) !important; }
+  html.dark[data-syntax='vitesse'] pre[data-language] span,
+  html.dark[data-syntax='vitesse'] code[data-inline-highlighted] span { color: var(--shiki-vtDark) !important; }
+
+  /* The `.dark[data-syntax]` form has to be spelled out. A themed dark rule
+     above carries three class-level parts, so an off rule with two loses to it
+     and the switch would work in light mode only. */
+  html[data-inline-syntax='off'] code[data-inline-highlighted] span,
+  html[data-inline-syntax='off'].dark code[data-inline-highlighted] span,
+  html[data-inline-syntax='off'][data-syntax] code[data-inline-highlighted] span,
+  html[data-inline-syntax='off'].dark[data-syntax] code[data-inline-highlighted] span {
+    color: inherit !important;
+  }
+
+  html[data-font='hyperlegible'] body { font-family: 'Atkinson Hyperlegible', ui-sans-serif, system-ui, sans-serif; }
+  html[data-font='lexend'] body { font-family: 'Lexend Variable', ui-sans-serif, system-ui, sans-serif; }
+  html[data-font='mono'] body { font-family: ui-monospace, SFMono-Regular, Menlo, monospace; }
+
+  /* The page keeps its scrollbar track at all times. A menu that locks the
+     body would otherwise remove the scrollbar, the content would widen by its
+     width, and every line on the page would shift sideways as the menu opens. */
+  html {
+    scrollbar-gutter: stable;
+  }
+
+  /* Inline `code` is highlighted by the same pass, so it needs the same swap.
+     Scoped to the marker the rehype plugin sets rather than to `code`, so a
+     span a page author wrote by hand inside a backtick is left alone. */
+
+
+  /* The highlighter emits one span per token; inline code has to stay on one
+     line, and the spans inherit the nowrap from their `code` parent. This keeps
+     the token colors from being flattened by the prose code color. */
+  :not(pre) > code[data-inline-highlighted] span {
+    background: none;
+  }
+
+  [inert] ::-webkit-scrollbar {
+    display: none;
+  }
+
+  /* Scrollbars belong to the page, not to the OS. Left alone, the sidebar
+     and every code block paint a light Windows scrollbar over a dark
+     surface. One decision covers all of them: a transparent track so the
+     surface underneath shows through, and a low-contrast thumb that gains
+     contrast on hover. */
+  * {
+    scrollbar-width: thin;
+    scrollbar-color: rgb(161 161 170 / 0.5) transparent;
+  }
+
+  :where(.dark) * {
+    scrollbar-color: rgb(113 113 122 / 0.55) transparent;
+  }
+
+  ::-webkit-scrollbar {
+    width: 8px;
+    height: 8px;
+  }
+
+  ::-webkit-scrollbar-track {
+    background: transparent;
+  }
+
+  ::-webkit-scrollbar-thumb {
+    border-radius: 4px;
+    background: rgb(161 161 170 / 0.5);
+  }
+
+  ::-webkit-scrollbar-thumb:hover {
+    background: rgb(113 113 122 / 0.7);
+  }
+
+  :where(.dark) ::-webkit-scrollbar-thumb {
+    background: rgb(113 113 122 / 0.55);
+  }
+
+  :where(.dark) ::-webkit-scrollbar-thumb:hover {
+    background: rgb(161 161 170 / 0.7);
+  }
+
+  ::-webkit-scrollbar-corner {
+    background: transparent;
+  }
+
+  /* Hide standalone code blocks until JavaScript wraps them */
+  .prose pre[data-highlighted] {
+    opacity: 0;
+  }
+  
+  /* Show code blocks that are already wrapped */
+  .my-6 pre,
+  [data-tab-content] pre {
+    opacity: 1 !important;
+  }
+
+  /* A monospace face reads larger than the sans body at the same size, so a
+     block at the body's 16px towered over the text around it. The block
+     wrapper is `not-prose`, so the typography config never reaches it; the
+     size lives here. A phone column is narrow: one step smaller again keeps a
+     signature line from scrolling after a few words. */
+  .prose pre {
+    font-size: 0.875rem;
+  }
+
+  @media (max-width: 639px) {
+    .prose pre {
+      font-size: 0.8125rem;
+    }
+  }
+
+  /* Inline code breaks only at its spaces, so a short identifier stays whole
+     while a long signature wraps instead of running off a phone screen.
+     Block code (<pre><code>) is handled separately below and keeps
+     white-space: pre. */
+  .prose :not(pre) > code,
+  table :not(pre) > code {
+    white-space: normal;
+  }
+
+  /* Block code (<pre><code>) preserves its formatting and does NOT wrap. */
+  .prose pre,
+  .my-6 pre,
+  .prose pre code {
+    white-space: pre;
+  }
+
+  /* Long lines scroll horizontally instead of breaking mid-token. The rounded
+     .my-6 wrapper is overflow-hidden, so the inner <pre> must own the scroll,
+     otherwise long lines get clipped instead of becoming scrollable. */
+  .prose pre,
+  .my-6 pre {
+    overflow-x: auto;
+  }
+
+  /* The reader's "Wrap long code lines" setting: a long line breaks onto the
+     next line instead of scrolling sideways. Off by default, because wrapped
+     code loses the indentation that shows its structure. */
+  html[data-code-wrap='on'] pre,
+  html[data-code-wrap='on'] pre code {
+    white-space: pre-wrap;
+    overflow-wrap: anywhere;
+  }
+
+  /* Paragraphs honour source line breaks: one sentence per line in the .mdx
+     renders as one line here, while long lines still wrap at the container
+     width. Code is exempt (handled above). */
+  .prose p {
+    white-space: pre-line;
+  }
+
+
+  /* Inline code inside table cells: do not break mid-token. */
+  .prose table :not(pre) > code {
+    word-break: keep-all;
+    overflow-wrap: anywhere;
+  }
+
+
+  /* Anchor scroll offset for the fixed top header (h-14 = 56px) +
+     breathing room. Applies to anything anchor-jumped: in-page TOC
+     clicks, `#hash` deep links, and the browser's auto-scroll on
+     hash change. Without this the heading lands flush under the
+     search bar and is invisible. */
+  :where(.prose h1, .prose h2, .prose h3, .prose h4, .prose h5, .prose h6),
+  :where([id]) {
+    scroll-margin-top: 72px;
+  }
+  html {
+    scroll-padding-top: 72px;
+  }
+
+  /* Brand-coloured focus ring on any interactive element that hasn't
+     defined its own. Tailwind's `outline-none` everywhere kills the
+     browser default; this restores a visible indicator for keyboard
+     users without affecting mouse interaction. */
+  :focus-visible {
+    outline: 2px solid rgb(16 185 129);
+    outline-offset: 2px;
+  }
+
+  /* Respect the user's OS-level motion preference. Caps every
+     animation + transition to effectively zero, lets framer-motion's
+     MotionConfig pick up the same signal via JS. */
+  @media (prefers-reduced-motion: reduce) {
+    *,
+    ::before,
+    ::after {
+      animation-duration: 0.01ms !important;
+      animation-iteration-count: 1 !important;
+      transition-duration: 0.01ms !important;
+      scroll-behavior: auto !important;
+    }
+  }
+}
+
+/* Identifiers in a table read as text, not as chips.
+   A Notes cell often names half a dozen fields in one breath. With the prose
+   treatment each one becomes a bordered, filled box, so the cell turns into a
+   row of pills and the sentence between them disappears. Inside a table the
+   monospace face and a distinct color already say "this is code": the ring,
+   the fill and the padding only add edges to count.
+   The first column keeps a faint fill, because there the identifier IS the
+   row's subject rather than a word inside a sentence. */
+.prose table :not(pre) > code,
+.prose li :not(pre) > code,
+.prose li > code {
+  /* padding: 0;
+  box-shadow: none;
+  background-color: transparent;
+  color: var(--tw-prose-code);
+  font-size: 0.8125rem; */
+}
+
+.prose tbody td:first-child code:not(pre code) {
+  padding: 0.0625rem 0.375rem;
+  border-radius: 0.375rem;
+  background-color: var(--tw-prose-code-bg);
+}
+
+/* Astro gives every <astro-island> `display: contents`, so the island has no
+   box of its own: the column's cap and auto margins land on it and reach
+   nothing, and the player example inside spans the full column while every
+   sibling stops at the cap. Cap the island's child instead, with the same two
+   widths the column uses. Unlayered for the same reason as the block below --
+   Astro's own rule is unlayered too. */
+.prose > astro-island > * {
+  max-width: var(--container-3xl);
+  margin-inline: auto;
+}
+
+@media (min-width: 1024px) {
+  .prose > astro-island > * {
+    max-width: var(--container-5xl);
+  }
+}
+
+/* Unlayered on purpose: the widths here override Tailwind utilities, and a
+   rule inside `@layer base` loses to the utilities layer however specific it
+   is.
+
+   Every direct child of the column shares one cap and one centre, set in
+   Prose.tsx. Nothing here pins a block to the left: a paragraph that sat at
+   the column's left edge while the code block above it centred is the exact
+   misalignment this file used to create. */
+@media (min-width: 1024px) {
+  /* A table stretched to the full column draws its row hairlines hundreds of
+     pixels past the last word in the row. Size to content instead, and let a
+     dense reference table still take the whole column when it needs it. */
+  .prose table {
+    width: auto;
+    /* rem grows with the reader's text size: at 150% a bare 32rem is 768px,
+       wider than the column beside the sidebar. */
+    min-width: min(32rem, 100%);
+    max-width: 100%;
+    /* The prose wrapper centers every direct child; a content-sized table
+       must stay on the same left edge as the text above it. */
+    margin-inline: 0;
+  }
+}
+
+/* Tables — mobile. Stack each row as its own card. The rehype plugin
+   stamps `data-label="<column header>"` on every <td>, and the ::before
+   below renders that label above each value, so a 5-column table reads as
+   five labelled lines per row instead of scrolling sideways off a phone.
+   Desktop tables (lg+) keep their standard tabular layout.
+
+   Unlayered, like the desktop table rules above: inside `@layer base` the
+   typography plugin's cell padding won however specific the selector, and
+   left 8px above and below each cell and 8px left of the last one.
+
+   The cell is `display: block`, never flex: a flex cell turns every inline
+   <code> into a stretched full-width item, which shatters a sentence like
+   "call `play()` after a gesture" into three stacked pills. Block keeps
+   inline code inline. */
+@media (max-width: 1023px) {
+  .prose table,
+  .prose tbody,
+  .prose tr {
+    display: block;
+    width: 100%;
+  }
+  .prose thead {
+    display: none;
+  }
+  /* Concentric: 12px card radius minus the 10px inset leaves the inline
+     code inside it at 6px, so the curves nest instead of competing. */
+  .prose tr {
+    margin: 0 0 0.5rem;
+    padding: 0.5rem 0.75rem;
+    border: 1px solid rgb(228 228 231);
+    border-radius: 0.75rem;
+    background: rgb(250 250 250);
+  }
+  :where(.dark) .prose tr {
+    border-color: rgb(63 63 70);
+    background: rgb(39 39 42 / 0.5);
+  }
+  /* A card is a summary of one row, so its text is a step smaller than the
+     body and set tight: at the body's 16px/24px a three-cell row stood
+     taller than the phone's half screen. */
+  .prose td {
+    display: block;
+    padding: 0;
+    border: 0;
+    text-align: left;
+    font-size: 0.875rem;
+    line-height: 1.5;
+  }
+  /* Spacing separates the cells, not rules — a dashed line per cell turned
+     a four-column row into four horizontal rules of visual noise. */
+  .prose td + td {
+    margin-top: 0.375rem;
+  }
+  /* A full signature in a card is wider than a phone, and the nowrap that
+     keeps an identifier whole pushed it out past the card's edge. Here it
+     breaks at its spaces; the clone repeats the tag padding on each line. */
+  .prose td code:not(pre code) {
+    white-space: normal;
+    -webkit-box-decoration-break: clone;
+    box-decoration-break: clone;
+  }
+  .prose td::before {
+    content: attr(data-label);
+    display: block;
+    margin-bottom: 0;
+    font-size: 0.625rem;
+    font-weight: 600;
+    line-height: 1.4;
+    letter-spacing: 0.06em;
+    text-transform: uppercase;
+    color: rgb(190, 190, 193);
+  }
+  :where(.dark) .prose td::before {
+    color: rgb(113 113 122);
+  }
+  .prose td:not([data-label])::before,
+  .prose td[data-label='']::before {
+    display: none;
+  }
+  /* The first column is the row's identity — the field, prop, method or
+     event the other cells describe. Size it as the card's heading so the
+     eye lands on the name first. */
+  .prose tbody td:first-child {
+    font-size: 0.9375rem;
+    line-height: 1.4;
+    font-weight: 600;
+    color: rgb(24 24 27);
+  }
+  :where(.dark) .prose tbody td:first-child {
+    color: rgb(244 244 245);
+  }
+  .prose tbody td:first-child code:not(pre code) {
+    font-size: 0.875rem;
+    font-weight: 600;
+  }
+  /* Inline code sits inside prose here, so it keeps its own shape and does
+     not stretch. `overflow-wrap` lets a long identifier break rather than
+     push the card wider than the screen. */
+  .prose td code:not(pre code) {
+    display: inline;
+    border-radius: 0.375rem;
+    overflow-wrap: anywhere;
+  }
+  /* An em dash alone in a cell is the "no default" marker. Mute it so it
+     reads as an absence rather than as a value. */
+  .prose td {
+    color: rgb(63 63 70);
+  }
+  :where(.dark) .prose td {
+    color: rgb(212 212 216);
+  }
+}
+
+/* One word of inline code stays whole: the rehype pass marks each word, so a
+   line breaks at the spaces between words, never after a hyphen or a slash
+   inside one. Unlayered so it outranks the typography plugin. */
+code[data-word],
+code [data-word] {
+  white-space: nowrap;
+}
+
+/* Wrapped code keeps its structure: each line's wrapped part hangs two columns
+   past that line's own indent (`--indent`, set per line by the rehype pass).
+   The negative text-indent pulls the first row back, so it starts where the
+   source line starts. */
+html[data-code-wrap='on'] pre .line {
+  display: inline-block;
+  width: 100%;
+  padding-left: calc((var(--indent, 0) + 2) * 1ch);
+  text-indent: calc((var(--indent, 0) + 2) * -1ch);
+}
+
+/* The step separator the rehype pass puts in place of a prose arrow: small,
+   muted, and centred on the line so the steps around it read as one chain. */
+.seq-sep {
+  display: inline-block;
+  margin-inline: 0.25em;
+  color: var(--color-zinc-400);
+  vertical-align: -0.125em;
+}
+.seq-sep svg {
+  width: 0.875em;
+  height: 0.875em;
+}
+:where(.dark) .seq-sep {
+  color: var(--color-zinc-500);
+}
+
+/* The live embed forces a 16:9 box; the headless player sizes nothing, so make
+   the mounted video fill the box and let its own object-fit letterbox-center. */
+[data-player-example] video {
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
+}
+
+/* Music mounts a native <audio controls> bar; pin it full width along the
+   bottom of the frame (a real app would use position: fixed). */
+[data-player-example] [role='region'] {
+  position: relative;
+}
+
+[data-player-example] audio {
+  position: absolute;
+  inset: auto 0 0 0;
+  width: 100%;
+}
+
+/* Reading settings: text size, text spacing and reading width. Each is one
+   attribute on <html> set by the reading menu and by the no-flash script in
+   MarkdownLayout. Unlayered on purpose: a rule inside @layer base loses to the
+   typography plugin whatever its specificity. */
+
+/* Text size scales the root, so everything sized in rem grows together: body,
+   headings, code, navigation and spacing, the way browser zoom does. */
+html[data-text-size='large'] { font-size: 112.5%; }
+html[data-text-size='larger'] { font-size: 125%; }
+html[data-text-size='largest'] { font-size: 150%; }
+
+/* Wide spacing uses the WCAG 1.4.12 text-spacing values: letter spacing
+   0.12em, word spacing 0.16em, line height well above 1.5, paragraph spacing
+   2em. Code keeps its own spacing, since columns in a block must stay aligned. */
+html[data-spacing='wide'] .prose {
+  letter-spacing: 0.12em;
+  word-spacing: 0.16em;
+  line-height: 2;
+}
+html[data-spacing='wide'] .prose :where(p, li) {
+  line-height: 2;
+}
+html[data-spacing='wide'] .prose :where(p) {
+  margin-bottom: 2em;
+}
+html[data-spacing='wide'] .prose :where(pre, pre *, code, code *) {
+  letter-spacing: normal;
+  word-spacing: normal;
+}
+
+/* Narrow caps every block of the body at about 65 characters, the line
+   length that is easiest to track back to the start of the next line. In ch,
+   not rem: a rem cap grows with the text size setting and at 150% would be
+   wider than the normal column. */
+html[data-reading-width='narrow'] :where(.prose > *) {
+  max-width: 65ch;
+}
+/* Read aloud: the block being spoken. An outline, not a border, so the text
+   never shifts while the voice moves from block to block. */
+[data-reading] {
+  outline: 2px solid var(--color-accent);
+  outline-offset: 4px;
+  border-radius: 0.25rem;
+  background: var(--color-accent-soft);
+}
