@@ -1,0 +1,129 @@
+---
+title: Polls and predictions
+description: Start and end a Twitch poll, run a prediction from start to payout, and read the history of past polls and predictions.
+---
+
+You run Twitch polls and predictions on the **Polls** page in the sidebar.
+The page title is **Polls and predictions**.
+The top panel, **Now**, shows what runs at this moment, and the **History** panel below it shows what ran before.
+
+## Who can use this
+
+A moderator, a lead moderator, an editor or the broadcaster may open the page, start and end a poll, and start, lock, resolve or cancel a prediction.
+Viewers vote and predict on Twitch, not on the dashboard.
+
+## Start a poll
+
+1. Open **Polls** in the sidebar.
+   With nothing running, the **Now** panel shows "Nothing is running. Start something for your viewers."
+2. Choose **Start a poll**.
+   The **Start a poll** dialog opens with the text "Viewers vote on Twitch. The result shows here."
+3. Type the **Question** and fill in the **Choices**.
+4. Set **Minutes**, and turn on **Let viewers vote with channel points** if you want that.
+5. Choose **Start poll**.
+   The poll starts on Twitch and shows in the **Now** panel with a countdown and one bar for each choice.
+
+| Label | Choices | Default |
+| --- | --- | --- |
+| **Question** | Any text. It cannot be empty. | Empty |
+| **Choices** | 2 to 5 choices. Use **Add choice** for more, and the remove button to take one away. | 2 empty choices |
+| **Minutes** | A whole number from 1 to 30 | 2 |
+| **Let viewers vote with channel points** | On or off | Off |
+| **Channel points per vote** | A whole number of 1 or more. It counts only when the switch above is on. | 10 |
+
+**Start poll** stays off until the question has text, at least 2 choices have text and the minutes are valid.
+An empty choice is left out of the poll.
+When fewer than 2 choices have text, the dialog shows "Give at least 2 choices."
+
+## End a poll early
+
+1. In the **Now** panel, choose **End poll**.
+   The poll ends on Twitch and moves to the **History** panel with the status **Ended early**.
+
+A poll that runs until its minutes are over ends by itself.
+
+## Run a prediction
+
+A prediction has three steps: viewers put channel points on an outcome, you lock it, then you pick the winning outcome.
+
+1. Open **Polls** in the sidebar and choose **Prediction**.
+   The **Start a prediction** dialog opens with the text "Viewers put channel points on an outcome on Twitch."
+2. Type the **Question** and fill in the **Outcomes**.
+3. Set **Minutes to predict**.
+4. Choose **Start prediction**.
+   The prediction starts on Twitch and shows in the **Now** panel with a countdown.
+   Each bar shows the points, the viewers and the share of all points on that outcome.
+5. Choose **Lock predictions** when viewers may no longer put points in.
+   The **Now** panel shows **Locked** instead of the countdown.
+6. Choose **Pick the winner**.
+   The dialog shows "Voting is closed. Pick the winning outcome to pay out."
+7. Pick the winning outcome and choose **Resolve prediction**.
+   Twitch pays out the points, and the prediction moves to the **History** panel.
+
+| Label | Choices | Default |
+| --- | --- | --- |
+| **Question** | Any text. It cannot be empty. | Empty |
+| **Outcomes** | 2 to 10 outcomes. Use **Add outcome** for more. | 2 empty outcomes |
+| **Minutes to predict** | A whole number from 1 to 30 | 2 |
+
+When fewer than 2 outcomes have text, the dialog shows "Give at least 2 outcomes."
+While the prediction is still open, **Details** opens the same dialog, where **Lock prediction** does the same as **Lock predictions**.
+
+## Cancel a prediction
+
+1. Open the running prediction with **Details** or **Pick the winner**.
+2. Choose **Cancel prediction**.
+   A confirm dialog asks "Cancel this prediction?" and says "Every viewer gets their points back."
+3. Choose **Cancel prediction** in the confirm dialog.
+   The prediction ends on Twitch with the status **Canceled**.
+
+## Read the history
+
+The **History** panel holds every Twitch poll and prediction the channel ran, and the bot's own chat polls, newest first.
+Each card shows the question, the type, the date and a bar with the share of each option.
+The winning option carries a trophy.
+
+Use **Show** to filter the cards.
+
+| Choice | Shows |
+| --- | --- |
+| **All** | Every card |
+| **Twitch polls** | Polls that ran on Twitch |
+| **Predictions** | Twitch predictions |
+| **Chat polls** | The bot's own polls in chat |
+
+The page remembers your **Show** choice.
+
+A card shows a status only when it changes how you read the result.
+
+| Status | Means |
+| --- | --- |
+| **Canceled** | The prediction was canceled and the points went back. |
+| **Ended early** | The poll was ended before its minutes were over. |
+| **No result recorded** | The poll or prediction started, but the bot never saw it end. |
+
+Polls that nobody voted on fold into one line, such as "3 with no votes".
+Choose that line to show their cards.
+
+A chat poll gets a winner only when it is closed and one option has more votes than every other option.
+
+## Start from the home page
+
+The home page has the same **Start a poll** and **Start a prediction** actions.
+They open the same dialogs, so a poll or prediction started there shows on this page too.
+See the [dashboard tour](/reference/getting-started/dashboard-tour) for the home page.
+
+## Troubleshooting
+
+::Troubleshooting
+
+**The Now panel does not show Start a poll or Prediction.**
+Only a moderator, a lead moderator, an editor or the broadcaster sees these actions.
+A person without them sees only what runs and the history.
+
+::
+
+## Related pages
+
+- [Dashboard tour](/reference/getting-started/dashboard-tour)
+- [Chat page](/reference/community/chat-page)
