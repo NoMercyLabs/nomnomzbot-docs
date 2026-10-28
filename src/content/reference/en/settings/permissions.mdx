@@ -1,0 +1,131 @@
+---
+title: Permissions
+description: Give people a role on your team, set the lowest role for each bot action, and give one person a dangerous capability.
+---
+
+The broadcaster sets who may do what on the **Permissions** page, which is under **Settings** in the sidebar.
+The page has three tabs: **Team**, **Actions** and **Per person**.
+Each tab shows a count beside its name.
+
+| Tab | What it holds |
+| --- | --- |
+| **Team** | The people who help run the channel, and the role of each person. |
+| **Actions** | Every bot action, grouped by area, with the lowest role that may use it. |
+| **Per person** | Dangerous capabilities that one person holds. |
+
+## Who can use this page
+
+The **Broadcaster** sees **Settings** in the sidebar, and only the **Broadcaster** may change anything on this page.
+A **Moderator**, **Lead moderator** or **Editor** does not see **Settings** in the sidebar, but may open this page from a direct link.
+They see the same lists, with the controls switched off or hidden.
+
+## The role ladder
+
+A role is a rung on one ladder.
+Each rung may do everything the rungs below it may do.
+The ladder, lowest first:
+
+| Role | Who has it |
+| --- | --- |
+| **Everyone** | Any viewer. |
+| **Twitch subscriber** | A subscriber of the channel. |
+| **VIP** | A VIP of the channel. |
+| **Artist** | A rung between **VIP** and **Moderator**. |
+| **Moderator** | A moderator of the channel. |
+| **Lead moderator** | A team member the broadcaster gives this role. It may use every action set to **Lead moderator** or lower. |
+| **Editor** | A team member the broadcaster gives this role. It may use every action set to **Editor** or lower. |
+| **Broadcaster** | The streamer who owns the channel. |
+
+A command, a reward and other features use the same ladder in their own **Who can use it** field.
+That field is on [Cooldowns and permissions](/reference/commands/cooldowns-and-permissions).
+
+## Add a person to your team
+
+The **Team** tab shows the **Your team** card: "Who helps run this channel, and the role each person has."
+
+1. Open the **Team** tab.
+2. Type a name in the **Person to add** box.
+   A list of people the bot knows opens under the box.
+3. Choose the person.
+   The name replaces the search box.
+4. Choose a role in **Role for the new person**: **Moderator**, **Lead moderator** or **Editor**.
+   The role starts as **Moderator**.
+5. Choose **Add to team**.
+   The person shows in the list with the role.
+
+To pick a different person before you add, choose **Pick someone else** (the **X** beside the name).
+If the bot refuses the change, red text under the card names the reason.
+
+### Change or remove a team member
+
+Each row has a role picker and a trash button.
+
+- Choose a new role in the row's picker. The change saves at once.
+- Choose the trash button to remove the person from the team.
+
+**Role for the new person** does not offer **Broadcaster**.
+A row's picker lists **Broadcaster**, but it is switched off.
+The owner's row cannot be changed or removed.
+
+## Set the lowest role for an action
+
+The **Actions** tab sets which role may use each bot action in this channel.
+The bot ships a default role for every action.
+
+1. Open the **Actions** tab.
+   The **Areas** list shows each area with its number of actions, such as **Moderation** or **Music**.
+2. Choose an area.
+   Its actions open beside the list: "The lowest role that may use each action in this channel."
+3. Find the action.
+   The actions are in two groups: **Chat and community** and **Channel management**.
+4. Choose a role in the action's picker.
+   The change saves at once.
+   The area row in the list now shows "1 changed".
+
+**Search actions** above the list finds an action by its name or its description in every area at once.
+When nothing fits, the list shows "No action matches your search."
+On a phone, the area opens over the list, and **All areas** takes you back.
+
+### Protected actions
+
+Some actions carry a **Protected** badge.
+A protected action has a lowest allowed role.
+The roles under it are switched off in the picker.
+
+### Go back to the default
+
+An action you changed has a reset button at the end of its row.
+Choose it to put the action back to the bot's default role.
+An action at its default has no reset button.
+
+## Give one person a capability
+
+A capability is one bot action, given to one person.
+Some actions cover many kinds of work: **Bot manager** is one capability that lets the person create and edit many kinds of items (see the table below).
+The **Per person** tab shows the **Personal capabilities** card: "A dangerous capability goes to one person, never to a whole role."
+
+1. Open the **Per person** tab.
+2. Type a name in the **Person to give a capability** box, and choose the person from the list.
+3. Choose the action in **Capability**.
+   The list is grouped by area.
+   Only actions the bot allows for one person are in it.
+4. Choose **Give capability**.
+   The person shows in the list, with the capability under the name.
+
+**OBS control** and **Bot manager** ask you to confirm first.
+The dialog names the person and the capability, and lists what the person can and cannot do.
+Choose **Give it** to give it.
+
+| Capability | The person can | The person cannot |
+| --- | --- | --- |
+| **OBS control** | Switch scenes and turn sources on and off in your OBS. | Start or stop your broadcast, or see your OBS password. |
+| **Bot manager** | Create and edit commands, timers, pipelines, event responses, triggers, widgets, sounds, quotes, and voice and music setup. | Moderate chat, change channel settings, control OBS, or manage roles. |
+
+When nobody holds a capability, the card shows "Nobody has a personal capability."
+To take a capability back, choose the trash button on the person's row.
+
+## Related pages
+
+- [Dashboard tour](/reference/getting-started/dashboard-tour)
+- [Cooldowns and permissions](/reference/commands/cooldowns-and-permissions)
+- [Trust and escalation](/reference/moderation/trust-and-escalation)
