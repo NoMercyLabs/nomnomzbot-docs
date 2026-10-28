@@ -12,8 +12,8 @@
 import MarkdownLayout from '../layouts/MarkdownLayout.astro';
 
 // The areas below follow the headings of the bot's README. Each line says what
-// the area does today and nothing more. The reference pages that go deeper are
-// generated from the bot's capability ledger and are added to the sidebar then.
+// the area does today and nothing more. The user guide pages go deeper and are
+// listed in the sidebar by area (src/lib/nav-structure.ts).
 const areas = [
   {
     title: 'Chat and commands',
@@ -61,8 +61,8 @@ const areas = [
         NomNomzBot
       </h1>
       <p class="mt-4 text-lg text-muted-foreground">
-        NomNomzBot is a free chat bot for live streamers.
-        You may use, change and share it for free. You may not earn money with it.
+        NomNomzBot is a chat bot for live streamers.
+        NomNomzBot is free to use, change and share. You may not earn money with it.
         You run it on your own computer or server.
         You control it from a web dashboard.
       </p>
@@ -74,7 +74,7 @@ const areas = [
           href="/reference/overview"
           class="inline-flex h-10 items-center rounded-lg bg-primary px-4 text-sm font-semibold text-primary-foreground transition hover:opacity-90"
         >
-          Open the reference
+          Open the user guide
         </a>
         <a
           href="https://github.com/NoMercyLabs/nomnomzbot"
@@ -110,9 +110,8 @@ const areas = [
     </h2>
     <ul class="mt-4 max-w-2xl list-disc space-y-2 pl-5 text-muted-foreground">
       <li>NomNomzBot is pre-release software. Expect changes.</li>
-      <li>Self-hosting your own bot is always free.</li>
-      <li>Running NomNomzBot as a hosted service for other people is against the project license. That right is reserved to NoMercy Labs.</li>
-      <li>The reference pages are not written yet. They will be generated from the bot's own list of capabilities, so they match what the bot does.</li>
+      <li>Running it for yourself, your friends and your community is free. You may not earn money with it: no selling it, and no paid hosting or paid service built on it.</li>
+      <li>The user guide is written for streamers and moderators. Each page rests on what the bot does today.</li>
     </ul>
   </div>
 </MarkdownLayout>

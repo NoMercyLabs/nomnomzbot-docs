@@ -36,7 +36,7 @@ export interface NavigationResult {
 }
 
 const PRODUCTS: Array<{ product: Product; label: string; collection: string; href: string; order: number; urlBase?: string }> = [
-  { product: 'reference', label: 'Reference', collection: 'reference', href: '/reference/overview', order: 1 },
+  { product: 'reference', label: 'User guide', collection: 'reference', href: '/reference/overview', order: 1 },
 ];
 
 export async function getNavigation(): Promise<NavigationResult> {

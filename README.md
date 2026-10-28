@@ -6,17 +6,19 @@ The live site is **https://docs.nomnomz.bot**.
 ## What it does
 
 The site explains what NomNomzBot can do and how to use it.
-NomNomzBot is a free, open-source chat bot for live streamers.
+NomNomzBot is a chat bot for live streamers.
+NomNomzBot is free to use, change and share. You may not earn money with it.
 
 The site has two parts:
 
 | Part | Address | What it holds |
 | --- | --- | --- |
 | Home | `/` | What the bot is and what it can do. |
-| Reference | `/reference/overview` | The bot's capabilities, one page per area. |
+| User guide | `/reference/overview` | The guide for streamers and moderators, one topic per page, grouped by area. |
 
-The Reference pages will be generated from the bot's own list of capabilities.
-Today the Reference section holds one overview page.
+The user guide follows the dashboard: getting started, commands, timers and rewards, widgets and overlays, music, voice and sound, moderation, currency and games, integrations, community and stream, settings, self-hosting, and a draft section for code scripts and the SDK.
+The plan for every page is in `docs-work/map.md`.
+Writers follow `docs-work/page-conventions.md`.
 
 ## Requirements
 
@@ -59,7 +61,8 @@ The workflow builds the site and publishes it to GitHub Pages at https://docs.no
 | Folder | What it holds |
 | --- | --- |
 | `src/pages/` | The routes of the site. |
-| `src/content/reference/` | The Reference pages. |
+| `src/content/reference/` | The user guide pages, one folder per area. |
+| `docs-work/` | The documentation map, the writer queues, the concept ledger and the page conventions. |
 | `src/components/` | The page parts, such as navigation, search and callouts. |
 | `src/styles/` | The theme. Its colors come from the NomNomzBot dashboard. |
 | `scripts/` | The script that builds the search index. |
