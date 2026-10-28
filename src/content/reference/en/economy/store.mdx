@@ -1,0 +1,124 @@
+---
+title: Store
+description: Add, edit, switch off and delete store items that viewers buy with the channel currency, and see what a purchase does.
+---
+
+You add the items viewers buy with the [channel currency](/reference/economy/currency-and-balances) on the **Economy** page in the sidebar.
+The items live on the **Store** tab.
+Each item has a name, a cost and limits on buying it.
+
+## Who can use this tab
+
+Anyone who may open the **Economy** page sees the **Store** tab.
+A **Moderator**, **Lead moderator**, **Editor** or **Broadcaster** may add, edit, switch and delete items.
+The **New item** button, the edit button, the delete button and the switch show only to them.
+
+## Add a store item
+
+1. Open **Economy** in the sidebar and choose the **Store** tab.
+   The **Store items** list shows "Things viewers buy with the currency."
+2. Choose **New item**.
+   The **New store item** dialog opens.
+3. Type a name in **Item name**.
+4. Type any short label in **Effect kind**, for example `sound`.
+5. Set **Cost** and the other fields (see the table below).
+6. Choose **Save item**.
+   The dialog closes and the item shows in the list, switched on, with its cost under the name, such as "50 to buy".
+
+**Effect kind** must hold a word before the item saves.
+No part of the bot acts on this word.
+
+The bot refuses a second item with the same name in the channel.
+It compares names without case and without spaces at the start or end.
+A negative cost is refused.
+
+| Label | What it sets | Default |
+| --- | --- | --- |
+| **Item name** | The name in the list. Required: "Give the item a name." | Empty |
+| **About this item** | A short description. | Empty |
+| **Effect kind** | A word saved with the item. Required on a new item: "Enter the effect kind." It cannot change later. | Empty |
+| **Cost** | How much currency one purchase takes. | 0 |
+| **Who can buy** | The lowest role that may buy the item. | **Everyone** |
+| **Command or pipeline to run** | What to link to the item. A linked command or bot action runs on each purchase. A linked pipeline does not run. | None |
+| **Cooldown (seconds)** | The time after a purchase before the item can be bought again. 0 is no cooldown. | 0 |
+| **Stock** | How many can be bought in total. Empty is no limit. | Empty |
+| **Per viewer per stream** | How many one viewer can buy during the current stream. Empty is no limit. | Empty |
+| **Sort order** | A number saved with the item for its place in the list. | 0 |
+| **Item icon URL** | A link to an image for the item. | Empty |
+| **Cooldown per viewer** | On: each viewer has their own cooldown. Off: one cooldown covers everyone. | Off |
+
+**Who can buy** lists the roles lowest first, written as the list shows them:
+
+- **Everyone**
+- **Subscriber**
+- **Vip** (a VIP)
+- **Artist**
+- **Moderator**
+- **LeadModerator** (a lead moderator)
+- **Editor**
+- **Broadcaster**
+
+The **Command or pipeline to run** list holds commands, bot actions and [pipelines](/reference/commands/pipelines).
+Link a command or a bot action when you want something to happen on a purchase.
+When you link a pipeline, the bot records the purchase, and nothing runs.
+
+## How a purchase is made today
+
+Today a viewer has no way to buy an item from the dashboard or from chat.
+The viewer **Store** page shows **Coming soon**, because that page is not built yet.
+No chat command buys an item, and no dashboard button buys one.
+
+The bot can still take a purchase from a program that a developer writes for it.
+That program buys for the signed-in viewer only.
+The sections below say what the bot does when such a purchase comes in.
+
+## What a purchase does
+
+When a purchase comes in, these checks run in order.
+The first check that fails stops the purchase, and the viewer pays nothing.
+
+1. The item exists and is switched on.
+2. The buyer's role is at least **Who can buy**.
+3. The cooldown has run out.
+4. Stock is left, when **Stock** is set.
+5. The buyer is under **Per viewer per stream**, when it is set and a stream is live.
+6. The buyer's balance holds the cost.
+
+When every check passes, the bot takes the cost from the buyer's balance.
+It takes one from the stock, when **Stock** is set.
+It saves the purchase with the item's name at that moment.
+The purchase sends no chat line of its own.
+
+When the item links a command or a bot action, the bot runs it with the buyer as the person who used it.
+Anything that command or bot action says in chat comes in the channel's one bot voice.
+When the command or bot action fails, the purchase still stands and the cost is not given back.
+
+The dashboard has no button to refund a purchase.
+
+## Edit a store item
+
+1. Choose the edit button on the item's row.
+   The **Edit store item** dialog opens with the item's values.
+2. Change the fields.
+   **Effect kind** is grayed out and cannot change.
+3. Choose **Save item**.
+   The dialog closes and the list shows the change.
+
+## Switch an item off or on
+
+Use the switch at the end of the item's row.
+A switched-off item stays in the list, and no viewer can buy it.
+
+## Delete a store item
+
+1. Choose the delete button on the item's row.
+   A dialog asks "Delete" with the item's name, and says "Viewers can no longer buy it. Past purchases stay."
+2. Choose **Delete item**.
+   The item leaves the list.
+
+Past purchases keep the name the item had when they were bought.
+
+## Related pages
+
+- [Currency and balances](/reference/economy/currency-and-balances)
+- [Pipelines](/reference/commands/pipelines)
