@@ -12,9 +12,9 @@ The page has two panels: **Pending rewards** and **Rewards**.
 Channel-point rewards exist only on Twitch.
 The channel must be connected to Twitch, as [Connect platforms](/reference/getting-started/connect-platforms) explains.
 
-Twitch gives channel points only to an Affiliate or Partner channel.
+Twitch gives channel points only to an Affiliate or Partner channel, a status that Twitch itself grants.
 For any other channel, the page shows "Channel points need Twitch Affiliate or Partner. These rewards are saved here and go live on Twitch when the channel is affiliate."
-Then only the **Rewards** panel shows, and the on and off switches in it are off.
+Then only the **Rewards** panel shows, and its on and off switches cannot be used.
 
 ## Who can use this page
 
@@ -32,23 +32,20 @@ When there is none, it shows "This channel has no rewards yet."
 
 Each row shows the reward's name, its cost in points, an on and off switch and an **Edit** button.
 The line under the name shows the reward's pipeline or its reply.
-A viewer buying a reward is called a redeem on the page.
+The dashboard calls a viewer buying a reward a "redeem".
 
-| Line under the name | What the bot does on a redeem |
+| Line under the name | What the bot does when a viewer buys the reward |
 | --- | --- |
 | A pipeline name | Runs that [pipeline](/reference/commands/pipelines). |
 | A line of text | Sends that chat reply. |
-| **Only lands in the queue** | See the next table. |
+| **Only lands in the queue** | See the text under this table. |
 
 **Only lands in the queue** shows for every reward that has no saved pipeline and no reply text.
 A command or an action picked under **Pipeline** is not a saved pipeline, so such a reward shows this line too.
-What the bot then does depends on how the reward is set.
 
-| How the reward is set | What the bot does on a redeem |
-| --- | --- |
-| **Pipeline**, with a command or an action picked | Runs that command or action. |
-| Never saved with a reply or a pipeline | Sends the channel's redemption line from [Event responses](/reference/automation/event-responses). |
-| **Simple reply**, saved with an empty **Chat reply** | Sends nothing. |
+With a command or an action picked, the bot runs it.
+With nothing picked, the bot sends the channel's **Reward redeemed** line from [Event responses](/reference/automation/event-responses), until you save the reward once in the **Edit** dialog.
+After that save, an empty **Chat reply** sends nothing.
 
 A row can also carry a badge.
 
@@ -98,7 +95,7 @@ It can use helpers in braces, listed on [Variables and templates](/reference/com
 
 ### Set limits
 
-The **Limits** group is folded shut each time the dialog opens.
+The **Limits** group is collapsed each time the dialog opens.
 Its header shows the limits that are set, and **Paused** when the reward is paused, for example "5 per stream · 30s cooldown".
 With none of these, it shows "No limits".
 
@@ -107,9 +104,10 @@ With none of these, it shows "No limits".
 | **Limit per stream** | "Most redeems of this reward in one stream." |
 | **Limit per viewer per stream** | "Most redeems per viewer in one stream." |
 | **Cooldown in seconds** | "Seconds to wait between any two redeems." |
-| **Timer in seconds** | A countdown that starts when a viewer buys the reward. 0 clears it. |
+| **Timer in seconds** | A countdown that starts when a viewer buys the reward. |
 
-An empty box keeps the limit the reward has now.
+An empty box keeps the limit the reward has now. Type 0 to clear a limit.
+For a **Not on Twitch** reward, the per-stream, per-viewer and cooldown limits do not save; only the timer does.
 
 <details>
 <summary>A reward another app made</summary>
@@ -128,8 +126,7 @@ For a reward that is on Twitch, the switch changes it on Twitch too; a **Not on 
 
 **Paused** is a different setting: the reward stays on, and Twitch shows it but lets no viewer buy it.
 
-A reward that is off cannot be bought.
-If a viewer still buys it, the bot runs none of its reply, pipeline or timer.
+A reward that is off cannot be bought, and the bot runs none of its reply, pipeline or timer.
 
 ## Copy a reward
 
@@ -164,7 +161,7 @@ When nothing waits, the panel shows "No requests are waiting."
 | Button | What happens |
 | --- | --- |
 | **Complete** (check mark on the row) | The request is marked done and leaves the list. |
-| **Reject** (cross on the row) | A dialog asks you to confirm: "Twitch cancels each request and gives the points back." Its **Reject 1** button confirms it, and the request leaves the list. |
+| **Reject** (cross on the row) | A dialog asks you to confirm: "Twitch cancels each request and gives the points back." Its **Reject 1** button, named for the count, confirms it, and the request leaves the list. |
 
 To act on many requests at once, tick their boxes, or tick **Select all requests**.
 The buttons at the bottom, such as **Complete 3** and **Reject 3**, act on the ticked requests.
@@ -178,7 +175,7 @@ With nothing ticked, they act on every request in the open list.
 Check these, in order:
 
 1. The switch on the reward's row. A reward that is off runs nothing.
-2. The **Reaction** in the **Edit** dialog. A **Pipeline** with nothing picked answers nothing.
+2. The **Reaction** in the **Edit** dialog. A **Pipeline** with nothing picked answers nothing. A saved empty **Chat reply** sends nothing: type a reply and choose **Save**.
 3. **Send the reply to**. **Chat overlay** and **Nowhere** send nothing to Twitch chat.
 
 ::
@@ -187,6 +184,5 @@ Check these, in order:
 
 - [Pipelines](/reference/commands/pipelines)
 - [Event responses](/reference/automation/event-responses)
-- [Text to speech](/reference/audio/text-to-speech)
 - [Connect platforms](/reference/getting-started/connect-platforms)
 - [Permissions](/reference/settings/permissions)

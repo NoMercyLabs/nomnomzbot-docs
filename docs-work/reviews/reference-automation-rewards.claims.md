@@ -7,7 +7,7 @@ Paths are in the product repo. CP = dashboard/src/views/dashboard/channel-points
 | 1 | Page label "Channel points" in the "Loyalty" sidebar group | dashboard/src/layouts/dashboard/navigation.ts:242-249; dashboard/src/i18n/locales/en.json frame.nav.channelPoints, frame.group.loyalty |
 | 2 | Two panels, Pending rewards and Rewards | CP/ChannelPointsView.vue:33-40; CP/i18n/en.json:8,76 |
 | 3 | Rewards need a Twitch connection (Helix calls) | server/src/NomNomzBot.Application/Contracts/Twitch/ITwitchChannelPointsApi.cs:27-63 |
-| 4 | Affiliate or Partner only; unavailable text; only Rewards panel; switches off | RS:512-518; CP/ChannelPointsView.vue:30-40,45-52; CP/i18n/en.json:6; CP/components/RewardsPanel.vue:125 |
+| 4 | Affiliate or Partner only; unavailable text; only Rewards panel; switches disabled (`:disabled="!reward.isManageable \|\| unavailable"`) | CP/components/RewardsPanel.vue:39,139; RS:512-518; CP/ChannelPointsView.vue:30-40,45-52; CP/i18n/en.json:6; CP/components/RewardsPanel.vue:125 |
 | 5 | Read: Moderator default, Broadcaster may lower to VIP | server/src/NomNomzBot.Infrastructure/Content/Identity/ActionDefinitionSeeder.cs:159-165,487; CP/route.ts:8 |
 | 6 | Change rewards and complete/reject: Editor and above | ActionDefinitionSeeder.cs:488; server/src/NomNomzBot.Api/Controllers/V1/RewardsController.cs:121,195,227,256,333 |
 | 7 | Without manage: no switch, no Edit, no queue buttons | CP/components/RewardsPanel.vue:28,122-140; CP/components/RedemptionsPanel.vue:43,250,269,290,322 |
@@ -30,6 +30,10 @@ Paths are in the product repo. CP = dashboard/src/views/dashboard/channel-points
 | 21 | Send the reply to choices | dashboard/src/components/layout/ReplyDeliveryField.vue:42-46; en.json common.replyDelivery.target |
 | 22 | Reply uses templates | RewardEditDialog.vue:492-503 (TemplateField) |
 | 23 | Limits folded each open; summary; "No limits" | RewardEditDialog.vue:118-119,158,183-196,510-521; en.json:36-42 |
+| 19b | Nothing picked: Response null runs the Reward redeemed event response; any dialog save sends response "" (simple and pipeline mode), and "" builds a send_message pipeline, so the generic line no longer runs | RewardEditDialog.vue:198-219; RH:242-258,488-499; RS:327 |
+| 19c | Troubleshooting: saved empty Chat reply sends nothing | as 19b |
+| 24b | 0 clears a limit (Twitch setting disabled, stored null) and the timer | RS:297-302,1371-1373,1381-1393,1395-1397 |
+| 24c | Limits save only for a manageable reward on Twitch (stored from Twitch's confirmed reply); timer always saves locally | RS:284,316-318,337-338 |
 | 24 | Limit fields and hints; empty keeps current | RewardEditDialog.vue:168-175,525-539; en.json:50-53,64-67 |
 | 25 | Timer starts countdown on redeem | RH:148-170 |
 | 26 | Other app reward: text, fields and switch off | RewardEditDialog.vue:393-399; RewardsPanel.vue:125; en.json:35; RS:253-259 |

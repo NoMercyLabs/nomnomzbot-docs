@@ -1,36 +1,38 @@
 # Reader review: src/content/reference/en/automation/rewards.mdx
 Verdict: PASS
 Reviewed: src/content/reference/en/automation/rewards.mdx
-Reviewed-SHA: defc805640c70e5e
+Reviewed-SHA: baaba1031b832424
 
-Round 4. Whole page re-read as rendered (no includes). Read against docs-work/page-conventions.md. The round 3 blocking item is fixed: line 43 now covers every reward with no saved pipeline and no reply text, line 44 says a picked command or action still shows the label, and the table at lines 47-51 agrees with both.
+Round 7, a fresh read of the current text. The round 4 non-blocking notes are applied: line 41 now points to the text under the table, lines 43-48 are split into short paragraphs, and line 110 names the limits that do not save for a Not on Twitch reward. No blocking finding remains.
 
-## Blocking findings
+## What I read and tested
 
-None.
+- I read the whole page as stored, lines 1-188 of `src/content/reference/en/automation/rewards.mdx`. No include changes the reader's view. The working tree has an uncommitted edit to this page, so this review judges that text. Its SHA is the stamp above.
+- I walked every flow as a reader: the reward list and its rows, the queue line under each name, Edit with Reaction and limits, switch on and off, Copy, Delete, the queue buttons, and the troubleshooting block.
+- I checked the redeemed-line rule at lines 47-48 against the troubleshooting step at line 178. A reader who saves once with an empty reply gets silence, and the steps lead there.
+- I judged the page against `docs-work/page-conventions.md`. The label, heading, link and plain-rule rules applied.
+- I did not run the product, the bot or any dashboard. This is a docs lane. Code facts are the fact-check reviewer's job.
 
-## Notes (do not decide the verdict)
+## Findings
 
-- [lines 50-51] "Never saved with a reply or a pipeline" and "Simple reply, saved with an empty Chat reply" are two separate rows, but the page never says what a new reward's **Reaction** is by default. A reader cannot tell which row a new, untouched reward falls into. Lead to decide: state the default Reaction for a new reward, or say that an untouched reward uses the redemption line.
-- [line 44] Two ideas in one sentence (the rule for a picked command, plus why). Style only.
-- [line 161] Five facts in one sentence. Convention: four or more parallel facts are a table or list.
-- [line 16] Quoted text ends "when the channel is affiliate" (should read "is an Affiliate"). Quote only if the dashboard shows that string. Not checked against the dashboard.
-- [line 22] "on the Permissions settings page" gives no tab or area. Style only.
-- [line 63] The dialog title and the quoted text share one sentence. Style only.
-- [line 88] A table cell carries four destinations and a limit in one cell. Style only.
+No blocking finding.
 
 ## Density
 
-Paragraphs over three sentences: none. Longest paragraphs are lines 6-8, 15-17 and 43-45 (three sentences each).
-
-Sentences with two ideas (not exhaustive):
-- Line 44 (rule for a picked command plus its reason).
-- Line 63 (name in title plus quoted text).
-- Line 127 (switch effect plus the Not on Twitch exception).
-
-Parallel facts that should be a table or list:
-- Line 161: five facts in one sentence.
+- Lines 15-17 (3 sentences, 56 words; the quote at line 16 holds two sentences): at the cap. No finding.
+- Lines 43-44 and 46-48 (2 and 3 sentences): within the cap. Line 47 carries two ideas, what the bot sends and until when.
+- Lines 98-100 (3 sentences): line 99 carries two ideas, the header content and when **Paused** shows.
+- Line 125 carries two ideas joined by a semicolon.
+- Line 156 carries two ideas joined by a semicolon.
+- Line 85 (table cell): one cell holds two fields and a sentence. Make two rows.
 
 ## Where I got lost
 
-1. Which row a new, untouched reward falls into (lines 50-51). The page does not give the default **Reaction**.
+- Line 47: whether my reward was ever saved. The dialog looks the same either way. Line 48 and line 178 give me a way out, so I got through, but I had to guess which state applied.
+
+## Notes (do not decide the verdict)
+
+- Line 35: "The dashboard calls a viewer buying a reward a 'redeem'." page-conventions.md says to say "channel-point reward", not "redeem". The quotes keep the dashboard's words, and this sentence states it once, which is an acceptable reading.
+- Line 109: "Type 0 to clear a limit" does not say whether 0 also clears the **Timer**. Name it, or say the timer is cleared another way.
+- The voice matches the pilot page `src/content/reference/en/commands/create-a-command.mdx`: the actor is the subject, results are checkable, and constraints arrive as symptoms.
+- The hosting marker and the plain rule are absent, which is correct: the page does not talk about price, hosting or use rights.
