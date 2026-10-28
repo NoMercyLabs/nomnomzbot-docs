@@ -42,6 +42,6 @@ Product repo paths are relative to the product root. Page en.json = `dashboard/s
 | 36 | Reset dialog title/body/action, listed items | Editor:221-234,491-499; page en.json:153-163 |
 | 37 | Reset puts all back and switches on; shared group replies reset on sibling | Svc:263-300; BuiltinsController.cs:101-104 |
 | 38 | Reset button only when something differs; not on data-rights | Editor:501-511 |
-| 39 | Channel command with same name answers instead, except always-on | create-a-command page section "Commands that repeat a system command"; IBuiltinCommand.cs:41-46 |
+| 39 | Channel command with same name answers instead, except !permit, !unpermit, !mydata, !gdpr, !forgetme | IBuiltinCommand.cs:34-46 (IsAlwaysOn => IsReserved); GdprBuiltins.cs:209,223,241 (IsReserved); PermitBuiltins.cs:257,499 (IsAlwaysOn); ChatMessageHandler.cs:285-293 |
 | 40 | Data-rights forgetme second confirm | GdprBuiltins.cs:203 (two-step); DependencyInjection.cs comment on 60s window (ErasureConfirmationTracker) |
 | 41 | Offline: viewer commands do nothing unless "Keep commands and rewards on while offline" is on; broadcaster, moderators and data-rights commands exempt | Infra/Chat/EventHandlers/ChatMessageHandler.cs:278-281; Infra/Chat/OfflineCommandGate.cs (KeepActiveWhileOffline false, IsLive false, not broadcaster/moderator); dashboard/src/views/dashboard/settings/i18n/en.json:106-108 (basics section) |
