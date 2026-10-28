@@ -1,0 +1,116 @@
+---
+title: Updates
+description: Know where your data stays, pick the stable, beta or nightly release channel, and update a self-hosted bot.
+---
+
+You update a self-hosted bot by downloading a newer image and starting it.
+This page assumes you followed [Install with Docker](/reference/self-hosting/install-with-docker).
+
+## Pick a release channel
+
+A release channel is the image tag you run.
+Each channel gets a copy of a build that was already tested on the channel before it.
+
+| Channel | Image | When it gets a new build |
+| --- | --- | --- |
+| **stable** | `ghcr.io/nomercylabs/nomnomzbot:stable` | When a stable release is made. It takes the current beta build. |
+| **beta** | `ghcr.io/nomercylabs/nomnomzbot:beta` | Every Monday. It takes the current nightly build. |
+| **nightly** | `ghcr.io/nomercylabs/nomnomzbot:nightly` | Every night. It takes the newest tested build. |
+
+Pick **stable** when you want the fewest surprises.
+A channel that has no new build skips its release.
+
+Set the channel with `API_IMAGE` in `.env`, for example:
+
+```text
+API_IMAGE=ghcr.io/nomercylabs/nomnomzbot:beta
+```
+
+The lite setup uses **stable** when `API_IMAGE` is empty.
+
+<details>
+<summary>Stay on one exact release</summary>
+
+Each release also has its own tag, such as `stable-2026.10.26-12`.
+The tag is the channel, the date and a run number.
+Put that tag in `API_IMAGE` to stay on exactly that release.
+
+</details>
+
+## Where your data stays
+
+An update keeps your data in place.
+
+| Setup | Where the data lives |
+| --- | --- |
+| Lite | The `nomnomzbot_lite_data` volume. |
+| Full | The `postgres_data` volume (the database), the `api_data` volume (the bot's files) and your `.env` file. |
+
+For the lite setup, you can back up the volume before you update.
+The steps are on [Install with Docker](/reference/self-hosting/install-with-docker#back-up-the-lite-data).
+
+::Callout
+
+Keep `ENCRYPTION_KEY` the same across an update.
+If it changes, the bot cannot read the sign-ins it stored.
+You must connect Twitch and every other connected service again.
+
+::
+
+## Update the lite setup
+
+Run this command in the project folder:
+
+```bash
+docker compose -f docker-compose.lite.yml pull && docker compose -f docker-compose.lite.yml up -d
+```
+
+Docker downloads the newest image of your channel and starts it.
+The bot pauses for a short time while it restarts.
+
+## Update the full setup
+
+1. Set `API_IMAGE` in `.env` to the image of your channel.
+2. Run the switchover script from the project folder in PowerShell:
+
+   ```powershell
+   .\scripts\switchover.ps1
+   ```
+
+   The script downloads the image and starts the new version next to the old one.
+   When the new version is ready, the script stops the old one.
+   The bot has no pause.
+
+If the new version never gets ready, the script stops it.
+The old version keeps running.
+
+When `API_IMAGE` is empty or names a local image, the script builds the image instead of downloading it.
+
+::Callout
+
+Do not let an automatic updater, such as Watchtower, update the bot containers in the full setup.
+It stops the old version before the new one is ready, so the bot pauses.
+Update with the switchover script only.
+
+::
+
+## See when an update exists
+
+The **System** page in the admin area of the dashboard has an **Updates** card.
+It "Checks GitHub every few hours for a newer stable release."
+
+| The card shows | Meaning |
+| --- | --- |
+| **New version**, the release name and **What changed** | A newer stable release exists. **What changed** opens its release page. |
+| "This bot runs the newest stable release." | No update is needed. |
+| "No stable release to compare with yet, or this build has no version to compare." | The card cannot compare. |
+| "GitHub did not answer the update check." | The check failed. Try again later. |
+
+The card compares with the **stable** channel only.
+
+Each release page lists its changes and the update steps for the lite and the full setup.
+
+## Related pages
+
+- [Install with Docker](/reference/self-hosting/install-with-docker)
+- [First-run setup](/reference/self-hosting/first-run-setup)
