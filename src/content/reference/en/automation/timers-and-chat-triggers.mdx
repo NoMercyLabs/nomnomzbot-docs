@@ -1,0 +1,228 @@
+---
+title: Timers and chat triggers
+description: Make a timer that posts on a schedule and a chat trigger that answers a phrase, and set when each fires.
+---
+
+A timer posts in chat on its own, every few minutes.
+A chat trigger answers when someone in chat types certain words.
+You make both on the **Triggers and timers** page in the sidebar.
+
+| Tab | What it holds |
+| --- | --- |
+| **Timers** | Lines the bot posts on a schedule. |
+| **Chat triggers** | Replies to words in ordinary chat lines. |
+
+A chat trigger is not a command.
+A command starts with the prefix, such as `!hello`, and is made on [Create a command](/reference/commands/create-a-command).
+
+## Who can use this page
+
+A **Moderator**, **Lead moderator**, **Editor** or **Broadcaster** may open the page and change timers and chat triggers.
+The roles are explained on [Permissions](/reference/settings/permissions).
+
+The **Broadcaster** may also let a **VIP** open each tab.
+A VIP then sees the list only, and the editor does not open.
+For a VIP, the **New timer** and **New trigger** buttons show "You can view this, but your role cannot change it."
+
+## Make a timer
+
+1. Open **Triggers and timers** in the sidebar, then the **Timers** tab.
+2. Choose **New timer**.
+   The **New timer** dialog opens.
+3. Type a **Name**, for example `Follow reminder`.
+4. Under **Reaction**, choose **Simple reply** or **Pipeline** (see the table below).
+5. Set **Minutes between posts**.
+   The default is 30 minutes.
+6. Choose **Create timer**.
+   The dialog closes and the new timer shows in the list, switched on.
+
+| **Reaction** | The field to fill in |
+| --- | --- |
+| **Simple reply** | **Messages**: one line per message. Blank lines are dropped. |
+| **Pipeline** | **Pipeline**: a command, a [pipeline](/reference/commands/pipelines) or an action for the timer to run. |
+
+A message can hold template helpers, such as `{channel}`.
+They are explained on [Variables and templates](/reference/commands/variables-and-templates).
+
+When the list is empty, the tab shows "No timers yet."
+Its **Make the first timer** button opens the same dialog.
+
+The dialog stops with a reason in red when a field is wrong:
+
+| Problem | What the dialog shows |
+| --- | --- |
+| No name | "Give the timer a name." |
+| **Simple reply** with no message | "Write at least one message." |
+| **Pipeline** with nothing picked | "Pick the command, action or pipeline the timer runs." |
+| Minutes outside the limits | "Use a whole number from 1 to 1440 minutes." |
+
+## When a timer posts
+
+The bot checks its timers about every 30 seconds.
+A timer posts when both of these are true:
+
+- **Minutes between posts** have passed since its last post.
+- Chat has at least **Chat lines needed** new lines since its last post.
+
+A timer that has never posted is due at once.
+A new timer starts with **Chat lines needed** at 0, so it posts at the next check, within about 30 seconds.
+
+A copy made with **Duplicate** keeps the **Chat lines needed** of the timer it copies.
+Once you switch the copy on, it posts at the next check after chat has had that many lines since the bot began watching your channel.
+After the first post, it waits **Minutes between posts** between posts.
+
+When **Chat lines needed** is 0, a timer posts on time alone.
+The bot posts only in a channel it is connected to.
+
+A timer with several messages posts them in turn, one per post.
+After the last message, it starts again at the first.
+A timer set to **Pipeline** has no messages, so it runs its command, pipeline or action each time.
+
+A message line goes to Twitch chat in the channel's one bot voice.
+When a line cannot be sent, the timer tries the same line again at the next check.
+
+## Edit a timer
+
+Choose a timer in the list to open it in the editor.
+The list shows each timer's name and how often it posts.
+
+| Field | What it does |
+| --- | --- |
+| **Enabled** | Switches the timer on or off at once. A timer that is off stays in the list, marked **Off**, and posts nothing. |
+| **Name** | The timer's name in the list. |
+| **Reaction** | The messages, or what the timer runs. |
+| **Minutes between posts** | A whole number from 1 to 1440. |
+| **Chat lines needed** | A whole number from 0 to 10000. |
+| **Post once** | The timer posts one time and then switches itself off. |
+| **Read it aloud** | Each post also plays as speech on your stream. |
+
+The footer counts your unsaved changes.
+Choose **Save changes** to keep them, or **Discard** to go back to the saved timer.
+After a save, the count goes away and the list shows the new values.
+
+**Duplicate** makes a copy named after the timer with "copy" added, such as `Follow reminder copy`.
+The copy is switched off, and it opens in the editor.
+
+## Delete a timer
+
+1. Open the timer and choose **Delete**.
+   A box asks "Delete *name*?"
+2. Choose **Delete timer**.
+
+The timer is removed and stops posting.
+The editor closes and shows "Pick a timer to edit it."
+
+## Make a chat trigger
+
+1. Open **Triggers and timers** in the sidebar, then the **Chat triggers** tab.
+2. Choose **New trigger**.
+   The **New chat trigger** dialog opens.
+3. Type the **Words to watch for**, for example `good morning`.
+4. Type the **Reply**, the line the bot sends.
+   The reply may hold template helpers from [Variables and templates](/reference/commands/variables-and-templates).
+5. Choose **Create trigger**.
+   The dialog closes and the new trigger shows in the list, switched on.
+
+The dialog shows "Give the trigger some words to watch for." or "Write the reply." when a field is empty.
+When the list is empty, the tab shows "No chat triggers yet." with a **Make the first trigger** button.
+
+A new trigger starts with these settings, which you change in the editor:
+
+| Setting | Starts at |
+| --- | --- |
+| **How chat must match** | **Contains the words** |
+| **Match capital letters** | Off |
+| **Seconds between replies** | 30 |
+| **Who can set it off** | **Everyone** |
+
+## How chat must match
+
+**How chat must match** decides how the words compare to a chat line.
+
+| Choice | The trigger fires when the chat line |
+| --- | --- |
+| **Contains the words** | Holds the words anywhere, even inside a longer word. |
+| **Is exactly the words** | Is the words and nothing else. |
+| **Starts with the words** | Begins with the words. |
+| **Matches a pattern** | Matches a regular expression, a pattern language for text. |
+
+With **Contains the words**, the words `hi` also match `this`.
+Use **Is exactly the words** or **Matches a pattern** when that is too wide.
+
+**Match capital letters** off means `Hello` and `hello` are the same.
+A pattern that does not work as a regular expression is refused when you save.
+
+## When a chat trigger fires
+
+The bot checks chat triggers only on ordinary chat lines:
+
+- A line that starts with the command prefix, or that runs a command, never sets off a chat trigger.
+- A line that plays a sound from the soundboard never sets off a chat trigger.
+
+One chat line sets off one chat trigger at most.
+The trigger then checks **Who can set it off** and **Seconds between replies**.
+
+**Who can set it off** is the lowest role that may fire the trigger.
+The choices run from **Everyone** up to **Broadcaster**, as on [Permissions](/reference/settings/permissions).
+
+**Seconds between replies** holds the whole channel.
+After the trigger answers, it stays quiet for that many seconds.
+The broadcaster and moderators are not held back by it.
+
+The bot keeps the value between 0 and 86400 seconds, one day.
+
+## Edit a chat trigger
+
+Choose a trigger in the list to open it in the editor.
+The list shows each trigger's words and its match choice.
+
+| Field | What it does |
+| --- | --- |
+| **Enabled** | Switches the trigger on or off at once. A trigger that is off stays in the list, marked **Off**, and answers nothing. |
+| **Words to watch for** | The words the bot looks for. |
+| **How chat must match** | See [How chat must match](#how-chat-must-match). |
+| **Match capital letters** | Makes `Hello` and `hello` different. |
+| **Reaction** | **Simple reply** sends the **Reply**. **Pipeline** runs a command, a pipeline or an action instead. |
+| **Seconds between replies** | The wait before the trigger answers again. |
+| **Who can set it off** | The lowest role that may fire it. |
+
+The reply goes to Twitch chat in the channel's one bot voice.
+Choose **Save changes** to keep your edits, or **Discard** to go back.
+After a save, the unsaved count goes away and the list shows the new words.
+
+## Delete a chat trigger
+
+1. Open the trigger and choose **Delete**.
+   A box asks "Delete *words*?"
+2. Choose **Delete trigger**.
+
+The trigger is removed for good and stops answering.
+The editor closes and shows "Pick a trigger to edit it."
+
+## Troubleshooting
+
+::Troubleshooting
+
+**A timer never posts.**
+Check these, in order:
+
+1. **Enabled**. A timer marked **Off** posts nothing, and **Post once** switches it off after one post.
+2. **Chat lines needed**. A quiet chat holds the timer until enough new lines arrive.
+3. **Minutes between posts**. After a post, the next one can come up to 30 seconds later than the number you set.
+
+**A chat trigger does not answer.**
+Check these, in order:
+
+1. **Enabled**. A trigger marked **Off** answers nothing.
+2. The chat line. A line that starts with the command prefix never sets off a trigger.
+3. **Who can set it off**. The viewer's role must be at least the role chosen.
+4. **Seconds between replies**. The trigger stays quiet after an answer.
+
+::
+
+## Related pages
+
+- [Create a command](/reference/commands/create-a-command)
+- [Pipelines](/reference/commands/pipelines)
+- [Variables and templates](/reference/commands/variables-and-templates)
+- [Permissions](/reference/settings/permissions)
