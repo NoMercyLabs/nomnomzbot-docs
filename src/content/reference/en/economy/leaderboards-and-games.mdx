@@ -1,0 +1,97 @@
+---
+title: Leaderboards and games
+description: Add, change and delete leaderboards that rank viewers by the channel currency, and see which game pages are not built yet.
+---
+
+You add the channel's leaderboards on the **Leaderboards** tab of the **Economy** page in the sidebar.
+A leaderboard ranks viewers by the [channel currency](/reference/economy/currency-and-balances).
+
+## Who can use this
+
+A **Moderator**, **Lead moderator**, **Editor** or **Broadcaster** may see, add, change and delete leaderboards.
+Someone who may not see leaderboards does not see the **Leaderboards** tab.
+
+## Add a leaderboard
+
+1. Open **Economy** in the sidebar and choose the **Leaderboards** tab.
+   The list shows "No leaderboards yet." when the channel has none.
+2. Choose **New leaderboard**.
+   The **New leaderboard** dialog opens.
+3. Choose the fields (see the table below).
+4. Choose **Save leaderboard**.
+   The dialog closes and the leaderboard shows in the list.
+
+| Label | Choices | Default |
+| --- | --- | --- |
+| **Ranks by** | **Balance**, **Earned**, **Spent** | **Balance** |
+| **Period** | **All time**, **Daily**, **Weekly**, **Monthly** | **All time** |
+| **Over** | **Whole channel**, **One jar** | **Whole channel** |
+| **Places shown** | A number from 1 to 100 | 10 |
+| **Visible to viewers** | On or off | On |
+
+When **Over** is **One jar**, a **Jar** field shows.
+Pick a savings jar there.
+Without a jar, the dialog shows "Pick a jar."
+
+Each row in the list shows what it ranks, then the set, the period and the places, for example "Whole channel · All time · top 10".
+A leaderboard with **Visible to viewers** off carries the badge **Private**.
+
+## How the bot ranks viewers
+
+| **Ranks by** | What counts |
+| --- | --- |
+| **Balance** | The viewer's balance now. The **Period** does not change it. |
+| **Earned** | The currency the viewer gained in the period. |
+| **Spent** | The currency the viewer spent in the period. |
+
+**Daily** starts at midnight UTC today.
+**Weekly** starts on the last Sunday at midnight UTC.
+**Monthly** starts on the first day of the month at midnight UTC.
+**All time** counts everything.
+
+A viewer who opted out of leaderboards is not ranked.
+
+::Callout
+
+The bot ranks only **Whole channel** leaderboards.
+A **One jar** leaderboard is saved, but it ranks no viewers.
+
+::
+
+## Show a leaderboard in chat
+
+A viewer types `!leaderboard` in chat.
+The bot answers in the channel's one bot voice with the top 5 viewers of one leaderboard.
+It picks the first leaderboard with **Visible to viewers** on.
+When none is on, it picks the first leaderboard of the channel.
+
+| Result | What the bot answers by default |
+| --- | --- |
+| The channel has no leaderboard | "No leaderboard is configured for this channel yet." |
+| The leaderboard ranks nobody | "The leaderboard doesn't have any ranked entries yet." |
+
+## Change or delete a leaderboard
+
+1. To change a leaderboard, choose **Edit leaderboard** on its row.
+   The **Edit leaderboard** dialog opens with the saved values.
+   Choose **Save leaderboard**.
+2. To delete a leaderboard, choose **Delete leaderboard** on its row.
+   The dialog **Delete this leaderboard?** shows "The ranking stops. Balances stay."
+   Choose **Delete leaderboard** to confirm.
+
+## Games and the viewer pages
+
+These pages show **Coming soon** today.
+They are not built yet.
+
+| Page | Where it is |
+| --- | --- |
+| **Games** | The dashboard sidebar |
+| **Leaderboards** | The [viewer pages](/reference/community/viewer-pages) of a channel |
+| **Points and store** | The viewer pages of a channel |
+| **Games** | The viewer pages of a channel |
+
+## Related pages
+
+- [Currency and balances](/reference/economy/currency-and-balances)
+- [Viewer pages](/reference/community/viewer-pages)
