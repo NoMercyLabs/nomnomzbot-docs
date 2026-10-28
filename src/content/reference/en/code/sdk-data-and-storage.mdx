@@ -1,0 +1,251 @@
+---
+title: Data and storage (Draft)
+description: Read viewers, balances, stream stats and rewards from a script, keep values in storage, fetch a web page and schedule a pipeline.
+---
+
+This page lists the `nnz.api` calls that read and keep data: viewers, balances, stats, rewards, storage, web fetch and scheduling.
+Each call needs its grant, and a failed call leaves its reason in `nnz.lastError`.
+[Script basics](/reference/code/sdk-script-basics) explains the grants, the error codes and how to turn on Custom Code.
+
+::Callout
+**Draft**: this part of the guide is not finished yet.
+::
+
+## Overview
+
+| Call | Gives | When it fails |
+| --- | --- | --- |
+| `nnz.api.user.get(id)` | A viewer's public profile | `null` |
+| `nnz.api.user.lookup(login)` | A Twitch account | `null` |
+| `nnz.api.economy.balance(userId)` | A viewer's balance | `0` |
+| `nnz.api.stats.viewer(userIdOrLogin)` | A viewer's channel stats | Zeros |
+| `nnz.api.stats.stream(options)` | Metrics of one stream | `null` |
+| `nnz.api.reward.get(rewardIdOrTitle)` | A channel-point reward | `null` |
+| `nnz.api.reward.update(rewardIdOrTitle, patch)` | `true` when the reward changed | `false` |
+| `nnz.api.storage.get(key)` | The stored text | `null` |
+| `nnz.api.storage.set(key, value)` | `true` when the value is stored | `false` |
+| `nnz.api.storage.delete(key)` | `true` when the call succeeded | `false` |
+| `nnz.api.storage.list(prefix)` | The stored keys | An empty list |
+| `nnz.api.http.fetch(url)` | The response body as text | `null` |
+| `nnz.api.schedule.pipeline(name, delaySeconds, variables, dedupeKey)` | `true` when the run is scheduled | `false` |
+
+A call that needs a value and gets none stops the script with an error, for example "storage.get needs a key".
+
+## Viewers
+
+### Get a viewer
+
+`nnz.api.user.get(id)` gives the public profile of a viewer of the channel.
+Leave out `id` for the viewer who started the script.
+The `id` may be the bot's own viewer id, the Twitch id or the login.
+
+| Field | Type | Meaning |
+| --- | --- | --- |
+| `id` | `string` | The viewer's id in the bot. |
+| `username` | `string` | The login name. |
+| `displayName` | `string` | The name as chat shows it. |
+| `avatarUrl` | `string`, optional | The profile picture. Absent when there is none. |
+| `paint` | object, optional | The 7TV name paint the viewer wears. Absent when there is none. |
+
+The paint has `backgroundImage`, `color` and `textShadow` as CSS text, each absent when the paint sets none, and `isImageOnly`.
+No email or other private data leaves the bot.
+A viewer the bot does not know gives `null` and the code `not_found`.
+
+### Look up a Twitch account
+
+`nnz.api.user.lookup(login)` finds a Twitch account by login, also when that user never chatted in the channel.
+A leading `@` and capital letters are fine.
+It gives `id`, `login` and `displayName`.
+
+A login must be letters, digits and underscores, at most 25 characters.
+One run may ask Twitch 3 times.
+The fourth call gives `null` and the code `limit_exceeded`.
+
+## Points
+
+`nnz.api.economy.balance(userId)` gives a viewer's balance in the channel's currency, as a number.
+Leave out `userId` for the viewer who started the script.
+The value may be an id or a login.
+A viewer the bot does not know gives `0`.
+[Currency and balances](/reference/economy/currency-and-balances) explains how viewers earn and spend it.
+
+## Stats
+
+### Viewer stats
+
+`nnz.api.stats.viewer(userIdOrLogin)` gives a viewer's totals in the channel.
+Leave out the value for the viewer who started the script.
+A viewer the bot never saw gets zeros and a `firstSeen` of `null`, never `null` itself.
+
+| Field | Meaning |
+| --- | --- |
+| `messages` | Chat messages sent. |
+| `watchtimeSeconds` | Time watched, in seconds. |
+| `firstSeen` | The first day the viewer was seen, as `yyyy-MM-dd`. |
+| `redemptions` | Rewards redeemed. |
+| `songRequests` | Songs requested. |
+| `commands` | Commands used. |
+
+This script answers with the viewer's own numbers:
+
+```js
+const stats = nnz.api.stats.viewer();
+const balance = nnz.api.economy.balance();
+
+nnz.api.chat.send('Messages: ' + stats.messages + ', points: ' + balance);
+```
+
+The bot posts that line in chat in the channel's one bot voice.
+
+### Stream stats
+
+`nnz.api.stats.stream(options)` gives metrics of one stream.
+`options.metrics` is the list of metric keys to read.
+`options.stream` is a stream id; leave it out for the latest stream, live or ended.
+
+The answer always has `stream`: its `id`, `startedAt`, `endedAt` (`null` while live), `title` and `game`.
+Each requested metric is a field of the answer with the same name.
+A metric with nothing to show is absent.
+
+| Key | What it gives |
+| --- | --- |
+| `bits` | Total bits and the top cheerers. |
+| `channel` | The channel's `name` and `avatarUrl`. |
+| `chat` | `messages` and `uniqueChatters`. |
+| `commandsRun` | Commands run and the most used ones. |
+| `duration` | Seconds from the start to the end, or to now while live. |
+| `followers` | New followers during the stream. |
+| `gifters` | Gifters by gift count; anonymous gifts count as "Anonymous". |
+| `hypeTrain` | The highest `level` and the number of `trains` that ended. |
+| `newFollowers` | Names of the viewers who followed, oldest first. |
+| `peakViewers` | The highest viewer count recorded. |
+| `raidsIn` | Raids that arrived: `name` and `viewers`. |
+| `redemptions` | Redemptions and the top reward titles. |
+| `selfSubs` | Viewers who subscribed themselves; gifts are not counted. |
+| `songRequesters` | Song requests and the top requesters, never song titles. |
+| `subs` | `new`, `resub`, `gift` and `total`. |
+| `topChatters` | The chatters with the most messages. |
+
+A total with a top list has `total` and `top`.
+Each top entry has `name` and `count`, highest first.
+Every list holds at most 5 entries.
+
+An empty metrics list gives every metric.
+An unknown key, or a channel with no such stream, gives `null`.
+
+```js
+const stats = nnz.api.stats.stream({
+  metrics: ['chat', 'peakViewers'],
+});
+
+if (stats) {
+  nnz.api.chat.send('Chatters today: ' + stats.chat.uniqueChatters);
+}
+```
+
+## Rewards
+
+### Read a reward
+
+`nnz.api.reward.get(rewardIdOrTitle)` finds a channel-point reward by its id or its title.
+A title matches without regard to capital letters.
+
+| Field | Meaning |
+| --- | --- |
+| `id` | The reward id. |
+| `title` | The title viewers see. |
+| `cost` | The cost in channel points. |
+| `prompt` | The text viewers see when they redeem it, or `null`. |
+| `isEnabled` | `true` when viewers can see the reward. |
+| `isPaused` | `true` when the reward is paused. |
+
+### Change a reward
+
+`nnz.api.reward.update(rewardIdOrTitle, patch)` changes the fields that the patch sets.
+The patch may set `title`, `cost`, `prompt`, `isEnabled` and `isPaused`.
+A field you leave out keeps its value, and other fields are ignored.
+
+Only a reward that the bot created can change.
+Any other reward gives `false` and the code `refused`.
+The change goes through the same path as the dashboard.
+[Channel-point rewards](/reference/automation/rewards) explains how the bot makes a reward.
+
+```js
+const changed = nnz.api.reward.update('Hydrate', {
+  cost: 500,
+  isPaused: false,
+});
+```
+
+## Storage
+
+Storage keeps text values for the channel between runs.
+Every script of the channel reads and writes the same keys.
+
+| Limit | Value |
+| --- | --- |
+| Key length | 1 to 128 characters |
+| Value size | 64 KB |
+| Keys per channel | 200 |
+
+### Store a value
+
+`nnz.api.storage.set(key, value)` stores the text under the key.
+A key that has no value yet counts toward the 200 keys; a new value for an existing key always fits.
+A value over the size limit, or a new key when the channel is full, gives `false` and stores nothing.
+Store a number or an object as text, for example with `nnz.json.stringify`.
+
+### Read a value
+
+`nnz.api.storage.get(key)` gives the stored text, or `null` when the key has no value.
+
+### Delete a value
+
+`nnz.api.storage.delete(key)` removes the key.
+A key that has no value still gives `true`.
+
+### List the keys
+
+`nnz.api.storage.list(prefix)` gives the stored keys, sorted by key.
+With a prefix, it keeps only the keys that start with it.
+
+```js
+const raw = nnz.api.storage.get('hugs.count');
+const count = Number(raw || '0') + 1;
+
+nnz.api.storage.set('hugs.count', String(count));
+```
+
+## Fetch a web page
+
+`nnz.api.http.fetch(url)` asks for an `https` address and gives the response body as text.
+Any other address gives `null` and the code `invalid_argument`.
+A server that does not answer with success gives `null` and the code `upstream_failed`.
+A request that is blocked or fails before an answer does the same.
+
+One run may send and receive at most 256 KB in total over all its fetches.
+A fetch that would go over it gives `null` and the code `limit_exceeded`.
+
+## Schedule a pipeline
+
+`nnz.api.schedule.pipeline(name, delaySeconds, variables, dedupeKey)` runs a saved pipeline of the channel once, after a delay.
+The name matches without regard to capital letters, and the pipeline must be switched on.
+A pipeline that is not found gives `false` and the code `not_found`.
+
+| Value | Meaning |
+| --- | --- |
+| `delaySeconds` | Rounded up to whole seconds, then held between 1 second and 24 hours. |
+| `variables` | Optional. Text values the pipeline gets when it runs. |
+| `dedupeKey` | Optional. A new schedule with the same key replaces the run that still waits. |
+
+```js
+nnz.api.schedule.pipeline('voice-reset', 300, {
+  reason: 'timeout',
+});
+```
+
+## Related pages
+
+- [Script basics](/reference/code/sdk-script-basics)
+- [Currency and balances](/reference/economy/currency-and-balances)
+- [Channel-point rewards](/reference/automation/rewards)
