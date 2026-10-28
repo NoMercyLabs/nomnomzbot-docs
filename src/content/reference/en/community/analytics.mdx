@@ -1,0 +1,140 @@
+---
+title: Analytics
+description: Read how the channel did over 30 days, 90 days or 12 months, and save a stream recap as a picture.
+---
+
+You read how the channel did on the **Analytics** page, in the **Live** group of the sidebar.
+Every number comes from what the bot recorded for the channel.
+The page has four tabs: **Overview**, **Streams**, **Chat** and **Recaps**.
+
+## Who can use this page
+
+A **Moderator**, **Lead moderator**, **Editor** or **Broadcaster** may open the page.
+The sidebar shows **Analytics** only to these roles.
+The roles are explained on [Permissions](/reference/settings/permissions).
+
+## Pick a range
+
+1. Open **Analytics** in the sidebar.
+   The **Overview** tab opens.
+2. Choose a value in **Range** at the top of the page.
+   The **Overview**, **Streams** and **Chat** tabs show that range.
+
+| **Range** | What it covers |
+| --- | --- |
+| **30 days** | The last 30 days. This is the default. |
+| **90 days** | The last 90 days. |
+| **12 months** | The last 365 days. |
+
+The browser remembers the range.
+The tab is part of the page address, so a link or the back button opens the same tab.
+The **Recaps** tab does not use the range.
+
+## Read the overview
+
+The **Overview** tab starts with a row of numbers for the range.
+
+| Number | What it counts |
+| --- | --- |
+| **Streams** | The streams in the range, with the total time live under it. |
+| **Chat lines** | The chat lines, with the lines per live hour under it. |
+| **New follows** | The new follows. |
+| **Twitch subs** | New, renewed and gifted subs. |
+| **Bits cheered** | The Bits cheered. |
+| **Peak viewers** | The highest viewer count. |
+
+A number the bot has no record of shows "No data".
+
+Below the numbers are three panels:
+
+- **Follows** shows the new follows per day as a bar chart.
+- **Chatters** shows how many different people chatted, per day.
+- **Highlights** shows the average stream length, the top category, and how many commands, rewards and song requests chat used.
+
+## Read every stream
+
+The **Streams** tab lists **Every stream** in the range.
+The line above the table gives the average stream length and the day with the busiest chat.
+
+| Column | What it shows |
+| --- | --- |
+| **Started** | The day and time the stream started. |
+| **Length** | How long the stream ran. |
+| **Category** | The category of the stream. |
+| **Chat lines** | The chat lines in the stream. |
+| **Chatters** | The different people who chatted. |
+| **New follows** | The follows during the stream. |
+| **Peak viewers** | The highest viewer count, or "Not known". |
+
+On a narrow screen the table hides some columns.
+The chatters and new follows then show under the start time.
+
+## See when chat is busy
+
+The **Chat** tab has two panels:
+
+- **When chat is busy** is a grid of weekdays and hours. Its legend runs from **Fewer** to **More** chat lines.
+- **Busy days and hours** shows the chat lines **By day of the week** and the **Busiest hours**.
+
+The line under **When chat is busy** names the time zone of the grid, for example "Times are in UTC."
+Chat follows the stream days, because chat happens only while you are live.
+
+## Save a stream recap
+
+A stream recap is the end credits of one stream: the stream's numbers, drawn by the raid recap overlay.
+The bot keeps one recap for each stream.
+It keeps the recap when the stream goes offline, and again when the raid recap shows at the end of a [raid](/reference/community/stream-page).
+A new recap of the same stream replaces the old one.
+
+1. Open the **Recaps** tab.
+   The **Stream recaps** table lists every kept recap, newest first.
+2. Choose **Open** on a row.
+   A dialog shows the recap as the overlay draws it, with its size under the title.
+3. Choose **Save as PNG**.
+   The browser saves the picture as a file named `recap-` with the stream date.
+
+| Column | What it shows |
+| --- | --- |
+| **Stream** | The day the stream started. |
+| **Title** | The stream title. |
+| **Length** | How long the stream ran. |
+| **Peak** | The highest viewer count, or a dash when the bot has no count. |
+| **Chat** | The chat lines in the stream. |
+
+Choose a column name to sort by it.
+The table shows 12 recaps to a page; use **Previous** and **Next** to move between pages.
+
+The picture has the size of the stream it was made for.
+A recap that stored no stream size is saved at 1920 x 1080, and the dialog says "(assumed, this recap stored no stream size)".
+
+## Troubleshooting
+
+::Troubleshooting
+
+**The Recaps tab says "No recap was kept yet."**
+The bot has no kept recap for the channel.
+A recap appears after the next stream goes offline or the next raid recap shows.
+
+::
+
+::Troubleshooting
+
+**The PNG could not be made. Try again.**
+The picture failed in the browser.
+Choose **Save as PNG** again.
+
+::
+
+::Troubleshooting
+
+**A panel says "This could not load."**
+The dashboard could not read the numbers.
+Choose **Try again** on the panel.
+
+::
+
+## Related pages
+
+- [Stream](/reference/community/stream-page)
+- [People](/reference/community/people)
+- [Permissions](/reference/settings/permissions)
