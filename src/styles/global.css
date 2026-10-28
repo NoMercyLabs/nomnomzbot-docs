@@ -60,6 +60,15 @@
   --color-border: var(--border);
   --color-ring: var(--ring);
   --color-sidebar-accent: var(--sidebar-accent);
+  /* The copied components use emerald for the accent; every emerald shade follows the bot's primary token. */
+  --color-emerald-50: color-mix(in oklch, var(--primary) 8%, var(--background));
+  --color-emerald-200: color-mix(in oklch, var(--primary) 35%, var(--background));
+  --color-emerald-300: color-mix(in oklch, var(--primary) 60%, var(--background));
+  --color-emerald-400: var(--primary);
+  --color-emerald-500: var(--primary);
+  --color-emerald-600: var(--primary);
+  --color-emerald-700: color-mix(in oklch, var(--primary) 80%, var(--foreground));
+  --color-emerald-900: color-mix(in oklch, var(--primary) 45%, var(--foreground));
 }
 
 @layer base {
