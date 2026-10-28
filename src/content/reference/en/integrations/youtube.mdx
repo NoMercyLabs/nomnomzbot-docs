@@ -1,0 +1,76 @@
+---
+title: YouTube
+description: Connect YouTube to the channel, read its row on the Stream page and the Integrations page, and see what the music player does with it.
+---
+
+YouTube connects to the channel as a second stream platform, beside Twitch.
+This page shows where the YouTube connection appears and what the bot does with it.
+How you connect it is on [Connect platforms](/reference/getting-started/connect-platforms).
+
+## Who can use this
+
+| Role | What they may do |
+| --- | --- |
+| **Moderator**, **Lead moderator** | See the YouTube row and its status. |
+| **Editor**, **Broadcaster** | Connect, reconnect and disconnect YouTube. |
+
+The roles are explained on [Permissions](/reference/settings/permissions).
+
+## What the connection asks for
+
+**Connect** opens Google's own sign-in page in a new window.
+It asks for one permission set, **Manage your channel**.
+When you accept, the window closes and the row shows **Connected** with the YouTube account name.
+
+## The YouTube row on the Stream page
+
+The [Stream page](/reference/community/stream-page) has a panel **Where it goes**.
+It lists Twitch, Kick, YouTube and X Live.
+The YouTube row shows **Connected** with the account name, or **Not connected**.
+
+A person who may change connections sees **Connect** beside **Not connected**.
+The panel asks "Open YouTube to connect?" before the sign-in window opens.
+
+## The YouTube row on the Integrations page
+
+Open **Settings** in the sidebar, then **Integrations**.
+The **Connected services** list has a **YouTube** row.
+
+| Status | What it means |
+| --- | --- |
+| **Connected** | The connection works. The row shows "as" and the account name. |
+| **Not connected** | No YouTube account is connected. |
+| **Sign in again** | The saved YouTube login no longer works. |
+| **Sign in again (the saved login is unreadable)** | The bot cannot read the saved login. |
+
+Choose **Details** on the row to see **Permission sets: Manage your channel**.
+Choose **Reconnect** to sign in to Google again.
+
+## What the music player does with YouTube
+
+The [music player](/reference/music/music-player) can play YouTube videos.
+The video plays in a music player overlay in your streaming software, not on your YouTube account.
+That overlay tells the bot what it plays, and whether the video plays, is paused, has ended or failed.
+
+| Report from the overlay | What the bot does |
+| --- | --- |
+| The video plays or is paused | The bot updates what the music player shows as now playing. |
+| A song request ended or failed | The bot starts the next song request. |
+
+Only one overlay plays the channel's YouTube music at a time.
+Song requests from YouTube do not need the channel's YouTube connection.
+
+## Disconnect YouTube
+
+1. On the **YouTube** row of **Connected services**, choose **Disconnect**.
+   A dialog **Disconnect YouTube?** opens.
+   It counts the [pipelines](/reference/commands/pipelines) that use music actions, because they stop working.
+2. Choose **Disconnect** in the dialog.
+   A message says "YouTube is disconnected."
+   The row shows **Not connected**.
+
+## Related pages
+
+- [Connect platforms](/reference/getting-started/connect-platforms) shows how YouTube and the other platforms connect.
+- [Stream page](/reference/community/stream-page) shows the stream info and the platform panel.
+- [Music player](/reference/music/music-player) shows what plays and how to control it.
