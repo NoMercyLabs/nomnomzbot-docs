@@ -1,0 +1,131 @@
+---
+title: Your data and privacy
+description: Download your data, read and withdraw your consents, opt out of extra processing, and erase your data.
+---
+
+You see and control the data the bot holds about you on the **Your data** page.
+It is in the settings sidebar, in the **Account** group.
+The page is about you, not about a channel.
+
+## Who can use this page
+
+Anyone who is signed in may open the page.
+You [sign in](/reference/getting-started/sign-in) as a broadcaster, a moderator or a viewer.
+Each action on the page works only on your own data, never on another person's data.
+
+## What the page holds
+
+The page has four panels, in this order.
+
+| Panel | What it does |
+| --- | --- |
+| **Download your data** | Saves one file with everything the bot holds about you. |
+| **Your consents** | Lists what you agreed to. You can withdraw each one. |
+| **Your requests** | Lists every download, erasure and opt-out you asked for, newest first. |
+| **Erase your data** | Holds two rows: **Opt out of extra processing**, with the **Opt out** button, and **Erase all my data**, with the **Erase my data** button. |
+
+## Download your data
+
+1. Choose **Download my data** at the top of the **Download your data** panel.
+   Your browser saves a file named `nomnomzbot-my-data-` with the date and `.json` at the end.
+2. Read the line under the button.
+   It says how much the file holds, for example "Saved 120 records, 48000 bytes."
+
+The file is JSON, a format a computer can read.
+Each download also shows as **Download my data** under **Your requests**.
+
+## Read and withdraw your consents
+
+**Your consents** lists each consent you gave, with a switch.
+The switch is on while the consent is given.
+Under each name, a line starts with "Legal basis:" and names the basis for that consent.
+
+| Consent | What it covers |
+| --- | --- |
+| **Terms of service and privacy policy** | Your agreement to the terms and the privacy policy. |
+| **I am 18 or older (gambling features)** | Your statement of age, for the gambling features. |
+| **Show my pronouns** | Showing your pronouns. |
+| **Appear on leaderboards** | Showing you on leaderboards. |
+| **Product news and marketing** | Product news and marketing. |
+
+Turn a switch off to withdraw that consent.
+The row stays in the list, so you can turn it on again to agree again.
+The change saves at once, with no **Save** button.
+
+When you gave no consent yet, the panel says "You have not given any consent yet."
+
+## Opt out of extra processing
+
+An opt-out stops the use of your data for marketing, leaderboards and analytics.
+Your data stays.
+
+1. Choose **Opt out** in the **Erase your data** panel.
+   The dialog asks "Opt out of extra processing?": "Nothing is deleted."
+2. Choose **Opt out** in the dialog.
+   The panel shows "Your opt-out is saved."
+
+The opt-out withdraws your **Product news and marketing** and **Appear on leaderboards** consents.
+
+When you have a channel open, the opt-out is for that channel only.
+It turns off only the switches of consents you gave in that channel.
+Consents for other channels, and consents not tied to a channel, keep their switches.
+
+The opt-out then shows under **Your requests** with the scope **One channel**.
+
+## Erase your data
+
+Erasing cannot be undone.
+It destroys your personal data and ends your sign-in.
+
+1. Choose **Erase my data** in the **Erase your data** panel.
+   The bot counts what it would destroy first.
+   The dialog "Erase all your data?" lists the counts, for example "3 sessions".
+2. Read the list.
+   When the bot holds nothing, the list says "The bot holds nothing to destroy."
+3. Choose **Erase my data** in the dialog.
+   The panel shows "Your erasure is requested. It shows under your requests."
+
+If the bot cannot count your data, the dialog does not open.
+The panel shows the reason in red text.
+
+| Items the list can name |
+| --- |
+| profile, chat messages, records, viewer data rows |
+| service accounts, connections |
+| sign-in tokens, sessions |
+| consents, encryption keys |
+
+An item with a count of zero does not show in the list.
+The bot ends every sign-in you have and destroys the keys that lock your stored data.
+
+## Your requests
+
+**Your requests** lists each request with its date, its scope and its status.
+
+| Status | Meaning |
+| --- | --- |
+| **Waiting** | The request is not started yet. |
+| **Done** | The request is finished. |
+| **Failed** | The request did not finish. The reason shows in red under it. |
+
+| Scope | Meaning |
+| --- | --- |
+| **Whole deployment** | Every channel on this bot. |
+| **One channel** | Only the channel you had open. |
+
+When you made no request yet, the panel says "You have not made a request yet."
+
+## Troubleshooting
+
+::Troubleshooting
+
+**A panel shows "Your consents could not be loaded." or "Your requests could not be loaded."**
+The panel offers a retry.
+Choose it to load the list again.
+
+::
+
+## Related pages
+
+- [Sign in](/reference/getting-started/sign-in)
+- [Viewer pages](/reference/community/viewer-pages)
