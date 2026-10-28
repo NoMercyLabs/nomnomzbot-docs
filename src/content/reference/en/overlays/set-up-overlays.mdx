@@ -1,0 +1,176 @@
+---
+title: Set up overlays
+description: Create an overlay in the dashboard, choose its settings, switch it on or off and keep it up to date.
+---
+
+You make and manage the channel's overlays on the **Overlays** page in the sidebar.
+An overlay is a small web page that shows on your stream, such as an alert box or a chat box.
+OBS shows it as a browser source, which [OBS browser source](/reference/overlays/obs-browser-source) explains.
+
+## Who can use this page
+
+A **Moderator**, **Lead moderator**, **Editor** or **Broadcaster** may open the page and change overlays.
+The roles are explained on [Permissions](/reference/settings/permissions).
+
+The **Broadcaster** may also let a **VIP** open the page.
+This is set on the **Permissions** settings page, in the **Widgets** area of the **Actions** tab.
+A VIP then sees the overlays only.
+For a VIP, **New overlay** shows "You can view this, but your role cannot change it."
+
+## Create an overlay
+
+1. Open **Overlays** in the sidebar and choose **New overlay**.
+   The **New overlay** dialog opens.
+2. Type a name in **Name**, for example `My alerts`.
+3. Choose a **Code language** (see the table below), or keep the default, **Vue**.
+4. Choose **Create overlay**.
+   The dialog closes and the new overlay opens beside the list, switched on.
+
+The code language cannot change after you create the overlay.
+
+| **Code language** | Pick it when |
+| --- | --- |
+| **Vue** | You write the overlay with Vue, a JavaScript framework for web pages. |
+| **Plain HTML, CSS and JavaScript** | You write the overlay as a plain web page, with no framework. |
+
+When **Name** is empty, the dialog shows "Give the overlay a name."
+Nothing is made.
+
+A new overlay has no code yet.
+You write its code with **Edit code** (see [Change the code](#change-the-code)).
+What an overlay can react to is explained on [Widgets and alerts](/reference/overlays/widgets-and-alerts).
+
+## Find an overlay
+
+The list shows the channel's overlays, except the overlays the bot needs, which are on the OBS page.
+The tabs above it filter the list, and each tab shows its count.
+
+| Tab | What it shows |
+| --- | --- |
+| **All** | Every overlay of your channel. |
+| **On** | Overlays that are switched on. |
+| **Off** | Overlays that are switched off. |
+| **Has a problem** | Overlays whose last run failed. |
+
+**Search overlays** filters the list by name.
+Choose an overlay in the list to open it beside the list.
+
+Each row shows a short state text and a colored dot.
+The text says whether a browser source has the overlay open.
+The dot adds whether the last run failed.
+
+| Row text | Meaning |
+| --- | --- |
+| **Off** | The overlay is switched off. |
+| **A browser source is open** | The overlay is on and a browser source shows it. |
+| **Nothing attached** | The overlay is on, but no browser source has it open. |
+
+| Dot | Meaning |
+| --- | --- |
+| Gray | The overlay is switched off. |
+| Red | The last run failed. The row also shows **Fails**. |
+| Orange | The last run did not fail, and no browser source has the overlay open. |
+| Green | The last run did not fail, and a browser source has the overlay open. |
+
+## What an open overlay shows
+
+The top of an open overlay holds its name and its controls.
+A badge **Built in** marks an overlay that comes with the bot.
+A badge **Edited** marks a built-in overlay whose code your channel changed.
+
+| Part | What it holds |
+| --- | --- |
+| **Settings** | The choices of the overlay, such as colors and texts. |
+| **Health** | Whether the last run worked, and whether a browser source has it open. |
+| **Reacts to** | The events the overlay listens to, each with a **Test** button. |
+
+**Copy browser source address** copies the address OBS needs.
+The button then reads **Address copied**.
+The page never shows the address itself.
+
+### Read the health
+
+**Health** shows two lines.
+The first line says how the last run went.
+The second line says whether a browser source has the overlay open.
+
+| First line | What it shows |
+| --- | --- |
+| **Works** | "No fault. Last ran" and when, or "No run on record." for an overlay that never ran. |
+| **Failed** | The fault of the last run. |
+
+| Second line | What it shows |
+| --- | --- |
+| **A browser source is open** | "Events reach your stream." |
+| **Nothing attached** | "No browser source has it open. Its output is lost until you add the address in OBS." |
+| **Switched off** | "It does not run until you switch it on." |
+
+### Test an event
+
+Choose **Test** beside an event under **Reacts to**.
+The bot sends a sample of that event to this overlay only.
+The row then shows "Sent to this overlay", or "Sent, but no browser source has it open".
+
+## Keep an overlay up to date
+
+### Change the settings
+
+1. Open the overlay and change a value under **Settings**.
+   The panel shows "Unsaved changes. Open sources reload on save."
+2. Choose **Save settings**.
+   The panel shows "Saved."
+
+Every browser source that has the overlay open gets the new settings at once.
+
+When the save fails, the panel shows "Not saved. Your changes are still here; try again."
+A value that differs from its default has a reset button, named "Reset" with the setting name and "to default".
+An overlay without settings shows "This overlay has no settings."
+
+### Change the code
+
+1. Open the overlay and choose **Edit code**.
+   The code editor opens.
+2. Change the code and choose **Save & Compile**.
+   The bot turns the code into the version the overlay runs.
+   The editor shows "Saved and compiled. The overlay now runs this version."
+
+The code SDK is described on [Widgets and alerts](/reference/overlays/widgets-and-alerts).
+
+### Switch an overlay on or off
+
+Use the **Overlay on** switch at the top of an open overlay.
+The text beside it changes to **On** or **Off**.
+A switched-off overlay does not run until you switch it on.
+
+## Copy an overlay
+
+Choose **Duplicate** at the bottom of an open overlay.
+The copy opens at once, so you can change it.
+
+## Delete an overlay
+
+1. Choose **Delete** at the bottom of an open overlay.
+   The dialog lists what else uses the overlay, or says "Nothing else uses this overlay."
+2. Choose **Delete overlay**.
+   The overlay leaves the list.
+
+The overlay stops working in every browser source that uses it.
+This cannot be undone.
+
+## Set the audio levels
+
+**Audio levels** at the top of the page opens **Music vs Bot audio levels**.
+It sets how loud the music plays against the bot voice and sounds on your overlays.
+The levels are the same for every overlay and on every streaming PC.
+
+| Setting | What it sets |
+| --- | --- |
+| **Master volume** | The loudness of everything your overlays play. |
+| **Voice volume** | The loudness of the text-to-speech voice. |
+| **Music duck percent** | How loud the music stays while the voice speaks. 100 means no ducking. |
+
+## Related pages
+
+- [OBS browser source](/reference/overlays/obs-browser-source)
+- [Widgets and alerts](/reference/overlays/widgets-and-alerts)
+- [Dashboard tour](/reference/getting-started/dashboard-tour)
