@@ -25,10 +25,15 @@ const ONLINE = /\bonline\b/i;
 const GOOGLE = /^google\b/i;
 const APPLE = /premium|enhanced|siri/i;
 const ROBOTIC = /espeak|compact/i;
+// The old Windows desktop voices sound flat and robotic. They are never offered.
+const OLD_DESKTOP = /\bmicrosoft (david|mark|zira)\b/i;
 const MAX_CHOICES = 6;
 
 function sameLanguage(voice: VoiceLike, lang: string): boolean {
-  return voice.lang.replace('_', '-').toLowerCase().startsWith(lang.slice(0, 2).toLowerCase());
+  return (
+    voice.lang.replace('_', '-').toLowerCase().startsWith(lang.slice(0, 2).toLowerCase()) &&
+    !OLD_DESKTOP.test(voice.name)
+  );
 }
 
 export function rankVoice(voice: VoiceLike, lang: string): number {

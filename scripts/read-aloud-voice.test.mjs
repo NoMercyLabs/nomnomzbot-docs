@@ -28,7 +28,14 @@ test('a natural voice wins over a network voice, and a network voice over a desk
 
 test('only voices of the page language are offered, best first, and a robotic one comes last', () => {
   const names = voiceChoices([espeak, david, dutch, google, aria], 'en').map(voice => voice.name);
-  assert.deepEqual(names, [aria.name, google.name, david.name, espeak.name]);
+  assert.deepEqual(names, [aria.name, google.name, espeak.name]);
+});
+
+test('the old Microsoft desktop voices David, Mark and Zira are never offered or picked', () => {
+  const mark = { name: 'Microsoft Mark - English (United States)', lang: 'en-US', localService: true };
+  const all = [david, zira, mark, espeak, google];
+  assert.deepEqual(voiceChoices(all, 'en').map(voice => voice.name), [google.name, espeak.name]);
+  assert.equal(pickVoice([david, zira, mark], 'en', null), undefined);
 });
 
 test('the reader\'s own pick wins while it exists, and is ignored when it is gone', () => {
