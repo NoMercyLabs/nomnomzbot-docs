@@ -1,0 +1,404 @@
+---
+title: Pipelines
+description: Build a pipeline of steps in the editor, try it with a test run that sends nothing, and read what each real run did.
+---
+
+A pipeline is a list of steps that the bot runs in order.
+A command, a chat trigger, a timer or an event response can start it.
+You build pipelines on the **Pipelines** page in the sidebar.
+
+| Part | What it is |
+| --- | --- |
+| Step | One thing the bot does, such as send a message or play a sound. |
+| Block | A step that holds other steps, such as a check with a **Yes** and a **No** path. |
+| Test run | A try of the pipeline that sends, says and changes nothing. |
+| Run | One time something really started the pipeline. |
+
+## Who can use this page
+
+A **Moderator**, **Lead moderator**, **Editor** or **Broadcaster** may open the page and change pipelines.
+The **Broadcaster** may also let a **VIP** open the page, on the **Permissions** settings page.
+The roles are explained on [Permissions](/reference/settings/permissions).
+
+A role that may only look sees the steps, but cannot add, change or save them.
+The step details then show "Your role cannot change pipelines."
+
+## The list of pipelines
+
+The list shows every pipeline of the channel, sorted by name.
+**Search pipelines** narrows it by name and description.
+
+Each row shows the description of the pipeline.
+A pipeline with no description shows how often it ran, for example "Ran 3 times, last 2 hours ago".
+
+| Mark on a row | Meaning |
+| --- | --- |
+| **Ready-made** | The pipeline came with the bot. |
+| **Off** | The pipeline is switched off. Nothing starts it. |
+
+When the channel has no pipelines, the page shows "This channel has no pipelines yet."
+Its **Make the first pipeline** button opens the **New pipeline** dialog.
+
+## Make a pipeline
+
+1. Open **Pipelines** in the sidebar and choose **New pipeline**.
+   The **New pipeline** dialog opens: "Give it a name. You add its steps next."
+2. Type a name in **Name**.
+3. Choose **Make pipeline**.
+   The dialog closes and the editor of the new pipeline opens, with "This pipeline has no steps yet."
+
+If the bot refuses the name, the dialog stays open with the reason.
+Nothing is made.
+
+A new pipeline starts from nothing until a command, a chat trigger, a timer or an event response uses it.
+To run it from a command, choose **Runs a pipeline** for the command (see [Create a command](/reference/commands/create-a-command)).
+
+## The editor
+
+Choose a pipeline in the list to open its editor.
+The editor has three parts:
+
+| Part | What it shows |
+| --- | --- |
+| **Steps to add** | Every step you can add, with a search on top. |
+| The steps | The steps of the pipeline, in the order the bot runs them. |
+| **Step details** | The settings of the step you choose. |
+
+On a narrow window, **Steps to add** and **Step details** open as panels from the side.
+
+Above the steps, one line says what starts the pipeline, for example "Starts when someone types !hug".
+A pipeline that nothing uses shows "Nothing starts this pipeline yet."
+Below the steps, the line "Done. The pipeline ends here." marks the end.
+
+### Add a step
+
+1. Choose **Add a step at the end** below the steps.
+   **Steps to add** opens, with the cursor in **Find a step**.
+2. Type part of a name to narrow the list, or scroll to the step.
+3. Choose the step.
+   The step joins the end of the pipeline, and its settings open in **Step details**.
+
+To add a step inside a block, choose the add button in one of the block's paths.
+**Steps to add** then shows where the step goes, for example "Adds to Yes of step 2".
+The **X** button beside that line adds at the end again.
+
+### Set up a step
+
+**Step details** has two tabs.
+**Settings** holds the fields of the step.
+**In plain words** says what the step does, whether it always runs, and what happens when it fails.
+
+A step with an empty field it needs shows "Not set up yet:" on its card, with the names of the empty fields.
+
+A field that says "Words in braces, like `{user}`, fill in from the run." takes helpers.
+The helpers are explained on [Variables and templates](/reference/commands/variables-and-templates).
+**Use earlier text** puts in text that an earlier step of the pipeline already holds.
+
+Some steps write a value that later steps can read, and **In plain words** then says "Later steps can use it."
+A field that picks a thing of the channel, such as a sound or a pick list, opens a list to choose from.
+For a **Run script** step, **Edit script** opens the script.
+
+Every step also has two switches:
+
+| Switch | What it does | Default |
+| --- | --- | --- |
+| **Keep going if this step fails** | On: the pipeline goes on after a failure of this step. Off: a failure stops the pipeline here. | Off |
+| **Stop here when this step matches** | On: when the step's check holds and the step works, the steps after it do not run. | Off |
+
+A check is a test a step runs before it starts.
+**Only run if** shows the check of a step, or "Always runs." when it has none.
+The editor has no field to add or change a check, so a step you add has none.
+
+**Stop here when this step matches** works only on a step that has a check.
+On a step you add, the switch stays off and cannot be turned on.
+It shows "Add a condition first. Without one, this step always runs and there is nothing to match."
+
+### Copy, remove and move back
+
+| Button | What it does |
+| --- | --- |
+| **Duplicate** in **Step details** | Adds a copy of the step. |
+| **Remove** in **Step details** | Takes the step out. The page shows "Step removed." with an **Undo** button. |
+| **Undo** and **Redo** above the steps | Take back the last change, or do it again. |
+
+### Save the pipeline
+
+Choose **Save** above the steps.
+The page shows "Pipeline saved." and **Save** turns off until the next change.
+
+If the bot refuses the pipeline, the page shows the reason, and your changes stay in the editor.
+When you leave with changes that are not saved, the dialog "Leave without saving?" asks first.
+**Leave without saving** drops the changes.
+
+| Key | What it does |
+| --- | --- |
+| `A` | Opens **Steps to add**. |
+| `/` | Puts the cursor in **Find a step**. |
+| `Ctrl+Z` | Undo. With `Shift`, redo. |
+| `Ctrl+Y` | Redo. |
+| `Ctrl+S` | Save, also from inside a field. |
+
+The `Cmd` key works in place of `Ctrl`.
+
+## Blocks
+
+A block holds other steps in one or more paths.
+Blocks are at the top of **Steps to add**, under **Checks and groups**.
+The list has 6 blocks.
+
+| Block | What it does | Its paths |
+| --- | --- | --- |
+| **If, otherwise** | Runs **Yes** when its check holds, **No** when it does not. With no check, it runs **Yes**. | **Yes** and **No** |
+| **Switch on a value** | Compares **Value to check** with each case, and runs the path of the case that matches. | One path per **Case** |
+| **Pick one at random** | Runs one path, picked at random. | **Path A**, **Path B** and so on |
+| **Repeat** | Runs its steps again and again. | **Each time** |
+| **Catch a failure** | Runs its steps. When one fails, it runs the other path. | **It works** and **It fails** |
+| **Run on its own** | Runs only the first plain step inside it, and skips every other step and block. The run does not wait for it, and its failure never fails the run. | **On its own** |
+
+A path with no steps shows "Nothing extra. Goes on to the next step."
+
+### Switch on a value
+
+A new **Switch on a value** comes with one **Case**.
+Each case has three settings:
+
+| Setting | What it sets | Default |
+| --- | --- | --- |
+| **Matches** | The value the case looks for. | Empty |
+| **How it compares** | **is**, **is not**, **is more than**, **is less than**, **is at least**, **is at most** or **contains**. Numbers compare as numbers, other text without caring about capitals. | **is** |
+| **Use when no other case matches** | Makes this case the fallback. | Off |
+
+### Pick one at random
+
+A new **Pick one at random** comes with two paths.
+Each path has a **Weight**, 1 by default.
+A path with weight 2 is picked twice as often as one with weight 1.
+
+### Repeat
+
+Choose how the repeat stops in **Repeat**.
+
+| **Repeat** | The steps run | Extra setting |
+| --- | --- | --- |
+| **A set number of times** | The number of times in **Times**. This is the default, with **Times** at 1. | **Times** |
+| **Once for each item in a list** | Once for each item in **List**: a variable, or text with items split by commas. | **List** |
+| **While a check holds** | As long as the check of the block holds. With no check, until a limit below stops the run. | None |
+
+**At most this many rounds** and **At most this many seconds** are limits.
+When a repeat reaches one, the whole run stops there, not only the repeat.
+An empty **At most this many rounds** means 1000 rounds.
+A number can only be lower.
+
+## Every step
+
+**Steps to add** lists the steps of the bot after the blocks.
+They are grouped by area, with the areas and the steps sorted by name.
+The bot has 113 steps in 24 areas.
+
+| Area | Step | What it does |
+| --- | --- | --- |
+| Billing | **Require tier** | Goes on only when the channel's tier is at least the chosen tier (see [Billing](/reference/settings/billing)). |
+| Chat | **Announce** | Post a highlighted chat announcement. |
+| Chat | **Send message** | Send a message to chat. |
+| Chat | **Send reply** | Reply to the triggering chat message. |
+| Code | **Run script** | Run a custom sandboxed script (see [How a script runs](/reference/code/how-a-script-runs)). |
+| Counters | **Adjust counter** | Increase or decrease a named counter by an amount. |
+| Counters | **Set counter** | Set a named counter to a fixed value. |
+| Discord | **Discord notification** | Post a notification to a configured Discord channel. |
+| Economy | **Check balance** | Check a viewer's currency balance against a minimum. |
+| Economy | **Contribute to jar** | Contribute currency to a savings jar. |
+| Economy | **Deduct currency** | Deduct currency from a viewer's balance. |
+| Economy | **Grant currency** | Grant currency to a viewer's balance. |
+| Economy | **Play game** | Play a configured currency game. |
+| Flow | **Break** | Break out of the enclosing loop. |
+| Flow | **Continue** | Skip to the next iteration of the enclosing loop. |
+| Flow | **Return value** | Return a value from a sub-pipeline. |
+| Flow | **Run pipeline** | Run another saved pipeline as a sub-pipeline. |
+| Flow | **Schedule pipeline** | Schedule a saved pipeline to run once after a delay. |
+| Flow | **Set variable** | Set a pipeline variable. |
+| Flow | **Stop** | Stop the pipeline immediately. |
+| Flow | **Wait** | Pause the pipeline for a duration. |
+| Flow | **Wait for event** | Pause the pipeline until a named event happens, or a timeout is reached. |
+| Games | **Cancel live game** | Cancel the currently running live game. |
+| Games | **Start live game** | Start a live interactive game for viewers. |
+| Giveaways | **Draw giveaway** | Draw a winner from an open giveaway. |
+| Giveaways | **Enter giveaway** | Enter the triggering viewer into a giveaway. |
+| Giveaways | **Open giveaway** | Open a giveaway for entries. |
+| Identity | **Permit** | Grant a viewer a temporary permit. |
+| Identity | **Set pronoun** | Set a viewer's pronouns. |
+| Identity | **Unpermit** | Revoke a viewer's active permit. |
+| Media | **Media playback** | Control the media-share player. |
+| Media | **Submit media** | Submit a media item for the media-share queue. |
+| Moderation | **Ban** | Ban a viewer from chat. |
+| Moderation | **Delete message** | Delete a chat message. |
+| Moderation | **Time out** | Time out a viewer in chat. |
+| Music | **Add to playlist** | Add the current track, or a given one, to a playlist. |
+| Music | **Ban song** | Block the currently playing track from requests and skip it. |
+| Music | **Music add to playlist** | Add the currently playing track to a chosen playlist. |
+| Music | **Music cycle repeat** | Cycle repeat through off, track, then playlist or album. |
+| Music | **Music follow artist** | Follow the current track's artist. |
+| Music | **Music next** | Skip to the next track. |
+| Music | **Music pause** | Pause playback. |
+| Music | **Music play** | Resume playback. |
+| Music | **Music play pause** | Toggle playback based on the current state. |
+| Music | **Music previous** | Go back to the previous track. |
+| Music | **Music remove from playlist** | Remove the currently playing track from a chosen playlist. |
+| Music | **Music save track** | Add the currently playing track to your liked songs. |
+| Music | **Music seek** | Jump to a point in the current track, in seconds. |
+| Music | **Music set repeat** | Set repeat to off, track, or playlist or album. |
+| Music | **Music set shuffle** | Turn shuffle on or off. |
+| Music | **Music set volume** | Set playback volume to a fixed level from 0 to 100. |
+| Music | **Music toggle saved** | Toggle the currently playing track's liked status. |
+| Music | **Music toggle shuffle** | Switch shuffle on or off based on the current state. |
+| Music | **Music transfer device** | Move playback to a chosen device. |
+| Music | **Music unfollow artist** | Unfollow the current track's artist. |
+| Music | **Music unsave track** | Remove the currently playing track from your liked songs. |
+| Music | **Music volume down** | Lower playback volume by a step, 10 by default. |
+| Music | **Music volume mute** | Mute playback, remembering the volume to restore. |
+| Music | **Music volume up** | Raise playback volume by a step, 10 by default. |
+| Music | **Now playing** | Show the currently playing track. |
+| Music | **Pause song** | Pause music playback. |
+| Music | **Play track once** | Play one track right now, then resume whatever was already playing. |
+| Music | **Previous song** | Jump back to the previous track. |
+| Music | **Request song** | Request a song to be queued. |
+| Music | **Resume song** | Resume music playback. |
+| Music | **Set song volume** | Show or change the music volume. |
+| Music | **Skip song** | Skip the currently playing track. |
+| Music | **Song queue** | Show the current song request queue. |
+| Music | **Song request favorite** | Queue a viewer's most-requested song. |
+| Music | **Wrong song (remove own)** | Remove the requester's most recent queued song. |
+| OBS | **Obs call vendor** | Call a vendor-specific OBS plugin request. |
+| OBS | **Obs filter** | Enable or disable an OBS source filter. |
+| OBS | **Obs hotkey** | Trigger an OBS hotkey by name. |
+| OBS | **Obs input mute** | Mute, unmute, or toggle an OBS audio input. |
+| OBS | **Obs input volume** | Set an OBS audio input's volume. |
+| OBS | **Obs media** | Control playback of an OBS media source. |
+| OBS | **Obs recording** | Start, stop, pause, or resume OBS recording. |
+| OBS | **Obs refresh browser** | Refresh an OBS browser source. |
+| OBS | **Obs replay buffer** | Start or stop the OBS replay buffer. |
+| OBS | **Obs request** | Send a raw OBS WebSocket request. |
+| OBS | **Obs request batch** | Send a batch of raw OBS WebSocket requests. |
+| OBS | **Obs save replay** | Save the current OBS replay buffer. |
+| OBS | **Obs screenshot** | Take a screenshot of an OBS source. |
+| OBS | **Obs set preview scene** | Set the OBS studio-mode preview scene. |
+| OBS | **Obs set source** | Show or hide a source within an OBS scene. |
+| OBS | **Obs streaming** | Start or stop OBS streaming. |
+| OBS | **Obs switch scene** | Switch the active OBS scene. |
+| OBS | **Obs transition** | Trigger an OBS scene transition. |
+| OBS | **Obs virtual cam** | Start or stop the OBS virtual camera. |
+| Pick Lists | **Pick from list** | Pick a random entry from a saved [pick list](/reference/commands/pick-lists). |
+| Quotes | **Post quote** | Post a saved quote to chat. |
+| Rewards | **Redemption fulfill** | Mark the triggering redemption fulfilled on Twitch. |
+| Rewards | **Redemption refund** | Refund the triggering redemption and return the points. |
+| Sound | **Play sound** | Play a sound clip (see [Sounds](/reference/audio/sounds)). |
+| Sound | **Stop sound** | Stop currently playing sound clips. |
+| Stream | **Shoutout** | Give another channel a shoutout. |
+| Stream | **Start raid** | Start a raid to another channel. |
+| Stream | **Wait until raid fires** | Wait for the time left until an earlier **Start raid** step fires, corrected for the delay of the steps in between. |
+| Text-to-Speech | **Read aloud (TTS)** | Speak text through text-to-speech (see [Text to speech](/reference/audio/text-to-speech)). |
+| Text-to-Speech | **Tts synthesize** | Make text-to-speech audio without playing it. |
+| Viewer Data | **Adjust viewer data** | Increase or decrease a stored number on a viewer's profile. |
+| Viewer Data | **Clear viewer data** | Clear a stored value for every viewer in the channel. |
+| Viewer Data | **Set viewer data** | Set a stored value on a viewer's profile. |
+| VTube Studio | **Vts color tint** | Apply a color tint to the VTube Studio model. |
+| VTube Studio | **Vts load model** | Load a VTube Studio model. |
+| VTube Studio | **Vts move model** | Move, rotate, or resize the VTube Studio model. |
+| VTube Studio | **Vts request** | Send a raw VTube Studio API request. |
+| VTube Studio | **Vts set expression** | Activate or deactivate a VTube Studio expression. |
+| VTube Studio | **Vts trigger hotkey** | Trigger a VTube Studio hotkey. |
+| Webhooks | **Send webhook** | Send an outbound webhook request. |
+| Widgets | **Show raid recap** | Show the stream recap on the raid recap widget. |
+| Widgets | **Stage effect** | Play a one-off effect on the Stage overlay: run across the screen, confetti, shake or flash. |
+| Widgets | **Widget event** | Push an event to a widget overlay. |
+
+By default, a message or reply that a step sends goes out in the channel's one bot voice.
+**Send message** can also post as the broadcaster, from the streamer's own account.
+The music steps act on the player on [Music player](/reference/music/music-player).
+
+Running it for yourself, your friends and your community is free. You may not earn money with it: no selling it, and no paid hosting or paid service built on it.
+
+## Try a pipeline with a test run
+
+A test run tries the steps as they are in the editor now, saved or not.
+It sends, says and changes nothing.
+
+1. Choose **Test run** above the steps.
+   Each step gets a mark: **Done**, **Failed** or **Did not run**.
+   A line above the steps counts them, for example "Test run 1: 3 steps ran."
+2. Read the marks to see which path the run took.
+3. Choose **Clear test run** to take the marks away.
+
+**Test run** is off while the pipeline has no steps.
+A change to the steps clears the marks, because they no longer fit.
+
+Most steps only make a record of what they would do, and count as **Done**.
+Four steps run for real, because they change nothing outside the run: **Set variable**, **Stop**, **Pick from list** and **Check balance**.
+The check of a step, when it has one, also runs for real, against the live data of the channel.
+
+### Give the test run its input
+
+A real start fills in values such as the name of the viewer.
+A test run starts with none, unless you give them.
+
+1. After a test run, choose **Input** beside the count.
+   The help reads: "Names with values the steps read as `{name}`, as a real start fills them in. Nothing is sent, said or changed."
+2. Choose **Add a name and value**, and type a name and its value.
+   A name used twice shows "The name … is used twice. Change one, then it saves."
+3. Choose **Run again**.
+   The marks show the new run, and the count goes up by one.
+
+## Read what a run did
+
+1. Choose **Runs** above the steps.
+   The **Runs** panel opens: "Each time chat, an event or a timer started this pipeline, newest first, with your test runs marked."
+2. Choose a run to open it.
+   Under **What each step did**, each step shows its number and name, how long it took, and **Done** or **Failed**.
+
+Each run shows its outcome, when it started and how long it took.
+A failed run shows **Failed**.
+Other outcomes show the bot's own word, such as "completed" or "stopped".
+A run that went wrong shows its error in red.
+A test run carries the mark **Test run**.
+
+Choose **Show older runs** at the bottom to load more runs.
+A pipeline that never ran shows "This pipeline has not run yet."
+
+The bot keeps a run that worked for 3 days, and a run that went wrong for 30 days.
+It keeps at most the 500 newest runs of all pipelines of the channel.
+
+## Switch a pipeline on or off
+
+The **Enabled** switch sits at the top of the steps.
+It saves at once, with no **Save**.
+
+When off, the page shows "… is off. Nothing starts it until you turn it on."
+The list and the editor mark the pipeline **Off**.
+
+## Delete a pipeline
+
+1. Open the pipeline and choose **Delete pipeline** at the bottom.
+   The dialog asks "Delete …?": "The pipeline and its steps are gone for good."
+   It names each thing that starts the pipeline, for example "When someone types !hug, nothing runs anymore."
+2. Choose **Delete pipeline**.
+   The page shows "… is deleted." and goes back to the list, without the pipeline.
+
+## Troubleshooting
+
+::Troubleshooting
+
+**The pipeline does nothing.**
+Check these, in order:
+
+1. The line above the steps. "Nothing starts this pipeline yet." means no command, chat trigger, timer or event response uses it.
+2. The **Enabled** switch. A pipeline that is **Off** does not run.
+3. **Runs**. A run that went wrong shows its error, and **What each step did** shows the step that failed.
+4. **Keep going if this step fails** on the failed step. Off stops the pipeline at that step.
+
+::
+
+## Related pages
+
+- [Create a command](/reference/commands/create-a-command)
+- [Variables and templates](/reference/commands/variables-and-templates)
+- [Pick lists](/reference/commands/pick-lists)
+- [How a script runs](/reference/code/how-a-script-runs)
