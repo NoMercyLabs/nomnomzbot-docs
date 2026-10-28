@@ -69,4 +69,4 @@ The workflow builds the site and publishes it to GitHub Pages at https://docs.no
 
 ## License
 
-[AGPL-3.0-or-later](LICENSE). Copyright © NoMercy Labs.
+You may use, change and share this site for free. You may not earn money with it. The legal text is in [LICENSE](LICENSE). Copyright © NoMercy Labs.

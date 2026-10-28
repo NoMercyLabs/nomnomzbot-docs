@@ -22,7 +22,7 @@
   "layout.feedback.title": "Was this page helpful?",
   "layout.feedback.yes": "Yes",
   "layout.feedback.no": "No",
-  "footer.copyright": "© Copyright {year} NoMercy Labs. Licensed under the AGPL-3.0.",
+  "footer.copyright": "© Copyright {year} NoMercy Labs. Free to use, change and share. No money from it.",
   "footer.followGitHub": "Follow us on GitHub",
   "stub.translationPending": "Translation pending — showing English.",
   "stub.translationContribute": "Help translate",
