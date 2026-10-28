@@ -1,0 +1,142 @@
+---
+title: Bot basics and personality
+description: Set the command prefix, language, timezone and viewer activity levels, pick the bot's reply voice, and set greetings and streak milestones.
+---
+
+You set how the bot behaves in your chat on three settings pages.
+Open them from the settings part of the sidebar, explained in the [dashboard tour](/reference/getting-started/dashboard-tour).
+
+| Sidebar entry | Card on the page | What you set |
+| --- | --- | --- |
+| **Bot basics** | **Commands and language** | The command prefix, the language, the timezone and the viewer activity levels. |
+| **Bot personality** | **Reply voice** | The tone of the bot's built-in commands. |
+| **Engagement triggers** | **Greetings and streaks** | Which moments the bot greets, and which watch streaks it celebrates. |
+
+## Who can use these pages
+
+| Page | Who may open it | Who may change it |
+| --- | --- | --- |
+| **Bot basics** | A **Moderator** and every role above it. | The **Broadcaster** only. |
+| **Bot personality** | A **Moderator** and every role above it. | The **Broadcaster** only. |
+| **Engagement triggers** | A **Moderator** and every role above it. | A **Moderator** and every role above it. |
+
+The **Broadcaster** may also let a **VIP** open **Bot basics** and **Bot personality**.
+Someone who may not change a page sees the values, but the fields are switched off and the save buttons do not show.
+The roles are explained on [Permissions](/reference/settings/permissions).
+
+## Change the bot basics
+
+1. Open **Bot basics** in the sidebar.
+   The **Commands and language** card opens.
+2. Change one or more fields (see the table below).
+   **Save** and **Discard changes** become active.
+3. Choose **Save**.
+   The page shows "Basics saved."
+
+A new prefix and a new language work in chat at once, with no restart.
+**Discard changes** puts back the values that are saved.
+
+| Field | What it does | Default |
+| --- | --- | --- |
+| **Command prefix** | The first characters of a command, such as `!`. One to five characters, no spaces. | `!` |
+| **Bot line marker** | Shown before lines the bot posts through your own account. Leave it empty for none. Up to four characters. | Empty (none) |
+| **Language** | The default language of the bot's replies. The list names each language in its own language. | Not set |
+| **Timezone** | Used for schedules and for times shown in replies. | Not set |
+| **Join chat automatically** | The bot joins your chat by itself when it starts. | On |
+| **Keep commands and rewards on while offline** | Off: when your stream ends, viewer commands stop and your rewards turn off. They come back when you go live. Mods and you can always use commands. | Off |
+
+The prefix is the one your [built-in commands](/reference/commands/built-in-commands) and your own commands start with.
+When you switch **Join chat automatically** off, the bot leaves your channel's events at once.
+When you switch it on, the bot joins them at once.
+
+### Set the viewer activity levels
+
+Under **Viewer activity levels**, you set how many chat messages a viewer needs before the bot calls them casual, regular or veteran.
+Below the first step, a viewer reads as new.
+
+| Field | Meaning | Default |
+| --- | --- | --- |
+| **Casual from** | Messages before a viewer stops reading as new. | 10 messages |
+| **Regular from** | Messages before a casual viewer reads as regular. | 100 messages |
+| **Veteran from** | Messages before a regular viewer reads as veteran. | 500 messages |
+
+Each step is a whole number from 1 to 1,000,000.
+Each step must be higher than the one before it.
+A wrong step shows its message under the field, and **Save** stays off until you fix it.
+
+## Pick the reply voice
+
+The reply voice is the tone your built-in commands answer in.
+It is still the channel's one bot voice: only the wording of the built-in replies changes.
+
+1. Open **Bot personality** in the sidebar.
+   The **Reply voice** card lists the tones.
+2. Choose a tone.
+   The choice is saved at once. There is no save button.
+
+| Tone | What it sounds like |
+| --- | --- |
+| **Informative** | Clear, helpful and polite. The default voice. |
+| **Friendly** | Warm, wholesome and encouraging. |
+| **Sassy** | Witty, teasing and playful, never mean. |
+| **Hype** | High energy, capital letters and emotes. |
+| **Chill** | Laid back and minimal. |
+
+A new pick applies to the next reply.
+Custom commands keep their own text.
+
+## Set greetings and streaks
+
+1. Open **Engagement triggers** in the sidebar.
+   The **Greetings and streaks** card opens.
+2. Switch on the moments you want the bot to greet, and set the numbers (see the tables below).
+3. Choose **Save changes**.
+
+| Moment | What the bot does | Default |
+| --- | --- | --- |
+| **First message ever** | Greets a viewer the first time they chat in your channel. | Off |
+| **Back after a break** | Welcomes a viewer who has not chatted for a while. | Off |
+| **Watch streaks** | Celebrates a viewer who watches stream after stream. | Off |
+
+| Field | What it does | Default |
+| --- | --- | --- |
+| **Time between greetings** | The bot greets at most one viewer in this time, in seconds. Use 0 for no limit. | 5 seconds |
+| **Streak milestones** | The streak counts the bot celebrates, in streams in a row. | None, which celebrates every stream |
+
+Each field on the page also shows its own default.
+**Reset to defaults** puts the defaults in the form.
+Nothing is saved until you choose **Save changes**.
+
+### Add or remove a streak milestone
+
+1. Choose **Add milestone**.
+   A new row opens with a count 5 higher than the last one.
+2. Change the count if you want. A count is a whole number of 1 or more.
+3. To remove a milestone, choose the trash button on its row.
+4. Choose **Save changes**.
+
+With no milestones, the page shows "No milestones: the bot celebrates a viewer's streak on every stream. Add a count to limit it."
+
+## Troubleshooting
+
+::Troubleshooting
+
+**Save changes stays off on Greetings and streaks.**
+A number is marked in red, and the page shows "Fix the numbers marked in red to save."
+Use a whole number of 0 or more for **Time between greetings**, and 1 or more for each milestone.
+
+::
+
+::Troubleshooting
+
+**Save stays off on Commands and language.**
+A field breaks a rule.
+The prefix needs one to five characters with no spaces, and the bot line marker takes up to four characters.
+
+::
+
+## Related pages
+
+- [Built-in commands](/reference/commands/built-in-commands)
+- [Permissions](/reference/settings/permissions)
+- [Dashboard tour](/reference/getting-started/dashboard-tour)
