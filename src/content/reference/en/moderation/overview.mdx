@@ -1,0 +1,149 @@
+---
+title: Moderation overview
+description: Handle the review queue on the Home page, read a viewer's moderation history, and find each other moderation tool.
+---
+
+You find moderation in three places on the dashboard.
+The review queue is on the **Home** page.
+The moderation history of one person is in the profile dialog.
+
+The profile dialog is the window that opens when you choose a person's name.
+The settings for filters, bans and trust are in the **Access** group of the settings.
+
+| Where | What you do there |
+| --- | --- |
+| **Review queue** on **Home** | Allow or deny the chat messages and flags that wait for a moderator. |
+| **Moderation** tab of the profile dialog | Read what moderation did to one person in this channel. |
+| The **Access** group of the settings | Set the filters, the bans, the trust rules and the reports. |
+
+The dashboard is explained on [Dashboard tour](/reference/getting-started/dashboard-tour).
+
+## Who can use these tools
+
+A **Moderator**, **Lead moderator**, **Editor** or **Broadcaster** may see the review queue.
+The same roles may allow and deny items in the queue.
+The same roles may read the moderation history.
+
+A role that may see the queue, but may not decide on it, sees the list without **Allow** or **Deny** buttons.
+A role that may not see the queue gets "The review queue could not load." in the panel.
+In the profile dialog, a role that may not read the history sees "Your role cannot see the moderation history."
+
+## Review queue
+
+The **Review queue** panel on the **Home** page lists the items that wait for a decision.
+The panel shows the count, for example "3 waiting".
+
+An item comes into the queue in these cases:
+
+| Source | What happened to the message |
+| --- | --- |
+| Twitch AutoMod | AutoMod holds the message. It is not in chat yet. |
+| A chat filter set to hold | The bot removed the message from chat. |
+| A chat filter set to flag | The message stays in chat. |
+| The newcomer gate | The bot removed the message of an account or follow younger than the channel's limit. |
+| A suspicious user on Twitch | Twitch marks the chatter as restricted or monitored. The bot leaves the message alone. |
+| The heat limit | A viewer crossed the channel's heat limit, and the bot did not time the viewer out by itself. This item has no message. |
+
+The platform of an item depends on its source:
+
+- AutoMod, the chat filters and suspicious users put only Twitch messages into the queue.
+- The newcomer gate also queues Kick and YouTube messages, but only when the bot could remove the message there.
+- The heat limit queues a viewer from any platform the viewer chats on.
+
+Each row shows the sender's name and the message.
+A row without a name shows "Unknown sender".
+
+The panel hint says: "Twitch drops a held message after a while. Allowing one teaches the spam filter."
+
+### Allow an item
+
+1. Open **Home** in the sidebar.
+2. Find the item in **Review queue**.
+3. Choose **Allow**.
+   The item leaves the queue.
+
+For a message that AutoMod holds, **Allow** sends the message to chat.
+For every other item, **Allow** only records your decision in the bot.
+A removed message does not come back to chat.
+
+### Deny an item
+
+1. Open **Home** in the sidebar.
+2. Find the item in **Review queue**.
+3. Choose **Deny**.
+   The row shows **Denied** and an **Undo** button.
+4. Do nothing to keep the denial.
+   After 6 seconds the bot sends the denial, and the item leaves the queue.
+
+For a message that AutoMod holds, the denial tells Twitch to drop the message.
+For every other item, the denial only records your decision in the bot.
+
+Choose **Undo** within the 6 seconds to take the denial back.
+The item stays in the queue.
+
+If you leave the page before the 6 seconds end, the bot sends the denial at once.
+
+### Panel states
+
+| The panel shows | When |
+| --- | --- |
+| "Nothing waits for you right now." | The stream is live and nothing waits. |
+| "Nothing waits for you. Held messages and spam checks show up here during a stream." | The stream is offline and nothing waits. |
+| **Shield mode on** | Twitch shield mode is on for the channel, and your role may see shield mode. The list works as usual. |
+| "The review queue could not load." | The queue failed to load, or your role may not see it. |
+
+## Moderation history
+
+The moderation history lists everything moderation did to one person in this channel, newest first.
+
+1. Choose a viewer's name anywhere in the dashboard, for example in chat.
+   The profile dialog opens.
+2. Choose the **Moderation** tab.
+   The **Moderation history** section lists the actions.
+
+The **People** page shows the same profile beside its list.
+
+Each entry has three lines:
+
+- What happened, for example **Banned**, or "Timed out for" and the length.
+- The reason, when one was given.
+- Who did it and the date. A moderator's name, or **Automatic** when the bot did it by itself, such as a filter or AutoMod.
+
+| Entry | Meaning |
+| --- | --- |
+| **Banned** | The person was banned. |
+| **Unbanned** | The ban was lifted. |
+| **Timed out** | The person was timed out. With a length, it shows "Timed out for" and the length. |
+| **Warned** | The person got a warning. |
+| **Accepted the warning** | The person accepted a warning. |
+| **Message deleted** | A message of the person was deleted. |
+| **Message held by AutoMod, then denied** | AutoMod held a message, and the message was denied. |
+| **Caught by a chat filter** | A chat filter caught a message. |
+| **Report confirmed** | A report about the person was confirmed. |
+| **Note** | A note was added. |
+| **Moderation action** | Any other action. |
+
+**Show older** at the bottom loads older entries.
+A person with no entries shows "Moderation has done nothing to this person here yet."
+
+## Where the other tools live
+
+Each of these pages is in the **Access** group of the settings.
+
+| Settings page | What it holds | Guide page |
+| --- | --- | --- |
+| **AutoMod filters** and **Chat filters** | The bot's filters, the Twitch AutoMod levels and your own filters. | [AutoMod and chat filters](/reference/moderation/automod-and-chat-filters) |
+| **Blocked terms** and **Banned people** | The words Twitch blocks, and the people who are banned. | [Bans and blocked terms](/reference/moderation/bans-and-blocked-terms) |
+| **Spam defense** | The spam policy and what it found. | [Spam defense](/reference/moderation/spam-defense) |
+| **Trust policy** and **Escalation** | The rules for new chatters, and the warn, timeout and ban steps. | [Trust and escalation](/reference/moderation/trust-and-escalation) |
+| **Viewer reports** | The reports viewers send about chat. | - |
+
+You can moderate one chat line on the **Chat** page.
+You can moderate one person from the profile dialog.
+
+## Related pages
+
+- [AutoMod and chat filters](/reference/moderation/automod-and-chat-filters)
+- [Bans and blocked terms](/reference/moderation/bans-and-blocked-terms)
+- [Spam defense](/reference/moderation/spam-defense)
+- [Trust and escalation](/reference/moderation/trust-and-escalation)
