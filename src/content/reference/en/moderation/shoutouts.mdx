@@ -1,0 +1,199 @@
+---
+title: Shoutouts
+description: Set how the bot shouts out other streamers, send its suggested shoutouts, and see how it keeps within the Twitch shoutout limits.
+---
+
+You set the channel's shoutouts on the **Shoutouts** settings page.
+You send suggested shoutouts from the **Quick actions** panel on **Home**.
+A shoutout is a Twitch shoutout plus a chat announcement from the bot.
+
+| Where | What it holds |
+| --- | --- |
+| **Automatic shoutouts** on **Shoutouts** | One switch: the bot shouts out a known streamer by itself. |
+| **Shoutout message** on **Shoutouts** | The line the bot announces in chat. |
+| **Own shoutout line** in a person's profile | A per-streamer line for that one streamer, and a **Shout out** button. |
+| **Suggested shoutouts** on **Home** | Chatters of this stream that you may want to shout out. |
+
+The bot has no built-in shoutout command.
+For chat to ask for a shoutout, make a command that runs a pipeline with a **Shoutout** step.
+
+[Create a command](/reference/commands/create-a-command) explains how to make the command.
+[Pipelines](/reference/commands/pipelines) explains the steps a command runs.
+
+### Make a shoutout command
+
+1. Open **Pipelines** in the sidebar and choose **New pipeline**.
+   Type a name in **Name** and choose **Make pipeline**.
+   The editor of the new pipeline opens, with "This pipeline has no steps yet."
+2. Choose **Add a step at the end**, then choose **Shoutout** in **Steps to add**.
+   The step joins the pipeline, and its settings open in **Step details**.
+3. In **User ID**, type `{args.1}`.
+   That is the first word chat types after the command: the name of the streamer to shout out.
+4. Choose **Save** above the steps.
+   The page shows "Pipeline saved."
+5. Open **Commands** in the sidebar and choose **New command**.
+   The **New command** dialog opens.
+6. Type `so` in **Name**, choose **Runs a pipeline** in **What it does**, and choose this pipeline in **Pipeline**.
+7. Choose **Create command**.
+   The dialog closes and the new command opens in the editor, switched on (see [Create a command](/reference/commands/create-a-command)).
+
+To test it, type `!so` and the name of a streamer in Twitch chat.
+The bot posts the shoutout announcement in chat.
+When a rate limit is active, the bot tells chat that the shoutout is queued, in the channel's [personality](/reference/settings/bot-basics-and-personality).
+With the default personality, the line is `Shoutout for {target.displayname} queued.`, where `{target.displayname}` is the name of the streamer who is shouted out.
+
+A **Test run** in the editor tries the steps but sends nothing, so it gives no shoutout.
+
+## Who can use this page
+
+A **Moderator**, **Lead moderator**, **Editor** or **Broadcaster** may open the **Shoutouts** page.
+The same roles may change its settings and send a suggested shoutout.
+Someone who may only see the page sees the switch and the message, but cannot change them.
+
+## What a shoutout does
+
+1. The bot sends the Twitch shoutout for the other channel.
+2. When Twitch accepts it, the bot posts its announcement in chat.
+3. When speech is on for the shoutout, the bot also reads the announcement aloud, in the channel's one bot voice.
+   A pipeline's shoutout step turns speech on. It is on by default for a raid.
+
+The announcement posts only after Twitch accepts the shoutout.
+The one exception is a chat request inside the per-streamer wait (see [Rate limits](#rate-limits)).
+When Twitch refuses it for another reason than a rate limit, nothing is posted.
+
+When Twitch refuses it for a rate limit, or the connection to Twitch drops, the shoutout and its announcement wait in the queue together (see [Rate limits](#rate-limits)).
+The announcement posts when Twitch accepts the shoutout later.
+
+## Turn on automatic shoutouts
+
+1. Open the settings and choose **Shoutouts** in the **Bot** group.
+   The page shows the **Automatic shoutouts** card on top.
+2. Switch on **Shout out a known streamer automatically**.
+   The switch saves at once.
+
+Default: off.
+
+A known streamer is a chatter whose own channel uses this NomNomzBot server.
+The bot looks at each chatter once per stream, on their first chat.
+It shouts a known streamer out when all of these are true:
+
+| Rule | Value |
+| --- | --- |
+| The stream has run for at least | 10 minutes |
+| The time since their first chat is at least | 5 minutes |
+| The time since the channel's last shoutout is at least | 8 minutes |
+| The time since this streamer's last shoutout here is at least | 60 minutes |
+| This streamer had no shoutout yet this stream | yes |
+
+The 8 minutes count from any shoutout in the channel.
+For an automatic shoutout, they replace the 2-minute channel wait (see [Rate limits](#rate-limits)).
+An automatic shoutout also waits while another shoutout is in the queue.
+
+The bot never shouts out the broadcaster or itself.
+When the stream ends, the waiting automatic shoutouts are dropped.
+When you switch the setting off, the waiting automatic shoutouts are dropped too.
+
+## Set the shoutout message
+
+1. Open the settings and choose **Shoutouts** in the **Bot** group.
+   The **Shoutout message** card is below **Automatic shoutouts**.
+2. Type the line in **Message**, for example `Go follow {target.displayname}!`.
+   The bot puts the name of the streamer who is shouted out in place of `{target.displayname}`.
+   The field holds up to 500 characters.
+3. Choose **Save**.
+   The page shows "Shoutout message saved."
+
+**Save** stays off until the text differs from the saved message.
+To go back to the built-in line, choose **Use the default**.
+It clears the field and saves at once.
+
+With no message, the bot uses its built-in line.
+That line follows the bot's [personality](/reference/settings/bot-basics-and-personality).
+
+### Which message the bot uses
+
+The bot picks the first message that is set, in this order:
+
+1. A message given in the shoutout step itself, in a pipeline.
+2. Your per-streamer line for that one streamer, set in their profile (see [Write a line for one streamer](#write-a-line-for-one-streamer)).
+3. The **Message** of the streamer who is shouted out, when their own channel uses this NomNomzBot server.
+4. Your own **Message**.
+5. The built-in line.
+
+So your **Message** is also how another channel on this server announces you.
+That channel's per-streamer line for you wins over it.
+
+## Write a line for one streamer
+
+You can give one streamer their own per-streamer line.
+It is set in that person's profile dialog, on the **Data** tab, under **Own shoutout line**.
+
+1. Open **Chat** in the sidebar ([Chat page](/reference/community/chat-page)) and choose the person's name on one of their chat lines.
+   Their profile dialog opens.
+   A name in **Suggested shoutouts** on **Home** opens the same dialog.
+2. Choose the **Data** tab.
+   Under **Own shoutout line** it shows "Uses the channel shoutout line." when no line is set.
+3. Choose **Write line**, or **Edit** when a line exists.
+   The **Shoutout line for** dialog opens, with the person's name.
+4. Type the line in **Shoutout line**, up to 500 characters.
+5. Choose **Save line**.
+   The dialog closes and the line shows under **Own shoutout line**.
+
+On the **People** page in the sidebar ([People](/reference/community/people)), the profile of the person you choose shows beside the list, with the same **Data** tab.
+
+To drop the line, choose **Remove** under **Own shoutout line**.
+A dialog asks to remove the shoutout line for the person.
+Choose **Remove** again.
+
+Shoutouts of that streamer then use the next message in the order above.
+Someone whose role cannot change it sees "Your role cannot change a shoutout line."
+
+The profile also has a **Shout out** button, which sends a shoutout for that person.
+The dashboard then shows "Shouted out" with their name.
+
+## Send a suggested shoutout
+
+When the channel is live, **Home** shows **Suggested shoutouts** in the **Quick actions** panel.
+The heading counts the suggestions you have not sent yet.
+
+1. Open **Home** in the sidebar and find the chatter under **Suggested shoutouts**.
+   Each row shows how many streams they had in the last 30 days, and their last category.
+2. Choose **Shoutout** to send it.
+   The row shows "Shoutout sent."
+3. Or choose **Not now**.
+   The chatter is hidden for the rest of this stream.
+
+When the shoutout does not go out, the row shows "The shoutout did not go out. Try again in a moment."
+
+The list holds up to 10 chatters, the most active streamers first.
+It shows only chatters who streamed in the last 30 days.
+
+It leaves out the broadcaster, the bot, and chatters who already had a shoutout this stream.
+When the channel is offline, the list is empty and the **Suggested shoutouts** heading is hidden.
+
+## Rate limits
+
+Twitch limits how often a channel may give a shoutout.
+By default, the bot waits 2 minutes between shoutouts in the channel.
+It waits 60 minutes between two shoutouts of the same streamer, the per-streamer wait.
+
+The bot keeps within these limits with one queue per channel.
+
+- A shoutout asked for while a limit is active waits in the queue, with its announcement.
+  The announcement posts when the shoutout goes out.
+- A queued shoutout is also held back while an earlier one waits, so the order stays fair.
+- A raid shoutout goes ahead of the other waiting shoutouts.
+- When a chat request waits, the bot tells chat that the shoutout is queued, in the channel's personality (see [Make a shoutout command](#make-a-shoutout-command)).
+
+A chat request for a streamer inside their per-streamer wait posts the announcement only, without a new Twitch shoutout.
+The bot also reads that announcement aloud.
+It posts that announcement at most once every 2 minutes for the same streamer.
+
+The **Shoutout** step of a pipeline can set its own wait times, in its **Step details**.
+Default: 60 minutes per streamer and 2 minutes for the channel.
+
+::Troubleshooting
+**A shoutout from chat did not show at once.**
+It waits in the queue for a Twitch limit.
+It goes out when the limit ends.
+::
