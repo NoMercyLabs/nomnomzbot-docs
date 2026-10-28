@@ -1,0 +1,203 @@
+---
+title: Giveaways
+description: Make a giveaway, let viewers enter, draw the winners, give a prize and keep a pool of codes for a code prize.
+---
+
+You run the channel's giveaways on the **Giveaways** page in the sidebar.
+A giveaway lets viewers enter, then the bot draws one or more winners and gives each winner the prize.
+
+## Who can use this
+
+A moderator, a lead moderator, an editor or the broadcaster may see, make, change, run and delete giveaways.
+Only the broadcaster sees the **Code pools** panel and may make or delete a code pool (see Keep a pool of codes below).
+
+## Make a giveaway
+
+1. Open **Giveaways** in the sidebar.
+   The **Giveaways** list shows "No giveaways yet." when the channel has none.
+2. Choose **New giveaway**.
+   The **New giveaway** dialog opens.
+3. Type a **Title** and set the fields (see the tables below).
+4. Choose **Create giveaway**.
+   The dialog closes and the giveaway shows in the list with the status **Draft**.
+
+Each row shows the title, then the entries, the number of winners and how viewers enter, for example "0 entries · 1 winner · Keyword !enter".
+
+### Entering
+
+| Label | Choices | Default |
+| --- | --- | --- |
+| **How viewers enter** | **Typing the keyword in chat**, **Active viewers, no keyword** | **Typing the keyword in chat** |
+| **Keyword** | Any text. Shows only for **Typing the keyword in chat**. | `!enter` |
+| **Entry cost** | A whole number of 0 or more, or empty | Empty (free) |
+| **Entries per viewer** | A whole number of 1 or more | 1 |
+
+With **Typing the keyword in chat**, a viewer enters by typing a chat message that is exactly the keyword.
+Upper and lower case do not matter.
+The bot does not answer in chat when a viewer enters or when an entry is refused.
+
+With **Active viewers, no keyword**, viewers do nothing to enter.
+At the draw, the bot takes every viewer who chatted in the last 30 minutes.
+This counts chat on every platform the channel has connected.
+
+A viewer can also enter through the pipeline step **Enter giveaway** (see the last section).
+That step and the keyword are the two ways a viewer enters.
+
+When a viewer enters, the bot takes the **Entry cost** from their [channel currency](/reference/economy/currency-and-balances).
+A viewer who does not have enough currency does not enter.
+With **Active viewers, no keyword**, the bot takes no **Entry cost**.
+
+Each viewer holds one entry, and a value above 1 in **Entries per viewer** changes nothing.
+An entry holds tickets, and the draw counts the tickets (see Tickets per viewer below).
+
+### Who may enter
+
+| Label | What it does | Where it applies | Default |
+| --- | --- | --- | --- |
+| **Twitch subscribers only** | Only subscribers, VIPs, artists and moderators of the channel may take part. | Keyword, **Enter giveaway** step, active viewers | Off |
+| **Leave out moderators** | Moderators may enter, but the draw never picks them. | The draw, for every way in | Off |
+| **Viewers must confirm they are 18 or older** | Only a viewer who confirmed they are 18 or older may enter. | Keyword, **Enter giveaway** step | Off |
+| **Least standing level** | A viewer needs at least this community standing level. | Keyword, **Enter giveaway** step, active viewers | Empty (no limit) |
+| **Least watch minutes** | A viewer needs at least this many minutes of watch time in the channel. | Keyword, **Enter giveaway** step, active viewers | Empty (no limit) |
+
+The draw never picks the broadcaster, for every way in.
+A viewer who is muted or shadowbanned by the bot cannot enter with the keyword, and cannot claim a win in chat.
+
+### Tickets per viewer
+
+A ticket is one chance in the draw.
+More tickets raise the chance to win.
+
+| Label | Who gets these tickets | Default |
+| --- | --- | --- |
+| **Twitch tier 1 sub** | A tier 1 subscriber, and a VIP, an artist or a moderator without a sub tier | 1 |
+| **Twitch tier 2 sub** | A tier 2 subscriber | 1 |
+| **Twitch tier 3 sub** | A tier 3 subscriber | 1 |
+| **VIP** | A VIP, an artist or a moderator | 1 |
+
+A viewer gets the highest count that fits them, and never fewer than 1.
+A count of 1 everywhere means every viewer has the same chance.
+
+### Drawing
+
+| Label | What it does | Default |
+| --- | --- | --- |
+| **Number of winners** | How many different viewers the draw picks. | 1 |
+| **Claim window (minutes)** | How long a winner has to answer in chat. | Empty |
+| **Close entries at** | The time at which entries close on their own. | Empty (you close them) |
+
+With a claim window, a winner claims the win by typing any chat message in the window.
+A winner who does not chat in time loses the win, and the badge shows **Forfeited**.
+With an empty claim window, every winner counts as **Claimed** at once.
+
+The bot checks the claim window and the close time once a minute.
+The close time must be in the future when you save.
+
+### Prize
+
+| **What winners get** | What the bot does for each winner | Extra field |
+| --- | --- | --- |
+| **An announcement in chat** | Saves the winner in the winners list. | None |
+| **Currency** | Adds the channel currency to the winner's balance. | **Currency per winner**, **Pay from the pot** |
+| **A command or pipeline runs** | Runs the command, pipeline or action you pick, with the winner as the viewer who ran it. | **Command or pipeline** |
+| **A code from a pool** | Takes the next free code from the pool and sends it to the winner in a whisper. | **Code pool** |
+
+The default is **An announcement in chat**.
+With this choice, a draw only records the winner in the winners list, and the bot posts nothing in chat.
+To have the bot name a winner in chat, choose **A command or pipeline runs** with a command that posts a chat line.
+
+With **Pay from the pot** on, the prize is the entry costs that viewers paid, split evenly over the winners.
+The first winner also gets what is left after the split.
+
+A giveaway with **A code from a pool** and an **Entry cost** above 0 needs **Viewers must confirm they are 18 or older** on.
+Without it, the bot does not save the giveaway.
+
+## Run a giveaway
+
+1. Choose **Open for entries** on the giveaway's row.
+   The status changes to **Open** and viewers can enter.
+2. Choose **Close entries** when you want to stop new entries.
+   The status changes to **Closed**.
+3. Choose **Draw winners**.
+   The status changes to **Drawn** and the winners show in the **Winners of** panel.
+
+You can also choose **Draw winners** while the giveaway is still **Open**.
+The draw picks fewer winners than **Number of winners** when fewer viewers can win.
+When nobody can win, the draw does not happen.
+
+The channel has one active giveaway at a time.
+You cannot open a giveaway while another one is **Open**, or **Closed** and not drawn yet.
+
+The page shows the winners and the entries of one giveaway.
+It picks the **Open** giveaway first, then the **Closed** one, then a **Drawn** one.
+The **Entries of** panel lists each viewer who entered with their tickets.
+
+## Draw a new winner
+
+Choose **Draw a new winner** on a winner's row.
+The bot picks a new winner who has not won this giveaway before, and gives them the prize.
+The new winner's row carries **Redrawn**.
+
+## Change or delete a giveaway
+
+Only a **Draft** or **Closed** giveaway shows **Edit giveaway**.
+
+1. To change a giveaway, choose **Edit giveaway** on its row.
+   The **Edit giveaway** dialog opens with the saved values.
+2. Change the fields and choose **Save giveaway**.
+   The dialog closes and the row shows the new values.
+3. To delete a giveaway, choose the trash button on its row.
+   A dialog opens with the title "Delete", the giveaway's title and a question mark.
+   It shows "This removes the giveaway for good." and a line for each count that goes with it.
+4. Choose **Delete giveaway** to confirm.
+   The dialog closes and the giveaway leaves the list.
+
+## Keep a pool of codes
+
+A code pool holds the codes that winners get for the prize **A code from a pool**.
+The page shows only how many codes a pool has, never the codes.
+
+1. In the **Code pools** panel, choose **New pool**.
+   The **New code pool** dialog opens.
+2. Type a **Name**.
+   You may add a **Note (optional)**.
+3. Paste the codes in **Codes**, one code per line.
+   Empty lines and repeated codes are skipped.
+4. Choose **Create pool**.
+   The pool shows in the list with its count, for example "10 of 10 available".
+
+Each winner takes the oldest free code.
+When the pool runs out, the winners after that get no code.
+When the whisper cannot be sent, the code stays with that winner and no other winner gets it.
+
+To delete a pool, choose **Delete** on its row, then **Delete pool**.
+The pool and its unused codes are removed.
+A pool that an active giveaway uses cannot be deleted.
+
+## Run a giveaway from a pipeline
+
+The **Pipelines** page in the sidebar has three giveaway steps in the group **Giveaways**.
+
+| Step | What it does | Which giveaway |
+| --- | --- | --- |
+| **Open giveaway** | Opens a giveaway for entries. | The giveaway you pick. |
+| **Draw giveaway** | Draws the winners. | The giveaway you pick, or the channel's active giveaway when you leave it blank. |
+| **Enter giveaway** | Enters the viewer who started the pipeline. | The giveaway you pick, or the channel's active giveaway when you leave it blank. |
+
+1. Open **Pipelines** in the sidebar and open a pipeline.
+   The pipeline's steps show.
+2. Choose **Add a step at the end**.
+   The list **Steps to add** opens.
+3. Type giveaway in **Find a step**.
+   The three giveaway steps show.
+4. Choose a step, then fill in the giveaway it uses.
+   The step shows at the end of the pipeline.
+5. Choose **Save**.
+   The page shows "Pipeline saved."
+
+When **Draw giveaway** or **Enter giveaway** is blank and no giveaway is active, the step fails.
+
+## Related pages
+
+- [Currency and balances](/reference/economy/currency-and-balances)
+- [Store](/reference/economy/store)
