@@ -32,7 +32,12 @@ function mdxFiles(dir) {
 const problems = [];
 for (const file of mdxFiles(root)) {
 	let inFence = false;
-	readFileSync(file, 'utf8').split(/\r?\n/).forEach((line, index) => {
+	const lines = readFileSync(file, 'utf8').split(/\r?\n/);
+	lines.forEach((line, index, all) => {
+		// A ::Name box only renders when a blank line follows its opener and precedes its closing ::.
+		const opensBox = /^::[A-Za-z]+\s*$/.test(line) && all[index + 1]?.trim() !== '';
+		const closesBox = /^::\s*$/.test(line) && all[index - 1]?.trim() !== '';
+		if (!inFence && (opensBox || closesBox)) problems.push(`${file}:${index + 1}: box needs a blank line: ${line.trim()}`);
 		if (line.trimStart().startsWith('```')) {
 			inFence = !inFence;
 			return;
@@ -44,7 +49,7 @@ for (const file of mdxFiles(root)) {
 }
 
 if (problems.length > 0) {
-	console.error(`check-mdx-braces: ${problems.length} bare brace(s) or placeholder tag(s) in prose. Put each in backticks:`);
+	console.error(`check-mdx-braces: ${problems.length} problem(s): bare braces or placeholder tags go in backticks; a ::Name box needs blank lines inside:`);
 	for (const problem of problems) console.error(`  ${problem}`);
 	process.exit(1);
 }
