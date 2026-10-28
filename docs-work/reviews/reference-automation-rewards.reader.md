@@ -1,7 +1,7 @@
 # Reader review: src/content/reference/en/automation/rewards.mdx
 Verdict: PASS
 Reviewed: src/content/reference/en/automation/rewards.mdx
-Reviewed-SHA: defc805640c70e5e43398fd6ac717b06d29b1a2dcb8aa98992b2ca7943cea1fa
+Reviewed-SHA: defc805640c70e5e
 
 Round 4. Whole page re-read as rendered (no includes). Read against docs-work/page-conventions.md. The round 3 blocking item is fixed: line 43 now covers every reward with no saved pipeline and no reply text, line 44 says a picked command or action still shows the label, and the table at lines 47-51 agrees with both.
 
