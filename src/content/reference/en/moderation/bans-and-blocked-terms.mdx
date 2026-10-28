@@ -1,0 +1,91 @@
+---
+title: Bans and blocked terms
+description: See who is banned in your channel and unban them, and block or unblock the words and phrases Twitch holds back from chat.
+---
+
+You see and unban banned people on the **Banned people** settings page.
+You block words and phrases on the **Blocked terms** settings page.
+Both pages are in the **Access** group of the settings sidebar.
+At the top of each page, the title line reads **Moderation** / and then the page name.
+
+| Page | What it holds |
+| --- | --- |
+| **Banned people** | Everyone banned in your channel, as Twitch holds the list. |
+| **Blocked terms** | The words and phrases Twitch holds back from your chat. |
+
+Twitch keeps both lists.
+What you see on these pages is what Twitch enforces.
+
+## Who can use these pages
+
+The roles below are explained on [Permissions](/reference/settings/permissions).
+
+| Who | What they may do |
+| --- | --- |
+| A **Moderator** | Open both pages, and unban people. |
+| A **Lead moderator** | All of the above, and block and unblock words and phrases. |
+| An **Editor** | All of the above. |
+| The **Broadcaster** | All of the above. |
+
+Someone who may not unban sees the list without the **Unban** button.
+Someone who may not block sees the **Blocked now** list only, without the **Block a word or phrase** panel and without **Unblock**.
+
+## See who is banned
+
+1. Open **Banned people** in the settings.
+   The page shows the **Banned people** panel.
+2. Read each row.
+   A row shows the person's name and a line like "Banned by a moderator 2 hours ago".
+   When the ban has a reason, the line shows the reason, then a dot, then "Banned by a moderator 2 hours ago".
+
+When nobody is banned, the panel shows "Nobody is banned in your channel."
+
+## Unban a person
+
+1. On **Banned people**, find the person's row.
+2. Choose **Unban**.
+   The person can chat again, and the row leaves the list.
+
+**Unban** asks for no confirmation.
+Banning the person again undoes it.
+If the unban fails, the page shows "`{name}` could not be unbanned." with the person's name in place of `{name}`.
+
+## Block a word or phrase
+
+1. Open **Blocked terms** in the settings.
+   The page shows the **Block a word or phrase** panel and the **Blocked now** list.
+2. Type the word or phrase in the field.
+   **Block** becomes active.
+3. Choose **Block**, or press Enter.
+   The term appears in **Blocked now**, and the field empties.
+
+Spaces at the start and end of the text drop out.
+A field with only spaces keeps **Block** off.
+If Twitch refuses the term, the page shows "The term could not be blocked:" with the reason.
+
+When the list is empty, it shows "Nothing is blocked yet."
+
+## Unblock a word or phrase
+
+1. On **Blocked terms**, find the term in **Blocked now**.
+2. Choose **Unblock**.
+   The term leaves the list, and Twitch no longer holds it back.
+
+**Unblock** asks for no confirmation.
+Blocking the term again undoes it.
+If it fails, the page shows "The term could not be unblocked:" with the reason.
+
+## Troubleshooting
+
+::Troubleshooting
+
+**A list shows an error instead of rows.**
+The page shows "The banned people could not be loaded." or "The blocked terms could not be loaded."
+Choose **Try again** in the panel to load the list from Twitch again.
+
+::
+
+## Related pages
+
+- [Linked channels](/reference/moderation/linked-channels) shares bans and blocks with other channels.
+- [AutoMod and chat filters](/reference/moderation/automod-and-chat-filters) covers the bot's own filters, which delete messages on top of the Twitch list.
