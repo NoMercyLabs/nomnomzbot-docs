@@ -1,0 +1,83 @@
+---
+title: Features
+description: Switch the channel's features on and off, and read what each switch changes in chat, rewards and scripts.
+---
+
+You switch parts of the bot on and off on the **Features** page.
+It sits in the **Bot** group of the settings sidebar (see [Dashboard tour](/reference/getting-started/dashboard-tour)).
+The page says: "Switch on the parts of NomNomzBot your channel uses. Each switch takes effect right away."
+
+## Who can use this page
+
+A moderator, a lead moderator, an editor or the broadcaster may open the page and flip a switch.
+
+## Switch a feature on or off
+
+1. Open **Features** in the settings sidebar.
+   The page lists each feature with its name, a short description and a switch.
+2. Choose the switch beside a feature.
+   The switch saves at once, with no save button.
+3. Read the row again.
+   A feature that you switched on shows "On since" and the date it was last switched on.
+   A feature that is on by default and was never switched shows no date.
+
+While one switch saves, the other switches are off.
+If the bot refuses the change, red text under the list names the reason.
+
+## The features
+
+The page groups the features under **Chat**, **Automation** and **More features**.
+A group with no features is not shown.
+
+| Feature | Group | What it changes | Default |
+| --- | --- | --- | --- |
+| **7TV Emotes** | **Chat** | Shows 7TV emotes in chat, animated emotes and emotes that sit on top of another emote included. | On |
+| **BetterTTV Emotes** | **Chat** | Shows BetterTTV emotes in chat. | On |
+| **FrankerFaceZ Emotes** | **Chat** | Shows FrankerFaceZ emotes in chat. | On |
+| **Link Previews** | **Chat** | Shows a preview card (title, description, image) for a link that a subscriber or higher shares. | Off |
+| **Chat HTML Fragments** | **Chat** | Lets a subscriber or higher post small, cleaned HTML pieces in chat. The overlay shows them. | Off |
+| **Viewer Templates** | **Chat** | Lets a viewer with the template permission use helpers such as `{stream.game}` in a reward input. Subscribers and higher hold that permission by default. | Off |
+| **Custom Code** | **Automation** | Lets you write JavaScript scripts and use them as pipeline actions. | Off |
+
+**Link Previews** is off by default because the bot fetches every shared link to build the card.
+A moderator's or the broadcaster's message meets the subscriber rule too.
+
+## What happens when Custom Code is off
+
+With **Custom Code** off, the bot refuses every script request.
+It answers: "Custom code is not enabled for this channel. Enable it on the Features page."
+A script can also use a bot ability only when the feature behind that ability is on.
+
+## A feature outside the channel's plan
+
+A feature that the channel's plan does not include shows a badge beside its name.
+The badge names the plan the feature needs, or reads **Higher plan**.
+A line under the description can give the reason.
+
+The switch of such a feature shows whether the feature is on or off.
+You cannot change the switch of such a feature on this page, also when the feature is on.
+Usage limits per plan are on [Resource limits](/reference/settings/resource-limits).
+
+::Callout
+
+Running it for yourself, your friends and your community is free. You may not earn money with it: no selling it, and no paid hosting or paid service built on it.
+
+::
+
+## Troubleshooting
+
+::Troubleshooting
+
+**The page shows "The features could not be loaded."**
+Choose **Try again** on the card to load the list again.
+
+**The page shows "No features are available for this channel."**
+The bot sent no features for the channel that is open.
+Check that you have the right channel open.
+
+::
+
+## Related pages
+
+- [Dashboard tour](/reference/getting-started/dashboard-tour)
+- [Resource limits](/reference/settings/resource-limits)
