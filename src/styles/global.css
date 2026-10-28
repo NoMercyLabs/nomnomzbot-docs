@@ -392,6 +392,14 @@
   }
 }
 
+/* Operating-system blocks: PlatformSwitcher sets data-platform on <html>;
+   a <Platform os="..."> block shows only when its list names that platform. */
+html[data-platform="windows"] [data-platform-only]:not([data-platform-only~="windows"]),
+html[data-platform="linux"] [data-platform-only]:not([data-platform-only~="linux"]),
+html[data-platform="macos"] [data-platform-only]:not([data-platform-only~="macos"]) {
+  display: none;
+}
+
 /* Tables — mobile. Stack each row as its own card. The rehype plugin
    stamps `data-label="<column header>"` on every <td>, and the ::before
    below renders that label above each value, so a 5-column table reads as

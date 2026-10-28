@@ -4,7 +4,7 @@ import { Providers } from "../components/Providers";
 import { Layout } from "../components/Layout";
 import { Hero } from "../components/protocol/Hero";
 import { CodeHighlighter } from "../components/CodeHighlighter";
-import PackageManagerSwitcher from "../components/PackageManagerSwitcher.astro";
+import PlatformSwitcher from "../components/PlatformSwitcher.astro";
 import { getNavigation } from "../lib/navigation";
 import { t } from "../lib/i18n";
 
@@ -129,7 +129,7 @@ const allSections: Record<
           <slot />
         </Layout>
       </div>
-      <PackageManagerSwitcher />
+      <PlatformSwitcher />
       <CodeHighlighter client:only="react" />
     </Providers>
   </body>

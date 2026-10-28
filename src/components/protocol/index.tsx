@@ -50,6 +50,7 @@ export { Troubleshooting } from './Troubleshooting';
 export { Row } from './Row';
 export { Col } from './Col';
 export { Properties, Property } from './Properties';
+export { Platform } from './Platform';
 
 // Home page components
 export { IconCards, IconCard } from './IconCards';

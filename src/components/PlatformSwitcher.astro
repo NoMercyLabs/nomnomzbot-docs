@@ -1,0 +1,60 @@
+---
+// -----------------------------------------------------------------------------
+//  Copyright (c) NoMercy Labs.
+//
+//  This file is part of NomNomzBot. You may use, change and share it for free,
+//  for any noncommercial purpose, under the PolyForm Noncommercial License
+//  1.0.0. You may not earn money with it. Distributed WITHOUT ANY WARRANTY.
+//  See LICENSE for details, and TRADEMARKS.md for the name and logo.
+//
+//  SPDX-License-Identifier: PolyForm-Noncommercial-1.0.0
+// -----------------------------------------------------------------------------
+
+// Operating-system switch ENGINE (no UI). It sets data-platform on <html>
+// before first paint, so the CSS in global.css shows only the reader's
+// <Platform> blocks. The first visit guesses from the browser; a choice in the
+// header PlatformMenu is stored and wins after that.
+---
+
+<script is:inline>
+  (function () {
+    var STORAGE_KEY = 'docs-platform';
+    var PLATFORMS = ['windows', 'linux', 'macos'];
+
+    function guess() {
+      var agent = (navigator.userAgentData && navigator.userAgentData.platform) || navigator.userAgent || '';
+      if (/mac/i.test(agent)) return 'macos';
+      if (/linux|x11|cros/i.test(agent) && !/android/i.test(agent)) return 'linux';
+      return 'windows';
+    }
+
+    function stored() {
+      try {
+        var value = localStorage.getItem(STORAGE_KEY);
+        return PLATFORMS.indexOf(value) >= 0 ? value : null;
+      } catch (_) {
+        return null;
+      }
+    }
+
+    function apply(platform) {
+      document.documentElement.dataset.platform = platform;
+      try { document.dispatchEvent(new CustomEvent('platform:change', { detail: platform })); } catch (_) {}
+    }
+
+    apply(stored() || guess());
+
+    document.addEventListener('click', function (event) {
+      var button = event.target && event.target.closest ? event.target.closest('[data-platform-value]') : null;
+      if (!button) return;
+      var platform = button.getAttribute('data-platform-value');
+      if (PLATFORMS.indexOf(platform) < 0) return;
+      try { localStorage.setItem(STORAGE_KEY, platform); } catch (_) {}
+      apply(platform);
+    });
+
+    document.addEventListener('astro:after-swap', function () {
+      apply(stored() || guess());
+    });
+  })();
+</script>

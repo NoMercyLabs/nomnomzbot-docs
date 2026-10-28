@@ -11,7 +11,7 @@ import {
   useMobileNavigationStore,
 } from './MobileNavigation';
 import { A11yMenu } from './A11yMenu';
-import { PackageManagerMenu } from './PackageManagerMenu';
+import { PlatformMenu } from './PlatformMenu';
 import { MobileSearch, Search } from './Search';
 import { CloseButton, Menu, MenuButton, MenuItem, MenuItems } from '@headlessui/react';
 
@@ -95,7 +95,7 @@ function ProductsMenu({ navigation, pathname }: { navigation: NavSection[]; path
     </>
   );
 
-  // Static trigger until hydration, as in PackageManagerMenu: the anchored
+  // Static trigger until hydration, as in PlatformMenu: the anchored
   // Menu's positioning hooks are client-only.
   if (!mounted) {
     return (
@@ -220,7 +220,7 @@ export const Header = forwardRef<
         <div className="hidden md:block md:h-5 md:w-px md:bg-zinc-900/10 md:dark:bg-white/15" />
         <div className="flex items-center gap-4">
           <MobileSearch />
-          <PackageManagerMenu />
+          <PlatformMenu />
           <A11yMenu />
         </div>
       </div>
