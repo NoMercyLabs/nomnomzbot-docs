@@ -73,8 +73,8 @@ interface SectionPattern {
 function SectionIcon({ icon }: { icon: React.ComponentType<{ className?: string }> }) {
   const Icon = icon
   return (
-    <div className="flex h-12 w-12 items-center justify-center rounded-full bg-zinc-900/5 ring-1 ring-zinc-900/25 backdrop-blur-[2px] transition duration-300 group-hover:bg-white/50 group-hover:ring-zinc-900/25 dark:bg-white/7.5 dark:ring-white/15 dark:group-hover:bg-emerald-300/10 dark:group-hover:ring-emerald-400">
-      <Icon className="h-6 w-6 fill-zinc-700/10 stroke-zinc-700 transition-colors duration-300 group-hover:stroke-zinc-900 dark:fill-white/10 dark:stroke-zinc-400 dark:group-hover:fill-emerald-300/10 dark:group-hover:stroke-emerald-400" />
+    <div className="flex h-12 w-12 items-center justify-center rounded-full bg-zinc-900/5 ring-1 ring-zinc-900/25 backdrop-blur-[2px] transition duration-300 group-hover:bg-white/50 group-hover:ring-zinc-900/25 dark:bg-white/7.5 dark:ring-white/15 dark:group-hover:bg-[var(--color-accent-soft)] dark:group-hover:ring-[var(--color-accent)]">
+      <Icon className="h-6 w-6 fill-zinc-700/10 stroke-zinc-700 transition-colors duration-300 group-hover:stroke-zinc-900 dark:fill-white/10 dark:stroke-zinc-400 dark:group-hover:fill-transparent dark:group-hover:stroke-[var(--color-accent)]" />
     </div>
   )
 }
@@ -102,7 +102,7 @@ function SectionPattern({
         />
       </div>
       <motion.div
-        className="absolute inset-0 rounded-2xl bg-linear-to-r from-[#D7EDEA] to-[#F4FBDF] opacity-0 transition duration-300 group-hover:opacity-100 dark:from-[#202D2E] dark:to-[#303428]"
+        className="absolute inset-0 rounded-2xl bg-linear-to-r from-[var(--color-accent-soft)] to-transparent opacity-0 transition duration-300 group-hover:opacity-100"
         style={style}
       />
       <motion.div
@@ -181,15 +181,17 @@ function headingToId(heading: string): string {
 }
 
 // Container component that renders children
-export function IconCards({ children, heading = 'Documentation' }: { children?: React.ReactNode; heading?: string }) {
-  const id = headingToId(heading)
-
+// The grid takes the column's own width and centring, so its edges line up
+// with the text above and below it. A heading is drawn only when one is given.
+export function IconCards({ children, heading }: { children?: React.ReactNode; heading?: string }) {
   return (
-    <div className="my-16 xl:max-w-none">
-      <Heading level={2} id={id}>
-        {heading}
-      </Heading>
-      <div className="not-prose mt-4 grid grid-cols-1 gap-8 border-t border-zinc-900/5 pt-10 sm:grid-cols-2 xl:grid-cols-3 dark:border-white/5">
+    <div className="my-8">
+      {heading && (
+        <Heading level={2} id={headingToId(heading)}>
+          {heading}
+        </Heading>
+      )}
+      <div className="not-prose grid grid-cols-1 gap-8 sm:grid-cols-2 xl:grid-cols-3">
         {children}
       </div>
     </div>
