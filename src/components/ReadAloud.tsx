@@ -5,6 +5,7 @@ import { useEffect, useRef } from 'react';
 import { create } from 'zustand';
 
 import { t } from '../lib/i18n';
+import { pickVoice } from '../lib/readAloudVoice';
 
 // Read aloud with the browser's own speech engine: no service, no key, and
 // the reader's system voices. The page is split into blocks (headings,
@@ -44,6 +45,16 @@ function readRate(): number {
   }
   catch {
     return 1;
+  }
+}
+
+// The voice the reader picked in the reading menu; empty means automatic.
+function readVoiceName(): string | null {
+  try {
+    return localStorage.getItem('read-aloud-voice') || null;
+  }
+  catch {
+    return null;
   }
 }
 
@@ -117,6 +128,8 @@ export const useReadAloud = create<ReadAloudState>()((set, get) => {
     const utterance = new SpeechSynthesisUtterance(sentences[sentenceIndex] ?? '');
     utterance.lang = document.documentElement.lang || 'en';
     utterance.rate = get().rate;
+    const voice = pickVoice(window.speechSynthesis.getVoices(), utterance.lang, readVoiceName());
+    if (voice) utterance.voice = voice;
     utterance.onend = () => {
       if (id !== runId) return;
       if (sentenceIndex + 1 < sentences.length) {

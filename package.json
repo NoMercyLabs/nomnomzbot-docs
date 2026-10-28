@@ -8,7 +8,8 @@
 	},
 	"scripts": {
 		"dev": "astro dev --host",
-		"build": "node scripts/check-mdx-braces.mjs && yarn build:search && astro build",
+		"build": "node scripts/check-mdx-braces.mjs && node --test \"scripts/*.test.mjs\" && yarn build:search && astro build",
+		"test": "node --test \"scripts/*.test.mjs\"",
 		"check:braces": "node scripts/check-mdx-braces.mjs",
 		"preview": "yarn build:search && astro build && astro preview --host",
 		"astro": "astro",

@@ -5,6 +5,7 @@ import clsx from 'clsx';
 import { useEffect, useState } from 'react';
 
 import { t } from '../lib/i18n';
+import { voiceChoices, type VoiceLike } from '../lib/readAloudVoice';
 import { readAloudSupported, useReadAloud } from './ReadAloud';
 
 // Reading settings, light and dark included: each Astro
@@ -70,6 +71,30 @@ function write(key: string, value: string): void {
   catch {
     /* private browsing, quota, blocked storage — the attribute still applies */
   }
+}
+
+// "Microsoft Aria Online (Natural) - English (United States)" is too wide for
+// the menu; the part before the dash names the voice.
+function shortVoiceName(voice: VoiceLike): string {
+  return voice.name.replace(/^Microsoft\s+/i, '').split(' - ')[0]!.trim();
+}
+
+function useVoiceOptions(): Option[] {
+  const [options, setOptions] = useState<Option[]>([]);
+
+  useEffect(() => {
+    if (!readAloudSupported()) return;
+    const load = (): void => {
+      const lang = document.documentElement.lang || 'en';
+      const choices = voiceChoices(window.speechSynthesis.getVoices(), lang);
+      setOptions(choices.map(voice => ({ value: voice.name, label: shortVoiceName(voice), hint: `${voice.name} (${voice.lang})` })));
+    };
+    load();
+    window.speechSynthesis.addEventListener('voiceschanged', load);
+    return () => window.speechSynthesis.removeEventListener('voiceschanged', load);
+  }, []);
+
+  return options;
 }
 
 function applyTheme(value: string): void {
@@ -232,8 +257,11 @@ export function A11yMenu() {
   const [size, setSize] = useState('default');
   const [spacing, setSpacing] = useState('normal');
   const [width, setWidth] = useState('full');
+  const [voice, setVoice] = useState('auto');
+  const voiceOptions = useVoiceOptions();
 
   useEffect(() => {
+    setVoice(read('read-aloud-voice', '') || 'auto');
     setSize(read('text-size', 'default'));
     setSpacing(read('text-spacing', 'normal'));
     setWidth(read('reading-width', 'full'));
@@ -281,6 +309,17 @@ export function A11yMenu() {
         {mounted && (
           <>
             {readAloudSupported() && <ReadAloudStart />}
+            {voiceOptions.length > 0 && (
+              <Group
+                label="Reading voice"
+                options={[{ value: 'auto', label: 'Automatic', hint: 'The most natural voice on this device' }, ...voiceOptions]}
+                value={voice}
+                onChange={(next) => {
+                  setVoice(next);
+                  write('read-aloud-voice', next === 'auto' ? '' : next);
+                }}
+              />
+            )}
             <Group
               label="Text size"
               options={TEXT_SIZES}
