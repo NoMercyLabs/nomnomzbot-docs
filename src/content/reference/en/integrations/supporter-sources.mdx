@@ -1,0 +1,166 @@
+---
+title: Supporter sources
+description: Connect a tip, membership or merch service, and read the tips and memberships the bot has received from it.
+---
+
+You connect the services your supporters pay through on the **Supporter sources** page.
+Open **Settings** and find it in the **Connections** group.
+The tips and memberships the bot receives then show on the **Supporters** page in the sidebar.
+
+## Who can use this page
+
+A moderator may open the page and read the list.
+Only the broadcaster may set up, change or remove a source.
+For anyone else the page shows the list without the buttons.
+
+## The services
+
+The list **Services your supporters use** shows every service the bot supports.
+Each service sends its supporter data in its own way.
+The bot picks that way for you.
+
+| Service | How the bot gets the events | What you do in the dialog |
+| --- | --- | --- |
+| **Buy Me a Coffee** | Sends events to the bot by webhook | Paste a secret, then paste the address into the service |
+| **DonorDrive** | The bot checks the service on a schedule | Paste a secret |
+| **Fourthwall** | Sends events to the bot by webhook | Paste a secret, then paste the address into the service |
+| **Ko-fi** | Sends events to the bot by webhook | Paste a secret, then paste the address into the service |
+| **Pally** | The bot listens on the service's websocket | Paste a secret |
+| **Patreon** | Sends events to the bot by webhook | Pick a connected account |
+| **Shopify** | Sends events to the bot by webhook | Pick a connected account |
+| **StreamElements** | The bot listens on the service's socket | Paste a secret |
+| **Streamlabs** | The bot listens on the service's socket | Paste a secret |
+| **Tipeee** | The bot listens on the service's socket | Paste a secret |
+| **Treatstream** | The bot listens on the service's socket | Pick a connected account |
+
+The middle column is the text the dashboard shows.
+A socket and a websocket are both a line the bot keeps open to the service.
+You do not set them up.
+
+Each row carries a state.
+
+| State | Meaning |
+| --- | --- |
+| **Not set up** | The source has no connection yet. |
+| **Connected** | The connection is saved and **Receive events** is on. |
+| **Paused** | The connection is saved and **Receive events** is off. |
+
+Under the state, a row shows **Last event** with the time of the newest event, or **No events yet**.
+
+## Set up a source with a secret
+
+Use these steps for every service in the table that says "Paste a secret".
+
+1. Choose **Set up** on the row of the service.
+   A dialog opens with the title "Set up" and the name of the service.
+2. Paste the secret or token from the service into **Secret or token**.
+3. Leave **Receive events** on.
+   It is on by default.
+4. Choose **Save**.
+   The dashboard shows "Connection saved." and the row shows **Connected**.
+
+The button on the row is now **Manage**.
+The secret goes to the bot and is never shown again.
+Afterward the box says "A secret is stored. Type a new one to replace it."
+
+## Give the address to Buy Me a Coffee, Fourthwall or Ko-fi
+
+These three services send their events to an address of the bot.
+You paste that address into the service yourself.
+The bot makes the address when you save the secret for the first time.
+
+1. Choose **Manage** on the row of the service.
+2. Copy the address in **Address to give the service**.
+3. Paste it into the webhook settings of the service.
+
+Webhook addresses in general are explained on [Webhooks and event feeds](/reference/integrations/webhooks-and-event-feeds).
+
+## Set up Patreon, Shopify or Treatstream
+
+These three services use an account you connect under **Integrations** in **Settings**.
+You paste no secret and no address.
+
+1. Connect the account under **Integrations** first.
+2. Choose **Set up** on the row of the service.
+3. Pick the account in **Connected account**.
+4. Choose **Save**.
+   The dashboard shows "Connection saved." and the row shows **Connected**.
+
+For **Patreon** and **Shopify**, the bot registers its own webhook on the service when you save.
+**Manage** then shows **Address to give the service**, but you do not need to copy it.
+For **Treatstream**, the bot listens on the service with the account, and there is no address.
+
+When no account is connected, the dialog shows "No `{name}` account is connected yet. Connect it under Integrations first.", where `{name}` is the name of the service.
+When the bot cannot register its webhook, the dialog shows "The connection could not be saved."
+Choose **Save** again to try once more.
+
+## Pause or change a source
+
+1. Choose **Manage** on the row.
+2. Turn **Receive events** off to pause the source, or on to start it again.
+   You can also type a new secret to replace the stored one.
+3. Choose **Save**.
+
+**Save** stays off until you change something.
+Turning the switch keeps the stored secret.
+
+## Remove a source
+
+1. Choose **Remove** on the row.
+   The dashboard asks "Remove `{name}`?", where `{name}` is the name of the service.
+2. Choose **Remove connection**.
+
+The stored secret is deleted.
+The bot stops listening to this service.
+For a webhook service, the address the bot made for it stops working too.
+
+Tips already recorded stay.
+You can set the source up again.
+
+## Read the tips and memberships
+
+Open **Supporters** in the sidebar.
+The panel **Tips and memberships** lists what the connected services sent, newest first.
+A moderator may read it.
+
+Each row shows the supporter's name, the kind, the amount and the tier when the service sent one, and the time.
+
+| Kind | Example |
+| --- | --- |
+| **Tip** | A one-time tip. |
+| **Membership** | A paid membership. |
+| **Merch** | A merch order. |
+| **Charity** | A charity donation. |
+
+When nothing is recorded, the panel says "No tips or memberships recorded yet."
+The bot records each payment once, even when a service sends it twice.
+
+## Answer a supporter in chat
+
+Each recorded event can start an event response, for one kind or for every supporter event.
+The bot then answers in chat in the channel's one bot voice.
+How to set this up is on [Event responses](/reference/automation/event-responses).
+
+## Troubleshooting
+
+::Troubleshooting
+
+**The row shows Connected, but no tip ever arrives.**
+For Buy Me a Coffee, Fourthwall or Ko-fi, check that the address from **Address to give the service** is pasted into the service.
+Check that the secret in the service matches the one you saved.
+Save a new secret if you are not sure.
+
+::
+
+::Troubleshooting
+
+**Tips stopped coming in.**
+Open **Manage** and check that **Receive events** is on.
+A paused source drops new events without a message.
+
+::
+
+## Related pages
+
+- [Webhooks and event feeds](/reference/integrations/webhooks-and-event-feeds)
+- [Event responses](/reference/automation/event-responses)
