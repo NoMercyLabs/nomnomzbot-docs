@@ -1,0 +1,135 @@
+---
+title: How a script runs (Draft)
+description: Turn on Custom Code, run a script from a pipeline step, and know what a script gets, what it gives back and its time and memory limits.
+---
+
+A code script runs when a pipeline reaches a **Run script** step.
+This page explains what happens in that run, what the script can read and change, and the limits it runs under.
+You write and save scripts on [Scripts](/reference/code/scripts).
+
+::Callout
+**Draft**: this part of the guide is not finished yet.
+::
+
+## Turn on Custom Code
+
+Custom Code is off for a new channel.
+While it is off, you cannot make or change scripts.
+A script that makes a bot call is then denied.
+
+1. Open the **Features** settings page.
+2. Find **Custom Code** in the **Automation** area.
+3. Switch it on.
+   The switch takes effect right away.
+
+## Run a script from a pipeline
+
+1. Open a [pipeline](/reference/commands/pipelines) and add the **Run script** step.
+   It is in the **Code** area of the steps.
+2. Choose the saved script the step runs.
+3. Save the pipeline.
+
+The step is the only way a pipeline runs a script.
+A chat command can also run a script directly, when its **What it does** is **Runs a code script**.
+
+## What happens in a run
+
+Every run takes these steps, in this order:
+
+1. The bot finds the script.
+   A deleted script is not found.
+2. The bot checks that the script is switched on.
+3. The bot checks that the channel has script time left for this period.
+4. The bot takes the script's published version.
+   A version that failed its check on save never runs.
+5. The bot reads which bot calls that version makes, and grants only those.
+   One call that is not allowed stops the whole run before it starts.
+6. The script runs in a fresh, closed sandbox.
+7. The bot saves the time of the run and its error, if there was one.
+
+A script that stops at one of the first five checks does not run at all.
+
+## What a script gets
+
+The sandbox gives the script two names: `bot` and `nnz`.
+The script has no access to files, the network or the server, except through bot calls.
+
+| Name | What it does |
+| --- | --- |
+| `bot.args` | The words chat typed after the command word, as a list. |
+| `bot.getVar(key)` | Reads a pipeline variable. It gives `null` when the variable is not set. |
+| `bot.setVar(key, value)` | Writes a pipeline variable. The value is text. |
+| `bot.send(message)` | Adds text to the step's output. It does not post in chat. |
+| `bot.stopPipeline()` | Stops the pipeline after this step. |
+| `console.log(...)` | Writes a line to the run's log. |
+
+The script works on its own copy of the pipeline variables.
+Calls such as `nnz.api.chat.send` reach the bot, and the bot posts in chat in the channel's one bot voice.
+The calls under `nnz` are listed on [Script basics](/reference/code/sdk-script-basics).
+
+This script reads the first word after the command, keeps it in a variable and greets that viewer in chat:
+
+```js
+const target = bot.args[0] || 'chat';
+
+bot.setVar('hug.target', target);
+
+nnz.api.chat.send('Hugs for ' + target + '!');
+```
+
+## What comes back to the pipeline
+
+When the script ends, the step hands these back to the pipeline:
+
+- Every variable the script wrote, with its new value.
+- The text the script passed to `bot.send`, as the step's output.
+- The stop, when the script called `bot.stopPipeline()`.
+
+A run that does not end cleanly fails the step.
+A failed step stops the pipeline, unless the step is set to go on after an error.
+
+## Limits
+
+Every run has the same limits.
+
+| Limit | Value |
+| --- | --- |
+| Time for the whole run, bot calls included | 8 seconds |
+| Bot calls | 64 |
+| Statements | 200,000 |
+| Memory | 64 MB |
+| Output from `bot.send` | 8,192 characters; the rest is cut off |
+| Depth of nested function calls | 64 |
+| Items in one list | 10,000 |
+| Time for one regular expression | 1 second |
+| One `nnz.time.sleep` pause | 5 seconds |
+| Log lines kept | 200; the rest are counted |
+
+The time limit counts every bot call, because each call waits for its answer.
+A script cannot build code from text: `eval` and `new Function` do not work.
+The script runs in strict mode.
+
+## Errors
+
+| Message | Why |
+| --- | --- |
+| run_code requires a valid code_script_id. | The step names no script. |
+| Script not found. | The script was deleted. |
+| Script is disabled. | The script is switched off. |
+| Sandbox execution quota exhausted for this period. | The channel used up its script time for this period. |
+| Script has no valid published version. | The script has no saved version that passed its check. |
+| Capability is not enabled: ... | Custom Code is off, and the script makes a bot call. |
+| Unknown capability: ... | The script names a bot call that does not exist. |
+| Capability denied: ... | The script made a bot call it was not granted. |
+| Host-call budget exceeded. | The script made more than 64 bot calls. |
+| Execution exceeded its time budget. | The run took longer than 8 seconds. |
+| Execution exceeded a resource limit. | The script went over the statements, the memory or the depth of nested calls. |
+
+An error the script throws itself shows its own message.
+The bot keeps the last error of each script; [Scripts](/reference/code/scripts) explains where you read it.
+
+## Related pages
+
+- [Scripts](/reference/code/scripts)
+- [Script basics](/reference/code/sdk-script-basics)
+- [Pipelines](/reference/commands/pipelines)
