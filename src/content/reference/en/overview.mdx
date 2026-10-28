@@ -1,15 +1,97 @@
 ---
-title: Reference
-description: The area pages of the NomNomzBot reference are generated from the bot's capability ledger.
+title: Overview
+description: Learn what NomNomzBot is, who this guide is for, the rule about use, and where each part of the guide lives.
 ---
 
-# Reference
+NomNomzBot is a chat bot for your stream.
+This guide shows you how to set it up and run it for your channel.
 
-This section has no area pages yet.
+## What NomNomzBot is
 
-The area pages are generated from the bot's capability ledger.
-The ledger lists what the bot can do.
-Each page will be written from that list, so no page can describe something the bot does not do.
+You set up the bot in the [dashboard](/reference/getting-started/sign-in).
+The dashboard is a website.
 
-When the generator runs, the pages appear in the sidebar.
-Until then, read the [home page](/) for a short overview of what NomNomzBot is.
+The bot answers in chat in the channel's one [bot voice](/reference/getting-started/bot-account).
+It speaks aloud only through [text to speech](/reference/audio/text-to-speech).
+
+## Who this guide is for
+
+This guide is for streamers and their moderators.
+You do not need to write code to use it.
+
+The last part of the guide, **Code and SDK (Draft)**, is for readers who write a little code.
+
+The **Draft** label on that part means the part is not finished yet.
+The part describes only what the bot can do today.
+
+## The rule about use
+
+::Callout
+
+NomNomzBot is free to use, change and share. You may not earn money with it.
+
+::
+
+## Start here
+
+Start with the sign-in page.
+The cards below are your first steps.
+Read the other parts of this guide when you need them.
+
+::IconCards
+
+::IconCard {{ href: '/reference/getting-started/sign-in', name: 'Sign in', icon: 'app' }}
+
+Sign in to the dashboard.
+
+::IconCard {{ href: '/reference/getting-started/connect-platforms', name: 'Connect your platforms', icon: 'app' }}
+
+Connect the platforms you stream on.
+
+::IconCard {{ href: '/reference/getting-started/bot-account', name: 'The bot account', icon: 'app' }}
+
+Learn which account the bot uses in chat.
+
+::IconCard {{ href: '/reference/getting-started/dashboard-tour', name: 'Dashboard tour', icon: 'app' }}
+
+Find your way around the dashboard sidebar and the Home page.
+
+::IconCard {{ href: '/reference/getting-started/first-command', name: 'Your first command', icon: 'app' }}
+
+Make one chat command and see the bot answer it.
+
+::
+
+These two cards are optional, for readers who run the bot themselves or write a little code.
+
+::IconCards
+
+::IconCard {{ href: '/reference/self-hosting/install-with-docker', name: 'Install with Docker', icon: 'server' }}
+
+Run the bot on your own machine.
+
+::IconCard {{ href: '/reference/code/scripts', name: 'Scripts (Draft)', icon: 'api' }}
+
+Write a small script for the bot.
+
+::
+
+## What each part of the guide covers
+
+The sidebar of this guide lists the parts in this order.
+
+| Part of the guide | What it covers |
+| --- | --- |
+| Start here | Sign in, connect your platforms, the bot account, the dashboard tour and your first command |
+| Commands | [Chat commands](/reference/commands/create-a-command), [templates](/reference/commands/variables-and-templates), [built-in commands](/reference/commands/built-in-commands), [cooldowns and permissions](/reference/commands/cooldowns-and-permissions), [pipelines](/reference/commands/pipelines), [pick lists](/reference/commands/pick-lists) and [quotes](/reference/commands/quotes) |
+| Timers, events and rewards | [Timers, chat triggers](/reference/automation/timers-and-chat-triggers), [event responses](/reference/automation/event-responses) and [channel-point rewards](/reference/automation/rewards) |
+| Widgets and overlays | [Overlays](/reference/overlays/set-up-overlays) for your stream and the [widgets](/reference/overlays/widgets-and-alerts) on them |
+| Music | The [music player](/reference/music/music-player) and [song requests](/reference/music/song-requests) |
+| Voice and sound | Text to speech, [voice triggers](/reference/audio/voice-triggers), [sounds](/reference/audio/sounds) and [media share](/reference/audio/media-share) |
+| Moderation | Filters, bans, [spam defense](/reference/moderation/spam-defense), [reports](/reference/moderation/reports), [shoutouts](/reference/moderation/shoutouts) and [linked channels](/reference/moderation/linked-channels) |
+| Currency and games | The [channel currency](/reference/economy/currency-and-balances), the [store](/reference/economy/store), [games](/reference/economy/leaderboards-and-games), [giveaways](/reference/economy/giveaways), [polls and predictions](/reference/economy/polls-and-predictions) |
+| Integrations | [Spotify](/reference/integrations/spotify), [Discord](/reference/integrations/discord), [YouTube](/reference/integrations/youtube), [OBS](/reference/integrations/obs), [Stream Deck](/reference/integrations/stream-deck-and-api-devices), [VTube Studio](/reference/integrations/vtube-studio), [webhooks](/reference/integrations/webhooks-and-event-feeds) and [supporter sources](/reference/integrations/supporter-sources) |
+| Community and stream | [People](/reference/community/people), [viewer pages](/reference/community/viewer-pages), the [chat page](/reference/community/chat-page), the [stream page](/reference/community/stream-page) and [analytics](/reference/community/analytics) |
+| Settings | [Bot basics](/reference/settings/bot-basics-and-personality), [features](/reference/settings/features), [permissions](/reference/settings/permissions), [your data](/reference/settings/your-data-and-privacy) and the other channel settings |
+| Self-hosting | [Install the bot with Docker](/reference/self-hosting/install-with-docker), the [first-run setup](/reference/self-hosting/first-run-setup) and [updates](/reference/self-hosting/updates) |
+| Code and SDK (Draft) | [Scripts](/reference/code/scripts) and the SDK that scripts use |
