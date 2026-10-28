@@ -1,0 +1,213 @@
+---
+title: Event responses
+description: Choose what the bot says or does for follows, subs, cheers, raids and other events, and reset a response to its default line.
+---
+
+You choose how the bot answers channel events on the **Event responses** page in the sidebar.
+An event response is what the bot does when something happens in the channel, such as a follow, a sub or a raid.
+It can post a line in chat, or run a command, a [pipeline](/reference/commands/pipelines) or an action.
+An action is a built-in bot task, chosen from the **Actions** part of the picker.
+
+## Who can use this page
+
+A **Moderator**, **Lead moderator**, **Editor** or **Broadcaster** may open the page and change event responses.
+The roles are explained on [Permissions](/reference/settings/permissions).
+
+The **Broadcaster** may also let a **VIP** open the page.
+A VIP then sees the list of events only, with no editor.
+
+## The list of events
+
+The **Events** list on the left holds every event the bot can answer.
+Each channel has 50 rows, one for each event.
+You cannot add or delete a row.
+
+Each row shows the event name and where its reply comes from.
+
+| Row text | Meaning |
+| --- | --- |
+| **Platform default** | The event follows the default that comes with the bot. |
+| **Your own text** | The event was saved from this page at least once. |
+| **Off** | The event is switched off. It stays in the list and says nothing. |
+
+**Search events** above the list filters the rows by name.
+When nothing fits, the list shows "No event matches your search."
+
+### Every event
+
+| Group | Events in the list |
+| --- | --- |
+| Follows and subs (7) | **New follower**, **New Twitch subscriber**, **Twitch resub message**, **Gifted Twitch subs**, **Anonymous gifted Twitch subs**, **Twitch gift sub received**, **Anonymous Twitch gift sub received** |
+| Cheers and raids (4) | **Cheer**, **Incoming raid**, **Outgoing raid**, **Raid starts** |
+| The stream (2) | **Stream goes live**, **Stream ends** |
+| Moderation (4) | **Ban**, **Unban**, **Moderator added**, **Moderator removed** |
+| Polls, predictions and hype trains (7) | **Poll starts**, **Poll ends**, **Prediction starts**, **Prediction locks**, **Prediction ends**, **Hype train starts**, **Hype train ends** |
+| Ad breaks (3) | **Ad break coming**, **Ad break starts**, **Ad break ends** |
+| Channel point rewards (5) | **Reward redeemed**, **Reward paused**, **Reward resumed**, **Reward enabled**, **Reward disabled** |
+| Viewers in chat (5) | **Engagement first time chatter**, **Engagement returning chatter**, **Engagement watch streak**, **Engagement session first message**, **Engagement modiversary** |
+| Supporters (5) | **Supporter tip**, **Supporter membership**, **Supporter merch**, **Supporter charity**, **Supporter any** |
+| OBS (5) | **OBS current program scene changed**, **OBS stream state changed**, **OBS record state changed**, **OBS replay buffer saved**, **OBS vendor** |
+| VTube Studio (3) | **VTube Studio model loaded**, **VTube Studio hotkey triggered**, **VTube Studio model clicked** |
+
+The order on screen differs from this table.
+
+### Events that start on
+
+On a new install, 18 of the 50 events are switched on.
+All others start off.
+
+| Group | Events that start on |
+| --- | --- |
+| Follows and subs | All 7 |
+| Cheers and raids | **Cheer** and **Incoming raid** |
+| The stream | **Stream goes live** |
+| Moderation | All 4 |
+| Polls | **Poll ends** |
+| Ad breaks | All 3 |
+
+**Twitch gift sub received** is the one event whose **Read it aloud** starts on (see [Read the line aloud](#read-the-line-aloud)).
+
+## The default lines
+
+An event that follows the platform default posts a line from a short list.
+The bot picks one line from the list each time the event happens.
+It never picks the same line twice in a row.
+
+The lines are written in the channel's tone.
+The tone is the **Reply voice** on the **Bot personality** page (see [Bot basics and personality](/reference/settings/bot-basics-and-personality)).
+The tone changes only the wording.
+The lines still come in the channel's one bot voice.
+
+Default lines exist for the 18 events that start on.
+On a new install, the other events have no default line, so you write their line yourself.
+
+## Edit an event response
+
+1. Choose an event in the **Events** list.
+   The editor opens beside the list, with the event name at the top.
+2. Under **Reaction**, choose **Simple reply** or **Pipeline**.
+3. Fill in the reply (see the sections below).
+   The footer counts your changes, for example "2 unsaved changes".
+4. Choose **Save changes**.
+   The count leaves the footer and **Save changes** turns off.
+   The row in the list now shows **Your own text**.
+
+**Discard** in the footer puts every field back as it was saved.
+If the bot refuses the change, red text under the form names the reason.
+Your edits stay in the form.
+
+### Post a line in chat
+
+With **Simple reply**, the bot posts a line in chat.
+The section **What the bot posts** shows where the line comes from.
+
+| The event | Badge | What the editor shows |
+| --- | --- | --- |
+| Has default lines and no line of your own | **Platform default** | The default lines, one per row: "The bot picks one of these lines each time, in your channel's tone. Edit a line to start from its text." |
+| Has no default lines and still follows the platform default | **Platform default** | An empty **Your line** box: "The bot posts this line in chat when the event happens." |
+| Has no default lines and was saved without a line, for example with the **Enabled** switch | **Your own text** | An empty **Your line** box. |
+| Has a saved line of your own | **Your own text** | The **Your line** box with your line. |
+
+32 of the 50 events have no default lines on a new install, so they open with the empty box.
+
+To start from a default line, choose **Edit this line** beside it.
+The line moves into the **Your line** box.
+The editor shows "Saving makes this your only line: it replaces the 3 default lines." when the list had three lines.
+
+The **Your line** box holds up to 500 characters.
+The info icon beside **Your line** reads "You can use:" and lists the helpers this event fills in, such as `{user}` and `{viewers}` for a raid.
+Helpers are explained on [Variables and templates](/reference/commands/variables-and-templates).
+
+A helper the event does not know shows "Not a known helper here:" under the box.
+The bot refuses to save a helper that works only in commands.
+
+<details>
+<summary>When your line stays on the default lines</summary>
+
+The first default line in the **Informative** tone is the line the bot shipped with first.
+If you save that exact line, the bot does not keep it as your own text.
+It keeps picking from the default lines in the channel's tone.
+
+</details>
+
+### Read the line aloud
+
+**Read it aloud** shows only with **Simple reply**.
+Its info icon reads "The reply also plays as speech on your stream."
+The bot speaks the line only after it posts it in chat.
+It starts off for every event except **Twitch gift sub received**.
+
+### Run a command, a pipeline or an action
+
+With **Pipeline**, the event runs something instead of posting a line.
+
+1. Under **Reaction**, choose **Pipeline**.
+   Until you pick something, an info icon beside **Pipeline** reads "This answers nothing until you pick a pipeline. The pipeline has its own reply step."
+2. Open the **Pipeline** picker.
+   It lists **Commands**, **Pipelines** and **Actions**, with a search box.
+3. Choose one, or choose **Create a new pipeline**.
+   A new pipeline is named after the event.
+4. Choose **Save changes**.
+   The event now runs your choice each time it happens.
+
+The picker's **Nothing** clears the choice.
+A pipeline or a command sends and speaks through its own steps.
+Pipelines are explained on [Pipelines](/reference/commands/pipelines), and commands on [Create a command](/reference/commands/create-a-command).
+
+## Switch an event on or off
+
+The **Enabled** switch sits at the top of the editor.
+Its info icon reads "An event that is off stays in the list and says nothing."
+It saves at once, with no **Save changes**.
+
+The switch is a save too.
+On an event that shows **Platform default**, either direction takes the event off the default.
+The row then shows **Your own text**.
+
+| You turn **Enabled** | Event with default lines | Event with no default lines |
+| --- | --- | --- |
+| On | Posts a line from the same default lines as before. | Says nothing until you save a line in **Your line**. |
+| Off | Says nothing. | Says nothing. |
+
+## Reset an event to its default
+
+**Reset to default** shows in the footer for every event that shows **Your own text**.
+
+1. Choose **Reset to default**.
+   The dialog asks "Reset to the platform default?": "The bot goes back to the platform default lines for this event."
+2. Read the list of what you lose.
+   It names your own line ("Your own line goes:") and any command, pipeline or action the event runs.
+3. Choose **Reset to default**.
+   The row in the list shows **Platform default** again.
+
+After a reset, the event is on or off as the platform default says.
+**Read it aloud** goes back to the default too.
+The pipeline or command it ran is not deleted.
+The event no longer runs it.
+
+## Alerts on your stream
+
+This page sets what the bot says or runs.
+The pictures and sounds on your stream are set as widgets and alerts (see [Widgets and alerts](/reference/overlays/widgets-and-alerts)).
+
+## Troubleshooting
+
+::Troubleshooting
+
+**The bot says nothing for an event.**
+Check these, in order:
+
+1. The row in the list. A row marked **Off** says nothing.
+2. The event has a line. An event without default lines needs a line in **Your line**.
+3. With **Pipeline**, a choice in the picker. With none, the event answers nothing.
+4. The pipeline or command you picked. A pipeline that is switched off does not run.
+
+::
+
+## Related pages
+
+- [Create a command](/reference/commands/create-a-command)
+- [Variables and templates](/reference/commands/variables-and-templates)
+- [Pipelines](/reference/commands/pipelines)
+- [Widgets and alerts](/reference/overlays/widgets-and-alerts)
+- [Bot basics and personality](/reference/settings/bot-basics-and-personality)
