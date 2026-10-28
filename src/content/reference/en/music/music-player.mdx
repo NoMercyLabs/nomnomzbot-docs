@@ -1,0 +1,172 @@
+---
+title: Music player
+description: Add the Music Player to your streaming software, control the song that plays now, set the player buttons and read the song history.
+---
+
+You control the channel's music on the **Music** page in the sidebar.
+The music comes from [Spotify](/reference/integrations/spotify) or [YouTube](/reference/integrations/youtube).
+It plays on the stream through the **Music Player** widget, an overlay page in your streaming software.
+
+| Panel | What it holds |
+| --- | --- |
+| **Now playing** | The song that plays now, its controls and the player buttons. |
+| **Request queue** | The songs viewers asked for, on [Song requests](/reference/music/song-requests). |
+| **History** | The latest song requests. |
+| **Thanks for the music** | The viewers who requested the most songs, all time. |
+
+The badge next to the page title shows the Spotify connection.
+
+| Badge | Meaning |
+| --- | --- |
+| **Spotify connected** | The bot can use your Spotify account. |
+| **Spotify needs a new sign-in** | Spotify no longer accepts the saved login. The **Spotify** row on the Integrations page shows **Sign in again**. Choose **Reconnect** there, as shown on [Spotify](/reference/integrations/spotify). |
+| **Spotify not connected** | No Spotify account is connected. |
+
+## Who can use this page
+
+| Role | What they may do |
+| --- | --- |
+| **Moderator**, **Lead moderator**, **Editor**, **Broadcaster** | Open the page, play, pause and skip, add and edit player buttons, and switch **Playback**. |
+| **VIP** | Open the page when the **Broadcaster** allows it. |
+
+The **Broadcaster** lets a VIP in on the **Permissions** settings page.
+The roles are explained on [Permissions](/reference/settings/permissions).
+
+## Add the Music Player to your streaming software
+
+The **Music Player** widget is the one page where the bot's music plays.
+It holds a hidden YouTube player.
+It also adds a Spotify playback device to your Spotify account, named "NomNomzBot" followed by the widget name.
+So the music has its own browser source and its own level.
+
+The page shows nothing while the music plays well.
+It shows something in two cases:
+
+- The status dot, when you turn on **Show a status dot (setup only)**.
+- A short Spotify message, when the Spotify device has a problem (see the table below).
+
+| Message on the page | What to do |
+| --- | --- |
+| "Click to enable audio playback" | Click the message in the browser source, so the page may play sound. |
+| "Reconnect Spotify with streaming permission to enable this device (Integrations page)." | Reconnect Spotify, as shown on [Spotify](/reference/integrations/spotify). |
+| "Couldn't start playback — check Spotify Premium and try reloading this source." | Check that the Spotify account has Premium, then reload the browser source. |
+
+1. Add the **Music Player** widget, as shown on [Widgets and alerts](/reference/overlays/widgets-and-alerts).
+2. Add its link to your streaming software as a browser source, as shown on [Add an overlay to OBS](/reference/overlays/obs-browser-source).
+3. Size the source 1 by 1 pixel and keep **Control audio via OBS** on.
+   With it off, the stream does not hear the music.
+
+A YouTube request that waits for this page shows "Waiting for the Music Player in OBS" in the **Request queue**.
+Its row has a button that opens the same setup steps.
+
+### Music Player settings
+
+You change these settings on the widget, as shown on [Widgets and alerts](/reference/overlays/widgets-and-alerts).
+**Play audio on this page** is the widget's own switch: with it off, the page plays no music at all.
+**Control audio via OBS** is a setting of the browser source in OBS: with it off, the page plays but the stream does not hear it.
+
+| Setting | Default | What it does |
+| --- | --- | --- |
+| **Volume (0-100)** | 100 | The page's own level for both players. |
+| **Mute the music on this page** | Off | Silences both players. |
+| **Play audio on this page** | On | Lets this page play the music. |
+| **Show a status dot (setup only)** | Off | Shows a dot that proves the source is alive. |
+| **Accent color** | `#9146ff` | The color of the status dot and the page's own status messages. |
+
+## Control the song that plays now
+
+The **Now playing** panel shows the cover, the song name, the artist and the viewer who requested it.
+When nothing plays, it shows "Nothing is playing right now."
+
+| Button | What it does |
+| --- | --- |
+| **Play** | Plays the paused song. |
+| **Pause** | Pauses the song. |
+| **Next song** | Skips to the next song. |
+
+A badge under the song name shows a special state.
+
+| Badge | Meaning |
+| --- | --- |
+| **Paused by you** | You paused the song. |
+| **Blocked: the player cannot start** | The player cannot start the song. |
+| **Starting** | The song is starting. |
+| **Music muted** | The music is muted. |
+
+### Turn song requests off
+
+The **Playback** switch sits in the header of the **Now playing** panel.
+It is on by default.
+When it is off, the bot refuses every new song request.
+
+## Set the player buttons
+
+Player buttons are your own shortcuts under the song.
+They are the same buttons as the Stream Deck music plugin.
+A channel can have at most 12 buttons.
+
+1. In the **Now playing** panel header, choose **Add button**.
+   The **Add a player button** dialog opens.
+2. Pick one of the buttons in the list.
+   The dialog shows what it does, and the fields it needs.
+3. Change the **Label** if you want, at most 24 characters.
+   Leave it empty for a button with only an icon.
+4. Choose **Add button**.
+   The dialog closes and the new button shows under the song.
+
+With 12 buttons, **Add button** is off and says "A channel can pin at most 12 buttons."
+
+| Button | What it does |
+| --- | --- |
+| **Play** | Resumes playback. |
+| **Pause** | Pauses playback. |
+| **Play/Pause** | Toggles playback. |
+| **Now Playing** | Toggles playback of the current track. |
+| **Next Song** | Skips to the next track. |
+| **Previous Song** | Goes back to the previous track. |
+| **Set Volume** | Sets playback volume to a fixed level. |
+| **Volume Up** | Raises playback volume by a step. |
+| **Volume Down** | Lowers playback volume by a step. |
+| **Volume Mute/Unmute** | Mutes if audible, or unmutes to a set level if muted. |
+| **Seek** | Jumps to a set point in the current track. |
+| **Set Shuffle** | Turns shuffle on or off. |
+| **Toggle Shuffle** | Switches shuffle on or off. |
+| **Set Repeat Mode** | Sets repeat to Off, Track, or Playlist/Album. |
+| **Cycle Repeat Mode** | Cycles repeat Off, Track, Playlist/Album. |
+| **Switch Playback Device** | Moves playback to a chosen device. |
+| **Save Track** | Adds the current track to your Liked Songs. |
+| **Remove Saved Track** | Removes the current track from your Liked Songs. |
+| **Favorite Toggle** | Adds or removes the current track from your Liked Songs. |
+| **Add to Playlist** | Adds the current track to a chosen playlist. |
+| **Remove from Playlist** | Removes the current track from a chosen playlist. |
+| **Follow Artist** | Follows the current track's artist. |
+| **Unfollow Artist** | Unfollows the current track's artist. |
+
+The list holds all 23 buttons.
+
+### Use, move and edit a button
+
+- Choose a button to run it.
+  When it fails, a message says it did not run.
+- Drag a button to move it.
+  The new order is saved at once.
+- Right-click a button to edit it.
+  The **Edit player button** dialog opens.
+  Choose **Save button** to keep the change, or **Remove button** to delete it.
+  The dialog closes and the strip shows the change.
+
+## Read the song history
+
+The **History** panel lists the 12 latest song requests, newest first.
+Each row shows the song, the artist, the viewer who requested it and when.
+A row with no known title shows "Unknown song".
+
+The **Thanks for the music** panel lists the 8 viewers who requested the most songs.
+A bar and a count show how many songs each one requested.
+**Open people** opens the **People** page.
+
+## Related pages
+
+- [Song requests](/reference/music/song-requests) shows how viewers request songs and how you set the rules.
+- [Spotify](/reference/integrations/spotify) shows how to connect Spotify.
+- [YouTube](/reference/integrations/youtube) shows how to connect YouTube.
