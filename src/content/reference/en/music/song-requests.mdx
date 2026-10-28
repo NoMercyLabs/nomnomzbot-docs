@@ -1,0 +1,259 @@
+---
+title: Song requests
+description: Let viewers request songs in chat, work the request queue, and set who may request, the limits and the blocked songs.
+---
+
+Viewers ask for songs in chat with `!sr`, and the songs wait in the **Request queue** panel on the **Music** page in the sidebar.
+You set who may request, the limits and the blocked songs in the **Request rules** panel on the same page.
+
+The player and its controls are on [Music player](/reference/music/music-player).
+
+## Who can use this
+
+| Role | What they may do |
+| --- | --- |
+| **Moderator**, **Lead moderator**, **Editor**, **Broadcaster** | Open **Request rules**, change the rules, and work the queue: play next, move, remove, ban and open or close it. |
+| **VIP** | Open the **Music** page and read the rules when the **Broadcaster** allows it. |
+
+The roles are explained on [Permissions](/reference/settings/permissions).
+
+## Request a song in chat
+
+A viewer types `!sr` and a song name or a song link:
+
+```text
+!sr song name
+```
+
+1. The bot looks the song up.
+   A pasted link goes to the service that owns it.
+   A song name goes to the service set under **Search first** (see [Sources tab](#sources-tab)).
+2. The bot checks the request rules (see [Why the bot refuses a request](#why-the-bot-refuses-a-request)).
+3. The song joins the queue.
+   The bot answers in chat in the channel's one bot voice, for example "Added Song Name by Artist Name to the queue." with a link to the song.
+
+With no song after `!sr`, the bot answers "Usage: !sr <song name or URL>".
+One viewer waits 5 seconds between two `!sr` messages by default.
+Cooldowns are explained on [Cooldowns and permissions](/reference/commands/cooldowns-and-permissions).
+
+A link must point to one song.
+For a playlist, album, episode, show or artist page, the bot answers "Song requests only take individual tracks — that link is a playlist, album, episode, show, or artist page. Paste a single track link, or just search by name instead."
+
+### Take back a request
+
+A viewer types `!wrongsong` to take back their own newest request.
+A viewer who knows the queue number of their request can type it after the command, for example `!wrongsong 3`.
+The bot takes the song back only when it is theirs.
+
+| Where the song is | What the bot does |
+| --- | --- |
+| Waiting in the queue | Removes it. The song does not play. |
+| Already sent to Spotify's own queue | Skips it when it starts. Spotify cannot delete from its own queue. |
+| Playing now | Skips it at once. |
+
+A viewer can never take back someone else's request.
+
+### Other music chat commands
+
+A music moderator is a moderator, or a viewer the broadcaster gave the right to moderate the music queue on the **Permissions** settings page.
+
+| Command | Who may use it | What it does |
+| --- | --- | --- |
+| `!sr` | Everyone | Requests a song. |
+| `!wrongsong` | Everyone | Takes back the viewer's own request. |
+| `!closequeue` | A music moderator | Closes the queue to new requests. The music keeps playing and the queued songs stay. |
+| `!openqueue` | A music moderator | Opens the queue to new requests again. |
+| `!clearsongs` | A music moderator | Removes every queued song of one viewer, for example `!clearsongs viewername`. The song that plays now keeps playing. |
+| `!bansong` | A music moderator | Blocks the song that plays now and skips it. Text after the command is saved as the reason. |
+
+Their replies, and how to reword them, are on [Built-in commands](/reference/commands/built-in-commands).
+
+## Work the request queue
+
+The **Request queue** panel lists the songs that wait, in the order they play.
+The header shows the count, for example "4 waiting", and a badge: **Open** or **Closed**.
+When nothing waits, it shows "No songs are waiting."
+
+| A row shows | Example |
+| --- | --- |
+| The queue number | `#1` |
+| The cover | The song's picture |
+| The song and the artist | Song Name, Artist Name |
+| Who asked for it | "Requested by viewername" |
+
+| Control | What it does |
+| --- | --- |
+| **Open queue** / **Close queue** | Opens or closes the queue to new requests, at once. |
+| The drag handle | Drag a row to move the song. |
+| **Play next** | Moves the song to the top of the queue. |
+| The trash button | Asks "Remove this song?". **Remove** takes it out of the queue. |
+| The ban button | Asks "Ban this song?". **Ban song** takes it out of the queue and blocks it: "nobody can request it again." |
+| **Pick a requester** and **Remove all**, at the top of the panel | Pick a viewer, then **Remove all**. The dialog asks "Remove 3 songs from viewername?" with "Every song they queued leaves the queue. The song playing now keeps playing." |
+
+When Spotify has no device that plays, the panel shows "Spotify has no active device. Open Spotify on a device to play requests."
+
+## Set the request rules
+
+1. On the **Music** page, choose **Request rules** in the page header.
+   The **Request rules** panel opens at the side, with three tabs: **Requests**, **Sources** and **Blocked**.
+2. Change the rules on the **Requests** and **Sources** tabs.
+3. Choose **Save**.
+   **Save** and **Discard** go gray.
+   The bot uses the new rules from the next request on.
+
+**Discard** puts every field back as it was saved.
+**Save** stays off while a number is outside its range.
+
+The **Requests are open** switch in the panel header saves at once, with no **Save**.
+It is the same as **Open queue** and **Close queue**.
+When it is off, the bot answers a request with "The song queue is closed."
+
+### Requests tab
+
+| Field | What it sets | Default |
+| --- | --- | --- |
+| **Songs in the queue, at most** | How many songs the queue holds, from 1 to 500. | 50 |
+| **Longest song (minutes:seconds)** | The longest song a viewer may request, from 0:10 to 60:00. | 6:00 (360 seconds) |
+| **Allow explicit songs** | Whether a song marked explicit may be requested. | On |
+| **Songs per person** | "How many songs one viewer can have in the queue at a time." From 1 to 50. | 5 |
+| **Songs per person per stream** | How many songs one viewer may request in one stream, from 0 to 100. "Counts songs that already played. 0 turns the cap off." | 0 (off) |
+
+The **By role** group sets **Songs per person** for one role.
+It has five boxes:
+
+- **Viewers**
+- **Twitch subscribers**
+- **VIPs**
+- **Moderators**
+- **Me** (the broadcaster)
+
+A blank box shows **Same** and uses **Songs per person**.
+A person gets the highest number among the roles they reach.
+
+**Songs in the queue, at most**, **Longest song**, **Allow explicit songs** and **Songs per person per stream** never apply to moderators or the broadcaster.
+When no **By role** box holds a number, moderators and the broadcaster have no per-person limit either.
+When any box holds a number, they get the highest number among the roles they reach, and a blank box counts as **Songs per person**.
+
+### Sources tab
+
+| Field | What it sets | Default |
+| --- | --- | --- |
+| **Allow Spotify songs** | Whether viewers may request from Spotify. | On |
+| **Spotify requests** | Who may request from Spotify. Shows when Spotify is allowed. | **Everyone** |
+| **Allow YouTube songs** | Whether viewers may request from YouTube. | Off |
+| **YouTube requests** | Who may request from YouTube. Shows when YouTube is allowed. | **Only me** |
+| **Music videos only** | "Only videos in the Music category or from artist (- Topic) channels." Shows when YouTube is allowed. | On |
+| **Search first** | The service a song name is searched on: **Automatic**, **Spotify** or **YouTube**. | **Automatic** |
+
+**Spotify requests** and **YouTube requests** save as soon as you pick a role, with no **Save**.
+Only the **Broadcaster** can change them.
+
+The choices run from **Everyone** to **Only me**, for example **Twitch subscribers and up** or **Moderators and up**.
+
+Connecting the services is on [Spotify](/reference/integrations/spotify) and [YouTube](/reference/integrations/youtube).
+
+<details>
+<summary>Banger playlist</summary>
+
+The **Banger playlist** group sets "The playlist !banger adds to."
+`!banger` is on [Built-in commands](/reference/commands/built-in-commands).
+**Playlist** lists your playlists, and **Choose automatically** is the default.
+**Make a playlist on first use** is off by default.
+
+</details>
+
+### Blocked tab
+
+The **Blocked** tab lists the songs nobody may request, each with its reason when it has one.
+When the list is empty, it shows "No songs are blocked."
+
+A song gets on the list through `!bansong` in chat or the ban button in the **Request queue**.
+A blocked song is refused on every way in: chat, a channel-point reward and a script.
+
+**Allow** takes a song off the list at once.
+The tab shows "Song Name can be requested again." with an **Undo** button for a short time.
+**Undo** blocks the song again.
+
+### Reset the rules
+
+**Reset to default** in the panel footer shows when a rule differs from the default.
+The dialog lists the rules that go back to the default.
+**Requests are open** and the banger playlist stay as they are.
+
+Choose **Reset to default** in the dialog to confirm.
+Your edits to those rules are lost.
+
+## Why the bot refuses a request
+
+The bot answers each refused request in chat with the reason.
+
+| The request | The bot answers |
+| --- | --- |
+| The queue is closed | "The song queue is closed." |
+| The queue holds **Songs in the queue, at most** | "The queue is full (50 max) — try again once it's shorter." |
+| The viewer has **Songs per person** queued | "You already have 5 request(s) queued — wait for one to play before adding more." |
+| The viewer hit **Songs per person per stream** | "You already requested 3 song(s) this stream. That is the limit." |
+| The song is longer than **Longest song** | "Failed to add to queue. "..." exceeds the maximum allowed duration of 6 minutes." |
+| The song is explicit and **Allow explicit songs** is off | "... is explicit, and explicit songs are not allowed here." |
+| The song is on the **Blocked** tab | "... is blocked in this channel." |
+| The song already waits in the queue | "... is already in the queue (requested by viewername)." |
+| The song plays now | "... is playing right now." |
+| The viewer's role is below **Spotify requests** or **YouTube requests** | "Your role can't request songs from that music service in this channel. Send a song name instead." |
+| A YouTube video is not music and **Music videos only** is on | It says YouTube requests must be in YouTube's Music category or come from an official artist (- Topic) channel. |
+| No song matches | "No tracks found for" and the search text. |
+
+### Let a refused song through
+
+Three limits can be lifted for one song: the queue size, **Songs per person** and **Longest song**.
+
+1. In chat, use your chat app's reply to answer the bot's refusal message.
+2. Type `!permit` and nothing else.
+   The bot answers, for example "Queued Song Name for viewername.", and the song joins the queue.
+
+Only a moderator or the broadcaster may do this.
+The blocked list and the duplicate check still apply to a permitted song.
+
+<details>
+<summary>Moderators who ban many songs</summary>
+
+The bot counts, for each person who typed `!bansong`, the songs they banned that are still on the **Blocked** tab.
+The rule is about that person, not about the viewer who asked for the song.
+
+| Songs that person banned | What the bot does |
+| --- | --- |
+| 6 to 9 | Adds a warning to its `!bansong` reply. |
+| 10 | Adds the warning, and refuses that person's own `!sr` requests: "Stop requesting songs, your permission has been revoked" |
+| 11 or more | Its `!bansong` reply says their song request permission is revoked, and it refuses their own `!sr` requests. |
+
+**Allow** on the **Blocked** tab takes one ban off that person's count.
+
+</details>
+
+## The public request page
+
+The dashboard has no public request page and shows no link to one.
+The bot can take requests from a public page only through its API.
+Such a request has no role, so it counts as **Everyone** for **Spotify requests** and **YouTube requests**.
+
+## Troubleshooting
+
+::Troubleshooting
+
+**Every request is refused, or `!sr` does nothing.**
+Check these, in order:
+
+1. **Requests are open** in **Request rules**. The **Request queue** badge must read **Open**.
+2. **Playback** on the **Now playing** panel. With it off, the bot refuses every request (see [Music player](/reference/music/music-player)).
+3. **Allow Spotify songs** and **Allow YouTube songs** on the **Sources** tab. A service that is off takes no requests.
+4. **YouTube requests** on the **Sources** tab. By default, only the broadcaster may request from YouTube. Pick **Everyone**, or the lowest role you want, to let viewers request.
+
+::
+
+## Related pages
+
+- [Music player](/reference/music/music-player)
+- [Built-in commands](/reference/commands/built-in-commands)
+- [Cooldowns and permissions](/reference/commands/cooldowns-and-permissions)
+- [Permissions](/reference/settings/permissions)
+- [Spotify](/reference/integrations/spotify)
+- [YouTube](/reference/integrations/youtube)
