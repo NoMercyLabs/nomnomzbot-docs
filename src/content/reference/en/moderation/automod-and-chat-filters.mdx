@@ -1,0 +1,221 @@
+---
+title: AutoMod and chat filters
+description: Set the four AutoMod filters and the Twitch AutoMod levels, and make, try, switch off and remove your own chat filters.
+---
+
+You set the bot's built-in filters on the **AutoMod filters** settings page.
+You make your own filters on the **Chat filters** settings page.
+Both pages are in the **Moderation** group of the settings.
+
+| Page | What it holds |
+| --- | --- |
+| **AutoMod filters** | Four fixed filters of the bot, and the Twitch AutoMod levels. |
+| **Chat filters** | The filters you make: a pattern, a list of blocked terms or a link rule. |
+
+## Who can use these pages
+
+| Who | What they may do |
+| --- | --- |
+| A **Moderator** | Open both pages and see the settings. |
+| A **Lead moderator** | Change the four AutoMod filters, and make, change and remove chat filters. |
+| The **Broadcaster** | All of the above, and change the Twitch AutoMod levels. |
+
+Someone who may only look sees the settings but cannot change them.
+On **Chat filters**, that person sees **On** or **Off** next to each filter.
+
+## Set the AutoMod filters
+
+The page says: "Four filters that read every chat message. A message a filter catches is deleted. Moderators and you are never filtered."
+
+1. Open **AutoMod filters** in the settings.
+   The page shows four panels: **Links**, **Capital letters**, **Banned phrases** and **Emote spam**.
+2. Switch a filter on or off, and fill in its fields (see the table below).
+   **Save** at the top of the page becomes active.
+3. Choose **Save**.
+   The page shows "AutoMod saved."
+
+| Panel | Switch | Field | What it does |
+| --- | --- | --- | --- |
+| **Links** | **Delete links** | **Allowed domains** | Deletes a message that holds a link. A link on the allowed list passes. |
+| **Capital letters** | **Delete shouting** | **Capital letters, percent** | Deletes a message with this share of capitals or more. |
+| **Banned phrases** | **Delete banned phrases** | **Banned phrases** | Deletes a message that holds one of these phrases, in any letter case. |
+| **Emote spam** | **Delete emote spam** | **Most emotes in a message** | Deletes a message with more emotes than this. |
+
+**Allowed domains** and **Banned phrases** take one entry per line.
+Blank lines and entries typed twice drop out when you save.
+
+**Capital letters, percent** takes a number from 1 to 100.
+**Most emotes in a message** takes a number from 1 to 50.
+A number outside its range shows "Use a number from 1 to 100." or "Use a number from 1 to 50.", and **Save** stays off.
+
+## Set the Twitch AutoMod levels
+
+The **Twitch AutoMod** panel sits under the four filters.
+Twitch's own filter holds back messages that look hateful or crude.
+Your moderators approve or deny them, and Twitch keeps these levels.
+
+1. In the **Twitch AutoMod** panel, pick a level for each category.
+2. Choose **Save Twitch levels**.
+   The page shows "Twitch AutoMod saved."
+
+| Level choice |
+| --- |
+| **Off** |
+| **Level 1, lightest** |
+| **Level 2** |
+| **Level 3** |
+| **Level 4, strictest** |
+
+The eight categories are **Aggression**, **Bullying**, **Disability**, **Misogyny**, **Race, ethnicity or religion**, **Sex-based terms**, **Sexuality, sex or gender** and **Swearing**.
+
+**Save** at the top of the page does not save these levels.
+Only **Save Twitch levels** does.
+
+## Make a chat filter
+
+A chat filter checks every message against a pattern, a list of blocked terms or a link rule.
+When a message matches, the bot takes the action you pick.
+
+1. Open **Chat filters** in the settings and choose **New filter**.
+   The **New chat filter** editor takes the place of the list.
+2. Type a name in **Name**.
+3. Choose **What it checks**, and fill in the fields it shows (see the table below).
+4. Choose **When a message matches** (see [What a filter does](#what-a-filter-does)).
+5. Choose **Never filter**: the lowest role the filter skips.
+6. Choose **Save filter**.
+   The page shows "Chat filter saved." and the list comes back with the new filter.
+
+| **What it checks** | The fields it shows |
+| --- | --- |
+| **Blocked terms** | **Blocked terms, one per line** |
+| **Pattern (regex)** | **Pattern**: a regular expression. |
+| **Links** | **Allowed domains, one per line**, and **Also catch links without https** |
+
+**Also catch links without https** treats text like `example.com/x` as a link.
+
+| Field | Default |
+| --- | --- |
+| **What it checks** | **Blocked terms** |
+| **When a message matches** | **Delete the message** |
+| **Timeout length, in seconds** | 600 seconds |
+| **Never filter** | **Moderators and above** |
+| **Also catch links without https** | On |
+| **Match upper and lower case apart** | Off |
+| **Filter is on** | On |
+
+When the list is empty, it shows "No chat filters yet."
+
+### What the editor refuses
+
+The editor checks the filter when you choose **Save filter**.
+A refused field shows its reason, and nothing is saved.
+
+| Rule | What the editor shows |
+| --- | --- |
+| **Name** is empty | "Give the filter a name." |
+| **Pattern** is empty for a pattern filter | "Enter a pattern." |
+| No term is in the list for a blocked-terms filter | "Add at least one term." |
+| The timeout length is under 1 second | "Use a length of at least 1 second." |
+
+The bot also refuses a pattern that is not a valid regular expression.
+The editor then shows "The chat filter could not be saved:" with the reason.
+
+## What a filter does
+
+**When a message matches** picks the bot's action.
+
+| Choice | What happens |
+| --- | --- |
+| **Delete the message** | The bot deletes the message. |
+| **Time the person out** | The bot times the sender out for **Timeout length, in seconds**. |
+| **Hold for review** | The message is held for a moderator to review. |
+| **Flag for review** | The message is flagged for a moderator to review. |
+| **Step up the escalation ladder** | The sender moves one step up the [escalation ladder](/reference/moderation/trust-and-escalation). |
+
+**Timeout length, in seconds** shows only when you choose **Time the person out**.
+
+**Never filter** picks the lowest role the filter skips.
+That role and every role above it are never filtered.
+The choices run from **Twitch subscribers and above** to **Only the broadcaster**.
+
+| **Never filter** choice |
+| --- |
+| **Twitch subscribers and above** |
+| **VIPs and above** |
+| **Artists and above** |
+| **Moderators and above** |
+| **Lead moderators and above** |
+| **Editors and above** |
+| **Only the broadcaster** |
+
+## Try a filter before you save it
+
+The **Try it** panel sits under the editor.
+It checks a message against the filter as you have it now.
+Nothing is saved or sent.
+
+1. Type a message in **A sample chat message**.
+2. Choose **Try message**.
+   The panel shows "This message would match." or "This message would not match."
+
+For a pattern that is not valid, the panel shows "The pattern is not valid:" with the reason.
+
+## Change a chat filter
+
+1. Choose **Edit** on the filter's row.
+   The editor opens with the filter's name in its title.
+2. Change the fields.
+3. Choose **Save filter**.
+   The page shows "Chat filter saved."
+
+**Cancel** closes the editor and keeps nothing you changed.
+
+Each row shows what the filter checks, its action and how many messages it matched, for example "Blocked terms · Delete the message · 3 matches".
+
+## Switch a chat filter on or off
+
+Use the switch on the filter's row.
+The change takes effect at once, with no **Save**.
+A filter that is off does not check chat.
+
+## Remove a chat filter
+
+1. Choose **Remove** on the filter's row.
+   A dialog asks "Remove" and the filter's name, with a question mark.
+2. Choose **Remove filter**.
+   The filter leaves the list.
+
+The filter stops checking chat at once.
+Its match count is lost.
+
+## Troubleshooting
+
+::Troubleshooting
+
+**Save does nothing on the AutoMod filters page.**
+**Save** is active only after you change something, and only when every number is in its range.
+Check **Capital letters, percent** and **Most emotes in a message** for a red message.
+
+::
+
+::Troubleshooting
+
+**The Twitch levels went back after I left the page.**
+**Save** at the top of the page saves only the four filters.
+Choose **Save Twitch levels** in the **Twitch AutoMod** panel.
+
+::
+
+::Troubleshooting
+
+**A filter never catches a moderator.**
+**Never filter** skips moderators and every role above them by default.
+Pick a higher role in **Never filter** if the filter must check them too.
+
+::
+
+## Related pages
+
+- [Moderation overview](/reference/moderation/overview)
+- [Trust and escalation](/reference/moderation/trust-and-escalation)
+- [Bans and blocked terms](/reference/moderation/bans-and-blocked-terms)
