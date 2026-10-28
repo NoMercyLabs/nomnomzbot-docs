@@ -167,9 +167,28 @@ function stripWrapper(nodes: ElementContent[], before: number, after: number): v
   prune(nodes)
 }
 
+// The user guide quotes template helpers, markup and dashboard words, not TypeScript. Guessing a
+// language there split `{target.name}` into white braces and a red name, and painted the bot's name
+// in the type color. Guide pages get fixed rules instead: see guideSpan.
+const TEMPLATE_HELPER = /^\{[A-Za-z_][\w.:|-]*(\s[^{}]*)?\}$/
+const HTML_MARKUP = /^<\/?[a-z][\w-]*(\s[^<>]*)?\/?>/i
+
+function isGuidePage(file: { path?: string; history?: string[] } | undefined): boolean {
+  const path = file?.path ?? file?.history?.[0] ?? ''
+  return /content[\\/]reference[\\/]/.test(path)
+}
+
+/** How a guide page colors an untagged inline span: a helper in one color, markup as HTML, the rest plain. */
+function guideSpan(text: string): { lang: string; wrap?: { before: string; after: string } } | null {
+  if (TEMPLATE_HELPER.test(text)) return { lang: 'ts', wrap: PSEUDO_TAGS.str }
+  if (HTML_MARKUP.test(text)) return { lang: 'html' }
+  return null
+}
+
 function rehypeShiki() {
-  return async (tree: Root) => {
+  return async (tree: Root, file?: { path?: string; history?: string[] }) => {
     const highlighter = await getHighlighter()
+    const guide = isGuidePage(file)
 
     // A heading names its subject in the heading's own face. A code badge in a
     // title reads as a pill stuck on the line, so code inside a heading becomes
@@ -248,7 +267,9 @@ function rehypeShiki() {
       const isType = !pseudo && !taggedLang && (/^[A-Z][A-Za-z0-9_$]*$/.test(typeName) && /[a-z]/.test(typeName) || /^[A-Z]$/.test(typeName))
       const isKeyword = /^as\s+\S/.test(text) || /^(instanceof|typeof|keyof|try|catch|finally|await|async|new|return|throw|const|let|type|interface|extends|implements|import|export)$/.test(text)
       const isExpression = /^\[.*\]$/.test(text) || /^[\w$.'"]+\s+(\?\?|\|\||&&|===?|!==?|[-+*/%]|<=?|>=?)\s+[\w$.'"]+/.test(text)
-      const isCode = taggedLang !== null || isHeader || isLiteral || isKeyValue || isPackage || isType || isKeyword || isExpression || /\(\)|\(.*\)|=>|[{};]|<[A-Za-z]/.test(text)
+      const guideRule = guide && !taggedLang ? guideSpan(text) : null
+      if (guide && !taggedLang && !guideRule) return
+      const isCode = guideRule !== null || taggedLang !== null || isHeader || isLiteral || isKeyValue || isPackage || isType || isKeyword || isExpression || /\(\)|\(.*\)|=>|[{};]|<[A-Za-z]/.test(text)
       if (!isCode) return
 
       // TypeScript reads a bare `{ autoplay: true }` as a block with a label,
@@ -262,14 +283,14 @@ function rehypeShiki() {
               ? { before: '({', after: '})' }
               : undefined)
         : undefined
-      const wrap = pseudo ?? (isPackage ? PSEUDO_TAGS.str : isType ? PSEUDO_TAGS.cls : objectWrap)
+      const wrap = guideRule ? guideRule.wrap : pseudo ?? (isPackage ? PSEUDO_TAGS.str : isType ? PSEUDO_TAGS.cls : objectWrap)
 
       node.properties = node.properties || {}
       node.properties['data-inline-highlighted'] = 'true'
 
       const source = wrap ? `${wrap.before}${text}${wrap.after}` : text
       const html = highlighter.codeToHtml(source, {
-        lang: pseudo ? (pseudo.lang ?? 'ts') : isHeader ? 'http' : (taggedLang ?? 'ts'),
+        lang: guideRule ? guideRule.lang : pseudo ? (pseudo.lang ?? 'ts') : isHeader ? 'http' : (taggedLang ?? 'ts'),
         themes: {
           light: 'one-light',
           dark: 'one-dark-pro',
