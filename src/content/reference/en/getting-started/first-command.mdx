@@ -1,0 +1,54 @@
+---
+title: Your first command
+description: Make one chat command, see it switched on, and watch the bot answer it in your chat.
+---
+
+On this page you make one chat command and see the bot answer it.
+A command is a word that chat types, such as `!hello`.
+It takes about a minute.
+
+You need the **Moderator**, **Lead moderator**, **Editor** or **Broadcaster** role in the channel.
+The roles are explained on [Permissions](/reference/settings/permissions).
+
+## Make the command
+
+1. Open **Commands** in the sidebar (see the [Dashboard tour](/reference/getting-started/dashboard-tour)).
+   The list of channel commands opens.
+2. Choose **New command**.
+   On an empty list, **Make the first command** does the same.
+   The **New command** dialog opens.
+3. Type `hello` in **Name**.
+4. Leave **What it does** at **Sends a reply**.
+5. Type the line the bot sends in **Reply**, for example `Hello, welcome to the stream!`.
+6. Leave the other fields as they are.
+7. Choose **Create command**.
+   The dialog closes and `!hello` opens in the editor beside the list.
+
+The new command is switched on at once.
+You do not need to choose **Save changes**.
+
+## Try it in chat
+
+1. Open your channel's chat.
+2. Type `!hello`.
+   The bot answers with your line, in the channel's one bot voice.
+
+The `!` is the channel prefix when you have set none.
+If your channel uses a different prefix, type that instead of `!`.
+
+You can stop here.
+Your first command works.
+
+::Troubleshooting
+
+**The bot does not answer.**
+Check that the switch on the command's row in the list is on.
+A command that is **Off** answers nobody.
+For the other causes, see Troubleshooting on [Create a command](/reference/commands/create-a-command).
+
+::
+
+## Next steps
+
+- Add helpers to the reply, such as the game you play, on [Variables and templates](/reference/commands/variables-and-templates).
+- Change who may use the command, the prefix, or the cooldown, on [Create a command](/reference/commands/create-a-command).
