@@ -1,0 +1,134 @@
+---
+title: OBS browser source
+description: Copy an overlay link, add it to OBS as a browser source, and check that the overlay shows on stream.
+---
+
+You put an [overlay](/reference/overlays/set-up-overlays) on your stream by adding its link to OBS as a browser source.
+A browser source is an OBS source that shows a web page.
+You add each overlay once.
+
+## The overlay link
+
+The overlay link is the address OBS loads for one overlay.
+It has this shape, with your own values in place of the two placeholders:
+
+```text
+https://your-bot-address/overlay?widgetId=YOUR-OVERLAY-ID&token=YOUR-OVERLAY-TOKEN
+```
+
+The token in the link is a secret of your channel.
+Anyone who has the link can open the overlay.
+Do not share it or show it on stream.
+The dashboard never prints the link: it copies it only when you choose a copy button.
+
+The link starts with the address you used to open the dashboard, unless the bot's operator set a separate overlay address.
+
+## Add an overlay to OBS
+
+1. Open **Overlays** in the sidebar.
+   Each overlay row has a button **Connect**, or **Configure** when OBS has it open already.
+2. Choose **Connect** on the overlay you want.
+   The dialog **Set up** `{name}` **in OBS** opens, with the name of the overlay.
+3. Read the setup lines in the dialog, if it shows them.
+   The table below explains them.
+4. Choose **Copy address**.
+   The button reads **Copied** for two seconds.
+5. In OBS, add a source of the type **Browser** and paste the address into its URL field.
+
+<Platform os="windows linux">
+
+Paste with Ctrl+V.
+
+</Platform>
+
+<Platform os="macos">
+
+Paste with Command+V.
+
+</Platform>
+
+6. In the OBS source settings, enter the width and height from the dialog.
+7. Set **Control audio via OBS** and **Shutdown source when not visible** as the dialog shows.
+8. Save the source in OBS.
+
+The dialog shows **Loaded in OBS** once the browser source has the overlay open.
+Until then it shows **Not loaded in OBS**.
+The button on the row then reads **Configure**.
+
+| Line in the dialog | What to do in OBS |
+| --- | --- |
+| **Width and height** | Enter these two numbers. "full screen" marks 1920 x 1080. "it draws nothing" means the overlay only plays sound and needs no space. |
+| **Control audio via OBS** | **Tick it**, or **Leave it off**, as the dialog says. |
+| **Shutdown source when not visible** | **Tick it**, or **Leave it off**. When it is ticked, the overlay misses events while hidden. |
+
+The setup lines come with the overlays that are built in.
+An overlay you made yourself shows no setup lines.
+The bot keeps no size for it, so set it up the way the built-in overlays are set up:
+
+| OBS setting | Value for your own overlay |
+| --- | --- |
+| Width and height | 1920 x 1080, full screen. |
+| **Control audio via OBS** | Tick it when the overlay plays sound. Leave it off when it does not. |
+| **Shutdown source when not visible** | Leave it off. |
+
+## Copy the link from the overlay
+
+You can also copy the link from an open overlay.
+Choose **Copy browser source address** at the top of the overlay.
+The button then reads **Address copied**.
+
+When an overlay has no link yet, the button is not available, and the overlay shows "This overlay has no address yet."
+
+## Check that it shows
+
+The **Health** part of an open overlay shows **A browser source is open** when OBS has it open.
+It shows **Nothing attached** when no browser source has it open.
+How to read the rest of **Health** is on [Set up overlays](/reference/overlays/set-up-overlays#read-the-health).
+
+To check the whole path, choose **Test** beside an event under **Reacts to**.
+The row shows "Sent to this overlay" when a browser source has it open.
+It shows "Sent, but no browser source has it open" when none has.
+
+The connection that lets the bot control OBS is a separate thing, explained on [OBS](/reference/integrations/obs).
+
+## Troubleshooting
+
+::Troubleshooting
+
+**The browser source shows "This overlay URL is missing its token."**
+The link lost its end when you pasted it.
+Copy the address again and paste the full address.
+
+::
+
+::Troubleshooting
+
+**The browser source shows "This overlay token is not valid."**
+The link is old or wrong.
+Copy the address again from the dashboard and paste it into the source.
+
+::
+
+::Troubleshooting
+
+**The browser source shows "That widget is not live on this channel (unknown, disabled, or not built)."**
+The overlay is switched off, deleted, or has no working code.
+Switch it on, or open **Edit code** and choose **Save & Compile**, as [Set up overlays](/reference/overlays/set-up-overlays) explains.
+
+::
+
+::Troubleshooting
+
+**The row shows "Not connected to the bot".**
+The overlay is switched on, but no browser source has it open, so nothing shows on stream.
+The row shows this only when the bot does not control OBS.
+Add or refresh the browser source in OBS.
+When the [OBS connection](/reference/integrations/obs) is on, the bot refreshes an open source for you.
+
+::
+
+## Related pages
+
+- [Set up overlays](/reference/overlays/set-up-overlays)
+- [Widgets and alerts](/reference/overlays/widgets-and-alerts)
+- [OBS](/reference/integrations/obs)
