@@ -1,44 +1,41 @@
 # Fact-check: /reference/self-hosting/first-run-setup
 Verdict: PASS
-Reviewed: src/content/reference/en/self-hosting/first-run-setup.mdx
+Reviewed: C:\Projects\NoMercyLabs\nomnomzbot-docs\src\content\reference\en\self-hosting\first-run-setup.mdx
 Reviewed-SHA: 7aaee6064fb775d4
 
-Paths are relative to the product repo C:\Projects\NoMercyLabs\nomnomzbot (master).
-S = dashboard/src/views/site/setup. D = server/src/NomNomzBot.Api/Models/SetupWizardDtos.cs. C = server/src/NomNomzBot.Api/Controllers/V1/SystemController.cs.
+Fresh full review of the current text (hash identical at start and end). Paths: D = dashboard/src/views/site/setup; E = D/i18n/en.json; W = server/src/NomNomzBot.Api/Models/SetupWizardDtos.cs; SC = server/src/NomNomzBot.Api/Controllers/V1/SystemController.cs.
 
-## Claims checked
+| Claim | Verdict | Proof |
+| --- | --- | --- |
+| Step row on top, current marked; narrow screen shows "Step 1 of 6" | true | D/components/StepsFrame.vue:57-64 (5 server steps + finish), 79-86 (sm:hidden compact text); E "progress" |
+| Short step names Twitch app, Bot account, Spotify, Discord, YouTube, Finish setup | true | E stepLabels; E finish.title |
+| Card titles | true | W:85, 140, 161, 186, 211; E finish.title |
+| Twitch needed, others optional | true | W Required: true at twitch_app; Required: false at platform_bot, spotify, discord, youtube |
+| Back / Next off on a needed step / Skip on an optional undone step | true | D/SetupView.vue:39-45, footer buttons (disabled index===0; :disabled="!canAdvance"; skips label) |
+| Anyone may change keys until Finish setup; then admin only | true | SC:36 [AllowAnonymous]; SC:276, 314, 353, 377, 425, 449, 474 (IsSetupCompleteAsync && !admin → Forbid); SC:489-492 flag set only by POST setup/complete |
+| Own app encouraged or shared app | true | W step description (line 86) |
+| Console, exact redirect URL, Chat Bot category, Client ID | true | W instructions (lines 98-101) |
+| Copy button beside the address | true | D/components/InstructionLine.vue, SetupAddress.vue, CopyAddressButton.vue (claims lead; SetupAddress use="both" seen in BotAccountStep.vue) |
+| Client ID field, Save, Next turns on | true | W fields; E saveCredentials; dashboard/src/api/setup.ts:93 invalidates the wizard so Complete refreshes |
+| Client Secret (optional); without it a code, with it one-tap | true | W field label "Client Secret (optional)"; W instruction line 4 (device-code vs one-tap redirect) |
+| Use the shared NomNomzBot app, no fields, step done | true | E useShared; W UseSharedAction; api/setup.ts:111 invalidates |
+| Only a saved decision finishes the step; a known Client ID does not count | true | W Complete: hasTwitchDecision, comment beside it |
+| Bot step optional; skip → broadcaster account speaks | true | W platform_bot description |
+| Sign in as bot account first; approve chat permissions | true | W platform_bot instructions 2-3 |
+| Authorize opens new tab, waiting text | true | D/components/BotAccountStep.vue:45 (window.open _blank), 68; E botAuthorize, botWaiting |
+| "Connected:" + name, step done | true | BotAccountStep.vue:65, watch(connected) invalidates wizard; E botConnected |
+| Link with copy button for another browser/profile while waiting | true | BotAccountStep.vue: v-if="authorizeUrl && !connected", SetupAddress; E botOtherProfile |
+| Spotify/Discord/YouTube need Client ID + Client Secret | true | W fields required true for both; CredentialsStep.vue:28 canSave |
+| What each turns on (song requests / notifications and server sync / YouTube music provider) | true | W descriptions of spotify, discord ("guild sync"), youtube |
+| Where the address goes (Redirect URI / OAuth2 Redirect / Authorized redirect URI) | true | W instructions of each step |
+| Finish card lists every step with Done / Not set | true | SetupView.vue summary list; E done, notSet |
+| Event feed check, sign-in-first text | true | D/components/EventFeedHealth.vue:53-56; E feed.title, feed.signInFirst |
+| Finish setup opens the dashboard, then sign in | true | SetupView.vue finish() → router.replace('/app'); E finish.description "You sign in after this." |
+| Unreachable text and Try again | true | SetupView.vue isError block; E unreachable, retry |
+| docker compose -f docker-compose.lite.yml ps; full setup docker compose ps; Up and healthy | true | docker-compose.lite.yml:35, 60 (healthcheck); docker-compose.yml:127 (api healthcheck) |
+| Save error text; admin only after finish | true | CredentialsStep.vue saveFailed alert; E saveFailed; SC guards above |
+| Finish error text; finish again from another browser admin only | true | SetupView.vue finish.failed alert; SC:474-475 |
 
-| Page line | Claim | Evidence | Verdict |
-| --- | --- | --- | --- |
-| 14-15 | Step row, current marked; narrow screen shows "Step 1 of 6" and current name | S/components/StepsFrame.vue:211-241 (sm:hidden compact row, aria-current); S/i18n/en.json:8; 5 server steps D:82-235 + Finish StepsFrame.vue:189-196 = 6 | true |
-| 17-24 | Short labels and card titles | S/i18n/en.json:17-23, 33; D:85, 140, 161, 186, 211 | true |
-| 19-24 | Needed column | D:88 Required true; D:142,163,188,213 Required false; Finish has no Skip (SetupView.vue:117) | true |
-| 26-28 | Back, Next off until done, Skip on optional not-done | SetupView.vue:40-45, 114-127; en.json:12-14 | true |
-| 32-34 | Anyone can change keys until Finish; then admin only | C:313-314, 354-355, 274-275, 473-474 (Forbid when setup_complete and not admin); C:36 AllowAnonymous; C:489-492 | true |
-| 40-42 | Own app or shared app; own app encouraged | D:86, 98, 102 | true |
-| 46-51 | Developer Console link, redirect URL with copy button, Chat Bot category, Client ID, Save, Next turns on | D:98-100; InstructionLine.vue (splitLinks, copy for /api/ addresses); SetupAddress.vue:26-33; CredentialsStep.vue Save; api/setup.ts:93 invalidates wizard; SystemCredentialsProvider.cs:90-93 saved client id = decision | true |
-| 53-55 | Secret optional; code sign-in without it, one-tap with it | D:101, 123-126; C:317-321 | true |
-| 57-60 | Shared app button needs no fields; only save or shared click completes | CredentialsStep.vue useShared button; C:348-366; SystemCredentialsProvider.cs:84-97 (config/env client id never counts); D:89-93 | true |
-| 64-66 | Optional; without it the broadcaster account types as the bot | D:141-143 | true |
-| 70-74 | Sign in as bot first; Authorize opens new tab; waiting text; Connected: name | D:149; BotAccountStep.vue window.open _blank, waiting/connected; en.json:28-30 | true |
-| 76-77 | Link with copy button while waiting, for another browser or profile | BotAccountStep.vue (authorizeUrl && !connected, SetupAddress use="both"); en.json:11 | true |
-| 81-95 | Spotify, Discord, YouTube: Client ID and Secret, links, redirect names, Save | D:161-233 (both fields required, instruction URLs, "Redirect URI", "OAuth2 Redirect", "Authorized redirect URI"); C:369, 417, 441 | true |
-| 87-89 | Song requests; notifications and server sync; YouTube music provider | D:162, 187 ("guild sync" = server), 212 | true |
-| 101-103 | Finish card lists steps with Done / Not set; Event feed text | SetupView.vue:96-105; en.json:15, 24, 39-40; EventFeedHealth.vue (signInFirst when not signed in) | true |
-| 105-106 | Finish setup opens the dashboard, then sign in | SetupView.vue:47-50 (router.replace('/app')); en.json:34 | true |
-| 112-114 | Unreachable text and Try again | SetupView.vue:69-72; en.json:6-7 | true |
-| 114-122 | Unreachable fix: `docker compose -f docker-compose.lite.yml ps`, full setup `docker compose ps`, row shows `Up` and `healthy` | docker-compose.lite.yml exists, service `api` with healthcheck at :28, :60; docker-compose.yml api service anchor healthcheck :127, merged into api-blue :162-164; api-green is profiled :166-176, so a plain start shows one bot row (blue) | true |
-| 124-126 | Known Client ID does not count | SystemCredentialsProvider.cs:89-93; D:89-92 | true |
-| 128-130 | Save failure text; admin only after finish | CredentialsStep.vue error line; en.json:27; C:313-314 | true |
-| 136-138 | Finish failure text; admin only after finish | SetupView.vue:106-108; en.json:36; C:473-474 | true |
+Conventions: no source citation, no action key, no numbered level, no license name or "open source" (grep: none). The page does not describe hosting for others, so no hosting marker is needed. American English.
 
-## Conventions
-
-- No source citation, no action key, no numbered permission level, no license name, no NoMercyBot name: checked, none found.
-- American English: no British spelling found.
-- Labels are bold and match en.json or the server DTO text exactly.
-
-## Notes (no effect on the verdict)
-
-- Line 6, "opens the setup page before anything else": the client routes to onboarding on `OnboardingComplete` (C:70-78, 124), which turns true once the Twitch choice is made, not at Finish. The sentence is true for a new bot. A later visit before Finish may not be forced back to the page. Not checked in the router; no change needed for this page.
-- The finish list shows the long card titles (SetupView.vue:98), not the short step labels. The page does not claim otherwise.
+Style notes (not failures): none blocking.
