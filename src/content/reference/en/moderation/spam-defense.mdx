@@ -1,0 +1,228 @@
+---
+title: Spam defense
+description: Set how the bot spots spam waves and raids in your chat, and what it may do about them.
+---
+
+You set the channel's spam defense policy on the **Spam defense** page.
+Open **Settings** in the sidebar, then **Spam defense** in the **Access** group.
+Each setting on the page shows a short explanation and what moving it costs.
+
+## Who can use this page
+
+| Who | What they may do |
+| --- | --- |
+| A **Moderator**, **Lead moderator**, **Editor** or **Broadcaster** | Open the page and read every value. |
+| The **Broadcaster** | Change the values and save them. |
+
+The roles are explained on [Permissions](/reference/settings/permissions).
+
+The **Save** button shows only to someone who may change the page.
+Anyone else sees the number boxes locked, and an on or off badge in place of each switch.
+
+## Change the policy
+
+1. Open **Settings** in the sidebar, then **Spam defense** in the **Access** group.
+   The page shows one card for each group of settings.
+2. Change a number or flip a switch.
+   The header shows "Unsaved changes", and **Save** becomes active.
+3. Choose **Save**.
+   The bot stores every setting at once and shows "Spam defense saved."
+
+**Save** stays inactive while a value is out of range.
+The reason shows in red under the setting, for example "Enter a value from 0 to 365."
+
+## Where the values come from
+
+A channel that never saved this page uses the bot's default values.
+After the first **Save**, the channel keeps its own values.
+
+The tables below show the default values the bot starts with.
+The person who runs your bot can change these default values.
+Then a channel that never saved uses the changed values, not the ones in the tables.
+
+> Running it for yourself, your friends and your community is free. You may not earn money with it: no selling it, and no paid hosting or paid service built on it.
+
+## Start in watch-only mode
+
+**Watch only, do not act** is on by default.
+In this mode the bot finds spam and records it, and it acts on none of it.
+The dashboard has no screen that shows these records yet.
+
+Each channel also has a first watch period of seven days.
+During these seven days the bot only watches, even with **Watch only, do not act** off.
+The seven days start when the channel joins the bot.
+
+If spam defense was off when you first saved it on, the seven days start at that save.
+The bot acts on real viewers only when both are true: **Watch only, do not act** is off, and the seven days have passed.
+Read the explanation of each setting before you turn it off.
+
+## Settings and defaults
+
+Some settings are a share.
+A share is a number from 0 to 1, so 0.8 means 80 percent.
+
+### Master
+
+This group turns spam defense on or off and sets watch-only mode.
+
+| Setting | Default | Allowed values |
+| --- | --- | --- |
+| **Spam defense enabled** | On | On or off |
+| **Watch only, do not act** | On | On or off |
+
+**Spam defense enabled** off means no detection and no records at all.
+With **Watch only, do not act** on, the bot records and does not act.
+With it off, the bot acts once the channel's first seven days have passed.
+
+### Trust
+
+| Setting | Default | Allowed values |
+| --- | --- | --- |
+| **Days around before a viewer counts as established** | 90 days | 0 or more |
+| **Messages before a viewer counts as established** | 300 messages | 0 or more |
+| **Separate active days before a viewer counts as established** | 30 days | 0 or more |
+| **Strike-free days before a viewer counts as established** | 180 days | 0 or more |
+| **Watch hours here that earn protection** | 10 hours | 1 to 200 |
+| **Watch hours across all channels that earn protection** | 25 hours | 1 to 500 |
+
+An established viewer is a viewer who has reached all four "established" values.
+A moderator or VIP of your channel is always established.
+"Days around" counts the days since the viewer's first message in your channel.
+
+The trust levels are explained on [Trust and escalation](/reference/moderation/trust-and-escalation).
+On the page, the four "established" values sit together under the label **Trust ladder thresholds**.
+
+The bot counts the hours each viewer watches.
+A viewer who reaches either watch-hours value earns protection.
+
+**Watch hours here that earn protection** counts the hours in your channel only.
+**Watch hours across all channels that earn protection** counts the hours in every channel on this bot server.
+
+A protected viewer is never banned or timed out automatically.
+The bot may still remove a message of that viewer and flag it.
+A moderator then decides the rest.
+
+### New accounts and new followers
+
+| Setting | Default | Allowed values |
+| --- | --- | --- |
+| **Newest account age that can chat freely** | 0 days (off) | 0 to 365 |
+| **Newest follow that can chat freely** | 0 days (off) | 0 to 90 |
+| **Keep gated messages for a moderator** | On | On or off |
+
+A gated message is a message that one of the two age limits above removed.
+With **Keep gated messages for a moderator** on, the message waits in the moderation queue for a moderator.
+With it off, the message is removed and nothing is kept.
+
+### Message content
+
+| Setting | Default | Allowed values |
+| --- | --- | --- |
+| **How similar counts as the same spam** | 0.6 | 0 to 1 |
+| **Shortest message that can be matched** | 8 characters | 2 to 50 |
+| **Restrict other alphabets to established viewers** | Off | On or off |
+
+"Other alphabets" means writing that does not use Latin letters, for example Japanese, Korean, Cyrillic or Arabic.
+With **Restrict other alphabets to established viewers** off, anyone may write in another alphabet.
+With it on, a message in another alphabet from a viewer who is not yet established looks more suspicious to the bot.
+
+The bot then rates that message as medium risk at most, never higher because of the alphabet alone.
+An established viewer is never affected.
+
+### Coordinated campaigns
+
+A campaign is a group of accounts that post the same message at almost the same time.
+A stranger is an account with no standing in your channel.
+A group is exonerated when your regulars join in and the share of strangers drops, so the bot judges it a community joke.
+
+| Setting | Default | Allowed values |
+| --- | --- | --- |
+| **Share of strangers that makes it a campaign** | 0.8 | 0.5 to 1 |
+| **Share at which the group is exonerated** | 0.65 | 0.3 to 0.95 |
+| **Fewest accounts that can be a campaign** | 5 accounts | 2 to 100 |
+| **How long a group is watched** | 600 seconds | 30 to 3600 |
+| **Longest a group can stay open** | 1800 seconds | 60 to 7200 |
+| **Head start before acting** | 8 seconds | 0 to 120 |
+| **Undo automatically when a group is exonerated** | On | On or off |
+
+Two pairs in this group must stay in order:
+
+- **Share at which the group is exonerated** must stay below **Share of strangers that makes it a campaign**.
+- **Longest a group can stay open** must be at least **How long a group is watched**.
+
+The page names a broken pair under the setting, and **Save** stays inactive.
+
+### Sudden activity
+
+| Setting | Default | Allowed values |
+| --- | --- | --- |
+| **Follow rate that counts as unusual** | 5 times | 1.5 to 50 |
+| **Join rate that counts as unusual** | 4 times | 1.5 to 50 |
+
+Each value is a number of times your channel's normal rate.
+
+### Raid lockdown
+
+To tighten the room means to turn on stricter chat rules during a raid, such as slow mode and followers-only, and later put them back as they were.
+The dashboard marks all three settings in this group **Not yet active**.
+Nothing tightens the room automatically during a raid yet, and the dashboard has no button that tightens it.
+
+The bot reads these three settings only for a lockdown that is started by hand, outside the dashboard.
+Then the room stays tightened for **How long the room stays tightened**.
+
+A second lockdown request can arrive while the room is still tightened.
+With **Keep it tightened while the attack continues** on, the bot then extends the time.
+It never extends past **Longest the room can stay tightened**, counted from the start.
+
+| Setting | Default | Allowed values |
+| --- | --- | --- |
+| **How long the room stays tightened** | 15 minutes | 1 to 240 |
+| **Keep it tightened while the attack continues** | On | On or off |
+| **Longest the room can stay tightened** | 60 minutes | 5 to 480 |
+
+**Longest the room can stay tightened** must be at least **How long the room stays tightened**.
+
+### Shared spam list
+
+The shared spam list is meant to hold spam patterns and bad links that other bot servers found.
+The dashboard marks **Use the shared spam list** and **Share what you catch** **Not yet active**.
+The bot stores their values and does not read them yet.
+
+| Setting | Default | Allowed values |
+| --- | --- | --- |
+| **Use the shared spam list** | On | On or off |
+| **Share what you catch** | Off | On or off |
+| **Reports needed before a shared pattern acts** | 3 reports | 1 to 20 |
+
+The page explains that **Share what you catch** is meant to send only the patterns your channel confirms, never message text or viewer names.
+
+The bot reads **Reports needed before a shared pattern acts** each time it checks a message.
+A pattern that is held back is used in that check only after it has at least this many reports.
+
+Today the bot holds back no pattern: the patterns it uses come from your own bot server, and those are never held back.
+So this number changes the result only when held-back patterns arrive from the shared spam list.
+
+## Settings marked Not yet active
+
+These settings carry the badge **Not yet active**:
+
+- **Join rate that counts as unusual**
+- **How long the room stays tightened**
+- **Keep it tightened while the attack continues**
+- **Longest the room can stay tightened**
+- **Use the shared spam list**
+- **Share what you catch**
+
+The bot stores **Join rate that counts as unusual**, **Use the shared spam list** and **Share what you catch**, and does not read them yet.
+The three lockdown settings are read only for a lockdown started by hand, as **Raid lockdown** above explains.
+
+## Guarantees with no switch
+
+The card **Guarantees with no switch** at the bottom of the page lists rules that no setting can turn off.
+For example, an established viewer of your channel is never acted on automatically by any part of spam defense.
+
+## Related pages
+
+- [Moderation overview](/reference/moderation/overview)
+- [Trust and escalation](/reference/moderation/trust-and-escalation)
+- [Permissions](/reference/settings/permissions)
