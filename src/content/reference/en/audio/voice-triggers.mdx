@@ -1,0 +1,178 @@
+---
+title: Voice triggers
+description: Count a word you say on stream, and pop a sticker on your stream each time the bot hears it.
+---
+
+You set up voice triggers on the **Voice triggers** page, in the **Build** group of the sidebar.
+A voice trigger is a word you say out loud on stream.
+Each time the bot hears it, the bot adds one to its count and can show a sticker on your stream.
+
+A voice trigger listens to your microphone, not to chat.
+It does not speak: reading text aloud is [Text to speech](/reference/audio/text-to-speech).
+
+## Who can use this page
+
+A **Moderator**, **Lead moderator**, **Editor** or **Broadcaster** may open the page and change voice triggers.
+The roles are explained on [Permissions](/reference/settings/permissions).
+
+The **Broadcaster** may also let a **VIP** open the page.
+A VIP then sees the list, the counts, **Popout listener** and **Copy listener link**.
+**New voice trigger** and the editor do not show for a VIP.
+The listener link holds the channel's overlay key, so allow a VIP only when you trust them with it.
+
+## How the bot hears you
+
+The bot hears you through the voice listener.
+The voice listener is a web page that you keep open in Chrome while you stream.
+It uses the speech recognition built into Chrome, set to US English.
+
+1. Open the **Voice triggers** page in Chrome, and choose **Popout listener** in the page header.
+   The listener opens in its own small window of the same browser, with the title **Voice Listener**.
+2. Allow the microphone when Chrome asks.
+   The listener shows **Listening**, and the words it hears show in its box.
+3. Leave the window open while you stream.
+
+Do not add the listener to OBS as a browser source.
+Speech recognition does not run inside OBS.
+When you close the listener, no voice trigger counts until you open it again.
+
+**Copy listener link** on the **Voice triggers** list copies the same link.
+Paste it into Chrome when the dashboard runs in another browser.
+The link holds your channel's overlay key: the secret that lets a page act for your channel's overlays, so do not share it.
+
+The listener shows each phrase it heard, newest first, with the last 20 kept.
+Next to each phrase it shows the result.
+
+| The listener shows | What it means |
+| --- | --- |
+| Matched "word" (count N) | The phrase held a voice trigger word, and the count went up. |
+| (no trigger word) | No voice trigger counted for this phrase. |
+| (not sent: this listener link is no longer valid) | The link is old. Copy a new one from the **Voice triggers** page. |
+| (not sent: the bot could not be reached) | The listener could not reach the bot. |
+
+The listener restarts itself when Chrome stops listening.
+When Chrome blocks the microphone, the listener shows **Stopped**.
+A line under it says what to allow.
+
+While your stream is live, the bot also keeps every phrase the listener sends as the spoken transcript of that stream.
+When you are not live, the bot only looks for a trigger word in each phrase, and does not store the phrase.
+
+## Create a voice trigger
+
+1. Choose **New voice trigger** in the page header.
+   The **New voice trigger** dialog opens.
+2. Type the word in **Word to listen for**, for example `hello`.
+3. Set **Start counting at**, or leave it at 0.
+   Use it to carry over a count from another bot.
+4. Set **Seconds between counts**, or leave it at 5.
+5. Pick a **Sticker**, or leave **No sticker**.
+6. Choose **Create voice trigger**.
+   The dialog closes, and the new word shows in the list, switched on.
+
+When the list is empty, the page shows "No voice triggers yet."
+Its **Make the first voice trigger** button opens the same dialog.
+
+When **Word to listen for** is empty, the dialog shows "Give the trigger a word to listen for."
+
+| Field | What it does |
+| --- | --- |
+| **Word to listen for** | The word or words the bot listens for, up to 200 characters. |
+| **Start counting at** | The count the trigger starts from. You set it only when you create the trigger. |
+| **Seconds between counts** | After a count, the trigger waits this long before it counts again. From 0 to 3600. |
+| **Sticker** | An image from your uploaded images. It pops up on your stream each time the word is heard. |
+
+## How a word is matched
+
+The bot checks each phrase the listener sends.
+A trigger counts when its word is anywhere in the phrase, in upper or lower case.
+So the word `cat` also counts in "category".
+
+Only one voice trigger counts for each phrase.
+A trigger that is switched off counts nothing.
+
+When the word is heard again within **Seconds between counts**, it is not counted.
+This stops one long word from counting twice.
+
+## Show the sticker on your stream
+
+The sticker shows through an **Alerts** overlay, as [Widgets and alerts](/reference/overlays/widgets-and-alerts) explains.
+A new **Alerts** overlay does not show voice triggers, so you switch them on once.
+
+1. Open the **Alerts** overlay on the **Overlays** page.
+2. In **Settings**, add **Voice trigger** to **Alert types**.
+3. Choose **Save settings**.
+   The editor shows "Saved.", and open sources reload.
+
+**Sticker on-screen time (ms)** in the same **Settings** sets how long the sticker stays.
+
+Each time the word counts, the alert shows the word with the new count, such as "hello (3)", and the sticker image.
+
+## Edit a voice trigger
+
+1. Choose a word in the **Voice triggers** list.
+   The editor opens on the right.
+2. Change **Word to listen for**, **Seconds between counts** or **Sticker**.
+   The footer shows how many changes are not saved.
+3. Choose **Save changes**.
+   The editor shows the saved values.
+
+**Discard** puts the fields back to the saved values.
+
+The top of the editor shows the sticker image and three facts.
+They change on their own as the word is heard.
+
+| Fact | What it shows |
+| --- | --- |
+| **Heard so far** | The count now. |
+| **Started at** | The count the trigger started from. |
+| **Last heard** | When the word last counted, or "Not yet". |
+
+The list shows each word with its count, such as "Heard 3 times".
+
+## Turn a voice trigger off or on
+
+Use the **Enabled** switch at the top of the editor.
+It saves at once.
+A trigger that is off stays in the list with an **Off** badge, keeps its count, and counts nothing.
+
+## Delete a voice trigger
+
+1. Open the voice trigger and choose **Delete**.
+   A dialog asks "Delete hello?" with the word you chose.
+2. Choose **Delete voice trigger**.
+   The word leaves the list, and its count is lost.
+
+The sticker image stays in your uploaded images.
+
+## Check that the listener works
+
+The page header shows when the bot last counted any word.
+
+| The header shows | What it means |
+| --- | --- |
+| No match heard yet | No voice trigger has counted yet. |
+| Last match: just now | A word counted in the last minute. |
+| Last match: and how long ago | When the last count was. |
+
+This shows a past count only.
+It does not prove that the listener is open now.
+
+::Troubleshooting
+**I say the word, but the count does not go up.**
+Check that the listener window is open and shows **Listening**.
+Check that the trigger is switched on, and that **Seconds between counts** has passed.
+Look at the listener: it shows what Chrome heard, which may be a different spelling.
+::
+
+::Troubleshooting
+**The count goes up, but no sticker shows.**
+Check that the trigger has a **Sticker**.
+Check that **Voice trigger** is in **Alert types** of your **Alerts** overlay.
+Check that the **Alerts** overlay is in OBS.
+::
+
+## Related pages
+
+- [Text to speech](/reference/audio/text-to-speech)
+- [Widgets and alerts](/reference/overlays/widgets-and-alerts)
+- [Permissions](/reference/settings/permissions)
