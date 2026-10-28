@@ -57,6 +57,7 @@ export const navStructure: Record<string, NavGroupDef[]> = {
         'templates/overview',
         'templates/user',
         'templates/target',
+        'templates/pronouns',
         'templates/channel',
         'templates/stream',
         'templates/chat',
