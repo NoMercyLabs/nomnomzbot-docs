@@ -43,9 +43,9 @@ A default of 0 seconds means no cooldown.
 | `!accountage` | Answers how old the caller's Twitch account is. | Everyone | 0 s | 30 s |
 | `!allow` | `!allow massban` lets a held mass ban run now (see [Bans and blocked terms](/reference/moderation/bans-and-blocked-terms)). | Lead moderators | 3 s | 0 s |
 | `!banger` | Adds the playing song to the channel's banger playlist. | Everyone | 5 s | 0 s |
-| `!bansong` | Blocks the playing song from later requests. | Everyone | 5 s | 0 s |
-| `!clearsongs` | Removes every queued song of one viewer. | Everyone | 5 s | 0 s |
-| `!closequeue` | Stops new song requests. The music keeps playing. | Everyone | 5 s | 0 s |
+| `!bansong` | Blocks the playing song from later requests. | Moderators | 5 s | 0 s |
+| `!clearsongs` | Removes every queued song of one viewer. | Moderators | 5 s | 0 s |
+| `!closequeue` | Stops new song requests. The music keeps playing. | Moderators | 5 s | 0 s |
 | `!coinflip` | Plays a coin flip for a bet in channel currency. | Everyone | 0 s | 0 s |
 | `!commands` | Lists the channel's commands that are switched on. | Everyone | 15 s | 0 s |
 | `!dice` | Plays a dice roll for a bet in channel currency. | Everyone | 0 s | 0 s |
@@ -59,15 +59,15 @@ A default of 0 seconds means no cooldown.
 | `!lurk` | Marks the caller as lurking (watching without chatting). | Everyone | 0 s | 30 s |
 | `!media` | Sends a clip or video link to media share (see [Media share](/reference/audio/media-share)). | Everyone | 0 s | 0 s |
 | `!mydata` | Asks for a copy of the caller's own data. Data-rights command. | Everyone | 0 s | 0 s |
-| `!openqueue` | Takes new song requests again. | Everyone | 5 s | 0 s |
-| `!pause` | Pauses the music. | Everyone | 5 s | 0 s |
+| `!openqueue` | Takes new song requests again. | Moderators | 5 s | 0 s |
+| `!pause` | Pauses the music. | Moderators | 5 s | 0 s |
 | `!permit` | Gives a viewer a role or a right for a time. Always on. | Moderators | 0 s | 0 s |
 | `!playlist` | Answers the link to the channel's banger playlist. | Everyone | 10 s | 0 s |
 | `!profile` | The same answer as `!stats`. | Everyone | 0 s | 10 s |
 | `!queue` | Lists the song queue, or the caller's own requests. | Everyone | 0 s | 10 s |
 | `!quote` | Shows a random quote, or a quote by number. It also adds, edits and deletes quotes (see [Quotes](/reference/commands/quotes)). | Everyone | 5 s | 0 s |
-| `!resume` | Plays the music again. | Everyone | 5 s | 0 s |
-| `!skip` | Skips the playing song. A viewer can skip only a song they requested. With a number, it removes the caller's own queued request. | Everyone | 5 s | 0 s |
+| `!resume` | Plays the music again. | Moderators | 5 s | 0 s |
+| `!skip` | Skips the playing song. A viewer can skip only a song they requested. With a number, it removes the caller's own queued request. | Everyone; moderators skip any song | 5 s | 0 s |
 | `!slots` | Plays the slots for a bet in channel currency. | Everyone | 0 s | 0 s |
 | `!song` | Answers which song plays now. | Everyone | 10 s | 0 s |
 | `!sr` | Requests a song for the queue (see [Song requests](/reference/music/song-requests)). | Everyone | 0 s | 5 s |
@@ -78,13 +78,14 @@ A default of 0 seconds means no cooldown.
 | `!update` | Reads the caller's Twitch name and avatar again. A moderator may name another viewer. | Everyone | 0 s | 60 s |
 | `!uptime` | Answers how long the stream has been live. | Everyone | 30 s | 0 s |
 | `!voice` | Lets a viewer pick their own text-to-speech voice (see [Text to speech](/reference/audio/text-to-speech)). | Everyone | 0 s | 5 s |
-| `!volume` | Answers or sets the music volume. | Everyone | 5 s | 0 s |
+| `!volume` | Answers the music volume. With a number, it sets the volume. | Everyone answers; moderators set | 5 s | 0 s |
 | `!whisper` | Sends a viewer a private message from the bot. | Moderators | 0 s | 3 s |
 | `!whitelist` | Gives a viewer the standing of a subscriber, VIP or moderator for commands. | Only you | 0 s | 0 s |
 | `!wrongsong` | Takes back the caller's own song request. | Everyone | 0 s | 5 s |
 
-`!pause`, `!resume`, `!volume` with a number, `!bansong`, `!closequeue`, `!openqueue` and `!clearsongs` check the caller again when they run, and a moderator passes.
-Anyone else passes only when the broadcaster gave them the right to moderate the song queue.
+For the music commands, "Moderators" means a moderator, or a viewer the broadcaster gave the right to moderate the song queue.
+That covers `!pause`, `!resume`, setting `!volume`, `!bansong`, `!closequeue`, `!openqueue` and `!clearsongs`.
+Anyone else who types one gets a refusal.
 `!skip` with no number lets a moderator or a holder of that right skip any song.
 
 Data-rights commands are explained on [Your data and privacy](/reference/settings/your-data-and-privacy).
