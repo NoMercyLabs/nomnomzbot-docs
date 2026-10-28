@@ -1,0 +1,277 @@
+---
+title: Dashboard tour
+description: Find your way in the dashboard - the sidebar and its groups, the Home page, the header tools, and who sees which page.
+---
+
+After you [sign in](/reference/getting-started/sign-in), you move between the pages of your channel with the sidebar.
+**Home** is the first page in the sidebar.
+
+## The sidebar
+
+The sidebar lists the pages of the channel in groups.
+The channel switcher is at the top of the sidebar.
+Your account menu is at the bottom of the sidebar.
+On a narrow window, both are in a bar at the top (see [On a smaller screen](#on-a-smaller-screen)).
+
+| Group | Pages |
+| --- | --- |
+| (no heading) | **Home** |
+| (no heading) | **People** |
+| **Live** | **Chat**, **Viewer chat**, **Stream**, **Analytics**, **Polls**, **OBS**, **VTube Studio** |
+| **Music and voice** | **Music**, **Text to speech**, **Media share**, **Sounds** |
+| **Build** | **Commands**, **Triggers and timers**, **Voice triggers**, **Pick lists**, **Event responses**, **Pipelines**, **Overlays**, **Scripts**, **Library**, **Gallery** |
+| **Loyalty** | **Channel points**, **Economy**, **Games**, **Giveaways**, **Quotes**, **Supporters** |
+| (no heading) | **Settings** |
+
+A group with two or more pages has a heading.
+Click the heading to fold or unfold the group.
+The browser remembers which groups you folded.
+
+The group that holds the open page always stays open.
+
+### Pages that are not built yet
+
+**Library**, **Gallery** and **Games** are in the sidebar.
+They are not built yet.
+Each one opens a page that says **Coming soon**.
+
+### Who sees which page
+
+You see a page in the sidebar only when your role may open it.
+The table shows the defaults for the main pages.
+
+| Page | Who may open it by default |
+| --- | --- |
+| **Home** | A moderator and up. The broadcaster may let a VIP open it too. |
+| **Chat** | A moderator and up. The broadcaster may let a VIP open it too. |
+| **Viewer chat** | Any signed-in viewer. It leaves the sidebar for someone who may open **Chat**. |
+| **People** | A moderator and up. |
+| **Settings** | The broadcaster only. |
+
+Every other page has its own default.
+The roles and their order are on [Permissions](/reference/settings/permissions).
+The broadcaster changes who may open each page there.
+
+Right after the dashboard loads, every page can show for a moment.
+The pages you may not open then leave the sidebar.
+
+### The settings sidebar
+
+**Settings** replaces the sidebar with a list of settings pages.
+
+| Group | What it holds, for example |
+| --- | --- |
+| **You** | **Readability** |
+| **Bot** | **Bot basics**, **Bot personality**, **Features** |
+| **Connections** | **Integrations**, **Discord** |
+| **Developers** | **API and devices**, **Webhooks** |
+| **Access** | **Permissions**, **Spam defense**, **Banned people** |
+| **Account** | **Resource limits**, **Your data**, **Channel management** |
+
+**Back to dashboard** at the top leaves the settings.
+It opens **Home**, or the first page your role may open.
+
+Anyone who is signed in may open **Readability**, from the account menu.
+
+### On a smaller screen
+
+The sidebar changes with the width of the window.
+
+| Window width | What you see |
+| --- | --- |
+| 840 px and wider | The full sidebar. |
+| 600 to 839 px | A narrow column of icons. Hover an icon to read its name. A bar at the top holds the channel switcher and the account menu. |
+| Under 600 px | A bar of pages at the bottom of the screen. A bar at the top holds the channel switcher and the account menu. |
+
+The bottom bar shows **Home**, **Chat**, **Stream** and **Commands** first, when your role may open them.
+When you may open more than five pages, the bar shows four pages and **More**.
+**More** opens a drawer with the other pages, in their groups.
+
+## The Home page
+
+**Home** shows what happens in the channel now.
+Its header says **Live on** and the platforms, or **Offline**.
+
+| When the channel is | The header shows | The main button |
+| --- | --- | --- |
+| Live | How long you are live, the viewers, the followers and the **Category** | **Open chat** opens the [Chat page](/reference/community/chat-page). |
+| Offline | When the last stream ended, and how long it was | **Edit stream info** opens the [Stream page](/reference/community/stream-page). |
+
+Under the header are five panels.
+Each panel shows only to someone whose role may read its data.
+
+| Panel | What it holds |
+| --- | --- |
+| **Review queue** | Chat messages that Twitch holds for review. **Allow** lets a message into chat. **Deny** keeps it out. |
+| **Needs attention** | Things that need you. **Open** goes to the page that fixes the item. **Dismiss** clears it. |
+| **Connections** | Each platform, with its account and **Live** or **Offline**. A platform that is not connected shows **Not connected** and a **Connect** button. [Connect platforms](/reference/getting-started/connect-platforms) explains this. |
+| **Quick actions** | Live tools for the stream (see the next table). |
+| **Happening now** | The newest channel events, such as follows, subscriptions, cheers and raids. When the channel is offline, this panel is **Last stream**. |
+
+The review queue is part of the [moderation tools](/reference/moderation/overview).
+
+### Quick actions
+
+| Row | What it shows | Button |
+| --- | --- | --- |
+| **Next ad break** | When the next Twitch ad break starts, and how many times you may still push it back | **Snooze 5 min** pushes the ad break back |
+| **Song queue** | How many songs wait | **Open queue** |
+| **Timers** | How many timers are on, and which one fires next | **Open timers** |
+| **Poll or prediction** | The poll or prediction that runs now | **Start a poll** or **Start a prediction** |
+| **Suggested shoutouts** | Chatters of this stream who may be worth a [shoutout](/reference/moderation/shoutouts) | **Shoutout** or **Not now** |
+
+Polls and predictions are explained on [Polls and predictions](/reference/economy/polls-and-predictions).
+
+<details>
+<summary>Connections: the bot and its services</summary>
+
+Under **Bot and services**, the **Connections** panel shows the [bot account](/reference/getting-started/bot-account) and each service the bot uses.
+The bot account shows **Connected** or **Not in chat**.
+A service shows **Connected**, **Sign in again** or **Not connected**.
+
+</details>
+
+<details>
+<summary>Replay a past event</summary>
+
+Each event in **Happening now** has a **Replay** button.
+It shows the event again: the bot's chat line, the voice and the overlay alerts.
+
+A moderator and up may replay an event.
+**All events** at the top of the panel opens the full list.
+
+</details>
+
+## The header tools
+
+Two tools sit in the page header.
+They show to a moderator and up.
+
+| Tool | What it does |
+| --- | --- |
+| **Shield on** / **Shield off** | Turns Twitch Shield mode on or off for the channel. Shield mode applies the protections you set up for it on Twitch. |
+| **Action required** | Opens the inbox. A number shows how many items wait. |
+
+### Shield mode
+
+The button shows the current state: **Shield on** or **Shield off**.
+Click it to switch.
+On a window 768 px or wider, the change goes to Twitch at once.
+
+On a window under 768 px wide, a dialog asks first.
+Choose **Turn on** or **Turn off**.
+
+By default, a moderator can see the button.
+Only a lead moderator and up may change it.
+The broadcaster changes this on [Permissions](/reference/settings/permissions).
+
+### The Action required inbox
+
+The inbox lists things that need you.
+Each item has **Dismiss**.
+Most items also have **Open**.
+When nothing waits, it says "Nothing needs your attention."
+
+| Kind of item | What it is | How long it stays |
+| --- | --- | --- |
+| A notice from the bot | For example, a connection that needs a new sign-in, or messages held for review | Until you dismiss it. It comes back when the problem happens again. |
+| **Not saved** | A change you made that did not save. The screen went back to the earlier value. | Until you dismiss it or reload the page. |
+
+For a **Not saved** item, choose **Open** to go back to the page, and make the change again.
+
+## The channel switcher
+
+The channel switcher at the top of the sidebar shows the open channel, with **Live** or **Offline**.
+
+1. Click the channel name.
+   A list opens with **Your channel** and **Channels you moderate**.
+   Live channels come first.
+2. Type in **Find a channel**.
+   The list keeps the channels that match.
+3. Choose a channel.
+   The same page opens for that channel.
+
+You may have one item open, such as one [pipeline](/reference/commands/pipelines) in its editor.
+Then the new channel opens on **Home** instead.
+
+<details>
+<summary>Find a channel you do not manage</summary>
+
+Under your own channels, the list shows **Recent channels**.
+When you type in **Find a channel**, it also shows **Visit a channel** and **More on Twitch**.
+
+| Group | What it holds | When you choose one |
+| --- | --- | --- |
+| **Recent channels** | Up to 5 channels you opened last on this device | The channel opens. |
+| **Visit a channel** | Channels this bot serves | The channel opens as a viewer sees it, in the [viewer pages](/reference/community/viewer-pages). |
+| **More on Twitch** | Twitch channels this bot does not serve | The chat of that channel opens on a viewer chat page of the dashboard. |
+
+</details>
+
+## The account menu
+
+The account menu at the bottom of the sidebar shows your name.
+Under it is **Broadcaster** in your own channel, or **Moderator** in a channel you moderate.
+
+| Item | What it does |
+| --- | --- |
+| **Readability** | Opens the [Readability](/reference/settings/readability) settings for this device. |
+| **View as moderator** | Shows the dashboard as a moderator sees it. |
+| **View as viewer** | Opens the viewer pages of your channel, as a viewer sees them. |
+| **Language** | Switches the language of the dashboard. |
+| **Fullscreen** | Hides the browser bars. It shows only when the browser can do this. |
+| **Sign out** | Signs you out and opens the sign-in page. |
+
+Only the broadcaster sees **View as moderator** and **View as viewer**.
+
+### View as another role
+
+When you view as another role, a bar at the top of every page says "Viewing as a moderator" or "Viewing as a viewer".
+It shows on the dashboard and on the viewer pages.
+Choose **Exit** in the bar to go back to your own view.
+
+For **View as viewer**, **Exit** also returns you to the page you left.
+
+The view stays on after a reload, until you choose **Exit**.
+
+## Keyboard shortcuts
+
+Press `?` to open **Keyboard shortcuts**.
+It lists the keys that the open page answers to.
+Press `?` again to close it.
+
+The list changes with the page.
+`?` does nothing while you type in a text field.
+
+## Troubleshooting
+
+::Troubleshooting
+
+**A page is missing from the sidebar.**
+Your role may not open it.
+The broadcaster can change that on the **Permissions** settings page.
+
+::
+
+::Troubleshooting
+
+**The page says "No access to" a channel.**
+You do not manage that channel.
+Pick one of your channels in the switcher, or ask the streamer to make you a moderator.
+
+::
+
+::Troubleshooting
+
+**Shield on or Shield off does not show in the header.**
+The button shows only after the dashboard has read the Shield mode state from Twitch.
+Until then, the header has no **Shield on** or **Shield off** button and no message.
+
+::
+
+## Related pages
+
+- [Make your first command](/reference/getting-started/first-command)
+- [Permissions](/reference/settings/permissions)
+- [Chat page](/reference/community/chat-page)
+- [Stream page](/reference/community/stream-page)
