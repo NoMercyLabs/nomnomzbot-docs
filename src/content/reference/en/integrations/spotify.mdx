@@ -1,0 +1,117 @@
+---
+title: Spotify
+description: Add your own Spotify app, connect your Spotify account to the channel, and see what the connection lets the bot do.
+---
+
+You connect Spotify on the **Integrations** page, under **Settings** in the sidebar.
+The connection lets the bot read and control what plays on your Spotify account.
+The [music player](/reference/music/music-player) uses it.
+
+## Who can use this page
+
+| Role | What they may do |
+| --- | --- |
+| **Moderator**, **Lead moderator** | See the page and the connection status. |
+| **Editor**, **Broadcaster** | Add the Spotify app, connect, reconnect and disconnect. |
+
+Only the **Broadcaster** sees **Settings** in the sidebar.
+A **Moderator**, **Lead moderator** or **Editor** opens the page from a direct link.
+The link is the dashboard address followed by `/app/u/` and the channel name, then `/settings/integrations`.
+The roles are explained on [Permissions](/reference/settings/permissions).
+
+## Make your Spotify app
+
+The bot always connects to Spotify through the channel's own Spotify app.
+You make this app once at Spotify.
+
+1. Create an app at `https://developer.spotify.com/dashboard`.
+2. Add this redirect address to the app, with your own dashboard address in front:
+
+   ```
+   https://your-dashboard.example.com/api/v1/integrations/spotify/callback
+   ```
+
+3. Copy the app's **Client ID** and **Client secret** from Spotify.
+
+## Add your Spotify app
+
+1. Open **Settings** in the sidebar, then **Integrations**.
+   The **Connected services** list shows a **Spotify** row.
+   With no app saved, the row says **No Spotify app yet**.
+   When Spotify is also not connected, the **Your own Spotify app** dialog opens by itself.
+2. If the dialog is closed, choose **Add your Spotify app**.
+3. Type the app's client id in **Client ID**.
+4. Type the app's client secret in **Client secret**.
+5. Choose **Save**.
+   The dialog closes and a message says "Your Spotify app is saved."
+   The row now says **Your own Spotify app**.
+   Under it, **Client ID ending in** shows the last four characters of the client id.
+
+Both fields are required.
+The secret is stored encrypted, and the dashboard never shows it again.
+To change it, choose **Edit** and type a new secret.
+
+## Connect your Spotify account
+
+1. On the **Spotify** row, choose **Connect**.
+   Spotify's own sign-in page opens in a new window.
+   When the browser blocks the window, the dashboard tab itself goes to Spotify.
+2. Sign in to Spotify and accept the permissions.
+   You are back on the dashboard.
+   The row now shows **Connected** and the Spotify account name after **as**.
+
+Choose **Details** on the row to see what the connection holds.
+
+| Line | What it shows |
+| --- | --- |
+| **Permission sets** | The groups of Spotify permissions you accepted. |
+| **Can do** | The things the bot has seen work on your account, such as **use Spotify Premium features**. |
+| **Last sync** | When the bot last synced with Spotify. |
+
+**Connect** asks for two permission sets.
+
+| Permission set | What it lets the bot do |
+| --- | --- |
+| **Control playback** | See what plays, and play, pause and skip. |
+| **Read your library** | Read your playlists and saved songs, and add to them. |
+
+## Reconnect
+
+When the row shows **Sign in again**, Spotify no longer accepts the saved login.
+Choose **Reconnect** on the row.
+Sign in to Spotify.
+The row shows **Connected** again.
+
+## Disconnect Spotify
+
+1. On the **Spotify** row, choose **Disconnect**.
+   A dialog **Disconnect Spotify?** opens.
+   It lists the parts of the channel that stop working, with the real counts.
+2. Choose **Disconnect** in the dialog.
+   A message says "Spotify is disconnected."
+   The row shows **Not connected**.
+
+Your Spotify app stays saved, so you can connect again with **Connect**.
+
+## Remove your Spotify app
+
+1. On the **Spotify** row, choose **Edit**.
+2. Choose **Remove my app** in the dialog.
+   A message says "Your Spotify app is removed."
+   The row says **No Spotify app yet**.
+
+Without the app, the channel cannot connect to Spotify.
+
+## Troubleshooting
+
+::Troubleshooting
+**The row shows "Sign in again (the saved login is unreadable)".**
+The bot cannot read the saved Spotify login.
+Choose **Reconnect** and sign in to Spotify again.
+::
+
+## Related pages
+
+- [Connect platforms](/reference/getting-started/connect-platforms) shows how the stream platforms connect.
+- [Music player](/reference/music/music-player) shows what plays and how to control it.
+- [YouTube](/reference/integrations/youtube) is the other music source.
