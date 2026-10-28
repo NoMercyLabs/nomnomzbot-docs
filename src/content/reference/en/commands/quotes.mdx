@@ -1,0 +1,95 @@
+---
+title: Quotes
+description: Keep, add, edit, delete and read back the channel's quotes on the Quotes page.
+---
+
+You keep the channel's quotes on the **Quotes** page in the sidebar.
+A quote is a line someone said, saved with a number.
+Chat reads quotes back with the `!quote` command, described on [Built-in commands](/reference/commands/built-in-commands).
+
+## Who can use this page
+
+| Action | Who may do it, out of the box |
+| --- | --- |
+| Open the page, search and pick a random quote | **VIP** and up |
+| Add and edit a quote | **VIP** and up |
+| Delete a quote | **Moderator** and up |
+
+The roles are explained on [Permissions](/reference/settings/permissions).
+The edit button and the delete button each show only to someone who may use them.
+
+## What a quote holds
+
+| Field | What it holds |
+| --- | --- |
+| **Quote** | The line. Up to 500 characters. |
+| **Said by** | A name, with or without the `@`. Optional. |
+| **Game** | The game at the time. Optional. |
+| **Said at** | The date and time. When you add a quote, an empty field uses the time you save. When you edit a quote, an empty field keeps the date the quote already has. |
+
+The bot gives each quote its number.
+A number never changes, and it is never given to another quote.
+
+## Add a quote
+
+1. Open **Quotes** in the sidebar and choose **New quote**.
+   The **New quote** dialog opens.
+2. Type the line in **Quote**.
+3. Fill in **Said by**, **Game** and **Said at**, or leave them empty.
+4. Choose **Add quote**.
+   The dialog closes and the quote shows in the list with its number.
+
+An empty **Quote** shows "Type the quote."
+
+## Edit a quote
+
+1. Choose the edit button at the end of the quote's row.
+   The **Edit quote** dialog opens with the quote's fields filled in.
+2. Change the fields.
+3. Choose **Save quote**.
+   The dialog closes and the row shows the new text.
+
+The number stays the same.
+
+## Delete a quote
+
+1. Choose the delete button at the end of the quote's row.
+   A dialog asks "Delete quote" with the number.
+2. Choose **Delete quote**.
+   The quote leaves the list.
+
+The quote is removed for good.
+Its number is not given to another quote, so the numbers in the list can have a gap.
+
+## Find a quote
+
+Type in **Search the quotes** above the list.
+The list keeps the quotes whose line or **Said by** name holds your text, in any letter case.
+When nothing matches, the list shows "No quote matches your search."
+
+The list shows the newest number first, 50 quotes at a time.
+Choose **Show more quotes** at the bottom to see the next 50.
+Each row shows the number, the line, and then the name, the game and the date.
+
+## Pick a random quote
+
+Choose **Random quote** at the top of the page.
+One quote, picked at random, shows above the search box.
+On a narrow screen the button shows its dice icon only.
+
+When the channel has no quotes, the list shows "No quotes yet."
+
+## Changes from chat
+
+By default, everyone in chat may read a quote with `!quote`.
+Adding and editing a quote in chat need the same role as on this page, **VIP** and up by default.
+Deleting a quote in chat needs **Moderator** and up by default.
+
+A viewer without the role who tries to add, edit or delete gets a line from the bot that they may not do it.
+A quote added, edited or deleted with `!quote` in chat also shows on this page.
+The list updates by itself, with no reload.
+
+## Related pages
+
+- [Built-in commands](/reference/commands/built-in-commands)
+- [Create a command](/reference/commands/create-a-command)
