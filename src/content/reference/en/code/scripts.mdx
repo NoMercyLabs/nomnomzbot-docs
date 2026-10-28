@@ -1,0 +1,148 @@
+---
+title: Code scripts (Draft)
+description: Create, edit, test, switch on and delete a code script on the Scripts page, and read why a save or a run failed.
+---
+
+You write small scripts for the bot on the **Scripts** page in the sidebar.
+A code script is a piece of code that a [pipeline](/reference/commands/pipelines) step runs.
+This page is part of **Code and SDK (Draft)**: it describes only what the bot does today.
+
+## Turn on Custom Code
+
+Custom Code is off for a new channel.
+While it is off, the **Scripts** page shows the bot's reason instead of a list: "Custom code is not enabled for this channel. Enable it on the Features page."
+
+1. Open **Features** in the settings.
+2. Find **Custom Code** in the **Automation** group and switch it on.
+   The switch takes effect right away, and the **Scripts** page shows the list.
+
+A **Moderator**, **Lead moderator**, **Editor** or **Broadcaster** may switch features on and off.
+
+## Who can use this page
+
+A **Moderator**, **Lead moderator**, **Editor** or **Broadcaster** may open the page and change scripts.
+The broadcaster may raise this, or give it to one named person, on the **Permissions** settings page.
+
+## Create a script
+
+1. Open **Scripts** in the sidebar and choose **New script**.
+   The **New script** dialog opens.
+2. Type a name in **Name**.
+3. Choose **Create script**.
+   The dialog closes and the new script opens beside the list.
+
+The new script starts with a small example.
+The example picks a number from 1 to a die size and sends nothing to chat yet.
+
+| Rule | What happens |
+| --- | --- |
+| The name is empty | **Create script** does nothing. |
+| The name is longer than 100 characters | The bot refuses it. |
+| Another script of the channel has the same name | The bot refuses it with "A script with that name exists." |
+
+When the bot refuses, the dialog stays open with the reason.
+Nothing is made.
+
+## Find a script
+
+The list shows each script with its name and when it last ran, or **Never run**.
+A script whose last run failed carries the **Failed** badge.
+**Search scripts** filters the list by name and description.
+
+| Tab | What it holds |
+| --- | --- |
+| **All** | Every script of your channel. |
+| **On** | Scripts that are switched on. |
+| **Off** | Scripts that are switched off. |
+| **Failed** | Scripts whose last run failed. |
+
+When the channel has no script, the list shows "This channel has no scripts yet."
+
+## Read a script
+
+Pick a script in the list.
+Its card opens beside the list.
+
+| Part of the card | What it shows |
+| --- | --- |
+| Run status | **Never run**, **Last run worked** with the time, or **Last run failed** with the error. |
+| Description | The script's description, or "This script has no description." |
+| **Runs from** | The commands, pipelines and other items that run this script. |
+| **What it reads when it starts** | The values from the trigger that the code reads, such as "The words typed after the command". |
+| **What it can do** | What the script asks for, such as **Send chat messages** or **Save values**. |
+| **Version** | The number of the version that runs now. |
+| **Language** | The language of the code. |
+
+When nothing runs the script, **Runs from** shows "Nothing runs this script yet. Add it to a pipeline step."
+The [script run page](/reference/code/how-a-script-runs) explains how a step runs the script.
+
+The footer reads "Each run stops after 8 s, 64 calls or 64 MB."
+
+## Edit the code
+
+1. Pick the script and choose **Edit code**.
+   The code editor opens with the script's files and the types of the SDK.
+2. Change the code.
+3. Choose **Save & Compile**.
+   The bot checks and builds the code.
+
+When the build works, the bot saves it as the next version.
+That version runs from now on, and **Version** on the card shows its number.
+
+When the build fails, the bot saves nothing.
+The editor shows the reason, and the script keeps running its last good version.
+
+## Test a script
+
+The **Test** card runs the script without real effects.
+"A test run is a dry run. Nothing it does reaches chat."
+
+1. Under **Trigger**, pick an event in **Event to test with (only events this script reads from)**, or leave **No event**.
+   The list shows only when the code reads a value from a trigger.
+2. Choose **Run test**.
+   The card shows **Worked** or **Failed** with the time in milliseconds.
+
+The test runs the version that runs now, not unsaved code in the editor.
+After a run, **Timeline** lists each step: **Started**, **Chat**, **Effect**, **Console** and **Error**.
+The lines the script would send to chat are shown on the card.
+
+When you test too often, the button shows "Too many tests, wait a moment" and comes back after a short wait.
+
+### Read a failed run
+
+A failed test run opens **The run failed** at once.
+It shows the error, the file, line and column, the **Steps**, **What it did before it stopped**, and the **Log**.
+
+Each test run of this visit is listed under **This session**, newest first.
+On a narrow screen, **Runs** in the page header opens that list.
+The list is kept only while the page is open: a reload clears it.
+
+## Switch a script on or off
+
+Use the switch on the script's row in the list, or the switch next to **Edit code** on its card.
+
+A new script is switched on when it is made.
+
+## Copy a script
+
+1. Pick the script and choose **Duplicate**.
+2. The copy opens beside the list.
+
+The copy is named after the script with " copy" at the end.
+It holds the code that runs now.
+
+## Delete a script
+
+1. Pick the script and choose **Delete**.
+   A dialog asks to delete the script by name and lists what uses it.
+2. Choose **Delete script**.
+   The script is gone, and the card closes.
+
+When nothing uses the script, the dialog says "Nothing else uses this script."
+A delete cannot be undone.
+
+## Related pages
+
+- [Pipelines](/reference/commands/pipelines)
+- [How a script runs](/reference/code/how-a-script-runs)
+- [A worked example](/reference/code/worked-example)
