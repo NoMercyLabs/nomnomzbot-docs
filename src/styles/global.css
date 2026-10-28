@@ -309,7 +309,7 @@
      browser default; this restores a visible indicator for keyboard
      users without affecting mouse interaction. */
   :focus-visible {
-    outline: 2px solid rgb(16 185 129);
+    outline: 2px solid var(--color-accent);
     outline-offset: 2px;
   }
 
@@ -601,9 +601,27 @@ html[data-spacing='wide'] .prose :where(pre, pre *, code, code *) {
 /* Narrow caps every block of the body at about 65 characters, the line
    length that is easiest to track back to the start of the next line. In ch,
    not rem: a rem cap grows with the text size setting and at 150% would be
-   wider than the normal column. */
-html[data-reading-width='narrow'] :where(.prose > *) {
-  max-width: 65ch;
+   wider than the normal column. The cap is measured once, on the column, in
+   the body text size: a registered length is absolute where it is computed, so
+   a larger heading shares the paragraph's cap instead of getting 65 of its own
+   wider characters. Headings and other React blocks render inside an
+   <astro-island>, so the island's child gets the cap too. */
+@property --reading-cap {
+  syntax: '<length>';
+  inherits: true;
+  initial-value: 0px;
+}
+html[data-reading-width='narrow'] .prose {
+  --reading-cap: 65ch;
+}
+html[data-reading-width='narrow'] :where(.prose > *, .prose > astro-island > *) {
+  max-width: var(--reading-cap);
+}
+/* A table keeps the width its columns need. It shares the text's centre, not
+   the left edge the full layout gives it. */
+html[data-reading-width='narrow'] .prose > table {
+  max-width: min(100%, var(--container-5xl));
+  margin-inline: auto;
 }
 /* Read aloud: the block being spoken. An outline, not a border, so the text
    never shifts while the voice moves from block to block. */
