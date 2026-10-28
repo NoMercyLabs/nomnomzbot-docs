@@ -1,0 +1,173 @@
+---
+title: Media share
+description: Let viewers share Twitch clips and YouTube videos to the stream, and approve, order, skip and play what they share.
+---
+
+You run media share on the **Media share** page in the sidebar.
+Viewers share a Twitch clip or a YouTube video, and the bot puts it in a queue.
+You approve each item and set the play order.
+
+The media share overlay plays the items on stream.
+
+The overlay plays only when its browser source is loaded in OBS.
+The setup is on [OBS browser source](/reference/overlays/obs-browser-source).
+
+## Who can use this page
+
+By default a moderator and every role above it may open the page, work the queue, change the settings and use the player.
+The broadcaster can change who may do each of these on [Permissions](/reference/settings/permissions).
+Someone who may open the page but not change the settings sees the settings, but cannot change them.
+
+## Turn media share on
+
+Media share is off until you turn it on.
+
+1. Open **Media share** in the sidebar and choose **Settings**.
+   The settings panel opens at the side of the page.
+2. Turn on **Accept media from viewers**.
+3. Change any other setting from the table below, or keep the defaults.
+4. Choose **Save settings**.
+   The values stay in the panel, and viewers can now share media.
+
+**Discard** puts back the saved values before you save.
+
+| Setting | What it does | Default |
+| --- | --- | --- |
+| **Accept media from viewers** | Turns media share on. When it is off, the bot refuses every shared item. | Off |
+| **Approve each item before it plays** | A shared item waits for a moderator before it can play. When it is off, a shared item goes straight to the play order. | On |
+| **Allow Twitch clips** | Accepts Twitch clip links. | On |
+| **Allow YouTube videos** | Accepts YouTube video links, including Shorts. | On |
+| **Twitch subscribers only** | Only Twitch subscribers can share media. Everyone else is turned away. | Off |
+| **Longest item (seconds)** | The bot refuses a clip or video that is longer than this. It must be at least 1. | 180 seconds |
+| **Cost per item (points)** | The channel currency a viewer pays to share one item. 0 means free. | 0 (free) |
+| **Longest queue** | The most items that can wait, play or be up next at the same time. It must be at least 1. | 20 |
+| **Wait between items per viewer (seconds)** | How long one viewer waits before they can share the next item. 0 means no wait. | 60 seconds |
+
+The cost is paid in the channel currency, explained on [Currency and balances](/reference/economy/currency-and-balances).
+When an item the viewer paid for is rejected, removed or skipped, the bot gives the viewer a refund.
+
+The refund is the channel's **Cost per item** at the moment of the refund, not the amount the viewer paid.
+When **Cost per item** is 0 by then, the refund is 0.
+
+## How viewers share media
+
+A viewer shares an item in two ways.
+
+| Way | How it works |
+| --- | --- |
+| Chat command | The viewer types `!media` and the link, for example `!media https://clips.twitch.tv/...`. |
+| Channel-point reward or other pipeline | A pipeline with a **Submit media** step shares the link for the viewer who started it. |
+
+The `!media` command is a built-in command, open to everyone by default.
+You change its replies and who may use it on [Built-in commands](/reference/commands/built-in-commands).
+
+To share from a [channel-point reward](/reference/automation/rewards), add a **Submit media** step to the reward's [pipeline](/reference/commands/pipelines).
+Put the link in its URL field.
+The field takes [template variables](/reference/commands/variables-and-templates), so it can hold the text the viewer typed.
+
+### What the bot answers
+
+The bot replies in chat to every `!media` message.
+
+| Result | What the bot says |
+| --- | --- |
+| No link after `!media` | How to use the command. |
+| Approval is on | The item is shared and a moderator reviews it. |
+| Approval is off | The item is added to the queue. |
+| Media share is off | Media share is not on in this channel. |
+| The link is not an allowed Twitch clip or YouTube video | Only the allowed clips and videos can be queued. |
+| The clip or video does not exist | It could not find it. |
+| The item is longer than **Longest item (seconds)** | The clip is too long. |
+| The viewer is not a subscriber while **Twitch subscribers only** is on | The viewer cannot share media now. |
+| The viewer shares again within the wait | The viewer must wait before the next item. |
+| The queue is at **Longest queue** | The queue is full. |
+| The bot cannot look up the link right now | Try again in a moment. |
+| Any other failure, such as too few points | The item could not be shared. |
+
+A refused item costs the viewer nothing.
+
+## Work the queue
+
+The **Queue** card lists the shared items in three sections.
+A section with no items is not shown.
+The card heading shows how many items still wait, are up next or play.
+
+| Section | Items in it | Actions |
+| --- | --- | --- |
+| **Waiting for approval** | Items a moderator has not decided on yet. | **Approve**, **Reject** |
+| **Up next** | Approved items, in play order. | **Play now**, **Skip**, **Remove**, and **Move up** or **Move down** in **More actions** |
+| **History** | Items that played, were rejected or were skipped. | None |
+
+Each row shows the title, "Shared by" and the viewer's name, the length and the source.
+An item in **Up next** also shows its place in the play order.
+When nothing was shared yet, the card shows "No media has been shared yet."
+
+### Approve or reject an item
+
+Choose **Approve** on an item in **Waiting for approval**.
+The item moves to the end of **Up next**.
+
+Choose **Reject** to turn the item down.
+The item moves to **History**, and a viewer who paid gets the refund.
+
+### Change the play order
+
+Open **More actions** on an item in **Up next**, then choose **Move up** or **Move down**.
+The item changes place by one, and the positions of the other items follow.
+
+Choose **Play now** to play an item at once.
+The item moves to the top of **Up next**.
+
+When nothing plays, the player starts with this item.
+When something plays, the bot skips it and plays this item.
+
+The skipped item moves to **History** as skipped, and its viewer gets the refund if they paid.
+The first item in **Up next** has no **Play now**.
+
+### Skip or remove an item
+
+Choose **Skip** on an item in **Up next**.
+The item moves to **History** as skipped, and a viewer who paid gets the refund.
+
+Choose **Remove** to take an item out of the queue.
+The dialog **Remove this item?** shows the title.
+Choose **Remove** in the dialog: the item moves to **History** as rejected, and a viewer who paid gets the refund.
+
+## Play items on stream
+
+The **On stream** card at the top of the page shows what the media share overlay plays now.
+It shows the title, the viewer who shared it, **Playing** or **Paused**, and the time in the item.
+
+| Control | What it does |
+| --- | --- |
+| **Play** | Starts the first item in **Up next**, or goes on with a paused item. |
+| **Pause** | Pauses the item on stream. |
+| **Skip to the next item** | Skips the item that plays and starts the next one. A viewer who paid gets the refund. |
+| **Stop playback** | Ends the item that plays and moves it to **History** as played. The next item does not start. |
+| **Place in the item** | Moves to another point in the item. |
+| **Overlay volume** | How loud the overlay plays, from 0 to 100. |
+
+When an item ends on the overlay, it moves to **History** as played and the next item starts.
+When nothing is approved, the card shows "Approve an item to play it on stream."
+By default a moderator and every role above it may use the player.
+
+A **Media playback** step in a [pipeline](/reference/commands/pipelines) runs the same controls.
+It can also play a finished item again, or play an approved item at once.
+The [Pipelines](/reference/commands/pipelines) page explains how to set up a step.
+
+## Troubleshooting
+
+::Troubleshooting
+
+**The On stream card says "The Media share browser source is not loaded in OBS, so nothing plays on stream."**
+The media share overlay is not in OBS.
+Choose **Set up in OBS** and add the overlay as a browser source, as [OBS browser source](/reference/overlays/obs-browser-source) explains.
+
+::
+
+## Related pages
+
+- [OBS browser source](/reference/overlays/obs-browser-source)
+- [Channel-point rewards](/reference/automation/rewards)
+- [Built-in commands](/reference/commands/built-in-commands)
+- [Sounds](/reference/audio/sounds)
