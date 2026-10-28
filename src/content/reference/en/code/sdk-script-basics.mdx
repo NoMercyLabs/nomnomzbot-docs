@@ -1,0 +1,200 @@
+---
+title: Script basics (Draft)
+description: Know the bot and nnz names a script can use without a grant, how a script gets its grants, and how to read why a bot call failed.
+---
+
+A script has two names to work with: `bot` and `nnz`.
+This page lists the parts that need no grant, and explains the grants that every bot call needs.
+The order of a run and its limits are on [How a script runs](/reference/code/how-a-script-runs).
+
+::Callout
+**Draft**: this part of the guide is not finished yet.
+::
+
+## Turn on Custom Code
+
+Custom Code is off for a new channel.
+While it is off, every grant is refused, and a script that makes a bot call does not run.
+
+1. Open the **Features** settings page.
+2. Find **Custom Code** in the **Automation** area.
+3. Switch it on.
+   The switch takes effect right away.
+
+## The bot name
+
+The `bot` name holds the values of the run and the raw bridge to the bot.
+[How a script runs](/reference/code/how-a-script-runs) explains what each part hands back to the pipeline.
+
+| Member | Type |
+| --- | --- |
+| `bot.args` | `string[]` |
+| `bot.getVar(key)` | `string \| null` |
+| `bot.setVar(key, value)` | nothing; the value is text |
+| `bot.send(message)` | nothing |
+| `bot.stopPipeline()` | nothing |
+| `bot.call(key, ...args)` | `string \| null` |
+
+`bot.call` is the one door that every `nnz.api` call goes through.
+It takes a grant key and text arguments.
+A key that the script was not granted is denied.
+
+`console.log` and `console.info` write a line to the test run panel.
+`console.warn` starts the line with "warn:", and `console.error` starts it with "error:".
+Viewers never see these lines.
+
+## Helpers that need no grant
+
+These helpers run inside the script.
+They make no bot call and need no grant.
+
+### Units
+
+`nnz.units.convert(value, from, to)` converts a value between units, for example `convert(10, 'km', 'mi')`.
+It knows length, weight, time and temperature.
+It gives `NaN` when the two units do not match.
+
+### Time
+
+| Member | What it gives |
+| --- | --- |
+| `nnz.time.now()` | The time now, as ISO 8601 text. |
+| `nnz.time.parse(iso)` | The time in epoch milliseconds, or `NaN` when the text is not a date. |
+| `nnz.time.format(epochMs)` | The time as ISO 8601 text. |
+| `nnz.time.add(iso, ms)` | The time moved by `ms`; a negative number goes back. |
+| `nnz.time.diff(a, b)` | `a` minus `b`, in milliseconds. |
+| `nnz.time.sleep(ms)` | A pause before the next statement, at most 5 seconds. |
+
+The pause counts against the run's time limit.
+
+### Math
+
+| Member | What it gives |
+| --- | --- |
+| `nnz.math.clamp(value, min, max)` | The value held between `min` and `max`. |
+| `nnz.math.round(value, digits)` | The value rounded to `digits` decimal places. Default: 0. |
+| `nnz.math.lerp(a, b, t)` | The point between `a` and `b` at `t`. |
+| `nnz.math.sum(values)` | The total of the list. |
+| `nnz.math.avg(values)` | The average of the list, or 0 for an empty list. |
+| `nnz.math.min(values)` | The smallest value. |
+| `nnz.math.max(values)` | The largest value. |
+| `nnz.math.randomInt(min, max)` | A random whole number from `min` to `max`, both included. |
+
+### Text
+
+| Member | What it gives |
+| --- | --- |
+| `nnz.str.padStart(value, length, pad)` | The text padded at the start. Default pad: a space. |
+| `nnz.str.padEnd(value, length, pad)` | The text padded at the end. Default pad: a space. |
+| `nnz.str.trim(value)` | The text without spaces at both ends. |
+| `nnz.str.upper(value)` | The text in upper case. |
+| `nnz.str.lower(value)` | The text in lower case. |
+| `nnz.str.title(value)` | Each word starting in upper case. |
+| `nnz.str.truncate(value, length, ellipsis)` | The text cut to `length` characters, the ellipsis included. Default: "…". |
+| `nnz.str.slugify(value)` | A lower case slug with dashes: "Hello World" gives "hello-world". |
+| `nnz.str.format(template, values)` | Each `{name}` filled from `values`; a name with no value stays as it is. |
+
+### JSON
+
+`nnz.json.parse(text)` gives `null` when the text is not valid JSON.
+`nnz.json.stringify(value)` gives the text "null" when the value cannot be written as JSON.
+Neither one throws.
+
+### Random
+
+| Member | What it gives |
+| --- | --- |
+| `nnz.random.int(min, max)` | A random whole number from `min` to `max`, both included. |
+| `nnz.random.pick(items)` | A random item of the list. An empty list stops the script with an error. |
+| `nnz.random.shuffle(items)` | A shuffled copy; the list itself stays as it is. |
+| `nnz.random.uuid()` | A random version 4 UUID. |
+
+### Last error
+
+`nnz.lastError` holds the error of the last bot call that failed, or `null`.
+Reading it is not a bot call and needs no grant.
+
+## How a script gets its grants
+
+A script never asks for a grant by hand.
+When you save the code, the bot reads which bot calls the code names, and keeps that list with the version.
+
+1. Each `nnz.api` call in the code adds its grant key.
+2. Each `bot.call('key', ...)` with a key in quotes adds that key.
+3. `nnz.template.render` adds the grant `template.render`.
+4. Each `nnz.api.actions.invoke('type', ...)` adds the grant for that one action type.
+
+When the script runs, the bot checks every key on the list.
+A key that does not exist, or a channel with Custom Code off, stops the whole run before it starts.
+A call to a key that is not on the list is denied while the script runs.
+
+`nnz.api.actions.invoke` needs its action type as text in quotes.
+A type built in code cannot be granted, and the save fails with "nnz.api.actions.invoke needs its action type as a string literal (for example 'tts_synthesize'): a grant is per action type, so a computed type can never be granted."
+
+### Grant keys
+
+| Call | Grant key |
+| --- | --- |
+| `nnz.api.chat.send` | `chat.send` |
+| `nnz.api.chat.reply` | `chat.reply` |
+| `nnz.api.user.get` | `user.get` |
+| `nnz.api.user.lookup` | `user.lookup` |
+| `nnz.api.economy.balance` | `economy.read` |
+| `nnz.api.music.nowPlaying` | `music.nowPlaying` |
+| `nnz.api.music.queue` | `music.queue` |
+| `nnz.api.music.playNow` | `actions.invoke:play_track_once` |
+| `nnz.api.http.fetch` | `http.fetch` |
+| `nnz.api.storage.get` | `storage.get` |
+| `nnz.api.storage.set` | `storage.set` |
+| `nnz.api.storage.delete` | `storage.delete` |
+| `nnz.api.storage.list` | `storage.list` |
+| `nnz.api.tts.speak` | `tts.speak` |
+| `nnz.api.tts.speakSequence` | `tts.speakSequence` |
+| `nnz.api.tts.getVoice` | `tts.voice.get` |
+| `nnz.api.tts.setVoice` | `tts.voice.set` |
+| `nnz.api.tts.listVoices` | `tts.voice.list` |
+| `nnz.api.stats.viewer` | `stats.viewer` |
+| `nnz.api.stats.stream` | `stats.stream` |
+| `nnz.api.widget.emit` | `widget.emit` |
+| `nnz.api.reward.get` | `reward.get` |
+| `nnz.api.reward.update` | `reward.update` |
+| `nnz.api.schedule.pipeline` | `schedule.pipeline` |
+| `nnz.api.actions.invoke('type', ...)` | `actions.invoke:` and the type |
+| `nnz.template.render` | `template.render` |
+
+The calls themselves are on [Chat, music and voice](/reference/code/sdk-chat-music-voice) and [Data and storage](/reference/code/sdk-data-and-storage).
+
+## Read why a bot call failed
+
+A bot call that fails gives back its empty result, such as `null`, `false` or an empty list.
+The script goes on.
+`nnz.lastError` then says why, with a `code` and a `message`.
+
+| Code | Meaning |
+| --- | --- |
+| `invalid_argument` | A value passed to the call is missing or wrong. |
+| `not_found` | No viewer, widget or reward matches. |
+| `refused` | The bot will not do it, for example the widget is turned off. |
+| `rate_limited` | The work behind the call reported too many requests. |
+| `limit_exceeded` | The call went over a limit of the run. |
+| `upstream_failed` | The service behind the call did not answer with success. |
+
+Every bot call clears `nnz.lastError` first, so it only ever describes the last call.
+
+This script tries to store a value and posts the reason when the store refuses it:
+
+```js
+const saved = nnz.api.storage.set('last.hug', bot.args[0] || 'chat');
+
+if (!saved) {
+  nnz.api.chat.send('Not saved: ' + nnz.lastError.message);
+}
+```
+
+The bot posts that line in chat in the channel's one bot voice.
+
+## Related pages
+
+- [How a script runs](/reference/code/how-a-script-runs)
+- [Chat, music and voice](/reference/code/sdk-chat-music-voice)
+- [Data and storage](/reference/code/sdk-data-and-storage)
