@@ -1,0 +1,195 @@
+---
+title: OBS
+description: Link OBS to the bot, switch scenes, start and stop the stream and recording, and read the health of the link.
+---
+
+You link OBS to the bot on the **OBS** page in the sidebar.
+With the link on, the bot can switch scenes, start and stop the stream and the recording, and change sources and audio.
+The link is a remote control for OBS.
+An [overlay link](/reference/overlays/obs-browser-source) is a different thing: it only shows a page in OBS.
+
+The page has three tabs.
+
+| Tab | What it holds |
+| --- | --- |
+| **Live** | The outputs, the scenes, the audio mixer and the sources of the scene on air. |
+| **Studio and tools** | Studio mode, OBS hotkeys and source screenshots. |
+| **Overlays in OBS** | The overlays to add to OBS as browser sources, explained on [OBS browser source](/reference/overlays/obs-browser-source). |
+
+## Who can use this page
+
+Different parts of the page need different roles.
+The roles are explained on [Permissions](/reference/settings/permissions).
+
+| What | Who may do it |
+| --- | --- |
+| Open the page and see the scenes and sources | A **Moderator** and up |
+| Switch scenes, change sources, audio, studio mode and hotkeys | An **Editor** and up. The broadcaster may lower this to a moderator. |
+| Start and stop the stream and the recording | The **Broadcaster** |
+| See and change the link to OBS | The **Broadcaster** |
+
+Without the right to control OBS, the page shows "Controlling OBS needs the Editor role or the OBS control permission."
+The controls then stay visible but are grayed out.
+
+## Link OBS
+
+OBS has its own remote-control server, the OBS WebSocket server.
+The bot connects to it.
+
+1. In OBS, open **Tools**, then **WebSocket Server Settings**.
+   Turn the server on, and note the port and the password.
+2. In the dashboard, open **OBS** in the sidebar and choose **Link OBS** at the top of the page.
+   The **OBS connection** dialog opens.
+3. Type the address of the computer that runs OBS in **Host**, and the port in **Port**.
+4. Type the OBS WebSocket password in **OBS password**.
+5. Turn on **Link to OBS** at the top of the dialog.
+6. Choose **Save connection**.
+   The dialog closes.
+   The top line shows **Connected** with a green dot once OBS answers.
+
+The bot keeps trying until OBS answers.
+It waits 2 seconds after a failed try, and doubles the wait each time, up to 60 seconds.
+After the first save, the button at the top reads **Edit connection**.
+
+| Field | What it does | Default |
+| --- | --- | --- |
+| **Link to OBS** | Switches the link on or off. | Off |
+| **Host** | Where the bot finds OBS. `127.0.0.1` is the computer the bot itself runs on. An empty box is saved as `127.0.0.1`. | `127.0.0.1` |
+| **Port** | The port of the OBS WebSocket server, from 1 to 65535. | `4455`, the OBS default |
+| **OBS password** | The OBS WebSocket password. The box is always empty when it opens. | None |
+| **OBS events to listen to** | The kinds of OBS events the bot receives. | Every group on, except the four marked "(high volume)" |
+
+::Callout
+
+The password is stored sealed and is never shown again.
+When a password is stored, the dialog says "A password is stored. Leave this empty to keep it."
+Choose **Remove password** to clear it on the next save.
+
+::
+
+<details>
+<summary>OBS events to listen to</summary>
+
+The bot receives events from OBS, such as a scene change or the end of a recording.
+You can use them in [event responses](/reference/automation/event-responses).
+
+The 15 event groups are switches under **OBS events to listen to**, below the password in the **OBS connection** dialog.
+The 4 groups marked "(high volume)" send many events per second, so they are off by default.
+Turn one on only when a widget needs it.
+
+</details>
+
+## Read the health of the link
+
+The line at the top of every tab shows two things, each with a colored dot.
+The first is the link to OBS.
+The second is the browser source bridge: a hidden page that runs inside OBS as a browser source.
+
+A red dot beside **OBS** also shows the last error from OBS.
+Without a red dot, the line shows the host and port.
+
+| Words beside **OBS** | Dot | What it means |
+| --- | --- | --- |
+| **The link to OBS is switched off** | Gray | **Link to OBS** is off. |
+| **The link to OBS failed** | Red | The last try to reach OBS gave an error. |
+| **Linked, but OBS did not answer** | Orange | The link is on, but OBS did not answer when the page asked for its state or scenes. |
+| **Connected** | Green | OBS answers. |
+
+The **OBS connection** dialog also shows **Last error** and **Last connected**, when the bot has them.
+
+The bridge is the **OBS control** row on the **Overlays in OBS** tab.
+When the bot reaches OBS through its WebSocket server, the bridge is not needed, and the line says "No bridge page is open in OBS. Only browser sources need it."
+
+The page title also carries one dot for the whole page.
+It shows the worst problem it finds: the link, the bridge, or an overlay that is not loaded or failed.
+When all is well, it reads **Everything is loaded**.
+
+## Go live and record
+
+The **Outputs** panel on the **Live** tab has one row per output, with its state and how long it has run.
+
+| Row | Buttons | States |
+| --- | --- | --- |
+| **Stream** | **Go live**, or **Stop stream** | **Off air**, **Live** |
+| **Recording** | **Start** or **Stop**, and while recording **Pause** or **Resume** and **Split file** | **Not recording**, **Recording**, **Paused** |
+| **Replay buffer** | **Start** or **Stop**, and while it runs **Save clip** | **Running**, **Stopped** |
+| **Virtual camera** | **Start** or **Stop** | **Running**, **Stopped** |
+
+**Stop stream** asks first, with the dialog **Stop the stream?**.
+It says that OBS ends the broadcast on every platform it streams to.
+It also says that a recording keeps running.
+Choose **Stop stream** in the dialog to end it.
+
+Only the broadcaster may use the **Stream** and **Recording** buttons.
+Others see "Starting and stopping the stream or a recording needs the broadcast control permission."
+
+While the link is on, the **Live** tab also shows a status line from OBS: bitrate, dropped frames, CPU, FPS and memory.
+
+## Switch scenes
+
+The **Scenes** panel lists the scenes OBS reports.
+The scene on air is marked **On air**.
+Choose a scene to put it on air.
+
+## Change sources and audio
+
+| Panel | What you can do |
+| --- | --- |
+| **Sources in the scene** | Show or hide a source of the scene on air, lock or unlock it, and turn its filters on or off. |
+| **Audio mixer** | Mute or unmute an audio source, and move its level slider. |
+
+## Studio and tools
+
+| Panel | What you can do |
+| --- | --- |
+| **Studio mode** | Turn studio mode on, pick the **Preview scene** and the **Transition**, set **Duration (seconds)**, and choose **Transition** to put the preview on air. |
+| **Hotkeys** | Press an OBS hotkey, as if you pressed it in OBS. **Search the hotkeys** finds one. |
+| **Source screenshot** | Pick a source and an **Image format**, then choose **Capture** to see a picture of it. |
+
+## Control OBS from other places
+
+The dashboard page is not the only way to control OBS.
+
+- A [pipeline](/reference/commands/pipelines) has 19 OBS steps, such as switching a scene, starting the recording or saving a replay. A command, a reward, an event response or a timer can run it.
+- A Stream Deck key can run the same OBS actions, as [Stream Deck and API devices](/reference/integrations/stream-deck-and-api-devices) explains.
+
+When an OBS step cannot run because OBS is not connected, the dashboard shows the notice "OBS is not connected".
+It counts the actions that could not run, and clears when OBS connects again.
+Its **Open OBS** button opens this page.
+
+When the link is on, the bot also refreshes an open overlay browser source that has no connection to the bot.
+It refreshes only a source that is switched on in a scene and shows an overlay that is switched on.
+[OBS browser source](/reference/overlays/obs-browser-source) explains the overlay side.
+
+## Troubleshooting
+
+::Troubleshooting
+
+**The top line shows "The link to OBS failed".**
+Open **Edit connection** and read **Last error**.
+Check that the OBS WebSocket server is on, and that **Host**, **Port** and **OBS password** match OBS.
+
+::
+
+::Troubleshooting
+
+**The panels say "Scenes show once the OBS link is switched on."**
+**Link to OBS** is off.
+Open **Edit connection**, turn it on and choose **Save connection**.
+
+::
+
+::Troubleshooting
+
+**The bot runs on another computer and never connects.**
+`127.0.0.1` points at the computer the bot runs on, not at your streaming PC.
+Type the address of the computer that runs OBS in **Host**, and make sure that computer lets the bot reach the port.
+
+::
+
+## Related pages
+
+- [OBS browser source](/reference/overlays/obs-browser-source)
+- [Set up overlays](/reference/overlays/set-up-overlays)
+- [Pipelines](/reference/commands/pipelines)
+- [Permissions](/reference/settings/permissions)
