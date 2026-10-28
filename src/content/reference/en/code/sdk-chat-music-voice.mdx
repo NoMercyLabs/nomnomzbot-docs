@@ -1,0 +1,223 @@
+---
+title: Chat, music and voice (Draft)
+description: Use the nnz.api calls that post in chat, read and request music, and speak text aloud, with their parameters, results and grants.
+---
+
+A script reaches chat, the music player and text to speech through `nnz.api.chat`, `nnz.api.music` and `nnz.api.tts`.
+This page lists each call with its parameters, its result and its grant.
+How grants work and how to read a failed call is on [Script basics](/reference/code/sdk-script-basics).
+
+::Callout
+**Draft**: this part of the guide is not finished yet.
+::
+
+## Before you start
+
+Custom Code must be on for the channel.
+[Script basics](/reference/code/sdk-script-basics) shows where you switch it on.
+Every call on this page needs its grant, and the bot adds the grant when you save code that names the call.
+
+A left-out, `null`, empty or unknown value follows the one rule on [Script basics](/reference/code/sdk-script-basics).
+The only exception on this page is `speakSequence`, under [Speak in several voices](#speak-in-several-voices).
+
+## Chat
+
+The bot posts every line in chat in the channel's one bot voice.
+
+| Call | Result | Grant |
+| --- | --- | --- |
+| `nnz.api.chat.send(text)` | nothing | `chat.send` |
+| `nnz.api.chat.reply(text)` | nothing | `chat.reply` |
+
+### Send a line
+
+`nnz.api.chat.send(text)` posts `text` in the channel's chat.
+Empty text is a failed call with the code `invalid_argument`, and the script goes on.
+A line that does not reach chat sets the code `upstream_failed`.
+
+### Reply to a message
+
+`nnz.api.chat.reply(text)` answers the chat message that started the script, as a threaded reply.
+When the platform refuses the thread, the bot posts the line with a mention of the viewer instead.
+When no chat message started the script, the bot posts a normal line.
+
+### Chat values a command script can read
+
+A script that a chat command or a chat trigger runs can read these values with `bot.getVar(key)`.
+
+| Key | Value |
+| --- | --- |
+| `user` | The viewer's display name. |
+| `user.id` | The viewer's id on the platform. |
+| `user.name` | The viewer's login. |
+| `user.provider` | The platform the viewer chats on. |
+| `user.role` | The viewer's role in the channel. |
+| `user.bits` | The bits on this message. |
+| `message` | The whole chat line, the command word included. |
+| `args` | The text after the command word. |
+| `args.count` | How many words follow the command word. |
+| `args.1`, `args.2` and so on | One word after the command word, counted from 1. |
+| `target` | The viewer named by the first word after the command word. |
+
+## Music
+
+| Call | Result | Grant |
+| --- | --- | --- |
+| `nnz.api.music.nowPlaying()` | the track, or `null` | `music.nowPlaying` |
+| `nnz.api.music.queue(uri)` | `true` or `false` | `music.queue` |
+| `nnz.api.music.playNow(uri)` | `true` or `false` | `actions.invoke:play_track_once` |
+
+The player itself is on [Music player](/reference/music/music-player).
+
+### Read the track that plays now
+
+`nnz.api.music.nowPlaying()` gives the track that plays now, or `null` when nothing plays.
+
+| Field | Type | Meaning |
+| --- | --- | --- |
+| `track` | `string` | The track title. |
+| `artist` | `string` | The artist name. |
+| `album` | `string \| null` | The album name, or `null` when it is not known. |
+| `durationMs` | `number` | The length of the track, in milliseconds. |
+| `progressMs` | `number` | How far the playback is, in milliseconds. |
+| `isPlaying` | `boolean` | `true` while the track plays, `false` when it is paused. |
+| `requestedBy` | `string \| null` | Who requested the track, or `null` when nobody did. |
+| `provider` | `string` | The music service that plays the track. |
+
+### Request a song
+
+`nnz.api.music.queue(uri)` requests a song. Pass a title, an artist or a link as `uri`.
+It gives `true` when the song is in the queue, and `false` when it was refused.
+
+The request counts as one from the viewer who started the script, with the rights of everyone.
+A music service that the channel limits to a higher role refuses it.
+
+### Play a track now
+
+`nnz.api.music.playNow(uri)` plays a track at once and skips the song-request queue.
+It gives `true` when the track plays, and `false` when it was refused.
+It runs the pipeline action that plays one track, so its grant is the grant of that action: `actions.invoke:play_track_once`.
+
+## Text to speech
+
+| Call | Result | Grant |
+| --- | --- | --- |
+| `nnz.api.tts.speak(text, voiceId, ratePercent, pitchPercent, asUser)` | the result, or `null` | `tts.speak` |
+| `nnz.api.tts.speakSequence(segments)` | the result, or `null` | `tts.speakSequence` |
+| `nnz.api.tts.getVoice(userIdOrLogin)` | the voice, or `null` | `tts.voice.get` |
+| `nnz.api.tts.setVoice(userIdOrLogin, voiceId)` | `true` or `false` | `tts.voice.set` |
+| `nnz.api.tts.listVoices(provider, locale)` | a list of voices | `tts.voice.list` |
+
+The channel's speech settings are on [Text to speech](/reference/audio/text-to-speech).
+A spoken line passes the same checks as any other line of text to speech.
+
+### Speak a line
+
+`nnz.api.tts.speak(text)` speaks `text` on the overlay.
+Only `text` is required.
+
+| Parameter | Meaning |
+| --- | --- |
+| `voiceId` | The voice for this one line. Leave it out for the normal voice. |
+| `ratePercent` | A change of speaking speed for this one line, in percent. |
+| `pitchPercent` | A change of pitch for this one line, in percent. |
+| `asUser` | Whose saved voice reads the line. Leave it out for the bot's own voice. |
+
+The line speaks in the channel's one bot voice, unless you set `asUser`.
+Set `asUser` to `'viewer'` when the line holds the words of the viewer who started the script.
+A login or an id reads the line in that viewer's saved voice.
+Use it only for that viewer's own words.
+A name that matches no viewer is a failed call with the code `not_found`: the call gives `null`, and the script goes on.
+
+The speed and pitch changes apply to this one line only.
+They do not change the channel's settings.
+
+The call gives `null` when text to speech refused the line.
+Otherwise it gives this result:
+
+| Field | Type | Meaning |
+| --- | --- | --- |
+| `voiceId` | `string` | The id of the voice that speaks the line. |
+| `characterCount` | `number` | How many characters text to speech accepted. |
+| `durationMs` | `number` | How long the line takes to play, in milliseconds. 0 for a test run, or for a line that waits for approval. |
+
+### Speak in several voices
+
+`nnz.api.tts.speakSequence(segments)` speaks 1 to 20 parts as one audio clip.
+Each part can have its own voice.
+
+| Field | Meaning |
+| --- | --- |
+| `text` | The words to speak. Required. |
+| `voice` | The voice id for this part. Leave it out for the normal voice. |
+| `rate` | A change of speaking speed, in percent. |
+| `pitch` | A change of pitch, in percent. |
+| `breakAfterMs` | Silence after this part, from 0 to 10,000 milliseconds. The last part ignores it. |
+
+The call gives the same result as `speak`, or `null`.
+This call is the exception to the one rule.
+The list is required, but the bot checks it, not the script.
+So a left-out or `null` list does not stop the run.
+These cases are each a failed call with the code `invalid_argument`:
+
+- a left-out, `null` or empty list
+- more than 20 parts
+- a part without text
+- a field of the wrong type, for example a `rate` that is text
+
+The call gives `null`, and the script goes on.
+
+### Read a viewer's voice
+
+`nnz.api.tts.getVoice(userIdOrLogin)` gives the voice a viewer has, as `voiceId` and `displayName`.
+Leave out `userIdOrLogin` for the viewer who started the script.
+It gives `null` when the viewer uses the channel's normal voice.
+A name that matches no viewer is a failed call with the code `not_found`: the call gives `null`, and the script goes on.
+
+### Set a viewer's voice
+
+`nnz.api.tts.setVoice(userIdOrLogin, voiceId)` gives a viewer a voice.
+Leave out `voiceId` to put the viewer back on the channel's normal voice.
+`userIdOrLogin` is required: leave it out and the run stops with "tts.setVoice needs a user id or login".
+A name that matches no viewer is a failed call with the code `not_found`: the call gives `false`, and the script goes on.
+It also gives `false` when the voice is not known.
+
+### List the voices
+
+`nnz.api.tts.listVoices(provider, locale)` gives at most 100 voices.
+Both parameters are optional.
+`provider` keeps the voices of one service, for example `Edge`.
+
+`locale` with a region, such as `en-US`, keeps that locale.
+`locale` with only a language, such as `en`, keeps every locale of that language.
+The list is empty when the voice list cannot be read.
+
+Each voice has `voiceId`, `displayName`, `locale` and `gender`.
+
+## Speak, then post
+
+This script speaks a line, waits, and then posts the same line in chat.
+The wait uses `nnz.time.sleep`, which waits at most 5 seconds.
+A line of up to 5 seconds has played when the chat line appears.
+A longer line still plays when the chat line appears.
+When `durationMs` is 0, or `speak` gives `null`, the script posts at once.
+
+```js
+const line = 'Welcome to the stream!';
+
+const spoken = nnz.api.tts.speak(line);
+
+if (spoken) {
+  nnz.time.sleep(spoken.durationMs);
+}
+
+nnz.api.chat.send(line);
+```
+
+The bot speaks and posts in the channel's one bot voice.
+
+## Related pages
+
+- [Script basics](/reference/code/sdk-script-basics)
+- [Text to speech](/reference/audio/text-to-speech)
+- [Music player](/reference/music/music-player)
