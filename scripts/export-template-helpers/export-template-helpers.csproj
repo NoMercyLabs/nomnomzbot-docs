@@ -1,0 +1,32 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <!-- Reads the template helper registry from a COPY of a built NomNomzBot API output.
+       Pass -p:ProductBin=<folder> (the copy). See the comment at the top of Program.cs. -->
+
+  <PropertyGroup>
+    <OutputType>Exe</OutputType>
+    <TargetFramework>net10.0</TargetFramework>
+    <Nullable>enable</Nullable>
+    <ImplicitUsings>enable</ImplicitUsings>
+    <RootNamespace>NomNomzBot.DocsTools.ExportTemplateHelpers</RootNamespace>
+    <!-- No deps.json: the host then loads every dll beside the exporter, which is the product copy. -->
+    <GenerateDependencyFile>false</GenerateDependencyFile>
+    <AppendTargetFrameworkToOutputPath>false</AppendTargetFrameworkToOutputPath>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <FrameworkReference Include="Microsoft.AspNetCore.App" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Reference Include="NomNomzBot.Application">
+      <HintPath>$(ProductBin)/NomNomzBot.Application.dll</HintPath>
+      <Private>false</Private>
+    </Reference>
+    <Reference Include="NomNomzBot.Infrastructure">
+      <HintPath>$(ProductBin)/NomNomzBot.Infrastructure.dll</HintPath>
+      <Private>false</Private>
+    </Reference>
+  </ItemGroup>
+
+</Project>
