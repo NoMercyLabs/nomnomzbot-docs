@@ -5,6 +5,7 @@ import { useEffect, useRef } from 'react';
 import { create } from 'zustand';
 
 import { t } from '../lib/i18n';
+import { chunkSentence } from '../lib/readAloudChunks';
 import { pickVoice } from '../lib/readAloudVoice';
 
 // Read aloud with the browser's own speech engine: no service, no key, and
@@ -61,6 +62,9 @@ function readVoiceName(): string | null {
 function textOf(element: HTMLElement): string {
   const copy = element.cloneNode(true) as HTMLElement;
   copy.querySelectorAll(STRIP).forEach(node => node.remove());
+  // textContent drops a line break, which glues the last word of one line to
+  // the first word of the next.
+  copy.querySelectorAll('br').forEach(node => node.replaceWith(' '));
   return (copy.textContent ?? '').replace(/\s+/g, ' ').trim();
 }
 
@@ -79,9 +83,9 @@ function split(text: string): string[] {
   const lang = document.documentElement.lang || 'en';
   if ('Segmenter' in Intl) {
     const segmenter = new Intl.Segmenter(lang, { granularity: 'sentence' });
-    return [...segmenter.segment(text)].map(part => part.segment.trim()).filter(Boolean);
+    return [...segmenter.segment(text)].flatMap(part => chunkSentence(part.segment));
   }
-  return text.match(/[^.!?]+[.!?]*/g)?.map(part => part.trim()).filter(Boolean) ?? [text];
+  return (text.match(/[^.!?]+[.!?]*/g) ?? [text]).flatMap(chunkSentence);
 }
 
 function isSection(element: HTMLElement): boolean {
