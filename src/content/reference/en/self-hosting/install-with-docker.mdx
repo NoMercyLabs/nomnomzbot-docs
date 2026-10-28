@@ -1,0 +1,229 @@
+---
+title: Install with Docker
+description: Run NomNomzBot on your own machine with Docker, pick the lite or the full setup, and find where your data lives.
+---
+
+You can run NomNomzBot on your own machine with Docker.
+This is called self-hosting.
+You pick one of two setups: lite or full.
+
+## Pick lite or full
+
+Pick **lite** when you run the bot for your own channel.
+Lite is one container and needs no database server.
+
+Pick **full** when you want a database server, or updates with no pause.
+Full runs Postgres and Redis next to the bot.
+
+| | Lite | Full |
+| --- | --- | --- |
+| Compose file | `docker-compose.lite.yml` | `docker-compose.yml` |
+| Containers | 1 | The bot, Postgres, Redis and a Caddy proxy |
+| Database | A SQLite file | Postgres |
+| Updates with no pause | No | Yes |
+| Settings file | Optional | Needed |
+
+## What you need
+
+- Docker with Compose v2.
+- A Twitch application, for its Client ID and Client Secret.
+  You make it in the Twitch developer console, at `https://dev.twitch.tv/console/apps`.
+  The console shows the Client ID and the Client Secret of the application.
+- The NomNomzBot project files, in one folder on your machine.
+  The next section shows how to get them.
+
+## Get the project files
+
+The project files are on [the NomNomzBot page on GitHub](https://github.com/NoMercyLabs/nomnomzbot).
+
+1. Open that page and choose **Code**, then **Download ZIP**.
+2. Unpack the ZIP file into a folder of your choice.
+   The folder holds `docker-compose.lite.yml`, `docker-compose.yml` and `.env.example`.
+3. Open a terminal in that folder.
+
+<Platform os="windows">
+
+Open the folder in File Explorer.
+Right-click an empty part of the folder and choose **Open in Terminal**.
+
+</Platform>
+
+<Platform os="macos">
+
+Open the **Terminal** app, type `cd ` with a space, drag the folder into the window, and press Return.
+
+</Platform>
+
+<Platform os="linux">
+
+Open a terminal, type `cd ` with a space and the path of the folder, and press Enter.
+
+</Platform>
+
+If you use Git, you can clone the project instead:
+
+```bash
+git clone https://github.com/NoMercyLabs/nomnomzbot.git
+cd nomnomzbot
+```
+
+## Install the lite setup
+
+1. Open a terminal in the project folder.
+2. Run this command:
+
+   ```bash
+   docker compose -f docker-compose.lite.yml up -d
+   ```
+
+   Docker downloads the ready-made image and starts the bot.
+3. Open `http://localhost:5080` in your browser.
+   The setup page opens.
+4. Follow the [first-run setup](/reference/self-hosting/first-run-setup).
+   You can enter your Twitch keys there.
+
+Lite needs no settings file.
+When the secret keys are empty, the bot makes its own keys and saves them in its data folder.
+
+<details>
+<summary>Put settings in a file first</summary>
+
+Copy `.env.example` to `.env` in the project folder.
+Then change two lines in `.env` before you start the bot.
+
+| Line in `.env` | What to do | Why |
+| --- | --- | --- |
+| `ENCRYPTION_KEY` | Make it empty, or set your own random value. | The example value is a development key. The bot does not start with it. |
+| `API_IMAGE` | Make it `ghcr.io/nomercylabs/nomnomzbot:stable`. | The example value makes Docker build the image on your machine. |
+
+The other values can stay as they are in lite.
+
+To use another port than 5080, set `API_HTTP_PORT` in `.env`.
+
+</details>
+
+<details>
+<summary>Build the image yourself</summary>
+
+Set `API_IMAGE=nomnomzbot-api:local` in `.env`.
+Then add `--build` to the command:
+
+```bash
+docker compose -f docker-compose.lite.yml up -d --build
+```
+
+The build needs a lot of memory for Docker.
+With too little memory, the build can stop.
+
+</details>
+
+## Install the full setup
+
+1. Copy `.env.example` to `.env` in the project folder.
+
+<Platform os="linux macos">
+
+```bash
+cp .env.example .env
+```
+
+</Platform>
+
+2. Fill in `TWITCH_CLIENT_ID` and `TWITCH_CLIENT_SECRET` from your Twitch application.
+   Fill in `TWITCH_BOT_USERNAME` with the Twitch name of the account the bot types in chat as.
+3. Fill in `JWT_SECRET` and `ENCRYPTION_KEY`.
+   The comment above each value in the file shows how to make one.
+4. Change `POSTGRES_PASSWORD` from the example value.
+5. Run this command:
+
+   ```bash
+   docker compose up -d --build
+   ```
+
+   Docker builds the image and starts Postgres, Redis, the proxy and the bot.
+   The bot sets up its database on the first start.
+6. Open `http://localhost:5080` in your browser and follow the [first-run setup](/reference/self-hosting/first-run-setup).
+
+To download the ready-made image instead of building it, set `API_IMAGE=ghcr.io/nomercylabs/nomnomzbot:stable` in `.env`.
+Then run `docker compose up -d` with no `--build`.
+
+::Callout
+
+Never share your `.env` file.
+It holds your secrets.
+If you change `ENCRYPTION_KEY` later, the bot must sign in to Twitch again.
+
+::
+
+## Where your data lives
+
+The bot keeps its files in `/app/data` inside the container.
+These are the database in lite, the secret keys it made, your uploads and the logs.
+
+| Setup | Where the data is kept |
+| --- | --- |
+| Lite | A Docker volume named `nomnomzbot_lite_data` |
+| Full | A volume for Postgres and a volume for the bot's files |
+
+In lite, you can use a plain folder instead of the volume.
+Open `docker-compose.lite.yml`.
+Remove the `#` before the line `./data:/app/data`, and remove the line with `lite_data:/app/data`.
+Make the folder before you start the bot.
+
+<Platform os="linux macos">
+
+```bash
+mkdir data
+sudo chown 1654:1654 data
+```
+
+</Platform>
+
+Keep the lite data folder together.
+The database has side files that end in `-wal` and `-shm`.
+Never copy the database file alone.
+
+### Back up the lite data
+
+1. Stop the bot:
+
+   ```bash
+   docker compose -f docker-compose.lite.yml stop
+   ```
+
+2. Copy the volume to a file in the current folder:
+
+   ```bash
+   docker run --rm -v nomnomzbot_lite_data:/data -v "$PWD":/backup alpine tar czf /backup/nomnomzbot-backup.tgz -C /data .
+   ```
+
+3. Start the bot:
+
+   ```bash
+   docker compose -f docker-compose.lite.yml start
+   ```
+
+The backup includes the key file the bot made.
+Without that file, the bot cannot read the secrets you saved.
+
+## Limits of lite
+
+- Run one lite container only. Do not run two copies on the same data.
+- Each update pauses the bot for a short time.
+- Do not put the data folder on a network drive.
+
+## Run the bot for other people
+
+::Callout
+
+Running it for yourself, your friends and your community is free. You may not earn money with it: no selling it, and no paid hosting or paid service built on it.
+
+::
+
+The full rule about use is on the [Overview](/reference/overview).
+
+## Related pages
+
+- [First-run setup](/reference/self-hosting/first-run-setup)
+- [Updates](/reference/self-hosting/updates)
+- [Overview](/reference/overview)
