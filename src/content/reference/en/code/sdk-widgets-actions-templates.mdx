@@ -1,0 +1,374 @@
+---
+title: Widgets, actions and templates (Draft)
+description: Use the widget SDK and its events, run a pipeline action from a widget or a script, send a widget an event and render a template.
+---
+
+This page lists the widget SDK, the events a widget can receive, the parameters of every pipeline action and the calls that render a template.
+A widget uses the `NomNomz` name, and a script uses `nnz`.
+[Script basics](/reference/code/sdk-script-basics) explains the grants, the error codes and the `nnz.lastError` value of a script.
+
+::Callout
+**Draft**: this part of the guide is not finished yet.
+::
+
+## Before you start
+
+Custom Code is off for a new channel.
+A script call on this page works only when Custom Code is on.
+[Script basics](/reference/code/sdk-script-basics) shows how to switch it on.
+
+You add and set up a widget on [Widgets and alerts](/reference/overlays/widgets-and-alerts).
+
+## The widget SDK
+
+The SDK is the `NomNomz` name in the widget page.
+It is loaded before the widget code runs.
+Each call that registers a handler gives back `NomNomz`, so calls chain.
+
+| Member | What it does |
+| --- | --- |
+| `NomNomz.on(eventType, handler)` | Calls `handler(data, eventType, meta)` for each event of that name. |
+| `NomNomz.off(eventType, handler)` | Removes a handler. Pass the same function you gave to `on`. |
+| `NomNomz.onAny(handler)` | Calls `handler(eventType, data, meta)` for every event. |
+| `NomNomz.onSettings(handler)` | Calls `handler(settings)` at once, then again on every change in the dashboard. |
+| `NomNomz.settings` | The widget's settings now. |
+| `NomNomz.widget.id` | The id of this widget. |
+| `NomNomz.widget.name` | The name of this widget. |
+| `NomNomz.reportError(message)` | Logs the message and reports it to the bot as a widget error. |
+| `NomNomz.actions.invoke(actionType, params, variables)` | Runs one pipeline action. |
+| `NomNomz.actions.claim(key)` | Claims an event for this one copy of the widget. |
+| `NomNomz.data.nowPlaying()` | The track that plays now, or `null`. |
+| `NomNomz.data.queue()` | The music queue, without the track that plays now. |
+| `NomNomz.data.storage(key)` | One value from the channel's script storage, or `null`. |
+| `NomNomz.data.streamStats(options)` | Metrics of one stream. |
+| `NomNomz.template.render(template, values)` | The template as text for this channel. |
+| `NomNomz.spotify.playbackToken()` | A short-lived Spotify token for the Spotify player. |
+| `NomNomz.reportYouTubePlayerState(videoId, state, positionMs)` | Tells the bot what a YouTube player page plays. |
+| `NomNomz.reportMediaSharePlayerState(requestId, state, positionSeconds, durationSeconds, volume)` | Tells the bot what the media-share player does. |
+
+The widget gets only the events it registered with `on`.
+`onAny` registers every event.
+
+### Live events and replays
+
+The `meta` value says where an event comes from.
+
+| Field | Meaning |
+| --- | --- |
+| `replay` | `true` for a remembered event the bot sends again when the widget joins. `false` for a live event. |
+| `occurredAt` | The time the replayed event really happened. Only set when `replay` is `true`. |
+| `test` | `true` for a test fire from the dashboard. Show it, but do not keep it as the widget's value or count. |
+
+A handler that you register late still gets the remembered events it would have seen.
+
+### Claim an event
+
+`NomNomz.actions.claim(key)` gives `true` only for the first open copy of the widget that claims the key.
+Every other copy gets `false`.
+A claim holds for ten minutes.
+
+Claim an event, for example with its redemption id, before you act on it.
+Then two OBS sources never both act on one event.
+
+The claim fails with an error when the widget is not connected to the bot, or the key is empty or over 200 characters.
+Catch that error.
+
+### Read the channel's state
+
+The `NomNomz.data` calls fail with an error when the request fails.
+`streamStats` takes `stream` and `metrics`.
+Leave out `stream` for the latest stream, live or ended.
+
+`NomNomz.spotify.playbackToken()` never fails with an error.
+It gives `{ error: 'blocked' }` when the bot may not play here, and `{ error: 'error' }` when the request failed.
+Ask again each time the Spotify player wants a token.
+
+## Widget events
+
+These are the names a widget passes to `NomNomz.on`.
+A field name that ends in `?` can be absent.
+
+| Event | Payload fields |
+| --- | --- |
+| `follow` | `userId`, `displayName`, `login`, `followedAt?`, `avatarUrl?`, `pronouns?`, `communityStanding?`, `user` |
+| `subscription` | `userId`, `displayName`, `tier`, `user` |
+| `resub` | `userId`, `displayName`, `tier`, `months`, `streak`, `message?`, `user` |
+| `gift` | `gifterId?`, `gifterDisplayName`, `tier`, `count`, `anonymous`, `user`, `amount` |
+| `cheer` | `userId?`, `displayName`, `bits`, `message`, `anonymous`, `imageUrl?`, `user`, `amount` |
+| `raid` | `fromUserId`, `fromDisplayName`, `fromLogin`, `viewerCount`, `user`, `viewers` |
+| `raid_recap.show` | `stream`, `channel?`, `duration?`, `peakViewers?`, `followers?`, `newFollowers?`, `subs?`, `gifters?`, `selfSubs?`, `bits?`, `raidsIn?`, `hypeTrain?`, `redemptions?`, `songRequesters?`, `chat?`, `topChatters?`, `commandsRun?` |
+| `ban`, `timeout`, `unban` | `action`, `moderatorId`, `targetUserId`, `reason?`, `durationSeconds?`, `targetDisplayName?`, `targetAvatarUrl?`, `targetPronouns?`, `targetCommunityStanding?`, `moderatorDisplayName?`, `timestamp`, `broadcasterId` |
+| `ChatMessage` | `id`, `channelId`, `userId`, `displayName`, `username`, `message`, `fragments`, `userType`, `isSubscriber`, `isVip`, `isModerator`, `isBroadcaster`, `isCheer`, `isCommand`, `badges`, `bitsAmount`, `color?`, `messageType`, `replyToMessageId?`, `replyParentMessageBody?`, `replyParentUserName?`, `timestamp`, `avatarUrl?`, `pronouns?`, `provider`, `paint?`, `isArtist`, `overlayLine?` |
+| `ChatCleared` | `clearedByUserId` |
+| `MessageDeleted` | `messageId`, `deletedByUserId`, `targetUserId`, `deletedByDisplayName` |
+| `UserMessagesCleared` | `targetUserId`, `targetUserDisplayName`, `targetUserLogin` |
+| `ChatMessageEnriched` | `messageId`, `linkUrl?`, `title?`, `description?`, `imageUrl?`, `provider?`, `userDisplayName?`, `userLogin?` |
+| `hype_train_begin`, `hype_train_progress` | `hypeTrainId`, `level`, `total`, `progress`, `goal`, `topContributions`, `expiresAt` |
+| `hype_train_end` | `hypeTrainId`, `level`, `total`, `topContributions`, `endedAt` |
+| `poll_begin` | `pollId`, `title`, `choices`, `durationSeconds`, `endsAt` |
+| `poll_progress` | `pollId`, `title`, `choices`, `endsAt` |
+| `poll_end` | `pollId`, `title`, `status`, `choices`, `winningChoiceId?` |
+| `prediction_begin` | `predictionId`, `title`, `outcomes`, `windowSeconds`, `locksAt` |
+| `prediction_progress` | `predictionId`, `title`, `outcomes`, `locksAt` |
+| `prediction_lock` | `predictionId`, `title`, `outcomes` |
+| `prediction_end` | `predictionId`, `title`, `status`, `outcomes`, `winningOutcomeId?` |
+| `reward_redeemed` | `broadcasterId`, `rewardId`, `rewardTitle`, `redemptionId`, `userId`, `userDisplayName`, `cost`, `userInput?`, `timestamp`, `avatarUrl?`, `pronouns?`, `communityStanding?`, `eventId?` |
+| `moderator_added`, `moderator_removed`, `vip_added`, `vip_removed` | `userId`, `userDisplayName`, `userLogin`, `avatarUrl?`, `pronouns?`, `communityStanding?` |
+| `shoutout_sent` | `toUserId`, `toDisplayName` |
+| `shoutout_received` | `fromBroadcasterId`, `fromBroadcasterDisplayName`, `fromBroadcasterLogin`, `viewerCount`, `avatarUrl?`, `pronouns?`, `communityStanding?` |
+| `sr_queue` | `items` |
+| `media_share_command` | `command`, `requestId?`, `sourceType?`, `mediaRef?`, `sourceUrl?`, `title?`, `durationSeconds?`, `positionSeconds?`, `volume?` |
+| `now_playing` | `isPlaying`, `track?`, `artist?`, `artUrl?`, `provider?`, `trackUri?`, `durationMs`, `progressMs`, `observedAt`, `requestedBy?`, `requestedByColor?` |
+| `music.nowPlaying` | `engine`, `itemId?`, `title`, `artists`, `albumArtUrl?`, `durationMs`, `progressMs`, `isPlaying`, `requestedBy?`, `volume`, `muted`, `state`, `blockedReason?` |
+| `ad_schedule` | `nextAdAt?`, `lastAdAt?`, `durationSeconds`, `prerollFreeTimeSeconds`, `snoozeCount`, `snoozeRefreshAt?`, `timeUntilNextAdSeconds?` |
+| `ad_upcoming` | `secondsUntilAd`, `thresholdSeconds`, `durationSeconds`, `nextAdAt` |
+| `youtube.play` | `videoId`, `trackUri` |
+| `youtube.pause`, `youtube.resume`, `youtube.stop` | No fields |
+| `youtube.seek` | `positionMs` |
+| `youtube.volume` | `percent` |
+| `track_saved_changed` | `trackUri`, `track?`, `artist?`, `isSaved` |
+| `tts_speak` | `text`, `voice`, `user`, `durationMs`, `audioUrl?` |
+| `stage_effect` | `preset`, `text?`, `durationMs`, `intensity?`, `color?` |
+| `goal` | `metric`, `value`, `target` |
+| `count` | `metric`, `value` |
+| `supporter.tip`, `supporter.membership`, `supporter.merch`, `supporter.charity` | `kind`, `supporterDisplayName`, `amountMinor?`, `currency?`, `tier?`, `quantity?`, `messageText?`, `isRecurring`, `user`, `amount?` |
+| `voice_trigger` | `word`, `count`, `stickerImageUrl?` |
+| `game.lobby`, `game.running` | One of five game frames. Their fields: `kind`, `lobbySeconds`, `maxMultiplier?`, `target?`, `radius?`, `successChance?`, `player`, `stake`, `entry?`, `phase?`, `crewSize`, `crew?`, `pot?`, `entrants?`, `multiplier`, `payout`, `landed`, `distance`, `hit` |
+| `game.resolved` | The results frame or the canceled frame. Their fields: `kind`, `results`, `crashedAt?`, `capped?`, `target?`, `radius?`, `successChance?`, `crewSize?`, `pot?`, `winner?`, `payout?`, `cancelled`, `reason` |
+| `play_sound` | `playbackUrl`, `volume`, `handle?`, `synced` |
+| `stop_sound` | `handle?`, `all` |
+| `test` | Any fields |
+| `custom.` and a source name | `fields`: each value of the custom data source, as text |
+
+This widget shows each new follower with a line from a template:
+
+```js
+NomNomz.on('follow', async (data, eventType, meta) => {
+  if (meta?.test) return;
+
+  const line = await NomNomz.template.render('Welcome {name}!', { name: data.displayName });
+
+  document.querySelector('#line').textContent = line;
+});
+```
+
+## Run a pipeline action
+
+A pipeline action is one step of a pipeline.
+A widget and a script can run any action type in the table below.
+A pipeline runs the same action types as steps.
+
+### From a widget
+
+`NomNomz.actions.invoke(actionType, params, variables)` runs one action as the channel owner, within the owner's own permissions.
+`params` holds the action's parameters, and `variables` holds values the action can read.
+You can leave out `params` when the action has no required parameter.
+
+The call gives back a result, also when the bot refuses the action or the action fails.
+It fails with an error only when the widget is not connected to the bot.
+
+| Field | Meaning |
+| --- | --- |
+| `success` | `true` when the action ran and succeeded. |
+| `output` | The text the action gave back, or `null`. |
+| `error` | Why it failed, or `null`. |
+| `errorCode` | Set when the bot refused to run it. |
+| `variables` | The action's values after the run, for example `tts.audioUrl` and `tts.durationMs`. |
+
+| Refusal code | Meaning |
+| --- | --- |
+| `AUTH_REQUIRED` | The widget connection is not signed in. |
+| `FORBIDDEN` | The widget belongs to another channel, or the widget is turned off. |
+| `NOT_FOUND` | Nothing matches. |
+| `VALIDATION_FAILED` | A value is missing or wrong. |
+| `RATE_LIMITED` | Too many calls. |
+
+Treat a code that is not in this table as a refusal too.
+
+### From a script
+
+`nnz.api.actions.invoke('type', params, variables)` runs one action from a script.
+Its grant is `actions.invoke:` and the type, so the type must be text in quotes.
+It gives back `success`, `output`, `error` and `variables`.
+
+When the action fails, the script goes on, and `nnz.lastError` says why.
+`params` and `variables` must each be an object.
+
+```js
+const result = nnz.api.actions.invoke('tts_synthesize', { text: 'Thanks for the raid!' });
+
+if (!result.success) {
+  nnz.api.chat.send('No voice line: ' + nnz.lastError.message);
+}
+```
+
+The bot posts that line in chat in the channel's one bot voice.
+
+### Action parameters
+
+A parameter in bold is required.
+An action with "None" takes no parameters.
+
+| Action | Parameters |
+| --- | --- |
+| `adjust_counter` | **`key`**, `delta` |
+| `adjust_viewer_data` | **`key`**, `delta`, `target` |
+| `announce` | **`message`**, `color` |
+| `ban` | `user_id`, `reason` |
+| `break` | None |
+| `cancel_live_game` | None |
+| `check_balance` | `set_var`, `min` |
+| `clear_viewer_data` | **`key`** |
+| `continue` | None |
+| `deduct_currency` | **`amount`**, `reason` |
+| `delete_message` | `message_id` |
+| `draw_giveaway` | `giveaway_id` |
+| `enter_giveaway` | `giveaway_id` |
+| `grant_currency` | **`amount`**, `reason` |
+| `jar_contribute` | **`jar_id`**, **`amount`** |
+| `media_playback` | **`command`**, `value` |
+| `music_add_to_playlist` | **`playlistId`**, `provider` |
+| `music_cycle_repeat` | None |
+| `music_follow_artist` | None |
+| `music_next` | None |
+| `music_pause` | None |
+| `music_play` | None |
+| `music_play_pause` | None |
+| `music_previous` | None |
+| `music_remove_from_playlist` | **`playlistId`**, `provider` |
+| `music_save_track` | None |
+| `music_seek` | **`positionSeconds`** |
+| `music_set_repeat` | **`mode`** |
+| `music_set_shuffle` | **`enabled`** |
+| `music_set_volume` | **`volume`** |
+| `music_toggle_saved` | None |
+| `music_toggle_shuffle` | None |
+| `music_transfer_device` | **`deviceId`** |
+| `music_unfollow_artist` | None |
+| `music_unsave_track` | None |
+| `music_volume_down` | `step` |
+| `music_volume_mute` | `unmuteVolume` |
+| `music_volume_up` | `step` |
+| `obs_call_vendor` | **`vendor`**, **`request_type`**, `request_data` |
+| `obs_filter` | **`source`**, **`filter`**, `enabled` |
+| `obs_hotkey` | **`hotkey_name`** |
+| `obs_input_mute` | **`input`**, `muted`, `toggle` |
+| `obs_input_volume` | **`input`**, `volume_db`, `volume_mul` |
+| `obs_media` | **`input`**, `action` |
+| `obs_recording` | `action` |
+| `obs_refresh_browser` | **`input`** |
+| `obs_replay_buffer` | `action` |
+| `obs_request` | **`request_type`**, `request_data` |
+| `obs_request_batch` | **`requests`**, `execution`, `halt_on_failure` |
+| `obs_save_replay` | None |
+| `obs_screenshot` | **`source`**, `format` |
+| `obs_set_preview_scene` | **`scene`** |
+| `obs_set_source` | **`scene`**, **`source`**, `visible` |
+| `obs_streaming` | `action` |
+| `obs_switch_scene` | **`scene`** |
+| `obs_transition` | `transition`, `studio`, `duration_ms` |
+| `obs_virtual_cam` | `action` |
+| `open_giveaway` | **`giveaway_id`** |
+| `permit` | `target_variable`, **`role_or_capability`**, `duration_minutes` |
+| `pick_from_list` | **`list`**, `variable` |
+| `play_game` | **`game_type`**, **`bet`** |
+| `play_sound` | **`clip`**, `volume`, `wait_for_finish`, `synced`, `handle` |
+| `play_track_once` | **`track_uri`** |
+| `play_tts` | `text`, `segments`, `voice`, `as`, `rate` |
+| `playlist_add` | **`playlist_id`**, `provider`, `track_uri`, `message`, `already_message` |
+| `post_quote` | `number` |
+| `redemption_fulfill` | None |
+| `redemption_refund` | None |
+| `require_tier` | **`min_tier`**, `denied_message` |
+| `return_value` | `value` |
+| `run_code` | **`code_script_id`** |
+| `run_pipeline` | **`pipeline`**, `mode`, `args`, `named_args`, `wait` |
+| `schedule_pipeline` | `pipeline`, `command`, `action_type`, `action_params`, **`delay_seconds`**, `dedupe_key` |
+| `send_discord_notification` | **`trigger_type`**, `dedupe_key` |
+| `send_message` | **`message`**, `sender`, `reply_target`, `reply_html` |
+| `send_reply` | **`message`** |
+| `send_webhook` | **`endpoint`**, `event_type` |
+| `set_counter` | **`key`**, **`value`** |
+| `set_pronoun` | **`username`**, **`pronoun`** |
+| `set_variable` | **`name`**, `value` |
+| `set_viewer_data` | **`key`**, `value`, `target` |
+| `shoutout` | **`user_id`**, `cooldown_minutes`, `global_cooldown_minutes`, `tts`, `priority`, `template` |
+| `show_raid_recap` | None |
+| `song_ban` | `reason` |
+| `song_current` | None |
+| `song_pause` | None |
+| `song_previous` | None |
+| `song_queue` | `max` |
+| `song_request` | **`query`** |
+| `song_request_favorite` | `user_id` |
+| `song_resume` | None |
+| `song_skip` | None |
+| `song_volume` | **`volume`** |
+| `song_wrong` | None |
+| `stage_effect` | **`preset`**, `text`, `duration_ms`, `intensity`, `color` |
+| `start_live_game` | **`game_type`** |
+| `start_raid` | **`target`**, `delay_seconds`, `raid_window_seconds` |
+| `stop` | None |
+| `stop_sound` | `handle`, `all` |
+| `submit_media` | **`url`** |
+| `timeout` | `user_id`, **`duration`**, `reason` |
+| `tts_synthesize` | **`text`**, `voice`, `rate`, `pitch`, `play_on_audio` |
+| `unpermit` | `target_variable`, `role_or_capability` |
+| `vts_color_tint` | **`r`**, **`g`**, **`b`**, `a`, `art_mesh_tag` |
+| `vts_load_model` | **`model`** |
+| `vts_move_model` | `x`, `y`, `rotation`, `size`, `time_seconds`, `relative` |
+| `vts_request` | **`request_type`**, `payload_json` |
+| `vts_set_expression` | **`expression`**, `active` |
+| `vts_trigger_hotkey` | **`hotkey`** |
+| `wait` | `milliseconds`, `seconds` |
+| `wait_for_event` | **`event_name`**, `timeout_seconds` |
+| `wait_until_raid_fires` | None |
+| `widget_event` | **`widget_id`**, **`event_type`**, `data` |
+
+## Send a widget an event from a script
+
+`nnz.api.widget.emit(widgetIdOrName, eventType, data)` sends an event to one widget of the channel.
+The widget gets it in its `NomNomz.on(eventType, ...)` handler.
+`data` is optional and is sent as the event's payload.
+
+It gives `true` when the event is sent, and `false` when it is not.
+Then `nnz.lastError` says why.
+
+| Code | When |
+| --- | --- |
+| `invalid_argument` | The widget or the event name is empty, or `data` is not valid JSON. |
+| `not_found` | No widget of this channel matches. |
+| `refused` | The widget is turned off, or it is open in no browser source. |
+| `upstream_failed` | The event could not be sent to the overlay. |
+
+```js
+const sent = nnz.api.widget.emit('Alerts', 'hug', { from: bot.args[0] || 'chat' });
+
+if (!sent) {
+  nnz.api.chat.send('The widget did not get it: ' + nnz.lastError.message);
+}
+```
+
+## Render a template
+
+A template is text with helpers in braces, such as `{name}` or `{name:argument}`.
+[Variables and templates](/reference/commands/variables-and-templates) lists every helper and what it gives.
+The bot renders the template for this channel.
+
+| Call | Gives |
+| --- | --- |
+| `NomNomz.template.render(template, values)` | A promise of the text. |
+| `nnz.template.render(template, values)` | The text. |
+
+`values` fills the plain names of the template.
+Each value must be text, a number, or `true` or `false`.
+
+A template can be at most 4096 characters.
+An empty template or a longer one is refused.
+In a widget the promise fails with an error, and in a script the call gives empty text and `nnz.lastError` says why.
+
+## Related pages
+
+- [Script basics](/reference/code/sdk-script-basics)
+- [Widgets and alerts](/reference/overlays/widgets-and-alerts)
+- [Variables and templates](/reference/commands/variables-and-templates)
