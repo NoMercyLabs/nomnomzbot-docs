@@ -1,31 +1,68 @@
 # NomNomzBot Documentation
 
-This repository holds the documentation website for [NomNomzBot](https://github.com/NoMercyLabs/nomnomzbot).
-NomNomzBot is a free, open-source chat bot for live streamers. It connects Twitch, Kick, YouTube and X Live in one dashboard.
+This is the source of the documentation website for [NomNomzBot](https://github.com/NoMercyLabs/nomnomzbot).
+The live site is **https://docs.nomnomz.bot**.
 
-Read the documentation at **https://docs.nomnomz.bot**.
+## What it does
 
-## What is here
+The site explains what NomNomzBot can do and how to use it.
+NomNomzBot is a free, open-source chat bot for live streamers.
 
-- The home page explains what the bot can do.
-- The Reference section lists every capability: what it does, which fields it takes, and what it gives back.
-- The Reference pages are generated from the bot's own capability list, so they always match the code.
+The site has two parts:
 
-## Run it locally
+| Part | Address | What it holds |
+| --- | --- | --- |
+| Home | `/` | What the bot is and what it can do. |
+| Reference | `/reference/overview` | The bot's capabilities, one page per area. |
 
-You need Node.js (the version in `.nvmrc`) with Corepack enabled.
+The Reference pages will be generated from the bot's own list of capabilities.
+Today the Reference section holds one overview page.
 
-```bash
-corepack enable
-yarn install
-yarn dev
-```
+## Requirements
 
-Then open the address that `yarn dev` prints.
+- Node.js 22. The version is set in `.nvmrc`.
+- Yarn 4.18.1, through Corepack. The version is set in `package.json`.
+
+## Getting started
+
+1. Enable Corepack, so the project's own Yarn version runs:
+
+   ```bash
+   corepack enable
+   ```
+
+2. Install the packages:
+
+   ```bash
+   yarn install
+   ```
+
+3. Start the local site:
+
+   ```bash
+   yarn dev
+   ```
+
+4. Open the address that `yarn dev` prints.
+   You see the NomNomzBot Documentation home page.
+
+To build the site the way it is published, run `yarn build`.
+The result is in `dist/`.
 
 ## Publishing
 
-Every push to `main` builds the site and publishes it to GitHub Pages.
+A push to `main` runs the workflow in `.github/workflows/pages.yml`.
+The workflow builds the site and publishes it to GitHub Pages at https://docs.nomnomz.bot.
+
+## Project structure
+
+| Folder | What it holds |
+| --- | --- |
+| `src/pages/` | The routes of the site. |
+| `src/content/reference/` | The Reference pages. |
+| `src/components/` | The page parts, such as navigation, search and callouts. |
+| `src/styles/` | The theme. Its colors come from the NomNomzBot dashboard. |
+| `scripts/` | The script that builds the search index. |
 
 ## License
 
