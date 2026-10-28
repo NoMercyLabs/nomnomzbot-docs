@@ -1,52 +1,41 @@
-# Reader review: C:\Projects\NoMercyLabs\nomnomzbot-docs\src\content\reference\en\code\sdk-script-basics.mdx
+# Reader review: src/content/reference/en/code/sdk-script-basics.mdx
 Verdict: PASS
 Reviewed: C:\Projects\NoMercyLabs\nomnomzbot-docs\src\content\reference\en\code\sdk-script-basics.mdx
-Reviewed-SHA: 72bde38d9a518811
+Reviewed-SHA: 43a67d7b8cbf4393
 
-Read: the whole page, as stored. It has no include or snippet directive. The only directive is the Draft callout at lines 10-12.
-Judged against: map row for this page (Assumes: how-a-script-runs; Owns: script grant), the ledger, and the pilot page for voice. I did not read the how-a-script-runs text. I judged only against its ownership line in the map.
+Blocking findings: none. Every step in "Turn on Custom Code" can be followed. The error section and the "One rule for a bad value" section tell the reader what they see.
 
-## Result
+Reviewed against: the Assumes page `src/content/reference/en/code/how-a-script-runs.mdx` (read whole), the ledger, the pilot `commands/create-a-command.mdx`, and the page text as it stands now.
 
-No blocking finding. Every step in "Turn on Custom Code" can be followed, and each step states its result. The page uses the pilot page's voice. The one question on the list, whether one person wrote both pages, gets a yes.
+## Findings (non-blocking, for the fact check and the author)
 
-## Findings, not blocking
+- [lines 15-23] The "Turn on Custom Code" steps repeat the same three steps from how-a-script-runs.mdx lines 14-23, with the same wording. The ledger assigns the run to how-a-script-runs. Re-taught text is a finding. Cost: the reader reads the same steps on two pages. Fix: link to how-a-script-runs and keep one line.
+- [lines 20] Step 1, "Open the **Features** settings page," does not say where the page is. The ledger names /reference/settings/features as the owner of the feature switch, and this page does not link it on first mention. Cost: a reader who does not know the Features page has no path to it.
+- [lines 25-28, 52-57 of the table] The `bot` member table repeats the names in how-a-script-runs.mdx lines 52-64. The ledger gives the bot facade to this page, so the table belongs here, but the Assumes page already lists the same names. The map and ledger disagree on who owns the bot facade. Fix in the map, not the page.
+- [line 27] "raw bridge to the bot" is jargon. A reader who does not script cannot picture it.
+- [line 44] "the test run panel" is a term this page never defines. how-a-script-runs.mdx line 64 calls the same thing "the run's log". Two names for one thing leave the reader unsure they are looking at the same place.
+- [lines 6-9, the intro] The first paragraph is four sentences (count: 4). Its first sentence states a fact rather than what the reader can do, which page-conventions.md asks for. The intro also says the page covers grants but leaves out the error section, which is most of the page after the table.
+- [line 130 and line 135] "A key that does not exist" (line 130) and "a key that is not on the list" (line 135) are two different ideas in two sentences. The reader cannot tell whether a typo, a dynamic key, or a removed grant is meant.
+- [line 135] "stops the whole run with the result Denied" names a result that no table, message or step on this page shows. how-a-script-runs.mdx line 123 names the error "Capability denied: ...". The reader cannot match the word to what they see.
+- [line 135 against how-a-script-runs.mdx line 46] This page says a call to a key not on the list stops the run when the call happens. how-a-script-runs.mdx says a call that is not allowed stops the whole run before it starts. These two pages describe the timing differently. The fact check must settle which is true. I did not judge it as a blocking fact, because the rule for this run counts only a fact that is wrong on the page and the pilot page.
+- [line 132 against how-a-script-runs.mdx line 18] With Custom Code off, this page says a script "does not run". how-a-script-runs.mdx says a bot call "is then denied". The outcome is compatible, but the words differ and the reader does not learn which word to look for.
+- [line 57] "`NaN`" is not explained. [line 63] "ISO 8601" is not explained. A reader who does not code cannot tell what either returns.
+- [line 229] "the first argument of the run" uses "argument". how-a-script-runs.mdx line 59 says "the words chat typed after the command word". One term should carry one meaning across the two pages.
+- [lines 226-227] The `bot.stopPipeline()` and `bot.args` rows say "Takes no value" and "A list, not a call" in both columns. These rows add nothing. Cut or merge them into a note.
+- [line 201-216] The "One rule for a bad value" section is clear. Each row names the result the reader sees. No change needed.
 
-1. Lines 7, 16-17, 119. The word "grant" appears three times before the section that explains it (line 117). A reader who starts at line 16 cannot tell what a grant is. Add one gloss sentence at line 7 or line 17.
+## Density count
 
-2. Line 19. "Open the **Features** settings page." names no route. A streamer new to the dashboard must search for it. Name the sidebar route, and link the feature switch page (ledger: /reference/settings/features) and the dashboard tour (ledger: /reference/getting-started/dashboard-tour). Neither link is on this page.
+- Paragraphs over three sentences: lines 6-9 (4 sentences, 74 words). No other paragraph exceeds three sentences.
+- Sentences with two ideas that leave the outcome unclear: line 130 (see the key finding above).
+- Parallel facts that should be a table: none found. The grant keys and the error codes are already tables.
 
-3. Lines 29-36 and 184-187. The bot table gives types only. It does not say what `bot.args`, `bot.send`, `bot.getVar`, `bot.setVar` or `bot.stopPipeline` do. Line 187 reads `bot.args[0]` and line 184 says "tries to store a value". The reader cannot tell which value. The page also does not say whether `bot.send` needs a grant. Line 7 frames the page as the list of parts that need none. Add a "What it does" column, and name the value at line 184.
+## Voice against the pilot
 
-4. Lines 40 and 129. A call with no grant is "denied". The failure table at lines 175-180 has no code for a denied call. The reader cannot tell whether `nnz.lastError` is set, or which code it holds. Name the code.
+The sentence-level voice matches the pilot: the actor leads, results are stated in checkable words, and constraints arrive as their symptom ("stops the whole run"). The page is a catalog, so it is terser than the pilot and uses "the bot" and "a script" more often. That is the catalog tier, not a voice fault. The page does not read as a different author.
 
-5. Lines 123 and 131-132. Line 123 says a `bot.call` key adds its grant "with a key in quotes". The page gives a save error only for `actions.invoke` (line 132). The reader cannot tell what happens to `bot.call` with a key held in a variable.
+## Rule checks
 
-6. Line 43. "the test run panel" is named, but the page does not say how to open it. A reader who wants the `console.log` output cannot find it.
-
-7. Line 54. "It knows length, weight, time and temperature." gives no unit names. Only `km` and `mi` appear, in the example at line 53.
-
-8. Lines 81 and 107. `nnz.math.randomInt(min, max)` and `nnz.random.int(min, max)` have the same description. The page gives no reason for two names. Source not checked, by design of this review.
-
-9. Line 165 and lines 196-200. The sentence names two pages for the calls. The grant rows at lines 158 (`widget.emit`), 162 (`actions.invoke`) and 163 (`template.render`) belong to /reference/code/sdk-widgets-actions-templates. That page is on the map (map line 128), and the Related pages list omits it. The map row for this page (map line 125, Links to) also omits it. This needs a map edit as well as a link.
-
-10. Lines 178-179. "The work behind the call reported too many requests" does not name what was limited. "The call went over a limit of the run" does not name the limit. Name the limit, or link the run limits on how-a-script-runs, which line 8 already names.
-
-11. Line 194. "the channel's one bot voice" is used without a link. The ledger gives the bot voice to /reference/getting-started/bot-account, and this page is not on that concept's referring list. Link it on first use.
-
-12. Line 17. "every grant is refused, and a script that makes a bot call does not run" carries two outcomes in one sentence. Line 132 carries the rule and the quoted error in one sentence. Both are minor.
-
-13. Lines 7 and 26. "This page lists the parts..." is a sentence about the page. "a raw bridge to the bot" is jargon with no gloss. Both are minor.
-
-## Density
-
-Measured. No paragraph is over three sentences. The longest blocks are lines 6-8, 53-55, 99-101 and 127-129, each with three sentences. The grant table (lines 136-163) is a catalog and is allowed to be long.
-
-## Other checks
-
-- The namespace is not misspelled. No NoMercyBot or NomNomzBot name appears on the page.
-- No hosting claim, so no hosting marker is needed. No license label appears.
-- No British spelling and no emoji were found in my read.
-- The Draft label appears in the title (line 2) and in the callout (lines 10-12), as the map says.
-- The bot speaks in one voice (line 194).
-- The page is not a second explanation of a ledger concept it does not own. It refers to "bot voice" (line 194), "feature switch" (line 19) and "dashboard layout" (line 19). Notes 2 and 11 cover them.
+- No NoMercyBot spelling. No hosting, price or license text, so no marker is needed. American spelling throughout. No emoji. No code written for the reader beyond the one example, which uses semicolons, blank lines between statements, and no type annotations.
+- The example (lines 232-237) matches the text above it, except the "argument" versus "word" term above.
+- The title and the callout carry "Draft", as the map says.

@@ -1,76 +1,66 @@
-# Fact-check: /reference/code/sdk-script-basics
+# Fact check: /reference/code/sdk-script-basics
 Verdict: PASS
 Reviewed: src/content/reference/en/code/sdk-script-basics.mdx
-Reviewed-SHA: 72bde38d9a518811
+Reviewed-SHA: 43a67d7b8cbf4393
 
-Product repo: nomnomzbot master (read only). Paths below are relative to `server/src/NomNomzBot.Infrastructure/` unless they start with `dashboard/`.
-JSE = `CustomCode/Jint/JintScriptExecutor.cs` (the `Bootstrap` script and the save-time scan).
+This verdict judges the current text (sha256 43a67d7b8cbf4393...). It re-checks every claim against product master and does not carry the older verdict (8a0de18761f85cba) forward.
 
-## Claims
+Paths: SRV = server/src/NomNomzBot.Infrastructure/. JSE = SRV CustomCode/Jint/JintScriptExecutor.cs; BRK = SRV CustomCode/ScriptCapabilityBroker.cs; HB = SRV CustomCode/ScriptHostBridge.cs; HE = SRV CustomCode/ScriptHostError.cs.
 
-| # | Claim | Page line | Product file:line | Verdict |
-| --- | --- | --- | --- | --- |
-| 1 | Title carries "(Draft)" and a Draft callout | 2, 10-12 | map.md row 125 "(Draft)" | true |
-| 2 | Custom Code is off for a new channel | 16 | `Platform/FeatureService.cs:51-56` (DefaultOn false) | true |
-| 3 | While off, every grant is refused | 17 | `CustomCode/ScriptCapabilityBroker.cs:35,118-128` | true |
-| 4 | Features page, Custom Code in the Automation area | 19-20 | `dashboard/src/views/dashboard/settings/features/featureAreas.ts:27`; `.../features/i18n/en.json:5,11`; label `FeatureService.cs:52` | true |
-| 5 | The switch takes effect right away | 22 | `.../features/i18n/en.json:6`; `FeaturesView.vue:66-79` (mutation on flip) | true |
-| 6 | bot.args string[] | 31 | `DevPlatform/SdkRuntimeSurface.cs:543`; JSE:79 | true |
-| 7 | bot.getVar returns string or null | 32 | `SdkRuntimeSurface.cs:549` | true |
-| 8 | bot.setVar returns nothing; value is text | 33 | `SdkRuntimeSurface.cs:565`; JSE:81 | true |
-| 9 | bot.send / bot.stopPipeline return nothing | 34-35 | `SdkRuntimeSurface.cs:567,569` | true |
-| 10 | bot.call(key, ...args) returns string or null | 36 | `SdkRuntimeSurface.cs:573`; JSE:84-91 | true |
-| 11 | Every nnz.api call goes through bot.call | 38 | JSE:154-286 (every wrapper calls bot.call) | true |
-| 12 | An ungranted key is denied | 40 | JSE:470-471 (ScriptCapabilityDeniedException) | true |
-| 13 | console.log/info plain; warn/error prefixed "warn:"/"error:" | 42-43 | JSE:53-66, 445 | true |
-| 14 | Console lines go to the test run panel, not viewers | 42-44 | JSE:447; `CustomCode/ScriptTestRunService.cs:184`; ScriptRunner has no log output | true |
-| 15 | Helpers make no bot call, need no grant | 48-49 | JSE:42-44, 96-176 (pure JS) | true |
-| 16 | units.convert: length, weight, time, temperature; NaN on mismatch | 53-55 | JSE:97-122 | true |
-| 17 | time.now/parse/format/add/diff behavior | 61-65 | JSE:124-129 | true |
-| 18 | time.sleep at most 5 seconds, counts against time limit | 66-68 | JSE:39 (MaxSleepMs 5000), 488-495 (shared timeout token) | true |
-| 19 | math.clamp/round (default 0)/lerp/sum/avg (0 for empty)/min/max/randomInt inclusive | 74-81 | JSE:140-147 | true |
-| 20 | str.padStart/padEnd default space; trim/upper/lower/title | 87-92 | JSE:150-155 | true |
-| 21 | str.truncate includes ellipsis, default "…" | 93 | JSE:156 | true |
-| 22 | str.slugify "Hello World" gives "hello-world" | 94 | JSE:157 | true |
-| 23 | str.format leaves unknown {name} as is | 95 | JSE:158 | true |
-| 24 | json.parse null on bad text; stringify "null"; neither throws | 99-101 | JSE:161-164 | true |
-| 25 | random.int/pick (empty list throws)/shuffle (copy)/uuid v4 | 107-110 | JSE:167-170 | true |
-| 26 | nnz.lastError: last failed call or null; reading needs no grant | 114-115 | JSE:96, 468-471; `CustomCode/ScriptHostBridge.cs:118-121` | true |
-| 27 | Grant list is read at save and kept with the version | 120 | JSE:315-319, 375-393; `CustomCode/ScriptRunner.cs:93-94` (DeclaredCapabilitiesJson) | true |
-| 28 | Four sources of grant keys (nnz.api, quoted bot.call, template.render, actions.invoke type) | 122-125 | JSE:323-324, 329, 335, 339-341, 384-392 | true |
-| 29 | Unknown key or Custom Code off stops the whole run before it starts | 128 | `ScriptCapabilityBroker.cs:108-128`; `ScriptRunner.cs:95-112` | true |
-| 30 | Computed action type fails save with the quoted message | 131-132 | JSE:307, 344-345 | true (text matches verbatim) |
-| 31 | Grant key table, 24 nnz.api rows | 138-161 | JSE:347-373 (ApiMethodCapabilities, all 24 match) | true |
-| 32 | actions.invoke key is "actions.invoke:" plus type | 162 | JSE:174, 391; `ScriptCapabilityBroker.cs:87-93` | true |
-| 33 | nnz.template.render key template.render | 163 | JSE:335, 389-390; broker:71 | true |
-| 34 | Failed call returns empty result, script continues | 169-170 | `ScriptHostBridge.cs:461,766` (Fail returns a fallback); JSE wrappers (e.g. storage.set === 'ok') | true |
-| 35 | lastError has code and message | 171 | `CustomCode/ScriptHostError.cs:15` | true |
-| 36 | Six error codes | 175-180 | `ScriptHostError.cs:48-53`; `SdkRuntimeSurface.cs:889` | true |
-| 37 | Code meanings (mapping VALIDATION_FAILED/NOT_FOUND/FORBIDDEN/RATE_LIMITED/LIMIT_EXCEEDED/other) | 175-180 | `ScriptHostError.cs:21-28` | true |
-| 38 | not_found for viewer, widget, reward; refused e.g. widget turned off | 176-177 | `ScriptHostBridge.cs:461,766,771,839` | true |
-| 39 | Every bot call clears lastError first | 182 | `ScriptHostBridge.cs:114-127` | true |
-| 40 | Example: storage.set returns false on refusal, chat.send posts | 186-192 | JSE:220, 197 | true |
-| 41 | Chat post in the channel's one bot voice | 194 | chat.send posts as the bot (`SdkRuntimeSurface.cs:752`) | true |
+| Claim | Page line | Supported by | Status |
+| --- | --- | --- | --- |
+| A script has the names `bot` and `nnz` | 6 | JSE:69 `var bot, nnz;`, JSE:80, JSE:95 | true |
+| A grant is permission for one kind of bot call | 7 | BRK:38-81 one catalog entry per call key; JSE:469-470 each key checked | true |
+| Custom Code is off for a new channel | 17 | SRV Platform/FeatureService.cs:51-55 `custom_code` DefaultOn false | true |
+| Off: every grant is refused; a script with a bot call does not run | 18, 132 | BRK:35 FeatureGate; BRK:118-127 fails the whole grant per declared key | true |
+| Features page, Custom Code, Automation area | 20-21 | dashboard/src/views/dashboard/settings/features/featureAreas.ts:27; features/i18n/en.json:11 "Automation"; FeatureService.cs:52 label "Custom Code" | true |
+| Takes effect right away | 23 | BRK:118-124 the gate is read per grant build (each run), no cache in the broker | true |
+| bot members and types (args, getVar, setVar, send, stopPipeline, call) | 30-37 | JSE:80-94; JSE:426-435 __getVar returns string or null, __setVar stores text; JSE:462-475 __call returns string? | true |
+| bot.call is the door every nnz.api call goes through; takes key and text args | 39-40 | JSE:186-258 wrappers call bot.call; JSE:92 args mapped with String | true |
+| console.log/info one line; warn "warn:", error "error:"; to the test run panel; viewers never see | 44-46 | JSE:62-67; JSE:437-449 `{level}: {text}`, OnConsoleLine and LogLines (Application/Contracts/CustomCode/ScriptContracts.cs:72, 101); not sent to chat | true |
+| Helpers make no bot call | 50-51 | JSE:97-182 pure JS, no __call | true |
+| units.convert: length, weight, time, temperature; NaN on mismatch | 55-57 | JSE:98-122 | true |
+| time now/parse/format/add/diff | 63-67 | JSE:124-128 | true |
+| time.sleep at most 5 s, counts against run time limit | 68-70 | JSE:39 MaxSleepMs 5000; JSE:488-498 clamp and same timeout token | true |
+| math table, round default 0, avg 0 for empty, randomInt both ends | 76-83 | JSE:140-147 | true |
+| str table, default pad space, truncate default "…" incl. in length, slugify, format keeps unknown names | 89-97 | JSE:150-158 | true |
+| json.parse null on invalid; stringify "null"; neither throws | 101-103 | JSE:160-165 | true |
+| random int/pick (empty list stops run)/shuffle copy/uuid v4 | 109-112 | JSE:167-170; JSE:531-535 JavaScriptException -> Faulted | true |
+| nnz.lastError: last failed call or null; no grant, not a bot call | 116-117 | JSE:96; JSE:468-471 last.error skips grant and host-call count; HB:117-118 | true |
+| Grants read from the code at save and kept with the version | 121-122 | JSE:312-317 ScriptCompilation carries DeclaredCapabilities | true |
+| Four sources of keys (nnz.api, bot.call literal, template.render, actions.invoke literal) | 124-127 | JSE:322, 330, 335, 340-343, 377-394 | true |
+| Unknown key stops the run before it starts | 130 | BRK:108-112 | true |
+| Empty key list still runs when Custom Code is off | 133 | BRK:104-131 loop only over declared keys; success when none | true |
+| Key not on the list stops the run with Denied | 135, 183 | JSE:470-471; JSE:509-512 outcome Denied | true |
+| Non-literal action type fails the save with the quoted message | 137-138 | JSE:303-310 (message verbatim) | true |
+| Grant key table (26 rows) | 144-169 | JSE:347-375 ApiMethodCapabilities (music.playNow -> actions.invoke:play_track_once); JSE:183-195 actions.invoke prefix; JSE:181 template.render | true |
+| Failed call gives empty result, script goes on, lastError has code and message | 179-181 | HB:167-172 Fail; HE:22-24 ToJson code, message | true |
+| Six error codes and meanings | 187-192 | HE:26-38 mapping (RATE_LIMITED, LIMIT_EXCEEDED, FORBIDDEN -> refused, else upstream_failed), HE:46-53 | true |
+| Every bot call clears lastError first | 194 | HB:120-125 | true |
+| Bad-value rule scope and exclusions | 198-205 | JSE:80-94 and 186-258 use need(); helpers JSE:97-182; deny JSE:470; gate BRK:118-127 | true |
+| Required value left out or null stops the run, error names call and value ("chat.send needs a message") | 209 | JSE:76-79 need(); JSE:188 | true |
+| Optional value left out is skipped | 210 | JSE:192, 196, 210, 217-222, 231-238, 242 | true |
+| Empty/space text -> invalid_argument; no match -> not_found | 211-212 | HB ValidateMessage IsNullOrWhiteSpace; HB:150-166 ValidateWrite; HE:30-31 | true |
+| Other types turned into text (5 -> "5") | 214 | JSE:78 String(v); JSE:92 | true |
+| bot member table messages ("bot.getVar needs a key", "bot.setVar needs a key/a value", "bot.send needs a message", "bot.call needs a key", "bot.call needs a value for argument 1") | 222-227 | JSE:82-91 | true |
+| getVar/setVar/send never make a failed call; empty text used as is | 217, 222-224 | JSE:426-460 no Fail path | true |
+| Example: storage.set returns false when refused | 232-236 | JSE:208 `=== 'ok'`; HB:560-564 Fail(set) returns null | true |
+| 200-key limit for new keys and the exact message | 240-241 | SRV CustomCode/ScriptStorageService.cs:64-76 (LIMIT_EXCEEDED, message verbatim); HE:39 message kept | true |
+| Chat line sent in the channel's one bot voice | 241 | JSE:188 chat.send -> bot.call('chat.send'); posts as the bot | true |
 
 ## Links
 
-| Target | In map.md |
-| --- | --- |
-| /reference/code/how-a-script-runs | row 124 |
-| /reference/code/sdk-chat-music-voice | row 126 |
-| /reference/code/sdk-data-and-storage | row 127 |
-
-All three targets are map rows.
+All link targets are map rows: /reference/code/how-a-script-runs (map.md:124), /reference/code/sdk-chat-music-voice (126), /reference/code/sdk-data-and-storage (127), /reference/code/sdk-widgets-actions-templates (128). Anchors #one-rule-for-a-bad-value and #how-a-script-gets-its-grants match page headings.
 
 ## Conventions
 
-- No people's names, no action keys, no numbered levels, no license name, no "open source": checked, none.
+- No people's names, no action keys shown as UI, no numbered levels, no license name, no "open source".
 - No hosting, price or paid plan is mentioned, so no hosting marker is needed.
-- No NoMercyBot spelling. American English: no British spelling found.
-- Labels "Features", "Automation" and "Custom Code" match the dashboard i18n file and the server feature label.
-- Example: a blank line between steps, statements end with semicolons, no object with 3 or more entries, calls nest at most two deep.
+- American English throughout.
+- NomNomzBot naming only; no NoMercyBot.
+- Example script: statements end with semicolons, blank line between steps, no object with 3 or more entries, call nesting at most two deep.
+- Labels "Features", "Custom Code", "Automation" equal the dashboard and server text.
 
-## Notes (not blocking)
+## Notes
 
-- Line 40 and line 129: a call to an ungranted key does not fail softly. It ends the run with the outcome Denied (JSE:470-471, 508-511). The page could say "stops the run" so readers do not expect `nnz.lastError` to explain it.
-- Line 176: `not_found` also covers a Twitch login that does not exist (`ScriptHostBridge.cs:343`). The list "viewer, widget or reward" gives examples; it is not complete.
+- None blocking.

@@ -4,7 +4,8 @@ description: Know the bot and nnz names a script can use without a grant, how a 
 ---
 
 A script has two names to work with: `bot` and `nnz`.
-This page lists the parts that need no grant, and explains the grants that every bot call needs.
+A grant is the bot's permission for one kind of bot call, such as sending a chat line.
+This page lists the parts that need no grant and explains how a script gets its grants.
 The order of a run and its limits are on [How a script runs](/reference/code/how-a-script-runs).
 
 ::Callout
@@ -37,7 +38,8 @@ The `bot` name holds the values of the run and the raw bridge to the bot.
 
 `bot.call` is the one door that every `nnz.api` call goes through.
 It takes a grant key and text arguments.
-A key that the script was not granted is denied.
+
+A missing value in a `bot` member works as [One rule for a bad value](#one-rule-for-a-bad-value) says.
 
 `console.log` and `console.info` write a line to the test run panel.
 `console.warn` starts the line with "warn:", and `console.error` starts it with "error:".
@@ -105,7 +107,7 @@ Neither one throws.
 | Member | What it gives |
 | --- | --- |
 | `nnz.random.int(min, max)` | A random whole number from `min` to `max`, both included. |
-| `nnz.random.pick(items)` | A random item of the list. An empty list stops the script with an error. |
+| `nnz.random.pick(items)` | A random item of the list. An empty list stops the whole run with an error. |
 | `nnz.random.shuffle(items)` | A shuffled copy; the list itself stays as it is. |
 | `nnz.random.uuid()` | A random version 4 UUID. |
 
@@ -125,8 +127,12 @@ When you save the code, the bot reads which bot calls the code names, and keeps 
 4. Each `nnz.api.actions.invoke('type', ...)` adds the grant for that one action type.
 
 When the script runs, the bot checks every key on the list.
-A key that does not exist, or a channel with Custom Code off, stops the whole run before it starts.
-A call to a key that is not on the list is denied while the script runs.
+A key that does not exist stops the whole run before it starts.
+
+When Custom Code is off, a list with at least one key also stops the whole run before it starts.
+A script with an empty list makes no bot call, so it still runs.
+
+A call to a key that is not on the list stops the whole run with the result Denied.
 
 `nnz.api.actions.invoke` needs its action type as text in quotes.
 A type built in code cannot be granted, and the save fails with "nnz.api.actions.invoke needs its action type as a string literal (for example 'tts_synthesize'): a grant is per action type, so a computed type can never be granted."
@@ -162,7 +168,11 @@ A type built in code cannot be granted, and the save fails with "nnz.api.actions
 | `nnz.api.actions.invoke('type', ...)` | `actions.invoke:` and the type |
 | `nnz.template.render` | `template.render` |
 
-The calls themselves are on [Chat, music and voice](/reference/code/sdk-chat-music-voice) and [Data and storage](/reference/code/sdk-data-and-storage).
+The calls themselves are on three pages:
+
+- [Chat, music and voice](/reference/code/sdk-chat-music-voice)
+- [Data and storage](/reference/code/sdk-data-and-storage)
+- [Widgets, actions and templates](/reference/code/sdk-widgets-actions-templates)
 
 ## Read why a bot call failed
 
@@ -170,10 +180,12 @@ A bot call that fails gives back its empty result, such as `null`, `false` or an
 The script goes on.
 `nnz.lastError` then says why, with a `code` and a `message`.
 
+A call to a key that is not on the list is not a failed call, as [How a script gets its grants](#how-a-script-gets-its-grants) says.
+
 | Code | Meaning |
 | --- | --- |
-| `invalid_argument` | A value passed to the call is missing or wrong. |
-| `not_found` | No viewer, widget or reward matches. |
+| `invalid_argument` | The bot cannot use a value, for example text that is empty or only spaces. |
+| `not_found` | No viewer, widget or reward matches the name, or Twitch has no user with that login. |
 | `refused` | The bot will not do it, for example the widget is turned off. |
 | `rate_limited` | The work behind the call reported too many requests. |
 | `limit_exceeded` | The call went over a limit of the run. |
@@ -181,7 +193,40 @@ The script goes on.
 
 Every bot call clears `nnz.lastError` first, so it only ever describes the last call.
 
-This script tries to store a value and posts the reason when the store refuses it:
+### One rule for a bad value
+
+This rule covers every `nnz.api` call and every member of `bot`.
+The page of a call names it when the call is an exception.
+
+These work as the sections above say, and the rule does not cover them:
+
+- the `nnz` helpers
+- a key that is not on the list
+- the Custom Code check
+
+| Value | Result |
+| --- | --- |
+| A required value that is left out or `null` | The whole run stops. It is not a failed call. The error names the call and the value, such as "chat.send needs a message". |
+| An optional value that is left out or `null` | The value is skipped. The call uses its normal behavior. |
+| A value the bot cannot use, such as text that is empty or only spaces | A failed call with the code `invalid_argument`. The script goes on. |
+| A name that matches nothing | A failed call with the code `not_found`. The script goes on. |
+
+A value of another type is turned into text first, so the number `5` becomes `"5"`.
+
+The members of `bot` follow the first row.
+`bot.getVar`, `bot.setVar` and `bot.send` never make a failed call, so the last two rows do not apply to them.
+A `bot.call` that the bot fails is a failed call, the same as an `nnz.api` call.
+
+| Member | A value that is left out or `null` | Empty text |
+| --- | --- | --- |
+| `bot.getVar(key)` | Stops the run: "bot.getVar needs a key". | Used as it is. |
+| `bot.setVar(key, value)` | Stops the run: "bot.setVar needs a key" or "bot.setVar needs a value". | Used as it is. |
+| `bot.send(message)` | Stops the run: "bot.send needs a message". | Used as it is. |
+| `bot.call(key, ...args)` | Stops the run: "bot.call needs a key", or "bot.call needs a value for argument 1" for the first argument. | An empty argument goes to the call, which can fail it with `invalid_argument`. |
+| `bot.stopPipeline()` | Takes no value. | Takes no value. |
+| `bot.args` | A list, not a call. | A list, not a call. |
+
+This script stores the first argument of the run, or "chat" when there is none, and posts the reason when the store refuses it:
 
 ```js
 const saved = nnz.api.storage.set('last.hug', bot.args[0] || 'chat');
@@ -191,10 +236,13 @@ if (!saved) {
 }
 ```
 
-The bot posts that line in chat in the channel's one bot voice.
+When the store works, the script posts nothing.
+The store refuses a new key when the channel already holds 200 script keys.
+Chat then shows "Not saved: Storage is full: this channel already holds 200 script keys." in the channel's one bot voice.
 
 ## Related pages
 
 - [How a script runs](/reference/code/how-a-script-runs)
 - [Chat, music and voice](/reference/code/sdk-chat-music-voice)
 - [Data and storage](/reference/code/sdk-data-and-storage)
+- [Widgets, actions and templates](/reference/code/sdk-widgets-actions-templates)
