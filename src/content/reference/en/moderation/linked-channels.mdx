@@ -1,0 +1,120 @@
+---
+title: Linked channels
+description: Choose what this channel shares with other trusted NomNomzBot servers, and whether mass bans and network blocks reach it.
+---
+
+You choose how bans reach your channel from outside it on the **Federation** settings page.
+The page is in the **Connections** group of the settings sidebar.
+A linked channel is a channel on another NomNomzBot server that this server trusts.
+
+| Card | What it decides |
+| --- | --- |
+| **Sharing with other bots** | What this channel accepts from, or shares with, other trusted NomNomzBot servers. |
+| **Choices for one bot** | Choices that name one other server instead of every trusted one. The card shows only when such a choice exists. |
+| **Network blocks** | Whether an admin network block also bans its blocked actor in this channel. |
+| **Moderator mass bans** | Whether a mass ban from one of your moderators also bans its accounts in this channel. |
+
+Everything on the page is off until you turn it on.
+
+## Who can use this page
+
+The roles below are the channel roles of the dashboard.
+
+| Who | What they may do |
+| --- | --- |
+| A **Lead moderator** | Open the page, and change the **Accept** and **Share** switches. |
+| An **Editor** | All of the above. |
+| The **Broadcaster** | All of the above, and change the **Network blocks** and **Moderator mass bans** switches. |
+
+A **Moderator** cannot open the page.
+
+Which other servers count as trusted is not set on this page.
+An admin of your NomNomzBot server sets it.
+
+## Accept or share a kind of data
+
+The **Sharing with other bots** card has one row for each kind of data.
+Each row has two switches: **Accept** and **Share**.
+
+1. Open the **Federation** settings page.
+2. Find the row, for example **Shared chat bans**.
+3. Turn on **Accept**, **Share**, or both.
+   The choice is saved at once and holds for every trusted server.
+4. To stop, turn both switches off.
+
+| Row | What the bot does with it |
+| --- | --- |
+| **Shared chat bans** | With **Accept** on, a ban sent by a trusted server bans the same account in your channel. **Share** is saved, but no server code reads it. |
+| **Shared ban list** | The choice is saved, but no server code reads it. |
+| **Shared trust list** | The choice is saved, but no server code reads it. |
+| **Shared savings** | The choice is saved, but no server code reads it. |
+
+An accepted ban is placed with your channel's own Twitch connection.
+The bot records it in the moderation history as a ban that came from another server.
+When Twitch refuses the ban, the bot tells you in the inbox of things that need your action.
+
+A message from a server that is not trusted never reaches your channel.
+
+## Turn off a choice for one bot
+
+The **Choices for one bot** card lists choices that name one other server.
+Each row shows the kind of data, **Accept** or **Share**, and the id of that server.
+These choices are made outside this page.
+
+1. Find the row.
+2. Choose **Turn this choice off** (the trash icon).
+   The row goes away, and that server no longer acts on your channel for that kind of data.
+
+## Network blocks
+
+An admin network block bans a known bad actor on every channel of the network that says yes.
+
+| Label | Default | When on |
+| --- | --- | --- |
+| **Ban blocked actors here** (switch **Ban here**) | Off | A network block also bans its blocked actor in this channel. |
+
+A block reaches your channel when an admin applies it while the switch is on.
+
+## Moderator mass bans
+
+A moderator can ban a list of accounts in every channel they moderate at once.
+
+| Label | Default | When on |
+| --- | --- | --- |
+| **Accept moderator mass bans** (switch **Accept**) | Off | A mass ban from one of your moderators also bans its accounts in this channel. |
+
+When your channel is live, the mass ban does not ban at once.
+It waits for an approval in your channel before it bans.
+
+<details>
+<summary>Other ways a mass ban can reach your channel</summary>
+
+The switch is not the only way in.
+A mass ban also reaches your channel when the moderator names it as a channel under attack.
+It also reaches your channel when the moderator added your channel to their own mass ban list.
+A channel the moderator excludes is never banned in.
+
+</details>
+
+## Troubleshooting
+
+::Troubleshooting
+
+**The page shows "The sharing choices could not be loaded."**
+The bot did not answer.
+Choose **Try again** on the card.
+
+::
+
+::Troubleshooting
+
+**A switch does not move when you click it.**
+Your role may not change it.
+Only the broadcaster changes **Ban here** and the mass ban **Accept** switch.
+
+::
+
+## Related pages
+
+- [Bans and blocked terms](/reference/moderation/bans-and-blocked-terms) shows who is banned in your channel.
+- [Trust and escalation](/reference/moderation/trust-and-escalation) sets the warn, timeout and ban steps for chatters.
