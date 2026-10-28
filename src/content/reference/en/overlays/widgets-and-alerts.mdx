@@ -1,0 +1,102 @@
+---
+title: Widgets and alerts
+description: What a widget and an alert are, how to add and test them, how to preview a change, and how to replay an alert.
+---
+
+This page shows how to add a widget, test an alert, preview a change and replay an alert.
+A widget is the code that runs inside one [overlay](/reference/overlays/set-up-overlays).
+An alert is what a widget shows on stream when an event happens, such as a follow or a cheer.
+
+## Add a widget
+
+You start a new widget from an overlay that already has code, such as one marked **Built in**.
+
+1. Open that overlay and choose **Duplicate**, as [Copy an overlay](/reference/overlays/set-up-overlays#copy-an-overlay) explains.
+   The copy opens with the same code.
+2. Choose **Edit code** on the copy and change its code, as [Change the code](/reference/overlays/set-up-overlays#change-the-code) explains.
+   After you save, the editor shows "Saved and compiled. The overlay now runs this version."
+   What the code can use is on [Widgets, actions and templates](/reference/code/sdk-widgets-actions-templates).
+3. Add the overlay's address in OBS, as [OBS browser source](/reference/overlays/obs-browser-source) explains.
+
+The **Gallery** entry in the sidebar shows a **Coming soon** page.
+
+## What a widget reacts to
+
+A widget lists the events it listens to under **Reacts to** of an open overlay.
+The bot gives the widget a kind from those events.
+An open overlay shows the kind as a badge on the row under its name.
+
+The first kind in this table with an event the widget listens to wins.
+
+| Kind | The widget listens to |
+| --- | --- |
+| **TTS speaker** | Text-to-speech lines. |
+| **Chat box** | Chat messages. |
+| **Now playing** | The song that plays now. |
+| **Alerts** | Follows, subs, resubs, gifts and cheers. |
+| **Reward** | Channel point redemptions. |
+| **Game** | Chat games. |
+| **Feather** | Events listed under **Reacts to** as `feather show`, `feather steal` or `feather event`. |
+| **Hype train** | Hype trains. |
+| **Leaderboard** | A leaderboard that is shown. |
+| **Poll** | Polls and predictions. |
+| **Raid** | A raid recap that is shown. |
+| **Song queue** | The song request queue. |
+
+These are all 12 kinds.
+A widget that matches none of them shows no badge.
+
+## Where an alert comes from
+
+An event response decides what the bot does when an event happens.
+It can show an alert on your overlays.
+It can also send a chat line in the channel's one bot voice.
+How to set one up is on [Event responses](/reference/automation/event-responses).
+
+## Test an alert
+
+Use **Test** beside an event under **Reacts to**, as [Test an event](/reference/overlays/set-up-overlays#test-an-event) explains.
+A **Moderator** or higher may send a test.
+
+## Preview a change
+
+The code editor that **Edit code** opens has a fire bar.
+The fire bar sends the same sample events as **Test**, but only to the preview in the editor.
+When the samples do not load, the editor shows "The sample events could not be loaded, so the fire bar sends nothing."
+
+What a widget's code can use is listed on [Widgets, actions and templates](/reference/code/sdk-widgets-actions-templates).
+
+## Replay an alert
+
+You replay a past event from the **Home** page.
+
+1. Open **Home** and find the event in the **Happening now** panel.
+   When you are offline, the panel is called **Last stream**.
+2. Choose the **Replay** button at the end of the event's row.
+   A message counts what was sent again.
+
+| Count in the message | What it counts |
+| --- | --- |
+| chat messages | Chat lines of the event response. |
+| voice | Text-to-speech lines of the event response. |
+| overlays | Alerts the event response showed on your overlays. |
+| widgets | Saved alerts sent again to your widgets. |
+
+A replay grants nothing: no currency, no points, no reward and no counter change.
+A gift bomb is one viewer gifting several subs at once.
+Its replay shows the gifter first, then each recipient, in the original order.
+
+| Message | Meaning |
+| --- | --- |
+| "Nothing to replay for this event." | The bot has no saved copy of this event and no saved alert for it. |
+| "Found the event, but there was nothing to show again: no response is set up for it and no alert was saved." | The event has no response and no saved alert. |
+| "Could not replay this event." | The replay failed. |
+
+A **Moderator** or higher sees the **Replay** button.
+
+## Related pages
+
+- [Set up overlays](/reference/overlays/set-up-overlays)
+- [OBS browser source](/reference/overlays/obs-browser-source)
+- [Event responses](/reference/automation/event-responses)
+- [Widgets, actions and templates](/reference/code/sdk-widgets-actions-templates)
