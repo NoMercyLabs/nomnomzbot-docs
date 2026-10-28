@@ -1,0 +1,285 @@
+---
+title: Chat page
+description: Read and send chat, reply, moderate a line, look at one chatter, search the history and change how the feed looks.
+---
+
+You read and write the channel's chat on the **Chat** page, in the **Live** group of the sidebar.
+The page shows the live feed, a send box, tools on each line and four side panels.
+The header shows **Live** or **Offline** for the channel.
+
+## Who can use this page
+
+A **Moderator**, **Lead moderator**, **Editor** or **Broadcaster** may open **Chat**.
+The **Broadcaster** may also let a **VIP** open it.
+The roles are explained on [Permissions](/reference/settings/permissions).
+
+A signed-in viewer sees **Viewer chat** in the sidebar instead.
+**Viewer chat** is the same feed and send box, with the **Display** panel only.
+It has no search, no moderation tools, no **Chat identity** panel and no **Viewer** panel.
+
+Someone who may open **Chat** but may not read the chat settings also gets this viewer version of the page.
+
+The chat of a Twitch channel that does not use the bot opens from the viewer pages (see [Viewer pages](/reference/community/viewer-pages)).
+
+## Send a message
+
+1. Open **Chat** in the sidebar.
+   The **Chat feed** card shows the lines, with a count such as "120 messages".
+2. Click the box that says "Send a message as you", or press `c`.
+3. Type your message.
+4. Press Enter or choose **Send**.
+   The line goes to chat and the box clears.
+
+The message goes out on your own account, not as the bot.
+The bot's replies show in the feed as chat lines, in the channel's one bot voice.
+
+If sending fails, the text stays in the box and the page shows "The message was not sent."
+
+| Limit | Value |
+| --- | --- |
+| Longest message | 500 characters. Over 500, **Send** turns off and the page shows "A message is at most 500 characters." |
+| Character counter | Shows from 400 characters, for example "420/500". |
+| Emote and emoji suggestions | Type `:` and two letters. |
+| Chatter suggestions | Type `@` and one letter. The latest speaker comes first. |
+| Suggestions shown | Up to 12. Up and Down move, Tab or Enter picks, Escape hides the list. |
+
+The send box shows only to someone who may send chat.
+
+### Pick emotes and emoji
+
+1. Choose **Emotes and emoji** beside the send box.
+   The picker opens above the box.
+2. Click an emote or emoji.
+   It goes into the box at the cursor, and the picker stays open.
+
+The picker lists **Favorites**, **Recent**, **You**, **This channel**, other channels and emote sources, then the emoji groups.
+**Jump to a section** scrolls to a section.
+Click a section heading to fold it.
+
+| Action | How |
+| --- | --- |
+| Star an emote or emoji | Right-click it. It joins **Favorites**. Right-click again to take the star off. An emoji with skin tones opens the tone menu instead; star it with the star in that menu. |
+| Set one skin tone for every emoji | **Skin tone for all emoji**, beside the search. |
+| Set a skin tone for one emoji | Right-click an emoji that has tones, then pick a tone in the menu. The right-click forgets the tone you chose before. |
+| Find an item | **Search emotes and emoji**, at the bottom of the picker. |
+
+**Favorites** follow your account.
+**Recent** keeps your last 24 picks, in this browser only.
+Folded sections and skin tones are also kept in this browser.
+
+## Reply to a line
+
+1. Point at a line in the feed.
+   A row of buttons shows at the top right of the line.
+2. Choose **Reply**.
+   "Replying to" and the name show above the send box.
+3. Type and send your answer.
+
+**Cancel reply** or Escape removes the reply.
+A reply line in the feed shows what it answers, for example "Replying to a viewer: hello".
+
+## Moderate a line
+
+The row of buttons on a line also holds the moderation tools.
+Each one shows only to someone who may use it.
+By default, that is a moderator and up.
+
+| Button | What it does |
+| --- | --- |
+| **Timeout** | Opens **Timeout length**: **1 min**, **10 min**, **1 hour** or **1 day**. The choice times the chatter out at once. |
+| **Delete message** | Deletes the message at once. There is no question first. |
+| **Ban** | Asks "Ban name?" with "The ban applies to this channel only." Choose **Ban** to confirm. |
+| **Open profile** | Opens the profile of the chatter. |
+
+After a timeout, the line is struck through and shows "Timed out · 10 min".
+After a ban, it shows **Banned**.
+A failed action shows "The timeout did not work.", "The message was not deleted." or "The ban did not work."
+
+**Timeout** and **Ban** do not show on your own lines or on the broadcaster's lines.
+On a moderator's line, only the broadcaster sees them.
+**Delete message** still shows.
+
+The moderation tools of the channel as a whole are on [Moderation](/reference/moderation/overview).
+
+## Look at one chatter
+
+1. Click a line, not on a name or a button.
+   That chatter's lines light up and the other lines dim.
+   The **Viewer** panel opens.
+2. Read the chatter's roles, their balance in the channel currency, and **Latest messages here**.
+   **Latest messages here** shows their last 6 lines in the loaded chat.
+3. Choose **Profile** to open the full profile.
+
+The balance shows only when the channel currency is on and the chatter has a balance.
+The full profile is explained on [People](/reference/community/people).
+
+To end the focus, choose **Clear focus on** and the name, press Escape, or close the panel.
+
+### Time out or ban from the Viewer panel
+
+1. Choose **Timeout** at the bottom of the panel and pick **1 min**, **10 min** or **1 hour**.
+   The panel shows "name timed out for 10 min." with **Undo**.
+2. Or choose **Ban**, then **Ban** again to confirm.
+   The panel shows "name is banned." with **Unban**.
+
+Both act in this channel only.
+If the action fails, the panel shows "That did not go through. Nothing changed."
+The **Undo** and **Unban** buttons are here only; a timeout or ban from the line has no undo on this page.
+
+## Search the history
+
+1. Type at least two characters in **Search chat**.
+   The feed becomes **Search results**, for example "4 messages match "hello"".
+2. Choose **Search further back** for older matches.
+   At the end, the page shows "Searched back to the first message."
+3. Clear the search field.
+   The live feed and the send box come back.
+
+The search covers the whole stored history of the channel, newest first.
+While you search, the send box is gone.
+
+## Change how the feed looks
+
+1. Choose **Display** in the page header.
+   The **Display** panel opens.
+2. Change a switch or a choice.
+   The feed changes at once.
+
+**Reset** puts every choice back to its default.
+The panel says "Kept on this device": the choices stay in this browser only.
+Another computer, another browser and an OBS dock start from the defaults.
+
+| Choice | Section | Default |
+| --- | --- | --- |
+| **Badges** | **Show** | On |
+| **Avatars** | **Show** | Off |
+| **Platform icons** | **Show** | Off |
+| **Commands** | **Show** | On. Off hides command lines from the feed. |
+| **Timestamps** | **Show** | **24-hour**. Also **Off** or **12-hour**. |
+| **Name colors** | **Show** | **Readable**. Also **As sent** or **Off**. **Readable** makes a dark or pale color easier to read. |
+| **Alternating rows** | **Layout** | Off |
+| **Narrow lines** | **Layout** | Off |
+| **Rows** | **Layout** | **One line**. Also **Two lines**. |
+| **Message spacing** | **Layout** | **Normal**. Also **Tight** or **Roomy**. |
+| **Emote size** | **Emotes** | **Medium**. Also **Small** or **Large**. |
+| **Highlight mentions of me** | **Mentions and deleted messages** | On |
+| **Deleted messages** | **Mentions and deleted messages** | **Strike**. Also **Hide** or **Show**. **Show** marks the line "(deleted)". |
+
+**Font and readability** has a **Change** link to the text size and font of the whole dashboard.
+
+<details>
+<summary>Show HTML messages as plain text</summary>
+
+A channel can allow chat messages drawn as HTML.
+Then the **Display** panel also has **Show HTML as plain text**: "Shows the code of an HTML message instead of drawing it."
+The switch is off by default.
+The channel turns HTML messages on with a feature on the [Features](/reference/settings/features) settings page.
+
+</details>
+
+## Use the side panels
+
+The page header has three buttons that open a side panel: **Chat settings**, **Chat identity** and **Display**.
+The **Viewer** panel opens when you click a line.
+
+One side panel fits beside the chat in a window narrower than 1800 pixels.
+From 1800 pixels, two fit.
+Opening one more closes the panel that was open longest.
+
+### Chat settings
+
+**Chat settings** holds the chat modes and two clean-up tools.
+By default a moderator and up may see and change them.
+
+| Chat mode | What it does | Number |
+| --- | --- | --- |
+| **Emote-only** | "Only emotes can be sent." | none |
+| **Twitch subscriber-only** | "Only Twitch subscribers can chat." | none |
+| **Unique chat** | "Duplicate messages are blocked." | none |
+| **Slow mode** | One message per person every so many seconds. | **Slow mode seconds**: 3 to 120. Turning it on from 0 fills in 30. |
+| **Followers-only** | Only people who followed at least so many minutes ago can chat. | **Followers-only minutes**: 0 to 129600. Turning it on keeps the number in the box; 0 lets every follower chat. |
+| **Non-moderator delay** | Messages from non-moderators wait so many seconds. | **Non-moderator delay seconds**: 2, 4 or 6. Turning it on from 0 fills in 2. |
+
+A switch saves at once.
+A number saves when you leave the box.
+A number out of range shows its range, for example "Enter 3 to 120 seconds.", and is not saved.
+
+| Tool | What it does |
+| --- | --- |
+| **Mass ban...** | Under **Raid accounts**, the panel counts the "hostile raid accounts assessed and not yet banned". The button asks "Mass ban raid accounts?" and bans them across the participating channels. It is off when the count is 0. |
+| **Clear chat** | Under **Clean up**, it asks "Clear chat?" and then removes every message in the chat for everyone. |
+
+If one of these fails, the panel shows "The moderation action failed. Try again."
+
+### Chat identity
+
+**Chat identity** shows how you look in Twitch chat: your name color and the badges you wear.
+**Preview** shows your badges and your name in your color.
+
+1. Click a color under **Name color**.
+   Or type a color in **Custom color in hex** and choose **Apply color**.
+2. The preview shows the new color.
+
+"Twitch gives everyone 15 named colors. Any hex color needs Twitch Turbo or Prime."
+When Twitch refuses a color, its reason shows under the box.
+
+**Badges** lists the badges you wear in this channel.
+You choose which ones show on Twitch: **Choose on Twitch** opens Twitch chat in a new tab.
+
+<details>
+<summary>The panel asks for a Twitch permission</summary>
+
+A color change needs a Twitch permission.
+When it is missing, the panel shows **Grant permission again**.
+
+1. Choose **Grant permission again**.
+   The panel shows "Enter this code on Twitch:" and a code.
+2. Enter the code on Twitch.
+   The panel shows "Permission granted. Reload your identity to continue."
+
+</details>
+
+## Open the chat in its own window
+
+| Button | What it does |
+| --- | --- |
+| **Pop out** | Opens the chat in a small window of its own, for a second screen. |
+| **Copy dock link** | Copies the address of that window. Paste it into an OBS Custom Browser Dock. |
+
+Both buttons are on the full page only, not on a phone and not in the viewer version.
+The window, the OBS dock and a phone show one slim header.
+There, **Search chat** opens the search field, and the three panel buttons fold into **More chat tools** when the header is narrow.
+
+## Troubleshooting
+
+::Troubleshooting
+
+**Typing in Search chat does not change the feed.**
+The search starts at two characters.
+Type one more.
+
+**The send box is gone.**
+A search is open.
+Clear the search field.
+If no search is open, your role may not send chat.
+
+**There is no Timeout or Ban button on a line.**
+The line is yours, the broadcaster's or a moderator's.
+Only the broadcaster may time out or ban a moderator.
+
+**The feed says "Only commands so far. Switch on Commands in Display to see them."**
+**Commands** is off in the **Display** panel.
+Switch it on.
+
+**My Display choices are gone.**
+They are kept in one browser only.
+A new browser, another computer or an OBS dock starts from the defaults.
+
+::
+
+## Related pages
+
+- [Dashboard tour](/reference/getting-started/dashboard-tour)
+- [Moderation](/reference/moderation/overview)
+- [People](/reference/community/people)
+- [Permissions](/reference/settings/permissions)
