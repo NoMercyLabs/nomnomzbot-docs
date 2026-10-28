@@ -12,7 +12,21 @@
 import assert from 'node:assert/strict';
 import { test } from 'node:test';
 
-import { isLabelCell } from '../src/lib/readAloudLabels.ts';
+import { isLabelCell, tableIsRead } from '../src/lib/readAloudLabels.ts';
+
+test('a table of one-word cells is reference data and is not read', () => {
+  const cells = ['Helper', 'he', 'she', 'they', 'Subject', 'he', 'she', 'they', 'Present tense', 'is', 'is', 'are'];
+  assert.equal(tableIsRead(cells), false);
+});
+
+test('a table with a cell of real text is read', () => {
+  const cells = ['State', 'Meaning', 'Active', 'The plan runs.', 'Trial', 'The plan is on a free trial.'];
+  assert.equal(tableIsRead(cells), true);
+});
+
+test('an empty table is not read', () => {
+  assert.equal(tableIsRead([]), false);
+});
 
 test('a table header cell is a label, never read', () => {
   assert.equal(isLabelCell('TH', 0, 2), true);

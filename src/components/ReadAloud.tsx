@@ -7,7 +7,7 @@ import { create } from 'zustand';
 import { t } from '../lib/i18n';
 import { chunkSentence, joinCommandBangs } from '../lib/readAloudChunks';
 import { createClipCache } from '../lib/readAloudClip';
-import { isLabelCell } from '../lib/readAloudLabels';
+import { isLabelCell, tableIsRead } from '../lib/readAloudLabels';
 import { pickVoice } from '../lib/readAloudVoice';
 
 // Read aloud with the browser's own speech engine: no service, no key, and
@@ -93,9 +93,23 @@ function textOf(element: HTMLElement): string {
   return (copy.textContent ?? '').replace(/\s+/g, ' ').trim();
 }
 
+const readTables = new WeakMap<Element, boolean>();
+
+function tableIsSpoken(table: Element): boolean {
+  let spoken = readTables.get(table);
+  if (spoken === undefined) {
+    const texts = [...table.querySelectorAll('th, td')].map(cell => cell.textContent ?? '');
+    spoken = tableIsRead(texts);
+    readTables.set(table, spoken);
+  }
+  return spoken;
+}
+
 function isLabel(element: HTMLElement): boolean {
   const row = element.closest('tr');
   if (!row) return false;
+  const table = row.closest('table');
+  if (table && !tableIsSpoken(table)) return true;
   const cells = [...row.children];
   return isLabelCell(element.tagName, cells.indexOf(element), cells.length);
 }

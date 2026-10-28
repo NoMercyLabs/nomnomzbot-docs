@@ -9,6 +9,15 @@
 //  SPDX-License-Identifier: PolyForm-Noncommercial-1.0.0
 // -----------------------------------------------------------------------------
 
+const WORDS_OF_REAL_TEXT = 3;
+
+// A table of one or two words per cell (he, she, they; is, are) is reference data: the voice would say each
+// word on its own, which is slow and says nothing a listener can use. A table is read only when some cell
+// holds real text.
+export function tableIsRead(cellTexts: string[]): boolean {
+  return cellTexts.some(text => text.trim().split(/\s+/).filter(Boolean).length >= WORDS_OF_REAL_TEXT);
+}
+
 // A table lists interface names (a panel, a button, a state) next to what each
 // one means. Read aloud is for the explanation, so a header cell and the label
 // cell of a row are skipped. A row with one cell is plain text and is read.
