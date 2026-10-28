@@ -1,0 +1,126 @@
+---
+title: Resource limits
+description: Read the limits that apply to your channel, how much of each you use, and what the bot does when you reach one.
+---
+
+You read the channel's limits on the **Resource limits** page in the settings sidebar.
+The page shows each limited resource, how much of it the channel uses, and the plan behind the limits.
+The page only shows limits; you cannot change them here.
+
+The settings sidebar is described on the [dashboard tour](/reference/getting-started/dashboard-tour).
+
+## Who can use this page
+
+Only the broadcaster may open the page.
+
+## What the page shows
+
+The page has three cards, from top to bottom.
+
+| Card | What it holds |
+| --- | --- |
+| **Plan** | "The plan that sets your limits." |
+| **Limits** | "How much of each limited resource this channel uses right now." |
+| **Usage this period** | Metered use in the current period, with its start and end dates. |
+
+## Plan
+
+The **Plan** card has three lines.
+
+| Line | What it shows |
+| --- | --- |
+| **Plan** | The name of the channel's plan. Without a name, it shows **Your plan**. |
+| **Custom bot name** | **Included** or **Not included**. |
+| **Priority support** | **Included** or **Not included**. |
+
+The **Change plan** button opens the [Billing](/reference/settings/billing) page.
+
+Running it for yourself, your friends and your community is free. You may not earn money with it: no selling it, and no paid hosting or paid service built on it.
+
+## Limits
+
+The **Limits** card puts each resource in one of four groups.
+A group with no resource in it does not show.
+
+| Group | What it means on the page | Resources |
+| --- | --- | --- |
+| **Storage** | "Disk space for your uploads. Deleting a file frees its space at once." | **Sound clip storage**, **Channel asset storage** |
+| **Monthly allowance** | "Time you can use each month. It starts again every period." | **Script run time per month** |
+| **Per message** | "The longest a single message can be. It is a cap, not a total." | **Text-to-speech message length** |
+| **Abuse protection** | "The same generous limit for every channel. It only stops runaway use." | **Custom commands**, **Timers** |
+
+### Read a meter
+
+Each resource outside **Per message** has a row with its name and the amount used.
+A resource with a limit also has a bar.
+The amount reads "used of limit", for example "3 of 200".
+Storage shows as a file size, and script time as a length of time.
+
+| How full | What you see |
+| --- | --- |
+| Under 80% | A muted bar. |
+| 80% or more | A darker bar. |
+| At or over the limit | A red bar and red figures. |
+| No limit | The amount and "no limit", with no bar. |
+
+A **Per message** row has no bar.
+It shows the cap as a number of characters per message, or **No cap**.
+
+### Abuse protection limits
+
+These limits do not change with the plan.
+Each row also shows "Safety limit for every channel:" and the value.
+
+| Resource | Safety limit |
+| --- | --- |
+| **Custom commands** | 1,500 |
+| **Timers** | 200 |
+
+Storage and the monthly allowance come from the plan.
+On a bot you host yourself, they have no limit.
+
+## Usage this period
+
+The **Usage this period** card lists metered use in the current period, such as **Text-to-speech characters**.
+Its description shows the first and last day of the period.
+A resource already shown under **Limits** is not shown here again.
+
+When nothing is metered yet, the card shows "Nothing is metered yet this period."
+
+## What happens at a limit
+
+The bot refuses the next save that would go over the limit.
+Nothing is made, and the page where you saved shows the reason.
+
+| You try to | The reason reads |
+| --- | --- |
+| Make a command past the limit | "Your plan allows up to 1500 custom commands. Upgrade your tier or remove one first." |
+| Make a timer past the limit | "Your plan allows up to 200 timers. Upgrade your tier or remove one first." |
+| Upload a sound clip past the storage limit | "This upload would use … MB of your … MB sound clip storage limit." |
+| Upload a channel asset past the storage limit | "This upload would use … MB of your … MB channel asset storage limit." |
+
+The command and timer reasons name your plan.
+Their limits are the abuse protection limits.
+A different plan does not raise them.
+
+A command or a timer that already exists keeps working.
+To make room, delete a command, a timer or a file.
+A deleted file frees its storage at once.
+
+Some features have their own switch on [Features](/reference/settings/features).
+
+## Troubleshooting
+
+::Troubleshooting
+
+**A card shows an error.**
+The card shows "The limits could not be loaded.", "The plan could not be loaded." or "The usage could not be loaded."
+Choose **Try again** on that card to load it again.
+
+::
+
+## Related pages
+
+- [Billing](/reference/settings/billing)
+- [Features](/reference/settings/features)
+- [Dashboard tour](/reference/getting-started/dashboard-tour)
