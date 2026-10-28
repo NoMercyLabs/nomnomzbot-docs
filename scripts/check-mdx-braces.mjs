@@ -16,6 +16,10 @@ import { join } from 'node:path';
 
 const root = process.argv[2] ?? 'src/content/reference';
 const bareBrace = /\{[A-Za-z_][\w.:-]*\}/;
+// A placeholder such as `<song name>` reads as an unknown JSX tag and fails the build the same way.
+const placeholderTag = /<([a-z][\w-]*)(\s[^<>]*)?>/g;
+const htmlTags = new Set(['a', 'b', 'i', 'em', 'strong', 'br', 'span', 'div', 'kbd', 'code', 'img', 'p', 'ul', 'ol', 'li', 'sup', 'sub', 'small', 'details', 'summary']);
+const hasPlaceholder = (prose) => [...prose.matchAll(placeholderTag)].some((match) => !htmlTags.has(match[1]));
 
 function mdxFiles(dir) {
 	return readdirSync(dir).flatMap((name) => {
@@ -35,12 +39,12 @@ for (const file of mdxFiles(root)) {
 		}
 		if (inFence) return;
 		const prose = line.replace(/`[^`]*`/g, '');
-		if (bareBrace.test(prose)) problems.push(`${file}:${index + 1}: ${line.trim()}`);
+		if (bareBrace.test(prose) || hasPlaceholder(prose)) problems.push(`${file}:${index + 1}: ${line.trim()}`);
 	});
 }
 
 if (problems.length > 0) {
-	console.error(`check-mdx-braces: ${problems.length} bare brace(s) in prose. Put each in backticks:`);
+	console.error(`check-mdx-braces: ${problems.length} bare brace(s) or placeholder tag(s) in prose. Put each in backticks:`);
 	for (const problem of problems) console.error(`  ${problem}`);
 	process.exit(1);
 }
