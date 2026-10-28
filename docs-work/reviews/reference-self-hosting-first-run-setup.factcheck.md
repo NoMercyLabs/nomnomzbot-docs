@@ -1,7 +1,7 @@
 # Fact-check: /reference/self-hosting/first-run-setup
 Verdict: PASS
 Reviewed: src/content/reference/en/self-hosting/first-run-setup.mdx
-Reviewed-SHA: 7aaee6064fb775d4 (re-run on the current text; earlier run was c3c00a32b8c2f9b9)
+Reviewed-SHA: 7aaee6064fb775d4
 
 Paths are relative to the product repo C:\Projects\NoMercyLabs\nomnomzbot (master).
 S = dashboard/src/views/site/setup. D = server/src/NomNomzBot.Api/Models/SetupWizardDtos.cs. C = server/src/NomNomzBot.Api/Controllers/V1/SystemController.cs.

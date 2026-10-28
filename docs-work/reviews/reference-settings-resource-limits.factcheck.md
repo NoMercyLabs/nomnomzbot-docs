@@ -1,7 +1,7 @@
 # Fact-check: /reference/settings/resource-limits
 Verdict: PASS
 Reviewed: src/content/reference/en/settings/resource-limits.mdx
-Reviewed-SHA: f392ac11ef64492b (same at start and end)
+Reviewed-SHA: f392ac11ef64492b
 
 Paths are in C:\Projects\NoMercyLabs\nomnomzbot. RL = dashboard/src/views/dashboard/settings/resource-limits.
 
