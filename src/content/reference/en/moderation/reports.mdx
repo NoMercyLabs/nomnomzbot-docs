@@ -1,0 +1,102 @@
+---
+title: Viewer reports
+description: Read the reports viewers file about a chatter, dismiss or escalate each one, and find the safety review queue.
+---
+
+You read and sort the reports viewers file about a chatter on the **Viewer reports** page.
+The page sits in the **Access** group of the settings sidebar.
+
+## Who can use this page
+
+| Who | What they can do |
+| --- | --- |
+| A **Moderator** or higher | Open the page and read every report. |
+| A **Lead moderator** or higher | Also **Dismiss** or **Escalate** an open report. |
+| A viewer in the channel | File a report. |
+
+## How a report arrives
+
+A report names one chatter and gives a reason.
+The dashboard has no form to file a report.
+A report comes in through the bot's API.
+
+| Rule | What happens |
+| --- | --- |
+| The reason is empty | The bot refuses the report: "A report needs a reason." |
+| The reason is longer than 500 characters | The bot refuses the report. |
+| No chatter is named | The bot refuses the report: "A report needs a reported user." |
+
+A new report has the status **Open**.
+The chatter in the report is saved as a user of the bot, even if they never chatted before.
+
+## Read the reports
+
+1. Open **Viewer reports** in the **Access** group of the settings sidebar.
+   The **Viewer reports** list shows the open reports, newest first.
+2. Choose a status in **Show reports that are**: **Open**, **Escalated** or **Dismissed**.
+   The list shows only the reports with that status.
+
+Each row shows the name of the reported chatter.
+Under the name, the row shows the reason and who filed it, for example "Filed by a viewer 5 minutes ago".
+When the bot does not know the reporter, the row says "a viewer".
+
+| Status | Text when the list is empty |
+| --- | --- |
+| **Open** | "No open reports. Nobody has asked for help." |
+| **Escalated** | "No escalated reports." |
+| **Dismissed** | "No dismissed reports." |
+
+## Dismiss or escalate a report
+
+1. Show the **Open** reports.
+2. On the row, choose **Dismiss** for a report that needs no action.
+   Choose **Escalate** for a report that a moderator should look into.
+3. The page shows "The report about (name) is dismissed." or "The report about (name) is escalated."
+   The report leaves the **Open** list and moves to the list of its new status.
+
+The bot records who made the choice and when.
+The buttons show only on open reports.
+
+::Callout
+**Escalate** does not ban or time out anyone.
+It only marks the report.
+The bans of the channel are on [Bans and blocked terms](/reference/moderation/bans-and-blocked-terms).
+::
+
+::Troubleshooting
+**The page shows "The report about (name) could not be changed."**
+The bot did not save the choice.
+The report stays as it was. Try again.
+::
+
+::Troubleshooting
+**The page shows "The reports could not be loaded."**
+The list did not load.
+Choose **Try again** on the card to load it again.
+::
+
+## The safety review queue
+
+The automatic actions of spam defense wait for a human decision in a separate queue.
+This queue is not on the channel's settings.
+It is the **Review queue** on the **Trust and safety** page, in the admin area of the dashboard.
+Only an operator of the deployment with the right to review trust and safety sees it.
+
+<details>
+<summary>Work the review queue</summary>
+
+1. Type why you open the page in **Reason for access**.
+   Nothing loads until you do. Every read and action is saved in the audit log with this reason.
+2. The **Review queue** shows the automatic account actions, newest first.
+   Each row shows the account, the channel, the reason, the message, the confidence, the action and the time.
+3. Choose **Confirm** or **Overturn** on a row.
+
+| Choice | What happens |
+| --- | --- |
+| **Confirm** | The action stays as it is and the review closes. |
+| **Overturn** | The bot removes the Twitch timeout or ban it gave, then marks the action overturned. |
+
+When the bot cannot remove the timeout or ban, the row stays as it was.
+The same page also shows **Cross-channel signals**: accounts flagged in two or more channels.
+
+</details>
