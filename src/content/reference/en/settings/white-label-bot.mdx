@@ -1,0 +1,103 @@
+---
+title: White-label bot
+description: Connect your own bot account on Twitch so the bot chats as that account, and go back to the shared bot.
+---
+
+You connect your channel's own bot account on the **White-label bot** page.
+Open **Settings** in the sidebar, then **White-label bot** in the **Bot** group.
+Which account the bot types from, and why you do not need a bot account, is on [Bot account](/reference/getting-started/bot-account).
+
+## Who can use this page
+
+The broadcaster may open the page.
+Only the broadcaster may connect, change or disconnect the bot account.
+
+The broadcaster may also let other roles open the page on the **Permissions** settings page.
+They then see which account the channel uses, and no buttons.
+
+## Read the status
+
+The card **Your channel's own bot** shows which account chats for your channel.
+
+| Badge | What the card shows |
+| --- | --- |
+| **Connected** | Your own bot account: its name, its `@` handle and its picture. |
+| **Shared bot** | "Your channel uses the shared bot" with the shared bot's name, or **Shared bot** when it has no name. |
+
+When the status cannot load, the card shows "The bot account could not be loaded." and lets you try again.
+
+## Connect your own bot
+
+Use a Twitch account that you made for the bot.
+Sign in to Twitch as that account, not as yourself.
+Use a private window if you are signed in to Twitch as yourself.
+
+1. Open the **White-label bot** page and choose **Connect your own bot**.
+   The card shows "Starting the sign-in..." and then a sign-in code.
+2. Choose **Open** followed by the Twitch site name.
+   The Twitch page opens in a new tab.
+3. Sign in there as the bot account and type the code.
+   The card shows "Waiting for you to approve the code..."
+4. Approve the code on Twitch.
+   A message pops up: "Your bot account is connected."
+   The badge changes to **Connected**.
+
+Viewers now see your bot's name and picture in chat.
+The bot still speaks in the channel's one bot voice, now from your own bot account.
+
+Choose **Cancel** to stop the sign-in.
+The button shows next to the code, and under a sign-in that failed.
+
+<details>
+<summary>Sign in with the browser instead of the code</summary>
+
+Under the code, the card shows "Can't use the code? Sign in on the Twitch page in this browser instead."
+Choose **Sign in with the browser**.
+The Twitch sign-in page opens in a new tab.
+
+</details>
+
+## Use another bot account
+
+1. On the **White-label bot** page, find the row **Use another account**.
+2. Choose **Change account**.
+   The same sign-in code steps start as in [Connect your own bot](#connect-your-own-bot).
+3. Approve the code as the new bot account.
+   The new account replaces the current one.
+
+## Go back to the shared bot
+
+1. On the **White-label bot** page, find the row **Go back to the shared bot**.
+2. Choose **Disconnect**.
+   A dialog asks "Disconnect" followed by the bot's name.
+3. Choose **Disconnect** in the dialog.
+   A message pops up: "Your bot account is disconnected. The shared bot speaks again."
+
+The shared bot answers commands and events in your channel again.
+The Twitch account itself stays as it is.
+You can connect it again at any time.
+
+## Troubleshooting
+
+::Troubleshooting
+
+**The card shows "The code ran out of time. Start again to get a new one."**
+The code was not approved in time.
+Choose **Try again** for a new code.
+
+::
+
+::Troubleshooting
+
+**The card shows "The sign-in was denied on Twitch."**
+The approval was refused on Twitch.
+Choose **Try again** and approve the code.
+
+::
+
+When the sign-in stops for another reason, the card shows "The sign-in did not finish. Try again." and a **Try again** button.
+
+## Related pages
+
+- [Bot account](/reference/getting-started/bot-account)
+- [First-run setup](/reference/self-hosting/first-run-setup)
