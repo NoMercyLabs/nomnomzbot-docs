@@ -1,0 +1,168 @@
+---
+title: Sounds
+description: Add sound clips, tune their volume, and play them from a chat word, a command, a reward or a pipeline.
+---
+
+You keep the channel's sound clips on the **Sounds** page in the sidebar.
+A sound clip is a short audio file the bot plays on your overlay.
+Chat can play it with a word, and a [pipeline](/reference/commands/pipelines) can play it as a step.
+
+Sound clips play through the overlay in your OBS browser source.
+The setup is on [OBS browser source](/reference/overlays/obs-browser-source).
+
+## Who can use this page
+
+A **Moderator**, **Lead moderator**, **Editor** or **Broadcaster** may open the page and change clips.
+The roles are explained on [Permissions](/reference/settings/permissions).
+
+The **Broadcaster** may also let a **VIP** open the page.
+A VIP then sees the list only.
+**New sound clip**, the on/off switch, **Edit** and **Delete** show only to someone who may change clips.
+
+## Add a sound clip
+
+1. Open **Sounds** in the sidebar and choose **New sound clip**.
+   The **New sound clip** dialog opens.
+2. Choose a file in **Audio file**.
+3. Type a **Short name**, for example `airhorn`.
+   Commands and pipelines find the clip by this name, and it cannot change later.
+4. Type a **Display name**, the name you see in the list.
+5. Set **Volume (0 to 100)**, or leave it at the default.
+6. Choose **Add sound clip**.
+   The dialog closes and the clip shows in the **Sound clips** list, switched on.
+
+| Field | Rule | Default |
+| --- | --- | --- |
+| **Audio file** | An mp3, ogg or wav file of at most 10 MB and at most 3 minutes. | None |
+| **Short name** | Must not be empty. No other clip in the channel may have the same name. | None |
+| **Display name** | Must not be empty. | None |
+| **Volume (0 to 100)** | A whole number from 0 to 100. | 80 |
+
+The bot reads the file itself to find its type.
+A file with another name ending is refused when its content is not mp3, ogg or wav.
+A refusal shows in the dialog, and nothing is saved.
+
+A channel holds at most 100 clips.
+Sound clip storage also counts toward the channel's limits on [Resource limits](/reference/settings/resource-limits).
+
+When the list is empty, the page shows "No sound clips yet."
+
+## Read the list
+
+Each row shows the display name in bold, with a line of details under it.
+
+| Detail | Example |
+| --- | --- |
+| The short name | `airhorn` |
+| The chat word, when the clip has one (see [Play a clip from chat](#play-a-clip-from-chat)) | chat word `airhorn` |
+| The volume | volume 80 |
+| The length in seconds | 2.5 s |
+
+The list shows 50 clips at a time; **Show more sound clips** loads the next 50.
+
+## Change a clip
+
+Choose **Edit** on the row.
+A dialog named **Edit** and the clip's display name opens.
+Each field shows the clip's current value.
+The audio file and the short name stay as uploaded.
+
+| Field | What it does | A new clip starts with |
+| --- | --- | --- |
+| **Display name** | The name in the list. It must not be empty. | The name you typed when you added it |
+| **Volume (0 to 100)** | How loud the clip plays. | The volume you set when you added it |
+| **Cooldown in seconds** | How long the clip waits before chat can play it again with its chat word. 0 means no wait. | 0 seconds |
+| **Who may play it** | The lowest role that may play the clip with its chat word. | **Everyone** |
+| **Chat word** | A word that plays the clip when a viewer types it as the whole message. Leave it empty for none. | Empty |
+
+Choose **Save sound clip**.
+The dialog closes and the row shows the new values.
+
+The cooldown can be at most 86400 seconds (one day).
+The cooldown and **Who may play it** apply only to the chat word.
+A pipeline step plays the clip without them.
+
+## Play a clip from chat
+
+A chat word plays a clip when a viewer's whole message is that word.
+The word has no prefix, so `airhorn` plays the clip and `!airhorn` does not.
+Case does not matter.
+
+| Rule for **Chat word** | What happens |
+| --- | --- |
+| It has a space | The dialog shows "The chat word cannot contain spaces." |
+| It is longer than 50 characters | The dialog shows "The chat word may have at most 50 characters." |
+| Another clip in the channel has the same word | The bot refuses it, and nothing is saved. |
+
+A viewer below **Who may play it** gets no sound and no reply.
+During the cooldown the word plays nothing.
+The broadcaster and moderators skip the cooldown.
+
+A message that matches a chat word only plays the clip.
+It does not also start a chat trigger with the same word.
+
+## Play a clip from a command, a reward or a pipeline
+
+A command or a [channel-point reward](/reference/automation/rewards) plays a clip through a pipeline.
+Add a **Play sound** step to a [pipeline](/reference/commands/pipelines).
+Then pick that pipeline in the command's **Pipeline** field, or in the reward's settings on [Rewards](/reference/automation/rewards).
+
+| **Play sound** field | What it does |
+| --- | --- |
+| **Sound clip** | The clip to play. |
+| **Volume** | A volume from 0 to 100 for this step only. Leave it blank to use the clip's own volume. |
+| **Wait for finish (true/false)** | Pauses the rest of the pipeline until the clip ends. The wait is at most 60 seconds. |
+| **Synced** | Starts the clip at the visual cue, outside the shared audio queue. |
+| **Handle** | A name for this playback, so a later **Stop sound** step can stop this clip only. |
+
+The **Stop sound** step stops clips that are playing.
+With **Handle** set, it stops that playback.
+With **All** on, it stops every clip that is playing.
+A **Play sound** step fails when the clip is switched off or does not exist.
+
+## Turn a clip off
+
+Use the switch at the end of the row.
+A clip that is off does not play from its chat word or from a pipeline step.
+Turn the switch on again to play it.
+
+## Set the overall loudness
+
+Each clip plays at its own volume times the channel's master volume.
+The master volume is set under **Audio levels** on the **Overlays** page, as explained on [Set up overlays](/reference/overlays/set-up-overlays).
+Its default is 100, so a clip plays at its own volume until you change it.
+
+## Delete a clip
+
+1. Choose **Delete** on the row.
+   The bot counts the pipelines and other places that play the clip.
+2. Read the dialog that asks **Delete** with the clip's display name.
+   It lists each kind of place that uses the clip, with a count and the names.
+   When nothing uses the clip, it shows "No command, pipeline or reward plays this clip."
+3. Choose **Delete sound clip**.
+   The clip and its audio file are gone for good, and the row leaves the list.
+
+A pipeline step that named the clip stays in the pipeline.
+It fails when it runs, because the clip no longer exists.
+
+## Troubleshooting
+
+::Troubleshooting
+
+**A chat word plays nothing.**
+Check these, in order:
+
+1. The switch in the row. A clip that is off does not play.
+2. **Who may play it**. The viewer's role must be at least that role.
+3. **Cooldown in seconds**. The word plays nothing until the cooldown ends.
+4. The message. It must be the chat word alone, with no prefix.
+5. The overlay. It must be open in your OBS browser source (see [OBS browser source](/reference/overlays/obs-browser-source)).
+
+::
+
+## Related pages
+
+- [Pipelines](/reference/commands/pipelines)
+- [Rewards](/reference/automation/rewards)
+- [Set up overlays](/reference/overlays/set-up-overlays)
+- [OBS browser source](/reference/overlays/obs-browser-source)
