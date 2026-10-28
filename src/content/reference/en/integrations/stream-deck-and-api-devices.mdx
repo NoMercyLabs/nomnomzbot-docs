@@ -1,0 +1,145 @@
+---
+title: Stream Deck and API devices
+description: Make an API key for a tool such as Stream Deck, pair a device with a code, and choose what each key may do.
+---
+
+An API key lets an outside tool use your channel, for example a Stream Deck, Touch Portal or your own script.
+You make keys and pair devices on the **API and devices** page.
+Open **Settings** from the [dashboard](/reference/getting-started/dashboard-tour), then choose **API and devices** in the **Developers** group.
+
+## Who can use this page
+
+An **Editor** or the **Broadcaster** may open the page and see the list of keys.
+Only the **Broadcaster** sees **New key**, the **Pair a device** panel, and the buttons to make a new secret or revoke a key.
+
+## Make a key
+
+1. Choose **New key**.
+   The **New API key** dialog opens.
+2. Type a name in **Name**, for example `Stream Deck on my desk`.
+   Each key in the channel needs its own name.
+3. Choose the **Allowed actions** (see the table below).
+   **Start pipelines**, **Read data** and **Listen to events** are on when the dialog opens.
+4. If **Start pipelines** is on, you can pick pipelines in **Pipelines it may start**.
+   Pick none to allow every [pipeline](/reference/commands/pipelines).
+5. Pick a day in **Ends on**, or leave it empty for a key that does not end.
+6. Choose **Make key**.
+   The **Key for** dialog opens and shows the key.
+7. Choose **Copy key**, paste the key into your tool, then choose **I copied it**.
+
+The bot keeps only a fingerprint of the key.
+After the dialog closes, no one can see the key again.
+A key with an end day stops working at the end of that day.
+
+| **Allowed actions** | What the tool may do |
+| --- | --- |
+| **Start pipelines** | Start a pipeline of the channel, or only the pipelines you picked. |
+| **Read data** | Read the channel's pipelines, chat commands, music player state and playlists, and OBS scenes and state. |
+| **Listen to events** | Receive the channel's public events while it is connected. |
+| **Speak as the bot** | Post chat messages in the channel's one bot voice. |
+
+Give a key only what the tool needs.
+A key needs at least one allowed action.
+
+## Read the key list
+
+Each key is one row in the **API keys** table.
+
+| Column | What it shows |
+| --- | --- |
+| **Key** | The name, and the first characters of the key. |
+| **Allowed** | The allowed actions, as short words (see the next table). A key limited to some pipelines also shows "Starts N chosen pipelines only". |
+| **Last used** | The day the tool last used the key, or **Never**. |
+| **Ends** | The end day, or **No end date**. |
+| **State** | **Active**, **Expired** or **Revoked**. |
+
+| Word in **Allowed** | The allowed action |
+| --- | --- |
+| invoke | **Start pipelines** |
+| read | **Read data** |
+| events | **Listen to events** |
+| chat | **Speak as the bot** |
+
+A key that may listen to events has an info button next to its allowed actions.
+It opens **Events this key can listen to**, a list of each event name with a short description.
+
+## Pair a device
+
+Pairing connects a Stream Deck or another device without copying a key by hand.
+The **Pair a device** panel has two halves, one for each direction.
+
+### Make a code for the device
+
+1. Type a name in **Device name** and choose **Make code**.
+   The page shows an eight-character code.
+2. Type the code into the device within five minutes.
+   The code works once.
+
+The device then gets its own key, which shows in the key list.
+A key made this way may start pipelines, read data and listen to events.
+
+### Approve a code the device shows
+
+1. Read the code the device shows.
+2. Type it into **Code shown on the device** and choose **Approve device**.
+   The page shows "Device approved. It appears in the key list."
+
+A device can also open an approval page in your browser.
+That page shows the code and an **Approve** button.
+If you are not logged in, the button reads **Log in first**: log in to the dashboard in the same browser, then reload the page.
+
+A code the device shows works for ten minutes, and it works once.
+A paired device's key is named after the device and ends 30 days after pairing.
+A device that stays connected renews its own key, so you do not need to pair it again.
+
+## Make a new secret for a key
+
+1. Choose the rotate button on the key's row.
+   The dialog asks "Make a new secret for" the key.
+2. Choose **Make new secret**.
+   The **Key for** dialog shows the new key once.
+
+The old key stops working right away.
+The tool needs the new key before it can connect again.
+A revoked key cannot get a new secret.
+
+## Revoke a key
+
+1. Choose the trash button on the key's row.
+2. Choose **Revoke key**.
+
+Any tool or device that uses the key loses access right away.
+A paired device is unpaired.
+The key stays in the list with the state **Revoked**, and its row has no buttons.
+
+## Troubleshooting
+
+::Troubleshooting
+
+**A device says the code is invalid or expired.**
+The code was used already, or its time ran out.
+Make a new code and type it in again.
+
+::
+
+::Troubleshooting
+
+**Pairing says there are too many attempts.**
+A device may try five codes a minute, and so may your account.
+All devices together may try 30 codes a minute.
+Wait the number of seconds the message names, then try again.
+
+::
+
+::Troubleshooting
+
+**The key is lost.**
+The bot cannot show it again.
+Make a new secret for the key, and put the new key into the tool.
+
+::
+
+## Related pages
+
+- [Dashboard tour](/reference/getting-started/dashboard-tour)
+- [Pipelines](/reference/commands/pipelines)
