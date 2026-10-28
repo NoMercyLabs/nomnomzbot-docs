@@ -1,0 +1,198 @@
+---
+title: Currency and balances
+description: Set up the channel currency, add earning rules, change or freeze a viewer's balance and make savings jars.
+---
+
+You set up the channel's own points on the **Economy** page in the sidebar.
+Viewers collect this currency in your channel.
+New to the dashboard? Start with the [dashboard tour](/reference/getting-started/dashboard-tour).
+
+| Tab | What it holds |
+| --- | --- |
+| **Currency** | The name of the currency, the starting balance and the highest balance. |
+| **Balances** | What each viewer holds. |
+| **Earning rules** | How viewers earn the currency. |
+| **Savings jars** | Shared pots viewers fill toward a goal. |
+| **Store** | Things viewers buy, on [Store](/reference/economy/store). |
+| **Leaderboards** | Rankings, on [Leaderboards and games](/reference/economy/leaderboards-and-games). |
+
+## Who can use this page
+
+A tab shows only to someone who may read it.
+A **Moderator**, **Lead moderator**, **Editor** or **Broadcaster** may see and change the **Currency**, **Balances** and **Earning rules** tabs.
+Anyone who may open the page may see the **Savings jars** tab, make a jar and invite a channel.
+Closing and deleting a jar needs a **Moderator** or higher.
+
+## Set up the currency
+
+1. Open **Economy** in the sidebar and choose the **Currency** tab.
+   The **Channel currency** card opens.
+2. **Currency name** starts as `points`.
+   Keep it, or type your own name, for example `coins`.
+3. Turn on **Currency on**.
+4. Choose **Save currency**.
+   The currency is saved, and the bot can now pay it out.
+
+A new channel has no saved currency.
+The card then shows the defaults below, and **Save currency** sets the currency up.
+
+| Label | What it does | Default |
+| --- | --- | --- |
+| **Currency on** | When it is off, no viewer earns or spends the currency, and you cannot adjust a balance. | Off |
+| **Currency name** | The name of the currency. It is required. | points |
+| **Plural name** | The name the bot uses for any amount that is not 1. | points |
+| **Starting balance** | The balance a viewer has when their wallet is made. It cannot be negative. | 0 |
+| **Highest balance** | The most one viewer can hold. Leave it empty for no limit. It must be at least the starting balance. | No limit |
+| **Decimal places** | A number from 0 to 8. Viewers see no change from it. | 0 |
+| **Currency icon URL** | A link to an image. Viewers see no change from it. | Empty |
+
+With an empty name, the card shows "Give the currency a name."
+
+## Switch on an earning rule
+
+An earning rule says what viewers do to earn, and how much they get.
+The bot keeps one rule per source.
+
+A new channel already has one rule for each source.
+Every rule starts off, so viewers earn nothing until you switch a rule on.
+
+1. Choose the **Earning rules** tab.
+   The list shows one row per source, each with an **Off** badge.
+2. To change the amount, choose **Edit rule** on the row.
+   The **Edit earning rule** dialog opens.
+3. Type the **Amount earned** and choose **Save rule**.
+4. Turn on the switch at the end of the row.
+   The **Off** badge goes away, and viewers earn from this source.
+
+| **Source** | When it earns | The amount | Start amount |
+| --- | --- | --- | --- |
+| **Chat messages** | A viewer sends a chat message. | **Amount earned** for each message. | 1 |
+| **Follows** | A viewer follows the channel. | **Amount earned** once. | 100 |
+| **Twitch subscriptions** | A viewer subscribes on Twitch. | **Amount earned** once. | 200 |
+| **Cheers** | A viewer cheers bits on Twitch. | **Amount earned** for each bit. | 1 |
+| **Raids** | The streamer who raids you earns. | **Amount earned** for each raider. | 500 |
+| **Supporter events** | A viewer's supporter event reaches the bot. | **Amount earned** once. | 250 |
+| **Watch time** | Nothing pays out for this source. | None | 10 |
+| **Twitch gift subscriptions** | Nothing pays out for this source. | None | 200 |
+
+A muted or shadowbanned chatter earns nothing for chat messages.
+The bot pays each event once, even when Twitch sends it twice.
+
+The dialog also has **Seconds per payout**.
+It does not change what a viewer earns.
+
+### Add a rule again after you delete it
+
+**New rule** at the top of the page opens the **New earning rule** dialog.
+Its **Source** list shows only the sources that have no rule.
+While every source has a rule, the list shows "Every source has a rule".
+
+1. Choose **New rule**.
+2. Choose a **Source**, and type the **Amount earned**.
+3. Choose **Save rule**.
+   The rule shows in the list, switched on.
+
+### Switch off or delete a rule
+
+- To stop a rule for a while, turn off its switch.
+  The row shows **Off**.
+- To delete a rule, choose **Delete rule** on the row, then **Delete rule** in "Delete this rule?".
+  Viewers stop earning from this source, and the balances they already have stay.
+
+When the list is empty, the card shows "No earning rules yet. Viewers earn nothing until you add one."
+
+## Change a viewer's balance
+
+The **Balances** tab lists each viewer's wallet.
+A viewer gets a wallet when they first earn currency.
+Each row shows the balance and how much the viewer earned and spent in total.
+
+1. Type a name in **Search viewers** to find the viewer.
+2. Choose **Adjust the balance** on the viewer's row.
+   The dialog shows the balance now.
+3. Type an **Amount**.
+   A positive amount adds, and a negative amount takes away.
+4. Type a **Reason**.
+5. Choose **Adjust balance**.
+   The dialog closes and the row shows the new balance.
+
+The amount is a whole number that is not zero, and the reason is required.
+Otherwise the dialog shows "Enter a whole amount that is not zero, and a reason."
+
+| The change would | What happens |
+| --- | --- |
+| Take the balance below 0 | The bot refuses it. |
+| Take the balance above **Highest balance** | The bot refuses it. |
+| Change a frozen wallet | The bot refuses it. |
+
+### Freeze a wallet
+
+Turn on the switch at the end of a viewer's row.
+A screen reader names it "Freeze the wallet of" followed by the viewer's name.
+A frozen wallet cannot earn or spend.
+Turn the switch off to unfreeze it.
+
+## Make a savings jar
+
+A savings jar is a shared pot that viewers fill toward a goal.
+
+1. Choose the **Savings jars** tab, then **New jar** at the top of the page.
+   The **New savings jar** dialog opens.
+2. Type a **Jar name**.
+3. Fill in the other fields, or leave them empty.
+4. Choose **Create jar**.
+   The jar shows in the list.
+   It starts open.
+   An open jar takes currency, and a closed jar does not.
+
+| Label | What it does |
+| --- | --- |
+| **Jar name** | The name of the jar. It is required. |
+| **About this jar** | A short text about the jar. |
+| **Goal** | The amount to save. The row then shows how much of the goal is saved. |
+| **Jar icon URL** | A link to an image. |
+| **Take-out cap per channel** | The most one channel can take out at one time. Leave it empty for no limit. |
+
+With an empty name, the dialog shows "Give the jar a name."
+
+### Open, close or delete a jar
+
+- Turn off the switch on the jar's row to close it.
+  The row shows **Closed**.
+- Turn the switch on again to open it.
+- To delete a jar, choose **Delete jar** on the row.
+  A dialog asks "Delete" followed by the jar's name.
+  Choose **Delete jar** in it, and the jar and its balance are removed.
+
+Only the channel that made a jar may change, close or delete it.
+
+Under the jar list, the **Deposits, withdrawals and invites** card shows "Not available here yet."
+You cannot put currency in, take it out or accept an invite on this page.
+
+### Invite a channel to a jar
+
+You can share a jar with another channel that uses the bot.
+The other channel has to accept before it can use the jar.
+
+1. Ask the other streamer for their **Channel ID**.
+   It is the channel's ID in NomNomzBot, a long code of letters, digits and dashes.
+   It is not the Twitch name.
+2. Choose **Invite a channel** on the jar's row.
+3. Type the code in **Channel ID**.
+4. Choose a **Role**, and fill in the caps, or leave them empty (see the table below).
+5. Choose **Send invite**.
+   The dialog closes.
+
+| Label | What it does | Default |
+| --- | --- | --- |
+| **Role** | **Partner** or **Viewer**. Both roles may use the jar the same way. | **Partner** |
+| **Put-in cap per stream** | The most the other channel can put in during one stream. | No limit |
+| **Take-out cap** | The most the other channel can take out at one time. | No limit |
+
+The bot refuses a second invite to a channel that is already invited.
+
+## Related pages
+
+- [Store](/reference/economy/store)
+- [Leaderboards and games](/reference/economy/leaderboards-and-games)
+- [Dashboard tour](/reference/getting-started/dashboard-tour)
