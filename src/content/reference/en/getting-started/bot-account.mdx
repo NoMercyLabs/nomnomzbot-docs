@@ -1,0 +1,70 @@
+---
+title: Bot account
+description: Learn which account the bot types from in your Twitch chat, and why you do not need a separate bot account.
+---
+
+The bot types its lines in your chat from one Twitch account.
+This page explains which account that is.
+A bot account is never required.
+
+## Which account the bot types from
+
+The bot picks the account in this order.
+
+| Order | The bot types from | When |
+| --- | --- | --- |
+| 1 | Your channel's own bot account | You connected one on the [White-label bot](/reference/settings/white-label-bot) settings page. |
+| 2 | The shared bot account | No own bot account is connected, and the install has a shared bot connected. |
+| 3 | Your own Twitch account | Neither of the two above exists. |
+
+A self-hosted bot uses the streamer's own account until a separate bot account is registered.
+So after you [connect Twitch](/reference/getting-started/connect-platforms), the bot can already type in your chat.
+
+The **White-label bot** page shows which account the channel uses now.
+It shows **Connected** for your own bot account, or **Shared bot** for the shared one.
+
+## The bot speaks in one voice
+
+Every line the bot writes uses the channel's one bot voice.
+A command reply, an announcement and an event response all come from the same account.
+The bot speaks aloud only through text to speech.
+
+## Mark lines the bot posts as you
+
+When the bot types from your own account, viewers cannot tell its lines from yours.
+A marker in front of each bot line fixes that.
+
+1. Open **Settings** in the sidebar and choose **Bot basics**.
+2. Type one to four characters in **Bot line marker**, such as `*` or an emoji.
+   Spaces are not allowed.
+3. Choose **Save**.
+   The page shows "Basics saved."
+
+The marker goes in front of each line the bot posts through your own account.
+Leave the field empty for no marker.
+The bot skips the marker when it types from a separate bot account, because that account's name already tells viewers apart.
+A line you send as yourself never gets the marker.
+
+## Keep the bot a moderator
+
+This applies only when the bot types from a separate bot account.
+Your own account needs no moderator role.
+
+When the bot account loses the moderator role, the dashboard shows a notice: "{botName} is not a moderator in your channel".
+The notice says: "Type /mod {botName} in your Twitch chat. Twitch limits what a bot without the moderator role can do."
+The notice clears when the bot is a moderator again.
+
+<details>
+<summary>The shared bot can get the role back by itself</summary>
+
+For the shared bot account, NomNomzBot tries to give the moderator role back with your own Twitch sign-in.
+This needs the permission to manage moderators on your Twitch account.
+If that permission is missing, the dashboard asks you for it in its notices.
+
+</details>
+
+## Related pages
+
+- [Connect platforms](/reference/getting-started/connect-platforms)
+- [White-label bot](/reference/settings/white-label-bot)
+- [First-run setup](/reference/self-hosting/first-run-setup)
