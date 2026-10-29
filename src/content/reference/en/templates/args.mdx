@@ -5,9 +5,16 @@ description: Lists 64 template helpers, each with what it gives and an example.
 
 Helpers on this page: `{args}`, `{args.*}`.
 
-These helpers read the words a viewer typed after the command, such as the first word or the second word.
+These helpers read the words after the command, such as the first word or the second word.
 Use them to take a word, a number or a duration from the command.
 They can also read a person from a word, such as `{args.1.user.points}`, and give facts about that person.
+
+Usually the words are exactly what the viewer typed.
+The **Viewer Templates** setting changes that. It is on by default, and you can switch it off in [Features](/reference/settings/features).
+While it is on, a viewer who may use helpers (subscribers and higher, by default) can put helpers in the text after the command.
+The bot fills them in once, when the message arrives.
+Then `{args}` and the helpers that read words from it, such as `{args.first}` and `{args.last}`, give the filled-in text.
+`{args.1}`, `{args.2}` and so on, and `{args.count}`, keep the words as typed.
 
 Each row is its own example, so the rows on this page do not all come from one moment.
 
@@ -77,7 +84,7 @@ Each row is its own example, so the rows on this page do not all come from one m
 | `{args.all.urlEncoded}` | All arguments made safe for a web address | `{args.all.urlEncoded}` gives `%40ViewerTwo%20hello%20big%20world` |
 | `{args.count}` | How many words follow the command | `{args.count}` gives `4` |
 | `{args.duration}` | Reads the word at a position as a time (5m, 1h30m, 90) and gives it in seconds. Type the position after a colon: when the second word is 5m, 2 gives 300 | `{args.duration:2}` gives `300` |
-| `{args.first}` | The first word after the command, as written | `{args.first}` gives `@ViewerTwo` |
+| `{args.first}` | The first word after the command, with a leading @ kept. When a viewer's helpers are filled in, it is the first word of the filled-in text | `{args.first}` gives `@ViewerTwo` |
 | `{args.isEmpty}` | True when the command has no arguments, false when it has some | `{args.isEmpty}` gives `false` |
 | `{args.last}` | The last word after the command | `{args.last}` gives `world` |
 | `{args.mentions}` | Every @mention in the arguments | `{args.mentions}` gives `@ViewerTwo` |

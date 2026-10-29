@@ -21,14 +21,14 @@ Each row is its own example, so the rows on this page do not all come from one m
 | `{list.inline.join}` | An inline list a;b;c joined with your own separator. Type the separator first, then a pipe and the list; use a backslash and s for a space | `{list.inline.join:\s+\s\|a;b}` gives `a + b` |
 | `{list.inline.length}` | How many entries an inline list a;b;c has | `{list.inline.length:a;b;c}` gives `3` |
 | `{list.item}` | The entry of a pick list at a position, counting from 1 | `{list.item:snacks\|2}` gives `cookies` |
-| `{list.join}` | All entries of a pick list, joined with a comma or your own separator | `{list.join:snacks}` gives `chips, cookies, fruit` |
+| `{list.join}` | All entries of a pick list, joined with a comma. To use your own separator, type the list name first, then a pipe and the separator; use a backslash and s for a space | `{list.join:snacks\|\s/\s}` gives `chips / cookies / fruit` |
 | `{list.join.and}` | All entries of a pick list as a sentence: a, b and c | `{list.join.and:snacks}` gives `chips, cookies and fruit` |
 | `{list.last}` | The last entry of a pick list | `{list.last:snacks}` gives `fruit` |
 | `{list.length}` | How many entries a pick list has | `{list.length:snacks}` gives `3` |
-| `{list.pick}` | One random entry of a pick list | `chips` |
+| `{list.pick}` | One random entry of a pick list | `{list.pick:snacks}` gives `cookies` |
 | `{list.pick.<name>}` | One random entry of a pick list | `{list.pick.snacks}` gives `cookies` |
-| `{list.random.index}` | A random position inside a pick list | `2` |
-| `{list.shuffle}` | All entries of a pick list in a random order | `fruit, chips, cookies` |
+| `{list.random.index}` | A random position inside a pick list | `{list.random.index:snacks}` gives `2` |
+| `{list.shuffle}` | All entries of a pick list in a random order | `{list.shuffle:snacks}` gives `fruit, chips, cookies` |
 | `{list.sorted}` | All entries of a pick list in alphabetical order | `{list.sorted:snacks}` gives `chips, cookies, fruit` |
 
 Back to [Template helpers](/reference/templates/overview). For the places helpers work, special characters and HTML, read [Variables and templates](/reference/commands/variables-and-templates).

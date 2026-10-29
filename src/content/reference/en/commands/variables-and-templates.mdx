@@ -63,9 +63,16 @@ A colon ends the name, and the text after it is the input, such as `{text.upper:
 
 | You write | What it does |
 | --- | --- |
-| `{if:value\|then\|else}` | Shows one text or the other. |
+| `{if:value\|then\|else}` | Shows the `then` text when the value is set, and the `else` text when it is not. A value is not set when it is empty, `false`, `no` or `0`. |
 | `{default:value\|fallback}` | Shows the fallback when the value is empty. |
-| `{set:name=value}` | Keeps a value for the rest of the reply and prints nothing. |
+| `{set:name=value}` | Keeps a value for the rest of the reply and prints nothing. Read it back with `{var.name}`. |
+
+For example, `{if:{stream.isLive}|We are live|We are offline}` shows `We are live` while the stream is live, and `We are offline` when it is not.
+The other forms of `{if}` are on [Condition helpers](/reference/templates/if).
+
+For example, `{set:mood=happy}I feel {var.mood}.` shows `I feel happy.`
+A name has letters, digits and underscores, and starts with a letter or an underscore.
+The value lasts for that one reply only.
 
 The **Reply** field lists every helper with an example, for the place you are writing in.
 

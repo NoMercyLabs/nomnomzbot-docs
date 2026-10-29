@@ -52,7 +52,7 @@ Each row is its own example, so the rows on this page do not all come from one m
 | `{music.queue.position}` | The place of the next song of the viewer who typed the command | `3` |
 | `{music.queue.position.ordinal}` | The place of the next song of the viewer as an ordinal: 3rd | `3rd` |
 | `{music.queue.requesters}` | How many different viewers have a song in the queue | `4` |
-| `{music.queue.target.count}` | How many songs of the mentioned viewer wait in the queue | `1` |
+| `{music.queue.target.count}` | How many songs of the mentioned viewer wait in the queue. The mentioned viewer is the first word after the command, as in !queue @someviewer; read [Target helpers](/reference/templates/target) for how the bot reads that name | `1` |
 | `{music.queue.wait}` | How long until the next song of the viewer starts: 7m 40s | `7m 40s` |
 | `{music.queue.wait.at}` | At what time the next song of the viewer starts, in the channel time zone: about 15:38 | `about 15:38` |
 

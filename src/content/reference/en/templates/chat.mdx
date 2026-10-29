@@ -8,6 +8,11 @@ Helpers on this page: `{chat.*}`, `{tts.*}`, `{link.*}`, `{raw.*}`.
 These helpers read the chat message that started the reply, and the chat settings.
 They also fit a reply to the chat length limit, share a message to a social site and prepare text for speech.
 
+The row `{raw.message}` is marked "Discord pipeline seed alias".
+It works only in a Discord notification that a pipeline sends. The bot then fills in the chat message that started the pipeline.
+In a command or an event response it stays as typed. In a command, use `{chat.message}` to read the chat message.
+The [channel helpers](/reference/templates/channel) page explains the same mark for its rows.
+
 Each row is its own example, so the rows on this page do not all come from one moment.
 
 | Helper | What it gives | Example |
@@ -34,12 +39,12 @@ Each row is its own example, so the rows on this page do not all come from one m
 | `{link.bluesky}` | A link that opens Bluesky with the text ready to post: https://bsky.app/intent/compose?text=Live%20now | `{link.bluesky:Live now}` gives `https://bsky.app/intent/compose?text=Live%20now` |
 | `{link.mastodon}` | A link that opens a Mastodon server with the text ready to post. Type the server host name first, then a pipe and the text | `{link.mastodon:mastodon.social\|Live now}` gives `https://mastodon.social/share?text=Live%20now` |
 | `{link.threads}` | A link that opens Threads with the text ready to post: https://www.threads.net/intent/post?text=Live%20now | `{link.threads:Live now}` gives `https://www.threads.net/intent/post?text=Live%20now` |
-| `{link.x}` | A link that opens X with the text ready to post: https://x.com/intent/post?text=Live%20now | `https://x.com/intent/post?text=Live%20now` |
+| `{link.x}` | A link that opens X with the text ready to post: https://x.com/intent/post?text=Live%20now | `{link.x:Live now}` gives `https://x.com/intent/post?text=Live%20now` |
 | `{raw.message}` | The raw triggering chat message (Discord pipeline seed alias) | `!hello world` |
 | `{tts.audioconnected}` | Whether an Audio widget page is open for the channel, so TTS can be heard (true or false) | `true` |
 | `{tts.lexicon}` | The text with the channel pronunciation list applied: good game | `{tts.lexicon:gg}` gives `good game` |
 | `{tts.numbers}` | Whole numbers in the text written as words, in the channel language: I have three cats | `{tts.numbers:I have 3 cats}` gives `I have three cats` |
-| `{tts.plain}` | Text made ready to be spoken: no links, no @, no emotes of the channel, fancy letters turned to plain ones: hi ViewerTwo hi | `hi ViewerTwo hi` |
+| `{tts.plain}` | Text made ready to be spoken: no links, no @, no emotes of the channel, fancy letters turned to plain ones: hi ViewerTwo hi | `{tts.plain:hi @ViewerTwo KEKW https://a.b 𝐡𝐢}` gives `hi ViewerTwo hi` |
 | `{tts.plain.keepEmotes}` | Text made ready to be spoken, with the emote names kept: hi KEKW | `{tts.plain.keepEmotes:hi KEKW}` gives `hi KEKW` |
 
 Back to [Template helpers](/reference/templates/overview). For the places helpers work, special characters and HTML, read [Variables and templates](/reference/commands/variables-and-templates).

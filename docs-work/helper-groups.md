@@ -115,8 +115,11 @@ Read [Pronouns in templates](/reference/templates/pronouns) to build a line that
 
 These helpers are about the person who used the command, such as `{user}`, `{user.points}` and `{user.followAge}`.
 They also hold that person's pronouns and the words that go with them, such as `{user.subject}` and `{user.possessive}`.
-The bare helpers `{name}`, `{link}`, `{subject}`, `{object}`, `{possessive}`, `{tense}`, `{presentTense}`, `{genderedTerm}` and `{verb:plays|play}` are here too.
-Use them to greet a viewer, to show their stats, or to write a reply that fits their pronouns.
+The bare helpers `{name}`, `{link}`, `{subject}`, `{object}`, `{possessive}`, `{tense}`, `{presentTense}`, `{genderedTerm}` and `{verb:plays|play}` are here too, and they follow a different rule.
+They are about the person the command names, which is the first word after the command, as in `!hug @someone`.
+When the command names nobody, they are about the person who used the command.
+Type the `user.` form, such as `{user.subject}`, to always get the person who used the command.
+Use these helpers to greet a viewer, to show their stats, or to write a reply that fits their pronouns.
 
 `{user}` is the display name, written the way the viewer writes it.
 In a chat reply, the bot writes the display name only when it matches the login apart from letter case. Otherwise, for example for a name in another alphabet, it writes the login.
@@ -130,14 +133,22 @@ Use them in a reply that talks about another person, such as a hug or a shoutout
 
 ### /reference/templates/args
 
-These helpers read the words a viewer typed after the command, such as the first word or the second word.
+These helpers read the words after the command, such as the first word or the second word.
 Use them to take a word, a number or a duration from the command.
 They can also read a person from a word, such as `{args.1.user.points}`, and give facts about that person.
+
+Usually the words are exactly what the viewer typed.
+The **Viewer Templates** setting changes that. It is on by default, and you can switch it off in [Features](/reference/settings/features).
+While it is on, a viewer who may use helpers (subscribers and higher, by default) can put helpers in the text after the command.
+The bot fills them in once, when the message arrives.
+Then `{args}` and the helpers that read words from it, such as `{args.first}` and `{args.last}`, give the filled-in text.
+`{args.1}`, `{args.2}` and so on, and `{args.count}`, keep the words as typed.
 
 ### /reference/templates/channel
 
 These helpers describe the channel: its name, links, followers and settings.
-Use the channel, channel.display, channel.id and streamer helpers in any reply that names the channel.
+Use the `{channel}`, `{channel.display}` and `{streamer}` helpers in any reply that names the channel.
+`{channel.id}` gives the platform ID, a number such as 123456789, not a name.
 A row marked "Discord seed alias" works only in a Discord notification, which fills in the value itself when it sends the message. In a command or an event response it stays as typed.
 
 ### /reference/templates/stream
@@ -150,6 +161,11 @@ A row marked "Discord seed alias" works only in a Discord notification, which fi
 
 These helpers read the chat message that started the reply, and the chat settings.
 They also fit a reply to the chat length limit, share a message to a social site and prepare text for speech.
+
+The row `{raw.message}` is marked "Discord pipeline seed alias".
+It works only in a Discord notification that a pipeline sends. The bot then fills in the chat message that started the pipeline.
+In a command or an event response it stays as typed. In a command, use `{chat.message}` to read the chat message.
+The [channel helpers](/reference/templates/channel) page explains the same mark for its rows.
 
 ### /reference/templates/activity
 
@@ -274,7 +290,7 @@ A line here replaces the product sample with a value the helper can return. Each
 - `link` = `twitch.tv/example_viewer`: LegacyTemplateHelpers.cs:634 and :646-647 build the link without https (sample at TemplateHelperSamples.cs:172).
 - `viewer.watchtime` = `12h 0m`: WatchTimeFormatter.cs:22 always writes the minutes (sample at TemplateHelperSamples.cs:142).
 - `target.watchtime` = `12h 0m`: WatchTimeFormatter.cs:22 always writes the minutes (sample at TemplateHelperSamples.cs:162).
-- `ad.when` = `in ~5 minutes`: AdScheduleWarner.cs:261-267 writes "in ~N minutes" (sample at TemplateHelperSamples.cs:38).
+- `ad.when` = `in ~3 minutes`: AdScheduleWarner.cs:261-267 writes "in ~N minutes", and AdScheduleWarner.cs:39 and :237-242 send the warning only when 3 minutes or less are left, so 3 is the largest value (sample at TemplateHelperSamples.cs:38).
 - `also_said` = `They also said: "Great stream!"`: AlsoSaidClause.cs:21-23 returns the lead-in with the quoted message (sample at TemplateHelperSamples.cs:68).
 - `poll.results` = `Pizza: 28 (56%) | Pasta: 22 (44%)`: PollEventHandler.cs:88-95 returns every choice with votes and share (sample at TemplateHelperSamples.cs:46).
 - `supporter.amount` = `5`: SupporterTriggerSource.cs:80-83 formats the amount with "0.##", which drops trailing zeros (sample at TemplateHelperSamples.cs:93).
@@ -288,17 +304,30 @@ A line here replaces the product sample with a value the helper can return. Each
 
 A line here replaces a product description that the code contradicts. Each line cites the code that proves it.
 
+- `name` = "The display name of the person the command names, or of the person who used the command when it names nobody. If the bot does not know the named person yet, it asks Twitch and shows that person's Twitch display name. It shows the word as typed only when no Twitch account has that name or the lookup fails": LegacyTemplateHelpers.cs:590-592 and :633-642 mirror the target when one is present, else the user; LegacyTemplateHelpers.cs:939-946 and :994-1010 ask Twitch for a person the bot has not stored and use the display name it returns, and :999-1004 fall back to the typed word; ChatMessageHandler.cs:1892-1898 takes the first word after the command as the target.
+- `target.displayname` = "The display name of the person the command names. If the bot does not know that person yet, it asks Twitch and shows the Twitch display name. It shows the word as typed only when no Twitch account has that name or the lookup fails": LegacyTemplateHelpers.cs:954-955 uses the stored display name; :939-946 and :994-1010 ask Twitch for a person the bot has not stored; :999-1004 fall back to the typed word.
+- `link` = "A profile link for the person the command names, or for the person who used the command when it names nobody": LegacyTemplateHelpers.cs:645-665 mirror target.link when a target is present, else user.link; ChatMessageHandler.cs:1892-1898.
+- `tense` = "Is or are while your channel is live, was or were when it is offline. The verb agrees with the person the command names, or with the person who used the command when it names nobody. In a shoutout it follows the live state of the person shouted out instead": LegacyTemplateHelpers.cs:611-626 and :1463-1473; ShoutoutAction.cs:433 seeds target.isLive.
+- `user.tense` = "Is or are while your channel is live, was or were when it is offline. The verb agrees with the person who used the command. In a shoutout it follows the live state of the person shouted out instead": LegacyTemplateHelpers.cs:611-626; ShoutoutAction.cs:433.
+- `target.tense` = "Is or are while your channel is live, was or were when it is offline. In a shoutout it follows the live state of the person shouted out instead": LegacyTemplateHelpers.cs:611-626 (one live state for all three sides; the person only picks is or are); ShoutoutAction.cs:433.
+- `verb:<sing|plur>` = "The first form when the person takes is (he, she, any other single pronoun, or a name), and the second form for they. The person is the one the command names, or the one who used the command when it names nobody (e.g. `{verb:plays|play}`)": LegacyTemplateHelpers.cs:200-233 and :1048-1050; bare grammar words mirror the target, else the user, at :1463-1473.
+
 - `user` = "The name of the person who used the command, as they write it (the display name). A chat reply uses the login when the two differ by more than letter case": ChatMessageHandler.cs:1823-1825 seeds user with the display name; strings.xml:5470 says login name.
 - `user.name` = "The login name of the person who used the command, in lower case": ChatMessageHandler.cs:1825 and TemplateSubject.cs:39 seed user.name with the login; strings.xml:5478 says display name.
 - `bot.license` = "The license of the bot source code: PolyForm-Noncommercial-1.0.0": strings.xml uses the British spelling.
 - `args.duration` = "Reads the word at a position as a time (5m, 1h30m, 90) and gives it in seconds. Type the position after a colon: when the second word is 5m, 2 gives 300": ArgumentParseHelpers.cs:79-87 reads the position from its one argument; ArgumentHelpersTableTests.cs:62.
 - `activity.commands.stream` = "Commands that ran successfully since the bot joined the channel this session. The count does not restart when a stream starts": IChannelRegistry.cs:319-320 and CommandExecutedBroadcastHandler.cs:34-41 count them; ChannelOnlineHandler.cs:146-158 does not reset the count.
+- `args.first` = "The first word after the command, with a leading @ kept. When a viewer's helpers are filled in, it is the first word of the filled-in text": ArgumentWholeHelpers.cs:25 reads the first word of the args text; CommandWords.cs:50-53 reads the args seed that ViewerArgsInterpreter.cs:34-41 rewrites.
+- `engagement.years` = "How many years this moderator has moderated the channel, worked out from the month count of `{engagement.months}` divided by 12. It gives a whole number at a full year (84 months gives 7), and one decimal otherwise (90 months gives 7.5, 85 months gives 7.1)": EngagementTriggerSources.cs:136-142 sets both helpers from e.Months, and :156-164 divide the months by 12 and round to a whole number only within 0.05 of a year, else one decimal (one month is 0.083 of a year, so only an exact full year is whole); EngagementEvents.cs:80 says Months is the whole months moderating this channel; ChatTranslators.cs:462 reads it from Twitch's modiversary months.
+- `fun.8ball` = "One answer from your own pick list named 8ball. Make that list on the [Pick lists](/reference/commands/pick-lists) page. With no list of that name, or an empty list, the helper stays as typed": FunEightBallHelpers.cs:14-17 and :24-31.
+- `music.queue.target.count` = "How many songs of the mentioned viewer wait in the queue. The mentioned viewer is the first word after the command, as in !queue @someviewer; read [Target helpers](/reference/templates/target) for how the bot reads that name": MusicQueuePlaceHelpers.cs:104-111 reads the target; MusicData.cs:105 takes the target seed without its @; ChatMessageHandler.cs:1893-1898 builds the target from the first word.
 - `chat.fit` = "The text cut to fit one chat line of the platform. A cut text ends in an ellipsis, or in your own end text after a pipe; a text that already fits stays whole": ChatFitHelpers.cs:26-33 and :42-60; ChatTemplateHelpersTests.cs:51-60.
 - `link.mastodon` = "A link that opens a Mastodon server with the text ready to post. Type the server host name first, then a pipe and the text": LinkShareHelpers.cs:32-41 reads the host from the first argument and the text from the second.
 - `music.now.bar` = "A progress bar of the track that plays now, with the clock. Add a width from 1 to 50 after a colon to get the bare bar of that many cells; the default width is 11": MusicProgressHelpers.cs:41-55; MusicText.cs:22-23 and :68-69.
 - `fun.dice` = "Rolls dice and gives the total. With no input it rolls one six-sided die. A number is one die with that many sides (2 to 1000), and 2d6 is two six-sided dice (up to 100 dice)": FunDiceHelpers.cs:26-30; FunDiceSpec.cs:22-24 and :26-48.
 - `fun.love` = "A love score from 0 to 100 percent for two names typed with a pipe between them, the same all day whichever name comes first": FunRatingHelpers.cs:33-41 and :78-81.
 - `fun.ship` = "Blends two names, typed with a pipe between them, into a ship name": FunRatingHelpers.cs:58-71.
+- `list.join` = "All entries of a pick list, joined with a comma. To use your own separator, type the list name first, then a pipe and the separator; use a backslash and s for a space": ListJoinHelpers.cs:17 and :32-33 take the list name first and an optional separator second, with ", " as the default; ListText.cs:37-41 turns the backslash s into a space; ListHelperRow.cs:49-52 print the helper as typed when it gets more than one separator.
 - `list.inline.join` = "An inline list a;b;c joined with your own separator. Type the separator first, then a pipe and the list; use a backslash and s for a space": ListInlineHelpers.cs:23-27 puts the separator first; ListText.cs:37-41 turns the backslash s into a space.
 - `text.lines.count` = "Counts the lines in the text. Type a backslash and n where a line ends": TextArguments.cs:22-26 turns a backslash n into a line break.
 - `text.lines.first` = "The first line of the text. Type a backslash and n where a line ends": SliceTextHelpers.cs:74-75 and TextArguments.cs:22-26.
@@ -326,6 +355,11 @@ A result after an arrow comes from a product test row (the test fixture's viewer
 - `emote.image` = `{emote.image:catJAM}` -> `https://cdn.7tv.app/emote/<emote id>/2x.webp`: SevenTvEmoteProvider.cs:94-112
 - `custom.<name>.<field>` = `{custom.heartrate.bpm}` -> `128`: LegacyTemplateHelpers.cs:272
 - `list.pick.<name>` = `{list.pick.snacks}` -> `cookies`: LegacyTemplateHelpers.cs:261
+- `list.pick` = `{list.pick:snacks}` -> `cookies`: ListReadHelpers.cs:30-35 reads the list name after the colon (one possible result of chips, cookies or fruit; ListHelpersTableTests.cs:79-83)
+- `list.random.index` = `{list.random.index:snacks}` -> `2`: ListRandomHelpers.cs:24-30 (one possible result of 1, 2 or 3; ListHelpersTableTests.cs:104-109)
+- `list.shuffle` = `{list.shuffle:snacks}` -> `fruit, chips, cookies`: ListRandomHelpers.cs:17-23 (the entries in a random order, joined with a comma; ListHelpersTableTests.cs:91-96)
+- `link.x` = `{link.x:Live now}` -> `https://x.com/intent/post?text=Live%20now`: LinkShareHelpers.cs:17-21 and :44-45 (the text after the colon, with spaces written as %20; the same form as ChatHelpersTableTests.cs:67)
+- `tts.plain` = `{tts.plain:hi @ViewerTwo KEKW https://a.b 𝐡𝐢}` -> `hi ViewerTwo hi`: TtsTextHelpers.cs:24-32 and :52-60 (the test channel has the emote KEKW; ChatHelpersTableTests.cs:51-54)
 - `transform.<name>:<text>` = `{transform.upper:hi}` -> `HI`: LegacyTemplateHelpers.cs:173
 - `var.<name>` = `{set:x=5}{var.x}` -> `5`: VariableTemplateHelpers.cs:27
 - `obs.event.<field>` = `{obs.event.sceneName}` -> `Scene 1`: EventResponsePresetCatalog.cs:151
@@ -348,6 +382,7 @@ A result after an arrow comes from a product test row (the test fixture's viewer
 - `if.<path>.lt` = `{if.stream.viewers.lt:10:cozy|busy}` -> `busy`: ValuePredicate.cs:36
 - `if.<path>.gte` = `{if.user.months.gte:6:veteran|new}` -> `veteran`: ValuePredicate.cs:37
 - `if.<path>.lte` = `{if.count.wins.lte:3:keep going|great}` -> `keep going`: ValuePredicate.cs:38
+- `list.join` = `{list.join:snacks|\s/\s}` -> `chips / cookies / fruit`: ListHelpersTableTests.cs:31
 - `list.inline.join` = `{list.inline.join:\s+\s|a;b}` -> `a + b`: ListHelpersTableTests.cs:41
 - `music.now.bar` = `{music.now.bar:5}` -> `▬▬🔘▬▬`: MusicHelpersTableTests.cs:36
 - `fun.dice` = `{fun.dice:20}` -> `5`: FunHelpersTableTests.cs:38 (a random total)

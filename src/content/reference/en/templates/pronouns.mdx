@@ -11,6 +11,7 @@ The helpers themselves are listed on [User helpers](/reference/templates/user) a
 
 The bot reads pronouns from the alejo.io pronoun API, the same source the Twitch pronoun chat plugins use.
 It loads the list of pronouns from `https://api.pronouns.alejo.io/v1/pronouns`.
+
 It looks up one viewer at `https://api.pronouns.alejo.io/v1/users/` followed by the viewer's Twitch login name.
 The lookup uses Twitch logins only, so it finds Twitch viewers.
 
@@ -18,10 +19,14 @@ The bot saves a person's pronouns when that person chats in any channel the bot 
 The saved pronouns are the same in every channel.
 A reply reads the saved pronouns. It does not look them up again.
 
+A viewer can also pick pronouns in the bot, as described on [Viewer pages](/reference/community/viewer-pages).
+
 The API lists the base pronouns, such as he, she and they.
 Pairs such as he/they come from the bot's own bundled set.
 If the API is down, the bot uses that bundled set.
-Pronouns set by a command that runs the Set pronoun action stay set. The API does not overwrite them.
+
+Pronouns set by a command that runs the [Set pronoun action](/reference/commands/pipelines) stay set.
+The API does not overwrite them.
 
 The bot adds the words that go with each pronoun.
 The words below are the ones the three common pronouns give.
@@ -32,12 +37,17 @@ The words below are the ones the three common pronouns give.
 | Object | him | her | them | the name |
 | Possessive | his | her | their | the name with `'s` |
 | Present tense | is | is | are | is |
-| Past tense | was | was | were | was |
+| Past tense (from `{tense}` when offline) | was | was | were | was |
 | Gendered term | guy | gal | person | person |
 
-Other pronouns, such as xe and zie, bring their own possessive words, and their gendered term is "person".
+Neopronouns such as xe/xem and zie/hir give their own words.
+For xe, the subject is xe, the object is xem and the possessive is xyr.
+For zie, the subject is zie, and the object and the possessive are hir.
+Both xe and zie give "person" as the gendered term.
+Both take the singular verb forms is and was.
 Only "they" takes the plural verb.
-The last column is explained under [When the pronouns are "any" or "other"](#when-the-pronouns-are-any-or-other).
+The last column is for the two open-choice pronoun sets, any and other.
+It is explained under [When the pronouns are "any" or "other"](#when-the-pronouns-are-any-or-other).
 
 ## Write correct sentences
 
@@ -52,7 +62,7 @@ The bot fills in the right word for the person in the line.
 - `{possessive}` gives his, her or their. Use it before a noun, as in "their cat".
 - `{genderedTerm}` gives guy, gal or person.
 - `{presentTense}` gives is or are. It does not change with the stream.
-- `{tense}` gives is or are while your channel's stream is live, and was or were when it is offline. In a shoutout it follows the target's stream.
+- `{tense}` gives is or are while the stream is live, and was or were when it is offline. In a shoutout the stream is the stream of the person you shout out. Everywhere else it is your channel's stream.
 - `{verb:plays|play}` gives the first form for he and she, and the second form for they.
 
 Use `{tense}` when you need was or were.
@@ -66,14 +76,18 @@ In `!hug @someone`, `{subject}` is about the person named, and in `!lurk` it is 
 Add `user.` or `target.` to choose a side yourself.
 `{user.subject}` is always about the person who used the command.
 `{target.subject}` is always about the person the command names.
+
 The same works for the other helpers, such as `{user.possessive}`, `{target.object}`, `{target.verb:plays|play}` and `{target.tense}`.
+The side changes the person, not the stream. `{target.tense}` still follows the stream of the person you shout out in a shoutout, and your channel's stream everywhere else.
 
 ### Start a sentence with a capital
 
-Write the first letter of the helper name in upper case to get a capital first letter.
+Write the first letter of the helper in upper case to get a capital first letter.
 `{Subject}` gives He, She or They.
 `{Target.Subject}`, `{User.Possessive}` and `{Tense}` work the same way.
-Use it at the start of a sentence.
+
+Only the very first letter counts. `{target.Subject}` has a lower case first letter, so it gives he, she or they.
+Use the capital form at the start of a sentence.
 A verb form from `{verb:plays|play}` does not get a capital.
 
 ### Make the verb agree
@@ -86,35 +100,47 @@ The first form is for he and she, and the second form is for they.
 Without a pipe, the bot leaves the text as you typed it.
 
 For the verb "to be", use `{presentTense}` or `{tense}`.
-They give is or are.
+`{presentTense}` gives is or are.
+`{tense}` gives is or are when the stream is live, and was or were when it is offline.
 
 ### When a person has no pronouns
 
 If the bot has no pronouns for a person, it uses they, them, their, person, are and were.
 This holds for a person the bot has never seen chat, and who never picked pronouns in the bot.
+
 The pronoun helpers never show as raw text.
 The verb takes the plural form, so the line reads "they play".
 
 ### When the pronouns are "any" or "other"
 
-"Any" and "other" name a choice, not words for a sentence.
-A guess such as "they" can be wrong for the person.
+Two pronoun sets name a choice, not words for a sentence: any and other.
+Neopronouns such as xe and zie are not in this group. They give their own words, as described above.
+
+The pronoun list in the bot shows the name the bot stored.
+When the pronoun API is reachable, the list shows `any` and `other`.
+The bundled set the bot uses when the API is down names them `any/all` and `other/ask` instead.
+The bot treats both spellings the same.
+
+A guess such as "they" can be wrong for a person with one of these sets.
 So the bot uses the person's name where a pronoun would go.
 
 - `{subject}` and `{object}` give the name.
 - `{possessive}` gives the name with 's, such as "Alex's".
-- `{presentTense}` and `{pastTense}` give is and was.
+- `{presentTense}` gives is. `{tense}` gives is while the stream is live and was when it is offline.
 - `{verb:plays|play}` gives the first form.
 - `{genderedTerm}` gives person.
 
 The name keeps its own capital letters, also in `{Subject}`.
-"iFiLLz" stays "iFiLLz".
-If you write a line for these people with `{name}` once and `{subject}` after it, the name shows twice.
-Use shorter lines to keep that readable.
+"mAyA_tV" stays "mAyA_tV".
+
+If you write a line with `{name}` once and `{subject}` after it, the name shows twice.
+Keep one name in the line to keep it readable.
+For example, `{Subject} {presentTense} great.` gives `Alex is great.` for these people, and `He is great.` for he.
 
 ## Examples
 
 Each line below is the same reply for four kinds of viewer: he, she, they, and any or other.
+The last example also splits live and offline.
 The first line of each example is what you type.
 For "any", the name stands where a pronoun would, so a line that already names the person shows the name more than once.
 
@@ -144,8 +170,8 @@ Typed: `{user} loves {user.possessive} cat. {user} is a good {user.genderedTerm}
 - they: `Alex loves their cat. Alex is a good person.`
 - any: `Alex loves Alex's cat. Alex is a good person.`
 
-**A line that follows the stream.**
-Typed: `{Target.Subject} {target.tense} streaming Tetris.`
+**A shoutout line that follows the stream of the person you shout out.**
+Typed in a shoutout: `{Target.Subject} {target.tense} streaming Tetris.`
 
 - he, live: `He is streaming Tetris.`
 - she, offline: `She was streaming Tetris.`
@@ -154,6 +180,7 @@ Typed: `{Target.Subject} {target.tense} streaming Tetris.`
 - any, live: `Alex is streaming Tetris.`
 - any, offline: `Alex was streaming Tetris.`
 
-In a shoutout, the live state is the live state of the person you shout out. Everywhere else it is the live state of your channel.
+In a shoutout, "live" means the person you shout out is live.
+Everywhere else "live" means your channel is live, even for `{target.tense}`.
 
 Back to [Template helpers](/reference/templates/overview). For the places helpers work, special characters and HTML, read [Variables and templates](/reference/commands/variables-and-templates).

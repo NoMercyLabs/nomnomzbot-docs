@@ -26,7 +26,7 @@ Each row is its own example, so the rows on this page do not all come from one m
 | `{target.possessive}` | The possessive pronoun for the @mention target | `their` |
 | `{target.presentTense}` | The present-tense to-be form for the @mention target | `are` |
 | `{target.subject}` | The subject-case pronoun for the @mention target | `they` |
-| `{target.tense}` | The live/offline-aware tense for the @mention target | `are` |
+| `{target.tense}` | Is or are while your channel is live, was or were when it is offline. In a shoutout it follows the live state of the person shouted out instead | `are` |
 | `{target.verb:<sing\|plur>}` | A singular/plural verb agreeing with the @mention target (e.g. `{target.verb:plays\|play}`) | `{target.verb:has\|have}` gives `have` |
 
 ## Names and links
@@ -37,7 +37,7 @@ Each row is its own example, so the rows on this page do not all come from one m
 | `{target.avatar}` | The link to the profile picture of the @mentioned viewer | `https://static-cdn.jtvnw.net/jtv_user_pictures/viewertwo.png` |
 | `{target.bio}` | The profile description of the @mentioned viewer | `I build castles` |
 | `{target.color}` | The chat color of the @mentioned viewer | `#FF4500` |
-| `{target.displayname}` | The @mention target's stored display name, or the typed text when the user is unknown | `Example_Viewer` |
+| `{target.displayname}` | The display name of the person the command names. If the bot does not know that person yet, it asks Twitch and shows the Twitch display name. It shows the word as typed only when no Twitch account has that name or the lookup fails | `Example_Viewer` |
 | `{target.id}` | The @mention target platform ID | `123456789` |
 | `{target.known}` | Whether the @mention target matches a user the bot knows (true or false) | `true` |
 | `{target.link}` | A profile link for the @mention target | `twitch.tv/example_viewer` |

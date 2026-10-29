@@ -7,8 +7,11 @@ Helpers on this page: `{user}`, `{user.*}`, `{viewer.*}`, `{engagement.*}`, `{na
 
 These helpers are about the person who used the command, such as `{user}`, `{user.points}` and `{user.followAge}`.
 They also hold that person's pronouns and the words that go with them, such as `{user.subject}` and `{user.possessive}`.
-The bare helpers `{name}`, `{link}`, `{subject}`, `{object}`, `{possessive}`, `{tense}`, `{presentTense}`, `{genderedTerm}` and `{verb:plays|play}` are here too.
-Use them to greet a viewer, to show their stats, or to write a reply that fits their pronouns.
+The bare helpers `{name}`, `{link}`, `{subject}`, `{object}`, `{possessive}`, `{tense}`, `{presentTense}`, `{genderedTerm}` and `{verb:plays|play}` are here too, and they follow a different rule.
+They are about the person the command names, which is the first word after the command, as in `!hug @someone`.
+When the command names nobody, they are about the person who used the command.
+Type the `user.` form, such as `{user.subject}`, to always get the person who used the command.
+Use these helpers to greet a viewer, to show their stats, or to write a reply that fits their pronouns.
 
 `{user}` is the display name, written the way the viewer writes it.
 In a chat reply, the bot writes the display name only when it matches the login apart from letter case. Otherwise, for example for a name in another alphabet, it writes the login.
@@ -31,23 +34,23 @@ Each row is its own example, so the rows on this page do not all come from one m
 | `{possessive}` | The possessive pronoun (e.g. their) | `their` |
 | `{presentTense}` | The present-tense to-be form (e.g. is/are) | `are` |
 | `{subject}` | The subject-case pronoun (e.g. they) | `they` |
-| `{tense}` | The live/offline-aware tense (is/was) | `is` |
+| `{tense}` | Is or are while your channel is live, was or were when it is offline. The verb agrees with the person the command names, or with the person who used the command when it names nobody. In a shoutout it follows the live state of the person shouted out instead | `is` |
 | `{user.genderedTerm}` | A gendered term for the triggering user | `person` |
 | `{user.object}` | The object-case pronoun for the triggering user | `them` |
 | `{user.possessive}` | The possessive pronoun for the triggering user | `their` |
 | `{user.presentTense}` | The present-tense to-be form for the triggering user | `are` |
 | `{user.pronouns}` | The triggering user recorded pronouns | `they/them` |
 | `{user.subject}` | The subject-case pronoun for the triggering user | `they` |
-| `{user.tense}` | The live/offline-aware tense for the triggering user | `are` |
+| `{user.tense}` | Is or are while your channel is live, was or were when it is offline. The verb agrees with the person who used the command. In a shoutout it follows the live state of the person shouted out instead | `are` |
 | `{user.verb:<sing\|plur>}` | A singular/plural verb agreeing with the triggering user (e.g. `{user.verb:plays\|play}`) | `{user.verb:has\|have}` gives `has` |
-| `{verb:<sing\|plur>}` | A singular/plural verb agreeing with the mirrored subject (e.g. `{verb:plays\|play}`) | `{subject} {verb:plays\|play}` gives `he plays` |
+| `{verb:<sing\|plur>}` | The first form when the person takes is (he, she, any other single pronoun, or a name), and the second form for they. The person is the one the command names, or the one who used the command when it names nobody (e.g. `{verb:plays\|play}`) | `{subject} {verb:plays\|play}` gives `he plays` |
 
 ## Names and links
 
 | Helper | What it gives | Example |
 | --- | --- | --- |
-| `{link}` | A profile link - the @mention target if present, otherwise the triggering user | `twitch.tv/example_viewer` |
-| `{name}` | The name shown - the @mention target if present, otherwise the triggering user | `Example_Viewer` |
+| `{link}` | A profile link for the person the command names, or for the person who used the command when it names nobody | `twitch.tv/example_viewer` |
+| `{name}` | The display name of the person the command names, or of the person who used the command when it names nobody. If the bot does not know the named person yet, it asks Twitch and shows that person's Twitch display name. It shows the word as typed only when no Twitch account has that name or the lookup fails | `Example_Viewer` |
 | `{user}` | The name of the person who used the command, as they write it (the display name). A chat reply uses the login when the two differ by more than letter case | `Example_Viewer` |
 | `{user.avatar}` | The link to the profile picture of the viewer | `https://static-cdn.jtvnw.net/jtv_user_pictures/viewerone.png` |
 | `{user.bio}` | The profile description of the viewer | `I like bots` |
@@ -100,7 +103,7 @@ Each row is its own example, so the rows on this page do not all come from one m
 | `{engagement.daysSinceLastSeen}` | Days since this viewer was last seen chatting | `14` |
 | `{engagement.months}` | How many months this moderator has moderated the channel | `18` |
 | `{engagement.streak}` | The viewer's current watch-streak count | `5` |
-| `{engagement.years}` | The same anniversary in years, rounded for reading aloud | `1` |
+| `{engagement.years}` | How many years this moderator has moderated the channel, worked out from the month count of `{engagement.months}` divided by 12. It gives a whole number at a full year (84 months gives 7), and one decimal otherwise (90 months gives 7.5, 85 months gives 7.1) | `1` |
 | `{user.activity.level}` | How active the viewer is in this channel (new, casual, regular or veteran), from the viewer's message count and the channel's own steps | `veteran` |
 | `{user.lastmessage}` | The triggering user most recent chat message | `see you tomorrow` |
 | `{user.messageCount}` | The triggering user total chat message count | `250` |
