@@ -40,7 +40,7 @@ let runId = 0;
 // The bot's own voice. A site that runs its own bot sets PUBLIC_READ_ALOUD_URL.
 const READ_ALOUD_URL
   = import.meta.env.PUBLIC_READ_ALOUD_URL ?? 'https://dev.nomnomz.bot/api/v1/public/read-aloud';
-const clips = createClipCache(READ_ALOUD_URL, url => fetch(url));
+const clips = createClipCache(READ_ALOUD_URL, (url, options) => fetch(url, options?.fresh ? { cache: 'reload' } : undefined));
 let player: HTMLAudioElement | null = null;
 
 // Audio elements made ahead of their turn, by clip address: a sentence is fetched and decoded while the one
@@ -70,7 +70,7 @@ function silence(): void {
   window.speechSynthesis.cancel();
 }
 
-// How many sentences are kept fetched ahead of the one being read. The queue sends one request at a time, so the
+// How many sentences are kept fetched ahead of the one being read. The queue sends a few requests at a time, in order, so the
 // buffer fills in reading order as each clip arrives, and a sentence is rarely fetched at the moment it plays.
 const BUFFER_AHEAD = 10;
 // Of those, how many already have an audio element built; the rest are only fetched.
@@ -198,12 +198,47 @@ function mark(element: HTMLElement | undefined): void {
   }
 }
 
+// Where the reading was when a dev reload (hot module swap or a full reload) threw the module away.
+interface SavedReading {
+  path: string;
+  blockIndex: number;
+  sentenceIndex: number;
+}
+
+const SAVED_KEY = 'read-aloud-saved';
+
+// Dev only. Production never keeps a reading across a page change: leaving the page stops it.
+function saveReading(): void {
+  if (!import.meta.env.DEV || useReadAloud.getState().status === 'idle') return;
+  try {
+    const saved: SavedReading = { path: location.pathname, blockIndex, sentenceIndex };
+    sessionStorage.setItem(SAVED_KEY, JSON.stringify(saved));
+  }
+  catch {
+    /* no storage: the bar simply does not come back */
+  }
+}
+
+function takeSavedReading(): SavedReading | null {
+  try {
+    const raw = sessionStorage.getItem(SAVED_KEY);
+    sessionStorage.removeItem(SAVED_KEY);
+    const saved = raw ? JSON.parse(raw) as SavedReading : null;
+    return saved?.path === location.pathname ? saved : null;
+  }
+  catch {
+    return null;
+  }
+}
+
 interface ReadAloudState {
   status: Status;
   // True while the reader waits for the first clips to be ready (or for a clip that is not ready yet).
   loading: boolean;
   rate: number;
   start: () => void;
+  // Puts the bar back at a saved place, paused, after a dev reload.
+  restore: (saved: SavedReading) => void;
   toggle: () => void;
   stop: () => void;
   step: (delta: 1 | -1, unit: 'paragraph' | 'section') => void;
@@ -323,6 +358,16 @@ export const useReadAloud = create<ReadAloudState>()((set, get) => {
       set({ status: 'playing', rate: readRate() });
       speak(true);
     },
+    restore: (saved) => {
+      blocks = collect();
+      if (blocks.length === 0) return;
+      blockIndex = Math.max(0, Math.min(saved.blockIndex, blocks.length - 1));
+      sentences = speechesOf(blocks[blockIndex]!);
+      sentenceIndex = Math.max(0, Math.min(saved.sentenceIndex, sentences.length - 1));
+      // Paused, not playing: a browser does not let a page start sound after a reload without a click.
+      set({ status: 'paused', rate: readRate() });
+      mark(blocks[blockIndex]);
+    },
     toggle: () => {
       const { status } = get();
       if (status === 'playing') {
@@ -369,6 +414,17 @@ export const useReadAloud = create<ReadAloudState>()((set, get) => {
     },
   };
 });
+
+// Dev only: a hot swap of this module drops the bar and the reading, and Vite may reload the page instead.
+// Either way the place was saved on the way out, and the bar comes back there, paused.
+if (import.meta.env.DEV && typeof window !== 'undefined') {
+  import.meta.hot?.dispose(() => {
+    saveReading();
+    useReadAloud.getState().stop();
+  });
+  const saved = takeSavedReading();
+  if (saved) window.setTimeout(() => useReadAloud.getState().restore(saved), 0);
+}
 
 function Icon({ d, filled = false }: { d: string; filled?: boolean }) {
   return (
@@ -473,10 +529,16 @@ export function ReadAloudBar() {
       if (active === document.body || active === null || group.current?.contains(active)) stop();
     };
     window.addEventListener('keydown', onKey);
-    window.addEventListener('pagehide', stop);
+    // Leaving the page stops the reading. In dev the place is kept first, so a reload brings the bar back.
+    const onPageHide = () => {
+      saveReading();
+      stop();
+    };
+    window.addEventListener('keydown', onKey);
+    window.addEventListener('pagehide', onPageHide);
     return () => {
       window.removeEventListener('keydown', onKey);
-      window.removeEventListener('pagehide', stop);
+      window.removeEventListener('pagehide', onPageHide);
     };
   }, [status, stop]);
 

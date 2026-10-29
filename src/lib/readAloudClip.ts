@@ -14,12 +14,13 @@
 // kept until the reading stops. When the bot cannot speak, the cache says so
 // once and the reader uses the browser voice for the rest of that reading.
 //
-// Requests go out one at a time, in the order they were asked for. A long block
+// Requests go out a few at a time, started in the order they were asked for. A long block
 // asked for every line at once, and the server answered them in any order, so
 // the line the reader needed first could arrive last. The line that is read now
 // is asked for as urgent and goes to the front of the queue.
 
-export type ClipFetch = (url: string) => Promise<Pick<Response, 'ok' | 'status' | 'blob'>>;
+// `fresh` asks for the network and not the browser cache: a retry must not read back the bad answer it retries.
+export type ClipFetch = (url: string, options?: { fresh?: boolean }) => Promise<Pick<Response, 'ok' | 'status' | 'blob'>>;
 
 export interface ClipCache {
   clip: (text: string, lang: string, urgent?: boolean) => Promise<string | null>;
@@ -99,7 +100,7 @@ export function createClipCache(base: string, fetchClip: ClipFetch, retryDelayMs
     for (let attempt = 1; attempt <= TRIES; attempt += 1) {
       if (attempt > 1) await new Promise(resolve => setTimeout(resolve, retryDelayMs * (attempt - 1)));
       try {
-        const response = await fetchClip(clipUrl(base, text, lang));
+        const response = await fetchClip(clipUrl(base, text, lang), { fresh: attempt > 1 });
         if (!response.ok) {
           refused = true;
           if (worthTryingAgain(response.status)) continue;
@@ -122,7 +123,8 @@ export function createClipCache(base: string, fetchClip: ClipFetch, retryDelayMs
     return null;
   }
 
-  const MAX_AT_ONCE = 1;
+  // A fresh clip takes 3 to 13 s, so one at a time stacked the waits. A few together, still started in order.
+  const MAX_AT_ONCE = 3;
   const queue: Waiting[] = [];
   let active = 0;
 

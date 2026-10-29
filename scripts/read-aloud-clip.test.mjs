@@ -72,6 +72,21 @@ test('an empty answer is tried again before the sentence goes to the browser voi
   assert.match(await cache.clip('One.', 'en'), /^blob:/);
 });
 
+// Stoney 2026-10-29: "the current line just switched to the system tts". The server's empty answer carried a
+// one-week cache header, so the browser gave the same empty clip to every retry (same x-request-id each time).
+// A retry must go to the network, not to the cache.
+test('the first try may use the browser cache, and every retry goes to the network', async () => {
+  const fresh = [];
+  const answers = [answer(200, []), answer(200, []), answer(200)];
+  const cache = createClipCache(BASE, async (_url, options) => {
+    fresh.push(options?.fresh === true);
+    return answers.shift();
+  }, 0);
+
+  assert.match(await cache.clip('One.', 'en'), /^blob:/);
+  assert.deepEqual(fresh, [false, true, true]);
+});
+
 test('a dropped connection is tried again', async () => {
   let calls = 0;
   const cache = createClipCache(BASE, async () => {
@@ -123,20 +138,24 @@ function slowServer() {
   return { started, fetchClip, finish };
 }
 
-test('lines are requested one at a time, in the order they were asked for', async () => {
+// Stoney 2026-10-29: fresh clips take 3 to 13 s each, so one at a time stacked the waits. Three go out together,
+// still in the order they were asked for; the bot's voice service handles that many at once.
+test('three lines are requested at a time, in the order they were asked for', async () => {
   const server = slowServer();
   const cache = createClipCache(BASE, server.fetchClip);
 
   const first = cache.clip('One.', 'en');
   cache.clip('Two.', 'en');
   cache.clip('Three.', 'en');
+  cache.clip('Four.', 'en');
+  cache.clip('Five.', 'en');
   await new Promise((resolve) => setImmediate(resolve));
 
-  assert.deepEqual(server.started, ['One.']);
-  await server.finish('One.');
-  assert.deepEqual(server.started, ['One.', 'Two.']);
-  await server.finish('Two.');
   assert.deepEqual(server.started, ['One.', 'Two.', 'Three.']);
+  await server.finish('Two.');
+  assert.deepEqual(server.started, ['One.', 'Two.', 'Three.', 'Four.']);
+  await server.finish('One.');
+  assert.deepEqual(server.started, ['One.', 'Two.', 'Three.', 'Four.', 'Five.']);
   assert.match(await first, /^blob:/);
 });
 
@@ -144,31 +163,35 @@ test('the line that is read now goes ahead of lines that only wait', async () =>
   const server = slowServer();
   const cache = createClipCache(BASE, server.fetchClip);
 
-  cache.clip('Busy.', 'en');
+  cache.clip('Busy one.', 'en');
+  cache.clip('Busy two.', 'en');
+  cache.clip('Busy three.', 'en');
   cache.clip('Later one.', 'en');
   cache.clip('Later two.', 'en');
   cache.clip('Now.', 'en', true);
   await new Promise((resolve) => setImmediate(resolve));
-  await server.finish('Busy.');
+  await server.finish('Busy one.');
 
-  assert.deepEqual(server.started, ['Busy.', 'Now.']);
+  assert.deepEqual(server.started, ['Busy one.', 'Busy two.', 'Busy three.', 'Now.']);
 });
 
 test('lines that only wait can be dropped, and are asked for again when needed', async () => {
   const server = slowServer();
   const cache = createClipCache(BASE, server.fetchClip);
 
-  cache.clip('Busy.', 'en');
+  cache.clip('Busy one.', 'en');
+  cache.clip('Busy two.', 'en');
+  cache.clip('Busy three.', 'en');
   const waiting = cache.clip('Waiting.', 'en');
   await new Promise((resolve) => setImmediate(resolve));
   cache.dropQueued();
 
   assert.equal(await waiting, null);
   assert.equal(cache.serverDown(), false);
-  await server.finish('Busy.');
+  await server.finish('Busy one.');
   const again = cache.clip('Waiting.', 'en');
   await new Promise((resolve) => setImmediate(resolve));
-  assert.deepEqual(server.started, ['Busy.', 'Waiting.']);
+  assert.deepEqual(server.started, ['Busy one.', 'Busy two.', 'Busy three.', 'Waiting.']);
   await server.finish('Waiting.');
   assert.match(await again, /^blob:/);
 });
