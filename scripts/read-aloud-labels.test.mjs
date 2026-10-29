@@ -12,7 +12,7 @@
 import assert from 'node:assert/strict';
 import { test } from 'node:test';
 
-import { isLabelCell, tableIsRead } from '../src/lib/readAloudLabels.ts';
+import { rowText, tableIsRead } from '../src/lib/readAloudLabels.ts';
 
 test('a table of one-word cells is reference data and is not read', () => {
   const cells = ['Helper', 'he', 'she', 'they', 'Subject', 'he', 'she', 'they', 'Present tense', 'is', 'is', 'are'];
@@ -28,24 +28,18 @@ test('an empty table is not read', () => {
   assert.equal(tableIsRead([]), false);
 });
 
-test('a table header cell is a label, never read', () => {
-  assert.equal(isLabelCell('TH', 0, 2), true);
-  assert.equal(isLabelCell('TH', 1, 2), true);
+// Stoney 2026-10-29: "can we read out a whole table row instead of each column?"
+test('a row with a label and an explanation is one line: the label, then what it means', () => {
+  assert.equal(rowText(['Active', 'The plan runs.']), 'Active: The plan runs.');
 });
 
-test('the first cell of a row with an explanation next to it is a label', () => {
-  assert.equal(isLabelCell('TD', 0, 2), true);
+test('a row of more cells puts a stop between the cells after the label', () => {
+  assert.equal(rowText(['Trial', 'Free for 14 days', 'Ends on its own']), 'Trial: Free for 14 days. Ends on its own');
 });
 
-test('the explanation cell is read', () => {
-  assert.equal(isLabelCell('TD', 1, 2), false);
+test('an empty cell is left out, and a row with one cell is read as it is', () => {
+  assert.equal(rowText(['Active', '  ', 'The plan runs.']), 'Active: The plan runs.');
+  assert.equal(rowText(['Just a sentence in one cell.']), 'Just a sentence in one cell.');
+  assert.equal(rowText(['', ' ']), '');
 });
 
-test('a row with one cell is plain text and is read', () => {
-  assert.equal(isLabelCell('TD', 0, 1), false);
-});
-
-test('a paragraph or a list item is never a label', () => {
-  assert.equal(isLabelCell('P', 0, 1), false);
-  assert.equal(isLabelCell('LI', 0, 3), false);
-});

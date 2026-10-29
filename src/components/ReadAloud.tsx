@@ -7,7 +7,7 @@ import { create } from 'zustand';
 import { t } from '../lib/i18n';
 import { chunkSentence, joinCommandBangs } from '../lib/readAloudChunks';
 import { createClipCache } from '../lib/readAloudClip';
-import { isLabelCell, tableIsRead } from '../lib/readAloudLabels';
+import { rowText, tableIsRead } from '../lib/readAloudLabels';
 import { pickVoice } from '../lib/readAloudVoice';
 
 // Read aloud with the browser's own speech engine: no service, no key, and
@@ -17,7 +17,7 @@ import { pickVoice } from '../lib/readAloudVoice';
 // seconds. Pause is a cancel that remembers the sentence: speechSynthesis
 // .pause() is unreliable on Android Chrome.
 
-const BLOCKS = 'h1, h2, h3, h4, p, li, dt, dd, th, td, figcaption';
+const BLOCKS = 'h1, h2, h3, h4, p, li, dt, dd, tr, figcaption';
 // A block with one of these inside is read through them instead, so a list
 // item that holds a paragraph is not read twice.
 const INNER = 'p, h1, h2, h3, h4, dt, dd, figcaption';
@@ -110,6 +110,8 @@ function readVoiceName(): string | null {
 }
 
 function textOf(element: HTMLElement): string {
+  // A table row is one line: its first cell, then what the other cells say.
+  if (element.tagName === 'TR') return rowText([...element.children].map(cell => textOf(cell as HTMLElement)));
   const copy = element.cloneNode(true) as HTMLElement;
   copy.querySelectorAll(STRIP).forEach(node => node.remove());
   // textContent drops a line break, which glues the last word of one line to
@@ -130,13 +132,13 @@ function tableIsSpoken(table: Element): boolean {
   return spoken;
 }
 
-function isLabel(element: HTMLElement): boolean {
+// Reference data (a table of one-word cells) and the header row of a table are not read.
+function isSkippedInTable(element: HTMLElement): boolean {
   const row = element.closest('tr');
   if (!row) return false;
   const table = row.closest('table');
   if (table && !tableIsSpoken(table)) return true;
-  const cells = [...row.children];
-  return isLabelCell(element.tagName, cells.indexOf(element), cells.length);
+  return element === row && row.querySelector('td') === null;
 }
 
 function collect(): HTMLElement[] {
@@ -144,7 +146,7 @@ function collect(): HTMLElement[] {
   if (!main) return [];
   return [...main.querySelectorAll<HTMLElement>(BLOCKS)].filter(
     element => !element.closest(SKIP)
-      && !isLabel(element)
+      && !isSkippedInTable(element)
       && !element.querySelector(INNER)
       && element.getClientRects().length > 0
       && textOf(element) !== '',

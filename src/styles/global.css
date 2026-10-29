@@ -641,6 +641,7 @@ html[data-reading-width='narrow'] .prose > table {
 }
 /* A table clips what sticks out of its cells, so the outline of a cell sits
    inside it. */
+tr[data-reading],
 td[data-reading],
 th[data-reading] {
   outline-offset: -2px;

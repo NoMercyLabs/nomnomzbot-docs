@@ -19,9 +19,11 @@ export function tableIsRead(cellTexts: string[]): boolean {
 }
 
 // A table lists interface names (a panel, a button, a state) next to what each
-// one means. Read aloud is for the explanation, so a header cell and the label
-// cell of a row are skipped. A row with one cell is plain text and is read.
-export function isLabelCell(tagName: string, cellIndex: number, cellCount: number): boolean {
-  if (tagName === 'TH') return true;
-  return tagName === 'TD' && cellCount > 1 && cellIndex === 0;
+// one means. A row is read as one line, not one cell at a time: the first cell
+// says what the row is about, the others say what it means. "Active: The plan
+// runs." A header row is skipped: its words only name the columns.
+export function rowText(cellTexts: string[]): string {
+  const [first, ...rest] = cellTexts.map(text => text.trim()).filter(Boolean);
+  if (first === undefined) return '';
+  return rest.length > 0 ? `${first}: ${rest.join('. ')}` : first;
 }
