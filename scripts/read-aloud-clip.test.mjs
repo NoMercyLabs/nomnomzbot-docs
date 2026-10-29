@@ -42,16 +42,57 @@ test('one sentence is requested once, however many times it is asked for', async
   assert.match(first, /^blob:/);
 });
 
-test('a refused request gives no clip, and the server is skipped for the rest of the reading', async () => {
+test('a request that keeps being refused gives no clip, and the server is skipped for the rest of the reading', async () => {
   let calls = 0;
   const cache = createClipCache(BASE, async () => {
     calls += 1;
     return answer(503);
-  });
+  }, 0);
 
   assert.equal(await cache.clip('One.', 'en'), null);
   assert.equal(cache.serverDown(), true);
   assert.equal(await cache.clip('Two.', 'en'), null);
+  assert.equal(calls, 3);
+});
+
+// Stoney 2026-10-29: "why did that fallback to the system tts?!" One busy answer (503, 429, an empty body, a
+// dropped connection) switched the bot voice off for the whole reading. A busy answer is tried again first.
+test('a busy answer is tried again, and the bot voice stays on when the second try works', async () => {
+  const answers = [answer(503), answer(429), answer(200)];
+  const cache = createClipCache(BASE, async () => answers.shift(), 0);
+
+  assert.match(await cache.clip('One.', 'en'), /^blob:/);
+  assert.equal(cache.serverDown(), false);
+});
+
+test('an empty answer is tried again before the sentence goes to the browser voice', async () => {
+  const answers = [answer(200, []), answer(200)];
+  const cache = createClipCache(BASE, async () => answers.shift(), 0);
+
+  assert.match(await cache.clip('One.', 'en'), /^blob:/);
+});
+
+test('a dropped connection is tried again', async () => {
+  let calls = 0;
+  const cache = createClipCache(BASE, async () => {
+    calls += 1;
+    if (calls === 1) throw new TypeError('Failed to fetch');
+    return answer(200);
+  }, 0);
+
+  assert.match(await cache.clip('One.', 'en'), /^blob:/);
+  assert.equal(cache.serverDown(), false);
+});
+
+test('a refusal that no retry can change (a site that is not allowed, a bad request) is not tried again', async () => {
+  let calls = 0;
+  const cache = createClipCache(BASE, async () => {
+    calls += 1;
+    return answer(403);
+  }, 0);
+
+  assert.equal(await cache.clip('One.', 'en'), null);
+  assert.equal(cache.serverDown(), true);
   assert.equal(calls, 1);
 });
 

@@ -82,28 +82,44 @@ export function clipUrl(base: string, text: string, lang: string): string {
   return `${base}?${query.toString()}`;
 }
 
-export function createClipCache(base: string, fetchClip: ClipFetch): ClipCache {
+const TRIES = 3;
+
+// A busy bot (503, 429, an empty clip, a dropped connection) usually answers a moment later. Any other refusal
+// (a site that is not allowed, a bad request) is the same every time.
+function worthTryingAgain(status: number): boolean {
+  return status === 429 || status >= 500;
+}
+
+export function createClipCache(base: string, fetchClip: ClipFetch, retryDelayMs = 400): ClipCache {
   const clips = new Map<string, Promise<string | null>>();
   let down = false;
 
   async function load(text: string, lang: string): Promise<string | null> {
-    try {
-      const response = await fetchClip(clipUrl(base, text, lang));
-      if (!response.ok) {
-        down = true;
-        return null;
+    let refused = false;
+    for (let attempt = 1; attempt <= TRIES; attempt += 1) {
+      if (attempt > 1) await new Promise(resolve => setTimeout(resolve, retryDelayMs * (attempt - 1)));
+      try {
+        const response = await fetchClip(clipUrl(base, text, lang));
+        if (!response.ok) {
+          refused = true;
+          if (worthTryingAgain(response.status)) continue;
+          break;
+        }
+        refused = false;
+        const blob = await response.blob();
+        // An empty clip cannot be played (a browser's range request on it fails). It is tried again; if it stays
+        // empty it is one sentence's problem, not the server's: the browser voice reads that sentence and the
+        // next one asks the bot again.
+        if (blob.size > 0) return URL.createObjectURL(blob);
       }
-      const blob = await response.blob();
-      // An empty clip cannot be played (a browser's range request on it fails), and it is one sentence's
-      // problem, not the server's: this sentence is read by the browser voice and the next asks the bot again.
-      return blob.size > 0
-        ? URL.createObjectURL(blob)
-        : null;
+      catch {
+        // a dropped connection: try again
+        refused = true;
+      }
     }
-    catch {
-      down = true;
-      return null;
-    }
+    // Only a bot that keeps refusing is skipped for the rest of the reading.
+    if (refused) down = true;
+    return null;
   }
 
   const MAX_AT_ONCE = 1;
