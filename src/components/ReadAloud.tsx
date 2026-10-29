@@ -256,8 +256,10 @@ export const useReadAloud = create<ReadAloudState>()((set, get) => {
     mark(block);
     const text = sentences[sentenceIndex] ?? '';
     const lang = document.documentElement.lang || 'en';
-    // The current sentence is asked for first; the ones after it follow, in order.
-    const current = clips.clip(text, lang);
+    // Lines that waited for an earlier position are no longer wanted. The current sentence goes to the front of
+    // the queue; the ones after it follow, in order.
+    clips.dropQueued();
+    const current = clips.clip(text, lang, true);
     upcomingTexts().forEach(upcoming => prepare(upcoming, lang));
     void current.then((clip) => {
       if (id !== runId) return;

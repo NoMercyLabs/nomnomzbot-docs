@@ -10,16 +10,29 @@
 // -----------------------------------------------------------------------------
 
 // The bot's own voice for Read aloud: one sentence is one request and one clip.
-// The reader asks for the next sentence while this one plays, and a clip is
+// The reader asks for the next sentences while this one plays, and a clip is
 // kept until the reading stops. When the bot cannot speak, the cache says so
 // once and the reader uses the browser voice for the rest of that reading.
+//
+// Requests go out one at a time, in the order they were asked for. A long block
+// asked for every line at once, and the server answered them in any order, so
+// the line the reader needed first could arrive last. The line that is read now
+// is asked for as urgent and goes to the front of the queue.
 
 export type ClipFetch = (url: string) => Promise<Pick<Response, 'ok' | 'status' | 'blob'>>;
 
 export interface ClipCache {
-  clip: (text: string, lang: string) => Promise<string | null>;
+  clip: (text: string, lang: string, urgent?: boolean) => Promise<string | null>;
+  // Forgets the lines that only wait for their turn; each answers with no clip and can be asked for again.
+  dropQueued: () => void;
   serverDown: () => boolean;
   reset: () => void;
+}
+
+interface Waiting {
+  key: string;
+  start: () => void;
+  cancel: () => void;
 }
 
 export function clipUrl(base: string, text: string, lang: string): string {
@@ -51,19 +64,61 @@ export function createClipCache(base: string, fetchClip: ClipFetch): ClipCache {
     }
   }
 
+  const MAX_AT_ONCE = 1;
+  const queue: Waiting[] = [];
+  let active = 0;
+
+  function next(): void {
+    while (active < MAX_AT_ONCE && queue.length > 0) {
+      active += 1;
+      queue.shift()!.start();
+    }
+  }
+
+  function enqueue(key: string, text: string, lang: string, urgent: boolean): Promise<string | null> {
+    return new Promise((resolve) => {
+      const waiting: Waiting = {
+        key,
+        start: () => {
+          const loaded = down ? Promise.resolve(null) : load(text, lang);
+          void loaded.then((url) => {
+            active -= 1;
+            resolve(url);
+            next();
+          });
+        },
+        cancel: () => resolve(null),
+      };
+      if (urgent) queue.unshift(waiting);
+      else queue.push(waiting);
+      next();
+    });
+  }
+
   return {
-    clip: (text, lang) => {
+    clip: (text, lang, urgent = false) => {
       if (down) return Promise.resolve(null);
       const key = `${lang}:${text}`;
-      let pending = clips.get(key);
-      if (!pending) {
-        pending = load(text, lang);
-        clips.set(key, pending);
+      const pending = clips.get(key);
+      if (pending) {
+        // Already asked for: if it still waits, the line read now moves to the front.
+        const index = queue.findIndex(waiting => waiting.key === key);
+        if (urgent && index > 0) queue.unshift(...queue.splice(index, 1));
+        return pending;
       }
-      return pending;
+      const created = enqueue(key, text, lang, urgent);
+      clips.set(key, created);
+      return created;
+    },
+    dropQueued: () => {
+      for (const waiting of queue.splice(0)) {
+        clips.delete(waiting.key);
+        waiting.cancel();
+      }
     },
     serverDown: () => down,
     reset: () => {
+      queue.splice(0).forEach(waiting => waiting.cancel());
       for (const pending of clips.values()) {
         void pending.then(url => url && URL.revokeObjectURL(url));
       }

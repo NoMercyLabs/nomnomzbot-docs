@@ -65,6 +65,73 @@ test('an empty answer is no clip, and one bad sentence does not silence the serv
   assert.match(await cache.clip('Fine one.', 'en'), /^blob:/);
 });
 
+// Stoney 2026-10-29: a long block asked for every line at once, and the first line came back last, so the reading
+// waited on the one clip it needed first. Requests now go out one at a time, in the order they were asked for.
+function slowServer() {
+  const started = [];
+  const gates = new Map();
+  const fetchClip = (url) => {
+    const text = new URL(url).searchParams.get('text');
+    started.push(text);
+    return new Promise((resolve) => gates.set(text, () => resolve(answer(200))));
+  };
+  const finish = async (text) => {
+    gates.get(text)();
+    await new Promise((resolve) => setImmediate(resolve));
+  };
+  return { started, fetchClip, finish };
+}
+
+test('lines are requested one at a time, in the order they were asked for', async () => {
+  const server = slowServer();
+  const cache = createClipCache(BASE, server.fetchClip);
+
+  const first = cache.clip('One.', 'en');
+  cache.clip('Two.', 'en');
+  cache.clip('Three.', 'en');
+  await new Promise((resolve) => setImmediate(resolve));
+
+  assert.deepEqual(server.started, ['One.']);
+  await server.finish('One.');
+  assert.deepEqual(server.started, ['One.', 'Two.']);
+  await server.finish('Two.');
+  assert.deepEqual(server.started, ['One.', 'Two.', 'Three.']);
+  assert.match(await first, /^blob:/);
+});
+
+test('the line that is read now goes ahead of lines that only wait', async () => {
+  const server = slowServer();
+  const cache = createClipCache(BASE, server.fetchClip);
+
+  cache.clip('Busy.', 'en');
+  cache.clip('Later one.', 'en');
+  cache.clip('Later two.', 'en');
+  cache.clip('Now.', 'en', true);
+  await new Promise((resolve) => setImmediate(resolve));
+  await server.finish('Busy.');
+
+  assert.deepEqual(server.started, ['Busy.', 'Now.']);
+});
+
+test('lines that only wait can be dropped, and are asked for again when needed', async () => {
+  const server = slowServer();
+  const cache = createClipCache(BASE, server.fetchClip);
+
+  cache.clip('Busy.', 'en');
+  const waiting = cache.clip('Waiting.', 'en');
+  await new Promise((resolve) => setImmediate(resolve));
+  cache.dropQueued();
+
+  assert.equal(await waiting, null);
+  assert.equal(cache.serverDown(), false);
+  await server.finish('Busy.');
+  const again = cache.clip('Waiting.', 'en');
+  await new Promise((resolve) => setImmediate(resolve));
+  assert.deepEqual(server.started, ['Busy.', 'Waiting.']);
+  await server.finish('Waiting.');
+  assert.match(await again, /^blob:/);
+});
+
 test('a network error is the same as a refusal', async () => {
   const cache = createClipCache(BASE, async () => {
     throw new TypeError('Failed to fetch');
