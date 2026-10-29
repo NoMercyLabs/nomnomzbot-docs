@@ -5,8 +5,8 @@ import { useEffect, useRef } from 'react';
 import { create } from 'zustand';
 
 import { t } from '../lib/i18n';
-import { chunkSentence, joinCommandBangs } from '../lib/readAloudChunks';
-import { createClipCache } from '../lib/readAloudClip';
+import { chunkSentence, joinCommandBangs, rowChunks } from '../lib/readAloudChunks';
+import { createClipCache, textsAhead } from '../lib/readAloudClip';
 import { rowText, tableIsRead } from '../lib/readAloudLabels';
 import { pickVoice } from '../lib/readAloudVoice';
 
@@ -70,19 +70,21 @@ function silence(): void {
   window.speechSynthesis.cancel();
 }
 
-// How many sentences are requested ahead of the one being read. One was not enough at 1.25x and 1.5x, where a
-// sentence ends sooner than the next clip arrives.
-const LOOKAHEAD = 3;
+// How many sentences are kept fetched ahead of the one being read. The queue sends one request at a time, so the
+// buffer fills in reading order as each clip arrives, and a sentence is rarely fetched at the moment it plays.
+const BUFFER_AHEAD = 10;
+// Of those, how many already have an audio element built; the rest are only fetched.
+const WARM_AHEAD = 2;
+
+function* laterBlockSentences(): Generator<string[]> {
+  for (let index = blockIndex + 1; index < blocks.length; index += 1) {
+    yield speechesOf(blocks[index]!);
+  }
+}
 
 // The sentences after the current one, so their clips can load while this one plays.
 function upcomingTexts(): string[] {
-  const texts = sentences.slice(sentenceIndex + 1, sentenceIndex + 1 + LOOKAHEAD);
-  const block = blocks[blockIndex + 1];
-
-  if (texts.length < LOOKAHEAD && block) {
-    texts.push(...split(textOf(block)).slice(0, LOOKAHEAD - texts.length));
-  }
-  return texts;
+  return textsAhead(sentences, sentenceIndex, laterBlockSentences(), BUFFER_AHEAD);
 }
 
 export function readAloudSupported(): boolean {
@@ -158,9 +160,18 @@ function split(text: string): string[] {
   if ('Segmenter' in Intl) {
     const segmenter = new Intl.Segmenter(lang, { granularity: 'sentence' });
     const parts = [...segmenter.segment(text)].map(part => part.segment.trim()).filter(Boolean);
-    return joinCommandBangs(parts).flatMap(chunkSentence);
+    return joinCommandBangs(parts).flatMap(sentence => chunkSentence(sentence));
   }
-  return joinCommandBangs((text.match(/[^.!?]+[.!?]*/g) ?? [text]).map(part => part.trim())).flatMap(chunkSentence);
+  return joinCommandBangs((text.match(/[^.!?]+[.!?]*/g) ?? [text]).map(part => part.trim()))
+    .flatMap(sentence => chunkSentence(sentence));
+}
+
+// What is spoken for a block: its sentences, or for a table row the whole row as one speech.
+function speechesOf(block: HTMLElement): string[] {
+  const text = textOf(block);
+  return block.tagName === 'TR'
+    ? rowChunks(text)
+    : split(text);
 }
 
 function isSection(element: HTMLElement): boolean {
@@ -221,10 +232,11 @@ export const useReadAloud = create<ReadAloudState>()((set, get) => {
     window.speechSynthesis.speak(utterance);
   }
 
-  // Fetches a sentence and builds its audio element now, so it is ready when its turn comes.
-  function prepare(text: string, lang: string): void {
+  // Fetches a sentence ahead of its turn. A sentence that is next in line also gets its audio element built now,
+  // so it starts the moment it is wanted.
+  function prepare(text: string, lang: string, buildElement: boolean): void {
     void clips.clip(text, lang).then((clip) => {
-      if (!clip || warm.has(clip)) return;
+      if (!clip || !buildElement || warm.has(clip)) return;
       const audio = new Audio();
       audio.preload = 'auto';
       audio.src = clip;
@@ -254,7 +266,7 @@ export const useReadAloud = create<ReadAloudState>()((set, get) => {
       get().stop();
       return;
     }
-    if (sentenceIndex === 0 || sentences.length === 0) sentences = split(textOf(block));
+    if (sentenceIndex === 0 || sentences.length === 0) sentences = speechesOf(block);
     mark(block);
     const text = sentences[sentenceIndex] ?? '';
     const lang = document.documentElement.lang || 'en';
@@ -262,7 +274,7 @@ export const useReadAloud = create<ReadAloudState>()((set, get) => {
     // the queue; the ones after it follow, in order.
     clips.dropQueued();
     const current = clips.clip(text, lang, true);
-    upcomingTexts().forEach(upcoming => prepare(upcoming, lang));
+    upcomingTexts().forEach((upcoming, position) => prepare(upcoming, lang, position < WARM_AHEAD));
     void current.then((clip) => {
       if (id !== runId) return;
       if (clip) playClip(clip, text, lang, id);

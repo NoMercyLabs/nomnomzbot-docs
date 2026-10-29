@@ -18,12 +18,19 @@ export function tableIsRead(cellTexts: string[]): boolean {
   return cellTexts.some(text => text.trim().split(/\s+/).filter(Boolean).length >= WORDS_OF_REAL_TEXT);
 }
 
+function endsInStop(text: string): boolean {
+  return /[.!?…]$/.test(text);
+}
+
 // A table lists interface names (a panel, a button, a state) next to what each
-// one means. A row is read as one line, not one cell at a time: the first cell
+// one means. A row is read as one speech, not one cell at a time: the first cell
 // says what the row is about, the others say what it means. "Active: The plan
 // runs." A header row is skipped: its words only name the columns.
 export function rowText(cellTexts: string[]): string {
   const [first, ...rest] = cellTexts.map(text => text.trim()).filter(Boolean);
   if (first === undefined) return '';
-  return rest.length > 0 ? `${first}: ${rest.join('. ')}` : first;
+  if (rest.length === 0) return first;
+  // A stop between the cells, unless a cell already ends in one.
+  const spoken = rest.reduce((text, cell) => `${text}${endsInStop(text) ? ' ' : '. '}${cell}`);
+  return `${first}${endsInStop(first) ? ' ' : ': '}${spoken}`;
 }

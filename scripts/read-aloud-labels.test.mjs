@@ -37,6 +37,17 @@ test('a row of more cells puts a stop between the cells after the label', () => 
   assert.equal(rowText(['Trial', 'Free for 14 days', 'Ends on its own']), 'Trial: Free for 14 days. Ends on its own');
 });
 
+test('a cell that already ends in a stop does not get a second one', () => {
+  assert.equal(
+    rowText(['!accountage', 'Answers how old the account is.', 'Everyone', '0 s']),
+    '!accountage: Answers how old the account is. Everyone. 0 s',
+  );
+});
+
+test('a label that is a whole sentence is not followed by a colon', () => {
+  assert.equal(rowText(['It is fixed.', 'A command for a viewer.']), 'It is fixed. A command for a viewer.');
+});
+
 test('an empty cell is left out, and a row with one cell is read as it is', () => {
   assert.equal(rowText(['Active', '  ', 'The plan runs.']), 'Active: The plan runs.');
   assert.equal(rowText(['Just a sentence in one cell.']), 'Just a sentence in one cell.');

@@ -35,6 +35,24 @@ interface Waiting {
   cancel: () => void;
 }
 
+// The sentences to have ready after the one being read: the rest of this block, then the blocks after it, up
+// to `count`. The later blocks are opened one by one, only as far as the buffer needs.
+export function textsAhead(
+  sentences: string[],
+  index: number,
+  laterBlocks: Iterable<string[]>,
+  count: number,
+): string[] {
+  const ahead = sentences.slice(index + 1, index + 1 + count);
+  const blocks = laterBlocks[Symbol.iterator]();
+  while (ahead.length < count) {
+    const block = blocks.next();
+    if (block.done) break;
+    ahead.push(...block.value.slice(0, count - ahead.length));
+  }
+  return ahead;
+}
+
 export function clipUrl(base: string, text: string, lang: string): string {
   const query = new URLSearchParams({ text, locale: lang });
   return `${base}?${query.toString()}`;

@@ -14,13 +14,15 @@
 // sentence that is too long at a comma, or at a space when there is no comma.
 
 export const MAX_UTTERANCE = 160;
+// A table row is one speech and is not cut into sentences, so it may run longer than a sentence before it is cut.
+export const MAX_ROW = 320;
 
-function cutPoint(text: string): number {
-  const window = text.slice(0, MAX_UTTERANCE + 1);
+function cutPoint(text: string, max: number): number {
+  const window = text.slice(0, max + 1);
   const comma = Math.max(window.lastIndexOf(', '), window.lastIndexOf('; '), window.lastIndexOf(': '));
   if (comma > 0) return comma + 1;
   const space = window.lastIndexOf(' ');
-  return space > 0 ? space : MAX_UTTERANCE;
+  return space > 0 ? space : max;
 }
 
 // A sentence splitter ends a sentence at "!", so "such as !uptime" comes apart
@@ -35,14 +37,19 @@ export function joinCommandBangs(parts: string[]): string[] {
   return joined;
 }
 
-export function chunkSentence(sentence: string): string[] {
+export function chunkSentence(sentence: string, max: number = MAX_UTTERANCE): string[] {
   const chunks: string[] = [];
   let rest = sentence.trim();
-  while (rest.length > MAX_UTTERANCE) {
-    const at = cutPoint(rest);
+  while (rest.length > max) {
+    const at = cutPoint(rest, max);
     chunks.push(rest.slice(0, at).trim());
     rest = rest.slice(at).trim();
   }
   if (rest) chunks.push(rest);
   return chunks;
+}
+
+// A table row is read as one speech: its cells and stops stay together.
+export function rowChunks(row: string): string[] {
+  return chunkSentence(row, MAX_ROW);
 }

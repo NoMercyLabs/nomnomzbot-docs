@@ -12,7 +12,7 @@
 import assert from 'node:assert/strict';
 import { test } from 'node:test';
 
-import { clipUrl, createClipCache } from '../src/lib/readAloudClip.ts';
+import { clipUrl, createClipCache, textsAhead } from '../src/lib/readAloudClip.ts';
 
 const BASE = 'https://bot.example/api/v1/public/read-aloud';
 
@@ -130,6 +130,28 @@ test('lines that only wait can be dropped, and are asked for again when needed',
   assert.deepEqual(server.started, ['Busy.', 'Waiting.']);
   await server.finish('Waiting.');
   assert.match(await again, /^blob:/);
+});
+
+// Stoney 2026-10-29: fetch ahead, not when a line plays: keep about ten sentences buffered.
+test('the lines to buffer run on from the current sentence into the next blocks', () => {
+  const later = [['C1.', 'C2.'], ['D1.']];
+
+  assert.deepEqual(textsAhead(['A1.', 'A2.', 'A3.'], 0, later, 10), ['A2.', 'A3.', 'C1.', 'C2.', 'D1.']);
+  assert.deepEqual(textsAhead(['A1.', 'A2.', 'A3.'], 2, later, 10), ['C1.', 'C2.', 'D1.']);
+});
+
+test('the buffer stops at its size, and the later blocks are only opened as far as needed', () => {
+  let opened = 0;
+  const later = (function* () {
+    for (const block of [['B1.', 'B2.'], ['C1.', 'C2.'], ['D1.']]) {
+      opened += 1;
+      yield block;
+    }
+  })();
+
+  assert.deepEqual(textsAhead(['A1.'], 0, later, 3), ['B1.', 'B2.', 'C1.']);
+  assert.equal(opened, 2);
+  assert.deepEqual(textsAhead(['A1.'], 0, [], 3), []);
 });
 
 test('a network error is the same as a refusal', async () => {
