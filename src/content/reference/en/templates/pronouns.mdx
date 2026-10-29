@@ -26,17 +26,18 @@ Pronouns set by a command that runs the Set pronoun action stay set. The API doe
 The bot adds the words that go with each pronoun.
 The words below are the ones the three common pronouns give.
 
-| Helper | he | she | they |
-| --- | --- | --- | --- |
-| Subject | he | she | they |
-| Object | him | her | them |
-| Possessive | his | her | their |
-| Present tense | is | is | are |
-| Past tense | was | was | were |
-| Gendered term | guy | gal | person |
+| Helper | he | she | they | any or other |
+| --- | --- | --- | --- | --- |
+| Subject | he | she | they | the name |
+| Object | him | her | them | the name |
+| Possessive | his | her | their | the name with `'s` |
+| Present tense | is | is | are | is |
+| Past tense | was | was | were | was |
+| Gendered term | guy | gal | person | person |
 
 Other pronouns, such as xe and zie, bring their own possessive words, and their gendered term is "person".
 Only "they" takes the plural verb.
+The last column is explained under [When the pronouns are "any" or "other"](#when-the-pronouns-are-any-or-other).
 
 ## Write correct sentences
 
@@ -113,8 +114,9 @@ Use shorter lines to keep that readable.
 
 ## Examples
 
-Each line below is the same reply for three viewers.
+Each line below is the same reply for four kinds of viewer: he, she, they, and any or other.
 The first line of each example is what you type.
+For "any", the name stands where a pronoun would, so a line that already names the person shows the name more than once.
 
 **A shoutout.**
 Typed: `Shoutout to {target.displayname}! {Target.Subject} {target.presentTense} a great streamer. Go follow {target.object}!`
@@ -122,6 +124,7 @@ Typed: `Shoutout to {target.displayname}! {Target.Subject} {target.presentTense}
 - he: `Shoutout to Alex! He is a great streamer. Go follow him!`
 - she: `Shoutout to Alex! She is a great streamer. Go follow her!`
 - they: `Shoutout to Alex! They are a great streamer. Go follow them!`
+- any: `Shoutout to Alex! Alex is a great streamer. Go follow Alex!`
 
 Without helpers, the same line written for "he" reads wrong for she and they.
 
@@ -131,6 +134,7 @@ Typed: `{target.displayname} is live. Say hi to {target.object} and see what {ta
 - he: `Alex is live. Say hi to him and see what he plays.`
 - she: `Alex is live. Say hi to her and see what she plays.`
 - they: `Alex is live. Say hi to them and see what they play.`
+- any: `Alex is live. Say hi to Alex and see what Alex plays.`
 
 **A possessive and a term.**
 Typed: `{user} loves {user.possessive} cat. {user} is a good {user.genderedTerm}.`
@@ -138,6 +142,7 @@ Typed: `{user} loves {user.possessive} cat. {user} is a good {user.genderedTerm}
 - he: `Alex loves his cat. Alex is a good guy.`
 - she: `Alex loves her cat. Alex is a good gal.`
 - they: `Alex loves their cat. Alex is a good person.`
+- any: `Alex loves Alex's cat. Alex is a good person.`
 
 **A line that follows the stream.**
 Typed: `{Target.Subject} {target.tense} streaming Tetris.`
@@ -146,6 +151,8 @@ Typed: `{Target.Subject} {target.tense} streaming Tetris.`
 - she, offline: `She was streaming Tetris.`
 - they, live: `They are streaming Tetris.`
 - they, offline: `They were streaming Tetris.`
+- any, live: `Alex is streaming Tetris.`
+- any, offline: `Alex was streaming Tetris.`
 
 In a shoutout, the live state is the live state of the person you shout out. Everywhere else it is the live state of your channel.
 
