@@ -53,6 +53,30 @@ export function textsAhead(
   return ahead;
 }
 
+// Resolves when `wanted` of the clips have answered (with a sound or without: a bad sentence must not hold the
+// reading back), when all of them have, or after `maxWaitMs`, whichever comes first.
+export function whenBuffered(
+  clips: Promise<string | null>[],
+  wanted: number,
+  maxWaitMs: number,
+): Promise<void> {
+  const needed = Math.min(wanted, clips.length);
+  if (needed === 0) return Promise.resolve();
+  return new Promise((resolve) => {
+    let answered = 0;
+    const timer = setTimeout(resolve, maxWaitMs);
+    for (const clip of clips) {
+      void clip.then(() => {
+        answered += 1;
+        if (answered >= needed) {
+          clearTimeout(timer);
+          resolve();
+        }
+      });
+    }
+  });
+}
+
 export function clipUrl(base: string, text: string, lang: string): string {
   const query = new URLSearchParams({ text, locale: lang });
   return `${base}?${query.toString()}`;

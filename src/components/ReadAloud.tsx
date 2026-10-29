@@ -6,7 +6,7 @@ import { create } from 'zustand';
 
 import { t } from '../lib/i18n';
 import { chunkSentence, joinCommandBangs, rowChunks } from '../lib/readAloudChunks';
-import { createClipCache, textsAhead } from '../lib/readAloudClip';
+import { createClipCache, textsAhead, whenBuffered } from '../lib/readAloudClip';
 import { rowText, tableIsRead } from '../lib/readAloudLabels';
 import { pickVoice } from '../lib/readAloudVoice';
 
@@ -75,6 +75,10 @@ function silence(): void {
 const BUFFER_AHEAD = 10;
 // Of those, how many already have an audio element built; the rest are only fetched.
 const WARM_AHEAD = 2;
+// Reading starts once this many clips (the first line and the ones after it) are ready, so the lines that follow
+// are already there when the first ends. The wait is capped, so a slow bot delays the start and never blocks it.
+const START_BUFFER = 4;
+const START_BUFFER_MAX_WAIT_MS = 12000;
 
 function* laterBlockSentences(): Generator<string[]> {
   for (let index = blockIndex + 1; index < blocks.length; index += 1) {
@@ -196,6 +200,8 @@ function mark(element: HTMLElement | undefined): void {
 
 interface ReadAloudState {
   status: Status;
+  // True while the reader waits for the first clips to be ready (or for a clip that is not ready yet).
+  loading: boolean;
   rate: number;
   start: () => void;
   toggle: () => void;
@@ -234,14 +240,16 @@ export const useReadAloud = create<ReadAloudState>()((set, get) => {
 
   // Fetches a sentence ahead of its turn. A sentence that is next in line also gets its audio element built now,
   // so it starts the moment it is wanted.
-  function prepare(text: string, lang: string, buildElement: boolean): void {
-    void clips.clip(text, lang).then((clip) => {
+  function prepare(text: string, lang: string, buildElement: boolean): Promise<string | null> {
+    const pending = clips.clip(text, lang);
+    void pending.then((clip) => {
       if (!clip || !buildElement || warm.has(clip)) return;
       const audio = new Audio();
       audio.preload = 'auto';
       audio.src = clip;
       warm.set(clip, audio);
     });
+    return pending;
   }
 
   function playClip(clip: string, text: string, lang: string, id: number): void {
@@ -258,7 +266,9 @@ export const useReadAloud = create<ReadAloudState>()((set, get) => {
     });
   }
 
-  function speak(): void {
+  // `fillBuffer` is true when the queue is cold (start, resume, a jump): the first line then waits for the lines
+  // after it. Between two lines the buffer is already full and the next clip plays as soon as it is there.
+  function speak(fillBuffer = false): void {
     const id = ++runId;
     silence();
     const block = blocks[blockIndex];
@@ -274,9 +284,14 @@ export const useReadAloud = create<ReadAloudState>()((set, get) => {
     // the queue; the ones after it follow, in order.
     clips.dropQueued();
     const current = clips.clip(text, lang, true);
-    upcomingTexts().forEach((upcoming, position) => prepare(upcoming, lang, position < WARM_AHEAD));
-    void current.then((clip) => {
+    const ahead = upcomingTexts().map((upcoming, position) => prepare(upcoming, lang, position < WARM_AHEAD));
+    const ready = fillBuffer
+      ? whenBuffered([current, ...ahead], START_BUFFER, START_BUFFER_MAX_WAIT_MS)
+      : current.then(() => undefined);
+    set({ loading: true });
+    void ready.then(() => current).then((clip) => {
       if (id !== runId) return;
+      set({ loading: false });
       if (clip) playClip(clip, text, lang, id);
       else speakWithBrowser(text, lang, id);
     });
@@ -286,12 +301,13 @@ export const useReadAloud = create<ReadAloudState>()((set, get) => {
     blockIndex = Math.max(0, Math.min(index, blocks.length - 1));
     sentenceIndex = 0;
     sentences = [];
-    if (get().status === 'playing') speak();
+    if (get().status === 'playing') speak(true);
     else mark(blocks[blockIndex]);
   }
 
   return {
     status: 'idle',
+    loading: false,
     rate: 1,
     start: () => {
       if (!readAloudSupported()) return;
@@ -305,18 +321,18 @@ export const useReadAloud = create<ReadAloudState>()((set, get) => {
       sentenceIndex = 0;
       sentences = [];
       set({ status: 'playing', rate: readRate() });
-      speak();
+      speak(true);
     },
     toggle: () => {
       const { status } = get();
       if (status === 'playing') {
         runId += 1;
         silence();
-        set({ status: 'paused' });
+        set({ status: 'paused', loading: false });
       }
       else if (status === 'paused') {
         set({ status: 'playing' });
-        speak();
+        speak(true);
       }
     },
     stop: () => {
@@ -327,7 +343,7 @@ export const useReadAloud = create<ReadAloudState>()((set, get) => {
       mark(undefined);
       blocks = [];
       sentences = [];
-      set({ status: 'idle' });
+      set({ status: 'idle', loading: false });
     },
     step: (delta, unit) => {
       if (unit === 'paragraph') {
@@ -365,6 +381,16 @@ function Icon({ d, filled = false }: { d: string; filled?: boolean }) {
         strokeLinecap="round"
         strokeLinejoin="round"
       />
+    </svg>
+  );
+}
+
+// Shown in the play button while the first clips are fetched. Still under reduced motion, where it is a ring.
+function Spinner() {
+  return (
+    <svg viewBox="0 0 20 20" aria-hidden="true" className="h-[20px] w-[20px] animate-spin motion-reduce:animate-none">
+      <circle cx="10" cy="10" r="7" fill="none" stroke="currentColor" strokeWidth="1.5" opacity="0.25" />
+      <path d="M10 3a7 7 0 0 1 7 7" fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" />
     </svg>
   );
 }
@@ -421,7 +447,7 @@ function Control({
  * keys between the buttons, and these are plain buttons reached with Tab.
  */
 export function ReadAloudBar() {
-  const { status, rate, toggle, stop, step, cycleRate } = useReadAloud();
+  const { status, loading, rate, toggle, stop, step, cycleRate } = useReadAloud();
   const group = useRef<HTMLDivElement>(null);
   const shown = status !== 'idle';
 
@@ -473,8 +499,14 @@ export function ReadAloudBar() {
       <Control label={t('readAloud.prevParagraph')} onClick={() => step(-1, 'paragraph')}>
         <Icon d={ICONS.prevParagraph} />
       </Control>
-      <Control label={playing ? t('readAloud.pause') : t('readAloud.play')} onClick={toggle} primary>
-        <Icon d={playing ? ICONS.pause : ICONS.play} filled={!playing} />
+      <Control
+        label={loading ? t('readAloud.loading') : playing ? t('readAloud.pause') : t('readAloud.play')}
+        onClick={toggle}
+        primary
+      >
+        {loading
+          ? <Spinner />
+          : <Icon d={playing ? ICONS.pause : ICONS.play} filled={!playing} />}
       </Control>
       <Control label={t('readAloud.nextParagraph')} onClick={() => step(1, 'paragraph')}>
         <Icon d={ICONS.nextParagraph} />

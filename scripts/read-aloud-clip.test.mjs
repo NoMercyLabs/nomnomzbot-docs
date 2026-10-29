@@ -12,7 +12,7 @@
 import assert from 'node:assert/strict';
 import { test } from 'node:test';
 
-import { clipUrl, createClipCache, textsAhead } from '../src/lib/readAloudClip.ts';
+import { clipUrl, createClipCache, textsAhead, whenBuffered } from '../src/lib/readAloudClip.ts';
 
 const BASE = 'https://bot.example/api/v1/public/read-aloud';
 
@@ -152,6 +152,48 @@ test('the buffer stops at its size, and the later blocks are only opened as far 
   assert.deepEqual(textsAhead(['A1.'], 0, later, 3), ['B1.', 'B2.', 'C1.']);
   assert.equal(opened, 2);
   assert.deepEqual(textsAhead(['A1.'], 0, [], 3), []);
+});
+
+// Stoney 2026-10-29: "a little delay and a loading indication to have at least 3 or 4 items ready to be played".
+function later(ms, value = null) {
+  return new Promise(resolve => setTimeout(() => resolve(value), ms));
+}
+
+test('reading waits until the wanted number of clips are ready', async () => {
+  const started = Date.now();
+  await whenBuffered([later(5), later(15), later(25), later(400)], 3, 1000);
+
+  const waited = Date.now() - started;
+  assert.ok(waited >= 20 && waited < 300, `waited ${waited} ms`);
+});
+
+test('a clip that arrives with no sound still counts as handled, so one bad sentence never holds reading back', async () => {
+  const started = Date.now();
+  await whenBuffered([later(5, 'blob:a'), later(10, null), later(15, 'blob:b')], 3, 1000);
+
+  assert.ok(Date.now() - started < 300);
+});
+
+test('fewer lines than the wanted number are enough when they are all there is', async () => {
+  const started = Date.now();
+  await whenBuffered([later(5), later(10)], 4, 1000);
+
+  assert.ok(Date.now() - started < 300);
+});
+
+test('reading starts after the longest wait even when the clips are not all ready', async () => {
+  const started = Date.now();
+  await whenBuffered([later(5), later(900), later(900)], 3, 80);
+
+  const waited = Date.now() - started;
+  assert.ok(waited >= 70 && waited < 400, `waited ${waited} ms`);
+});
+
+test('no lines at all is no wait', async () => {
+  const started = Date.now();
+  await whenBuffered([], 4, 1000);
+
+  assert.ok(Date.now() - started < 100);
 });
 
 test('a network error is the same as a refusal', async () => {

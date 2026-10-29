@@ -33,6 +33,7 @@
   "readAloud.controls": "Read aloud controls",
   "readAloud.play": "Play",
   "readAloud.pause": "Pause",
+  "readAloud.loading": "Getting the voice ready",
   "readAloud.stop": "Stop reading",
   "readAloud.prevSection": "Previous section",
   "readAloud.nextSection": "Next section",
