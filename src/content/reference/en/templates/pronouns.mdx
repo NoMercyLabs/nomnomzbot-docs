@@ -91,11 +91,25 @@ They give is or are.
 
 If the bot has no pronouns for a person, it uses they, them, their, person, are and were.
 This holds for a person the bot has never seen chat, and who never picked pronouns in the bot.
-It also holds when the pronouns are "any" or "other", because those name a choice, not words for a sentence.
 The pronoun helpers never show as raw text.
 The verb takes the plural form, so the line reads "they play".
-The bot never swaps in the person's name.
-If you want the name, use `{user}` for the person who used the command or `{target.displayname}` for the person the command names.
+
+### When the pronouns are "any" or "other"
+
+"Any" and "other" name a choice, not words for a sentence.
+A guess such as "they" can be wrong for the person.
+So the bot uses the person's name where a pronoun would go.
+
+- `{subject}` and `{object}` give the name.
+- `{possessive}` gives the name with 's, such as "Alex's".
+- `{presentTense}` and `{pastTense}` give is and was.
+- `{verb:plays|play}` gives the first form.
+- `{genderedTerm}` gives person.
+
+The name keeps its own capital letters, also in `{Subject}`.
+"iFiLLz" stays "iFiLLz".
+If you write a line for these people with `{name}` once and `{subject}` after it, the name shows twice.
+Use shorter lines to keep that readable.
 
 ## Examples
 

@@ -12,7 +12,7 @@
 // A browser speaks with its default voice for the page language, and that is
 // often the oldest, most robotic voice on the system. Rank the voices the
 // reader has and prefer the natural ones: neural and online voices first, then
-// the network voices of Chrome, then Apple's enhanced voices.
+// Apple's enhanced voices. Chrome's Google voices are never offered.
 
 export interface VoiceLike {
   name: string;
@@ -22,17 +22,16 @@ export interface VoiceLike {
 
 const NATURAL = /natural|neural/i;
 const ONLINE = /\bonline\b/i;
-const GOOGLE = /^google\b/i;
 const APPLE = /premium|enhanced|siri/i;
 const ROBOTIC = /espeak|compact/i;
-// The old Windows desktop voices sound flat and robotic. They are never offered.
-const OLD_DESKTOP = /\bmicrosoft (david|mark|zira)\b/i;
+// The old Windows desktop voices and Chrome's Google network voices sound flat and robotic. They are never offered.
+const NEVER_OFFERED = /\bmicrosoft (david|mark|zira)\b|^google\b/i;
 const MAX_CHOICES = 6;
 
 function sameLanguage(voice: VoiceLike, lang: string): boolean {
   return (
     voice.lang.replace('_', '-').toLowerCase().startsWith(lang.slice(0, 2).toLowerCase()) &&
-    !OLD_DESKTOP.test(voice.name)
+    !NEVER_OFFERED.test(voice.name)
   );
 }
 
@@ -40,7 +39,6 @@ export function rankVoice(voice: VoiceLike, lang: string): number {
   let rank = 10;
   if (NATURAL.test(voice.name)) rank += 100;
   else if (ONLINE.test(voice.name)) rank += 80;
-  else if (GOOGLE.test(voice.name)) rank += 70;
   else if (APPLE.test(voice.name)) rank += 60;
 
   if (ROBOTIC.test(voice.name)) rank -= 20;

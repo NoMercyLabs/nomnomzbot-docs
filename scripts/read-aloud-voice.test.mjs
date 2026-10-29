@@ -21,21 +21,27 @@ const aria = { name: 'Microsoft Aria Online (Natural) - English (United States)'
 const espeak = { name: 'eSpeak English', lang: 'en', localService: true };
 const dutch = { name: 'Microsoft Frank Online (Natural) - Dutch (Netherlands)', lang: 'nl-NL', localService: false };
 
-test('a natural voice wins over a network voice, and a network voice over a desktop voice', () => {
+test('a natural voice wins, and the Google and old desktop voices are never picked', () => {
   assert.equal(pickVoice([david, zira, google, aria], 'en', null), aria);
-  assert.equal(pickVoice([david, zira, google], 'en', null), google);
+  assert.equal(pickVoice([david, zira, google], 'en', null), undefined);
 });
 
 test('only voices of the page language are offered, best first, and a robotic one comes last', () => {
   const names = voiceChoices([espeak, david, dutch, google, aria], 'en').map(voice => voice.name);
-  assert.deepEqual(names, [aria.name, google.name, espeak.name]);
+  assert.deepEqual(names, [aria.name, espeak.name]);
 });
 
 test('the old Microsoft desktop voices David, Mark and Zira are never offered or picked', () => {
   const mark = { name: 'Microsoft Mark - English (United States)', lang: 'en-US', localService: true };
-  const all = [david, zira, mark, espeak, google];
-  assert.deepEqual(voiceChoices(all, 'en').map(voice => voice.name), [google.name, espeak.name]);
+  const all = [david, zira, mark, espeak];
+  assert.deepEqual(voiceChoices(all, 'en').map(voice => voice.name), [espeak.name]);
   assert.equal(pickVoice([david, zira, mark], 'en', null), undefined);
+});
+
+test('the Google voices (US English, UK English Female and Male) are never offered', () => {
+  const ukFemale = { name: 'Google UK English Female', lang: 'en-GB', localService: false };
+  const ukMale = { name: 'Google UK English Male', lang: 'en-GB', localService: false };
+  assert.deepEqual(voiceChoices([google, ukFemale, ukMale, aria], 'en').map(voice => voice.name), [aria.name]);
 });
 
 test('the reader\'s own pick wins while it exists, and is ignored when it is gone', () => {

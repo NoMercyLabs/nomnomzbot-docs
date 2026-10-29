@@ -45,7 +45,7 @@ export function Property({ name, children, type }: { name: string; children: Rea
         {type && (
           <>
             <dt className="sr-only">Type</dt>
-            <dd className="font-mono text-xs text-zinc-400 dark:text-zinc-500">{type}</dd>
+            <dd className="font-mono text-xs text-zinc-500 dark:text-zinc-400">{type}</dd>
           </>
         )}
         <dt className="sr-only">Description</dt>

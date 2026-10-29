@@ -101,7 +101,7 @@ export default defineConfig({
   },
   server: {
     host: true, // Use 'true' instead of '0.0.0.0' - allows Astro to auto-detect the best host
-    port: 4321,
+    port: 5085, // docs-dev.nomnomz.bot points here; 4321 is the NoMercy docs dev port
     allowedHosts: true,
   },
 });

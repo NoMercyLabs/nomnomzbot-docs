@@ -592,7 +592,7 @@ export function Search() {
       >
         <SearchIcon className="h-5 w-5 shrink-0 stroke-current" />
         <span className="hidden truncate @min-[140px]:block">{t('nav.search.placeholder')}</span>
-        <kbd aria-hidden="true" className="ml-auto hidden shrink-0 text-2xs @min-[180px]:inline text-zinc-400 dark:text-zinc-500">
+        <kbd aria-hidden="true" className="ml-auto hidden shrink-0 text-2xs @min-[180px]:inline text-zinc-500 dark:text-zinc-400">
           <kbd className="font-sans">{modifierKey}</kbd>
           <kbd className="font-sans">K</kbd>
         </kbd>

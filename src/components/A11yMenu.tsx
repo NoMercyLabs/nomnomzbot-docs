@@ -253,6 +253,7 @@ export function A11yMenu() {
   const [theme, setTheme] = useState('system');
   const [syntax, setSyntax] = useState('vitesse');
   const [inline, setInline] = useState(true);
+  const [bold, setBold] = useState(true);
   const [wrap, setWrap] = useState(false);
   const [size, setSize] = useState('default');
   const [spacing, setSpacing] = useState('normal');
@@ -269,6 +270,7 @@ export function A11yMenu() {
     setTheme(read('theme', 'system'));
     setSyntax(read('syntax-theme', 'vitesse'));
     setInline(read('inline-syntax', 'on') !== 'off');
+    setBold(read('bold-text', 'on') !== 'off');
     setWrap(read('code-wrap', 'off') === 'on');
     setMounted(true);
   }, []);
@@ -372,6 +374,17 @@ export function A11yMenu() {
                 const value = next ? 'on' : 'off';
                 document.documentElement.setAttribute('data-inline-syntax', value);
                 write('inline-syntax', value);
+              }}
+            />
+            <Toggle
+              label="Bold words inside sentences"
+              hint="Off shows them in the normal weight, so they stop pulling the eye"
+              on={bold}
+              onChange={(next) => {
+                setBold(next);
+                const value = next ? 'on' : 'off';
+                document.documentElement.setAttribute('data-bold', value);
+                write('bold-text', value);
               }}
             />
             <Toggle
