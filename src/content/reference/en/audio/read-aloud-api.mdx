@@ -1,12 +1,14 @@
 ---
 title: Read aloud for a page
-description: Let a web page read its text aloud in the bot's own voice, with one request per sentence.
+description: Let a web page read its text aloud with a neural voice from the bot, with one request per sentence.
 ---
 
 The bot can read a short piece of text aloud for a visitor of a web page.
-The visitor hears the same neural voice as the bot, not the voice of their browser.
+The visitor hears a neural voice from the bot's server, not the voice of their browser.
+The section "Which voice speaks" says which voice.
+
 The dashboard uses this on its Privacy Policy and Terms of Service pages.
-A site that you build can use the same request.
+A site that you build can use the same request, once the bot allows that site.
 
 This is a request that a page sends to your bot.
 It is not a setting in the dashboard.
@@ -15,9 +17,13 @@ To make the bot speak on stream, see [Text to speech](/reference/audio/text-to-s
 ## Send a request
 
 Send one request for each piece of text.
+The route sits on the address of your bot.
+The examples use `bot.example.com`.
+Write the address of your own bot instead.
 
 ```http
 POST /api/v1/public/read-aloud
+Host: bot.example.com
 Content-Type: application/json
 
 { "text": "Welcome to the stream.", "locale": "en" }
@@ -25,30 +31,55 @@ Content-Type: application/json
 
 | Field | What it holds |
 | --- | --- |
-| `text` | The text to speak. 1 to 500 characters. |
-| `locale` | The language of the page: `en`, `nl`, or a locale such as `nl-NL`. |
+| `text` | The text to speak. 1 to 500 characters, counted after the bot trims the spaces from both ends. |
+| `locale` | The language of the page: `en`, `nl`, or a locale such as `nl-NL` or `pt_BR`. A request with no `locale`, or an empty one, gets a 400 answer. |
 
 The request needs no sign-in.
 A good answer is audio in the `audio/mpeg` format (MP3).
-Play it in an audio element.
+
+The answer is the audio itself, not a link.
+In a script, read the answer as a blob, make a temporary address from it, and play that address in an audio element.
+
+```js
+const response = await fetch("https://bot.example.com/api/v1/public/read-aloud", {
+  method: "POST",
+  headers: { "Content-Type": "application/json" },
+  body: JSON.stringify({ text: "Welcome to the stream.", locale: "en" }),
+});
+const clip = URL.createObjectURL(await response.blob());
+new Audio(clip).play();
+```
+
+### Choose POST or GET
+
+Use `POST` from a script.
+The route also answers a `GET` request with the same two fields as the query values `text` and `locale`.
+A good answer to the `GET` form carries a cache header, so the browser and any cache in front of the bot keep the clip.
+The header allows a browser to keep it for 7 days and a shared cache to keep it for 30 days.
+The `POST` form carries no such header.
+Do not point an audio element at the `GET` address.
+That request sends no `Origin` header, so the bot refuses it (see "Use it from another site").
 
 ## Pick one sentence at a time
 
 The limit of 500 characters is for a sentence, not for a page.
 Split the page into sentences and send one request for each sentence.
 Ask for the next sentence while the current one plays, so the voice never waits.
-Keep each clip until the reading stops, so a repeat is free.
 
-The dashboard does this in `dashboard/src/composables/useReadAloud.ts`.
-It reads headings, paragraphs and list items, and it skips code, menus and hidden text.
+Keep each clip in the memory of the page until the reading stops, so a repeat is free.
+The dashboard reads headings, paragraphs, list items and table cells.
+It skips code blocks, menus, headers, footers and hidden text.
 
 ## Which voice speaks
 
+The route does not use the voice setting of any channel.
+It always picks the voice itself, from the language of the request.
+
 | Language | Voice |
 | --- | --- |
-| English | The bot's default voice. |
-| Any other language | The first voice of that language in the Edge voice list. A voice from the main country of the language comes first, for example `nl-NL` for `nl`. |
-| A language with no voice | The bot's default voice. |
+| English (`en`, or a locale such as `en-US`) | The platform default voice. A channel follows it until the channel picks its own voice (see [Text to speech](/reference/audio/text-to-speech)). |
+| Any other language | The first Microsoft Edge voice of that language that the bot knows. A voice whose country code is the language code in capitals comes first, for example `nl-NL` for `nl`. Without one, the voices go in alphabetical order of their name, so the first country code wins. |
+| A language with no voice | The platform default voice. |
 
 The same page always sounds the same, because the choice does not change between requests.
 
@@ -57,18 +88,77 @@ The same page always sounds the same, because the choice does not change between
 | Answer | Meaning |
 | --- | --- |
 | 200 | Audio, in the `audio/mpeg` format. |
-| 400 | The text is empty or longer than 500 characters. |
-| 429 | The visitor sent too many requests. The limit is 120 requests each minute for each IP address. |
+| 400 | The `locale` is missing, empty, or not a language or locale code. Or the text is missing, empty or longer than 500 characters. |
+| 403 | The site that sent the request is not allowed. See the next section. |
+| 429 | The visitor sent too many requests. The limit is 40 requests each minute for each IP address. |
 | 503 | The voice cannot speak right now. The page should stop and tell the visitor. |
 
-The bot keeps the audio of every sentence it has already made, so the same text costs one synthesis.
-That cache lives in the memory of the bot, and a restart clears it.
+A 429 answer carries a `Retry-After` header with the number of seconds to wait.
+An empty clip counts as a failure and also answers 503.
+
+A 400, 403 or 503 that the route itself sends carries the header `Cache-Control: no-store`, so no cache keeps a refusal.
+One 400 is different.
+A request that leaves out `text` or `locale`, or sends one of them empty or with only spaces, gets the 400 of the web framework instead.
+This is the same for `GET` and `POST`.
+That answer carries no `no-store` header.
+
+The bot makes at most 2 clips at the same moment, for all visitors together.
+A request that finds both places busy waits up to 30 seconds for one, and then answers 503.
+
+The bot keeps the audio of up to 200 clips in memory, so the same text and voice cost one synthesis.
+The text to speech of the bot shares that memory.
+When it is full, the bot drops one clip to make room, and a restart clears all of them.
 
 ## Use it from another site
 
-A page on another site needs the bot to allow its address.
-Add the address to the `Cors:Origins` setting of the bot, written exactly as the browser shows it, with the scheme, the host and the port.
-Without the setting, the browser blocks the answer.
+The bot answers only a request whose `Origin` header names an allowed site.
+A browser sends that header when a script calls the route with `fetch` from another site, and on every `POST`.
+A plain audio element that points at the `GET` address sends none.
+A request with no `Origin` header gets a 403 answer, so that audio element, a plain script and a `curl` call are refused by default.
+
+The allowed sites are:
+
+- The public address of the bot, from the `App:BaseUrl` setting. This is the address that you set as `API_BASE_URL`.
+- The sites in the `ReadAloud:Origins` setting. Without that setting, these two are allowed: `https://docs.nomnomz.bot` and `https://docs-dev.nomnomz.bot`.
+
+Write each site exactly as the browser shows it, with the scheme, the host and the port.
+A site in `ReadAloud:Origins` replaces the two default sites, so list them again if you still want them.
+The route does not allow cookies or sign-in details from the other site, so the page gets the audio and nothing else.
+
+### Set the allowed sites
+
+Only the person who runs the bot can change these two settings.
+The bot reads them when it starts.
+
+1. Copy `.env.example` to `.env`, if you do not have one yet.
+   Open `.env` in the project folder of the bot and set `API_BASE_URL` to the public address, for example `https://bot.example.com`.
+   The default is `http://localhost:5080`.
+   The compose file passes it to the bot as `App:BaseUrl`.
+2. Open your compose file, `docker-compose.yml` or `docker-compose.lite.yml`.
+   Add one line for each site at the end of the bot's `environment` list, as the next two steps show.
+   The first site ends in `__0`, the next in `__1`, and so on.
+3. In `docker-compose.yml`, the list sits in the `x-api-service` block at the top of the file, not under `api-blue` or `api-green`.
+   Add the lines after the last item of that list, with four spaces of indent.
+   Do not add a second `environment` key to `api-blue` or `api-green`, because it would replace the whole shared list.
+4. In `docker-compose.lite.yml`, add the lines at the end of `environment` under the `api` service, with six spaces of indent.
+5. Start the bot again.
+
+This is the form for `docker-compose.yml`:
+
+```yaml
+    - ReadAloud__Origins__0=https://docs.nomnomz.bot
+    - ReadAloud__Origins__1=https://www.example.com
+```
+
+This is the form for `docker-compose.lite.yml`:
+
+```yaml
+      - ReadAloud__Origins__0=https://docs.nomnomz.bot
+      - ReadAloud__Origins__1=https://www.example.com
+```
+
+The shipped compose files have no `.env` variable for `ReadAloud:Origins`, so the lines go into the compose file itself.
+For the install steps, see [Install with Docker](/reference/self-hosting/install-with-docker).
 
 ## Related
 
