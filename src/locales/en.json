@@ -24,6 +24,7 @@
   "layout.feedback.no": "No",
   "footer.copyright": "© Copyright {year} NoMercy Labs. Free to use, change and share. No money from it.",
   "footer.followGitHub": "Follow us on GitHub",
+  "header.openBot": "Open the bot",
   "stub.translationPending": "Translation pending — showing English.",
   "stub.translationContribute": "Help translate",
   "stub.contentPending": "This page is being written. Check back soon.",

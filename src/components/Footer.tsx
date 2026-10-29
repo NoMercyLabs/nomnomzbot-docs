@@ -5,6 +5,7 @@
 // social row + copyright now.
 
 import { t } from '@/lib/i18n';
+import { botUrl } from '@/lib/siteLinks';
 
 const Link = ({ href, className, children, tabIndex, ...props }: { href: string; className?: string; children: React.ReactNode; tabIndex?: number; } & React.AnchorHTMLAttributes<HTMLAnchorElement>) => (
   <a href={href} className={className} tabIndex={tabIndex} {...props}>
@@ -47,7 +48,10 @@ function SmallPrint() {
       <p className="text-xs text-zinc-600 dark:text-zinc-400">
         {t('footer.copyright', { year: String(new Date().getFullYear()) })}
       </p>
-      <div className="flex gap-4">
+      <div className="flex items-center gap-4">
+        <Link href={botUrl} className="text-xs text-zinc-600 hover:text-zinc-900 dark:text-zinc-400 dark:hover:text-white">
+          {t('header.openBot')}
+        </Link>
         <SocialLink href="https://github.com/NoMercyLabs/nomnomzbot" icon={GitHubIcon}>
           {t('footer.followGitHub')}
         </SocialLink>

@@ -10,6 +10,8 @@ import {
   useIsInsideMobileNavigation,
   useMobileNavigationStore,
 } from './MobileNavigation';
+import { t } from '../lib/i18n';
+import { botUrl } from '../lib/siteLinks';
 import { A11yMenu } from './A11yMenu';
 import { PlatformMenu } from './PlatformMenu';
 import { MobileSearch, Search } from './Search';
@@ -220,6 +222,13 @@ export const Header = forwardRef<
         <div className="hidden md:block md:h-5 md:w-px md:bg-zinc-900/10 md:dark:bg-white/15" />
         <div className="flex items-center gap-4">
           <MobileSearch />
+          <a
+            href={botUrl}
+            data-open-bot
+            className="hidden text-sm/5 whitespace-nowrap text-zinc-600 transition hover:text-zinc-900 md:block dark:text-zinc-400 dark:hover:text-white"
+          >
+            {t('header.openBot')}
+          </a>
           <PlatformMenu />
           <A11yMenu />
         </div>
