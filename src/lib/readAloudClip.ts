@@ -38,7 +38,12 @@ export function createClipCache(base: string, fetchClip: ClipFetch): ClipCache {
         down = true;
         return null;
       }
-      return URL.createObjectURL(await response.blob());
+      const blob = await response.blob();
+      // An empty clip cannot be played (a browser's range request on it fails), and it is one sentence's
+      // problem, not the server's: this sentence is read by the browser voice and the next asks the bot again.
+      return blob.size > 0
+        ? URL.createObjectURL(blob)
+        : null;
     }
     catch {
       down = true;

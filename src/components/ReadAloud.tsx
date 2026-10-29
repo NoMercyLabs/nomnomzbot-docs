@@ -43,21 +43,46 @@ const READ_ALOUD_URL
 const clips = createClipCache(READ_ALOUD_URL, url => fetch(url));
 let player: HTMLAudioElement | null = null;
 
+// Audio elements made ahead of their turn, by clip address: a sentence is fetched and decoded while the one
+// before it plays, so it starts the moment it is wanted.
+const warm = new Map<string, HTMLAudioElement>();
+
+// Lets go of an element's clip. An element that is only paused keeps loading its blob, and a blob revoked
+// under it fails with ERR_REQUEST_RANGE_NOT_SATISFIABLE.
+function release(audio: HTMLAudioElement): void {
+  audio.onended = null;
+  audio.onerror = null;
+  audio.pause();
+  audio.removeAttribute('src');
+  audio.load();
+}
+
+function releaseWarm(): void {
+  warm.forEach(release);
+  warm.clear();
+}
+
 function silence(): void {
   if (player) {
-    player.onended = null;
-    player.onerror = null;
-    player.pause();
+    release(player);
     player = null;
   }
   window.speechSynthesis.cancel();
 }
 
-// The first sentence after the current one, so its clip can load while this one plays.
-function nextText(): string | undefined {
-  if (sentenceIndex + 1 < sentences.length) return sentences[sentenceIndex + 1];
+// How many sentences are requested ahead of the one being read. One was not enough at 1.25x and 1.5x, where a
+// sentence ends sooner than the next clip arrives.
+const LOOKAHEAD = 3;
+
+// The sentences after the current one, so their clips can load while this one plays.
+function upcomingTexts(): string[] {
+  const texts = sentences.slice(sentenceIndex + 1, sentenceIndex + 1 + LOOKAHEAD);
   const block = blocks[blockIndex + 1];
-  return block ? split(textOf(block))[0] : undefined;
+
+  if (texts.length < LOOKAHEAD && block) {
+    texts.push(...split(textOf(block)).slice(0, LOOKAHEAD - texts.length));
+  }
+  return texts;
 }
 
 export function readAloudSupported(): boolean {
@@ -194,8 +219,20 @@ export const useReadAloud = create<ReadAloudState>()((set, get) => {
     window.speechSynthesis.speak(utterance);
   }
 
+  // Fetches a sentence and builds its audio element now, so it is ready when its turn comes.
+  function prepare(text: string, lang: string): void {
+    void clips.clip(text, lang).then((clip) => {
+      if (!clip || warm.has(clip)) return;
+      const audio = new Audio();
+      audio.preload = 'auto';
+      audio.src = clip;
+      warm.set(clip, audio);
+    });
+  }
+
   function playClip(clip: string, text: string, lang: string, id: number): void {
-    const audio = new Audio(clip);
+    const audio = warm.get(clip) ?? new Audio(clip);
+    warm.delete(clip);
     audio.playbackRate = get().rate;
     audio.onended = () => finished(id);
     audio.onerror = () => {
@@ -219,9 +256,10 @@ export const useReadAloud = create<ReadAloudState>()((set, get) => {
     mark(block);
     const text = sentences[sentenceIndex] ?? '';
     const lang = document.documentElement.lang || 'en';
-    const upcoming = nextText();
-    if (upcoming) void clips.clip(upcoming, lang);
-    void clips.clip(text, lang).then((clip) => {
+    // The current sentence is asked for first; the ones after it follow, in order.
+    const current = clips.clip(text, lang);
+    upcomingTexts().forEach(upcoming => prepare(upcoming, lang));
+    void current.then((clip) => {
       if (id !== runId) return;
       if (clip) playClip(clip, text, lang, id);
       else speakWithBrowser(text, lang, id);
@@ -243,6 +281,7 @@ export const useReadAloud = create<ReadAloudState>()((set, get) => {
       if (!readAloudSupported()) return;
       blocks = collect();
       if (blocks.length === 0) return;
+      releaseWarm();
       clips.reset();
       // Start where the reader is looking, not at the top of the page.
       const first = blocks.findIndex(block => block.getBoundingClientRect().bottom > 96);
@@ -267,6 +306,7 @@ export const useReadAloud = create<ReadAloudState>()((set, get) => {
     stop: () => {
       runId += 1;
       if (readAloudSupported()) silence();
+      releaseWarm();
       clips.reset();
       mark(undefined);
       blocks = [];
@@ -291,8 +331,9 @@ export const useReadAloud = create<ReadAloudState>()((set, get) => {
         /* the new rate still applies to this visit */
       }
       set({ rate });
-      // The rate is fixed per utterance: restart the sentence at the new one.
-      if (get().status === 'playing') speak();
+      // The playing clip changes speed where it is, and the next one reads the rate when it starts. A sentence
+      // the browser voice is speaking keeps its speed until the next sentence: that voice fixes it per utterance.
+      if (player) player.playbackRate = rate;
     },
   };
 });

@@ -55,6 +55,16 @@ test('a refused request gives no clip, and the server is skipped for the rest of
   assert.equal(calls, 1);
 });
 
+// Stoney 2026-10-29: the console filled with ERR_REQUEST_RANGE_NOT_SATISFIABLE on blob clips. A browser asks a
+// blob for a byte range, and an empty blob has none to give.
+test('an empty answer is no clip, and one bad sentence does not silence the server for the rest', async () => {
+  const cache = createClipCache(BASE, async (url) => (url.includes('Empty') ? answer(200, []) : answer(200)));
+
+  assert.equal(await cache.clip('Empty one.', 'en'), null);
+  assert.equal(cache.serverDown(), false);
+  assert.match(await cache.clip('Fine one.', 'en'), /^blob:/);
+});
+
 test('a network error is the same as a refusal', async () => {
   const cache = createClipCache(BASE, async () => {
     throw new TypeError('Failed to fetch');
