@@ -1,0 +1,4 @@
+# Every checkout writes LF, the same bytes the editors and agents write.
+# The Atlas acceptance fingerprint hashes raw file bytes, so a CRLF checkout
+# makes every accepted page stale without one word changing.
+* text=auto eol=lf
