@@ -1,7 +1,27 @@
+# Current independent reader review
+
+Verdict: PASS
+Reviewed: src/content/reference/en/audio/voice-triggers.mdx
+Reviewed-SHA: a69b74e672cae24beb5defc1dfec25073de7efd1f7578b0dc8e456cd50d2727c
+Reviewed-SHA256: a69b74e672cae24beb5defc1dfec25073de7efd1f7578b0dc8e456cd50d2727c
+Reviewed-Date: 2026-11-05
+Reviewer: independent media-section reviewer
+Product: 54da8b6318de63b5205a0ff8db35e0b9045dd959 plus preserved current music UI edits
+
+The listener/count/sticker steps are separated so readers can verify recognition before presentation. The substring example and cooldown explain unexpected counts; transcript storage and the secret listener link are explicit. The missing supplied-alert settings path is documented without inventing a workaround UI.
+
+The full page was read with adjacent navigation and related links. The owner's natural explanatory style governs: no Atlas sentence caps, pilot imitation or rigid article template was imposed. No substantive reader finding remains at this hash. Combined build, rendered-output and link/frontmatter checks belong to the lead's separate validation.
+
+Report: docs-work/overhaul/review-automation-media-integrations.md.
+
+## Historical evidence
+
+Older hashes and verdicts below are retained for history and are not the current review.
+
 # Reader review: src/content/reference/en/audio/voice-triggers.mdx
 Verdict: PASS
 Reviewed: src/content/reference/en/audio/voice-triggers.mdx
-Reviewed-SHA: 1001f86c0b45231a
+Reviewed-SHA: c319979c7d30b4bf
 
 Round 2. Assumed page: `text-to-speech` (`src/content/reference/en/audio/text-to-speech.mdx`). This page links to it at L11 and does not re-teach it. Also read: `src/content/reference/en/overlays/widgets-and-alerts.mdx` (for the **Alerts** kind, L31-44) and `set-up-overlays.mdx` (for the **Settings** panel and **Save settings**). Read as a file; no includes or snippet directives.
 

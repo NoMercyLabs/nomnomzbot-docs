@@ -1,3 +1,44 @@
+# Current targeted factcheck review
+
+Verdict: PARTIAL
+Reviewed: src/content/reference/en/commands/pipelines.mdx
+Reviewed-SHA: 7aa395026a50fd06b6746ff8093b207514c4637df686933eb440f4c3f574eadc
+Reviewed-SHA256: 7aa395026a50fd06b6746ff8093b207514c4637df686933eb440f4c3f574eadc
+Reviewed-Date: 2026-11-06
+Reviewer: final-learning editing author; self-review, not independent
+Product: 2dfefbb0c393f439954d79b32ac11511678d7f44
+
+The full article was read for editorial clarity. Source verification is limited to the claims below and the focused checks in docs-work/ecosystem-validation/final-learning.md. This is not an exhaustive factual PASS, independent approval, rendered-site review or live application test.
+
+Capacity: server/src/NomNomzBot.Infrastructure/Platform/Pipeline/PipelineEngine.cs:195-218 uses the injected limit; PipelineConcurrencyLimitProvider.cs:51-85 resolves it; server/src/NomNomzBot.Infrastructure/Platform/ScalingDefaults.cs:24-50 gives SQLite=3, PostgreSQL=processor count clamped to 3..16 and override precedence; DependencyInjection.cs:1129 wires the provider. The change replaces only the fixed-five promise.
+
+## Preserved historical reviews
+
+The earlier hashes, verdicts and claims below are retained as historical evidence; they do not approve this revision.
+
+# Current independent fact check
+
+Verdict: PASS
+Reviewed: src/content/reference/en/commands/pipelines.mdx
+Reviewed-SHA: affa7c03d2a260208903bf54b8f27b7a54cfbfd0b899bf0bcce0e86666377681
+Reviewed-SHA256: affa7c03d2a260208903bf54b8f27b7a54cfbfd0b899bf0bcce0e86666377681
+Reviewed-Date: 2026-11-05
+Reviewer: independent section reviewer
+Product: 54da8b6318de63b5205a0ff8db35e0b9045dd959 (initial source tracing b12f4f69638553c03ed64c1518c90d7bcccd6907)
+
+The full article was read in navigation order; consequential behavior and reference details were checked against current source. All reported documentation findings affecting this page were repaired and re-reviewed. This is a source review, not a live-channel test.
+
+- Dry versus live action sets, draft validation and one-live-run gate: server/src/NomNomzBot.Infrastructure/Platform/Pipeline/PipelineTestRunService.cs:66-191.
+- Current mode selector, confirmation and input: dashboard/src/views/dashboard/pipelines/WorkbenchView.vue:340-413,586-600; dashboard/src/views/dashboard/pipelines/i18n/en.json:180-218.
+- Limits and run retention: server/src/NomNomzBot.Infrastructure/Platform/Pipeline/PipelineEngine.cs:44-70,2556-2605.
+- Re-review resolved the caller/input finding: the text now states that the caller is the default and explicit user/user.id input can override it, matching server/src/NomNomzBot.Infrastructure/Platform/Pipeline/TestRunTrigger.cs:36-48.
+
+Report: docs-work/overhaul/review-learning-commands-helpers.md.
+
+## Historical evidence
+
+The material below is retained as historical evidence. Its older hashes, verdicts and values do not constitute the current review.
+
 # Fact check: src/content/reference/en/commands/pipelines.mdx
 Verdict: PASS
 Reviewed: src/content/reference/en/commands/pipelines.mdx

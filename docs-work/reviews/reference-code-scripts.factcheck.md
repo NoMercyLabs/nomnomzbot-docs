@@ -1,5 +1,45 @@
-# Fact check: src/content/reference/en/code/scripts.mdx
+# Current targeted source review — 2026-11-06
+
+Verdict: TARGETED AUTHOR SELF-REVIEW; no independent or exhaustive PASS.
+Reviewed: src/content/reference/en/code/scripts.mdx
+Reviewed-SHA256: b1b4db506522b1e81649f6f04097962d4d3c13e8d9f8629f689227504f499fcd
+Reviewer: editing agent (author self-review)
+
+Full editorial read; retained prerequisites, authoring/test/live distinction and expected outcomes. Removed the blanket Draft sentence/title. Focused source checks: ScriptRunner.cs:43-205 lifecycle; grant/storage/widget contracts checked on their owning SDK pages. UI labels and all authoring branches were not exhaustively reverified.
+
+Coverage details and final static-check results: [final-developer.md](../ecosystem-validation/final-developer.md). Full reading is distinct from focused source verification. No live application/provider test or whole-project build in this batch.
+
+## Historical records below — verdicts and hashes preserved
+
+# Independent source review: /reference/code/scripts
 Verdict: PASS
+Reviewed: src/content/reference/en/code/scripts.mdx
+Reviewed-SHA: 2b31c799150f9bdc
+Reviewed-SHA256: 2b31c799150f9bdc703b1d9547e29f1597e2270ab88ec49f14b73f86b101b956
+Reviewed-Date: 2026-11-05
+Reviewer: independent reviewer, separate from article author
+Product-Revision: 54da8b6318de63b5205a0ff8db35e0b9045dd959
+
+The complete current article was read in navigation order and checked against current product source. Historical PASS entries below are leads, not approval of this revision. Atlas voice/template gates do not govern this review.
+
+## Current evidence and result
+
+No substantive finding. Off-by-default, save/compile publication, valid-version restore and protected live version, test capture/live reads checked.
+
+Source files opened in this review: CustomCode/CodeScriptService.cs:188-212,265-310,352-449; ScriptTestRunService.cs:53-155; CaptureScriptHostBridge.cs:37-92; dashboard/scripts/components/useScriptEditor.ts:51-159; ScriptDetail.vue:173-193,218-345.
+
+Unqualified paths beginning Identity, CustomCode, Billing, EventStore, Engagement, Rewards, Widgets or Platform are under server/src/NomNomzBot.Infrastructure; Api and Domain identify their corresponding server projects. Dashboard shorthand is under dashboard/src/views/dashboard.
+
+Verification is read-only source review. No bot/API startup, live account authorization, channel writes, C# host/Jint execution, Docker install or restore was performed. Documentation build/render QA belongs to the combined parent pass. The SDK reference and worked-example checks additionally ran the existing read-only nnz-code-doc-check.mjs with production JavaScript bootstrap and substituted host I/O.
+
+## Historical review (superseded)
+
+# Fact check: src/content/reference/en/code/scripts.mdx
+Historical verdict: PENDING
+
+2026-11-04 overhaul: the article changed, so the previous PASS and hash below are historical evidence, not approval of the current revision.
+Fresh writer source checks and article inventory are recorded under C1/C2 in `docs-work/overhaul/settings-hosting-code.md`.
+Independent review of the changed text is pending.
 Reviewed: C:\Projects\NoMercyLabs\nomnomzbot-docs\src\content\reference\en\code\scripts.mdx
 Reviewed-SHA: 69cba5dd02898fc2
 

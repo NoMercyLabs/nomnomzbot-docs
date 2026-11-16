@@ -1,5 +1,37 @@
-# Fact check: src/content/reference/en/moderation/bans-and-blocked-terms.mdx
+# Independent source verification: /reference/moderation/bans-and-blocked-terms
 Verdict: PASS
+Reviewed: src/content/reference/en/moderation/bans-and-blocked-terms.mdx
+Reviewed-SHA: c1b696032f878c16ae0687aa13ce7505dead4524609f75b9204689abb1f1e10b
+
+## Independent overhaul review, 2026-11-05
+
+BannedView.vue:27-105; BlockedTermsView.vue:30-155; ActionDefinitionSeeder.cs:241-288: Twitch lists, trim, unconfirmed unban/unblock, retry and default roles.
+
+Reviewed independently of the article author, in actual navigation order. Current product source 54da8b631 and relevant changes since b12f4f696 were read without starting the bot, executing platform actions or changing channel data. This verdict is source verification, not proof of live platform delivery. See [review-moderation-economy-community.md](../overhaul/review-moderation-economy-community.md) for the review scope and findings.
+
+## Prior review history
+
+The earlier text below is retained as history; it does not independently approve a later article hash.
+
+Author source audit: 2026-11-04. Independent review of the revised article is pending; the historical PASS below does not approve this text.
+Product source: C:/Projects/NoMercyLabs/nomnomzbot at b12f4f696, inspected without starting the bot or changing data.
+
+Teaches the choice between a person-level ban and a phrase-level Twitch control; connects the actual ban entry points and custom filters.
+
+| Revised claim or retained core behavior | Current source opened |
+| --- | --- |
+| Lists come from Twitch; UI add/unblock/unban controls and retry | dashboard/src/views/dashboard/settings/banned/BannedView.vue; dashboard/src/views/dashboard/settings/blocked-terms/BlockedTermsView.vue; their i18n/en.json files |
+| Default role permissions | server/src/NomNomzBot.Infrastructure/Content/Identity/ActionDefinitionSeeder.cs:241-288 |
+| Profile and chat ban entry points | dashboard/src/components/layout/profile/ProfileView.vue:140-240; dashboard/src/views/dashboard/chat/components/ChatLine.vue |
+
+The practical scenarios are recommended uses of these verified controls, not promises of a new feature. Unchanged reference details were compared with the current view, labels and relevant implementation. Runtime platform calls were not performed.
+
+## Historical evidence
+
+The prior review is retained for its detailed claim inventory. Its verdict and file hashes refer to the earlier article; where the new evidence differs, the new evidence takes precedence.
+
+# Fact check: src/content/reference/en/moderation/bans-and-blocked-terms.mdx
+Historical verdict: PASS
 Reviewed: src/content/reference/en/moderation/bans-and-blocked-terms.mdx
 Reviewed-SHA: f86bf831a7aad311
 

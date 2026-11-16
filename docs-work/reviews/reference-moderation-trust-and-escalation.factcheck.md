@@ -1,5 +1,41 @@
-# Fact check: src/content/reference/en/moderation/trust-and-escalation.mdx
+# Independent source verification: /reference/moderation/trust-and-escalation
 Verdict: PASS
+Reviewed: src/content/reference/en/moderation/trust-and-escalation.mdx
+Reviewed-SHA: c2934d90f46cca6b7e9fdd590049c40c9d6442ead4c1f2b1f441ad9ec38b5ef4
+
+## Independent overhaul review, 2026-11-05
+
+ModerationProjectionService.cs:390-479; TrustScoreCalculator.cs:35-124; ModerationEscalationService.cs:40-180,200-330; ActingModeratorResolverService.cs:73-105; ViolationEscalationService.cs:50-61: local tenure, unused inputs, multiplier, penalties, decay and stored offense window. Repaired F1 now correctly explains onboarded owner, otherwise active signed-in moderator, failure with neither.
+
+Reviewed independently of the article author, in actual navigation order. Current product source 54da8b631 and relevant changes since b12f4f696 were read without starting the bot, executing platform actions or changing channel data. This verdict is source verification, not proof of live platform delivery. See [review-moderation-economy-community.md](../overhaul/review-moderation-economy-community.md) for the review scope and findings.
+
+## Prior review history
+
+The earlier text below is retained as history; it does not independently approve a later article hash.
+
+Author source audit: 2026-11-04. Independent review of the revised article is pending; the historical PASS below does not approve this text.
+Product source: C:/Projects/NoMercyLabs/nomnomzbot at b12f4f696, inspected without starting the bot or changing data.
+
+Explains trust, heat and offense counting as distinct systems, names the local-tenure limitation and gives a warning-timeout-ban example.
+
+| Revised claim or retained core behavior | Current source opened |
+| --- | --- |
+| Actual moderation inputs and heat calculation | server/src/NomNomzBot.Infrastructure/Moderation/ModerationProjectionService.cs:390-479 |
+| Escalating a viewer report does not record a confirmed-report heat event | server/src/NomNomzBot.Infrastructure/Moderation/ViewerReportService.cs:180-224; ModerationProjectionService.cs:55-61 |
+| Calculator weights, boosts, follow penalty and caps | server/src/NomNomzBot.Domain/Trust/TrustScoreCalculator.cs:35-124 |
+| Heat default flags versus opt-in timeout | server/src/NomNomzBot.Infrastructure/Moderation/EventHandlers/HeatThresholdAutoTimeoutHandler.cs:90-155 |
+| Escalation policy storage, validation and window behavior | server/src/NomNomzBot.Infrastructure/Moderation/ModerationEscalationService.cs:40-180,200-330 |
+| Qualifying automatic violations replace original punishment | server/src/NomNomzBot.Infrastructure/Moderation/ViolationEscalationService.cs:40-116 |
+| UI names and allowed bounds | dashboard/src/views/dashboard/settings/trust-policy/TrustPolicyView.vue; dashboard/src/views/dashboard/settings/escalation/EscalationView.vue; their i18n/en.json |
+
+The practical scenarios are recommended uses of these verified controls, not promises of a new feature. Unchanged reference details were compared with the current view, labels and relevant implementation. Runtime platform calls were not performed.
+
+## Historical evidence
+
+The prior review is retained for its detailed claim inventory. Its verdict and file hashes refer to the earlier article; where the new evidence differs, the new evidence takes precedence.
+
+# Fact check: src/content/reference/en/moderation/trust-and-escalation.mdx
+Historical verdict: PASS
 Reviewed: src/content/reference/en/moderation/trust-and-escalation.mdx
 Reviewed-SHA: eb4561e6473f2a95
 

@@ -1,3 +1,22 @@
+# Current independent reader review
+
+Verdict: PASS
+Reviewed: src/content/reference/en/getting-started/sign-in.mdx
+Reviewed-SHA: 5589cf741348040cefa7add750a05898bc41250a6746b549bce9fbb902a6b11f
+Reviewed-SHA256: 5589cf741348040cefa7add750a05898bc41250a6746b549bce9fbb902a6b11f
+Reviewed-Date: 2026-11-05
+Reviewer: independent section reviewer
+
+The reader learns why sign-in asks for access, which role button matches their task, and what to expect next. Provider limitations and code sign-in remain available without interrupting the normal path.
+
+The full page was read with the preceding/following navigation context and related links. This review applies the owner's explanatory, progressive-disclosure guidance; it does not impose Atlas sentence caps, pilot mimicry or fixed article headings. No substantive reader finding remains at this hash. Build/render/link checks are recorded separately by the lead reviewer.
+
+Report: docs-work/overhaul/review-learning-commands-helpers.md.
+
+## Historical evidence
+
+The material below is retained as historical evidence; its older verdict is not the current review.
+
 # Reader review: /reference/getting-started/sign-in
 Verdict: PASS
 Reviewed: C:\Projects\NoMercyLabs\nomnomzbot-docs\src\content\reference\en\getting-started\sign-in.mdx

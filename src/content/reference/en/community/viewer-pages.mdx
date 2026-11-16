@@ -3,14 +3,12 @@ title: Viewer pages
 description: See what a viewer finds on their own channel page and account page, and which viewer pages are not built yet.
 ---
 
-A viewer has their own pages in the dashboard, apart from the pages the streamer manages.
-They show the viewer's own data in one channel.
+Viewers can sign in to see their own activity, check their song requests and manage their personal choices without opening a streamer's management tools.
+Start from **My channels**, choose a community, and use **My channel** for your stats or **Me** for account settings.
+The chat pages show the shared conversation, while the account and activity panels show information about you.
 
-The two chat pages are the exceptions: they show a channel's chat, with the messages of other people.
-These are the **Chat** page and the chat of a channel under **More on Twitch**.
-
-Anyone who has signed in may open them.
-[Sign in](/reference/getting-started/sign-in) explains how to sign in.
+Anyone who has [signed in](/reference/getting-started/sign-in) can use the viewer pages.
+You do not need to be a moderator or run a bot yourself.
 
 ## Find a channel
 
@@ -20,34 +18,38 @@ It lists the channels where the viewer was active, with **Live now** or **Last s
 1. Choose **Open** beside a channel.
    The channel page **My channel** opens for that channel.
 2. To open a channel that is not on the list, use **Find a channel** at the top of the page.
+   Inside a channel, the same button shows that channel's name.
    Type a channel name and pick a row.
-   A channel under **Visit a channel** opens that channel's viewer pages.
+   The list starts with **Recent channels**, the chats you opened before.
+   A channel under **Visit a channel** opens at its **Chat** page, inside that channel's viewer pages.
 
 A channel under **More on Twitch** is not served by this bot.
 It opens only its chat.
 That chat shows the live lines and lets you send a message, with no history and no moderation.
-
-The first live channel has the filled **Open** button.
-The other channels have an outline button.
+You chat as yourself.
+If Twitch has not given the bot permission to read or send for you, the page asks for it.
+Choose **Allow chat reading**, or grant the send permission again.
 
 A viewer who manages channels also sees **Channels you manage**.
 Each name there opens the management dashboard of that channel.
+The header also has a **Dashboard** button that goes back to the management dashboard.
 
 When the list is empty, the page shows "You have not watched a channel here yet".
 
 ## The seven viewer pages
 
 A row of links under the header holds the seven pages of one channel.
-On a phone, the links sit in a bar along the bottom edge, with one-word labels.
+On a phone, a bar along the bottom edge holds four pages with one-word labels (**Home**, **Chat**, **Music** and **Me**) and a **More** button.
+**More** opens a sheet with the other three pages: **Leaderboards**, **Points and store** and **Games**.
 
-| Page | Phone label | What it shows |
+| Page | On a phone | What it shows |
 | --- | --- | --- |
 | **My channel** | **Home** | Your stats in the channel and your songs in the queue. |
 | **Chat** | **Chat** | The channel's chat, as a viewer sees it. |
 | **Now playing** | **Music** | "Coming soon". |
-| **Leaderboards** | **Ranks** | "Coming soon". |
-| **Points and store** | **Store** | "Coming soon". |
-| **Games** | **Games** | "Coming soon". |
+| **Leaderboards** | In **More** | "Coming soon". |
+| **Points and store** | In **More** | "Coming soon". |
+| **Games** | In **More** | "Coming soon". |
 | **Me** | **Me** | Your account in the channel. |
 
 Four of the seven pages open a **Coming soon** page.
@@ -91,6 +93,9 @@ A badge shows your standing in that channel.
 
 The page has four panels.
 
+Pronouns and linked sign-ins belong to your account, while your standing and chosen voice are specific to the channel you opened.
+For example, choosing a voice here controls how your own words are read in this community; it does not replace the voice the streamer uses for the bot's announcements.
+
 ### Pronouns
 
 **Pronouns** are shown beside your name wherever you chat.
@@ -113,21 +118,30 @@ The account you first signed in with carries **Main sign-in** and has no **Unlin
 2. Choose **Unlink** in the dialog.
    The account is removed from the list.
 
-You can link it again later.
+This panel currently provides **Unlink**, but no button to connect an additional account.
+A reconnect flow is not available from this panel.
 
 ### Your voice
 
 **Your voice** is used only when the bot reads your own messages aloud in this channel.
-Until you choose one, the panel shows "The channel voice is used for you."
+When you have no saved voice, the panel shows "The channel voice is used for you."
+The first time your words are read aloud, the bot picks a random English or multilingual voice from the channel's provider and saves it for you, preferring one that fits your pronouns.
+If no such voice exists, the channel voice speaks.
+Later messages use that saved voice, as [Text to speech](/reference/audio/text-to-speech#which-voice-speaks) explains.
 
 1. Type in **Search voices** to filter the list.
 2. Choose **Use this voice** beside a voice.
    The voice now carries the **Your voice** badge.
 
-Choose **Use the channel voice** to go back to the channel voice.
+Choose **Use the channel voice** to clear your saved voice.
+After that, your next spoken message can get a new random voice.
+You can also change your voice in chat with `!voice`, as [Built-in commands](/reference/commands/built-in-commands) shows.
 
-The streamer decides if viewers may choose a voice.
-When they may not, the panel shows "The streamer has not turned on voice choice for viewers, or you cannot browse voices here."
+The voice list needs permission to browse voices.
+By default only moderators have it.
+The streamer can open it to VIPs.
+The streamer can also turn off voice choice for viewers in the text to speech rules.
+When you cannot browse or choose, the panel shows "The streamer has not turned on voice choice for viewers, or you cannot browse voices here."
 
 ### My data
 

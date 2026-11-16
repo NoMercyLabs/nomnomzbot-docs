@@ -1,5 +1,26 @@
-# Reader review: C:\Projects\NoMercyLabs\nomnomzbot-docs\src\content\reference\en\settings\event-journal.mdx
+# Independent reader review: /reference/settings/event-journal
 Verdict: PASS
+Reviewed: src/content/reference/en/settings/event-journal.mdx
+Reviewed-SHA: 0a6f78e63a2dac91
+Reviewed-SHA256: 0a6f78e63a2dac91d43337b17e5dfd1e687dee9aef7d8456674290e093f5e1c4
+Reviewed-Date: 2026-11-05
+Reviewer: independent reviewer, separate from article author
+Product-Revision: 54da8b6318de63b5205a0ff8db35e0b9045dd959
+
+The complete current article was read independently of its author, in the established settings, self-hosting and Code and SDK navigation order. The user's natural explainer/progressive-disclosure requirements take precedence over historical pilot mimicry, sentence caps and repeated page templates.
+
+## Learning and lookup result
+
+Investigation/migration purpose precedes controls, and journal export is clearly separated from a complete installation backup. Replay versus rebuild now gives the reader an actionable explanation of the silent implementation and misleading UI help.
+
+No outstanding substantive reader finding.
+
+Related routes were checked as contextual continuations rather than prerequisites for ordinary bot use. Draft labels remain appropriate for code material. This is a text/structure review, not a claim of rendered browser QA.
+
+## Historical review (superseded)
+
+# Reader review: C:\Projects\NoMercyLabs\nomnomzbot-docs\src\content\reference\en\settings\event-journal.mdx
+Historical verdict: PASS
 Reviewed: C:\Projects\NoMercyLabs\nomnomzbot-docs\src\content\reference\en\settings\event-journal.mdx
 Reviewed-SHA: 094f8147fe3aece0
 

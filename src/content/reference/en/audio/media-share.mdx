@@ -3,20 +3,39 @@ title: Media share
 description: Let viewers share Twitch clips and YouTube videos to the stream, and approve, order, skip and play what they share.
 ---
 
-You run media share on the **Media share** page in the sidebar.
-Viewers share a Twitch clip or a YouTube video, and the bot puts it in a queue.
-You approve each item and set the play order.
+Media share lets viewers contribute Twitch clips and YouTube videos for you to watch together on stream.
+The **Media share** page keeps those submissions in a queue, where a moderator can approve them and decide what plays next.
+Approval starts enabled for ordinary viewer submissions. A moderator or higher bot role using `!media`, or anyone allowed to use `!play`, submits without that review step.
 
-The media share overlay plays the items on stream.
+Playback happens in the **Media share** browser source in OBS.
+Add it from **Required overlays** on the **OBS** page, using the [browser-source setup](/reference/overlays/obs-browser-source), before opening submissions.
+The dashboard controls the player, but the source is what your viewers see and hear.
 
-The overlay plays only when its browser source is loaded in OBS.
-The setup is on [OBS browser source](/reference/overlays/obs-browser-source).
+## Try the whole flow with one video
+
+After turning media share on below, leave **Cost per item (points)** at 0 and keep approval enabled for this first check.
+Ask a viewer below moderator to send `!media` followed by a Twitch clip or YouTube video link in Twitch chat.
+Their submission appears under **Waiting for approval**. Your own `!media` submission is approved automatically, so it does not test that review step.
+
+Choose **Approve** to move it into the play order. If nothing is playing and the enabled Media share browser source is connected, playback starts automatically.
+Otherwise, open the source and use **Play** in **On stream** to start the first approved item.
+Check the OBS preview and audio mixer, then try **Pause** and **Stop playback** so you know where the controls are before viewers submit more items.
+Once that works, adjust the duration, queue and per-viewer limits for your stream.
 
 ## Who can use this page
 
-By default a moderator and every role above it may open the page, work the queue, change the settings and use the player.
-The broadcaster can change who may do each of these on [Permissions](/reference/settings/permissions).
+Four permissions control this page. All four default to Moderator.
+
+| Permission | What it covers |
+| --- | --- |
+| **See shared media** | Opens the page. |
+| **Approve or skip shared media** | **Approve**, **Reject**, **Skip**, **Remove**, **Move up** and **Move down**. |
+| **Change the media share settings** | The settings panel. |
+| **Create and change pipelines** | The **On stream** player, and the **Play now** and **Replay** buttons. |
+
+The broadcaster can change who holds each of these on [Permissions](/reference/settings/permissions).
 Someone who may open the page but not change the settings sees the settings, but cannot change them.
+**Play now** and **Replay** also show for someone who has **Approve or skip shared media**, but the bot refuses them unless they also have **Create and change pipelines**.
 
 ## Turn media share on
 
@@ -34,7 +53,7 @@ Media share is off until you turn it on.
 | Setting | What it does | Default |
 | --- | --- | --- |
 | **Accept media from viewers** | Turns media share on. When it is off, the bot refuses every shared item. | Off |
-| **Approve each item before it plays** | A shared item waits for a moderator before it can play. When it is off, a shared item goes straight to the play order. | On |
+| **Approve each item before it plays** | Ordinary submissions wait for review. Moderator-or-higher `!media` submissions and `!play` bypass review. When off, all accepted submissions enter the play order directly. | On |
 | **Allow Twitch clips** | Accepts Twitch clip links. | On |
 | **Allow YouTube videos** | Accepts YouTube video links, including Shorts. | On |
 | **Twitch subscribers only** | Only Twitch subscribers can share media. Everyone else is turned away. | Off |
@@ -44,22 +63,38 @@ Media share is off until you turn it on.
 | **Wait between items per viewer (seconds)** | How long one viewer waits before they can share the next item. 0 means no wait. | 60 seconds |
 
 The cost is paid in the channel currency, explained on [Currency and balances](/reference/economy/currency-and-balances).
-When an item the viewer paid for is rejected, removed or skipped, the bot gives the viewer a refund.
+When a charged item is rejected, removed or skipped, the bot attempts to refund the viewer.
 
-The refund is the channel's **Cost per item** at the moment of the refund, not the amount the viewer paid.
+The refund is the channel's **Cost per item** at the moment of the refund, not necessarily the amount the viewer paid.
 When **Cost per item** is 0 by then, the refund is 0.
+An unsuccessful refund does not stop the queue action, and the bot clears the item's refund marker even if the currency service refuses the credit.
+Later queue actions do not automatically retry it. Check the viewer's balance when a refund fails.
 
 ## How viewers share media
 
-A viewer shares an item in two ways.
+A viewer can explicitly submit a link with the command below, or through a reward or pipeline you prepare.
+Use Twitch chat for the command workflows described here. The current `!media` and `!play` requester lookup still assumes a Twitch identity when a command arrives from Kick or YouTube, so requester attribution, subscriber eligibility and currency charging are not reliable on those chats.
 
 | Way | How it works |
 | --- | --- |
 | Chat command | The viewer types `!media` and the link, for example `!media https://clips.twitch.tv/...`. |
+| Moderator command | Type `!play` and a link to submit it approved. In Twitch chat, you can also reply `!play` to a message containing the link. |
 | Channel-point reward or other pipeline | A pipeline with a **Submit media** step shares the link for the viewer who started it. |
+
+The bot also notices the first Twitch clip link in an ordinary chat message and submits it through the same rules.
+That background submission is silent: a refused clip produces no chat reply.
+YouTube links need an explicit submission; they are not collected by this passive scan.
+The passive scan and **Submit media** pipeline step follow the approval setting even when the person submitting is a moderator; the command bypass described above is specific to `!media` and `!play`.
+
+Keep this behavior in mind when enabling paid submissions: a plain Twitch clip link can use the same **Cost per item** as `!media`.
 
 The `!media` command is a built-in command, open to everyone by default.
 You change its replies and who may use it on [Built-in commands](/reference/commands/built-in-commands).
+
+`!play` requires **Moderator** by default. On Twitch it credits the person running the command, including when they reply to another viewer's message.
+It submits an item to the approved play order; it does not interrupt the current item. Use **Play now** in the dashboard when you want to interrupt it.
+Both commands still check whether media share is enabled, which sources and viewers are allowed, the duration, per-viewer wait, queue length and cost.
+If you lower `!play`'s required role, everyone you admit can submit without review.
 
 To share from a [channel-point reward](/reference/automation/rewards), add a **Submit media** step to the reward's [pipeline](/reference/commands/pipelines).
 Put the link in its URL field.
@@ -72,8 +107,8 @@ The bot replies in chat to every `!media` message.
 | Result | What the bot says |
 | --- | --- |
 | No link after `!media` | How to use the command. |
-| Approval is on | The item is shared and a moderator reviews it. |
-| Approval is off | The item is added to the queue. |
+| Approval is on and the submission needs review | The item is shared and a moderator reviews it. |
+| Approval is off, or this command submission bypasses review | The item is added to the play order and may start automatically. |
 | Media share is off | Media share is not on in this channel. |
 | The link is not an allowed Twitch clip or YouTube video | Only the allowed clips and videos can be queued. |
 | The clip or video does not exist | It could not find it. |
@@ -96,7 +131,7 @@ The card heading shows how many items still wait, are up next or play.
 | --- | --- | --- |
 | **Waiting for approval** | Items a moderator has not decided on yet. | **Approve**, **Reject** |
 | **Up next** | Approved items, in play order. | **Play now**, **Skip**, **Remove**, and **Move up** or **Move down** in **More actions** |
-| **History** | Items that played, were rejected or were skipped. | None |
+| **History** | Items that played, were rejected or were skipped. | Played or skipped: **Replay**, **Play now**, **Remove**. Rejected: no actions. |
 
 Each row shows the title, "Shared by" and the viewer's name, the length and the source.
 An item in **Up next** also shows its place in the play order.
@@ -106,9 +141,10 @@ When nothing was shared yet, the card shows "No media has been shared yet."
 
 Choose **Approve** on an item in **Waiting for approval**.
 The item moves to the end of **Up next**.
+When nothing is playing and the enabled browser source is connected, the first approved item starts automatically.
 
 Choose **Reject** to turn the item down.
-The item moves to **History**, and a viewer who paid gets the refund.
+The item moves to **History**, and the bot requests the refund if the viewer paid.
 
 ### Change the play order
 
@@ -121,17 +157,25 @@ The item moves to the top of **Up next**.
 When nothing plays, the player starts with this item.
 When something plays, the bot skips it and plays this item.
 
-The skipped item moves to **History** as skipped, and its viewer gets the refund if they paid.
-The first item in **Up next** has no **Play now**.
+The skipped item moves to **History** as skipped, with a refund attempted if its viewer paid.
+**Play now** is also available on the first item in **Up next**.
+
+### Play something from history again
+
+Choose **Replay** on a played or skipped item to put it at the front of **Up next**.
+The current item keeps playing; if nothing is playing, the replay starts.
+Choose **Play now** to interrupt the current item and start the selected historical item instead.
+
+Replaying does not charge the viewer again. **Remove** marks a played or skipped item as rejected without issuing another refund, and removes its replay controls; it does not erase the history row.
 
 ### Skip or remove an item
 
 Choose **Skip** on an item in **Up next**.
-The item moves to **History** as skipped, and a viewer who paid gets the refund.
+The item moves to **History** as skipped, and the bot attempts the refund if the viewer paid.
 
 Choose **Remove** to take an item out of the queue.
 The dialog **Remove this item?** shows the title.
-Choose **Remove** in the dialog: the item moves to **History** as rejected, and a viewer who paid gets the refund.
+Choose **Remove** in the dialog: the item moves to **History** as rejected, with a refund attempted if the viewer paid.
 
 ## Play items on stream
 
@@ -142,14 +186,15 @@ It shows the title, the viewer who shared it, **Playing** or **Paused**, and the
 | --- | --- |
 | **Play** | Starts the first item in **Up next**, or goes on with a paused item. |
 | **Pause** | Pauses the item on stream. |
-| **Skip to the next item** | Skips the item that plays and starts the next one. A viewer who paid gets the refund. |
+| **Skip to the next item** | Skips the current item, attempts any applicable refund and starts the next one. |
 | **Stop playback** | Ends the item that plays and moves it to **History** as played. The next item does not start. |
 | **Place in the item** | Moves to another point in the item. |
 | **Overlay volume** | How loud the overlay plays, from 0 to 100. |
 
 When an item ends on the overlay, it moves to **History** as played and the next item starts.
+When the overlay cannot play an item, the bot moves it to **History** as skipped, attempts the refund if the viewer paid, and starts the next item.
 When nothing is approved, the card shows "Approve an item to play it on stream."
-By default a moderator and every role above it may use the player.
+The player needs the **Create and change pipelines** permission, which a moderator and every role above it hold by default.
 
 A **Media playback** step in a [pipeline](/reference/commands/pipelines) runs the same controls.
 It can also play a finished item again, or play an approved item at once.

@@ -1,0 +1,71 @@
+---
+title: Redeem an invite
+description: Open an invite link, read what it gives your channel, sign in with Twitch to claim it, and see what the page says when the invite is invalid, used up or has no channel yet.
+---
+
+An invite link looks like `/invite/<code>`, and the page it opens is titled **You are invited**.
+It gives your channel a plan tier for a set time, or the founders badge when the invite has no tier.
+You do not need an account first: opening the link and reading what it gives costs nothing, and only the claim step uses the invite up.
+
+## Look at the invite first
+
+The page asks the bot about the code as soon as it opens, and shows "Looking up this invite…" while it waits.
+Reading the invite never spends it, so you can open the link as often as you like before you claim.
+
+When the code works, the page says what it gives your channel:
+
+| The page says | The invite gives |
+| --- | --- |
+| "This invite gives your channel Pro for 3 months." | A tier for a number of months. The tier name and the count come from the invite. |
+| "This invite gives your channel Pro forever." | A tier with no end date. |
+| "This invite gives your channel the founders badge." | The founders badge, with no tier. |
+
+## Claim it when you are signed out
+
+Choose **Sign in with Twitch to claim**.
+The browser goes to Twitch, and you sign in as a broadcaster, the same role as **Continue as broadcaster** on the [sign-in page](/reference/getting-started/sign-in).
+The invite travels with that sign-in, so the bot redeems it on the channel the sign-in sets up.
+There is no separate **Redeem** step for a new streamer.
+
+When the browser comes back, the dashboard opens and shows a message once.
+**Invite redeemed** says that the plan or badge the invite gave is now on your channel.
+If the bot could not redeem it, the message says "The invite could not be redeemed" and gives the reason.
+
+## Claim it when you are already signed in
+
+The page checks your session before it shows a button, so a signed-in streamer never sees the Twitch button first.
+It shows **Redeem on** followed by your own channel's name.
+Choose it.
+The page then names your channel and says it now has the plan or badge, and **Open the dashboard** takes you to the dashboard.
+
+An invite is for a streamer's own channel.
+It never goes to a channel you only moderate, even when you have that channel open.
+If your own channel is open, the button names it.
+Otherwise the page picks your own channel from your list.
+
+If redeeming fails, a red notice under the button gives the reason, and the button stays so you can try again.
+
+## The other states
+
+| What you see | What it means | What to do |
+| --- | --- | --- |
+| "This invite does not work": "This invite link is not valid or can no longer be used." | The code is unknown, used up, expired or revoked. The page does not say which, and every one of them looks the same. | Ask the person who sent it for a new link. Choose **Back to the home page**. |
+| "This invite could not be loaded. Try again in a moment." | The page could not reach the bot to check the code. This is not a verdict on the code. | Reload the page. |
+| "You have no channel set up here yet. Open the dashboard to set one up, then open this link again." | You are signed in, but you have no channel of your own on this bot. | Choose **Open the dashboard**, set up your channel, then open the invite link again. |
+| "Loading your channel…" | You are signed in and the page is reading your channels. | Wait a moment. |
+
+An invite that is already used shows the "does not work" state.
+The page can no longer read it once it is used, so it cannot tell you what it gave.
+For that reason the page notes the gift in your browser tab before it sends you to Twitch, and the message after sign-in reads from that note.
+
+## Redeem a code by typing it
+
+You can also redeem a code that someone gave you as text.
+The channel's **Billing** page has an invite code field for this.
+See [Use an invite code](/reference/settings/billing) on that page.
+
+## Related pages
+
+- [Sign in](/reference/getting-started/sign-in)
+- [Billing](/reference/settings/billing)
+- [Connect platforms](/reference/getting-started/connect-platforms)

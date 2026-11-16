@@ -1,0 +1,92 @@
+[
+  {
+    "case": "C:\\Projects\\NoMercyLabs\\nomnomzbot-docs\\docs-work\\reader-first-pilot\\calibration\\run-2\\103",
+    "route": "/reference/commands/create-a-command",
+    "page": "C:\\Projects\\NoMercyLabs\\nomnomzbot-docs\\docs-work\\reader-first-pilot\\new\\commands\\create-a-command.mdx",
+    "card": "C:\\Projects\\NoMercyLabs\\nomnomzbot-docs\\docs-work\\reader-first-pilot\\cards\\create-a-command.md",
+    "intact": true,
+    "kind": "intact",
+    "seeded_defect": "No injected defect. Assess the actual page rather than presuming it is clean."
+  },
+  {
+    "case": "C:\\Projects\\NoMercyLabs\\nomnomzbot-docs\\docs-work\\reader-first-pilot\\calibration\\run-2\\107",
+    "route": "/reference/commands/create-a-command",
+    "page": "C:\\Projects\\NoMercyLabs\\nomnomzbot-docs\\docs-work\\reader-first-pilot\\new\\commands\\create-a-command.mdx",
+    "card": "C:\\Projects\\NoMercyLabs\\nomnomzbot-docs\\docs-work\\reader-first-pilot\\calibration\\run-2\\107\\card.md",
+    "intact": false,
+    "kind": "omitted-action",
+    "seeded_defect": "The initial creation procedure omits choosing Create command before testing the reply."
+  },
+  {
+    "case": "C:\\Projects\\NoMercyLabs\\nomnomzbot-docs\\docs-work\\reader-first-pilot\\calibration\\run-2\\108",
+    "route": "/reference/commands/cooldowns-and-permissions",
+    "page": "C:\\Projects\\NoMercyLabs\\nomnomzbot-docs\\docs-work\\reader-first-pilot\\new\\commands\\cooldowns-and-permissions.mdx",
+    "card": "C:\\Projects\\NoMercyLabs\\nomnomzbot-docs\\docs-work\\reader-first-pilot\\cards\\cooldowns-and-permissions.md",
+    "intact": true,
+    "kind": "intact",
+    "seeded_defect": "No injected defect. Assess the actual page rather than presuming it is clean."
+  },
+  {
+    "case": "C:\\Projects\\NoMercyLabs\\nomnomzbot-docs\\docs-work\\reader-first-pilot\\calibration\\run-2\\102",
+    "route": "/reference/commands/cooldowns-and-permissions",
+    "page": "C:\\Projects\\NoMercyLabs\\nomnomzbot-docs\\docs-work\\reader-first-pilot\\new\\commands\\cooldowns-and-permissions.mdx",
+    "card": "C:\\Projects\\NoMercyLabs\\nomnomzbot-docs\\docs-work\\reader-first-pilot\\calibration\\run-2\\102\\card.md",
+    "intact": false,
+    "kind": "contradictory-outcome",
+    "seeded_defect": "The example says a refused attempt restarts waits, contradicting the unchanged explanation that refusal starts neither."
+  },
+  {
+    "case": "C:\\Projects\\NoMercyLabs\\nomnomzbot-docs\\docs-work\\reader-first-pilot\\calibration\\run-2\\106",
+    "route": "/reference/automation/timers-and-chat-triggers",
+    "page": "C:\\Projects\\NoMercyLabs\\nomnomzbot-docs\\docs-work\\reader-first-pilot\\new\\automation\\timers-and-chat-triggers.mdx",
+    "card": "C:\\Projects\\NoMercyLabs\\nomnomzbot-docs\\docs-work\\reader-first-pilot\\cards\\timers-and-chat-triggers.md",
+    "intact": true,
+    "kind": "intact",
+    "seeded_defect": "No injected defect. Assess the actual page rather than presuming it is clean."
+  },
+  {
+    "case": "C:\\Projects\\NoMercyLabs\\nomnomzbot-docs\\docs-work\\reader-first-pilot\\calibration\\run-2\\104",
+    "route": "/reference/automation/timers-and-chat-triggers",
+    "page": "C:\\Projects\\NoMercyLabs\\nomnomzbot-docs\\docs-work\\reader-first-pilot\\new\\automation\\timers-and-chat-triggers.mdx",
+    "card": "C:\\Projects\\NoMercyLabs\\nomnomzbot-docs\\docs-work\\reader-first-pilot\\calibration\\run-2\\104\\card.md",
+    "intact": false,
+    "kind": "buried-condition",
+    "seeded_defect": "Both explicit first-firing/next-poll explanations are moved after the entire reference and related links, away from creating/enabling a timer. The normal repeating poll frequency stays in its reference section."
+  },
+  {
+    "case": "C:\\Projects\\NoMercyLabs\\nomnomzbot-docs\\docs-work\\reader-first-pilot\\calibration\\run-2\\110",
+    "route": "/reference/commands/built-in-commands",
+    "page": "C:\\Projects\\NoMercyLabs\\nomnomzbot-docs\\docs-work\\reader-first-pilot\\new\\commands\\built-in-commands.mdx",
+    "card": "C:\\Projects\\NoMercyLabs\\nomnomzbot-docs\\docs-work\\reader-first-pilot\\cards\\built-in-commands.md",
+    "intact": true,
+    "kind": "intact",
+    "seeded_defect": "No injected defect. Assess the actual page rather than presuming it is clean."
+  },
+  {
+    "case": "C:\\Projects\\NoMercyLabs\\nomnomzbot-docs\\docs-work\\reader-first-pilot\\calibration\\run-2\\101",
+    "route": "/reference/commands/built-in-commands",
+    "page": "C:\\Projects\\NoMercyLabs\\nomnomzbot-docs\\docs-work\\reader-first-pilot\\new\\commands\\built-in-commands.mdx",
+    "card": "C:\\Projects\\NoMercyLabs\\nomnomzbot-docs\\docs-work\\reader-first-pilot\\calibration\\run-2\\101\\card.md",
+    "intact": false,
+    "kind": "contradictory-outcome",
+    "seeded_defect": "Inserted single-field instructions promise whole-command Reset to default changes only one field, contradicting the unchanged reset reference."
+  },
+  {
+    "case": "C:\\Projects\\NoMercyLabs\\nomnomzbot-docs\\docs-work\\reader-first-pilot\\calibration\\run-2\\109",
+    "route": "/reference/self-hosting/first-run-setup",
+    "page": "C:\\Projects\\NoMercyLabs\\nomnomzbot-docs\\docs-work\\reader-first-pilot\\new\\self-hosting\\first-run-setup.mdx",
+    "card": "C:\\Projects\\NoMercyLabs\\nomnomzbot-docs\\docs-work\\reader-first-pilot\\cards\\first-run-setup.md",
+    "intact": true,
+    "kind": "intact",
+    "seeded_defect": "No injected defect. Assess the actual page rather than presuming it is clean."
+  },
+  {
+    "case": "C:\\Projects\\NoMercyLabs\\nomnomzbot-docs\\docs-work\\reader-first-pilot\\calibration\\run-2\\105",
+    "route": "/reference/self-hosting/first-run-setup",
+    "page": "C:\\Projects\\NoMercyLabs\\nomnomzbot-docs\\docs-work\\reader-first-pilot\\new\\self-hosting\\first-run-setup.mdx",
+    "card": "C:\\Projects\\NoMercyLabs\\nomnomzbot-docs\\docs-work\\reader-first-pilot\\calibration\\run-2\\105\\card.md",
+    "intact": false,
+    "kind": "missing-prerequisite",
+    "seeded_defect": "The own-Twitch-app path omits verified-email and two-factor requirements needed to answer the prerequisites question."
+  }
+]

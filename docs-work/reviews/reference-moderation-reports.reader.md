@@ -1,7 +1,17 @@
-# Reader review: C:\Projects\NoMercyLabs\nomnomzbot-docs\src\content\reference\en\moderation\reports.mdx
+# Independent reader review: /reference/moderation/reports
 Verdict: PASS
-Reviewed: C:\Projects\NoMercyLabs\nomnomzbot-docs\src\content\reference\en\moderation\reports.mdx
-Reviewed-SHA: 9adc5725e8857434
+Reviewed: src/content/reference/en/moderation/reports.mdx
+Reviewed-SHA: a789da3356cdd993819b90e228dfd16e23f721ded4e1e8f59307a8d868b69a02
+
+## Independent overhaul review, 2026-11-05
+
+The task and status-only consequence precede controls; the missing submission form is candid and investigation links give a practical next step.
+
+Reviewed independently of the article author, in actual navigation order. Current product source 54da8b631 and relevant changes since b12f4f696 were read without starting the bot, executing platform actions or changing channel data. The reader judgment follows the user's natural teaching style; old pilot mimicry, sentence caps and unrelated Atlas style gates were not applied. See [review-moderation-economy-community.md](../overhaul/review-moderation-economy-community.md) for the review scope and findings.
+
+## Prior review history
+
+The earlier text below is retained as history; it does not independently approve a later article hash.
 
 Reader: a streamer or moderator who has read only /reference/moderation/overview (map Assumes column).
 Voice compared with the pilot page commands/create-a-command.mdx.

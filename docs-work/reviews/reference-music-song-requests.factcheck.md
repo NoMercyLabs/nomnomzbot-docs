@@ -1,7 +1,40 @@
-# Fact check: src/content/reference/en/music/song-requests.mdx
+# Current independent fact check
+
 Verdict: PASS
 Reviewed: src/content/reference/en/music/song-requests.mdx
-Reviewed-SHA: 781d3f9e09d53afd
+Reviewed-SHA: a3c1b774e6dbb5a14dc4c0909f119d2f7c54910b1aa1857005f1741ef2956515
+Reviewed-SHA256: a3c1b774e6dbb5a14dc4c0909f119d2f7c54910b1aa1857005f1741ef2956515
+Reviewed-Date: 2026-11-05
+Reviewer: independent media-section reviewer
+Product: 54da8b6318de63b5205a0ff8db35e0b9045dd959 plus preserved current music UI edits
+
+The full article was read in sidebar order. Consequential defaults, permissions, prerequisites, state lifetime and effects were traced against current source; repaired findings were re-read before this verdict. This is source verification, not a live-channel or visible/audible output test.
+
+- server/src/NomNomzBot.Infrastructure/Commands/Builtins/SongRequestBuiltin.cs:45-47 sets 0 shared/12-second personal command pacing; the reviewed article now says 12 seconds.
+- server/src/NomNomzBot.Application/Music/Dtos/MusicConfigDefaults.cs:20-32 defines 50 queued, 5 per person, 360-second tracks, Spotify allowed and YouTube off; server/src/NomNomzBot.Infrastructure/Music/MusicService.cs:1170-1330 implements operator/per-role cap interactions, playability, duplicates, fair insertion and persistence.
+- server/src/NomNomzBot.Infrastructure/Music/FairQueue.cs:82-99 orders equal-rank requests FIFO and accounts for currently playing requests; SongRequestQueueRestoreHostedService.cs:45-80 restores only within 4 hours; RefusedSongRequestStore.cs:34-65 holds only the latest qualifying refusal for 15 minutes in memory.
+- server/src/NomNomzBot.Infrastructure/Music/PipelineActions/SongWrongAction.cs:104-176 distinguishes stable code/current queue position and restricts retraction to the caller's requests.
+
+Source paths without a repeated layer prefix in a bullet are relative to its preceding Infrastructure or dashboard scope. The section report records method, repaired findings, external sources and remaining product limitations: docs-work/overhaul/review-automation-media-integrations.md.
+
+## Historical evidence
+
+Older hashes, verdicts and values below are retained for history and are not the current review.
+
+# Fact check: src/content/reference/en/music/song-requests.mdx
+Verdict: PENDING
+Reviewed: src/content/reference/en/music/song-requests.mdx
+Reviewed-SHA: 552c8e558b44b70a9be39e9827cdacc18f1a9e1370e095113b0e5d2a271ac0c8
+
+## 2026-11-05 author source verification
+
+Author source audit complete; independent verdict pending. This hash binds the current text, not the historical PASS below. The article was read in full and revised toward the user's explainer style while preserving precise reference detail. MusicService.cs; FairQueue.cs; SongWrongAction.cs; SongCode.cs; SongRequestQueueRestoreHostedService.cs; RefusedSongRequestStore.cs. Both codes and numeric queue positions work; restoration freshness is four hours and refused permits last fifteen minutes.
+
+The section inventory and known implementation gaps are in [automation-media-integrations.md](../overhaul/automation-media-integrations.md). This is source verification, not a live-channel execution claim. Independent review must account for product changes after the original author pass at b12f4f696.
+
+## Historical review (SHA 781d3f9e09d53afd)
+
+Historical verdict: PASS. The earlier evidence below is retained as history and is superseded where the current article or source changed.
 
 Round 2. Product repo master at 9a7e5513d (includes b6204c36c). Paths are product-repo relative. MS = server/src/NomNomzBot.Infrastructure/Music/MusicService.cs, RR = server/src/NomNomzBot.Infrastructure/Music/SongRequestRefusalReplies.cs, B = server/src/NomNomzBot.Infrastructure/Commands/Builtins, EN = dashboard/src/views/dashboard/music/i18n/en.json, ADS = server/src/NomNomzBot.Infrastructure/Content/Identity/ActionDefinitionSeeder.cs, RRL = dashboard/src/views/dashboard/music/components/requestRules.ts.
 

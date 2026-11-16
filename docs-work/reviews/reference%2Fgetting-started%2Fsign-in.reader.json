@@ -1,0 +1,60 @@
+{
+  "fingerprint": "d0e454e59437f6851dff61b237602771a263c2fc56cae84cb69aeaeb0418c42a",
+  "verdict": "PASS",
+  "answers": [
+    {
+      "question": 1,
+      "answer": "Press Continue as broadcaster if it is your own channel. It creates or opens your channel so the bot can work in it. Continue as moderator and Continue as viewer sign you in as yourself and create no channel. Steps I followed: (1) check the bot address and the line under it at the top of the Welcome card, and press Change first if it is wrong; (2) press the button for your role, and the browser goes to Twitch; (3) approve on Twitch, and the browser comes back signed in. Every action the prose needs has a step.",
+      "quote": "If this is your own channel, choose Continue as broadcaster: it creates or opens your channel, so the bot can work in it."
+    },
+    {
+      "question": 2,
+      "answer": "You need the address of a running bot and an account on a platform that bot has switched on. A moderator must also be a moderator of the channel on Twitch. Role buttons show only on an https:// address or on localhost on the bot's own computer. All of this is in Before you start.",
+      "quote": "You need the address of a running NomNomzBot and an account on a platform that bot has switched on for sign-in."
+    },
+    {
+      "question": 3,
+      "answer": "On the button path, success is the browser coming back to the bot with you signed in. On the code path, the page goes on by itself and opens the dashboard. The role table and the scope paragraphs tell the three role buttons apart.",
+      "quote": "The browser comes back to the bot, and you are signed in."
+    },
+    {
+      "question": 4,
+      "answer": "On an http:// address that is not this computer, the page offers only a code. Continue with Twitch there signs you in as the broadcaster of your own channel, which creates a channel for you and does not ask for the moderation tools. So the moderator asks the person who runs the bot for its https:// address, opens it, and the role buttons show; then they press Continue as moderator. If they use the code anyway, they reach the friend's channel through the channel switcher under Channels you moderate, but they can only chat there, not ban, time out or delete messages.",
+      "quote": "If you came to moderate a friend’s channel, ask the person who runs the bot for its address that starts with https:// instead."
+    },
+    {
+      "question": 5,
+      "answer": "In the code-only section I nearly guessed. The section first tells a moderator to get the https:// address, then gives code steps anyway, and only the earlier Sign in with a code section says a code sign-in lacks the moderation tools. Before you start links ahead to this case, so the cost is one reread, not a wrong action.",
+      "quote": "On this page, choosing Continue with Twitch signs you in as the broadcaster of your own channel on that bot, as a Twitch code always does."
+    },
+    {
+      "question": 6,
+      "answer": "Read aloud, the three scope paragraphs under What Twitch is asked for are a run of permission lists that a person signing in will not act on. It is a small cost in listening time.",
+      "quote": "Continue as viewer asks to read chat, send chat as you, and read your emotes."
+    }
+  ],
+  "findings": [],
+  "warnings_released": true,
+  "warning_review": [
+    {
+      "id": "length",
+      "decision": "keep",
+      "reason": "Most of the 1901 words are the role table, the platform table, the code and bot-address tables, and troubleshooting entries that a reader reaches only in their own branch. The main path is short, and every answer was found on the page without a reread. A word count alone is not a defect."
+    },
+    {
+      "id": "first-numbered-step",
+      "decision": "keep",
+      "reason": "The 291 words before step 1 are the access requirements (address, platform, moderator status, the https rule) and the role table that step 2 depends on. voice.md places these before the steps. The reader found the first press without rereading."
+    },
+    {
+      "id": "paragraph-19",
+      "decision": "keep",
+      "reason": "The paragraph says Twitch is always on and that YouTube signs in with a code, which a reader on another platform needs before the table. Six sentences of plain facts cost little listening time, and no sentence hides a step."
+    },
+    {
+      "id": "paragraph-30",
+      "decision": "keep",
+      "reason": "The five sentences give the cause (the address is not a NomNomzBot with its own sign-in), then the action (Change, then check the address), then the fallback to the bot's owner. Each sentence carries a fact the reader needs when this message appears. A sentence count alone is not a defect."
+    }
+  ]
+}

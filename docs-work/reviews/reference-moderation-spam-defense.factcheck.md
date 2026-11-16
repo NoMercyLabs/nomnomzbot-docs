@@ -1,5 +1,55 @@
-# Fact-check: /reference/moderation/spam-defense
+# Targeted final review — 2026-11-06
+
+Verdict: PENDING
+Reviewed: src/content/reference/en/moderation/spam-defense.mdx
+Reviewed-SHA: 0dff3811d01958cae4bd7269196ce0e0ee03ad6bd176b581351bcc97b3877dc0
+Reviewed-SHA256: 0dff3811d01958cae4bd7269196ce0e0ee03ad6bd176b581351bcc97b3877dc0
+Reviewer: final-features correction author; self-review, not independent PASS
+Product-Revision: 2dfefbb0c393f439954d79b32ac11511678d7f44 plus working tree
+
+The full article was read editorially. The correction was independently traced from the staged lead to current source, then applied by this reviewer. This is targeted author verification, not a new exhaustive source audit, independent final-text approval or runtime test. See [final-features.md](../ecosystem-validation/final-features.md) for exact source anchors, coverage and remaining limits.
+
+## Historical reviews
+
+The original records below are preserved verbatim and apply only to their recorded hashes.
+
+# Independent source verification: /reference/moderation/spam-defense
 Verdict: PASS
+Reviewed: src/content/reference/en/moderation/spam-defense.mdx
+Reviewed-SHA: 8f66fc5a7d0a932632d1f4f1b16be882d73201f3ee21ff579925ac296ecb4af1
+
+## Independent overhaul review, 2026-11-05
+
+SpamDefenseDefaults.cs:20-72; SpamObservationWindow.cs:24-55; TrustTierLadder.cs:125-160,245-285; SpamDefenseService.cs:410-500,695-719; SpamEnforcementExecutor.cs:90-195: defaults, seven-day window, VIP/flag interactions, immunity, dry-run and platform boundaries.
+
+Reviewed independently of the article author, in actual navigation order. Current product source 54da8b631 and relevant changes since b12f4f696 were read without starting the bot, executing platform actions or changing channel data. This verdict is source verification, not proof of live platform delivery. See [review-moderation-economy-community.md](../overhaul/review-moderation-economy-community.md) for the review scope and findings.
+
+## Prior review history
+
+The earlier text below is retained as history; it does not independently approve a later article hash.
+
+Author source audit: 2026-11-04. Independent review of the revised article is pending; the historical PASS below does not approve this text.
+Product source: C:/Projects/NoMercyLabs/nomnomzbot at b12f4f696, inspected without starting the bot or changing data.
+
+Explains campaigns versus single-message filters and tuning thresholds; separates spam tiers from numerical trust score and qualifies VIP immunity.
+
+| Revised claim or retained core behavior | Current source opened |
+| --- | --- |
+| Policy form and Save role | dashboard/src/views/dashboard/settings/spam-defense/SpamDefenseView.vue:40-129; server/src/NomNomzBot.Infrastructure/Content/Identity/ActionDefinitionSeeder.cs |
+| Defaults and settings catalogue/ranges/inactive fields | server/src/NomNomzBot.Domain/Moderation/SpamDefense/SpamDefenseDefaults.cs:22-72; server/src/NomNomzBot.Domain/Moderation/SpamDefense/SpamDefenseSettings.cs:225-430 |
+| Platform defaults and seven-day observation stamp | server/src/NomNomzBot.Infrastructure/Moderation/SpamDefenseService.cs:85-155; server/src/NomNomzBot.Infrastructure/Moderation/SpamObservationWindow.cs:24-55 |
+| Moderator bypass, capability gate, dry run | server/src/NomNomzBot.Infrastructure/Moderation/SpamDefenseService.cs:410-500 |
+| Established immunity and suspicious-user override; alphabet Regular floor | server/src/NomNomzBot.Domain/Moderation/SpamDefense/TrustTierLadder.cs:115-160,240-285; server/src/NomNomzBot.Infrastructure/Moderation/SpamDefenseService.cs:690-710 |
+| Native-platform enforcement and ladder use | server/src/NomNomzBot.Infrastructure/Moderation/SpamEnforcementExecutor.cs:90-195 |
+
+The practical scenarios are recommended uses of these verified controls, not promises of a new feature. Unchanged reference details were compared with the current view, labels and relevant implementation. Runtime platform calls were not performed.
+
+## Historical evidence
+
+The prior review is retained for its detailed claim inventory. Its verdict and file hashes refer to the earlier article; where the new evidence differs, the new evidence takes precedence.
+
+# Fact-check: /reference/moderation/spam-defense
+Historical verdict: PASS
 Reviewed: src/content/reference/en/moderation/spam-defense.mdx
 Reviewed-SHA: 6f82127ac970ec7c
 

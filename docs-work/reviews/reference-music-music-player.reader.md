@@ -1,3 +1,38 @@
+# Targeted final review — 2026-11-06
+
+Verdict: PENDING
+Reviewed: src/content/reference/en/music/music-player.mdx
+Reviewed-SHA: b9592030736d7adaae53ad5c13830ac41a4faaf3f28d29de0c6b03137111da30
+Reviewed-SHA256: b9592030736d7adaae53ad5c13830ac41a4faaf3f28d29de0c6b03137111da30
+Reviewer: final-features correction author; self-review, not independent PASS
+Product-Revision: 2dfefbb0c393f439954d79b32ac11511678d7f44 plus working tree
+
+The full article was read editorially. The first-task prerequisite correction was checked against current source and applied by this reviewer. This is targeted author verification, not an exhaustive source audit, independent final-text approval or runtime test. See [final-features.md](../ecosystem-validation/final-features.md) for the exact claims and limits.
+
+## Historical reviews
+
+Original records below are preserved verbatim and apply only to their recorded hashes.
+
+# Current independent reader review
+
+Verdict: PASS
+Reviewed: src/content/reference/en/music/music-player.mdx
+Reviewed-SHA: 98c6051a2a074d6d9c5741a3d65ae54423dcc778c3dd5c33a3b928dedab293c9
+Reviewed-SHA256: 98c6051a2a074d6d9c5741a3d65ae54423dcc778c3dd5c33a3b928dedab293c9
+Reviewed-Date: 2026-11-05
+Reviewer: independent media-section reviewer
+Product: 54da8b6318de63b5205a0ff8db35e0b9045dd959 plus preserved current music UI edits
+
+The first-song path explains Spotify active-device audio versus YouTube browser-source audio before controls. The player-setting availability gap is explicit, and the full shortcut-button/history reference remains usable. It asks for Now playing plus the OBS mixer, avoiding a false claim that connection proves audible output.
+
+The full page was read with adjacent navigation and related links. The owner's natural explanatory style governs: no Atlas sentence caps, pilot imitation or rigid article template was imposed. No substantive reader finding remains at this hash. Combined build, rendered-output and link/frontmatter checks belong to the lead's separate validation.
+
+Report: docs-work/overhaul/review-automation-media-integrations.md.
+
+## Historical evidence
+
+Older hashes and verdicts below are retained for history and are not the current review.
+
 # Reader review: src/content/reference/en/music/music-player.mdx
 Verdict: PASS
 Reviewed: src/content/reference/en/music/music-player.mdx

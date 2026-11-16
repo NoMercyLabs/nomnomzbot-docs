@@ -1,7 +1,39 @@
-# Fact check: src/content/reference/en/automation/event-responses.mdx
+# Current independent fact check
+
 Verdict: PASS
 Reviewed: src/content/reference/en/automation/event-responses.mdx
-Reviewed-SHA: ddc8c868b4c8addb
+Reviewed-SHA: c778bb8aab5fda2cf4b919f380df5027eefad26cb4e68d82cd876b83fecccf49
+Reviewed-SHA256: c778bb8aab5fda2cf4b919f380df5027eefad26cb4e68d82cd876b83fecccf49
+Reviewed-Date: 2026-11-05
+Reviewer: independent media-section reviewer
+Product: 54da8b6318de63b5205a0ff8db35e0b9045dd959 plus preserved current music UI edits
+
+The full article was read in sidebar order. Consequential defaults, permissions, prerequisites, state lifetime and effects were traced against current source; repaired findings were re-read before this verdict. This is source verification, not a live-channel or visible/audible output test.
+
+- server/src/NomNomzBot.Application/Commands/Services/EventResponsePresetCatalog.cs:35-209 defines the catalog and matching event variables; server/src/NomNomzBot.Infrastructure/Content/Commands/PlatformEventResponseDefaultsSeeder.cs:35-100 defines 18 enabled defaults and the single default spoken gift-received event.
+- server/src/NomNomzBot.Infrastructure/Commands/EventResponseTestService.cs:78-170 sends sample data through the actual executor and real downstream dependencies; server/src/NomNomzBot.Infrastructure/Platform/Eventing/EventResponseExecutor.cs:335-400,500-590 confirms successful-chat-only speech, mixed narration/viewer segments and real target/pipeline execution.
+- server/src/NomNomzBot.Infrastructure/Commands/EventResponseService.cs:80-130 resolves effective defaults and personality; current editor labels and save/test affordances were checked with the authored workflow.
+
+Source paths without a repeated layer prefix in a bullet are relative to its preceding Infrastructure or dashboard scope. The section report records method, repaired findings, external sources and remaining product limitations: docs-work/overhaul/review-automation-media-integrations.md.
+
+## Historical evidence
+
+Older hashes, verdicts and values below are retained for history and are not the current review.
+
+# Fact check: src/content/reference/en/automation/event-responses.mdx
+Verdict: PENDING
+Reviewed: src/content/reference/en/automation/event-responses.mdx
+Reviewed-SHA: c778bb8aab5fda2cf4b919f380df5027eefad26cb4e68d82cd876b83fecccf49
+
+## 2026-11-05 author source verification
+
+Author source audit complete; independent verdict pending. This hash binds the current text, not the historical PASS below. The article was read in full and revised toward the user's explainer style while preserving precise reference detail. EventResponseTestService.cs; EventResponseExecutor.cs; EventResponseEditor.vue; EventResponseTestButton.vue. Tests and replays invoke real bound pipelines; narration follows successful chat.
+
+The section inventory and known implementation gaps are in [automation-media-integrations.md](../overhaul/automation-media-integrations.md). This is source verification, not a live-channel execution claim. Independent review must account for product changes after the original author pass at b12f4f696.
+
+## Historical review (SHA ddc8c868b4c8addb)
+
+Historical verdict: PASS. The earlier evidence below is retained as history and is superseded where the current article or source changed.
 
 Round 3. I checked the round 2 fix first, then the whole page (213 lines), against product master b6204c36c. Every row rests on a line I opened in rounds 1 to 3 of this review; the product files have not changed since round 1 (master is still b6204c36c). No row is (lead). No bare word in braces is on the page: every helper (line 118) is in backticks. Paths: Editor = `dashboard/src/views/dashboard/event-responses/components/EventResponseEditor.vue`, Service = `server/src/NomNomzBot.Infrastructure/Commands/EventResponseService.cs`, Executor = `server/src/NomNomzBot.Infrastructure/Platform/Eventing/EventResponseExecutor.cs`, Seeder = `server/src/NomNomzBot.Infrastructure/Content/Commands/PlatformEventResponseDefaultsSeeder.cs`, Tone = `server/src/NomNomzBot.Application/Commands/Services/EventResponseToneCatalog.cs`, Presets = `server/src/NomNomzBot.Application/Commands/Services/EventResponsePresetCatalog.cs`.
 

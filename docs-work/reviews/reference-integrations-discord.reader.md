@@ -1,3 +1,23 @@
+# Current independent reader review
+
+Verdict: PASS
+Reviewed: src/content/reference/en/integrations/discord.mdx
+Reviewed-SHA: f0222a8a59006fb05acb6fa784c06c6f28c12bf200390f2cd82e9a4d65b2c296
+Reviewed-SHA256: f0222a8a59006fb05acb6fa784c06c6f28c12bf200390f2cd82e9a4d65b2c296
+Reviewed-Date: 2026-11-05
+Reviewer: independent media-section reviewer
+Product: 54da8b6318de63b5205a0ff8db35e0b9045dd959 plus preserved current music UI edits
+
+The guide starts with a simple go-live notification, postponing role pings and embeds until the destination works. It distinguishes Preview saving, self-assign buttons, notification DMs and the streamer live role. Pause, consent and disconnect consequences remain explicit.
+
+The full page was read with adjacent navigation and related links. The owner's natural explanatory style governs: no Atlas sentence caps, pilot imitation or rigid article template was imposed. No substantive reader finding remains at this hash. Combined build, rendered-output and link/frontmatter checks belong to the lead's separate validation.
+
+Report: docs-work/overhaul/review-automation-media-integrations.md.
+
+## Historical evidence
+
+Older hashes and verdicts below are retained for history and are not the current review.
+
 # Reader review: C:\Projects\NoMercyLabs\nomnomzbot-docs\src\content\reference\en\integrations\discord.mdx
 Verdict: PASS
 Reviewed: C:\Projects\NoMercyLabs\nomnomzbot-docs\src\content\reference\en\integrations\discord.mdx

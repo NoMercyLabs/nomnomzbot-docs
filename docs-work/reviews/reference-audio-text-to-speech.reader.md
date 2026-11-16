@@ -1,7 +1,27 @@
+# Current independent reader review
+
+Verdict: PASS
+Reviewed: src/content/reference/en/audio/text-to-speech.mdx
+Reviewed-SHA: 4d7ec8c974212b595d577378c1409f4f06135aa8793ffd6c5a598ee73e82044f
+Reviewed-SHA256: 4d7ec8c974212b595d577378c1409f4f06135aa8793ffd6c5a598ee73e82044f
+Reviewed-Date: 2026-11-05
+Reviewer: independent media-section reviewer
+Product: 54da8b6318de63b5205a0ff8db35e0b9045dd959 plus preserved current music UI edits
+
+The guide begins with an end-to-end spoken command and distinguishes channel narration from viewer speech. The re-reviewed additions include all three omitted visible controls, identify stored-but-unused preferences, explain the approval queue/dashboard gap and recommend approval off for the initial test. Paid rewards bypass role/bits/cooldown, while approval still applies; no absent approval UI is invented.
+
+The full page was read with adjacent navigation and related links. The owner's natural explanatory style governs: no Atlas sentence caps, pilot imitation or rigid article template was imposed. No substantive reader finding remains at this hash. Combined build, rendered-output and link/frontmatter checks belong to the lead's separate validation.
+
+Report: docs-work/overhaul/review-automation-media-integrations.md.
+
+## Historical evidence
+
+Older hashes and verdicts below are retained for history and are not the current review.
+
 # Reader review: src/content/reference/en/audio/text-to-speech.mdx
 Verdict: PASS
 Reviewed: src/content/reference/en/audio/text-to-speech.mdx
-Reviewed-SHA: ddc3f6d41d1ab8c6
+Reviewed-SHA: 1f212ff90dde53a4
 
 Round 7, read as a new reader. Read the whole page as rendered (no directives expanded). Lines 35-36 now say a **Read aloud (TTS)** step sets the text it reads, and seven named settings on this page still apply to it (checked, lines 35-36). Line 189 now says each speak place goes through the same settings as a speak step, and points to "Which voice speaks" (checked, lines 186, 189). The voice question no longer appears: no broadcaster voice, no second voice for bot speech. Assumed pages checked: commands/pipelines.mdx (line 298 names the step **Read aloud (TTS)**), commands/built-in-commands.mdx (line 78 `!voice`), automation/rewards.mdx.
 

@@ -1,68 +1,87 @@
 ---
 title: Bot account
-description: Learn which account the bot types from in your Twitch chat, and why you do not need a separate bot account.
+description: Which Twitch account the bot types from in your chat, how to see which one it uses, and how to mark its lines when it types as you.
 ---
 
-The bot types its lines in your chat from one Twitch account.
-This page explains which account that is.
-A bot account is never required.
+You do not need to make a bot account first.
+After you [connect Twitch](/reference/getting-started/connect-platforms), the bot can already reply in your chat.
+Until a shared bot or your own bot account is connected, it types those replies from your own Twitch account, so you can test a command straight away.
 
 ## Which account the bot types from
 
-The bot picks the account in this order.
+Three accounts can type the bot's lines in your chat, and the bot uses the first one in this list that is connected.
 
 | Order | The bot types from | When |
 | --- | --- | --- |
-| 1 | Your channel's own bot account | You connected one on the [White-label bot](/reference/settings/white-label-bot) settings page. |
-| 2 | The shared bot account | No own bot account is connected, and the install has a shared bot connected. |
-| 3 | Your own Twitch account | Neither of the two above exists. |
+| 1 | Your own bot account | Your own bot account is connected on **White-label bot** and is active. |
+| 2 | The shared bot | Your own bot account is not connected, and the shared bot is connected on your NomNomzBot installation. |
+| 3 | Your own Twitch account | Neither your own bot account nor the shared bot is connected. |
 
-A self-hosted bot uses the streamer's own account until a separate bot account is registered.
-So after you [connect Twitch](/reference/getting-started/connect-platforms), the bot can already type in your chat.
+Your own bot account is a Twitch account you made for the bot and connected for your channel only.
+You connect it on the [White-label bot](/reference/settings/white-label-bot) settings page, in the card **Your channel's own bot**.
+When it is connected, the bot types from it, leaves the marker off its lines, and the moderator notice checks this account.
 
-The **White-label bot** page shows which account the channel uses now.
-It shows **Connected** for your own bot account, or **Shared bot** for the shared one.
+The shared bot is one bot account for every channel on a NomNomzBot installation.
+If your channel runs on someone else's installation, you do nothing for it.
+Only the person who runs the installation adds the shared bot, during [first-run setup](/reference/self-hosting/first-run-setup) or later on the **Platform bot** page of the admin console.
+When you run NomNomzBot yourself, that person is you.
 
-## The bot speaks in one voice
+## See which account the bot uses now
 
-Every line the bot writes uses the channel's one bot voice.
-A command reply, an announcement and an event response all come from the same account.
-The bot speaks aloud only through text to speech.
+In the sidebar, choose **Settings**, the last item.
+The sidebar then lists the settings pages in groups.
+Choose **White-label bot** in the **Bot** group.
+The card **Your channel's own bot** has one row, and the name on that row tells you which account is set up.
 
-## Mark lines the bot posts as you
+| The row's name | What it means |
+| --- | --- |
+| The bot's name, with a **Connected** badge and an `@` handle under it | Your own bot account is connected, and the bot types from it. |
+| "Your channel uses the shared bot", followed by the bot's login name | The shared bot types the bot's lines. |
+| **Shared bot**, and nothing after it | Your own Twitch account types the bot's lines, because neither your own bot account nor the shared bot is connected. |
 
-When the bot types from your own account, viewers cannot tell its lines from yours.
-A marker in front of each bot line fixes that.
+## Mark the lines the bot posts as you
 
-1. Open **Settings** in the sidebar and choose **Bot basics**.
-2. Type one to four characters in **Bot line marker**, such as `*` or an emoji.
-   Spaces are not allowed.
+The **Bot line marker** is a short mark the bot puts in front of each line it posts through your own Twitch account, so viewers can tell those lines from what you type.
+It shows only when no bot account is connected for your channel: neither your own bot account nor the shared bot.
+When either one is connected, the bot leaves the marker off.
+You can still save a marker then, but it does not show in chat.
+
+Only the broadcaster can change the marker.
+
+1. In the sidebar, choose **Settings**, then choose **Bot basics** in the **Bot** group.
+2. In **Bot line marker**, type one to four characters with no spaces, such as `*` or an emoji.
+   Most emoji count as two of the four characters, and an emoji with a skin tone counts as all four.
 3. Choose **Save**.
    The page shows "Basics saved."
+   If an error shows instead, the marker is not saved, so check it against step 2 and choose **Save** again.
+4. In your Twitch chat, type `!commands` and press Enter.
+   The bot answers with the list of your commands, with your marker in front of its line.
+   As the broadcaster, you can repeat `!commands` at any time, because its wait between uses does not apply to you.
+   If the line has no marker, check the card on **White-label bot**: when it shows your own bot account or the shared bot, the marker stays off.
 
-The marker goes in front of each line the bot posts through your own account.
-Leave the field empty for no marker.
-The bot skips the marker when it types from a separate bot account, because that account's name already tells viewers apart.
-A line you send as yourself never gets the marker.
+To remove the marker, clear the field and choose **Save**.
+
+A command or event response can also post a line as you on purpose.
+Its steps are built in the editor described on [Pipelines](/reference/commands/pipelines#the-editor), where a **Send message** step has a **Sender** field.
+Set to **Bot**, the default, the line comes from the account the bot types from now.
+Set to **Broadcaster**, the line always comes from your own Twitch account, even when a bot account is connected.
+That suits a line only you can post, such as one with a subscriber-only emote that the bot account cannot use.
+Those lines never get the marker, because they are meant to read as your own words.
 
 ## Keep the bot a moderator
 
-This applies only when the bot types from a separate bot account.
-Your own account needs no moderator role.
+The moderator notice checks one bot account: your own bot account when one is connected, else the shared bot.
+Your own Twitch account is the broadcaster, which already outranks a moderator.
 
-When the bot account loses the moderator role, the dashboard shows a notice with the bot's name: "BotName is not a moderator in your channel".
+When that bot account is not a moderator, a notice titled "BotName is not a moderator in your channel" appears.
+The notice shows the bot account's Twitch login name in place of BotName.
+It shows in the **Needs attention** panel on the dashboard home and in the **Action required** list.
+To open that list, choose the inbox icon button at the top of the dashboard, next to the Shield mode button.
 The notice says: "Type /mod BotName in your Twitch chat. Twitch limits what a bot without the moderator role can do."
-BotName stands for the name of your bot account.
-The notice clears when the bot is a moderator again.
 
-<details>
-<summary>The shared bot can get the role back by itself</summary>
-
-For the shared bot account, NomNomzBot tries to give the moderator role back with your own Twitch sign-in.
-This needs the permission to manage moderators on your Twitch account.
-If that permission is missing, the dashboard asks you for it in its notices.
-
-</details>
+1. In your Twitch chat, as the broadcaster, type `/mod` followed by a space and the login name the notice shows.
+2. Press Enter.
+   The notice clears once Twitch reports that the bot is a moderator again.
 
 ## Related pages
 

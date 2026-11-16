@@ -1,46 +1,124 @@
 ---
 title: Emote helpers
-description: Lists 30 template helpers, each with what it gives and an example.
+description: Show, repeat, pick, list and count emotes from Twitch, 7TV, BTTV and FFZ, and read chat's most used emote, with 30 template helpers.
 ---
 
 Helpers on this page: `{emote}`, `{emote.*}`.
 
-These helpers show emotes from the channel and from 7TV, BTTV and FFZ.
-They can also count and pick emotes.
+Most of these helpers work in commands, event responses, timers, pipeline steps, Discord notifications and webhook bodies.
+The ones that read a viewer or a message need a trigger that brings one, so they do not work in timers.
+The **Use in** column of the table at the end lists the fields for each helper.
 
-Each row is its own example, so the rows on this page do not all come from one moment.
+The emotes a helper can see are the ones your channel can show: your own Twitch emotes, the Twitch globals, and your 7TV, BTTV and FFZ sets with their globals.
+When you name an emote in a helper, write its code the way viewers type it.
+An exact match wins, and a code that differs only in capitals is used when there is no exact one.
 
-| Helper | What it gives | Example |
-| --- | --- | --- |
-| `{emote}` | An emote by name when the channel has it, else the fallback text (or nothing): catJAM | `{emote:catJAM}` gives `catJAM` |
-| `{emote.channel.top}` | The emote chat used most, over the last 5,000 chat lines: KEKW | `KEKW` |
-| `{emote.channel.top.stream}` | The emote chat used most this stream, over the last 5,000 chat lines: catJAM | `catJAM` |
-| `{emote.cheermote}` | The cheermote for an amount of Bits, the biggest tier that fits: Cheer100 | `{emote.cheermote:100}` gives `Cheer100` |
-| `{emote.count.7tv}` | How many emotes the channel 7TV set has: 48 | `48` |
-| `{emote.count.bttv}` | How many emotes the channel BTTV set has: 20 | `20` |
-| `{emote.count.channel}` | How many Twitch emotes the channel has: 12 | `12` |
-| `{emote.count.ffz}` | How many emotes the channel FFZ set has: 9 | `9` |
-| `{emote.image}` | The picture link of an emote of the channel: https://cdn.7tv.app/emote/catjam01/2x.webp | `{emote.image:catJAM}` gives `https://cdn.7tv.app/emote/<emote id>/2x.webp` |
-| `{emote.list.7tv}` | Every emote of the channel 7TV set, one space apart: catJAM KEKW | `catJAM KEKW` |
-| `{emote.list.bttv}` | Every emote of the channel BTTV set, one space apart: catJAM | `catJAM` |
-| `{emote.list.channel}` | Every Twitch emote of the channel, one space apart: sampleHype sampleLove sampleWave | `sampleHype sampleLove sampleWave` |
-| `{emote.list.ffz}` | Every emote of the channel FFZ set, one space apart: monkaS | `monkaS` |
-| `{emote.message.count}` | How many emotes the message holds, repeats counted: 3 | `3` |
-| `{emote.message.first}` | The first emote in the message: KEKW | `KEKW` |
-| `{emote.provider}` | The network an emote comes from: 7TV, BTTV, FFZ or Twitch | `{emote.provider:catJAM}` gives `7TV` |
-| `{emote.random}` | A random emote from the channel Twitch emotes: sampleHype | `sampleHype` |
-| `{emote.random.7tv}` | A random emote from the channel 7TV set: catJAM | `catJAM` |
-| `{emote.random.any}` | A random emote from every network the channel uses: catJAM | `catJAM` |
-| `{emote.random.bits}` | A random Bits tier emote of the channel: sampleBits | `sampleBits` |
-| `{emote.random.bttv}` | A random emote from the channel BTTV set: catJAM | `catJAM` |
-| `{emote.random.ffz}` | A random emote from the channel FFZ set: monkaS | `monkaS` |
-| `{emote.random.follower}` | A random follower emote of the channel: sampleWave | `sampleWave` |
-| `{emote.random.global}` | A random Twitch global emote: Kappa | `Kappa` |
-| `{emote.random.sub}` | A random subscriber emote of the channel: sampleLove | `sampleLove` |
-| `{emote.repeat}` | An emote repeated a number of times, from 1 to 50: catJAM catJAM catJAM | `{emote.repeat:catJAM\|3}` gives `catJAM catJAM catJAM` |
-| `{emote.user.favorite}` | The newest favorite emote of the channel owner: catJAM | `catJAM` |
-| `{emote.user.top}` | The emote the viewer used most, over the last 5,000 chat lines: KEKW | `KEKW` |
-| `{emote.user.top.count}` | How many times the viewer used their top emote: 212 | `212` |
-| `{emote.wall}` | A wall of one emote with rows and columns, rows split by a slash: catJAM catJAM / catJAM catJAM | `{emote.wall:catJAM\|2\|2}` gives `catJAM catJAM / catJAM catJAM` |
+## Look up one emote
+
+`{emote:catJAM}` gives `catJAM` when your channel can show it, and nothing when it cannot.
+Add a fallback after a pipe to send other text instead: `{emote:catJAM|hype}` gives `hype` when there is no `catJAM`.
+
+`{emote.image:catJAM}` gives the picture link of the emote, and `{emote.provider:catJAM}` gives the network it comes from: `7TV`, `BTTV`, `FFZ` or `Twitch`.
+Both give nothing when the emote is not there.
+
+## Repeat an emote or build a wall
+
+`{emote.repeat:catJAM|3}` gives `catJAM catJAM catJAM`.
+The count is a whole number from 1 to 50.
+
+`{emote.wall:catJAM|2|3}` gives 2 rows of 3, with a slash between the rows: `catJAM catJAM catJAM / catJAM catJAM catJAM`.
+A wall has 1 to 10 rows and 1 to 20 columns.
+
+A count outside those limits, or one that is not a plain number, leaves the helper in the reply exactly as you wrote it, braces and all.
+An emote your channel cannot show gives nothing.
+
+`{emote.repeat}` is the only emote helper a viewer can use in their own text, such as the words after a command, when the [Viewer Templates setting and permissions](/reference/settings/features) allow it.
+There it takes a plain emote code only, not a link or another helper, and an emote your channel cannot show leaves the helper as the viewer wrote it.
+
+## Pick, list or count a set
+
+Each set has three helpers: a pick gives one random emote, a list gives every emote one space apart, and a count gives how many there are.
+
+| Set | Pick | List | Count |
+| --- | --- | --- | --- |
+| Your own Twitch emotes | `{emote.random}` | `{emote.list.channel}` | `{emote.count.channel}` |
+| Your 7TV set | `{emote.random.7tv}` | `{emote.list.7tv}` | `{emote.count.7tv}` |
+| Your BTTV set | `{emote.random.bttv}` | `{emote.list.bttv}` | `{emote.count.bttv}` |
+| Your FFZ set | `{emote.random.ffz}` | `{emote.list.ffz}` | `{emote.count.ffz}` |
+
+The 7TV, BTTV and FFZ helpers in this table read only your channel's own set, not that network's globals.
+Your own Twitch emotes are your subscriber, follower and Bits tier emotes, and you can pick from one kind with `{emote.random.sub}`, `{emote.random.follower}` or `{emote.random.bits}`.
+`{emote.random.global}` picks a Twitch global, and `{emote.random.any}` picks from every emote your channel can show.
+
+A pick is new each time the reply runs.
+Pick, list and count helpers take no arguments, so they have no fallback text.
+When you add an argument anyway, the helper stays in the reply as written, braces and all.
+When a set is empty, a pick and a list give nothing and the count gives `0`.
+So `Today's emote: {emote.random.7tv}` on a channel without a 7TV set sends `Today's emote:` and nothing after it.
+A count uses the number style of your channel's language, such as `1,204` in English.
+
+## Show a cheermote
+
+`{emote.cheermote:100}` gives the cheermote for 100 Bits, at the biggest tier the amount reaches: `Cheer100`.
+It uses the standard `Cheer` cheermote, and gives nothing when no tier fits.
+The amount is a whole number of at least 1; anything else leaves the helper as written.
+
+## Show chat's most used emote
+
+These helpers count the emotes in the newest 5,000 chat lines of your channel.
+Lines that ran a command are not counted.
+A tie goes to the code that sorts first by character code, so a capital letter beats a lowercase one (KEKW beats catJAM).
+When nobody used an emote, the helper gives nothing.
+
+- `{emote.channel.top}` is the emote chat used most.
+- `{emote.channel.top.stream}` counts only the lines of the stream that is live now, so it gives nothing while you are offline.
+- `{emote.user.top}` is the emote used most by the viewer who triggered the reply, and `{emote.user.top.count}` is how many times they used it.
+
+`{emote.user.favorite}` is a different thing: it does not look at chat.
+It gives the emote you, the channel owner, starred most recently.
+To star one, open **Chat**, open **Emotes and emoji** in the message box, and right-click the emote.
+
+## Read the emotes in a message
+
+`{emote.message.count}` gives how many emotes the triggering message holds, with repeats counted, and `{emote.message.first}` gives the first one.
+For a command, that is the chat line that ran it.
+Without a message, the count is `0` and the first emote is empty.
+
+## All emote helpers
+
+The examples are made up; your results depend on your channel's emotes and chat.
+
+| Helper | What it gives | Example | Use in |
+| --- | --- | --- | --- |
+| `{emote}` | The emote by name when your channel can show it, else the fallback text, else nothing | `{emote:catJAM\|hype}` gives `catJAM` | Commands, event responses, timers, pipelines, Discord, webhooks |
+| `{emote.channel.top}` | The emote chat used most in the newest 5,000 lines | `{emote.channel.top}` gives `KEKW` | Commands, event responses, timers, pipelines, Discord, webhooks |
+| `{emote.channel.top.stream}` | The emote chat used most this stream, in the newest 5,000 lines | `{emote.channel.top.stream}` gives `catJAM` | Commands, event responses, timers, pipelines, Discord, webhooks |
+| `{emote.cheermote}` | The cheermote for an amount of Bits, at the biggest tier the amount reaches | `{emote.cheermote:150}` gives `Cheer100` | Commands, event responses, timers, pipelines, Discord, webhooks |
+| `{emote.count.7tv}` | How many emotes your 7TV set has | `{emote.count.7tv}` gives `48` | Commands, event responses, timers, pipelines, Discord, webhooks |
+| `{emote.count.bttv}` | How many emotes your BTTV set has | `{emote.count.bttv}` gives `20` | Commands, event responses, timers, pipelines, Discord, webhooks |
+| `{emote.count.channel}` | How many Twitch emotes your channel has | `{emote.count.channel}` gives `12` | Commands, event responses, timers, pipelines, Discord, webhooks |
+| `{emote.count.ffz}` | How many emotes your FFZ set has | `{emote.count.ffz}` gives `9` | Commands, event responses, timers, pipelines, Discord, webhooks |
+| `{emote.image}` | The picture link of the emote, or nothing | `{emote.image:catJAM}` gives `https://cdn.7tv.app/emote/<emote id>/2x.webp` | Commands, event responses, timers, pipelines, Discord, webhooks |
+| `{emote.list.7tv}` | Every emote of your 7TV set, one space apart | `{emote.list.7tv}` gives `catJAM KEKW` | Commands, event responses, timers, pipelines, Discord, webhooks |
+| `{emote.list.bttv}` | Every emote of your BTTV set, one space apart | `{emote.list.bttv}` gives `catJAM` | Commands, event responses, timers, pipelines, Discord, webhooks |
+| `{emote.list.channel}` | Every Twitch emote of your channel, one space apart | `{emote.list.channel}` gives `sampleHype sampleLove sampleWave` | Commands, event responses, timers, pipelines, Discord, webhooks |
+| `{emote.list.ffz}` | Every emote of your FFZ set, one space apart | `{emote.list.ffz}` gives `monkaS` | Commands, event responses, timers, pipelines, Discord, webhooks |
+| `{emote.message.count}` | How many emotes the triggering message holds, repeats counted | `{emote.message.count}` gives `3` | Commands, event responses, pipelines, webhooks, Discord |
+| `{emote.message.first}` | The first emote in the triggering message | `{emote.message.first}` gives `KEKW` | Commands, event responses, pipelines, webhooks, Discord |
+| `{emote.provider}` | The network of the emote: 7TV, BTTV, FFZ or Twitch, or nothing | `{emote.provider:catJAM}` gives `7TV` | Commands, event responses, timers, pipelines, Discord, webhooks |
+| `{emote.random}` | A random emote of your own Twitch emotes | `{emote.random}` gives `sampleHype` | Commands, event responses, timers, pipelines, Discord, webhooks |
+| `{emote.random.7tv}` | A random emote of your 7TV set | `{emote.random.7tv}` gives `catJAM` | Commands, event responses, timers, pipelines, Discord, webhooks |
+| `{emote.random.any}` | A random emote of every emote your channel can show | `{emote.random.any}` gives `catJAM` | Commands, event responses, timers, pipelines, Discord, webhooks |
+| `{emote.random.bits}` | A random Bits tier emote of your channel | `{emote.random.bits}` gives `sampleBits` | Commands, event responses, timers, pipelines, Discord, webhooks |
+| `{emote.random.bttv}` | A random emote of your BTTV set | `{emote.random.bttv}` gives `catJAM` | Commands, event responses, timers, pipelines, Discord, webhooks |
+| `{emote.random.ffz}` | A random emote of your FFZ set | `{emote.random.ffz}` gives `monkaS` | Commands, event responses, timers, pipelines, Discord, webhooks |
+| `{emote.random.follower}` | A random follower emote of your channel | `{emote.random.follower}` gives `sampleWave` | Commands, event responses, timers, pipelines, Discord, webhooks |
+| `{emote.random.global}` | A random Twitch global emote | `{emote.random.global}` gives `Kappa` | Commands, event responses, timers, pipelines, Discord, webhooks |
+| `{emote.random.sub}` | A random subscriber emote of your channel | `{emote.random.sub}` gives `sampleLove` | Commands, event responses, timers, pipelines, Discord, webhooks |
+| `{emote.repeat}` | The emote repeated 1 to 50 times, one space apart | `{emote.repeat:catJAM\|3}` gives `catJAM catJAM catJAM` | Commands, event responses, timers, pipelines, Discord, webhooks, viewer text |
+| `{emote.user.favorite}` | The emote the channel owner starred most recently | `{emote.user.favorite}` gives `catJAM` | Commands, event responses, timers, pipelines, Discord, webhooks |
+| `{emote.user.top}` | The emote the triggering viewer used most in the newest 5,000 lines | `{emote.user.top}` gives `KEKW` | Commands, event responses, pipelines, webhooks, Discord |
+| `{emote.user.top.count}` | How many times the triggering viewer used their top emote | `{emote.user.top.count}` gives `212` | Commands, event responses, pipelines, webhooks, Discord |
+| `{emote.wall}` | A wall of 1 to 10 rows and 1 to 20 columns, rows split by a slash | `{emote.wall:catJAM\|2\|2}` gives `catJAM catJAM / catJAM catJAM` | Commands, event responses, timers, pipelines, Discord, webhooks |
 
 Back to [Template helpers](/reference/templates/overview). For the places helpers work, special characters and HTML, read [Variables and templates](/reference/commands/variables-and-templates).

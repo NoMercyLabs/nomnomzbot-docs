@@ -1,0 +1,62 @@
+[
+  {
+    "page": "Create a command",
+    "label": "A",
+    "file": "1-a.html",
+    "variant": "new"
+  },
+  {
+    "page": "Create a command",
+    "label": "B",
+    "file": "1-b.html",
+    "variant": "factual-corrections-only original"
+  },
+  {
+    "page": "Cooldowns and permissions",
+    "label": "A",
+    "file": "2-a.html",
+    "variant": "factual-corrections-only original"
+  },
+  {
+    "page": "Cooldowns and permissions",
+    "label": "B",
+    "file": "2-b.html",
+    "variant": "new"
+  },
+  {
+    "page": "Timers and chat triggers",
+    "label": "A",
+    "file": "3-a.html",
+    "variant": "new"
+  },
+  {
+    "page": "Timers and chat triggers",
+    "label": "B",
+    "file": "3-b.html",
+    "variant": "factual-corrections-only original"
+  },
+  {
+    "page": "Built-in commands",
+    "label": "A",
+    "file": "4-a.html",
+    "variant": "new"
+  },
+  {
+    "page": "Built-in commands",
+    "label": "B",
+    "file": "4-b.html",
+    "variant": "factual-corrections-only original"
+  },
+  {
+    "page": "First-run setup",
+    "label": "A",
+    "file": "5-a.html",
+    "variant": "factual-corrections-only original"
+  },
+  {
+    "page": "First-run setup",
+    "label": "B",
+    "file": "5-b.html",
+    "variant": "new"
+  }
+]

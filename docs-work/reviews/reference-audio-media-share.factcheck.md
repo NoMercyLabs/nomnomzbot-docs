@@ -1,7 +1,39 @@
-# Fact check: src/content/reference/en/audio/media-share.mdx
+# Current independent fact check
+
 Verdict: PASS
 Reviewed: src/content/reference/en/audio/media-share.mdx
-Reviewed-SHA: 9c827efc69e9365a
+Reviewed-SHA: d9be380b8d3d13afa046f60ac45cf80833fd76f2fa7ad1cac9d4ab50cd2ce8b6
+Reviewed-SHA256: d9be380b8d3d13afa046f60ac45cf80833fd76f2fa7ad1cac9d4ab50cd2ce8b6
+Reviewed-Date: 2026-11-05
+Reviewer: independent media-section reviewer
+Product: 54da8b6318de63b5205a0ff8db35e0b9045dd959 plus preserved current music UI edits
+
+The full article was read in sidebar order. Consequential defaults, permissions, prerequisites, state lifetime and effects were traced against current source; repaired findings were re-read before this verdict. This is source verification, not a live-channel or visible/audible output test.
+
+- server/src/NomNomzBot.Domain/MediaShare/Entities/MediaShareConfig.cs:25-55 defines off/approval-on/provider/duration/queue/cooldown defaults.
+- server/src/NomNomzBot.Infrastructure/MediaShare/MediaShareService.cs:65-210 validates eligibility/queue/cost before persistence; :544-582 refunds using current configuration and clears the charge reference. MediaShare/Playback/MediaSharePlaybackService.cs:60-193 distinguishes end/error/skip/stop paths.
+- server/src/NomNomzBot.Infrastructure/Chat/EventHandlers/ChatMessageHandler.cs:237-246,1512-1552 silently submits the first ordinary Twitch clip URL through the same service; YouTube has no such passive path.
+
+Source paths without a repeated layer prefix in a bullet are relative to its preceding Infrastructure or dashboard scope. The section report records method, repaired findings, external sources and remaining product limitations: docs-work/overhaul/review-automation-media-integrations.md.
+
+## Historical evidence
+
+Older hashes, verdicts and values below are retained for history and are not the current review.
+
+# Fact check: src/content/reference/en/audio/media-share.mdx
+Verdict: PENDING
+Reviewed: src/content/reference/en/audio/media-share.mdx
+Reviewed-SHA: d9be380b8d3d13afa046f60ac45cf80833fd76f2fa7ad1cac9d4ab50cd2ce8b6
+
+## 2026-11-05 author source verification
+
+Author source audit complete; independent verdict pending. This hash binds the current text, not the historical PASS below. The article was read in full and revised toward the user's explainer style while preserving precise reference detail. MediaShareService.cs; ChatMessageHandler.cs; MediaShareView.vue. Passive Twitch clip submissions use the same gates and costs; refunds use the current configured entry cost.
+
+The section inventory and known implementation gaps are in [automation-media-integrations.md](../overhaul/automation-media-integrations.md). This is source verification, not a live-channel execution claim. Independent review must account for product changes after the original author pass at b12f4f696.
+
+## Historical review (SHA 9c827efc69e9365a)
+
+Historical verdict: PASS. The earlier evidence below is retained as history and is superseded where the current article or source changed.
 
 ## Round 4 changes checked
 

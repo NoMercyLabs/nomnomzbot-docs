@@ -1,7 +1,54 @@
-# Fact check: src/content/reference/en/automation/rewards.mdx
+# Targeted final review — 2026-11-06
+
+Verdict: PENDING
+Reviewed: src/content/reference/en/automation/rewards.mdx
+Reviewed-SHA: a2c66d82a380f348f141483594bbcddf378d6b1c5d2b5630101b95e4108b4a4c
+Reviewed-SHA256: a2c66d82a380f348f141483594bbcddf378d6b1c5d2b5630101b95e4108b4a4c
+Reviewer: final-features correction author; self-review, not independent PASS
+Product-Revision: 2dfefbb0c393f439954d79b32ac11511678d7f44 plus working tree
+
+The full article was read editorially. The first-task prerequisite correction was checked against current source and applied by this reviewer. This is targeted author verification, not an exhaustive source audit, independent final-text approval or runtime test. See [final-features.md](../ecosystem-validation/final-features.md) for the exact claims and limits.
+
+## Historical reviews
+
+Original records below are preserved verbatim and apply only to their recorded hashes.
+
+# Current independent fact check
+
 Verdict: PASS
 Reviewed: src/content/reference/en/automation/rewards.mdx
-Reviewed-SHA: baaba1031b832424
+Reviewed-SHA: b2d2d5b856ef693cd270a414c7552d2a653357875b03810937ccb8013a2a0c96
+Reviewed-SHA256: b2d2d5b856ef693cd270a414c7552d2a653357875b03810937ccb8013a2a0c96
+Reviewed-Date: 2026-11-05
+Reviewer: independent media-section reviewer
+Product: 54da8b6318de63b5205a0ff8db35e0b9045dd959 plus preserved current music UI edits
+
+The full article was read in sidebar order. Consequential defaults, permissions, prerequisites, state lifetime and effects were traced against current source; repaired findings were re-read before this verdict. This is source verification, not a live-channel or visible/audible output test.
+
+- server/src/NomNomzBot.Infrastructure/Rewards/EventHandlers/RewardRedeemedHandler.cs:145-270,397-416 distinguishes countdown, reward speech, direct binding and pipeline/simple-reply fallback; the behaviors are not all mutually exclusive.
+- server/src/NomNomzBot.Infrastructure/Rewards/RewardService.cs:284-342 updates Twitch before local persistence; server/src/NomNomzBot.Infrastructure/Content/Identity/ActionDefinitionSeeder.cs:488-492 defines reward-management and redemption roles, while server/src/NomNomzBot.Api/Controllers/V1/RewardsController.cs:186-333 applies the actual management gates.
+- dashboard/src/views/dashboard/channel-points/ChannelPointsView.vue:33-60 and reward list/editor controls expose existing rewards/duplication rather than a New reward control.
+
+Source paths without a repeated layer prefix in a bullet are relative to its preceding Infrastructure or dashboard scope. The section report records method, repaired findings, external sources and remaining product limitations: docs-work/overhaul/review-automation-media-integrations.md.
+
+## Historical evidence
+
+Older hashes, verdicts and values below are retained for history and are not the current review.
+
+# Fact check: src/content/reference/en/automation/rewards.mdx
+Verdict: PENDING
+Reviewed: src/content/reference/en/automation/rewards.mdx
+Reviewed-SHA: b2d2d5b856ef693cd270a414c7552d2a653357875b03810937ccb8013a2a0c96
+
+## 2026-11-05 author source verification
+
+Author source audit complete; independent verdict pending. This hash binds the current text, not the historical PASS below. The article was read in full and revised toward the user's explainer style while preserving precise reference detail. RewardService.cs; RewardRedeemedHandler.cs; ChannelPointsView.vue; RewardsPanel.vue. Viewer TTS, countdown and the configured reaction are independently handled; creation starts from an editable reward or duplication.
+
+The section inventory and known implementation gaps are in [automation-media-integrations.md](../overhaul/automation-media-integrations.md). This is source verification, not a live-channel execution claim. Independent review must account for product changes after the original author pass at b12f4f696.
+
+## Historical review (SHA baaba1031b832424)
+
+Historical verdict: PASS. The earlier evidence below is retained as history and is superseded where the current article or source changed.
 
 Round 7. Every hunk of `git diff HEAD` on the page was read again; it holds only the round 5 and round 6 changes (checked below) plus these three:
 

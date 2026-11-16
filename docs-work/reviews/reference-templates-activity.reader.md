@@ -1,3 +1,22 @@
+# Current independent reader review
+
+Verdict: PASS
+Reviewed: src/content/reference/en/templates/activity.mdx
+Reviewed-SHA: b93f6b6b863543859c3bb03fefc3c7fd8d554fc6f11fd274e960b5ea954a83b8
+Reviewed-SHA256: b93f6b6b863543859c3bb03fefc3c7fd8d554fc6f11fd274e960b5ea954a83b8
+Reviewed-Date: 2026-11-05
+Reviewer: independent section reviewer
+
+A short purpose explanation leads to an exact activity lookup. Session versus stream counting is explicitly distinguished for commands.stream; availability prevents readers from treating trigger data as universally present.
+
+The full page was read with the preceding/following navigation context and related links. This review applies the owner's explanatory, progressive-disclosure guidance; it does not impose Atlas sentence caps, pilot mimicry or fixed article headings. No substantive reader finding remains at this hash. Build/render/link checks are recorded separately by the lead reviewer.
+
+Report: docs-work/overhaul/review-learning-commands-helpers.md.
+
+## Historical evidence
+
+The material below is retained as historical evidence; its older verdict is not the current review.
+
 # Reader review: src/content/reference/en/templates/activity.mdx
 Verdict: PASS
 Reviewed: C:/Projects/NoMercyLabs/nomnomzbot-docs/src/content/reference/en/templates/activity.mdx

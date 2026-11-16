@@ -1,0 +1,34 @@
+{
+  "fingerprint": "e55482959ca9e0819284c10890e8a6f4948d8123a521fbf7ce69fc5afe539326",
+  "metrics": {
+    "non_code_words": 2274,
+    "table_rows": 62,
+    "first_numbered_step_after_words": 1551
+  },
+  "warnings": [
+    {
+      "id": "paragraph-3",
+      "message": "paragraph 3: approximately 6 sentences"
+    },
+    {
+      "id": "sentence-3-5",
+      "message": "31 words: Ordinary viewers also need the stream to be live or Keep commands and rewards on while offline switched on; the platform’s broadcaster and moderators, and data-rights commands, bypass that offline gate."
+    },
+    {
+      "id": "paragraph-8",
+      "message": "paragraph 8: approximately 5 sentences"
+    },
+    {
+      "id": "paragraph-12",
+      "message": "paragraph 12: approximately 6 sentences"
+    },
+    {
+      "id": "sentence-12-4",
+      "message": "34 words: Without a channel name, the bot uses the one channel where it has seen you chatting in the current session; if there is none or more than one, it asks which channel you mean."
+    },
+    {
+      "id": "sentence-13-1",
+      "message": "32 words: If the bot reaches its daily whisper limit for new recipients, it can post a short notice in a channel where it has seen you chatting, asking you to use chat instead."
+    }
+  ]
+}

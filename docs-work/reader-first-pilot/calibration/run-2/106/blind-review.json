@@ -1,0 +1,63 @@
+{
+  "fingerprint": "6f495ebe9d74597968ba6c66213210148cfca3a1559b159ecd5e8cad28904aab",
+  "verdict": "PENDING",
+  "answers": [
+    {
+      "question": 1,
+      "answer": "Open Triggers and timers, Timers, New timer. Give it a name such as Break reminder. Leave Reaction at Simple reply and put Stretch and get water. and New here? Welcome! on separate lines in Messages. Keep Minutes between posts at 30, Send the reply to at Twitch chat and Chat lines needed at its new-timer default 0. Choose Create timer; it starts on. The first message is due at the next timer check, usually within about 30 seconds, rather than after the first 30 minutes. Messages then rotate in order, one per firing.",
+      "quote": [
+        "A new timer starts switched on with Chat lines needed at 0. Its first message is due at the next timer check, usually within about 30 seconds; it does not wait a full 30 minutes first.",
+        "Open Triggers and timers, then Timers, and choose New timer.",
+        "Leave Reaction at Simple reply. In Messages, enter these two lines:",
+        "Keep Minutes between posts at its default, 30, and Send the reply to at Twitch chat. Leave the other options alone for now.",
+        "Choose Create timer. The dialog closes and the timer appears in the list, switched on.",
+        "Several messages rotate in order, one per firing, then wrap back to the first."
+      ]
+    },
+    {
+      "question": 2,
+      "answer": "It needs neither a live stream nor an existing command or pipeline for this Simple reply. Sign in and select the channel; by default Moderator, Lead moderator, Editor or Broadcaster can change timers, subject to a raised requirement. The bot must be running and connected. VIP read access does not permit editing.",
+      "quote": [
+        "Sign in and select your channel. By default, a Moderator, Lead moderator, Editor or Broadcaster can change its timers and chat triggers. The broadcaster can raise the required role on Permissions.",
+        "The bot must be running and connected to the channel to check timers and receive chat. Timers can post while the stream is offline, so switch off a reminder when you finish if you only want it during broadcasts. A simple reply needs no existing command or pipeline.",
+        "A VIP sees that tab’s list, without an editor. New timer and New trigger show “You can view this, but your role cannot change it.”"
+      ]
+    },
+    {
+      "question": 3,
+      "answer": "Watch connected Twitch chat for Stretch and get water. at the first eligible check, then New here? Welcome! after the next 30-minute wait and an eligible check, then the first line again. A switch-on list entry alone is not proof of delivery. To prevent offline posts, switch the reminder off when finishing the broadcast; offline status alone does not stop it. Enabled saves immediately.",
+      "quote": [
+        "Watch your channel’s chat for “Take a moment to stretch and get some water.” After the next 30-minute wait and an eligible timer check, the bot posts the second line.",
+        "Several messages rotate in order, one per firing, then wrap back to the first.",
+        "The stream being offline does not stop a timer in a connected channel. Switch it off to stop a live-only reminder.",
+        "Saves immediately. An off timer stays listed as Off and posts nothing."
+      ]
+    },
+    {
+      "question": 4,
+      "answer": "For eligible ordinary lines, this is nice matches because hi occurs inside this, and HI matches because capital-letter matching is off. !hi is excluded if ! is the channel’s command prefix; the article does not establish the actual configured prefix for this channel. Matches can also be held by the channel-wide wait or excluded if claimed by another command or soundboard. To answer only the greeting, change How chat must match to Is exactly the words, keep Words to watch for at hi, and Save changes. With capitalization matching still off, HI remains an exact greeting match.",
+      "quote": [
+        "For example, hi with Contains the words also matches this. Choose Is exactly the words to answer only the greeting, or use a suitable pattern for a more specific rule.",
+        "With Match capital letters off, Hello and hello match the same way. Turning it on makes them different. An invalid regular expression is refused when you save.",
+        "Chat triggers watch ordinary chat lines. A line starting with the channel’s command prefix is excluded, even when it does not run a valid command. A line claimed by another command or by a soundboard trigger is excluded too.",
+        "Choose Save changes to keep edits, or Discard to return to the saved trigger. Saving clears the unsaved count and updates the words in the list."
+      ]
+    },
+    {
+      "question": 5,
+      "answer": "No material obstacle to the requested timer. The early first firing, new-timer chat-line default and ability to post offline are disclosed before creation, so I can judge those consequences before enabling the reminder. The later trigger reference states substring matching and prefix exclusions directly; only the channel’s actual configured prefix remains unspecified, so the !hi answer is conditional rather than invented.",
+      "quote": [
+        "The bot must be running and connected to the channel to check timers and receive chat. Timers can post while the stream is offline, so switch off a reminder when you finish if you only want it during broadcasts. A simple reply needs no existing command or pipeline.",
+        "A new timer starts switched on with Chat lines needed at 0. Its first message is due at the next timer check, usually within about 30 seconds; it does not wait a full 30 minutes first."
+      ]
+    },
+    {
+      "question": 6,
+      "answer": "No material read-aloud obstacle identified. The two messages, first-firing warning and later matching examples provide enough context when heard in order. The longer timer-delivery reference covers other reactions, but that is not itself a failure for the simple reminder task.",
+      "quote": []
+    }
+  ],
+  "findings": [],
+  "warnings_released": false,
+  "warning_review": []
+}

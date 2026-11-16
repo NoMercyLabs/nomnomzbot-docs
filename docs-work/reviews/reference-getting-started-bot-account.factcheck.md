@@ -1,3 +1,24 @@
+# Current independent fact check
+
+Verdict: PASS
+Reviewed: src/content/reference/en/getting-started/bot-account.mdx
+Reviewed-SHA: 8aff774b7f204f22f22972aebaa833d18a6f42a32c4ecc8f7633e1255a722154
+Reviewed-SHA256: 8aff774b7f204f22f22972aebaa833d18a6f42a32c4ecc8f7633e1255a722154
+Reviewed-Date: 2026-11-05
+Reviewer: independent section reviewer
+Product: 54da8b6318de63b5205a0ff8db35e0b9045dd959 (initial source tracing b12f4f69638553c03ed64c1518c90d7bcccd6907)
+
+The full article was read in navigation order; consequential behavior and reference details were checked against current source. All reported documentation findings affecting this page were repaired and re-reviewed. This is a source review, not a live-channel test.
+
+- Dedicated then connected shared account resolution: server/src/NomNomzBot.Infrastructure/Identity/ChannelTwitchBotResolver.cs:31-55; shared/owner send fallback: server/src/NomNomzBot.Infrastructure/Chat/HelixChatProvider.cs:399-465. Marker application: server/src/NomNomzBot.Infrastructure/Chat/ChatPlatformRouter.cs:533-568.
+- Name-marker validation is enforced at server/src/NomNomzBot.Infrastructure/Identity/ChannelService.cs:545-578 (1-4 non-whitespace characters).
+
+Report: docs-work/overhaul/review-learning-commands-helpers.md.
+
+## Historical evidence
+
+The material below is retained as historical evidence. Its older hashes, verdicts and values do not constitute the current review.
+
 # Fact check: src/content/reference/en/getting-started/bot-account.mdx
 Verdict: PASS
 Reviewed: src/content/reference/en/getting-started/bot-account.mdx

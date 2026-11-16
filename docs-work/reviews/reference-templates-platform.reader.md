@@ -1,3 +1,22 @@
+# Current independent reader review
+
+Verdict: PASS
+Reviewed: src/content/reference/en/templates/platform.mdx
+Reviewed-SHA: c241ac78c3fe64e14f3fba9dd274caf916e362e44452aacc66741d74158582f0
+Reviewed-SHA256: c241ac78c3fe64e14f3fba9dd274caf916e362e44452aacc66741d74158582f0
+Reviewed-Date: 2026-11-05
+Reviewer: independent section reviewer
+
+The reference explains connected versus live platform counts and preserves empty-value behavior for disconnected/offline platforms. It separates channel-wide state from the triggering user/event platform.
+
+The full page was read with the preceding/following navigation context and related links. This review applies the owner's explanatory, progressive-disclosure guidance; it does not impose Atlas sentence caps, pilot mimicry or fixed article headings. No substantive reader finding remains at this hash. Build/render/link checks are recorded separately by the lead reviewer.
+
+Report: docs-work/overhaul/review-learning-commands-helpers.md.
+
+## Historical evidence
+
+The material below is retained as historical evidence; its older verdict is not the current review.
+
 # Reader review: src/content/reference/en/templates/platform.mdx
 Verdict: PASS
 Reviewed: C:/Projects/NoMercyLabs/nomnomzbot-docs/src/content/reference/en/templates/platform.mdx

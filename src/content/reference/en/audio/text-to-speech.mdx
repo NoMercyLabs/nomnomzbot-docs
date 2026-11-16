@@ -3,9 +3,25 @@ title: Text to speech
 description: Turn on text to speech, pick the channel voice, choose who is heard, add pronunciation rules, store your own voice key and read the history.
 ---
 
-You set up text to speech on the **Text to speech** page in the sidebar.
-Text to speech is how the bot reads a line aloud on your stream.
-The page header shows "Text to speech is on" or "Text to speech is off".
+Text to speech turns a written line into audio that your viewers can hear.
+You might use it to read a channel-point reward, speak a command's reply or thank someone during an event response.
+The **Text to speech** page sets the voice and rules shared by those features.
+
+Turning speech on does not make every chat line speak by itself.
+A command, reward, event response or pipeline must request the speech, and the browser source in OBS must be ready to play it.
+Set up that path first, then use the voice and message settings to decide how it should sound.
+
+## Hear your first spoken reply
+
+1. Open **OBS**, choose **Overlays in OBS**, and find **TTS caption** in **Required overlays**.
+2. Choose **Connect** and add it to OBS as a **Browser** source using the dialog's settings. Keep **Control audio via OBS** on.
+3. Open **Text to speech** and choose **Rules**. Check that **Read messages aloud** is on and **Moderators approve first** is off for this first test.
+4. Choose a voice on **Voices** and use its play button to hear a sample.
+5. On a [chat command](/reference/commands/create-a-command), enable **Read it aloud**, save it and run the command in chat.
+
+You should hear the reply through OBS and see the caption when the source displays it.
+The dashboard's voice sample checks the voice; running the command checks the path through to your stream.
+For viewer-written speech instead, use **Rewards that speak** below.
 
 | Tab | What it holds |
 | --- | --- |
@@ -15,8 +31,8 @@ The page header shows "Text to speech is on" or "Text to speech is off".
 | **Pronunciation** | Rules that make the bot say a word another way. |
 | **Keys** | Your own voice provider keys, and how your channel name is spoken. |
 
-The speech plays through the speaker overlay.
-Add it to OBS from **Required overlays** on the **OBS** page.
+The speech plays through **TTS caption**, which also displays the spoken words.
+**Bot Audio** handles sound clips and redemption sounds; it is a different source.
 [OBS browser source](/reference/overlays/obs-browser-source) shows how.
 The **Speaker overlay** row on the **Overview** tab opens that place.
 
@@ -27,6 +43,7 @@ The roles are explained on [Permissions](/reference/settings/permissions).
 
 The **Broadcaster** may also let a **VIP** open the page.
 A VIP then sees the settings, but cannot change them.
+A VIP does not see the play buttons: playing a voice sample needs **Moderator** or higher.
 The **Keys** tab shows only to someone who may change the settings.
 
 ## Which voice speaks
@@ -35,11 +52,25 @@ A line the bot writes, such as a command reply or an event response, is spoken i
 A **Read aloud (TTS)** step in a [pipeline](/reference/commands/pipelines) sets the text it reads.
 These settings on this page still apply to it: **Read messages aloud**, **Who may be heard**, **Minimum bits**, **Cooldown** for a viewer's lines, **Maximum characters**, **Censor profanity** and the pronunciation rules.
 
+On a **Read aloud (TTS)** step, the **As** field picks whose voice speaks.
+Blank, `bot` or `channel` uses the channel voice.
+`viewer` or `user` uses the voice of the viewer who triggered the step.
+`broadcaster` uses the broadcaster's own saved voice, and a platform user id speaks as that person.
+The **Rate** field sets the speed as a percent of normal, from -50% to +50%.
+
 A viewer's own words, such as a reward's typed text, are read in the viewer's own voice.
 A viewer picks it in chat with `!voice`, as [Built-in commands](/reference/commands/built-in-commands) shows.
-A viewer with no voice of their own gets a random voice the first time their words are read.
+A viewer with no voice of their own gets a voice the first time their words are read.
 The bot picks an English voice, or one that speaks many languages, from the channel's provider.
+It prefers a voice that matches the viewer's pronouns (he: male, she: female, others: neutral), and picks at random among those.
 The viewer keeps that voice.
+
+Some event replies contain both the bot's announcement and the viewer's own message, such as a resubscription message.
+The bot can speak those parts in their respective voices within the same reply.
+The person who triggered an event does not become the voice of all the bot's narration.
+
+When the bot says a viewer's name, it reads a name such as `smirking_squiggly` as "smirking squiggly".
+A number range such as `10-30` stays as written.
 
 ## Turn text to speech on or off
 
@@ -57,6 +88,7 @@ A new channel starts with it on.
 3. Choose the play button on a row to hear a sample of the voice.
 4. Click the row to make it the channel voice.
    The **Channel voice** panel shows the voice you picked.
+   Picking a voice also sets **Voice provider** to that voice's service.
 
 **Load more voices** at the bottom adds the next part of the list.
 
@@ -78,11 +110,14 @@ A change saves when you switch it, choose it, or leave the box.
 | **Who may be heard** | The lowest role that is read aloud: **Everyone**, **Twitch subscribers**, **VIPs**, **Moderators** or **Broadcaster**. | **Everyone** |
 | **Maximum characters** | The longest line, up to 500. | 500 characters |
 | **Cooldown** | Seconds a viewer waits between their spoken lines, from 0 to 3600. 0 means none. | 0 seconds |
+| **Skip bot messages** | Saves the preference, but the current speech dispatcher does not consult it. It does not silence bot-authored command or event replies. | On |
 
 A bot line longer than **Maximum characters** is cut at the last whole word that fits.
 A viewer's own words that are too long are not read at all.
 
-A number outside its range is refused, and the row shows the reason in red, for example "The cooldown is between 0 and 3600 seconds."
+A number above or below the range is set to the nearest allowed value.
+For example, 5000 in **Cooldown** becomes 3600.
+Only **Minimum bits** on the **Rules** tab can be refused: a value above 1,000,000 shows "The minimum bits is between 0 and 1,000,000." in red.
 
 ## Choose who is heard
 
@@ -94,16 +129,30 @@ The **Message rules** panel on the **Rules** tab decides who is heard and what t
 | **Viewers pick their own voice** | Viewers change their voice with `!voice`. Off: moderators only. | On |
 | **Censor profanity** | Mask mild swearing before it is spoken. | On |
 | **Minimum bits** | The bits a line needs to be read, from 0 to 1,000,000. 0 means none. | 0 |
+| **Read usernames** | Saves the preference, but the current speech dispatcher does not automatically add names based on it. Include a name in the reply text when you want it spoken. | On |
+| **Moderators approve first** | Holds otherwise accepted speech requests in an approval queue instead of playing them immediately. See the current dashboard limitation below. | Off |
 
-**Who may be heard**, **Minimum bits** and **Cooldown** do not apply to a channel-point reward.
+**Who may be heard**, **Minimum bits** and **Cooldown** are bypassed when the reward's built-in **Rewards that speak** path reads its submitted text.
+A **Read aloud (TTS)** step in that reward's pipeline still uses the normal checks; being triggered by a redemption does not give the step the same bypass.
 The viewer already paid for that line with channel points.
 
 When **Censor profanity** removes every word of a line, the bot reads nothing.
+
+### Approval and the current dashboard limitation
+
+**Moderators approve first** changes the speech path, including requests for bot-authored replies: an accepted request is held rather than played.
+The server has permission-controlled actions to list, approve and reject queued speech, but the current dashboard has no queue review screen or approval buttons.
+Keep this switch off for an ordinary dashboard-only setup; turning it on without a separate review integration can leave valid speech waiting unheard.
+
+Turning the switch off lets new requests use the immediate playback path.
+It does not itself approve or play requests already held in the queue.
 
 ### Reset the settings
 
 **Reset to defaults** sits at the bottom of the **Speaking** and **Message rules** panels.
 It puts every setting in both panels back to its default, except **Follow the platform voice**.
+The button is grayed out while every setting already has its default.
+When **Cooldown** is the only changed setting, the button stays grayed out; set **Cooldown** back to 0 by hand.
 
 The note beside it says "Keys, voice and pronunciation stay."
 The reset keeps your keys, the channel voice, your pronunciation rules and the viewers' own voices.
@@ -114,7 +163,7 @@ The **Rewards that speak** panel on the **Rules** tab lists your channel-point r
 Switch a reward on to have the bot read aloud the text the viewer types when they redeem it.
 The line is spoken in the viewer's own voice.
 
-A reward is made on [Channel-point rewards](/reference/automation/rewards).
+Choose and configure the reward on [Channel-point rewards](/reference/automation/rewards), including **Viewer must type a message** so the viewer can supply the text.
 With no rewards, the panel says "No rewards yet. Create a reward first."
 
 ## Add a pronunciation rule
@@ -125,9 +174,16 @@ A pronunciation rule makes the bot say a replacement whenever a phrase appears i
    The **Add a pronunciation rule** dialog opens.
 2. Type the phrase in **Phrase**, up to 100 characters.
 3. Type what the bot should say in **Say instead**, up to 200 characters.
-4. Choose **Match**: **Whole word, any case**, or **Exact text**.
-5. Choose **Add rule**.
+4. Optional: type the sound of the word in **Exact sound (IPA)**, up to 200 characters.
+   IPA is the International Phonetic Alphabet, for example `vjuː` for "Vue".
+5. Choose **Match**: **Whole word, any case**, or **Exact text**.
+6. Choose **Add rule**.
    The dialog closes and the rule shows in the list.
+
+A voice that reads IPA, such as an Azure voice, says the exact sound.
+Every other voice says the text in **Say instead**, so always fill in both.
+If the voice service refuses the sound, the bot speaks the line with **Say instead**.
+The list shows the sound under the replacement.
 
 **Add rule** stays grayed out until **Phrase** and **Say instead** both hold text.
 A second rule with the same phrase and match is refused with "A rule with this phrase and match already exists."
@@ -180,6 +236,77 @@ With nothing spoken yet, the panel says "Nothing has been read aloud yet. Messag
 
 ## Other places that speak
 
+### Coordinate speech with other steps
+
+A reward might lower the music, speak a line, then restore the volume.
+By default, a **Read aloud (TTS)** step uses **Mode** `async`: the next step begins after the line is dispatched, while its audio may still be playing.
+Choose `sync` when the next step should wait for that line. The bot waits for the synthesized clip's reported duration, capped at 60 seconds, plus a quarter-second startup allowance.
+This is a timed wait, rather than confirmation from OBS that playback finished.
+A request held for moderator approval does not run this playback wait.
+Both modes set `{tts.durationMs}` and `{tts.voiceId}` for later steps.
+If you want to reference either output in a later template field, first declare that name with **Set variable** and an empty **Value**; the save-time check does not automatically register these outputs either.
+
+For a sequence with several timed lines, first add **Set variable** with **Name** `scene.token` and an empty **Value**, then add **Scene reserve** before its speech.
+The declaration is currently needed because the editor's save-time check does not automatically recognize the reservation's output variable.
+**Scene reserve** then sets `{scene.token}`; put that variable in **Scene token** on each of the sequence's **Read aloud (TTS)** steps.
+Use `sync` for lines that should finish before the next step, then add **Scene release** with the same token after the sequence.
+Unrelated new speech waits for the reservation to clear. Speech already underway is not cancelled, and the usual TTS permission, bits, length and approval checks still apply.
+
+**Max hold seconds** defaults to 60 and is clamped to 1–120 seconds.
+The reservation expires even if the pipeline stops before reaching **Scene release**, so a failed sequence cannot hold other speech indefinitely.
+Only one reservation is active per channel: another **Scene reserve** replaces its token, and an old token cannot release the replacement.
+Reservations are held in memory and end when the bot restarts.
+
+### Make speech without playing it
+
+The synthesize step makes the speech audio without playing it.
+It gives `{tts.audioUrl}` and `{tts.durationMs}` to later steps, for example for a widget.
+
+### Several voices in one line
+
+The **Segments** field of a **Read aloud (TTS)** step speaks one line as a list of blocks.
+When it is set, it replaces **Text to read**.
+It takes a JSON list, and every value in it accepts [template variables](/reference/commands/variables-and-templates).
+The whole list can also come from one variable, such as one a paired program hands over.
+
+A text block has `text`, and optionally `voice`, `rate`, `pitch`, `volume`, `stress` and `breakAfterMs`.
+`rate`, `pitch` and `volume` are a percent change from normal, such as `20` or `-10%`.
+Each one is limited to -50 to 50; a bigger value counts as 50.
+`stress` set to `true` marks the block that carries the stress; `breakAfterMs` is silence after the block, up to 5000 ms.
+A pause block has only `pause`, in milliseconds, and adds silence after the block before it.
+Blocks go in any order.
+
+```json
+[
+  { "text": "Welcome back", "voice": "en-US-AriaNeural" },
+  { "pause": 400 },
+  { "text": "everyone", "stress": true }
+]
+```
+
+Each voice provider reads the list its own way.
+Azure speaks the blocks in one clip, and makes a stressed block slower, higher and louder.
+Edge cannot stress a word, so it joins neighboring blocks that sound the same and cuts at a pause.
+ElevenLabs speaks a run of blocks with the same voice as one text.
+It skips pauses, `breakAfterMs`, `rate`, `pitch`, `volume` and `stress`; only the voice changes are heard.
+The step fails when the list is empty or is not valid JSON, when a block is not an object or has neither `text` nor `pause`, when no block has `text`, or when a `rate`, `pitch` or `volume` is not a number.
+A pause block at the start of the list adds no silence.
+A [code script](/reference/code/sdk-chat-music-voice) can pass the same blocks.
+
+### Assign a viewer's voice from a pipeline
+
+**Tts set voice** saves the catalog voice selected in **Voice id**, while **Tts clear voice** removes the saved assignment.
+These steps are useful when a reward changes a viewer's voice for future messages; they do not change the channel voice.
+To change only one spoken line, use the **Voice (optional)** field on that line's **Read aloud (TTS)** step instead.
+
+Leave **Target variable** empty to use the person who triggered the pipeline. This self-service path requires **Read messages aloud** and **Viewers pick their own voice** to be on.
+To name another viewer, enter the name of a variable containing their platform user id, such as `target.id`, without braces.
+If that variable is missing or empty, the step falls back to the triggering person; make sure a targeted workflow supplies it before running the step.
+The named-viewer path does not apply the self-service switches or check a separate invoking role. Limit who can trigger a pipeline that changes someone else's voice.
+Clearing an assignment does not pin the viewer to the channel voice: the next viewer-speech request can assign a random voice again, as explained in [Which voice speaks](#which-voice-speaks).
+
+### Commands, scripts and rewards
+
 Text to speech also runs from other places in the bot:
 
 - A command reply with **Read it aloud** switched on, on [Create a command](/reference/commands/create-a-command).
@@ -195,7 +322,8 @@ Each one goes through the same settings as a speak step, listed in [Which voice 
 **A reward is redeemed, but nothing is read aloud.**
 Check that **Read messages aloud** is on, and that the reward is switched on in **Rewards that speak**.
 The viewer must type text when they redeem it.
-Check that the speaker overlay is in OBS.
+Check that **TTS caption** is loaded in OBS and its audio reaches the mixer.
+If **Moderators approve first** is on, the request may be waiting in the approval queue; the current dashboard cannot review that queue.
 
 ::
 

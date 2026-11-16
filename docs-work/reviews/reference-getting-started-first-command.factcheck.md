@@ -1,3 +1,25 @@
+# Current independent fact check
+
+Verdict: PASS
+Reviewed: src/content/reference/en/getting-started/first-command.mdx
+Reviewed-SHA: 8929dd11e29b59c38e685d0acdb1f38505415beb4efc336728fce408f1bb13f7
+Reviewed-SHA256: 8929dd11e29b59c38e685d0acdb1f38505415beb4efc336728fce408f1bb13f7
+Reviewed-Date: 2026-11-05
+Reviewer: independent section reviewer
+Product: 54da8b6318de63b5205a0ff8db35e0b9045dd959 (initial source tracing b12f4f69638553c03ed64c1518c90d7bcccd6907)
+
+The full article was read in navigation order; consequential behavior and reference details were checked against current source. All reported documentation findings affecting this page were repaired and re-reviewed. This is a source review, not a live-channel test.
+
+- New command enabled/role/cooldown defaults: server/src/NomNomzBot.Application/Commands/Dtos/CommandDtos.cs:96-156.
+- Save validation and creation: server/src/NomNomzBot.Infrastructure/Commands/CommandService.cs:70-249.
+- Broadcaster/moderator offline exception versus ordinary viewers: server/src/NomNomzBot.Infrastructure/Chat/OfflineCommandGate.cs:23-26; server/src/NomNomzBot.Infrastructure/Chat/EventHandlers/ChatMessageHandler.cs:290-379.
+
+Report: docs-work/overhaul/review-learning-commands-helpers.md.
+
+## Historical evidence
+
+The material below is retained as historical evidence. Its older hashes, verdicts and values do not constitute the current review.
+
 # Fact check: src/content/reference/en/getting-started/first-command.mdx
 Verdict: PASS
 Reviewed: src/content/reference/en/getting-started/first-command.mdx

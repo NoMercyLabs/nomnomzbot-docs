@@ -1,42 +1,116 @@
 ---
 title: Condition helpers
-description: Lists 26 template helpers, each with what it gives and an example.
+description: Choose between texts, compare a value or fall back when a value is empty, with 26 template helpers.
 ---
 
 Helpers on this page: `{if}`, `{if.*}`, `{switch*}`, `{coalesce*}`, `{default*}`, `{literal*}`, `{chars.*}`.
 
-These helpers choose a text by a condition, or give a fallback when a value is empty.
-Use them when a reply must change with the situation.
+These helpers pick the wording of a reply while the bot fills it in.
+They work in every box that takes helpers: commands, event responses, timers, pipeline steps, Discord notifications and webhook bodies.
+They also work in viewer text, except `{if.<path>.matches}`.
+They change only the words. To decide who may use a command, use [command permissions](/reference/commands/cooldowns-and-permissions), and to run different actions, use a [pipeline](/reference/commands/pipelines).
 
-Each row is its own example, so the rows on this page do not all come from one moment.
+How to write a helper, put one inside another and type spaces or new lines is on [Variables and templates](/reference/commands/variables-and-templates).
+When a helper here has the wrong number of parts, it stays in the reply as written, braces and all.
 
-| Helper | What it gives | Example |
-| --- | --- | --- |
-| `{chars.newline}` | A line break (for Discord and webhooks; chat shows a space) | - |
-| `{chars.nothing}` | Nothing at all, for an empty branch that reads clearly | - |
-| `{chars.pipe}` | The pipe character, which would otherwise split arguments | `\|` |
-| `{chars.space}` | A space | - |
-| `{chars.zws}` | A zero-width space, which stops a mention such as @everyone from working | `​` |
-| `{coalesce}` | The first value that is not empty: `{coalesce:a\|b\|c}` | `ViewerTwo` |
-| `{default}` | The value, or the fallback when the value is empty: `{default:value\|fallback}` | `Software and Game Development` |
-| `{if}` | Shows the first text when the value is set (not empty, false, 0 or no), else the second: `{if:value\|then\|else}` | `thanks sub!` |
-| `{if.<path>}` | Shows the first text when a helper such as stream.live is set, else the second: `{if.stream.live:then\|else}` | `{if.stream.live:on\|off}` gives `on` |
-| `{if.<path>.contains}` | Tests that a helper contains a text: `{if.args.all.contains:text:then\|else}` | `{if.args.all.contains:hello:hi back\|}` gives `hi back` |
-| `{if.<path>.endswith}` | Tests that a helper ends with a text: `{if.args.all.endswith:text:then\|else}` | `{if.args.all.endswith:world:yes\|no}` gives `yes` |
-| `{if.<path>.equals}` | Tests that a helper equals a text, exactly: `{if.user.login.equals:text:then\|else}` | `{if.user.login.equals:viewerone:hi me\|hi}` gives `hi me` |
-| `{if.<path>.gt}` | Tests that a helper is a number greater than a number: `{if.count.deaths.gt:10:then\|else}` | `{if.count.deaths.gt:10:rough day\|ok}` gives `rough day` |
-| `{if.<path>.gte}` | Tests that a helper is a number greater than or equal to a number: `{if.user.months.gte:6:then\|else}` | `{if.user.months.gte:6:veteran\|new}` gives `veteran` |
-| `{if.<path>.iequals}` | Tests that a helper equals a text, ignoring upper and lower case: `{if.user.login.iequals:text:then\|else}` | `{if.user.login.iequals:VIEWERONE:yes\|no}` gives `yes` |
-| `{if.<path>.lt}` | Tests that a helper is a number less than a number: `{if.stream.viewers.lt:10:then\|else}` | `{if.stream.viewers.lt:10:cozy\|busy}` gives `busy` |
-| `{if.<path>.lte}` | Tests that a helper is a number less than or equal to a number: `{if.count.wins.lte:3:then\|else}` | `{if.count.wins.lte:3:keep going\|great}` gives `keep going` |
-| `{if.<path>.matches}` | Tests that a helper matches a regular expression: `{if.args.2.matches:pattern:then\|else}` | `{if.args.2.matches:^h:h-word\|other}` gives `h-word` |
-| `{if.<path>.startswith}` | Tests that a helper starts with a text: `{if.args.1.startswith:text:then\|else}` | `{if.args.1.startswith:@:mention\|word}` gives `mention` |
-| `{if.all}` | Shows the first text when both values are set, else the second: `{if.all:a\|b\|then\|else}` | `both` |
-| `{if.any}` | Shows the first text when at least one value is set, else the second: `{if.any:a\|b\|then\|else}` | `yes` |
-| `{if.empty}` | Shows the first text when the value is empty, else the second: `{if.empty:value\|then\|else}` | `who?` |
-| `{if.not}` | Shows the first text when the value is not set, else the second: `{if.not:value\|then\|else}` | `not a mod` |
-| `{literal}` | The text as written, with nothing inside it resolved: `{literal:{user}}` shows `{user}` | `{literal:a\|b}` gives `a\|b` |
-| `{switch}` | Picks the text of the first case that equals the value, else the last text: `{switch:value\|case=text\|case=text\|else}` | `{switch:they/them\|she/her=queen\|he/him=king\|royal}` gives `royal` |
-| `{switch.range}` | Picks the text of the first limit that is at least the number, else the last text: `{switch.range:number\|limit=text\|limit=text\|else}` | `{switch.range:7\|5=fine\|10=hmm\|oof}` gives `hmm` |
+## Choose between two texts
 
-Back to [Template helpers](/reference/templates/overview). For the places helpers work, special characters and HTML, read [Variables and templates](/reference/commands/variables-and-templates).
+`{if:{stream.isLive}|We are live!|See you next stream.}` gives the first text while your channel is live and the second while it is offline.
+The bot fills in only the text it picks, so a helper inside the other text never runs.
+You can leave out the last text, and then the reply shows nothing when the condition fails.
+
+`{if}`, `{if.not}`, `{if.all}`, `{if.any}` and the `{if.<path>}` tests see a value as set when it has text and that text is not `false`, `no` or `0`.
+Upper and lower case do not matter, so `False` and `NO` are not set either.
+
+`{if.empty}`, `{default}` and `{coalesce}` look only for blank text: nothing at all, or only spaces.
+To them, `0` and `false` are values, so `{default:0|none}` gives `0`.
+
+## Fall back when a value is missing
+
+A helper that has no value stays in the reply as written, as shown under [When a value is missing](/reference/commands/variables-and-templates#when-a-value-is-missing).
+That leftover text is not blank, so `{default}`, `{coalesce}`, `{if.empty}` and `{if}` treat it as a value.
+For a bare command, `{default:{args.1}|everyone}` gives `{args.1}`, not `everyone`.
+
+Use the `{if.<path>}` form instead.
+Write a helper name after `if.`, without braces, and the bot reads that helper itself.
+A helper with no value counts as not set there, so you get the second text:
+
+`{if.args.1:Hi {args.1}!|Hi everyone!}` gives `Hi everyone!` for a bare command, and `Hi chat!` for a command followed by `chat`.
+
+Keep `{default}` and `{coalesce}` for values that are blank when empty, such as text you typed or a helper that gives empty text.
+
+## Compare a value
+
+A test adds its name after the helper name, then a colon, the value to compare with, another colon and the first text.
+A pipe goes before the second text, as usual:
+
+`{if.user.login.equals:viewerone:hi me|hi}` gives `hi me` when the person is `viewerone`, and `hi` for anyone else.
+
+To put a colon inside the value you compare with, write `\:`.
+
+The text tests are `equals`, `contains`, `startswith` and `endswith`.
+They match upper and lower case exactly, so `equals:Viewerone` does not match `viewerone`.
+Use `iequals` to compare while ignoring case.
+`matches` tests a regular expression, a pattern such as `^h` for "starts with h".
+A pattern the bot cannot read makes the helper stay as written.
+
+The number tests are `gt` (greater than), `gte` (at least), `lt` (less than) and `lte` (at most).
+Both sides must be plain numbers, such as `12`, `4.5` or `82%`: a dot for decimals, and a `%` at the end is ignored.
+A number with a thousands separator, such as `1,234`, is not a plain number.
+When either side is not a number, the helper stays in the reply as written.
+
+`{if.count.deaths.gt:10:Rough day, {count.deaths} deaths.|Only {count.deaths} so far.}` gives `Rough day, 12 deaths.` when the counter is at 12.
+
+## Choose from several cases
+
+`{switch}` compares one value with each case in the order you write them and gives the text of the first case that matches.
+It ignores upper and lower case, and the spaces around the value and the case names.
+The last part, written without `=`, is the fallback.
+Without a fallback and without a match, the reply shows nothing.
+
+`{switch:{args.1}|red=Roses!|blue=Skies!|No idea.}` gives `Skies!` for `blue` or `Blue`, and `No idea.` for any other word.
+
+`{switch.range}` takes a number and gives the text of the first limit that is at least that number.
+The bot checks the limits in the order you write them, so put them from low to high.
+`{switch.range:7|5=fine|10=hmm|oof}` gives `hmm`, and with `12` instead of `7` it gives `oof`.
+When the value, or a limit the bot reaches before a match, is not a plain number, the helper stays in the reply as written.
+
+## Special characters
+
+A pipe splits the parts of a helper, so type `{chars.pipe}` or `\|` when you want a pipe in the text.
+`{literal:...}` shows its text exactly as written, without filling in any helper inside it.
+The `{chars.*}` helpers take no input.
+
+## All condition helpers
+
+| Helper | What it gives | Example | Use in |
+| --- | --- | --- | --- |
+| `{chars.newline}` | A line break | - | Commands, event responses, timers, pipelines, Discord, webhooks, viewer text |
+| `{chars.nothing}` | Nothing at all, for an empty text that reads clearly | - | Commands, event responses, timers, pipelines, Discord, webhooks, viewer text |
+| `{chars.pipe}` | The pipe character, which would otherwise split the parts | `\|` | Commands, event responses, timers, pipelines, Discord, webhooks, viewer text |
+| `{chars.space}` | A space | - | Commands, event responses, timers, pipelines, Discord, webhooks, viewer text |
+| `{chars.zws}` | A zero-width space, which stops a mention such as @everyone from working | (invisible) | Commands, event responses, timers, pipelines, Discord, webhooks, viewer text |
+| `{coalesce}` | The first value that is not blank, or nothing when all are blank: `{coalesce:a\|b\|c}` | `{coalesce:\|second}` gives `second` | Commands, event responses, timers, pipelines, Discord, webhooks, viewer text |
+| `{default}` | The value, or the fallback when the value is blank: `{default:value\|fallback}` | `{default:\|fallback}` gives `fallback` | Commands, event responses, timers, pipelines, Discord, webhooks, viewer text |
+| `{if}` | The first text when the value is set (not blank, `false`, `0` or `no`), else the second: `{if:value\|then\|else}` | `{if:true\|yes\|no}` gives `yes` | Commands, event responses, timers, pipelines, Discord, webhooks, viewer text |
+| `{if.<path>}` | The first text when the named helper is set, else the second: `{if.stream.isLive:then\|else}` | `{if.stream.isLive:on\|off}` gives `on` while the stream is live | Commands, event responses, timers, pipelines, Discord, webhooks, viewer text |
+| `{if.<path>.contains}` | Tests whether a helper contains a text, with exact case | `{if.args.contains:hello:hi back\|}` gives `hi back` when the text after the command is `hello world` | Commands, event responses, timers, pipelines, Discord, webhooks, viewer text |
+| `{if.<path>.endswith}` | Tests whether a helper ends with a text, with exact case | `{if.args.endswith:world:yes\|no}` gives `yes` when the text after the command is `hello world` | Commands, event responses, timers, pipelines, Discord, webhooks, viewer text |
+| `{if.<path>.equals}` | Tests whether a helper equals a text, with exact case: `{if.user.login.equals:text:then\|else}` | `{if.user.login.equals:viewerone:hi me\|hi}` gives `hi me` when the viewer's login is `viewerone` | Commands, event responses, timers, pipelines, Discord, webhooks, viewer text |
+| `{if.<path>.gt}` | Tests whether a helper is a number greater than a number: `{if.count.deaths.gt:10:then\|else}` | `{if.count.deaths.gt:10:rough day\|ok}` gives `rough day` when the deaths counter is at 12 | Commands, event responses, timers, pipelines, Discord, webhooks, viewer text |
+| `{if.<path>.gte}` | Tests whether a helper is a number at least a number | `{if.user.stats.streak.gte:5:regular\|new}` gives `regular` when the viewer's streak is 5 streams | Commands, event responses, timers, pipelines, Discord, webhooks, viewer text |
+| `{if.<path>.iequals}` | Tests whether a helper equals a text, ignoring case: `{if.user.login.iequals:text:then\|else}` | `{if.user.login.iequals:VIEWERONE:yes\|no}` gives `yes` when the viewer's login is `viewerone` | Commands, event responses, timers, pipelines, Discord, webhooks, viewer text |
+| `{if.<path>.lt}` | Tests whether a helper is a number less than a number: `{if.stream.viewers.lt:10:then\|else}` | `{if.stream.viewers.lt:10:cozy\|busy}` gives `busy` when 42 people are watching | Commands, event responses, timers, pipelines, Discord, webhooks, viewer text |
+| `{if.<path>.lte}` | Tests whether a helper is a number at most a number: `{if.count.wins.lte:3:then\|else}` | `{if.count.wins.lte:3:keep going\|great}` gives `keep going` when the wins counter is at 2 | Commands, event responses, timers, pipelines, Discord, webhooks, viewer text |
+| `{if.<path>.matches}` | Tests whether a helper matches a regular expression: `{if.args.2.matches:pattern:then\|else}` | `{if.args.2.matches:^h:h-word\|other}` gives `h-word` when the second word after the command is `hi` | Commands, event responses, timers, pipelines, Discord, webhooks |
+| `{if.<path>.startswith}` | Tests whether a helper starts with a text, with exact case: `{if.args.1.startswith:text:then\|else}` | `{if.args.1.startswith:@:mention\|word}` gives `mention` when the first word after the command is `@viewerone` | Commands, event responses, timers, pipelines, Discord, webhooks, viewer text |
+| `{if.all}` | The first text when both values are set, else the second: `{if.all:a\|b\|then\|else}` | `{if.all:yes\|yes\|both\|not both}` gives `both` | Commands, event responses, timers, pipelines, Discord, webhooks, viewer text |
+| `{if.any}` | The first text when at least one value is set, else the second: `{if.any:a\|b\|then\|else}` | `{if.any:no\|yes\|one\|none}` gives `one` | Commands, event responses, timers, pipelines, Discord, webhooks, viewer text |
+| `{if.empty}` | The first text when the value is blank, else the second: `{if.empty:value\|then\|else}` | `{if.empty:\|blank\|filled}` gives `blank` | Commands, event responses, timers, pipelines, Discord, webhooks, viewer text |
+| `{if.not}` | The first text when the value is not set, else the second: `{if.not:value\|then\|else}` | `{if.not:false\|yes\|no}` gives `yes` | Commands, event responses, timers, pipelines, Discord, webhooks, viewer text |
+| `{literal}` | The text as written, with nothing inside it filled in: `{literal:{user}}` shows `{user}` | `{literal:a\|b}` gives `a\|b` | Commands, event responses, timers, pipelines, Discord, webhooks, viewer text |
+| `{switch}` | The text of the first case that matches the value, ignoring case, else the last text: `{switch:value\|case=text\|case=text\|else}` | `{switch:b\|a=x\|b=chosen\|d}` gives `chosen` | Commands, event responses, timers, pipelines, Discord, webhooks, viewer text |
+| `{switch.range}` | The text of the first limit that is at least the number, else the last text: `{switch.range:number\|limit=text\|limit=text\|else}` | `{switch.range:7\|5=fine\|10=hmm\|oof}` gives `hmm` | Commands, event responses, timers, pipelines, Discord, webhooks, viewer text |
+
+For viewer text, the [Viewer Templates setting and permissions](/reference/settings/features) also apply.
+Back to [Template helpers](/reference/templates/overview).

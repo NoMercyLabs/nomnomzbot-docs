@@ -1,0 +1,55 @@
+{
+  "fingerprint": "4363e4580ec9b40abaf1303cfc5f42c46e755af348d0298cf2361647c26af6c3",
+  "verdict": "PASS",
+  "answers": [
+    {
+      "question": 1,
+      "answer": "Open Commands in the sidebar. The page opens on the Channel commands tab. Choose New command, type schedule in Name, leave What it does at Sends a reply, write the reply in Reply, then choose Create command. To change the command later, choose it in the list, change the fields and choose Save changes at the right of the footer.",
+      "quote": "Choose New command at the top of the page."
+    },
+    {
+      "question": 2,
+      "answer": "You need one of the roles allowed to make and change commands. This is stated in Before you start, together with the rule that only the broadcaster, moderators and lead moderators get an answer while you are offline.",
+      "quote": "By default, a Moderator, Lead moderator, Editor or Broadcaster can make and change commands."
+    },
+    {
+      "question": 3,
+      "answer": "After Create command, the command opens in the editor and is already switched on. Typing !schedule in chat makes the bot answer. For a change, the unsaved-changes count leaves the footer after Save changes.",
+      "quote": "Now type !schedule in your channel’s chat, and the bot answers with your reply."
+    },
+    {
+      "question": 4,
+      "answer": "For more than one trigger, open Trigger and cooldowns, set Match to Regex, type ^!(schedule|times)$ in Regex pattern and choose Save changes. To switch it off without deleting it, use the switch on its row or Enabled in the editor; both save at once. The command stays in the list marked Off and answers nobody. If a reward, timer or other item still runs it, the switch flips back and the moderator has to move or remove those items first.",
+      "quote": "A command that is switched off stays in the list, marked Off, and answers nobody."
+    },
+    {
+      "question": 5,
+      "answer": "I made no real detour. The offline rule is stated in Before you start, before the test step, and repeated next to it. The only rule I learned after the setting it affects is that Read it aloud depends on Send the reply to. It comes after the field table, so a reader who already set Chat overlay with Read it aloud may wonder why nothing is spoken. The cost is small because the sentence follows the table directly.",
+      "quote": "Read it aloud speaks a reply only after it was sent to Twitch chat."
+    },
+    {
+      "question": 6,
+      "answer": "Read aloud, the regex note on the anchors is slightly hard to follow because 'only contains' sits next to 'somewhere in the middle'. The listener has to reread it to see that it means a longer message. The cost is one reread. Nothing on the page explains what a chat bot command is in general.",
+      "quote": "Without them, the pattern also matches a message that only contains !times somewhere in the middle."
+    }
+  ],
+  "findings": [],
+  "warnings_released": true,
+  "warning_review": [
+    {
+      "id": "length",
+      "decision": "keep",
+      "reason": "The 1586 words include reference tables and the sections past the main path (change, switch off, copy, delete, troubleshooting), which this reader's application case needs. The create path and the first test are answered early, and the reader found answers 1 to 4 quickly. The cost is a longer read, not a wrong or missing step."
+    },
+    {
+      "id": "first-numbered-step",
+      "decision": "keep",
+      "reason": "The 224 words before the first step are access requirements: who may make and change commands, and that only the broadcaster, moderators and lead moderators get an answer while offline unless Keep commands and rewards on while offline is on. The reader needs these before the offline test, and the page states them before the steps as the voice requires."
+    },
+    {
+      "id": "paragraph-5",
+      "decision": "keep",
+      "reason": "The five sentences give the name rules (no spaces, 100 characters at most, unique, no leading exclamation mark, system-command overlap). Each is a short fact the reader needs to pick a valid name before the create steps. The count alone is not a defect."
+    }
+  ]
+}

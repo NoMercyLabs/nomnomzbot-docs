@@ -1,5 +1,32 @@
-# Fact-check: reference-self-hosting-install-with-docker
+# Independent source review: /reference/self-hosting/install-with-docker
 Verdict: PASS
+Reviewed: src/content/reference/en/self-hosting/install-with-docker.mdx
+Reviewed-SHA: 3b0e369e6693914b
+Reviewed-SHA256: 3b0e369e6693914bbea5011185c50c1fcbe310ed939f857dd0125af077127ae5
+Reviewed-Date: 2026-11-05
+Reviewer: independent reviewer, separate from article author
+Product-Revision: 54da8b6318de63b5205a0ff8db35e0b9045dd959
+
+The complete current article was read in navigation order and checked against current product source. Historical PASS entries below are leads, not approval of this revision. Atlas voice/template gates do not govern this review.
+
+## Current evidence and result
+
+No substantive finding. Mount names, two full volumes, fixed lite name, health endpoint, single writer, generated key preservation and cold-backup sequence checked.
+
+Source files opened in this review: docker-compose.lite.yml:29-77; docker-compose.yml:65-83,143-205,246-248; Platform/Security/DataFolderKekStore.cs:25-70; official Docker volume backup/restore documentation reviewed 2026-11-05.
+
+Unqualified paths beginning Identity, CustomCode, Billing, EventStore, Engagement, Rewards, Widgets or Platform are under server/src/NomNomzBot.Infrastructure; Api and Domain identify their corresponding server projects. Dashboard shorthand is under dashboard/src/views/dashboard.
+
+Verification is read-only source review. No bot/API startup, live account authorization, channel writes, C# host/Jint execution, Docker install or restore was performed. Documentation build/render QA belongs to the combined parent pass. The SDK reference and worked-example checks additionally ran the existing read-only nnz-code-doc-check.mjs with production JavaScript bootstrap and substituted host I/O.
+
+## Historical review (superseded)
+
+# Fact-check: reference-self-hosting-install-with-docker
+Historical verdict: PENDING
+
+2026-11-04 overhaul: the article changed, so the previous PASS and hash below are historical evidence, not approval of the current revision.
+Fresh writer source checks and article inventory are recorded under H1/H2 in `docs-work/overhaul/settings-hosting-code.md`.
+Independent review of the changed text is pending.
 Reviewed: C:\Projects\NoMercyLabs\nomnomzbot-docs\src\content\reference\en\self-hosting\install-with-docker.mdx
 Reviewed-SHA: 1d0518d661ea9ef4
 

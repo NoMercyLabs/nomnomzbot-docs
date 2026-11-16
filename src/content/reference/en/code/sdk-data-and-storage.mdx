@@ -1,17 +1,14 @@
 ---
-title: Data and storage (Draft)
+title: Data and storage
 description: Read viewers, balances, stream stats and rewards from a script, keep values in storage, fetch a web page and schedule a pipeline.
 ---
 
-This page lists the `nnz.api` calls that read and keep data: viewers, balances, stats, rewards, storage, web fetch and scheduling.
+Scripts can combine live channel information with values you keep between runs.
+For example, you can read a viewer's balance for a reply, remember a channel-wide count, or schedule a pipeline to run after a delay.
+The reference below covers viewers, balances, statistics, rewards, storage, web fetches and scheduling.
+
 Each call needs its grant, and a failed call leaves its reason in `nnz.lastError`.
-[Script basics](/reference/code/sdk-script-basics) explains the grants, the error codes and how to turn on Custom Code.
-
-::Callout
-
-**Draft**: this part of the guide is not finished yet.
-
-::
+[Script basics](/reference/code/sdk-script-basics) explains grants and errors; the [worked example](/reference/code/worked-example) puts storage and chat together.
 
 ## Overview
 
@@ -107,7 +104,9 @@ The bot posts that line in chat in the channel's one bot voice.
 
 The answer always has `stream`: its `id`, `startedAt`, `endedAt` (`null` while live), `title` and `game`.
 Each requested metric is a field of the answer with the same name.
-A metric with nothing to show is absent.
+A metric you did not ask for is absent.
+`channel`, `peakViewers` and `hypeTrain` are also absent when there is no data.
+The other metrics are present, with zeros or an empty list.
 
 | Key | What it gives |
 | --- | --- |
@@ -121,7 +120,7 @@ A metric with nothing to show is absent.
 | `hypeTrain` | The highest `level` and the number of `trains` that ended. |
 | `newFollowers` | Names of the viewers who followed, oldest first. |
 | `peakViewers` | The highest viewer count recorded. |
-| `raidsIn` | Raids that arrived: `name` and `viewers`. |
+| `raidsIn` | Raids that arrived, largest first: `name` and `viewers`. |
 | `redemptions` | Redemptions and the top reward titles. |
 | `selfSubs` | Viewers who subscribed themselves; gifts are not counted. |
 | `songRequesters` | Song requests and the top requesters, never song titles. |
@@ -130,7 +129,8 @@ A metric with nothing to show is absent.
 
 A total with a top list has `total` and `top`.
 Each top entry has `name` and `count`, highest first.
-Every list holds at most 5 entries.
+The ranked `top` lists, `topChatters`, `newFollowers`, `selfSubs` and `raidsIn` hold at most 5 entries.
+`gifters` keeps every counted gifter, sorted by gift count and then name.
 
 An empty metrics list gives every metric.
 An unknown key, or a channel with no such stream, gives `null`.
@@ -140,10 +140,34 @@ const stats = nnz.api.stats.stream({
   metrics: ['chat', 'peakViewers'],
 });
 
-if (stats) {
+if (stats && stats.chat) {
   nnz.api.chat.send('Chatters today: ' + stats.chat.uniqueChatters);
 }
 ```
+
+#### Where the numbers come from
+
+Stream statistics read the bot's stored records for the selected channel and stream window.
+They do not fetch a fresh total from a streaming platform each time you call them.
+Chat and command counts use the recorded messages and command uses; redemptions use recorded reward redemptions, and song requesters use song-request history.
+Follower, subscription, cheer, raid and hype-train statistics use recorded channel events and their original occurrence times.
+Peak viewers uses the larger of the stream's saved peak and its recorded viewer-count samples.
+
+People currently banned in the channel are excluded from the viewer-related records used by these metrics.
+The latest ban or unban in the moderation history determines that status, with the saved ban list used when there is no such history entry.
+A timeout does not count as a ban, and an unbanned viewer counts again.
+These are statistics recalculated from available records, so missing or retained history affects what can be counted.
+They count the events the bot ingested, rather than reconstructing a streaming platform's complete history.
+
+Gift counts use two related sources differently.
+`subs.gift` sums recorded gift-batch counts; `gifters` compares each gifter's batch total with their per-recipient notices and uses the larger, avoiding double-counting the same gifts.
+The two values can therefore differ when one source is missing.
+[SDK types and payloads](/reference/code/sdk-contracts#stream-metric-types) lists every result field and its exact type.
+
+Hype trains that end during a live stream are not counted yet, because the bot does not save their end time.
+A missing `hypeTrain` does not prove that no train ran.
+The metric counts the records that carry the event time.
+A record without a numeric level counts as a train at level 0.
 
 ## Rewards
 
@@ -184,22 +208,32 @@ const changed = nnz.api.reward.update('Hydrate', {
 Storage keeps text values for the channel between runs.
 Every script of the channel reads and writes the same keys.
 
+Choose descriptive keys such as `hugs.count` so unrelated scripts do not overwrite each other's values.
+Storage is shared within the channel, rather than automatically private to one script or one viewer.
+To keep separate viewer values, include the viewer's identifier in the key you choose.
+
 | Limit | Value |
 | --- | --- |
 | Key length | 1 to 128 characters |
-| Value size | 64 KB |
+| Value size | 65,536 bytes of UTF-8 text |
 | Keys per channel | 200 |
 
 ### Store a value
 
 `nnz.api.storage.set(key, value)` stores the text under the key.
-A key that has no value yet counts toward the 200 keys; a new value for an existing key always fits.
+A key that has no value yet counts toward the 200-key limit.
+Replacing an existing key does not consume another key, but its new value must still fit the value-size limit.
 A value over the size limit, or a new key when the channel is full, gives `false` and stores nothing.
 Store a number or an object as text, for example with `nnz.json.stringify`.
+The byte limit is not a character limit: emoji and many non-English characters use more than one byte.
+
+A read followed by a write is two separate operations.
+If two runs read the same count before either writes, one increment can overwrite the other; this pattern is not an atomic counter.
 
 ### Read a value
 
 `nnz.api.storage.get(key)` gives the stored text, or `null` when the key has no value.
+A key longer than 128 characters also gives `null`, with no error code.
 
 ### Delete a value
 
@@ -227,6 +261,11 @@ A request that is blocked or fails before an answer does the same.
 
 One run may send and receive at most 256 KB in total over all its fetches.
 A fetch that would go over it gives `null` and the code `limit_exceeded`.
+
+A test run still performs these web requests, even though it captures chat and storage writes.
+In a test run, a write gives `true` when its key and value are valid.
+A full storage or a missing pipeline shows only in a live run.
+Use a read-only HTTPS endpoint when testing a fetch.
 
 ## Schedule a pipeline
 

@@ -1,7 +1,41 @@
-# Reader review: C:\Projects\NoMercyLabs\nomnomzbot-docs\src\content\reference\en\code\sdk-widgets-actions-templates.mdx
+# Current targeted editorial review — 2026-11-06
+
+Verdict: TARGETED AUTHOR SELF-REVIEW; no independent or exhaustive PASS.
+Reviewed: src/content/reference/en/code/sdk-widgets-actions-templates.mdx
+Reviewed-SHA256: 02c13c554edbfe16c72e4e2865fcc5cae0e575a15ab56cac3dd8425414102b01
+Reviewer: editing agent (author self-review)
+
+Full editorial read; corrected promise return/error handling, claim scope/expiry, and welcome handler rejection; removed blanket Draft. Direct source: Api/Controllers/OverlaySdkController.cs:470-615; Infrastructure/Widgets/WidgetActionService.cs:29-88. Large action/event tables were read but not fully compared to every current producer or executor.
+
+Coverage details and final static-check results: [final-developer.md](../ecosystem-validation/final-developer.md). Full reading is distinct from focused source verification. No live application/provider test or whole-project build in this batch.
+
+## Historical records below — verdicts and hashes preserved
+
+# Independent reader review: /reference/code/sdk-widgets-actions-templates
 Verdict: PASS
+Reviewed: src/content/reference/en/code/sdk-widgets-actions-templates.mdx
+Reviewed-SHA: bd4ed1cb1071a34c
+Reviewed-SHA256: bd4ed1cb1071a34c717d400727b2de1d6b233b802a3bd0e3b6de9bba74572b04
+Reviewed-Date: 2026-11-05
+Reviewer: independent reviewer, separate from article author
+Product-Revision: 54da8b6318de63b5205a0ff8db35e0b9045dd959
+
+The complete current article was read independently of its author, in the established settings, self-hosting and Code and SDK navigation order. The user's natural explainer/progressive-disclosure requirements take precedence over historical pilot mimicry, sentence caps and repeated page templates.
+
+## Learning and lookup result
+
+The browser-widget versus script-sandbox distinction and jump links make the long reference usable. Event tables, action parameter tables and runtime error contracts preserve advanced lookup depth; the handler excerpt states its required element and test-event consequence.
+
+No outstanding substantive reader finding.
+
+Related routes were checked as contextual continuations rather than prerequisites for ordinary bot use. Draft labels remain appropriate for code material. This is a text/structure review, not a claim of rendered browser QA.
+
+## Historical review (superseded)
+
+# Reader review: C:\Projects\NoMercyLabs\nomnomzbot-docs\src\content\reference\en\code\sdk-widgets-actions-templates.mdx
+Historical verdict: PASS
 Reviewed: C:\Projects\NoMercyLabs\nomnomzbot-docs\src\content\reference\en\code\sdk-widgets-actions-templates.mdx
-Reviewed-SHA: 5ddb1953fd3aceac
+Reviewed-SHA: 078c6d866c509050
 
 Reader: a streamer or script writer who has read only `/reference/code/sdk-script-basics` (map Assumes). Pilot read next to it: `/reference/commands/create-a-command`. No blocking finding. Every item below is a note; the run rule keeps the verdict at PASS.
 

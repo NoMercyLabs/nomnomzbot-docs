@@ -1,5 +1,26 @@
-# Reader review: C:\Projects\NoMercyLabs\nomnomzbot-docs\src\content\reference\en\settings\channel-management.mdx
+# Independent reader review: /reference/settings/channel-management
 Verdict: PASS
+Reviewed: src/content/reference/en/settings/channel-management.mdx
+Reviewed-SHA: 806591151235ad5d
+Reviewed-SHA256: 806591151235ad5d3081c2352ef6ae4bef96b8b409bc1819274d1c24aab0b727
+Reviewed-Date: 2026-11-05
+Reviewer: independent reviewer, separate from article author
+Product-Revision: 54da8b6318de63b5205a0ff8db35e0b9045dd959
+
+The complete current article was read independently of its author, in the established settings, self-hosting and Code and SDK navigation order. The user's natural explainer/progressive-disclosure requirements take precedence over historical pilot mimicry, sentence caps and repeated page templates.
+
+## Learning and lookup result
+
+Leave/reset/delete are introduced as decisions of increasing scope, with counted confirmation and the restore window. The repaired reset section names the retained command-prefix/language/personality/activity values, feature and engagement settings, and separately vaulted account connections, so readers can choose a reset without expecting a complete factory reset.
+
+No outstanding substantive reader finding.
+
+Related routes were checked as contextual continuations rather than prerequisites for ordinary bot use. Draft labels remain appropriate for code material. This is a text/structure review, not a claim of rendered browser QA.
+
+## Historical review (superseded)
+
+# Reader review: C:\Projects\NoMercyLabs\nomnomzbot-docs\src\content\reference\en\settings\channel-management.mdx
+Historical verdict: PASS
 Reviewed: C:\Projects\NoMercyLabs\nomnomzbot-docs\src\content\reference\en\settings\channel-management.mdx
 Reviewed-SHA: ae9d862ad9112f63
 

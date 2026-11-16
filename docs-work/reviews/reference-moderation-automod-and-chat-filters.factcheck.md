@@ -1,5 +1,41 @@
-# Fact check: src/content/reference/en/moderation/automod-and-chat-filters.mdx
+# Independent source verification: /reference/moderation/automod-and-chat-filters
 Verdict: PASS
+Reviewed: src/content/reference/en/moderation/automod-and-chat-filters.mdx
+Reviewed-SHA: 9ec3c8ae6d1aed3f79e32e1f7446a7969826c6781de96c29b5e8e99d8ea2249e
+
+## Independent overhaul review, 2026-11-05
+
+ChatFilterExecutionHandler.cs:86-137,149-191,257-353; AutoModerationHandler.cs:145-215; ChatFilterService.cs:85-152: staff bypass, oldest enabled match, Twitch-only reviews, fallback timeout, percent-1 exception, domain allowlist and validation.
+
+Reviewed independently of the article author, in actual navigation order. Current product source 54da8b631 and relevant changes since b12f4f696 were read without starting the bot, executing platform actions or changing channel data. This verdict is source verification, not proof of live platform delivery. See [review-moderation-economy-community.md](../overhaul/review-moderation-economy-community.md) for the review scope and findings.
+
+## Prior review history
+
+The earlier text below is retained as history; it does not independently approve a later article hash.
+
+Author source audit: 2026-11-04. Independent review of the revised article is pending; the historical PASS below does not approve this text.
+Product source: C:/Projects/NoMercyLabs/nomnomzbot at b12f4f696, inspected without starting the bot or changing data.
+
+Distinguishes Twitch holding from bot deletion, adds a link-review scenario and corrects the misleading advice that raising Never filter would filter moderators.
+
+| Revised claim or retained core behavior | Current source opened |
+| --- | --- |
+| UI names, actions, role choices and Try it | dashboard/src/views/dashboard/settings/automod/i18n/en.json:4-80; dashboard/src/views/dashboard/settings/chat-filters/i18n/en.json:4-108; dashboard/src/views/dashboard/settings/chat-filters/ChatFiltersView.vue |
+| Always exempt broadcaster/moderators; oldest enabled match only | server/src/NomNomzBot.Infrastructure/Moderation/EventHandlers/ChatFilterExecutionHandler.cs:86-137 |
+| Delete, timeout, hold and flag behavior; non-Twitch queue exclusions | server/src/NomNomzBot.Infrastructure/Moderation/EventHandlers/ChatFilterExecutionHandler.cs:149-191,257-294 |
+| Escalate removes then uses ladder, with timeout fallback | server/src/NomNomzBot.Infrastructure/Moderation/EventHandlers/ChatFilterExecutionHandler.cs:303-353 |
+| Caps minimum length, domain and subdomain allowlist semantics | server/src/NomNomzBot.Infrastructure/Moderation/EventHandlers/AutoModerationHandler.cs:145-215 |
+| Initial switches off, 70 percent capitals and 10 emotes; threshold 1 means 100 percent | server/src/NomNomzBot.Infrastructure/Moderation/ModerationService.cs:636-671; EventHandlers/AutoModerationHandler.cs:145-177 |
+| Save validation and timeout default | server/src/NomNomzBot.Infrastructure/Moderation/ChatFilterService.cs:85-152; dashboard/src/views/dashboard/settings/chat-filters/ChatFiltersView.vue |
+
+The practical scenarios are recommended uses of these verified controls, not promises of a new feature. Unchanged reference details were compared with the current view, labels and relevant implementation. Runtime platform calls were not performed.
+
+## Historical evidence
+
+The prior review is retained for its detailed claim inventory. Its verdict and file hashes refer to the earlier article; where the new evidence differs, the new evidence takes precedence.
+
+# Fact check: src/content/reference/en/moderation/automod-and-chat-filters.mdx
+Historical verdict: PASS
 Reviewed: src/content/reference/en/moderation/automod-and-chat-filters.mdx
 Reviewed-SHA: a8bfacac5d9731b2
 

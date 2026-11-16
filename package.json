@@ -8,9 +8,11 @@
 	},
 	"scripts": {
 		"dev": "astro dev --host",
-		"build": "node scripts/check-mdx-braces.mjs && node --test \"scripts/*.test.mjs\" && yarn build:search && astro build",
+		"build": "node scripts/check-mdx-braces.mjs && node scripts/check-reference.mjs && yarn type-check && node --test \"scripts/*.test.mjs\" && yarn build:search && astro build && node scripts/check-reference.mjs --rendered",
+		"type-check": "astro sync && tsc --noEmit",
 		"test": "node --test \"scripts/*.test.mjs\"",
 		"check:braces": "node scripts/check-mdx-braces.mjs",
+		"check:reference": "node scripts/check-reference.mjs",
 		"preview": "yarn build:search && astro build && astro preview --host",
 		"astro": "astro",
 		"build:search": "node scripts/build-search-index.mjs"
@@ -35,6 +37,7 @@
 		"flexsearch": "^0.8.205",
 		"framer-motion": "^12.23.11",
 		"gray-matter": "^4.0.3",
+		"hast-util-from-html": "^2.0.3",
 		"hast-util-to-string": "^3.0.1",
 		"mdast-util-to-string": "^4.0.0",
 		"mdx-annotations": "^0.1.4",

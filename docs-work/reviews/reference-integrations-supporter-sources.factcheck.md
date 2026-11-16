@@ -1,7 +1,39 @@
-# Fact-check: /reference/integrations/supporter-sources
+# Current independent fact check
+
 Verdict: PASS
 Reviewed: src/content/reference/en/integrations/supporter-sources.mdx
-Reviewed-SHA: 588dcd436a9f72f9
+Reviewed-SHA: ba43d7246851fa8e8858d01c497170158f9d44750da9953948b0b49f823bd817
+Reviewed-SHA256: ba43d7246851fa8e8858d01c497170158f9d44750da9953948b0b49f823bd817
+Reviewed-Date: 2026-11-05
+Reviewer: independent media-section reviewer
+Product: 54da8b6318de63b5205a0ff8db35e0b9045dd959 plus preserved current music UI edits
+
+The full article was read in sidebar order. Consequential defaults, permissions, prerequisites, state lifetime and effects were traced against current source; repaired findings were re-read before this verdict. This is source verification, not a live-channel or visible/audible output test.
+
+- server/src/NomNomzBot.Infrastructure/Supporters/SupporterConnectionService.cs:82-180 validates source transport, provisions provider webhooks and preserves/seals secrets; SupporterPollHostedService.cs:123-151 interprets DonorDrive secret as a public HTTPS feed URL.
+- server/src/NomNomzBot.Infrastructure/Supporters/Adapters/DonordriveSupporterSource.cs:31-75 normalizes donation IDs/amounts without inventing currency; SupporterIngestService.cs:55-150 ignores paused/unconfigured sources and deduplicates provider transactions.
+- dashboard/src/views/dashboard/supporters/SupporterSourcesView.vue:94-114 derives Connected from saved/enabled state, independently of actual event arrival.
+
+Source paths without a repeated layer prefix in a bullet are relative to its preceding Infrastructure or dashboard scope. The section report records method, repaired findings, external sources and remaining product limitations: docs-work/overhaul/review-automation-media-integrations.md.
+
+## Historical evidence
+
+Older hashes, verdicts and values below are retained for history and are not the current review.
+
+# Fact-check: /reference/integrations/supporter-sources
+Verdict: PENDING
+Reviewed: src/content/reference/en/integrations/supporter-sources.mdx
+Reviewed-SHA: ba43d7246851fa8e8858d01c497170158f9d44750da9953948b0b49f823bd817
+
+## 2026-11-05 author source verification
+
+Author source audit complete; independent verdict pending. This hash binds the current text, not the historical PASS below. The article was read in full and revised toward the user's explainer style while preserving precise reference detail. SupporterConnectionService.cs; SupporterPollHostedService.cs; DonordriveSupporterSource.cs; SupporterSourcesView.vue. DonorDrive takes a public HTTPS feed URL; Connected reflects saved enabled configuration.
+
+The section inventory and known implementation gaps are in [automation-media-integrations.md](../overhaul/automation-media-integrations.md). This is source verification, not a live-channel execution claim. Independent review must account for product changes after the original author pass at b12f4f696.
+
+## Historical review (SHA 588dcd436a9f72f9)
+
+Historical verdict: PASS. The earlier evidence below is retained as history and is superseded where the current article or source changed.
 
 Product repo: NomNomzBot master, read only. D = dashboard/src, SV = D/views/dashboard/supporters, EN = SV/i18n/en.json, I = server/src/NomNomzBot.Infrastructure/Supporters, CS = I/SupporterConnectionService.cs.
 

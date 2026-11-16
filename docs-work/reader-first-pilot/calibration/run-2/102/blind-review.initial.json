@@ -1,0 +1,65 @@
+{
+  "fingerprint": "fa45592b1c2f1d2045e8e97de074d52a47bf34461c256e3fdcc1c4f99c6b82a4",
+  "verdict": "PENDING",
+  "answers": [
+    {
+      "question": 1,
+      "answer": "Open schedule in Commands, keep Who can use it at Everyone, open Trigger and cooldowns, set Chat cooldown (seconds) to 10 and Per-person cooldown (seconds) to 60, and choose Save changes. The unsaved count disappears and the save button turns off.",
+      "quote": [
+        "Open the command and keep Who can use it at Everyone.",
+        "Open Trigger and cooldowns.",
+        "Enter 10 in Chat cooldown (seconds) and 60 in Per-person cooldown (seconds).",
+        "Choose Save changes. The unsaved-change count disappears and the save button turns off."
+      ]
+    },
+    {
+      "question": 2,
+      "answer": "No. A bot-assigned Editor who is an ordinary platform viewer gets normal waits, not the platform-moderator bypass. Use an account that is neither the platform broadcaster nor a platform moderator and that still meets command access. The bot must be running and connected, the command enabled, and the message must fit the trigger; the ordinary account also needs a live stream or the offline setting.",
+      "quote": [
+        "A Moderator, Lead moderator or Editor role assigned inside the bot can grant command access, but does not by itself grant that cooldown bypass.\nAn Editor who is an ordinary platform viewer experiences the normal waits. To test ordinary behavior, use an account that is neither the platform broadcaster nor a platform moderator and still meets the command’s access requirement.",
+        "Test with an ordinary viewer account to experience these waits. The bot must be running and connected, the command enabled, and the message must fit its trigger.\nOrdinary viewers also need enough command access and a live stream, unless Keep commands and rewards on while offline is on."
+      ]
+    },
+    {
+      "question": 3,
+      "answer": "UNKNOWN as a consistent prediction: the article contradicts itself. Its t=50 example and later accepted-use rule say A can use at t=60 if nothing else intervenes and the refused t=5 attempt starts neither wait. But the earlier t=5 bullet says both waits restart, which would move A’s personal expiry to t=65 and even conflict with the next t=10 bullet. I cannot establish which rule to trust from this article alone.",
+      "quote": [
+        "At 5 seconds, A tries again. The attempt is refused and both waits start again from that moment.",
+        "At 10 seconds, another viewer could use it. A still has to wait until 60 seconds.",
+        "If viewer B uses it at 50 seconds, B starts a new shared wait. A’s personal wait and that shared wait both end at 60 seconds, so A can use it then if nothing else intervenes.",
+        "Each accepted use starts fresh waits. If someone else uses it at 55 seconds instead, A’s own minute still ends at 60, but chat’s shared wait lasts until 65.\nHere, “accepted” means the use passed the access and cooldown checks; a later action can still fail. A refusal for access or cooldown starts neither wait."
+      ]
+    },
+    {
+      "question": 4,
+      "answer": "The Artist badge alone does not satisfy Artists, so the command does not run and the viewer receives the permission refusal. The bot also attempts to speak that refusal even with Read it aloud off. Actual audio depends on TTS setup, settings and playback; positive Minimum bits blocks the zero-bit refusal, approval can hold it, and the per-viewer denial-speech throttle can prevent a new attempt.",
+      "quote": [
+        "An Artist badge alone does not pass an Artists command requirement. The person needs Artist standing recorded in the bot or a higher qualifying role.",
+        "The command does not run. By default, the bot replies in chat in the channel’s one bot voice: “You don’t have permission to use that command.”\nIt also attempts to speak that line in the channel’s bot voice, even when the command’s Read it aloud switch is off.",
+        "You do not need text to speech to set access or cooldowns. To hear a refusal, the channel’s TTS setup, settings and playback must allow it.\nA positive Minimum bits setting blocks this speech because the refusal carries 0 bits.",
+        "The bot attempts denial speech at most once every 30 seconds for each viewer in a channel, shared across all denied commands."
+      ]
+    },
+    {
+      "question": 5,
+      "answer": "The refusal-timing example requires guessing or rereading: t=5 says the refused attempt restarts both waits, while the later rule says a refusal starts neither. A viewer following the first statement would test A at t=65, while the worked example expects t=60. That prevents using the page as a reliable cooldown test and could make normal behavior look faulty. No late prerequisite is needed to save the requested Everyone/10/60 configuration.",
+      "quote": [
+        "At 5 seconds, A tries again. The attempt is refused and both waits start again from that moment.",
+        "A refusal for access or cooldown starts neither wait."
+      ]
+    },
+    {
+      "question": 6,
+      "answer": "The opposing refusal rules are materially confusing aloud as well: a listener cannot reconcile the t=5 restart with the later no-restart statement and must return to the example or verify behavior elsewhere. This is a conflict in the predicted result, not a preference about wording or length.",
+      "quote": [
+        "At 5 seconds, A tries again. The attempt is refused and both waits start again from that moment.",
+        "A refusal for access or cooldown starts neither wait."
+      ]
+    }
+  ],
+  "findings": [
+    "The t=5 refused-use bullet restarts both waits, but the later accepted-use rule says refusals start neither. The resulting t=60 versus t=65 prediction is unresolved, so a reader cannot reliably validate the saved cooldowns without another source or a runtime experiment."
+  ],
+  "warnings_released": false,
+  "warning_review": []
+}

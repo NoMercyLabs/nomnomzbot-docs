@@ -3,12 +3,12 @@ title: Sounds
 description: Add sound clips, tune their volume, and play them from a chat word, a command, a reward or a pipeline.
 ---
 
-You keep the channel's sound clips on the **Sounds** page in the sidebar.
-A sound clip is a short audio file the bot plays on your overlay.
-Chat can play it with a word, and a [pipeline](/reference/commands/pipelines) can play it as a step.
+Sound clips give your stream a soundboard that chat and the bot can use.
+Upload a short audio file on **Sounds**, then decide whether viewers can play it by typing a word or whether it belongs in a command, reward or [pipeline](/reference/commands/pipelines).
+The same saved clip can serve several of those uses, so you can adjust its volume in one place.
 
-Sound clips play through the overlay in your OBS browser source.
-The setup is on [OBS browser source](/reference/overlays/obs-browser-source).
+Before testing, add **Bot Audio** from **Required overlays** on the **OBS** page as an [OBS browser source](/reference/overlays/obs-browser-source).
+That is the page that plays sound clips on the stream; **TTS caption** plays spoken messages separately.
 
 ## Who can use this page
 
@@ -18,6 +18,7 @@ The roles are explained on [Permissions](/reference/settings/permissions).
 The **Broadcaster** may also let a **VIP** open the page.
 A VIP then sees the list only.
 **New sound clip**, the on/off switch, **Edit** and **Delete** show only to someone who may change clips.
+In place of the switch, a VIP sees **On** or **Off** at the end of each row.
 
 ## Add a sound clip
 
@@ -71,18 +72,23 @@ The audio file and the short name stay as uploaded.
 | --- | --- | --- |
 | **Display name** | The name in the list. It must not be empty. | The name you typed when you added it |
 | **Volume (0 to 100)** | How loud the clip plays. | The volume you set when you added it |
-| **Cooldown in seconds** | How long the clip waits before chat can play it again with its chat word. 0 means no wait. | 0 seconds |
-| **Who may play it** | The lowest role that may play the clip with its chat word. | **Everyone** |
+| **Cooldown in seconds** | How long the clip waits before chat can play it again with its chat word. The field takes minutes and seconds, for example `0:30` for 30 seconds and `2:00` for two minutes. A plain number counts as minutes, so `30` means 30 minutes. `0:00` means no wait. | `0:00` |
+| **Who may play it** | The lowest role that may play the clip with its chat word. The choices show as Everyone, Subscriber, Vip, Artist, Moderator, LeadModerator, Editor and Broadcaster. | **Everyone** |
 | **Chat word** | A word that plays the clip when a viewer types it as the whole message. Leave it empty for none. | Empty |
 
 Choose **Save sound clip**.
 The dialog closes and the row shows the new values.
 
-The cooldown can be at most 86400 seconds (one day).
+A longer cooldown is not refused.
+It is saved as one day, which is `1440:00` in the field.
 The cooldown and **Who may play it** apply only to the chat word.
 A pipeline step plays the clip without them.
 
 ## Play a clip from chat
+
+For a first soundboard word, open your uploaded clip with **Edit**, set **Chat word** to `airhorn`, and choose **Save sound clip**.
+Type `airhorn` as a complete chat message and listen through OBS.
+You can then set **Cooldown in seconds** or raise **Who may play it** if you want to limit how often viewers use it.
 
 A chat word plays a clip when a viewer's whole message is that word.
 The word has no prefix, so `airhorn` plays the clip and `!airhorn` does not.
@@ -91,7 +97,7 @@ Case does not matter.
 | Rule for **Chat word** | What happens |
 | --- | --- |
 | It has a space | The dialog shows "The chat word cannot contain spaces." |
-| It is longer than 50 characters | The dialog shows "The chat word may have at most 50 characters." |
+| It is longer than 50 characters | The field stops taking characters at 50. |
 | Another clip in the channel has the same word | The bot refuses it, and nothing is saved. |
 
 A viewer below **Who may play it** gets no sound and no reply.
@@ -103,9 +109,13 @@ It does not also start a chat trigger with the same word.
 
 ## Play a clip from a command, a reward or a pipeline
 
-A command or a [channel-point reward](/reference/automation/rewards) plays a clip through a pipeline.
+A command plays a clip through a pipeline.
 Add a **Play sound** step to a [pipeline](/reference/commands/pipelines).
-Then pick that pipeline in the command's **Pipeline** field, or in the reward's settings on [Rewards](/reference/automation/rewards).
+Then pick that pipeline in the command's **Pipeline** field.
+
+A [channel-point reward](/reference/automation/rewards) can do the same.
+It can also choose the **Play sound** action directly in its **Pipeline** picker, with the same fields, so no pipeline is needed.
+Event responses, chat triggers, timers, economy catalog items and giveaways offer the same direct choice.
 
 | **Play sound** field | What it does |
 | --- | --- |
@@ -118,6 +128,7 @@ Then pick that pipeline in the command's **Pipeline** field, or in the reward's 
 The **Stop sound** step stops clips that are playing.
 With **Handle** set, it stops that playback.
 With **All** on, it stops every clip that is playing.
+With **Handle** empty and **All** off, it stops the clip that started last.
 A **Play sound** step fails when the clip is switched off or does not exist.
 
 ## Turn a clip off
@@ -135,7 +146,7 @@ Its default is 100, so a clip plays at its own volume until you change it.
 ## Delete a clip
 
 1. Choose **Delete** on the row.
-   The bot counts the pipelines and other places that play the clip.
+   The bot counts the pipeline steps that play the clip.
 2. Read the dialog that asks **Delete** with the clip's display name.
    It lists each kind of place that uses the clip, with a count and the names.
    When nothing uses the clip, it shows "No command, pipeline or reward plays this clip."
@@ -144,6 +155,11 @@ Its default is 100, so a clip plays at its own volume until you change it.
 
 A pipeline step that named the clip stays in the pipeline.
 It fails when it runs, because the clip no longer exists.
+
+The Redemption Alert widget can also play a clip.
+Its **Alert sound** setting takes a clip's id or name and plays the clip each time the alert fires.
+The delete count does not include that setting and does not warn about it.
+Check the widget before you delete a clip.
 
 ## Troubleshooting
 

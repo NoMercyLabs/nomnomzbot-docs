@@ -1,3 +1,24 @@
+# Current independent fact check
+
+Verdict: PASS
+Reviewed: src/content/reference/en/overview.mdx
+Reviewed-SHA: f1600825a3d5e0d3e3435f07a2f1b1e495ed4b610286c0983446ea9d50d30757
+Reviewed-SHA256: f1600825a3d5e0d3e3435f07a2f1b1e495ed4b610286c0983446ea9d50d30757
+Reviewed-Date: 2026-11-05
+Reviewer: independent section reviewer
+Product: 54da8b6318de63b5205a0ff8db35e0b9045dd959 (initial source tracing b12f4f69638553c03ed64c1518c90d7bcccd6907)
+
+The full article was read in navigation order; consequential behavior and reference details were checked against current source. All reported documentation findings affecting this page were repaired and re-reviewed. This is a source review, not a live-channel test.
+
+- Dashboard versus bot and current platform connection behavior: dashboard/src/views/dashboard/home/components/ConnectionsPanel.vue:41-139; dashboard/src/layouts/dashboard/navigation.ts:45-295.
+- Initial command execution and offline role exceptions: server/src/NomNomzBot.Infrastructure/Chat/EventHandlers/ChatMessageHandler.cs:290-379; server/src/NomNomzBot.Infrastructure/Chat/OfflineCommandGate.cs:23-26.
+
+Report: docs-work/overhaul/review-learning-commands-helpers.md.
+
+## Historical evidence
+
+The material below is retained as historical evidence. Its older hashes, verdicts and values do not constitute the current review.
+
 # Fact-check: /reference/overview
 Verdict: PASS
 Reviewed: C:\Projects\NoMercyLabs\nomnomzbot-docs\src\content\reference\en\overview.mdx

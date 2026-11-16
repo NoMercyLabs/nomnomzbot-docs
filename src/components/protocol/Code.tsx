@@ -2,6 +2,8 @@
 
 import { Tab, TabList, TabPanel, TabPanels } from '@headlessui/react';
 import clsx from 'clsx';
+import { fromHtml } from 'hast-util-from-html';
+import { toString } from 'hast-util-to-string';
 import {
   Children,
   createContext,
@@ -30,6 +32,10 @@ const languageNames: Record<string, string> = {
   sh: 'Shell',
   txt: 'Code',
 };
+
+function codeText(html: string): string {
+  return toString(fromHtml(html.replace(/<br\s*\/?>/gi, '\n'), { fragment: true }));
+}
 
 function getPanelTitle({
   title,
@@ -79,6 +85,7 @@ function CopyButton({ code }: { code: string; }) {
   return (
     <button
       type="button"
+      data-code={code}
       aria-label={copied ? 'Code copied to clipboard' : 'Copy code to clipboard'}
       className={clsx(
         'group/button absolute top-3.5 right-4 overflow-hidden rounded-full py-1 pr-3 pl-2 text-2xs font-medium opacity-0 backdrop-blur-sm transition group-hover:opacity-100 focus-visible:opacity-100 focus-visible:outline-2 focus-visible:outline-emerald-500',
@@ -461,7 +468,7 @@ export function CodeGroup({
                 cleanedHTML = tempDiv.innerHTML;
               }
             } else {
-              code = preHTML.replace(/<[^>]*>/g, '').replace(/&lt;/g, '<').replace(/&gt;/g, '>').replace(/&amp;/g, '&');
+              code = codeText(preHTML);
 
               // Server-side: Use regex to clean up the HTML (only the pre tag)
               cleanedHTML = preHTML
@@ -486,9 +493,6 @@ export function CodeGroup({
             let blockTitle: string;
             if (titleAttr) {
               blockTitle = titleAttr;
-            } else if (dataLanguage === 'bash' && blockIndex === 0) {
-              // First bash block in a group is typically cURL
-              blockTitle = 'cURL';
             } else {
               blockTitle = getPanelTitle({ language: detectedLanguage });
             }
@@ -608,10 +612,10 @@ export function CodeGroup({
     <CodeGroupContext.Provider value={true}>
       <div className={containerClassName}>
         <div className="not-prose">
-          {singleBlockTitle && (
+          {(title || singleBlockTitle) && (
             <div className="flex min-h-[calc(--spacing(12)+1px)] flex-wrap items-start gap-x-4 border-b border-zinc-400 bg-zinc-300 px-4 dark:border-zinc-800 dark:bg-transparent">
               <h3 className="mr-auto pt-3 text-xs font-semibold text-zinc-900 dark:text-white">
-                {singleBlockTitle}
+                {title || singleBlockTitle}
               </h3>
             </div>
           )}

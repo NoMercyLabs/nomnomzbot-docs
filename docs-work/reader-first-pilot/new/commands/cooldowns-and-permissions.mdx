@@ -1,0 +1,145 @@
+---
+title: Cooldowns and permissions
+description: Choose who can use a command, space out its replies, and understand why moderator tests differ from ordinary viewers.
+---
+
+**Who can use it** decides whether someone may run the command at all. Cooldowns decide how soon an allowed viewer may use it again.
+For a schedule reply, you can let everyone ask while keeping repeated answers from filling chat.
+
+Open the command on **Commands** in the selected channel. You need permission to edit commands: the requirement starts at **Moderator**, including higher roles, and the broadcaster can raise it.
+If the command does not exist yet, [create it first](/reference/commands/create-a-command).
+These settings apply when a chat message triggers the command. A timer or reward bound directly to it follows its own invocation rules.
+
+## Choose how often it answers
+
+Use **Chat cooldown** for an answer everyone sees, such as your schedule or the current song. **Per-person cooldown** holds back repeat requests from one viewer while allowing others to ask.
+You can combine them. For example, to leave `!schedule` open to everyone, allow one reply every 10 seconds and make each viewer wait a minute:
+
+1. Open the command and keep **Who can use it** at **Everyone**.
+2. Open **Trigger and cooldowns**.
+3. Enter `10` in **Chat cooldown (seconds)** and `60` in **Per-person cooldown (seconds)**.
+4. Choose **Save changes**. The unsaved-change count disappears and the save button turns off.
+
+Both fields take whole seconds from 0 to 86400, or 24 hours. A value of 0 turns that wait off.
+New custom commands start with both at 0; presets and built-in commands may have different defaults. The 10 and 60 above are example values for this schedule reply.
+
+Close **Trigger and cooldowns** and its heading shows "10 s chat · 60 s per person". With both waits off, it says "No cooldown"; with a 30-second chat wait and a 10-second personal wait, it says "30 s chat · 10 s per person".
+
+### How the two cooldowns work
+
+The chat wait belongs to the command, so one person's use holds it for the other viewers too. The personal wait belongs to the person who used it.
+When both are set, a viewer must be clear of both. The bot checks their role first: someone without access gets a permission refusal before either cooldown is considered.
+
+With the example's 10-second chat wait and 60-second personal wait:
+
+- At 0 seconds, viewer A uses `!schedule`. The shared wait starts for chat and the personal wait starts for A.
+- At 5 seconds, A tries again. The attempt is refused and restarts neither wait.
+- At 10 seconds, another viewer could use it. A still has to wait until 60 seconds.
+- If viewer B uses it at 50 seconds, B starts a new shared wait. A's personal wait and that shared wait both end at 60 seconds, so A can use it then if nothing else intervenes.
+
+Each accepted use starts fresh waits. If someone else uses it at 55 seconds instead, A's own minute still ends at 60, but chat's shared wait lasts until 65.
+Here, "accepted" means the use passed the access and cooldown checks; a later action can still fail. A refusal for access or cooldown starts neither wait.
+
+### Testing as a moderator
+
+Test with an ordinary viewer account to experience these waits. The bot must be running and connected, the command enabled, and the message must fit its trigger.
+Ordinary viewers also need enough command access and a live stream, unless **Keep commands and rewards on while offline** is on.
+
+The broadcaster and moderators identified by the incoming platform message bypass both normal cooldown checks on Twitch, Kick and YouTube, including Twitch lead moderators.
+Their uses still start the waits, including the shared wait for everyone else, so repeatedly trying the command as a moderator does not reproduce a viewer's experience.
+
+A **Moderator**, **Lead moderator** or **Editor** role assigned inside the bot can grant command access, but does not by itself grant that cooldown bypass.
+An Editor who is an ordinary platform viewer experiences the normal waits. To test ordinary behavior, use an account that is neither the platform broadcaster nor a platform moderator and still meets the command's access requirement.
+
+Some built-in commands add their own safeguards, such as the moderator skip window on [Built-in commands](/reference/commands/built-in-commands).
+
+### When a command is still cooling down
+
+The command does not run. By default, the bot replies in chat in the channel's one bot voice: "That command is still on cooldown."
+
+Active waits are held in memory and clear when the bot restarts. The saved cooldown lengths remain; the next allowed use starts new waits rather than resuming their old remaining time.
+
+## Set who can use a command
+
+**Who can use it**, the first field in the editor, starts at **Everyone**. Choose the lowest role you want to allow; people with that role or a higher one can run it.
+For example, **Moderators** also allows **Lead moderators**, **Editors** and the broadcaster.
+
+1. Open the command and choose the role in **Who can use it**.
+2. Choose **Save changes**. The footer's change count, such as "1 unsaved change", disappears and the save button turns off.
+
+The eight choices run from lowest to highest:
+
+| Choice | Who may use the command |
+| --- | --- |
+| **Everyone** | Anyone in chat. |
+| **Twitch subscribers** | Subscribers and every higher role. |
+| **VIPs** | VIPs and every higher role. |
+| **Artists** | Artists and every higher role. |
+| **Moderators** | Moderators and every higher role. |
+| **Lead moderators** | Lead moderators and every higher role. |
+| **Editors** | Editors and the broadcaster. |
+| **Only you** | The broadcaster. |
+
+These are NomNomzBot access levels. Each platform supplies different information about the person sending a chat message:
+
+| Platform | Access the bot recognizes from that message |
+| --- | --- |
+| **Twitch** | Subscriber, including founder; VIP; moderator; lead moderator identified by the lead-moderator badge; broadcaster. |
+| **Kick** | Subscriber, VIP, moderator and broadcaster. Incoming chat does not supply Artist, Lead moderator or Editor access to this check. |
+| **YouTube** | Channel member as Subscriber, live-chat moderator as Moderator, and channel owner as Broadcaster. An ordinary YouTube subscription is not membership. Incoming chat does not supply VIP, Artist, Lead moderator or Editor access. |
+
+Twitch's native Artist, Lead Moderator and Editor roles do not all arrive as usable chat badges.
+A lead moderator displaying an ordinary moderator badge proves Moderator access on that message; a stored Lead moderator role can still supply the higher level.
+An Artist badge alone does not pass an **Artists** command requirement. The person needs Artist standing recorded in the bot or a higher qualifying role.
+Twitch Editor access comes through stored team membership rather than a chat badge.
+
+Bot-assigned standing, team membership and active role permits can raise a person's command access beyond the role their message proves.
+You can assign **Lead moderator** and **Editor** inside NomNomzBot to people on Kick or YouTube too.
+YouTube Studio's Editor role is separate and is not imported as bot Editor access by chat.
+Giving someone access inside the bot does not make them a moderator on their streaming platform. Manage these roles on [Permissions](/reference/settings/permissions).
+
+### When a viewer's role is too low
+
+The command does not run. By default, the bot replies in chat in the channel's one bot voice: "You don't have permission to use that command."
+It also attempts to speak that line in the channel's bot voice, even when the command's **Read it aloud** switch is off.
+
+You do not need text to speech to set access or cooldowns. To hear a refusal, the channel's [TTS setup](/reference/audio/text-to-speech), settings and playback must allow it.
+A positive **Minimum bits** setting blocks this speech because the refusal carries 0 bits.
+**Moderators approve first** holds an otherwise accepted request for approval, and the current dashboard cannot review that queue. See [Approval and the current dashboard limitation](/reference/audio/text-to-speech#approval-and-the-current-dashboard-limitation).
+
+The bot attempts denial speech at most once every 30 seconds for each viewer in a channel, shared across all denied commands.
+That wait starts with the attempt, so unavailable or refused TTS can still use it up. It does not limit the chat notices.
+Platform-identified broadcasters and moderators, including Twitch lead moderators, bypass this speech throttle too; a bot-assigned role alone does not.
+This 30-second guard is separate from command cooldowns and the TTS cooldown for a viewer's own lines.
+
+Twitch, Kick and YouTube messages use the same refusal path. Its speech lookup still treats the stored channel identity as Twitch, even when the message came from Kick or YouTube.
+If the identity lookup or speech delivery fails, the chat notice can appear without audio.
+
+## Reset to the preset
+
+Only a command made from a preset has **Reset to preset** in its footer; see [Create a command](/reference/commands/create-a-command).
+The dialog lists which values differ, including **Who can use it**, **Chat cooldown (seconds)** and **Per-person cooldown (seconds)**. They return to that preset's values, which may be nonzero.
+
+Reset also restores the preset's reply, description, aliases and trigger configuration. Use it when you want those settings restored too.
+The command's name and on/off state stay as you chose them.
+
+## Troubleshooting
+
+::Troubleshooting
+
+**A viewer gets "You don't have permission to use that command."**
+Their role is below **Who can use it**. Lower the requirement or give them an appropriate role on [Permissions](/reference/settings/permissions).
+For an Artist badge or a role from another platform, check the comparison under [Set who can use a command](#set-who-can-use-a-command).
+
+**A moderator can spam a command that has a cooldown.**
+That is the normal platform-moderator bypass. Test with an eligible ordinary viewer account to check the waits; built-ins can still have the extra safeguards described under [Testing as a moderator](#testing-as-a-moderator).
+
+**A command runs again sooner than its cooldown after a bot restart.**
+The restart cleared the active waits. Their configured lengths are still saved and apply from the next allowed use.
+
+::
+
+## Related pages
+
+- [Create a command](/reference/commands/create-a-command)
+- [Permissions](/reference/settings/permissions)

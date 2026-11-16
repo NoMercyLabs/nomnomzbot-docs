@@ -3,10 +3,13 @@ title: Trust and escalation
 description: Tune how the bot scores a viewer's trust, and set the ladder of warn, timeout and ban steps for repeat offenders.
 ---
 
-You tune two moderation policies on two settings pages.
-Both pages sit in the **Access** group of the settings sidebar.
-**Trust policy** sets how the bot scores each viewer's trust and heat.
-**Escalation** sets how the bot punishes a viewer who breaks the rules again and again.
+Trust and escalation answer different moderation questions.
+Trust and heat give context about a viewer and recent trouble; escalation decides which action to take when someone repeatedly breaks a rule.
+You can use either policy without treating a low score as a reason to ban someone.
+
+Both settings pages are in the **Access** group of **Settings**.
+**Trust policy** controls the score calculations, while **Escalation** defines a sequence of warnings, timeouts and bans.
+For most channels, it is easier to understand the existing scores first and introduce an escalation ladder only after deciding which filter offenses should count.
 
 ## Who can use these pages
 
@@ -26,7 +29,8 @@ The **Save** and **Reset to defaults** buttons show only to someone who may chan
 Both pages work the same way.
 
 1. Open the page in the **Access** group of the settings sidebar.
-   Each field shows its default next to its name, for example "Default 168".
+   Each number field shows its default next to its name, for example "Default 168".
+   On **Trust policy**, the **Reputation boost** switch shows no default.
 2. Change one or more fields.
    **Save** becomes active.
 3. Choose **Save**.
@@ -38,22 +42,19 @@ You still choose **Save** to store the reset.
 
 ## Trust policy
 
-The bot keeps two numbers for each viewer in your channel: a trust score and heat.
-Both run from 0 to 100.
-The bot works them out again after each moderation action against the viewer.
-The profile dialog shows the score as **Trust score** under **Bot standing**.
+The bot keeps two numbers for a viewer in your channel, both from 0 to 100.
+The trust score combines the information currently available to the bot, while heat reflects moderation trouble that fades over time.
+The profile shows **Trust score** under **Bot standing**, and the bot updates the calculations as moderation events arrive.
+
+Treat these as context for a decision rather than a complete account of a person.
+In particular, the **Account age** input in the moderation score currently means how long the bot has known the viewer, not the age of their Twitch account.
+Several fields on the policy page apply to a richer calculation than the moderation history currently supplies; the tables distinguish them below.
 
 The **Trust policy** page holds every number behind the score and the heat.
 The fields sit in six panels.
 
-::Callout
-
-The trust score uses only five facts about a viewer today.
-They are how long the bot has known the viewer, the Twitch affiliate or partner status, a verified YouTube channel, the number of timeouts and the number of bans.
-The page shows more fields than these.
-Only the fields named below as used change the score today.
-
-::
+The moderation score currently uses how long the bot has known the viewer, their Twitch affiliate or partner status, a verified YouTube channel, and their timeout and ban counts.
+The fields listed as unused below are saved by the policy editor, but the moderation calculation does not receive the information they would need.
 
 ### How the score is made
 
@@ -117,7 +118,8 @@ Each tier ceiling is between 0 and 100, and higher than the one before it.
 ### Heat
 
 Heat measures recent trouble.
-Each event in the table adds heat.
+Today a ban, a timeout and a denied AutoMod message add heat.
+**Heat for a confirmed report** and **Heat for a filter hit** are saved, but nothing feeds them yet.
 Heat then fades by half for each half-life that passes.
 Heat never goes above 100.
 
@@ -132,15 +134,16 @@ These fields sit in the **Heat** panel.
 | **Heat for a denied AutoMod message** | 5 |
 | **Heat for a filter hit** | 5 |
 
-When a viewer's heat rises to 80 or more, the bot puts the viewer in the review queue on the Home page.
-A moderator then decides what to do.
-No field on this page changes the 80.
+By default, crossing 80 heat puts a viewer in the review queue on **Home** for a moderator's decision.
+The underlying AutoMod configuration can change that threshold or enable an automatic timeout, but the **Trust policy** page exposes neither control.
+Changing the heat amounts here does not itself switch automatic timeouts on.
 
 The half-life is above 0 and at most one year (8760 hours).
 A heat amount is between 0 and 1000.
-A denied AutoMod message is a message that AutoMod holds back.
-A filter hit is a message that trips one of your [chat filters](/reference/moderation/automod-and-chat-filters).
-A confirmed report is explained on [Reports](/reference/moderation/reports).
+A denied AutoMod message is a held message that a moderator rejects.
+A filter hit would be a message that trips one of your [chat filters](/reference/moderation/automod-and-chat-filters).
+A chat filter hit does not add heat today.
+Choosing **Escalate** on [Reports](/reference/moderation/reports) changes that report's status; it does not by itself record a confirmed-report heat event.
 
 ## Escalation
 
@@ -157,7 +160,15 @@ These events count as an offense:
 - With **Count AutoMod holds** on, AutoMod or spam defense would time out or ban the viewer.
   The ladder step takes the place of that punishment, so the viewer is punished once.
 
+This automatic ladder path applies to Twitch.
+Spam defense's high-confidence viewer-selling exception can ban directly without counting a ladder offense, and its Kick and YouTube enforcement does not use this ladder.
+See [Spam defense](/reference/moderation/spam-defense#start-in-watch-only-mode) for the watch-only exception and platform differences.
+
 A timeout or ban that a moderator gives by hand does not count.
+
+For example, a ladder can warn on the first offense, time out on the second, and ban on a later offense.
+That ladder is used when a Twitch chat filter is set to **Step up the escalation ladder**; merely creating the ladder does not make every chat message an offense.
+If you also enable **Count AutoMod holds**, qualifying automatic timeout or ban decisions use the ladder in place of their original punishment.
 
 ### What each action does
 
@@ -165,7 +176,11 @@ A timeout or ban that a moderator gives by hand does not count.
 - **Timeout** times the viewer out for the step's length.
 - **Ban** bans the viewer.
 
-The bot takes the action in the name of the channel owner.
+For a channel that has completed setup, the bot takes automatic escalation actions using the channel owner's connected account.
+For a channel that has not completed broadcaster setup, the ladder steps of AutoMod and spam defense instead need a moderator's connected account and an active chat reader for that channel.
+A chat filter's ladder step always needs the channel owner's connected account, so on a channel that is not set up it fails.
+The bot periodically keeps those moderator readers running for enabled channels with a stored team membership; keeping a dashboard tab open is not required.
+Without either identity, the escalation action cannot run; opening a channel's chat is different from completing its broadcaster setup.
 
 ### Policy
 
@@ -177,7 +192,9 @@ The bot takes the action in the name of the channel owner.
 | **Default timeout** | The length a timeout step takes when it has no length of its own. | 10:00 (10 minutes) |
 
 The ladder ships switched off.
-It punishes nobody until you switch on **Escalation ladder** and choose **Save**.
+Ladder steps apply only after you switch on **Escalation ladder** and choose **Save**.
+While the ladder is off, a chat filter set to **Step up the escalation ladder** still removes the message and uses the filter's own timeout length.
+Kick and YouTube messages always get that filter timeout.
 **Count AutoMod holds** works only while **Escalation ladder** is on.
 
 The offense window is 1 to 8760 hours.
@@ -237,9 +254,10 @@ A viewer keeps the offense count they already have.
 
 ::Troubleshooting
 
-**The ladder does nothing.**
+**The ladder steps do not happen.**
 **Escalation ladder** is off by default.
 Switch it on and choose **Save**.
+Until then, a chat filter that steps up the ladder gives its own timeout instead.
 
 ::
 

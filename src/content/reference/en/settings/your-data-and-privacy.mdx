@@ -3,15 +3,18 @@ title: Your data and privacy
 description: Download your data, read and withdraw your consents, opt out of extra processing, and erase your data.
 ---
 
-You see and control the data the bot holds about you on the **Your data** page.
-It is in the settings sidebar, in the **Account** group.
-The page is about you, not about a channel.
+**Your data** lets you inspect your personal data, change consent choices, or request erasure.
+It is in the **Account** group of the settings sidebar and acts on the signed-in person, including when that person is a viewer rather than a streamer.
+An opt-out keeps your data and records the choices described below; erasure is the irreversible choice.
 
 ## Who can use this page
 
 Anyone who is signed in may open the page.
 You [sign in](/reference/getting-started/sign-in) as a broadcaster, a moderator or a viewer.
 Each action on the page works only on your own data, never on another person's data.
+Viewers open the page from **My data** on their Account page, with the **Open my data** button.
+The chat commands `!mydata`, `!forgetme` and `!gdpr` do the same download and erasure from chat; a chat erasure always uses the widest scope, **Whole deployment**.
+See [Built-in commands](/reference/commands/built-in-commands).
 
 ## What the page holds
 
@@ -19,7 +22,7 @@ The page has four panels, in this order.
 
 | Panel | What it does |
 | --- | --- |
-| **Download your data** | Saves one file with everything the bot holds about you. |
+| **Download your data** | Saves a JSON export of your profile, recorded chat and history, connected-service details and consents. |
 | **Your consents** | Lists what you agreed to. You can withdraw each one. |
 | **Your requests** | Lists every download, erasure and opt-out you asked for, newest first. |
 | **Erase your data** | Holds two rows: **Opt out of extra processing**, with the **Opt out** button, and **Erase all my data**, with the **Erase my data** button. |
@@ -34,9 +37,15 @@ The page has four panels, in this order.
 The file is JSON, a format a computer can read.
 Each download also shows as **Download my data** under **Your requests**.
 
+The export includes at most your 10,000 newest stored chat messages, alongside the other exported records.
+It includes connection details such as provider names and permissions, rather than the secret sign-in tokens themselves.
+Keep the downloaded file somewhere private, since it contains your personal history.
+
 ## Read and withdraw your consents
 
-**Your consents** lists each consent you gave, with a switch.
+**Your consents** lists your whole consent record, from every channel and the consents not tied to a channel.
+Consents you withdrew stay in the list with the switch off.
+The same consent can show more than once, one row per channel, and a row does not say which channel it belongs to.
 The switch is on while the consent is given.
 Under each name, a line starts with "Legal basis:" and names the basis for that consent.
 
@@ -56,8 +65,8 @@ When you gave no consent yet, the panel says "You have not given any consent yet
 
 ## Opt out of extra processing
 
-An opt-out stops the use of your data for marketing, leaderboards and analytics.
-Your data stays.
+An opt-out withdraws saved marketing and leaderboard consents in its scope and marks your existing viewer profiles as opted out of analytics.
+Your data stays, and this is not a blanket stop on all recording or ranking.
 
 1. Choose **Opt out** in the **Erase your data** panel.
    The dialog asks "Opt out of extra processing?": "Nothing is deleted."
@@ -65,17 +74,25 @@ Your data stays.
    The panel shows "Your opt-out is saved."
 
 The opt-out withdraws your **Product news and marketing** and **Appear on leaderboards** consents.
+There is a current limitation: currency leaderboards use a separate exclusion setting, which this button and the consent switches do not update.
+Do not rely on **Opt out** or withdrawing **Appear on leaderboards** alone to hide you from those rankings; [Leaderboards and games](/reference/economy/leaderboards-and-games#how-the-bot-ranks-viewers) explains that distinction.
+The analytics flag excludes marked profiles from the top-viewer ranking and stops the periodic chatter-presence poll from updating them, but it does not erase recorded chat or remove all channel totals.
 
 When you have a channel open, the opt-out is for that channel only.
 It turns off only the switches of consents you gave in that channel.
 Consents for other channels, and consents not tied to a channel, keep their switches.
 
-The opt-out then shows under **Your requests** with the scope **One channel**.
+The opt-out then shows under **Your requests** as **Opt out of processing** with the scope **One channel**.
+
+When you have no channel open, the opt-out covers every channel.
+It withdraws these consents in every channel and marks all your viewer profiles.
+It shows with the scope **Whole deployment**.
 
 ## Erase your data
 
 Erasing cannot be undone.
-It destroys your personal data and ends your sign-in.
+It removes or clears the data described below, disables your profile and marks its saved sign-in sessions and renewal tokens as revoked.
+It does not physically delete every record associated with you.
 
 1. Choose **Erase my data** in the **Erase your data** panel.
    The bot counts what it would destroy first.
@@ -96,7 +113,28 @@ The panel shows the reason in red text.
 | consents, encryption keys |
 
 An item with a count of zero does not show in the list.
-The bot ends every sign-in you have and destroys the keys that lock your stored data.
+The bot destroys the keys used to unlock the encrypted data included in this erasure.
+
+### What erasure removes and retains
+
+The erasure process replaces your displayed name with **Deleted User** and clears profile details such as pictures, email and pronouns.
+It deletes stored chat and history matched to your Twitch identity, and your per-viewer custom data across channels.
+It revokes connected-service credentials and withdraws active consents.
+The profile row and linked platform identifiers remain; erasure does not delete your account on Twitch, Kick, YouTube or another connected service.
+
+Balances, currency transactions, historical rankings and viewer analytics rows also remain.
+The bot replaces their copied Twitch IDs and clears or replaces their copied names, rather than removing those rows or undoing past transactions.
+The erasure request and its audit record remain too.
+
+The current chat and history deletion matches your Twitch ID; it does not also look up your linked Kick and YouTube identities.
+If you need those histories removed, ask the deployment operator to investigate them separately.
+The confirmation's counts describe the categories it checks, rather than a complete count of every retained record.
+Erasure also does not prevent new data from being collected if you chat again.
+New messages can be stored and the bot can update your name from the incoming chat profile.
+
+Erasure prevents those saved sessions from renewing their sign-in, but it does not immediately invalidate every access token already issued to an open dashboard.
+An existing token can remain usable until it expires.
+Sign out of your open dashboards yourself as well; erasure is not an immediate sign-out control for every device.
 
 ## Your requests
 
@@ -107,11 +145,21 @@ The bot ends every sign-in you have and destroys the keys that lock your stored 
 | **Waiting** | The request is not started yet. |
 | **Done** | The request is finished. |
 | **Failed** | The request did not finish. The reason shows in red under it. |
+| **running** | The request is running again after a failure. The row shows this word in lowercase, as the bot writes it. |
+
+A request can also end as cancelled.
+That row shows the raw word **cancelled**.
+
+The request label says what you asked for.
+A download shows as **Download my data**, an erasure as **Erase my data** and an opt-out as **Opt out of processing**.
 
 | Scope | Meaning |
 | --- | --- |
 | **Whole deployment** | Every channel on this bot. |
+| **This instance** | Comes from a request made on the operator side. |
 | **One channel** | Only the channel you had open. |
+
+**Download my data** and **Erase my data** on this page always show as **Whole deployment**.
 
 When you made no request yet, the panel says "You have not made a request yet."
 

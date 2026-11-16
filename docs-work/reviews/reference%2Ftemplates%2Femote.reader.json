@@ -1,0 +1,50 @@
+{
+  "fingerprint": "408246781a0b19be333c89a22e042fa662e95b8b05c112f8a9d15e0e64d2bb0f",
+  "verdict": "PASS",
+  "answers": [
+    {
+      "question": 1,
+      "answer": "Use the Pick, list or count a set table. Each set has a pick, a list and a count helper: {emote.random}, {emote.list.channel} and {emote.count.channel} for your own Twitch emotes, and {emote.random.7tv}, {emote.list.7tv}, {emote.count.7tv} (and the same with bttv and ffz) for your 7TV, BTTV and FFZ sets. These helpers take no arguments. For one kind of Twitch emote use {emote.random.sub}, {emote.random.follower} or {emote.random.bits}. {emote.random.global} picks a Twitch global and {emote.random.any} picks from every emote your channel can show.",
+      "quote": "Each set has three helpers: a pick gives one random emote, a list gives every emote one space apart, and a count gives how many there are."
+    },
+    {
+      "question": 2,
+      "answer": "You need emotes your channel can show: your own Twitch emotes, the Twitch globals, or a 7TV, BTTV or FFZ set. This is stated in the opening paragraphs. Those paragraphs also say where the helpers work, and that helpers which read a viewer or a message do not work in timers.",
+      "quote": "The emotes a helper can see are the ones your channel can show: your own Twitch emotes, the Twitch globals, and your 7TV, BTTV and FFZ sets with their globals."
+    },
+    {
+      "question": 3,
+      "answer": "A pick gives one random emote that changes each run, a list gives every emote one space apart, and a count gives a number in your channel's language style. The 7TV, BTTV and FFZ set helpers read only your channel's own set, not that network's globals. The chat-usage helpers ({emote.channel.top}, {emote.user.top}) count chat lines, and {emote.user.favorite} is the owner's starred emote.",
+      "quote": "{emote.user.favorite} is a different thing: it does not look at chat."
+    },
+    {
+      "question": 4,
+      "answer": "To choose from one provider, use that set's pick, for example {emote.random.7tv}. When the set is empty, the pick gives nothing and the reply goes out without it. You cannot add fallback text, because an added argument leaves the helper in the reply with its braces. So Today's emote: {emote.random.7tv} on a channel without a 7TV set sends Today's emote: and nothing after it, and {emote.count.7tv} would give 0.",
+      "quote": "When a set is empty, a pick and a list give nothing and the count gives 0."
+    },
+    {
+      "question": 5,
+      "answer": "A reader used to the {emote:catJAM|hype} fallback might try a fallback on a pick. The page warns against this after the table, in the paragraph that also describes the empty case, so a reader who stops at the table could still send raw braces to chat. To star a favorite, right-click the emote; the page does not say whether that stars it at once or opens a menu, so I would have to guess.",
+      "quote": "When you add an argument anyway, the helper stays in the reply as written, braces and all."
+    },
+    {
+      "question": 6,
+      "answer": "The tie rule by character code is an internal sorting detail that is hard to follow aloud, and it costs a reread. Read aloud, the All emote helpers table repeats the same Use in list on almost every row, which is long and adds little after the opening paragraph.",
+      "quote": "A tie goes to the code that sorts first by character code, so a capital letter beats a lowercase one (KEKW beats catJAM)."
+    }
+  ],
+  "findings": [],
+  "warnings_released": true,
+  "warning_review": [
+    {
+      "id": "sentence-11-2",
+      "decision": "keep",
+      "reason": "The 39-word sentence names the six Twitch pick helpers as copyable codes, and the table above gives the same helpers in full. A reader scans for one code, and no step depends on parsing the sentence in one pass, so its length alone is not a defect."
+    },
+    {
+      "id": "paragraph-12",
+      "decision": "keep",
+      "reason": "The paragraph is a run of short one-line sentences about how pick, list and count behave when run or empty. Each line states one fact and the reader can stop at any line, so the sentence count alone is not a defect."
+    }
+  ]
+}

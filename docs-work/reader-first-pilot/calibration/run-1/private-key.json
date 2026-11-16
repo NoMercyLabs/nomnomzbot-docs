@@ -1,0 +1,92 @@
+[
+  {
+    "case": "C:\\Projects\\NoMercyLabs\\nomnomzbot-docs\\docs-work\\reader-first-pilot\\calibration\\run-1\\110",
+    "route": "/reference/commands/create-a-command",
+    "page": "C:\\Projects\\NoMercyLabs\\nomnomzbot-docs\\docs-work\\reader-first-pilot\\new\\commands\\create-a-command.mdx",
+    "card": "C:\\Projects\\NoMercyLabs\\nomnomzbot-docs\\docs-work\\reader-first-pilot\\cards\\create-a-command.md",
+    "intact": true,
+    "kind": "intact",
+    "seeded_defect": "No injected defect. Assess the actual page rather than presuming it is clean."
+  },
+  {
+    "case": "C:\\Projects\\NoMercyLabs\\nomnomzbot-docs\\docs-work\\reader-first-pilot\\calibration\\run-1\\105",
+    "route": "/reference/commands/create-a-command",
+    "page": "C:\\Projects\\NoMercyLabs\\nomnomzbot-docs\\docs-work\\reader-first-pilot\\new\\commands\\create-a-command.mdx",
+    "card": "C:\\Projects\\NoMercyLabs\\nomnomzbot-docs\\docs-work\\reader-first-pilot\\calibration\\run-1\\105\\card.md",
+    "intact": false,
+    "kind": "omitted-action",
+    "seeded_defect": "The initial creation procedure omits choosing Create command before testing the reply."
+  },
+  {
+    "case": "C:\\Projects\\NoMercyLabs\\nomnomzbot-docs\\docs-work\\reader-first-pilot\\calibration\\run-1\\101",
+    "route": "/reference/commands/cooldowns-and-permissions",
+    "page": "C:\\Projects\\NoMercyLabs\\nomnomzbot-docs\\docs-work\\reader-first-pilot\\new\\commands\\cooldowns-and-permissions.mdx",
+    "card": "C:\\Projects\\NoMercyLabs\\nomnomzbot-docs\\docs-work\\reader-first-pilot\\cards\\cooldowns-and-permissions.md",
+    "intact": true,
+    "kind": "intact",
+    "seeded_defect": "No injected defect. Assess the actual page rather than presuming it is clean."
+  },
+  {
+    "case": "C:\\Projects\\NoMercyLabs\\nomnomzbot-docs\\docs-work\\reader-first-pilot\\calibration\\run-1\\106",
+    "route": "/reference/commands/cooldowns-and-permissions",
+    "page": "C:\\Projects\\NoMercyLabs\\nomnomzbot-docs\\docs-work\\reader-first-pilot\\new\\commands\\cooldowns-and-permissions.mdx",
+    "card": "C:\\Projects\\NoMercyLabs\\nomnomzbot-docs\\docs-work\\reader-first-pilot\\calibration\\run-1\\106\\card.md",
+    "intact": false,
+    "kind": "contradictory-outcome",
+    "seeded_defect": "The example says a refused attempt restarts waits, contradicting the unchanged explanation that refusal starts neither."
+  },
+  {
+    "case": "C:\\Projects\\NoMercyLabs\\nomnomzbot-docs\\docs-work\\reader-first-pilot\\calibration\\run-1\\104",
+    "route": "/reference/automation/timers-and-chat-triggers",
+    "page": "C:\\Projects\\NoMercyLabs\\nomnomzbot-docs\\docs-work\\reader-first-pilot\\new\\automation\\timers-and-chat-triggers.mdx",
+    "card": "C:\\Projects\\NoMercyLabs\\nomnomzbot-docs\\docs-work\\reader-first-pilot\\cards\\timers-and-chat-triggers.md",
+    "intact": true,
+    "kind": "intact",
+    "seeded_defect": "No injected defect. Assess the actual page rather than presuming it is clean."
+  },
+  {
+    "case": "C:\\Projects\\NoMercyLabs\\nomnomzbot-docs\\docs-work\\reader-first-pilot\\calibration\\run-1\\109",
+    "route": "/reference/automation/timers-and-chat-triggers",
+    "page": "C:\\Projects\\NoMercyLabs\\nomnomzbot-docs\\docs-work\\reader-first-pilot\\new\\automation\\timers-and-chat-triggers.mdx",
+    "card": "C:\\Projects\\NoMercyLabs\\nomnomzbot-docs\\docs-work\\reader-first-pilot\\calibration\\run-1\\109\\card.md",
+    "intact": false,
+    "kind": "buried-condition",
+    "seeded_defect": "The initial next-poll firing condition is moved after the entire reference and related links, away from creating/enabling a timer."
+  },
+  {
+    "case": "C:\\Projects\\NoMercyLabs\\nomnomzbot-docs\\docs-work\\reader-first-pilot\\calibration\\run-1\\103",
+    "route": "/reference/commands/built-in-commands",
+    "page": "C:\\Projects\\NoMercyLabs\\nomnomzbot-docs\\docs-work\\reader-first-pilot\\new\\commands\\built-in-commands.mdx",
+    "card": "C:\\Projects\\NoMercyLabs\\nomnomzbot-docs\\docs-work\\reader-first-pilot\\cards\\built-in-commands.md",
+    "intact": true,
+    "kind": "intact",
+    "seeded_defect": "No injected defect. Assess the actual page rather than presuming it is clean."
+  },
+  {
+    "case": "C:\\Projects\\NoMercyLabs\\nomnomzbot-docs\\docs-work\\reader-first-pilot\\calibration\\run-1\\102",
+    "route": "/reference/commands/built-in-commands",
+    "page": "C:\\Projects\\NoMercyLabs\\nomnomzbot-docs\\docs-work\\reader-first-pilot\\new\\commands\\built-in-commands.mdx",
+    "card": "C:\\Projects\\NoMercyLabs\\nomnomzbot-docs\\docs-work\\reader-first-pilot\\calibration\\run-1\\102\\card.md",
+    "intact": false,
+    "kind": "contradictory-outcome",
+    "seeded_defect": "Inserted single-field instructions promise whole-command Reset to default changes only one field, contradicting the unchanged reset reference."
+  },
+  {
+    "case": "C:\\Projects\\NoMercyLabs\\nomnomzbot-docs\\docs-work\\reader-first-pilot\\calibration\\run-1\\107",
+    "route": "/reference/self-hosting/first-run-setup",
+    "page": "C:\\Projects\\NoMercyLabs\\nomnomzbot-docs\\docs-work\\reader-first-pilot\\new\\self-hosting\\first-run-setup.mdx",
+    "card": "C:\\Projects\\NoMercyLabs\\nomnomzbot-docs\\docs-work\\reader-first-pilot\\cards\\first-run-setup.md",
+    "intact": true,
+    "kind": "intact",
+    "seeded_defect": "No injected defect. Assess the actual page rather than presuming it is clean."
+  },
+  {
+    "case": "C:\\Projects\\NoMercyLabs\\nomnomzbot-docs\\docs-work\\reader-first-pilot\\calibration\\run-1\\108",
+    "route": "/reference/self-hosting/first-run-setup",
+    "page": "C:\\Projects\\NoMercyLabs\\nomnomzbot-docs\\docs-work\\reader-first-pilot\\new\\self-hosting\\first-run-setup.mdx",
+    "card": "C:\\Projects\\NoMercyLabs\\nomnomzbot-docs\\docs-work\\reader-first-pilot\\calibration\\run-1\\108\\card.md",
+    "intact": false,
+    "kind": "missing-prerequisite",
+    "seeded_defect": "The own-Twitch-app path omits verified-email and two-factor requirements needed to answer the prerequisites question."
+  }
+]

@@ -20,7 +20,8 @@ const DEFAULT_DATA = 'docs-work/helpers.json';
 const DEFAULT_GROUPS = 'docs-work/helper-groups.md';
 const DEFAULT_INPUTS = 'docs-work/helper-inputs.json';
 const EXTRAS_DIR = 'docs-work/helper-sections';
-const DEFAULT_OUT = 'src/content/reference/en/templates';
+const WRITTEN_DIR = 'docs-work/helper-pages';
+const DEFAULT_OUT ='src/content/reference/en/templates';
 const ROUTE_PREFIX = '/reference/templates/';
 const COMMANDS_PAGE = '/reference/commands/variables-and-templates';
 const OVERVIEW_SLUG = 'overview';
@@ -455,11 +456,19 @@ function exampleCell(helper, example) {
 function helperRow(helper, examples) {
 	const description = firstLine(helper.description ?? '');
 	const gives = description === '' ? '-' : tableSafe(proseSafe(description));
-	return `| ${codeSpan(`{${helper.key}}`)} | ${gives} | ${exampleCell(helper, examples.get(helper.key))} |`;
+	const surfaces = {
+		Command: 'Commands', EventResponse: 'event responses', Timer: 'timers',
+		Pipeline: 'pipelines', Discord: 'Discord', Webhook: 'webhooks', Viewer: 'viewer text',
+	};
+	const available = helper.contexts.map((context) => {
+		if (!surfaces[context]) throw new Error(`Unknown helper context: ${context}`);
+		return surfaces[context];
+	}).join(', ');
+	return `| ${codeSpan(`{${helper.key}}`)} | ${gives} | ${exampleCell(helper, examples.get(helper.key))} | ${available} |`;
 }
 
 function helperTable(helpers, examples) {
-	return ['| Helper | What it gives | Example |', '| --- | --- | --- |', ...helpers.map((helper) => helperRow(helper, examples))].join('\n');
+	return ['| Helper | What it gives | Example | Use in |', '| --- | --- | --- | --- |', ...helpers.map((helper) => helperRow(helper, examples))].join('\n');
 }
 
 function countWords(count) {
@@ -487,7 +496,7 @@ function pageEnd() {
 
 function typePage(row, helpers, parts, intro, extra, examples) {
 	const description = `Lists ${countWords(helpers.length).replace('helper', 'template helper')}, each with what it gives and an example.`;
-	const note = 'Each row is its own example, so the rows on this page do not all come from one moment.';
+	const note = 'The examples illustrate possible values; your results depend on the channel and trigger.\n**Use in** lists the template fields that accept each helper.\nA pipeline still needs a trigger that supplies the relevant person, message, or event; event-specific helpers need that event.\nFor viewer-written text, the [Viewer Templates setting and permissions](/reference/settings/features) also apply.';
 	const body =
 		parts === null
 			? helperTable(helpers, examples)
@@ -505,13 +514,13 @@ function keyLine(row, helpers) {
 }
 
 function overviewLines(rows, pages) {
-	return rows.map((row) => `- [${row.title}](${row.route}): ${countWords(pages.get(row.route).length)}`);
+	return [...rows].sort((a, b) => a.title.localeCompare(b.title, 'en')).map((row) => `- [${row.title}](${row.route}): ${countWords(pages.get(row.route).length)}`);
 }
 
 function overviewPage(rows, pages, overview, total) {
 	const description = `Find any of the ${total} template helpers, with one page for each type of helper.`;
 	const list = overviewLines(rows, pages).join('\n');
-	return `${frontmatter(OVERVIEW_TITLE, description)}\n${overview}\n\n## All helper pages\n\n${list}\n\n${pageEnd()}\n`;
+	return `${frontmatter(OVERVIEW_TITLE, description)}\n${overview}\n\n## All helper pages\n\n${list}\n\nFor nested helpers, literal braces, and optional HTML output, return to [Variables and templates](${COMMANDS_PAGE}).\n`;
 }
 
 function buildPages(context) {
@@ -523,6 +532,15 @@ function buildPages(context) {
 		built.set(`${row.slug}.mdx`, page);
 	}
 	built.set(`${OVERVIEW_SLUG}.mdx`, overviewPage(context.rows, context.pages, context.overview, context.total));
+	return withWrittenPages(built);
+}
+
+// A page reviewed by hand lives whole in docs-work/helper-pages/<slug>.mdx and replaces the generated text, so a rerun cannot undo the review.
+function withWrittenPages(built) {
+	for (const name of [...built.keys()]) {
+		const path = join(WRITTEN_DIR, name);
+		if (existsSync(path)) built.set(name, readFileSync(path, 'utf8'));
+	}
 	return built;
 }
 

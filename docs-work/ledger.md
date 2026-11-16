@@ -104,6 +104,10 @@ Format: concept: owning page; pages that may refer to it.
 - first-run setup: /reference/self-hosting/first-run-setup; /reference/getting-started/bot-account
 - release channel (stable, beta, nightly): /reference/self-hosting/updates
 
+
+Pages about people, not features. The owning page explains the word once; every other page names it in a clause and links.
+
+
 ## Code and SDK (Draft)
 
 - code script: /reference/code/scripts; /reference/commands/pipelines, /reference/code/worked-example

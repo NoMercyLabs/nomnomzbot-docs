@@ -1,7 +1,41 @@
-# Reader review: src/content/reference/en/code/sdk-script-basics.mdx
+# Current targeted editorial review — 2026-11-06
+
+Verdict: TARGETED AUTHOR SELF-REVIEW; no independent or exhaustive PASS.
+Reviewed: src/content/reference/en/code/sdk-script-basics.mdx
+Reviewed-SHA256: 733a4916bad7e4af79e031bf24d2aaa0fe70dafc3f4db9e84f1a2208bbb20e7a
+Reviewer: editing agent (author self-review)
+
+Full editorial read; corrected syntactic grant discovery and removed blanket Draft. Direct source: Infrastructure/CustomCode/Jint/JintScriptExecutor.cs:76-265,279-399. Aliased/computed calls do not infer grants; an already-declared capability remains usable. No whole-sandbox execution claim.
+
+Coverage details and final static-check results: [final-developer.md](../ecosystem-validation/final-developer.md). Full reading is distinct from focused source verification. No live application/provider test or whole-project build in this batch.
+
+## Historical records below — verdicts and hashes preserved
+
+# Independent reader review: /reference/code/sdk-script-basics
 Verdict: PASS
+Reviewed: src/content/reference/en/code/sdk-script-basics.mdx
+Reviewed-SHA: 0169a39a4aa6fbe1
+Reviewed-SHA256: 0169a39a4aa6fbe13d5b4aae5c96c195e77816ec3433fe04f2a1623e6eb864fa
+Reviewed-Date: 2026-11-05
+Reviewer: independent reviewer, separate from article author
+Product-Revision: 54da8b6318de63b5205a0ff8db35e0b9045dd959
+
+The complete current article was read independently of its author, in the established settings, self-hosting and Code and SDK navigation order. The user's natural explainer/progressive-disclosure requirements take precedence over historical pilot mimicry, sentence caps and repeated page templates.
+
+## Learning and lookup result
+
+bot versus nnz, local helpers versus host calls, grants versus human roles and hard errors versus failed calls build a coherent model. Method tables preserve lookup depth, and the storage example explains the expected no-output/specific-failure result.
+
+No outstanding substantive reader finding.
+
+Related routes were checked as contextual continuations rather than prerequisites for ordinary bot use. Draft labels remain appropriate for code material. This is a text/structure review, not a claim of rendered browser QA.
+
+## Historical review (superseded)
+
+# Reader review: src/content/reference/en/code/sdk-script-basics.mdx
+Historical verdict: PASS
 Reviewed: C:\Projects\NoMercyLabs\nomnomzbot-docs\src\content\reference\en\code\sdk-script-basics.mdx
-Reviewed-SHA: 43a67d7b8cbf4393
+Reviewed-SHA: 7b3fb393a30d3918
 
 Blocking findings: none. Every step in "Turn on Custom Code" can be followed. The error section and the "One rule for a bad value" section tell the reader what they see.
 

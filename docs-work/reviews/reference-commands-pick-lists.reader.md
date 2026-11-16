@@ -1,7 +1,26 @@
+# Current independent reader review
+
+Verdict: PASS
+Reviewed: src/content/reference/en/commands/pick-lists.mdx
+Reviewed-SHA: 32a267e0f0b7756a6b6e9fd26d0157d70470f2f40107b5c75505389756cdb3a6
+Reviewed-SHA256: 32a267e0f0b7756a6b6e9fd26d0157d70470f2f40107b5c75505389756cdb3a6
+Reviewed-Date: 2026-11-05
+Reviewer: independent section reviewer
+
+The shared-choice use case is clear, examples show a saved list and visible result, and it distinguishes a command draw from a pipeline variable reused later. The reviewed repair correctly separates the deletion role floor from personal grants.
+
+The full page was read with the preceding/following navigation context and related links. This review applies the owner's explanatory, progressive-disclosure guidance; it does not impose Atlas sentence caps, pilot mimicry or fixed article headings. No substantive reader finding remains at this hash. Build/render/link checks are recorded separately by the lead reviewer.
+
+Report: docs-work/overhaul/review-learning-commands-helpers.md.
+
+## Historical evidence
+
+The material below is retained as historical evidence; its older verdict is not the current review.
+
 # Reader review: src/content/reference/en/commands/pick-lists.mdx
 Verdict: PASS
 Reviewed: src/content/reference/en/commands/pick-lists.mdx
-Reviewed-SHA: f474cce871227217
+Reviewed-SHA: 8097ec1e9ed7c43a
 
 Round 3, a re-review. The page changed by one line since the last PASS (Reviewed-SHA a6445721fa9338dd): line 38 now sets the helper `{list.pick.snacks}` in code format. I read the whole page again as a new reader. Run rule: FAIL only for a blocking finding (a wrong fact, or a step a non-coder cannot follow). None found, so the verdict is PASS.
 

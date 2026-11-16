@@ -1,7 +1,17 @@
-# Reader review: C:\Projects\NoMercyLabs\nomnomzbot-docs\src\content\reference\en\economy\giveaways.mdx
+# Independent reader review: /reference/economy/giveaways
 Verdict: PASS
-Reviewed: C:\Projects\NoMercyLabs\nomnomzbot-docs\src\content\reference\en\economy\giveaways.mdx
-Reviewed-SHA: 7fda655c060a7727
+Reviewed: src/content/reference/en/economy/giveaways.mdx
+Reviewed-SHA: 2e02dc0b7bae63f0a521451bef8cd298051bc34932a72137b55088743f21777b
+
+## Independent overhaul review, 2026-11-05
+
+A free first draw builds confidence before advanced tickets/payment/eligibility. Claim tracking versus already-delivered prizes is explicit; tables support lookup.
+
+Reviewed independently of the article author, in actual navigation order. Current product source 54da8b631 and relevant changes since b12f4f696 were read without starting the bot, executing platform actions or changing channel data. The reader judgment follows the user's natural teaching style; old pilot mimicry, sentence caps and unrelated Atlas style gates were not applied. See [review-moderation-economy-community.md](../overhaul/review-moderation-economy-community.md) for the review scope and findings.
+
+## Prior review history
+
+The earlier text below is retained as history; it does not independently approve a later article hash.
 
 Judged against: map row for /reference/economy/giveaways (Assumes: /reference/economy/currency-and-balances, /reference/economy/store), docs-work/ledger.md, docs-work/page-conventions.md, and the pilot page /reference/commands/create-a-command. The page has no includes or snippets, so the stored text is the text the reader sees. The product repository was not read. The Assumes pages were not read; re-teaching was judged against the ledger's ownership lines.
 

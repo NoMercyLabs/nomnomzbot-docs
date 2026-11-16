@@ -1,3 +1,38 @@
+# Current targeted reader review
+
+Verdict: PARTIAL
+Reviewed: src/content/reference/en/audio/read-aloud-api.mdx
+Reviewed-Date: 2026-11-06
+Reviewer: final-pass author; not an independent reviewer
+
+The entire article was read. The raw request now includes its required origin, with browser-versus-command-line guidance beside the example. Rate-limit recovery explains the cross-origin header limitation, and the origin section distinguishes filtering from authentication. The unchanged request, playback, voice, configuration, and troubleshooting sections retain their existing order and technical detail. Independent full-page review remains incomplete.
+
+## Additional current reader checks
+
+Final-pass addendum: the request table now defines the exact string-length unit. GET privacy guidance is adjacent to the method choice. Advanced limits distinguish queue waiting, process-local state and possible duplicate synthesis; prefetching is described as reducing pauses rather than guaranteeing uninterrupted speech. Purpose, prerequisites and the main request/playback example remain intact.
+
+## Historical independent reader review
+
+The following PASS applies only to the earlier recorded hash.
+
+Verdict: PASS
+Reviewed: src/content/reference/en/audio/read-aloud-api.mdx
+Reviewed-SHA: a925a99fbc7849d079bf696152559b673d6fb4bf15c69c2d0b0144d72bb19776
+Reviewed-SHA256: a925a99fbc7849d079bf696152559b673d6fb4bf15c69c2d0b0144d72bb19776
+Reviewed-Date: 2026-11-05
+Reviewer: independent media-section reviewer
+Product: 54da8b6318de63b5205a0ff8db35e0b9045dd959 plus preserved current music UI edits
+
+The opening explicitly identifies the developer audience and distinguishes visitor-browser audio from stream TTS. Request/error/cleanup behavior, caching/origins, voice choice and operational limits remain complete. Navigation places it after Code and SDK pages, preserving its route while removing it from the ordinary audio learning path.
+
+The full page was read with adjacent navigation and related links. The owner's natural explanatory style governs: no Atlas sentence caps, pilot imitation or rigid article template was imposed. No substantive reader finding remains at this hash. Combined build, rendered-output and link/frontmatter checks belong to the lead's separate validation.
+
+Report: docs-work/overhaul/review-automation-media-integrations.md.
+
+## Historical evidence
+
+Older hashes and verdicts below are retained for history and are not the current review.
+
 # Reader review: src/content/reference/en/audio/read-aloud-api.mdx
 Verdict: PASS
 Reviewed: C:\Projects\NoMercyLabs\nomnomzbot-docs\src\content\reference\en\audio\read-aloud-api.mdx

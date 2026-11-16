@@ -1,29 +1,33 @@
 ---
 title: Viewer reports
-description: Read the reports viewers file about a chatter, dismiss or escalate each one, and find the safety review queue.
+description: Review concerns about a person in chat, dismiss or escalate reports, and follow up through the channel's moderation tools.
 ---
 
-You read and sort the reports viewers file about a chatter on the **Viewer reports** page.
-The page sits in the **Access** group of the settings sidebar.
+Reports give moderators a record of a concern about someone in chat, with a reason and the person who submitted it.
+Use the **Viewer reports** page in the **Access** group of **Settings** to decide which concerns need follow-up.
+Changing a report's status organizes that work; it does not punish the reported person.
 
 ## Who can use this page
+
+The following roles are the channel defaults; [Permissions](/reference/settings/permissions) can change access to individual actions.
 
 | Who | What they can do |
 | --- | --- |
 | A **Moderator** or higher | Open the page and read every report. |
 | A **Lead moderator** or higher | Also **Dismiss** or **Escalate** an open report. |
-| A viewer in the channel | File a report. |
 
 ## How a report arrives
 
 A report names one chatter and gives a reason.
-The dashboard has no form to file a report.
-A report comes in through the bot's API.
+The dashboard currently provides the review list, but no form for a viewer to submit a report.
+Any signed-in viewer of the channel can file a report through the bot's API.
+By default the action **File a report** is open to Everyone, and [Permissions](/reference/settings/permissions) can change that.
+The bot saves the signed-in person as the reporter, so the row shows their name.
 
 | Rule | What happens |
 | --- | --- |
 | The reason is empty | The bot refuses the report: "A report needs a reason." |
-| The reason is longer than 500 characters | The bot refuses the report. |
+| The reason is longer than 500 characters | The bot refuses the report: "A report reason can't exceed 500 characters." |
 | No chatter is named | The bot refuses the report: "A report needs a reported user." |
 
 A new report has the status **Open**.
@@ -40,6 +44,14 @@ Each row shows the name of the reported chatter.
 Under the name, the row shows the reason and who filed it, for example "Filed by a viewer 5 minutes ago".
 When the bot does not know the reporter, the row says "a viewer".
 
+## Open reports as notices
+
+Each open report also shows as a notice titled "(name) was reported by a viewer", with the line "Reason: (reason)".
+The notice appears in the **Needs attention** panel on the dashboard home and in the **Action required** inbox.
+Its **Open** link goes to [People](/reference/community/people), not to **Viewer reports**.
+The notice goes away when you dismiss or escalate the report.
+You can also dismiss the notice itself.
+
 | Status | Text when the list is empty |
 | --- | --- |
 | **Open** | "No open reports. Nobody has asked for help." |
@@ -47,6 +59,9 @@ When the bot does not know the reporter, the row says "a viewer".
 | **Dismissed** | "No dismissed reports." |
 
 ## Dismiss or escalate a report
+
+Dismiss a report when it needs no further work, or escalate it when someone should investigate.
+For an escalated report, open the person's profile or the chat history to review the situation, then use the normal moderation controls if an action is needed.
 
 1. Show the **Open** reports.
 2. On the row, choose **Dismiss** for a report that needs no action.
@@ -56,14 +71,6 @@ When the bot does not know the reporter, the row says "a viewer".
 
 The bot records who made the choice and when.
 The buttons show only on open reports.
-
-::Callout
-
-**Escalate** does not ban or time out anyone.
-It only marks the report.
-The bans of the channel are on [Bans and blocked terms](/reference/moderation/bans-and-blocked-terms).
-
-::
 
 ::Troubleshooting
 
@@ -81,28 +88,8 @@ Choose **Try again** on the card to load it again.
 
 ::
 
-## The safety review queue
+## Related pages
 
-The automatic actions of spam defense wait for a human decision in a separate queue.
-This queue is not on the channel's settings.
-It is the **Review queue** on the **Trust and safety** page, in the admin area of the dashboard.
-Only an operator of the deployment with the right to review trust and safety sees it.
-
-<details>
-<summary>Work the review queue</summary>
-
-1. Type why you open the page in **Reason for access**.
-   Nothing loads until you do. Every read and action is saved in the audit log with this reason.
-2. The **Review queue** shows the automatic account actions, newest first.
-   Each row shows the account, the channel, the reason, the message, the confidence, the action and the time.
-3. Choose **Confirm** or **Overturn** on a row.
-
-| Choice | What happens |
-| --- | --- |
-| **Confirm** | The action stays as it is and the review closes. |
-| **Overturn** | The bot removes the Twitch timeout or ban it gave, then marks the action overturned. |
-
-When the bot cannot remove the timeout or ban, the row stays as it was.
-The same page also shows **Cross-channel signals**: accounts flagged in two or more channels.
-
-</details>
+- [People](/reference/community/people) opens a person's profile and moderation history.
+- [Chat page](/reference/community/chat-page) lets you review messages and act on them.
+- [Moderation overview](/reference/moderation/overview) explains the separate queue for held messages.

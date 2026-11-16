@@ -1,3 +1,22 @@
+# Current independent reader review
+
+Verdict: PASS
+Reviewed: src/content/reference/en/templates/list.mdx
+Reviewed-SHA: dbc5d3d0ab575b3273f6f6286a01c3f17f4c0f45d0e4683f79617d18d3fd4759
+Reviewed-SHA256: dbc5d3d0ab575b3273f6f6286a01c3f17f4c0f45d0e4683f79617d18d3fd4759
+Reviewed-Date: 2026-11-05
+Reviewer: independent section reviewer
+
+The page explains that reading a saved choice or counter does not modify it. A named snack-list example and second-entry lookup connect the reference to the dashboard feature and pipeline counter actions.
+
+The full page was read with the preceding/following navigation context and related links. This review applies the owner's explanatory, progressive-disclosure guidance; it does not impose Atlas sentence caps, pilot mimicry or fixed article headings. No substantive reader finding remains at this hash. Build/render/link checks are recorded separately by the lead reviewer.
+
+Report: docs-work/overhaul/review-learning-commands-helpers.md.
+
+## Historical evidence
+
+The material below is retained as historical evidence; its older verdict is not the current review.
+
 # Reader review: src/content/reference/en/templates/list.mdx
 Verdict: PASS
 Reviewed: C:/Projects/NoMercyLabs/nomnomzbot-docs/src/content/reference/en/templates/list.mdx

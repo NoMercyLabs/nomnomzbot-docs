@@ -1,7 +1,39 @@
-# Fact-check: /reference/integrations/obs (round 2)
+# Current independent fact check
+
 Verdict: PASS
 Reviewed: src/content/reference/en/integrations/obs.mdx
-Reviewed-SHA: 12c8cc2e868be8b3
+Reviewed-SHA: a35ec15b33a6e2aa8fb39ed7101d1e2de6837f7b41eeae4cc001eead483ee638
+Reviewed-SHA256: a35ec15b33a6e2aa8fb39ed7101d1e2de6837f7b41eeae4cc001eead483ee638
+Reviewed-Date: 2026-11-05
+Reviewer: independent media-section reviewer
+Product: 54da8b6318de63b5205a0ff8db35e0b9045dd959 plus preserved current music UI edits
+
+The full article was read in sidebar order. Consequential defaults, permissions, prerequisites, state lifetime and effects were traced against current source; repaired findings were re-read before this verdict. This is source verification, not a live-channel or visible/audible output test.
+
+- server/src/NomNomzBot.Domain/Obs/Entities/ObsConnectionDefaults.cs:20-38 defines direct/127.0.0.1/4455/off and event masks; server/src/NomNomzBot.Infrastructure/Obs/Transport/ObsDirectConnectionKeeper.cs:24-105 implements 2..60-second retries.
+- server/src/NomNomzBot.Infrastructure/Obs/Transport/DirectObsTransport.cs:31-100 implements the authenticated WebSocket v5 control channel; Content/Identity/ActionDefinitionSeeder.cs:373-380 separates connection, scene and output roles.
+- External OBS 28+ WebSocket availability and setup were verified against https://obsproject.com/kb/remote-control-guide on 2026-11-05.
+
+Source paths without a repeated layer prefix in a bullet are relative to its preceding Infrastructure or dashboard scope. The section report records method, repaired findings, external sources and remaining product limitations: docs-work/overhaul/review-automation-media-integrations.md.
+
+## Historical evidence
+
+Older hashes, verdicts and values below are retained for history and are not the current review.
+
+# Fact-check: /reference/integrations/obs (round 2)
+Verdict: PENDING
+Reviewed: src/content/reference/en/integrations/obs.mdx
+Reviewed-SHA: a35ec15b33a6e2aa8fb39ed7101d1e2de6837f7b41eeae4cc001eead483ee638
+
+## 2026-11-05 author source verification
+
+Author source audit complete; independent verdict pending. This hash binds the current text, not the historical PASS below. The article was read in full and revised toward the user's explainer style while preserving precise reference detail. ObsConnectionService.cs; ObsConnectionPanel.vue; RequiredOverlaysPanel.vue. Remote control requires reachable OBS WebSocket; source audio/rendering is a separate connection.
+
+The section inventory and known implementation gaps are in [automation-media-integrations.md](../overhaul/automation-media-integrations.md). This is source verification, not a live-channel execution claim. Independent review must account for product changes after the original author pass at b12f4f696.
+
+## Historical review (SHA 12c8cc2e868be8b3)
+
+Historical verdict: PASS. The earlier evidence below is retained as history and is superseded where the current article or source changed.
 
 ## Round 2: changed sentences checked
 - Line 9 overlay link "only shows a page in OBS": true, same meaning as round 1.

@@ -1,3 +1,22 @@
+# Current independent reader review
+
+Verdict: PASS
+Reviewed: src/content/reference/en/templates/pronouns.mdx
+Reviewed-SHA: 85b63f721d0d58dba8b0f3fa1c348d9c423e910c33f5e06a05a963bd25747072
+Reviewed-SHA256: 85b63f721d0d58dba8b0f3fa1c348d9c423e910c33f5e06a05a963bd25747072
+Reviewed-Date: 2026-11-05
+Reviewer: independent section reviewer
+
+The article teaches adapting a sentence, choosing a person, capitalizing and agreeing verbs through meaningful outcomes. Saved-choice origin, unknown/open-choice fallbacks, neopronouns and shoutout live-state differences retain their full explanations.
+
+The full page was read with the preceding/following navigation context and related links. This review applies the owner's explanatory, progressive-disclosure guidance; it does not impose Atlas sentence caps, pilot mimicry or fixed article headings. No substantive reader finding remains at this hash. Build/render/link checks are recorded separately by the lead reviewer.
+
+Report: docs-work/overhaul/review-learning-commands-helpers.md.
+
+## Historical evidence
+
+The material below is retained as historical evidence; its older verdict is not the current review.
+
 # Reader review: src/content/reference/en/templates/pronouns.mdx
 Verdict: PASS
 Reviewed: C:/Projects/NoMercyLabs/nomnomzbot-docs/src/content/reference/en/templates/pronouns.mdx

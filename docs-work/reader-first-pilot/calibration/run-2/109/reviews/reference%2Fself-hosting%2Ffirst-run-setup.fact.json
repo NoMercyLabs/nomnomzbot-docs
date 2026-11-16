@@ -1,0 +1,34 @@
+{
+  "fingerprint": "20d1af7de3afec43ecab4e1aa4109cff7d876e641345c3f0eebfdc1e878eac54",
+  "verdict": "PASS",
+  "findings": [],
+  "coverage": [
+    {
+      "id": "fixed-coverage",
+      "result": "supported",
+      "evidence": "Independently reviewed complete candidate at product source C:/Projects/NoMercyLabs/nomnomzbot HEAD f741789bf6b8d90ae2fd07f33a307a5a11623606: 8/8 required contract groups retained. Actual source paths/ranges and closed findings in C:/Projects/NoMercyLabs/nomnomzbot-docs/docs-work/reader-first-pilot/fact-review/first-run-setup.md; factual requirements in contracts/first-run-setup.md. New Run2 case109 answers1-4 independently re-read and judged; current page/card/render fingerprint recomputed after frozen final. Source/answer support only, not runtime or human usability."
+    }
+  ],
+  "reader_answers": [
+    {
+      "question": 1,
+      "result": "supported",
+      "evidence": "Run2 case109 NEW frozen answer Q1: At the running bot’s address, choose Use the shared NomNomzBot app and Next; no Client ID or Client Secret is needed. Skip Bot account, then skip Spotify, Discord and YouTube. On the final card, skipped services may remain Not set; choose Finish setup, then sign in as the broadcaster to connect the channel. No extra services, separate bot login/account or TTS setup are needed. Independent source check: Explicit Use shared app, Next, skip four optional steps, Finish setup and broadcaster sign-in. Resolved default Client ID alone not decision. Source: server/src/NomNomzBot.Api/Models/SetupWizardDtos.cs:83-157; server/src/NomNomzBot.Api/Controllers/V1/SystemController.cs:227-229,348-366; dashboard/src/views/site/setup/SetupView.vue:39-50,112-127. Its final article excerpts were individually verified present; answer text unchanged from initial."
+    },
+    {
+      "question": 2,
+      "result": "supported",
+      "evidence": "Run2 case109 NEW frozen answer Q2: A separate bot Twitch account, Twitch Client Secret and healthy Event feed are all unnecessary for first sign-in. The new bot has no broadcaster connection for an event-feed check yet. If registering your own Twitch app instead, you cannot proceed with registration while email is unverified or two-factor authentication is off: verify email and enable two-factor authentication first. The article establishes this in Use your own Twitch app and links Twitch’s registration requirements; I have not consulted that external page. You can still take the shared-app path now. Independent source check: No separate bot account, Client Secret or healthy feed needed; own-app registrant must verify email and enable2FA before registering. Article own-app instructions attribute this to Twitch; URL reproduction not required. Source: server/src/NomNomzBot.Api/Models/SetupWizardDtos.cs:98-149; dashboard/src/views/site/setup/components/EventFeedHealth.vue:31-59; https://dev.twitch.tv/docs/authentication/register-app/ official prerequisite checked in contract. Its final article excerpts were individually verified present; answer text unchanged from initial."
+    },
+    {
+      "question": 3,
+      "result": "supported",
+      "evidence": "Run2 case109 NEW frozen answer Q3: Successful Finish setup saves completion, closes the open key-changing window and opens the dashboard/sign-in flow. Before completion anyone who reaches the address can change application keys; afterward replacement credentials require a bot administrator, and channel moderator status alone is insufficient. Sign in as broadcaster afterward to connect the channel. Independent source check: Finish saves explicit completion flag and routes app/sign-in; closes anonymous credential-write window; subsequent replacement requires bot admin, not channel moderator. Source: server/src/NomNomzBot.Api/Controllers/V1/SystemController.cs:314-315,353-354,469-491; dashboard/src/views/site/setup/SetupView.vue:47-50. Its final article excerpts were individually verified present; answer text unchanged from initial."
+    },
+    {
+      "question": 4,
+      "result": "supported",
+      "evidence": "Run2 case109 NEW frozen answer Q4: Yes, skip the YouTube setup for YouTube song requests: their search and playback use a separate public/keyless path and need neither the Google app nor a YouTube account connection. Saving Spotify credentials only prepares its account connection and music features; it does not link the individual account or choose a playback device. Those still need configuration afterward. Independent source check: YouTube requests use public/keyless path, not Google OAuth/account connection; Spotify app credentials do not authorize individual account or choose player device. Source: server/src/NomNomzBot.Infrastructure/Music/YouTubeMusicProvider.cs:139-164,348-374; server/src/NomNomzBot.Infrastructure/Music/SpotifyMusicProvider.cs:36-39,205-225,299-325; server/src/NomNomzBot.Api/Models/SetupWizardDtos.cs:159-232. Its final article excerpts were individually verified present; answer text unchanged from initial."
+    }
+  ]
+}

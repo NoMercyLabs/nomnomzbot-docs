@@ -1,0 +1,75 @@
+{
+  "fingerprint": "aa5bffe396423dfbe69330ab7e509ab73f97b6af9408a2fa57ee90322e04487e",
+  "verdict": "PASS",
+  "answers": [
+    {
+      "question": 1,
+      "answer": "Pick lite for a bot that serves your own channel. Pick full only for a database server or updates with no pause. Lite path: get the project files (Code, then Download ZIP, unpack, open a terminal in nomnomzbot-master). Run docker compose -f docker-compose.lite.yml up -d, then check it with docker compose -f docker-compose.lite.yml ps. Open http://localhost:5080/setup and follow the first-run setup. The data lives in /app/data inside the container. Docker keeps it in the volume nomnomzbot_lite_data, or in the visible data folder if you made one. To keep it, never run docker compose down -v to update, keep the whole data folder together with keys/root-kek.key, and back it up with the stop, tar and start commands.",
+      "quote": "For a bot that serves your own channel, start with lite."
+    },
+    {
+      "question": 2,
+      "answer": "You need Docker with Compose v2, already running. You need a Twitch account for your channel and the NomNomzBot project files in one folder. All of this is in the What you need section. For the port, the address or a visible data folder, the Install the lite setup section says to do those steps before the first start.",
+      "quote": "Docker with Compose v2, and Docker running before you start."
+    },
+    {
+      "question": 3,
+      "answer": "The ps command shows the container as running, and it turns healthy after a short start-up. When the setup page loads, the bot is installed. After setup and sign-in, the dashboard opens at /app. Lite and full are told apart by the comparison table: lite is the bot only with a SQLite file, and full is the bot with Postgres, Redis and Caddy and no pause on updates.",
+      "quote": "When the setup page loads, the bot is installed."
+    },
+    {
+      "question": 4,
+      "answer": "Before the first start, follow If you open the bot from another computer. Copy .env.example to .env, make ENCRYPTION_KEY empty, set API_IMAGE to ghcr.io/nomercylabs/nomnomzbot:stable, keep or change API_HTTP_PORT, and set API_BASE_URL to the server address with the port, such as http://192.168.1.20:5080. Then allow that port in the server's firewall. Also before the first start, follow If you want the data in a folder you can see: uncomment ./data:/app/data, remove the lite_data:/app/data line, then run mkdir data (and the chown on Linux). Start with the lite up -d command and open the API_BASE_URL with /setup from the laptop. On that plain http address, sign-in offers only the code sign-in. These steps must come first because the Twitch return address is built from API_BASE_URL, and a new data folder starts empty once the bot has run.",
+      "quote": "Use it when the bot runs on another computer, such as a small home server you open from your laptop, or when port 5080 is taken."
+    },
+    {
+      "question": 5,
+      "answer": "In the full script path, you learn only after running the script that it does not ask for the port or the address. You then edit .env and run docker compose up -d a second time, which costs one extra restart. The lite path warns early enough, because the two before-the-first-start links come ahead of the start command.",
+      "quote": "The script does not ask for the port or the address."
+    },
+    {
+      "question": 6,
+      "answer": "Read aloud, the long docker run tar commands and the repeated reminders to copy a command whole or press Enter add length without new meaning. The PowerShell random-key one-liners cannot be followed by ear.",
+      "quote": "It is one command, so copy it whole."
+    }
+  ],
+  "findings": [],
+  "warnings_released": true,
+  "warning_review": [
+    {
+      "id": "length",
+      "decision": "keep",
+      "reason": "Length is a reading cost, not a wrong turn. The three reader questions are answered from the lite path, which comes first, and the long sections are the full setup and the backup and restore that the data-loss question needs. Reader answer 6 names the tar commands and repeated reminders as the listening cost; the owner's listening test judges that cost."
+    },
+    {
+      "id": "first-numbered-step",
+      "decision": "keep",
+      "reason": "Access requirements (Docker, a Twitch account, the project files) come before the first numbered step, and the before-first-start settings come before the start command. The order is the one voice.md asks for."
+    },
+    {
+      "id": "sentence-25-3",
+      "decision": "keep",
+      "reason": "The three firewall names give the reader the search term for their own operating system. The sentence is read only when the bot runs on another computer, so it adds nothing to the main path."
+    },
+    {
+      "id": "paragraph-39",
+      "decision": "keep",
+      "reason": "A sentence count alone is not a defect. The reader found no wrong step and no unclear condition in this paragraph."
+    },
+    {
+      "id": "sentence-40-1",
+      "decision": "keep",
+      "reason": "It names the condition (another computer, or port 5080 taken) and the deadline (before the Twitch app is registered in first-run setup), which is the decision the reader has to make. Reader answer 5 records the cost of reading it late as one extra restart, not a wrong step, so the wording stays."
+    },
+    {
+      "id": "sentence-48-3",
+      "decision": "keep",
+      "reason": "It states the consequence of changing ENCRYPTION_KEY, the one change that forces the reader to re-enter the Twitch secrets, in plain words a new streamer can act on."
+    },
+    {
+      "id": "sentence-52-2",
+      "decision": "keep",
+      "reason": "It states the consequence of losing the key file, which is the data-loss point the reader asked about. It repeats the callout above in short form, and it sits where the data is explained."
+    }
+  ]
+}

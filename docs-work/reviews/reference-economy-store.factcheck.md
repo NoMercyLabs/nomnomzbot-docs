@@ -1,5 +1,40 @@
-# Fact check: src/content/reference/en/economy/store.mdx
+# Independent source verification: /reference/economy/store
 Verdict: PASS
+Reviewed: src/content/reference/en/economy/store.mdx
+Reviewed-SHA: cb36b576254bedb9009ec82b61d7e7c47a083a095e5a095cb734c5d244215c1c
+
+## Independent overhaul review, 2026-11-05
+
+CatalogService.cs:280-465,467-538; CatalogController.cs:140-163; CatalogPanel/CatalogDialog; viewer route.ts: validation, stock/debit, all binding types, authenticated buyer, no auto-refund, incomplete viewer purchase UI.
+
+Reviewed independently of the article author, in actual navigation order. Current product source 54da8b631 and relevant changes since b12f4f696 were read without starting the bot, executing platform actions or changing channel data. This verdict is source verification, not proof of live platform delivery. See [review-moderation-economy-community.md](../overhaul/review-moderation-economy-community.md) for the review scope and findings.
+
+## Prior review history
+
+The earlier text below is retained as history; it does not independently approve a later article hash.
+
+Author source audit: 2026-11-04. Independent review of the revised article is pending; the historical PASS below does not approve this text.
+Product source: C:/Projects/NoMercyLabs/nomnomzbot at b12f4f696, inspected without starting the bot or changing data.
+
+Explains the earn-to-action purpose while putting the incomplete purchase surface up front; corrects the stale claim that bound pipelines do not run.
+
+| Revised claim or retained core behavior | Current source opened |
+| --- | --- |
+| Management UI, required Effect kind and exact fields | dashboard/src/views/dashboard/economy/components/CatalogPanel.vue; components/CatalogDialog.vue; i18n/en.json:140-200 |
+| Current purchase checks and payment/stock behavior | server/src/NomNomzBot.Infrastructure/Economy/CatalogService.cs:280-465 |
+| All binding kinds now execute after purchase | server/src/NomNomzBot.Infrastructure/Economy/CatalogService.cs:467-538 |
+| Buyer and role bound to authenticated caller | server/src/NomNomzBot.Api/Controllers/V1/CatalogController.cs:140-163 |
+| Viewer store not implemented and no buy/refund controls | dashboard/src/views/viewer/nav/route.ts:27; dashboard/src/views/dashboard/economy/components/CatalogPanel.vue; CatalogDialog.vue |
+| Default roles | server/src/NomNomzBot.Infrastructure/Content/Identity/ActionDefinitionSeeder.cs:459-463,575-576 |
+
+The scenario is a recommended use of verified bindings, not a runtime purchase test. No platform calls were performed.
+
+## Historical evidence
+
+The prior review is retained for its claim inventory. Its verdict and file hashes refer to the earlier article; the current binding implementation supersedes its old pipeline finding.
+
+# Fact check: src/content/reference/en/economy/store.mdx
+Historical verdict: PASS
 Reviewed: C:\Projects\NoMercyLabs\nomnomzbot-docs\src\content\reference\en\economy\store.mdx
 Reviewed-SHA: 4fcdb4824580d04b
 

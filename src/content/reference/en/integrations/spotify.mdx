@@ -1,11 +1,30 @@
 ---
 title: Spotify
-description: Add your own Spotify app, connect your Spotify account to the channel, and see what the connection lets the bot do.
+description: Connect your Spotify account, choose a shared or personal app, and get playback and song requests ready.
 ---
 
-You connect Spotify on the **Integrations** page, under **Settings** in the sidebar.
-The connection lets the bot read and control what plays on your Spotify account.
-The [music player](/reference/music/music-player) uses it.
+Connecting Spotify lets NomNomzBot work with the music you play on your Spotify account.
+The dashboard can show the current song, control playback and accept [song requests](/reference/music/song-requests), while Spotify remains the music service and playback device.
+You make the connection on **Integrations**, under **Settings**.
+
+Two things are involved in setup: your Spotify listening account and the Spotify app that asks permission to use it.
+The bot's operator may already provide a shared app, in which case you can connect without making one yourself.
+Your own app is needed only when there is no shared app, or when you choose to use your own credentials.
+
+## Choose the app, then connect your account
+
+Open the **Spotify** row under **Connected services** and check the app label.
+
+| Label | Next step |
+| --- | --- |
+| **The shared Spotify app** | Choose **Connect** and sign in to Spotify. Making your own app is optional. |
+| **Your own Spotify app** | Choose **Connect** using the app you already saved. |
+| **No Spotify app yet** | Add your app using the steps below, then choose **Connect**. |
+
+After connecting, open Spotify on your preferred playback device and start a song.
+The [Music page](/reference/music/music-player) should show it under **Now playing**.
+This checks the account connection before you add request rules or browser audio.
+When the Music page says "Spotify has no active device", open Spotify on a device, or use the **Device** picker on the Music page to choose which Spotify device plays.
 
 ## Who can use this page
 
@@ -21,10 +40,14 @@ The roles are explained on [Permissions](/reference/settings/permissions).
 
 ## Make your Spotify app
 
-The bot always connects to Spotify through the channel's own Spotify app.
-You make this app once at Spotify.
+Skip this section when the shared app already works for your channel.
+A personal app gives the bot your own Spotify client credentials; it does not create another Spotify listening account.
 
-1. Create an app at `https://developer.spotify.com/dashboard`.
+New Spotify apps start in development mode.
+Spotify currently requires a Premium account for the app owner and an allowlist for the Spotify users who use the app, with up to five authenticated users in development mode.
+Check Spotify's [quota-mode requirements](https://developer.spotify.com/documentation/web-api/concepts/quota-modes) when creating or sharing the app.
+
+1. Create an app in the [Spotify developer dashboard](https://developer.spotify.com/dashboard).
 2. Add this redirect address to the app, with your own dashboard address in front:
 
    ```
@@ -33,13 +56,17 @@ You make this app once at Spotify.
 
 3. Copy the app's **Client ID** and **Client secret** from Spotify.
 
+The redirect address is where Spotify returns after you approve the connection.
+It must match your bot's address exactly, including `https://` and any port.
+Spotify's [redirect-address requirements](https://developer.spotify.com/documentation/web-api/concepts/redirect_uri) explain the exceptions for local loopback addresses.
+
 ## Add your Spotify app
 
 1. Open **Settings** in the sidebar, then **Integrations**.
    The **Connected services** list shows a **Spotify** row.
-   With no app saved, the row says **No Spotify app yet**.
-   When Spotify is also not connected, the **Your own Spotify app** dialog opens by itself.
-2. If the dialog is closed, choose **Add your Spotify app**.
+   With neither your own app nor a shared app available, the row says **No Spotify app yet**.
+   When Spotify is also not connected and no shared app exists, the **Your own Spotify app** dialog opens by itself.
+2. If the dialog is closed, choose **Add your Spotify app**, or **Use your own Spotify app** when a shared app is available.
 3. Type the app's client id in **Client ID**.
 4. Type the app's client secret in **Client secret**.
 5. Choose **Save**.
@@ -65,7 +92,7 @@ Choose **Details** on the row to see what the connection holds.
 | Line | What it shows |
 | --- | --- |
 | **Permission sets** | The groups of Spotify permissions you accepted. |
-| **Can do** | The things the bot has seen work on your account, such as **use Spotify Premium features**. |
+| **Can do** | The things the bot has seen work on your account since it last started. The names are short words, such as **playback**. |
 | **Last sync** | When the bot last synced with Spotify. |
 
 **Connect** asks for two permission sets.
@@ -96,11 +123,22 @@ Your Spotify app stays saved, so you can connect again with **Connect**.
 ## Remove your Spotify app
 
 1. On the **Spotify** row, choose **Edit**.
-2. Choose **Remove my app** in the dialog.
-   A message says "Your Spotify app is removed."
-   The row says **No Spotify app yet**.
+2. Choose **Remove my app** in the dialog, or **Use the shared app** when that is offered.
+   Without a shared app, the message is "Your Spotify app is removed." and the row returns to **No Spotify app yet**.
+   With a shared app, the message is "Back on the shared Spotify app."
 
-Without the app, the channel cannot connect to Spotify.
+If the bot has a shared app, the removal control is **Use the shared app** and the channel falls back to it.
+Otherwise the row returns to **No Spotify app yet**, and you need an app before making a new connection.
+
+## Spotify audio in an OBS browser source
+
+Controlling Spotify and playing Spotify audio inside a browser source need different permissions.
+The normal **Connect** flow asks for **Control playback** and **Read your library**.
+Browser playback additionally needs **Play in the browser** and Spotify Premium.
+
+The current dashboard's normal **Reconnect** button does not request that extra permission set.
+If **Music Player** says to reconnect for streaming permission and the permission is still absent afterward, repeating the same reconnect will not add it.
+You can still use Spotify on an active desktop or other Spotify device; capturing that device's audio in OBS is separate from the bot's account connection.
 
 ## Troubleshooting
 

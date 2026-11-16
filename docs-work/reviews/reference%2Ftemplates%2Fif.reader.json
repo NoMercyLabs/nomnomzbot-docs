@@ -1,0 +1,50 @@
+{
+  "fingerprint": "0943b6bb4e89dae9774bbf0e6524fffd0ffdb9896dc74bdb090cf880570a415e",
+  "verdict": "PASS",
+  "answers": [
+    {
+      "question": 1,
+      "answer": "To choose between two texts, use {if:value|then|else}, or {if.<path>:then|else} when you test a helper by name. To choose a fallback for blank text, use {default:value|fallback} or {coalesce:a|b|c}. To choose from several cases, use {switch:value|case=text|...|else}, or {switch.range} for number limits. To compare, add a test after the helper name, for example {if.count.deaths.gt:10:then|else}.",
+      "quote": "The value, or the fallback when the value is blank: {default:value|fallback}"
+    },
+    {
+      "question": 2,
+      "answer": "You need to know how to write a helper, put one inside another and type spaces or new lines. The intro says this is on the Variables and templates page. For viewer text, the Viewer Templates setting and permissions also apply, and the last paragraph says so.",
+      "quote": "How to write a helper, put one inside another and type spaces or new lines is on Variables and templates."
+    },
+    {
+      "question": 3,
+      "answer": "There are two different ideas. 'Set' is used by {if}, {if.not}, {if.all}, {if.any} and {if.<path>}: the value has text and that text is not false, no or 0. 'Blank' is used by {if.empty}, {default} and {coalesce}: the text is empty or only spaces, so 0 and false count as values. Each table row's Example column shows what a working helper gives.",
+      "quote": "look only for blank text: nothing at all, or only spaces."
+    },
+    {
+      "question": 4,
+      "answer": "For the fallback: if the value is a helper that may have no value, use {if.<path>:...|fallback}, for example {if.args.1:Hi {args.1}!|Hi everyone!}. A helper with no value stays in the reply as written, and {default} treats that leftover text as a value. Keep {default:value|fallback} for text that is truly blank. For the number branch: use a number test such as {if.count.deaths.gt:10:first|second}. Both sides must be plain numbers, otherwise the helper stays in the reply as written.",
+      "quote": "{if.count.deaths.gt:10:Rough day, {count.deaths} deaths.|Only {count.deaths} so far.} gives Rough day, 12 deaths. when the counter is at 12."
+    },
+    {
+      "question": 5,
+      "answer": "The first section shows {default:0|none} and presents {default} as the fallback tool. Only the next section says that {default} does not catch a helper with no value. A reader who stops after the first section would write {default:{args.1}|everyone} and get {args.1} in chat. This costs a reread, but the warning comes before the page's fallback example, so no step is missing. The page also does not say whether a colon inside the first text of a comparison needs escaping. It only covers the value you compare with, so I would guess.",
+      "quote": "That leftover text is not blank, so {default}, {coalesce}, {if.empty} and {if} treat it as a value."
+    },
+    {
+      "question": 6,
+      "answer": "Read aloud, the table repeats the same Use in list on nearly every row. That costs the listener time and hides the one row that differs, {if.<path>.matches}, which leaves out viewer text. The intro already says this.",
+      "quote": "Commands, event responses, timers, pipelines, Discord, webhooks, viewer text"
+    }
+  ],
+  "findings": [],
+  "warnings_released": true,
+  "warning_review": [
+    {
+      "id": "paragraph-2",
+      "decision": "keep",
+      "reason": "The second paragraph is four short lines that say where the helpers work, what they change and where to go for permissions and pipelines. Each line is a separate short sentence with one idea, so the reader can stop at any line. Splitting it would add no clarity."
+    },
+    {
+      "id": "sentence-20-1",
+      "decision": "keep",
+      "reason": "The 35 words are two short statements joined in one check: how to type a pipe in text and what the literal helper does. Both are needed together in the escaping section, and each is an exact instruction with the helper written out, so the length does not hide a step."
+    }
+  ]
+}

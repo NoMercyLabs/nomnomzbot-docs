@@ -3,9 +3,32 @@ title: Stream Deck and API devices
 description: Make an API key for a tool such as Stream Deck, pair a device with a code, and choose what each key may do.
 ---
 
-An API key lets an outside tool use your channel, for example a Stream Deck, Touch Portal or your own script.
-You make keys and pair devices on the **API and devices** page.
-Open **Settings** from the [dashboard](/reference/getting-started/dashboard-tour), then choose **API and devices** in the **Developers** group.
+An outside control panel can run bot actions without keeping the dashboard in front of you.
+For example, a Stream Deck key can pause music or control OBS while you stay in your game.
+NomNomzBot gives that tool its own credential, so it can connect without using your dashboard sign-in.
+
+There are two ways to give it that access: pair a device that offers pairing, or make an API key that you paste into a compatible tool.
+Pairing handles the secret for you.
+A manual key lets you choose its allowed actions and, if needed, restrict which pipelines it can start.
+
+You manage both on **API and devices** under **Settings**, in the **Developers** group.
+Touch Portal and custom scripts need a compatible setup that calls the bot's automation API; merely creating a key does not add a plugin to those tools.
+
+## Connect a NomNomzBot Stream Deck plugin
+
+The project supplies separate **NomNomzBot Music** and **NomNomzBot OBS** plugins for Stream Deck software 6.5 or later on Windows and macOS.
+Choose the [Music plugin release](https://github.com/NoMercyLabs/nomnomzbot/releases?q=streamdeck-music-v) or [OBS plugin release](https://github.com/NoMercyLabs/nomnomzbot/releases?q=streamdeck-obs-v), download its `.streamDeckPlugin` file and open the file to install it in Stream Deck.
+
+When an unpaired plugin starts, it opens **Connect your Stream Deck** in your browser.
+
+1. Enter your bot's address in **Bot URL**. The default, `http://localhost:5080`, fits a bot running on that computer; use the bot's actual address for another computer or server.
+2. Choose **Authorize**. The plugin opens the bot's approval page and shows a pairing code.
+3. Sign in to the dashboard as the broadcaster if needed, then approve the device on that page.
+4. Wait for **Paired! You can close this tab.**
+
+The device now appears in the dashboard's key list.
+Its controls still need the underlying feature to work: connect [Spotify](/reference/integrations/spotify) for Spotify music and [OBS](/reference/integrations/obs) for OBS control.
+Pairing supplies access to the bot; it does not connect those services for you.
 
 ## Who can use this page
 
@@ -14,6 +37,10 @@ Only the **Broadcaster** sees **New key**, the **Pair a device** panel, and the 
 
 ## Make a key
 
+Use this path when your tool asks for an API key rather than offering pairing.
+For example, a tool that starts one prepared pipeline can have **Start pipelines** enabled and only that pipeline selected.
+Test the pipeline in the dashboard first so a device-connection problem is easier to distinguish from an action that is not ready.
+
 1. Choose **New key**.
    The **New API key** dialog opens.
 2. Type a name in **Name**, for example `Stream Deck on my desk`.
@@ -21,6 +48,7 @@ Only the **Broadcaster** sees **New key**, the **Pair a device** panel, and the 
 3. Choose the **Allowed actions** (see the table below).
    **Start pipelines**, **Read data** and **Listen to events** are on when the dialog opens.
 4. If **Start pipelines** is on, you can pick pipelines in **Pipelines it may start**.
+   The field shows only when the channel has at least one pipeline.
    Pick none to allow every [pipeline](/reference/commands/pipelines).
 5. Pick a day in **Ends on**, or leave it empty for a key that does not end.
 6. Choose **Make key**.
@@ -35,8 +63,8 @@ A key with an end day stops working at the end of that day.
 | --- | --- |
 | **Start pipelines** | Start a pipeline of the channel, or only the pipelines you picked. |
 | **Read data** | Read the channel's pipelines, chat commands, music player state and playlists, and OBS scenes and state. |
-| **Listen to events** | Receive the channel's public events while it is connected. |
-| **Speak as the bot** | Post chat messages in the channel's one bot voice. |
+| **Listen to events** | Receive the channel's public events while it is connected, and read past events. |
+| **Speak as the bot** | Post chat messages, replies and whispers as the bot. |
 
 Give a key only what the tool needs.
 A key needs at least one allowed action.
@@ -78,7 +106,7 @@ The **Pair a device** panel has two halves, one for each direction.
 The device then gets its own key, which shows in the key list.
 A key made this way may start pipelines, read data and listen to events.
 
-### Approve a code the device shows
+### Approve a device code
 
 1. Read the code the device shows.
 2. Type it into **Code shown on the device** and choose **Approve device**.
@@ -89,7 +117,8 @@ That page shows the code and an **Approve** button.
 If you are not logged in, the button reads **Log in first**: log in to the dashboard in the same browser, then reload the page.
 
 A code the device shows works for ten minutes, and it works once.
-A paired device's key is named after the device and ends 30 days after pairing.
+A paired device's key is named after the kind of device and its name. If that name is taken, a short code is added in brackets.
+The key ends 30 days after pairing.
 A device that stays connected renews its own key, so you do not need to pair it again.
 
 ## Make a new secret for a key
@@ -141,5 +170,6 @@ Make a new secret for the key, and put the new key into the tool.
 
 ## Related pages
 
+- [Automation API](/reference/code/automation-api) covers requests from compatible tools and scripts.
 - [Dashboard tour](/reference/getting-started/dashboard-tour)
 - [Pipelines](/reference/commands/pipelines)

@@ -1,3 +1,23 @@
+# Current independent reader review
+
+Verdict: PASS
+Reviewed: src/content/reference/en/music/song-requests.mdx
+Reviewed-SHA: a3c1b774e6dbb5a14dc4c0909f119d2f7c54910b1aa1857005f1741ef2956515
+Reviewed-SHA256: a3c1b774e6dbb5a14dc4c0909f119d2f7c54910b1aa1857005f1741ef2956515
+Reviewed-Date: 2026-11-05
+Reviewer: independent media-section reviewer
+Product: 54da8b6318de63b5205a0ff8db35e0b9045dd959 plus preserved current music UI edits
+
+The guide teaches participation and fairness, then keeps stable request codes, queue numbers, roles, source controls and restart/permit rules available. The 12-second repair removes a contradiction with the built-in catalog. Concrete limits are explained as sharing stream time, rather than a detached settings list.
+
+The full page was read with adjacent navigation and related links. The owner's natural explanatory style governs: no Atlas sentence caps, pilot imitation or rigid article template was imposed. No substantive reader finding remains at this hash. Combined build, rendered-output and link/frontmatter checks belong to the lead's separate validation.
+
+Report: docs-work/overhaul/review-automation-media-integrations.md.
+
+## Historical evidence
+
+Older hashes and verdicts below are retained for history and are not the current review.
+
 # Reader review: src/content/reference/en/music/song-requests.mdx
 Verdict: PASS
 Reviewed: src/content/reference/en/music/song-requests.mdx

@@ -3,9 +3,31 @@ title: Channel-point rewards
 description: Edit, copy, switch off and delete channel-point rewards, choose what the bot does when a viewer buys one, and work the queue of waiting requests.
 ---
 
-You manage the channel's channel-point rewards on the **Channel points** page, in the **Loyalty** group of the sidebar.
-A channel-point reward is something a Twitch viewer buys with the points they earn by watching.
-The page has two panels: **Pending rewards** and **Rewards**.
+Channel-point rewards give Twitch viewers a way to ask for something during your stream, using the points they earn on Twitch.
+The reward might ask you to do something yourself, or it might run a bot action such as reading a viewer's message aloud or playing a sound.
+You manage the bot's reaction and the requests waiting for attention on **Channel points**, in the **Loyalty** group of the sidebar.
+
+The two panels serve different jobs.
+**Rewards** defines what viewers can request and what the bot does; **Pending rewards** is the list you work through during the stream.
+Twitch channel points are separate from the bot's own [channel currency](/reference/economy/currency-and-balances).
+
+## Start with a reward you can manage
+
+Before trying this, check [what the bot needs from Twitch](#what-the-bot-needs-from-twitch) and [who can use this page](#who-can-use-this-page).
+Changing a reward requires the **Editor** or **Broadcaster** role by default, and the reward must be available on Twitch before you can redeem it.
+
+Choose a reward in **Rewards** and open **Edit**.
+For a simple first reaction, select **Simple reply**, enter `Thanks for redeeming this reward!` in **Chat reply**, and leave **Send the reply to** on **Twitch chat**.
+Choose **Save**, then redeem it from Twitch chat to check that the bot posts the reply.
+
+There is currently no **New reward** button on this dashboard page.
+To make another reward from an existing bot-managed one, use **Duplicate**, change the copy's name and settings, then enable it when it is ready.
+A **Not on Twitch** badge means viewers cannot redeem that reward yet.
+
+For a reward that reads the viewer's own message, enable **Viewer must type a message**, then switch the reward on in **Rewards that speak** on [Text to speech](/reference/audio/text-to-speech).
+For a sound or a series of actions, choose **Pipeline** and pick a saved [pipeline](/reference/commands/pipelines), a command or an action.
+You can also choose **Create a new pipeline** to make an empty one named after the reward, then **Open in the pipeline editor** to build it.
+These approaches make the redemption the trigger; you do not need a separate chat command.
 
 ## What the bot needs from Twitch
 
@@ -21,8 +43,9 @@ Then only the **Rewards** panel shows, and its on and off switches cannot be use
 A **Moderator**, **Lead moderator**, **Editor** or **Broadcaster** may open the page and read it.
 The **Broadcaster** may also let a **VIP** open it, on the **Permissions** settings page.
 
-An **Editor** or the **Broadcaster** may change rewards and complete or reject requests.
-Anyone else sees the lists only, with no switches, no **Edit** button and no queue buttons.
+An **Editor** or the **Broadcaster** may change the reward definitions by default.
+A **Moderator**, **Lead moderator**, **Editor** or **Broadcaster** may complete or reject pending requests; those are separate permissions from editing rewards.
+Someone with read access alone sees the lists without the relevant switches, **Edit** button or queue actions.
 The roles are explained on [Permissions](/reference/settings/permissions).
 
 ## Read the reward list
@@ -32,7 +55,7 @@ When there is none, it shows "This channel has no rewards yet."
 
 Each row shows the reward's name, its cost in points, an on and off switch and an **Edit** button.
 The line under the name shows the reward's pipeline or its reply.
-The dashboard calls a viewer buying a reward a "redeem".
+The dashboard uses "redeem" for spending Twitch points on a reward.
 
 | Line under the name | What the bot does when a viewer buys the reward |
 | --- | --- |
@@ -85,8 +108,9 @@ The **Reaction** group in the dialog has two choices.
 | **Simple reply** | **Chat reply**: "What the bot says in chat when someone redeems it." Up to 500 characters. **Send the reply to** chooses **Twitch chat**, **Chat overlay**, **Both** or **Nowhere**. |
 | **Pipeline** | **Pipeline**: the thing to run, which is a saved pipeline, a command or an action. Until you pick one, the dialog shows "This answers nothing until you pick a pipeline. The pipeline has its own reply step." |
 
-A reward does one of the two, never both.
-When you save, the choice you did not pick is cleared.
+The **Reaction** setting chooses either the simple reply or the selected command, pipeline or action.
+When you save, the unused reaction is cleared.
+Reading the viewer's text through **Rewards that speak** and starting **Timer in seconds** are separate behaviors, so they can accompany the reaction.
 
 The reply is a line in the channel's one bot voice.
 It can use helpers in braces, listed on [Variables and templates](/reference/commands/variables-and-templates).
@@ -104,10 +128,10 @@ With none of these, it shows "No limits".
 | **Limit per stream** | "Most redeems of this reward in one stream." |
 | **Limit per viewer per stream** | "Most redeems per viewer in one stream." |
 | **Cooldown in seconds** | "Seconds to wait between any two redeems." |
-| **Timer in seconds** | A countdown that starts when a viewer buys the reward. |
+| **Timer in seconds** | A countdown that starts when a viewer buys the reward. The longest timer is 86,400 seconds (24 hours); a longer value is cut to that. |
 
 An empty box keeps the limit the reward has now. Type 0 to clear a limit.
-For a **Not on Twitch** reward, the per-stream, per-viewer and cooldown limits do not save; only the timer does.
+For a **Not on Twitch** reward, **Color** and the per-stream, per-viewer and cooldown limits do not save. The timer and the other fields do.
 
 <details>
 <summary>A reward another app made</summary>
@@ -115,6 +139,10 @@ For a **Not on Twitch** reward, the per-stream, per-viewer and cooldown limits d
 Twitch lets only the app that made a reward change it.
 For such a reward, the dialog shows "Another app made this reward, so Twitch only lets that app change it."
 Its fields and its switch in the list are off.
+
+**Delete** and **Duplicate** still work for it.
+**Delete** removes it only from the bot. It stays on Twitch, and it can come back when the list imports your Twitch rewards again.
+**Duplicate** makes a copy that the bot owns and can change.
 
 </details>
 
@@ -144,14 +172,14 @@ If a reward with the copy's name exists, the dialog stays open with the reason.
 
 1. Choose **Edit** on the reward's row.
 2. Choose **Delete** at the bottom of the dialog.
-   The dialog asks "Delete" and the reward's name: "The reward is removed here and on Twitch. This cannot be undone."
+   The dialog asks "Delete" and the reward's name: "The reward is removed here and on Twitch. This cannot be undone." (For a reward another app made, it is removed only here.)
    Under it, a line names what the reward takes with it, or says "No viewer has redeemed this reward."
 3. Choose **Delete reward**.
    The dialog closes and the reward leaves the list.
 
 ## Work the queue
 
-The **Pending rewards** panel lists the requests that wait for you, with the count at the top, for example "3 waiting".
+The **Pending rewards** panel lists the requests that wait for you, with the count of the open list at the top, for example "3 waiting".
 On the left, **All requests** and each reward show their own count.
 Choose one to see only its requests; the page remembers your choice.
 

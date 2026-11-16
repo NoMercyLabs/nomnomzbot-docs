@@ -1,0 +1,39 @@
+{
+  "fingerprint": "e2a04b8dc29922e4794d651e5b8d8293d83ae50fa16647f187669a6f91d3d2e1",
+  "verdict": "PENDING",
+  "answers": [
+    {
+      "question": 1,
+      "answer": "Open Commands > New command. Enter schedule in Name; keep What it does as Sends a reply; enter Tuesdays at 19:00 Amsterdam time. in Reply; keep Send the reply to as Twitch chat, Prefix as Channel default and Match as Starts with. Choose Create command: it opens switched on. Type !schedule in the channel Twitch chat.",
+      "quote": "Open Commands in the sidebar and choose New command.\nType schedule in Name.\nLeave What it does at Sends a reply, and enter your own stream times in Reply.\nKeep Send the reply to at Twitch chat, Prefix at Channel default and Match at Starts with.\nChoose Create command.\nThe dialog closes and the new command opens in the editor, switched on.\nType !schedule in your channel’s Twitch chat as the broadcaster or a platform moderator."
+    },
+    {
+      "question": 2,
+      "answer": "Have the bot running, sign in and select the connected channel with a working Twitch chat connection. By default Moderator, Lead moderator, Editor or Broadcaster can change commands, subject to a higher broadcaster-set requirement. Test as broadcaster or a platform moderator, including offline. A VIP allowed to see Commands cannot create or change commands.",
+      "quote": "Have the bot running, sign in, and select your connected channel.\nA working Twitch chat connection is needed for the first reply and test below.\nBy default, a Moderator, Lead moderator, Editor or Broadcaster may open the page and change commands.\nThe broadcaster can raise the access requirement.\nA VIP then sees the list only.\nFor a VIP, New command shows “You can view this, but your role cannot change it.”\nThe bot posts the reply you saved; those roles can test commands even while the stream is offline."
+    },
+    {
+      "question": 3,
+      "answer": "Choose Save changes. The unsaved count disappears and Save changes turns off. Try !schedule again; the bot posting the newly saved times proves the result.",
+      "quote": "When you edit the times later, choose Save changes before trying the command again.\nChoose Save changes.\nThe count leaves the footer and Save changes turns off.\nThe bot posts the reply you saved; those roles can test commands even while the stream is offline."
+    },
+    {
+      "question": 4,
+      "answer": "The copy is welcome-copy, starts switched off, and sends its reply to Twitch chat. It keeps Read it aloud, so speech still requires successful chat delivery and ready TTS. Choosing a destination before testing is optional; enabling the copy is required.",
+      "quote": "A copy named after the command with -copy at the end opens in the editor, for example !hello-copy.\nThe copy has most of the command’s saved settings, including Read it aloud.\nSpeech still needs successful chat delivery and a ready text-to-speech setup.\nIt does not keep aliases, which are additional names for the original command, or its reply destination and enabled state.\nThe copy’s reply goes to Twitch chat.\nChoosing a different destination before testing is optional; switching the copy on is required.\nThe copy starts switched off."
+    },
+    {
+      "question": 5,
+      "answer": "No material obstacle. The creation, save/test and duplicate outcomes are explicit; the later reference sections do not require guessing.",
+      "quote": ""
+    },
+    {
+      "question": 6,
+      "answer": "No material read-aloud obstacle. The labels, examples and reference tables provide relevant distinctions without changing the required actions.",
+      "quote": ""
+    }
+  ],
+  "findings": [],
+  "warnings_released": false,
+  "warning_review": []
+}

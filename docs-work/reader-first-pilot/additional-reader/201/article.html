@@ -1,0 +1,543 @@
+<article><p>Chat commands let viewers ask for information or start an activity without waiting for you to notice the message.
+A schedule command can answer a question you hear every stream; a welcome command can greet the person who used it.
+You create both on the <strong>Commands</strong> page in the dashboard.
+Have the bot running, <a href="/reference/getting-started/sign-in">sign in</a>, and select your <a href="/reference/getting-started/connect-platforms">connected channel</a>.
+A working Twitch chat connection is needed for the first reply and test below.</p>
+
+<p>Each command connects a trigger to a response.
+With the usual <code>!</code> prefix, a command named <code>schedule</code> runs when someone types <code>!schedule</code> in chat.
+The bot checks whether that person may use it and whether it is cooling down, then sends your reply or runs the actions you chose.</p>
+
+<p>If you have not tested the bot yet, <a href="/reference/getting-started/first-command">Your first command</a> takes you through one plain reply.
+Here you can build on that result, choose different responses, and find the exact trigger and editor options.</p>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<table><thead><tr><th>Tab</th><th>What it holds</th></tr>
+</thead><tbody><tr><td><strong>Channel commands</strong></td><td>The commands you make.</td></tr>
+<tr><td><strong>System commands</strong></td><td>The bot’s own commands, on <a href="/reference/commands/built-in-commands">Built-in commands</a>.</td></tr>
+</tbody></table>
+
+<h2 id="who-can-use-this-page"><a href="#who-can-use-this-page">Who can use this page</a></h2>
+
+<p>By default, a <strong>Moderator</strong>, <strong>Lead moderator</strong>, <strong>Editor</strong> or <strong>Broadcaster</strong> may open the page and change commands.
+The broadcaster can raise the access requirement.
+The roles are explained on <a href="/reference/settings/permissions">Permissions</a>.</p>
+
+<p>The <strong>Broadcaster</strong> may also let a <strong>VIP</strong> open the page.
+This is set on the <strong>Permissions</strong> settings page, in the <strong>Commands</strong> area of the <strong>Actions</strong> tab.
+A VIP then sees the list only.</p>
+
+<p>For a VIP, <strong>New command</strong> shows “You can view this, but your role cannot change it.”
+The <strong>System commands</strong> tab shows only to someone who may change commands.</p>
+
+<h2 id="make-a-useful-reply"><a href="#make-a-useful-reply">Make a useful reply</a></h2>
+
+<p>For a schedule command, begin with a reply you can read back exactly as written.
+You can add changing information and more advanced actions after confirming that the simple version works.</p>
+
+<ol>
+<li>Open <strong>Commands</strong> in the sidebar and choose <strong>New command</strong>.
+The <strong>New command</strong> dialog opens.</li>
+
+<li>Type <code>schedule</code> in <strong>Name</strong>.
+With the default prefix, viewers use <code>!schedule</code>.</li>
+
+<li>Leave <strong>What it does</strong> at <strong>Sends a reply</strong>, and enter your own stream times in <strong>Reply</strong>.
+For example: <code>I stream on Tuesdays and Thursdays at 19:00 Amsterdam time.</code></li>
+
+<li>Keep <strong>Send the reply to</strong> at <strong>Twitch chat</strong>, <strong>Prefix</strong> at <strong>Channel default</strong> and <strong>Match</strong> at <strong>Starts with</strong>.</li>
+
+<li>Choose <strong>Create command</strong>.
+The dialog closes and the new command opens in the editor, switched on.</li>
+
+</ol>
+<p>Type <code>!schedule</code> in your channel’s Twitch chat as the broadcaster or a platform moderator.
+If your channel uses a prefix other than <code>!</code>, type that instead.
+The bot posts the reply you saved; those roles can test commands even while the stream is offline.
+When you edit the times later, choose <strong>Save changes</strong> before trying the command again.</p>
+
+<h3 id="choose-a-different-response">Choose a different response</h3>
+
+<p>A text reply is enough for information such as a schedule or a community link.
+Use a random reply when you want variety, or a pipeline when the response needs several actions.
+Scripts are an optional route for people who want to write code.</p>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<table><thead><tr><th><strong>What it does</strong></th><th>The field to fill in</th></tr>
+</thead><tbody><tr><td><strong>Sends a reply</strong></td><td><strong>Reply</strong>: the line the bot sends.</td></tr>
+<tr><td><strong>Sends a random reply</strong></td><td><strong>Reply 1</strong>, <strong>Reply 2</strong> and so on: one line in each box.</td></tr>
+<tr><td><strong>Runs a pipeline</strong></td><td><strong>Pipeline</strong>: the <a href="/reference/commands/pipelines">pipeline</a> to run.</td></tr>
+<tr><td><strong>Runs a code script</strong></td><td><strong>Script</strong>: a script from the <strong>Scripts</strong> page. See <a href="/reference/code/scripts">Scripts (Draft)</a>.</td></tr>
+</tbody></table>
+
+<p>When the list is empty, the page shows “No commands yet.”
+Its <strong>Make the first command</strong> button opens the same dialog.</p>
+
+<h3 id="rules-for-the-name">Rules for the name</h3>
+
+<p>The dialog cleans the name before it sends it:</p>
+
+<ul>
+<li>It removes spaces at the ends.</li>
+
+<li>It drops all leading <code>!</code> characters.</li>
+
+<li>It makes the name lowercase, so <code>!Hello</code> becomes <code>hello</code>.</li>
+
+</ul>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<table><thead><tr><th>Rule</th><th>What happens</th></tr>
+</thead><tbody><tr><td>The name is empty</td><td>The dialog shows “Give the command a name.”</td></tr>
+<tr><td>The name has whitespace inside it</td><td>The bot refuses it. A name with whitespace can never match one chat word.</td></tr>
+<tr><td>The name is only the prefix</td><td>The bot refuses it. The prefix is added for you when the command runs.</td></tr>
+<tr><td>Another channel command has the same name</td><td>The bot refuses it. Names are compared without letter case.</td></tr>
+<tr><td>The name is longer than 100 characters</td><td>The bot refuses it.</td></tr>
+</tbody></table>
+
+<p>When the bot refuses, the dialog stays open with the reason in red.
+Nothing is made.</p>
+
+<h2 id="what-a-command-does"><a href="#what-a-command-does">What a command does</a></h2>
+
+<p><strong>What it does</strong> in the dialog, and <strong>Reaction</strong> in the editor, decide how the bot answers.</p>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<table><thead><tr><th>In the dialog</th><th>In the editor</th><th>What the bot does</th></tr>
+</thead><tbody><tr><td><strong>Sends a reply</strong></td><td><strong>Text</strong></td><td>Sends one reply.</td></tr>
+<tr><td><strong>Sends a random reply</strong></td><td><strong>Random reply</strong></td><td>Sends one reply, picked from a list each time.</td></tr>
+<tr><td><strong>Runs a pipeline</strong></td><td><strong>Pipeline</strong></td><td>Runs the pipeline. The pipeline has its own reply step.</td></tr>
+<tr><td><strong>Runs a code script</strong></td><td><strong>Code script</strong></td><td>Runs the script chosen under <strong>Script</strong>.</td></tr>
+</tbody></table>
+
+<p>A reply goes to Twitch chat by default, in the channel’s one bot voice.
+<strong>Send the reply to</strong> in the creation dialog or editor can send it elsewhere for text and random replies (see <a href="#edit-a-command">Edit a command</a>).</p>
+
+<h3 id="write-a-reply">Write a reply</h3>
+
+<p>A reply can combine your own words with helpers, which insert information when the command runs.
+For example, this reply stays useful when you switch games:</p>
+
+<pre><code>Welcome! Today we play {stream.game}.<br></code></pre>
+
+<p>When the stream plays a game called Example Game, chat sees “Welcome! Today we play Example Game.”</p>
+
+<p>The reply box holds up to 500 characters.
+A helper the bot does not know shows “Not a known helper here:” under the box, with the unknown names.
+The full list is on <a href="/reference/commands/variables-and-templates">Variables and templates</a>.</p>
+
+<h3 id="write-random-replies">Write random replies</h3>
+
+<p>For <strong>Random reply</strong>, the bot picks one line from the list each time chat uses the command.</p>
+
+<ol>
+<li>With <strong>Reaction</strong> set to <strong>Random reply</strong>, choose <strong>Edit replies</strong> in the editor.
+The <strong>Random replies</strong> dialog opens: “One reply per line. The bot picks one of them each time.”</li>
+
+<li>Type each line in its own box: <strong>Reply 1</strong>, <strong>Reply 2</strong> and so on.
+<strong>Add a reply</strong> adds a box.</li>
+
+<li>Choose <strong>Use these replies</strong>.
+The editor shows the count, for example “3 replies”.</li>
+
+<li>Choose <strong>Save changes</strong>.
+The unsaved count leaves the footer and <strong>Save changes</strong> turns off.</li>
+
+</ol>
+<p>The <strong>X</strong> button beside a box removes it.
+When one box is left, <strong>X</strong> is off.</p>
+
+<p>A list that many commands share is a <a href="/reference/commands/pick-lists">pick list</a>.</p>
+
+<details><summary>Start from another command’s replies</summary><p>The <strong>Random replies</strong> dialog lists your other random-reply commands under <strong>Or start from a list you already have</strong>.
+Choose <strong>Use the replies of !name</strong> to copy that list into this command.
+A later change to one command does not change the other.</p>
+</details>
+
+<h2 id="triggers"><a href="#triggers">Triggers</a></h2>
+
+<p>A trigger is the message that runs the command.
+It has two parts: the <strong>Prefix</strong> and the <strong>Match</strong>.
+Both are in the <strong>New command</strong> dialog and in the editor’s <strong>Trigger and cooldowns</strong> group.</p>
+
+<h3 id="prefix">Prefix</h3>
+
+<p>The prefix is the text chat types before the name.
+The channel prefix is <strong>Command prefix</strong> on the <strong>Bot basics</strong> settings page (see <a href="/reference/settings/bot-basics-and-personality">Bot basics and personality</a>).</p>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<table><thead><tr><th>Choice</th><th>Chat types</th></tr>
+</thead><tbody><tr><td><strong>Channel default</strong></td><td>The channel prefix and the name. The prefix is <code>!</code> when the channel has set none. This is the default.</td></tr>
+<tr><td><strong>Custom</strong></td><td>Your own prefix and the name. Type the prefix in <strong>Custom prefix</strong>, up to 8 characters.</td></tr>
+<tr><td><strong>None</strong></td><td>The name only, with no prefix.</td></tr>
+</tbody></table>
+
+<p>The <strong>Custom</strong> prefix needs text in <strong>Custom prefix</strong>.</p>
+
+<h3 id="match">Match</h3>
+
+<p>The match says how a chat message must look to run the command.
+Letter case never matters.</p>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<table><thead><tr><th>Choice</th><th>The command runs when the message</th></tr>
+</thead><tbody><tr><td><strong>Starts with</strong></td><td>starts with the prefix and the name, followed by whitespace or nothing. This is the default. Text after the name goes to the command.</td></tr>
+<tr><td><strong>Exact</strong></td><td>is the prefix and the name, and nothing else.</td></tr>
+<tr><td><strong>Contains</strong></td><td>holds the prefix and the name as a whole word anywhere. A command named <code>cat</code> with no prefix does not run on “category”.</td></tr>
+<tr><td><strong>Regex</strong></td><td>fits your pattern in <strong>Regex pattern</strong>. A regex is a text pattern. It is tested against the message text; choosing Regex does not require a match of the entire message.</td></tr>
+</tbody></table>
+
+<p><strong>Regex</strong> needs a pattern.
+If the custom prefix or the pattern is empty, <strong>Create command</strong> shows “Fill in the custom prefix or the regex pattern you picked.”
+It makes nothing.
+In the editor, <strong>Save changes</strong> stays off.</p>
+
+<h2 id="edit-a-command"><a href="#edit-a-command">Edit a command</a></h2>
+
+<ol>
+<li>Choose the command in the list.
+The editor opens beside the list, with the command name at the top.</li>
+
+<li>Change the fields you want.
+The footer counts them, for example “2 unsaved changes”.</li>
+
+<li>Choose <strong>Save changes</strong>.
+The count leaves the footer and <strong>Save changes</strong> turns off.</li>
+
+</ol>
+<p><strong>Discard</strong> in the footer puts every field back as it was saved.
+If the bot refuses the change, red text names the reason.
+Your edits stay in the form.</p>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<table><thead><tr><th>Field</th><th>What it sets</th><th>Default</th></tr>
+</thead><tbody><tr><td><strong>Who can use it</strong></td><td>The lowest role that may run the command.</td><td><strong>Everyone</strong></td></tr>
+<tr><td><strong>Reaction</strong></td><td>How the bot answers (see <a href="#what-a-command-does">What a command does</a>).</td><td><strong>Text</strong></td></tr>
+<tr><td><strong>Send the reply to</strong></td><td><strong>Twitch chat</strong>, <strong>Chat overlay</strong>, <strong>Both</strong> or <strong>Nowhere</strong>. The chat overlay is a browser source (a web page layer in your streaming app). It shows the reply on your stream as a bot line.</td><td><strong>Twitch chat</strong></td></tr>
+<tr><td><strong>Read it aloud</strong></td><td>“The reply also plays as speech on your stream.”</td><td>Off</td></tr>
+<tr><td><strong>Trigger and cooldowns</strong></td><td>The prefix, the match, the <strong>Chat cooldown</strong> (how long all of chat waits between uses) and the <strong>Per-person cooldown</strong> (how long one viewer waits).</td><td>0 seconds; the editor shows “No cooldown”</td></tr>
+</tbody></table>
+
+<p><strong>Send the reply to</strong> and <strong>Read it aloud</strong> show only for a text or random reply.
+For these replies, <strong>Read it aloud</strong> queues speech only after the reply is successfully sent to chat.
+Choosing <strong>Chat overlay</strong> or <strong>Nowhere</strong> therefore does not speak the reply, even with that switch on.
+Speech also needs the channel’s <a href="/reference/audio/text-to-speech">text-to-speech setup</a> to be ready.
+A pipeline or a script sends and speaks through its own steps.
+Cooldowns are explained on <a href="/reference/commands/cooldowns-and-permissions">Cooldowns and permissions</a>.</p>
+
+<details><summary>Reset a command to its preset</summary><p>A preset is a ready-made command that the bot added to the channel.
+A command that came from a preset has a <strong>Reset to preset</strong> button in the footer.
+The dialog lists the settings that go back to the preset: “Your edits to them are lost.”</p>
+<p>When nothing differs, it says “This command already matches its preset. Resetting changes nothing.”
+This restores a channel command’s preset; system commands have their own reset controls.</p>
+</details>
+
+<h2 id="switch-a-command-on-or-off"><a href="#switch-a-command-on-or-off">Switch a command on or off</a></h2>
+
+<p>Each row in the list has a switch.
+The editor has the same switch, <strong>Enabled</strong>, at the top.
+Both save at once, with no <strong>Save changes</strong>.
+Switching a command off can be refused while something else still runs it; move or remove those uses first, as for deletion below.</p>
+
+<p>A command that is off stays in the list, marked <strong>Off</strong>.
+It answers nobody.</p>
+
+<h2 id="copy-a-command"><a href="#copy-a-command">Copy a command</a></h2>
+
+<ol>
+<li>Open the command in the list.</li>
+
+<li>Choose <strong>Duplicate</strong> in the footer.
+A copy named after the command with <code>-copy</code> at the end opens in the editor, for example <code>!hello-copy</code>.</li>
+
+</ol>
+<p>The copy has most of the command’s saved settings, including <strong>Read it aloud</strong>.
+Speech still needs successful chat delivery and a ready text-to-speech setup.
+It does not keep aliases, which are additional names for the original command, or its reply destination and enabled state.
+The copy’s reply goes to <strong>Twitch chat</strong>.
+Choosing a different destination before testing is optional; switching the copy on is required.</p>
+
+<p>The copy starts switched off.
+It has no <strong>Reset to preset</strong> button.</p>
+
+<p>If a command with the copy’s name already exists, the bot refuses the copy.
+The editor shows the reason.</p>
+
+<h2 id="delete-a-command"><a href="#delete-a-command">Delete a command</a></h2>
+
+<ol>
+<li>Open the command in the list.</li>
+
+<li>Choose <strong>Delete</strong> in the footer.
+The dialog asks “Delete !name?”: “The command is removed for good. Chat can no longer use it.”</li>
+
+<li>Choose <strong>Delete command</strong>.
+The editor closes and the command leaves the list.</li>
+
+</ol>
+<p>When something else still runs the command, the dialog does not open.
+The editor shows one line that names each kind of item, its count and up to five names.
+For two timers, it reads “Still used by 2 timers: …. Move or remove these first, then delete the command.”</p>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<table><thead><tr><th>Kind in the line</th><th>Sidebar page</th></tr>
+</thead><tbody><tr><td>rewards (channel-point rewards that run the command)</td><td><strong>Channel points</strong></td></tr>
+<tr><td>timers (posts on a schedule) and chat triggers</td><td><strong>Triggers and timers</strong></td></tr>
+<tr><td>event responses (what the bot does for a follow, sub or raid)</td><td><strong>Event responses</strong></td></tr>
+<tr><td>giveaways</td><td><strong>Giveaways</strong></td></tr>
+<tr><td>catalog items</td><td><strong>Economy</strong></td></tr>
+</tbody></table>
+
+<p>An <strong>other places</strong> line can include pending scheduled tasks that run the command.
+Those uses also block deletion or switching the command off; resolve them before retrying.</p>
+
+<h2 id="commands-that-repeat-a-system-command"><a href="#commands-that-repeat-a-system-command">Commands that repeat a system command</a></h2>
+
+<p>A channel command can have the same name as one of the bot’s system commands.
+The list marks it <strong>Repeats !name</strong>.</p>
+
+<p>A line above the list counts these copies.
+When the channel command’s trigger matches, it answers in chat instead of the ordinary system command.</p>
+
+<p><code>!permit</code>, <code>!unpermit</code>, <code>!mydata</code>, <code>!gdpr</code> and <code>!forgetme</code> are the exception.
+They always answer as the system command.</p>
+
+<p><strong>Move copies to system</strong> on that line asks you to confirm with <strong>Remove copies</strong>.
+Then every copy is removed for good.
+The ordinary system command’s saved enabled state, access requirement and cooldowns still apply; removing a copy alone does not guarantee an answer in chat.</p>
+
+<h2 id="troubleshooting"><a href="#troubleshooting">Troubleshooting</a></h2>
+
+<h2>When something is not right</h2>
+<p><strong>The command does nothing in chat.</strong>
+Check these, in order:</p>
+<ol>
+<li>The switch in the list. A command that is <strong>Off</strong> answers nobody.</li>
+
+<li><strong>Who can use it</strong>. The viewer’s role must be at least the role chosen under <strong>Who can use it</strong>.</li>
+
+<li>The prefix and the match. They must fit the message chat typed (see <a href="#triggers">Triggers</a>).</li>
+
+<li><strong>Send the reply to</strong>. <strong>Chat overlay</strong> and <strong>Nowhere</strong> send nothing to Twitch chat.</li>
+
+<li>The <strong>Chat cooldown</strong> and the <strong>Per-person cooldown</strong>. A cooldown holds viewers, not the broadcaster or moderators.</li>
+
+<li>Whether you are offline. Viewers’ commands are ignored unless <strong>Keep commands and rewards on while offline</strong> is on in <a href="/reference/settings/bot-basics-and-personality">Bot basics</a>. The broadcaster and moderators can still test them.</li>
+
+</ol>
+<h2 id="related-pages"><a href="#related-pages">Related pages</a></h2>
+
+<ul>
+<li><a href="/reference/commands/built-in-commands">Built-in commands</a></li>
+
+<li><a href="/reference/commands/variables-and-templates">Variables and templates</a></li>
+
+<li><a href="/reference/commands/cooldowns-and-permissions">Cooldowns and permissions</a></li>
+
+<li><a href="/reference/commands/pipelines">Pipelines</a></li>
+
+<li><a href="/reference/settings/permissions">Permissions</a></li>
+
+</ul></article>

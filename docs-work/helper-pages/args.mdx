@@ -1,0 +1,160 @@
+---
+title: Command word helpers
+description: The 64 helpers that read the words a viewer types after a command, with what each gives when a word is missing.
+---
+
+These helpers work in a command reply, and in a pipeline that a chat command starts.
+They read the text after the command name, split on spaces.
+Words count from 1, so in `!remind @ViewerTwo 10m`, `{args.1}` is `@ViewerTwo` and `{args.2}` is `10m`.
+An event response or a timer message has no command text, so these helpers do not belong there.
+
+A pipeline that a **Run pipeline** action calls gets the words that action passes as its positional arguments, and reads them as `{args.1}`, `{args.2}` and so on.
+When something other than a chat command starts the pipeline, such as an event or a timer, every other form on this page stays in the message as you wrote it.
+
+## Words after the command
+
+These examples use the message `!example @ViewerTwo hello big world`, unless the row names another.
+
+| Helper | What it gives | Example |
+| --- | --- | --- |
+| `{args}` | Everything typed after the command, as one text | `{args}` gives `@ViewerTwo hello big world` |
+| `{args.<a>-<b>}` | The words from the a-th to the b-th, for example args.2-3 | `{args.2-3}` gives `hello big` |
+| `{args.<n>}` | The n-th word after the command, as typed | `{args.1}` gives `@ViewerTwo` |
+| `{args.<n>+}` | Every word from the n-th one to the end, for example args.2+ | `{args.2+}` gives `hello big world` |
+| `{args.<n>.clean}` | The n-th word without a leading @ | `{args.1.clean}` gives `ViewerTwo` |
+| `{args.<n>.isMention}` | True when the n-th word is an @mention | `{args.1.isMention}` gives `true` |
+| `{args.<n>.isNumber}` | True when the n-th word is a number | `{args.1.isNumber}` gives `false` |
+| `{args.<n>.length}` | How many characters the n-th word has | `{args.2.length}` gives `5` |
+| `{args.<n>.number}` | The n-th word when it is a number, else the default after the colon or nothing | `{args.3.number:1}` gives `1` |
+| `{args.<n>.upper}` | The n-th word in UPPERCASE | `{args.2.upper}` gives `HELLO` |
+| `{args.<n>.urlEncoded}` | The n-th word made safe for a web address | `{args.1.urlEncoded}` gives `%40ViewerTwo` |
+| `{args.<n>:<default>}` | The n-th word, or the default after the colon when the command has fewer words | `{args.5:nobody}` gives `nobody` |
+| `{args.all.quoted}` | All the words, in double quotes | `{args.all.quoted}` gives `"@ViewerTwo hello big world"` |
+| `{args.all.urlEncoded}` | All the words, made safe for a web address | `{args.all.urlEncoded}` gives `%40ViewerTwo%20hello%20big%20world` |
+| `{args.count}` | How many words follow the command | `{args.count}` gives `4` |
+| `{args.duration:<n>}` | The n-th word read as a time (5m, 1h30m, 90), in seconds | For `!remind @ViewerTwo 5m`, `{args.duration:2}` gives `300` |
+| `{args.first}` | The first word after the command, with a leading @ kept | `{args.first}` gives `@ViewerTwo` |
+| `{args.isEmpty}` | True when no words follow the command, false when some do | `{args.isEmpty}` gives `false` |
+| `{args.last}` | The last word after the command | `{args.last}` gives `world` |
+| `{args.mentions}` | Every @mention among the words, separated by a space | For `!hug @ViewerTwo @ViewerThree`, `{args.mentions}` gives `@ViewerTwo @ViewerThree` |
+| `{args.mentions.count}` | How many @mentions are among the words | `{args.mentions.count}` gives `1` |
+| `{args.numbers}` | Every word that is a number, separated by a space | For `!roll 42 7`, `{args.numbers}` gives `42 7` |
+| `{args.rest}` | Every word after the first one | `{args.rest}` gives `hello big world` |
+
+## When a word is missing
+
+A missing word does not always give an empty result.
+`{args.3}` stays in the reply as you wrote it, `{args.3:nobody}` gives `nobody`, and the person helpers give nothing.
+
+| You write | The word is missing, so you get |
+| --- | --- |
+| `{args.3}` | `{args.3}`, as written |
+| `{args.3:nobody}` | `nobody`, the text after the colon |
+| `{args.3.number}` | Nothing. With `{args.3.number:1}` you get `1`, which you also get when the word is not a number |
+| `{args.3+}` or `{args.3-4}` | Nothing |
+| `{args.3.upper}`, `{args.3.clean}`, `{args.3.length}` or `{args.3.urlEncoded}` | The helper, as written |
+| `{args.3.isNumber}` or `{args.3.isMention}` | `false` |
+| `{args.first}`, `{args.last}` or `{args.rest}` | Nothing |
+| `{args.duration:3}` | `{args.duration:3}`, as written |
+| `{args.3.user.display}` and every other person helper | Nothing |
+
+When the viewer types no words at all, `{args}`, `{args.mentions}`, `{args.numbers}` and `{args.all.urlEncoded}` give nothing, `{args.count}` and `{args.mentions.count}` give `0`, `{args.isEmpty}` gives `true`, and `{args.all.quoted}` gives `""`.
+
+So a reply that may run without a word should use a form with a fallback, such as `{args.1:friend}`.
+
+## Read a duration
+
+`{args.duration:2}` reads the second word as a time and gives it in seconds.
+Here the number after the colon is the position of the word, not a fallback as in `{args.2:friend}`.
+A word can use `s`, `m`, `h`, `d` and `w` for seconds, minutes, hours, days and weeks, chain them as in `1h30m`, or be a plain number of seconds such as `90`.
+Capital letters work too, so `5m` and `5M` both give `300`, and `1h30m` gives `5400`.
+
+A missing word, or a word that is not a time such as `soon` or `1h30`, leaves `{args.duration:2}` in the reply as you wrote it.
+For a command that takes a viewer name and then a duration, the reply `{args.1.user.display}, see you in {args.duration:2} seconds` turns `!remind @ViewerTwo 10m` into `ViewerTwo, see you in 600 seconds`.
+`!remind @ViewerTwo` alone gives `ViewerTwo, see you in {args.duration:2} seconds`.
+
+There is no fallback for a duration.
+When you need one, ask viewers for a plain number of seconds, such as `600`, and read it with `{args.2.number:60}`.
+That gives `60` when the word is missing, and also when it is not a number, so a viewer who types `10m` gets `60` with no warning.
+
+## Read the person named in a word
+
+`{args.1.user.display}` and the other person helpers read the word as a viewer name, with a leading `@` dropped, and then give a fact about that viewer.
+When the word is missing they give nothing, so `!hug` alone makes `{args.1.user.display}` empty.
+
+Use `{args.1.user.display}` when the reply names a viewer.
+It gives the display name the bot knows, capital letters included, or the word without the `@` when the viewer is unknown.
+`{args.1.clean}` gives the word as typed, minus the `@`, and unlike the person helper it stays as written when the word is missing.
+
+For example, the reply `{args.1.user.display} has followed for {args.1.user.followAge}` for `!since @ViewerTwo` gives `ViewerTwo has followed for 9 months and 21 days`.
+For a viewer who does not follow, `{args.1.user.followAge}` gives `not following`.
+
+The points helpers read the named viewer's balance in this bot's [channel currency](/reference/economy/currency-and-balances), not their Twitch Channel Points.
+A viewer with no balance yet reads as `0`.
+A viewer who is not on the currency ranking gets nothing from `{args.1.user.points.rank}`, and the top viewer gets nothing from the two next-rank helpers, because nobody is above them.
+
+## When viewers type helpers
+
+With the **Viewer Templates** setting on, a viewer who holds the template permission can type helpers in the text after a command, and the bot fills them in once, when the message arrives.
+The setting is on by default, and its switch is on the [Features](/reference/settings/features) page.
+
+The permission has the key `reward:input:template`, because the same permission covers the text a viewer types into a reward.
+Twitch subscribers and higher hold it by default.
+To change that, open the **Permissions** settings page and go to the **Actions** tab.
+Type `reward:input:template` into **Search actions**, open the **Rewards** area, and pick the lowest role that may use it in the list beside the action.
+
+Once the bot has filled in the viewer's helpers, only `{args.1}`, `{args.2}` and the other plain numbered words, and `{args.count}`, still show what the viewer actually typed.
+Every other form on this page reads the filled-in text, including `{args}`, `{args.first}` and a word with a fallback such as `{args.1:friend}`.
+
+## Person named in the message
+
+In this table, the named viewer is the viewer typed as the n-th word.
+The examples read `@ViewerTwo` from `!example @ViewerTwo hello big world`, sent on 2026-10-27.
+They show made-up values; yours depend on the viewer and the channel.
+The thousands separator in `{args.1.user.points}`, `{args.1.user.viewers}` and `{args.1.user.stats.bits}` follows the channel's language.
+
+| Helper | What it gives | Example |
+| --- | --- | --- |
+| `{args.<n>.user.accountAge}` | How old the named viewer's account is, in years and months | `{args.1.user.accountAge}` gives `7 years, 5 months` |
+| `{args.<n>.user.accountAge.days}` | How many days old the named viewer's account is | `{args.1.user.accountAge.days}` gives `2735` |
+| `{args.<n>.user.activity.level}` | How active the named viewer is in this channel (new, casual, regular or veteran) | `{args.1.user.activity.level}` gives `veteran` |
+| `{args.<n>.user.avatar}` | The link to the named viewer's profile picture | `{args.1.user.avatar}` gives `https://static-cdn.jtvnw.net/jtv_user_pictures/viewertwo.png` |
+| `{args.<n>.user.bio}` | The named viewer's profile description | `{args.1.user.bio}` gives `I build castles` |
+| `{args.<n>.user.color}` | The named viewer's chat color | `{args.1.user.color}` gives `#FF4500` |
+| `{args.<n>.user.createdAt}` | The date the named viewer's account was created | `{args.1.user.createdAt}` gives `2019-05-02` |
+| `{args.<n>.user.data.<key>}` | A value stored for the named viewer, with an optional default after a colon | `{args.1.user.data.food:none}` gives `none` |
+| `{args.<n>.user.display}` | The named viewer's display name | `{args.1.user.display}` gives `ViewerTwo` |
+| `{args.<n>.user.followAge}` | How long the named viewer has followed, in words | `{args.1.user.followAge}` gives `9 months and 21 days` |
+| `{args.<n>.user.followAge.days}` | How many days the named viewer has followed | `{args.1.user.followAge.days}` gives `294` |
+| `{args.<n>.user.followedAt}` | The date the named viewer started following | `{args.1.user.followedAt}` gives `2026-01-06` |
+| `{args.<n>.user.game}` | The category the named viewer's channel set | `{args.1.user.game}` gives `Minecraft` |
+| `{args.<n>.user.isFollower}` | Whether the named viewer follows the channel: true or false | `{args.1.user.isFollower}` gives `true` |
+| `{args.<n>.user.isLive}` | Whether the named viewer is live now: true or false | `{args.1.user.isLive}` gives `true` |
+| `{args.<n>.user.isSub}` | Whether the named viewer is a subscriber: true or false | `{args.1.user.isSub}` gives `true` |
+| `{args.<n>.user.login}` | The named viewer's login name | `{args.1.user.login}` gives `viewertwo` |
+| `{args.<n>.user.mention}` | The named viewer, as an @mention | `{args.1.user.mention}` gives `@ViewerTwo` |
+| `{args.<n>.user.platform}` | The named viewer's platform, in lower case | `{args.1.user.platform}` gives `twitch` |
+| `{args.<n>.user.platform.name}` | The named viewer's platform, as a name | `{args.1.user.platform.name}` gives `Twitch` |
+| `{args.<n>.user.points}` | The named viewer's channel currency balance, with a thousands separator | `{args.1.user.points}` gives `2,500` |
+| `{args.<n>.user.points.name}` | The name of the channel currency, singular for a balance of exactly 1 or when the channel set no plural name | `{args.1.user.points.name}` gives `nomz` |
+| `{args.<n>.user.points.nextRank.gap}` | How far the named viewer is behind the viewer one place above; nothing for the top viewer | `{args.1.user.points.nextRank.gap}` gives `300` |
+| `{args.<n>.user.points.nextRank.name}` | The viewer one place above the named viewer; nothing for the top viewer | `{args.1.user.points.nextRank.name}` gives `ViewerThree` |
+| `{args.<n>.user.points.rank}` | The named viewer's place on the channel currency ranking; nothing when not ranked | `{args.1.user.points.rank}` gives `4` |
+| `{args.<n>.user.points.rank.ordinal}` | The named viewer's ranking place as an ordinal | `{args.1.user.points.rank.ordinal}` gives `4th` |
+| `{args.<n>.user.points.raw}` | The named viewer's channel currency balance, as a plain number | `{args.1.user.points.raw}` gives `2500` |
+| `{args.<n>.user.quotes.count}` | How many quotes the named viewer has said | `{args.1.user.quotes.count}` gives `3` |
+| `{args.<n>.user.shoutoutLink}` | The link to the named viewer's channel | `{args.1.user.shoutoutLink}` gives `https://twitch.tv/viewertwo` |
+| `{args.<n>.user.stats.bits}` | The bits the named viewer cheered in this channel, with a thousands separator | `{args.1.user.stats.bits}` gives `0` |
+| `{args.<n>.user.stats.firstSeen.relative}` | How long ago the named viewer was first seen | `{args.1.user.stats.firstSeen.relative}` gives `one year ago` |
+| `{args.<n>.user.stats.lastSeen}` | The date the named viewer was last seen | `{args.1.user.stats.lastSeen}` gives `2026-10-25` |
+| `{args.<n>.user.stats.lastSeen.relative}` | How long ago the named viewer was last seen | `{args.1.user.stats.lastSeen.relative}` gives `2 days ago` |
+| `{args.<n>.user.stats.streak}` | The named viewer's current attendance streak | `{args.1.user.stats.streak}` gives `2` |
+| `{args.<n>.user.stats.streak.best}` | The named viewer's best attendance streak | `{args.1.user.stats.streak.best}` gives `9` |
+| `{args.<n>.user.stats.watchTime.hours}` | The named viewer's watch time, in hours | `{args.1.user.stats.watchTime.hours}` gives `12.5` |
+| `{args.<n>.user.stats.watchTime.long}` | The named viewer's watch time, in words | `{args.1.user.stats.watchTime.long}` gives `12 hours, 30 minutes` |
+| `{args.<n>.user.subTier}` | The named viewer's subscription tier, as a number | `{args.1.user.subTier}` gives `1` |
+| `{args.<n>.user.subTier.name}` | The named viewer's subscription tier, as a name | `{args.1.user.subTier.name}` gives `Tier 1` |
+| `{args.<n>.user.title}` | The stream title the named viewer's channel set | `{args.1.user.title}` gives `Building castles` |
+| `{args.<n>.user.viewers}` | How many viewers the named viewer's channel has now | `{args.1.user.viewers}` gives `18` |
+
+Back to [Template helpers](/reference/templates/overview). For the places helpers work, special characters and HTML, read [Variables and templates](/reference/commands/variables-and-templates).

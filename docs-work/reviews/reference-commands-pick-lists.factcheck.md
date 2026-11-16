@@ -1,7 +1,29 @@
+# Current independent fact check
+
+Verdict: PASS
+Reviewed: src/content/reference/en/commands/pick-lists.mdx
+Reviewed-SHA: 32a267e0f0b7756a6b6e9fd26d0157d70470f2f40107b5c75505389756cdb3a6
+Reviewed-SHA256: 32a267e0f0b7756a6b6e9fd26d0157d70470f2f40107b5c75505389756cdb3a6
+Reviewed-Date: 2026-11-05
+Reviewer: independent section reviewer
+Product: 54da8b6318de63b5205a0ff8db35e0b9045dd959 (initial source tracing b12f4f69638553c03ed64c1518c90d7bcccd6907)
+
+The full article was read in navigation order; consequential behavior and reference details were checked against current source. All reported documentation findings affecting this page were repaired and re-reviewed. This is a source review, not a live-channel test.
+
+- Name, description and entry normalization/limits and missing/empty draw results: server/src/NomNomzBot.Infrastructure/PickLists/PickListService.cs:275-365.
+- No-immediate-repeat state is held in memory: server/src/NomNomzBot.Application/Common/Picking/NoImmediateRepeatPicker.cs:21-63.
+- Default/floor distinction and personal grants: server/src/NomNomzBot.Infrastructure/Content/Identity/ActionDefinitionSeeder.cs:152-153,506-508; server/src/NomNomzBot.Infrastructure/Identity/RoleResolver.cs:94-145.
+
+Report: docs-work/overhaul/review-learning-commands-helpers.md.
+
+## Historical evidence
+
+The material below is retained as historical evidence. Its older hashes, verdicts and values do not constitute the current review.
+
 # Fact-check: /reference/commands/pick-lists (round 3)
 Verdict: PASS
 Reviewed: src/content/reference/en/commands/pick-lists.mdx
-Reviewed-SHA: f474cce871227217
+Reviewed-SHA: 8097ec1e9ed7c43a
 
 Product repo master at b6204c36c. Paths are relative to the product root.
 

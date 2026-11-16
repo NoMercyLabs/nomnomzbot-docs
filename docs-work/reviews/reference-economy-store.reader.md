@@ -1,7 +1,17 @@
-# Reader review: C:\Projects\NoMercyLabs\nomnomzbot-docs\src\content\reference\en\economy\store.mdx
+# Independent reader review: /reference/economy/store
 Verdict: PASS
-Reviewed: C:\Projects\NoMercyLabs\nomnomzbot-docs\src\content\reference\en\economy\store.mdx
-Reviewed-SHA: 4fcdb4824580d04b
+Reviewed: src/content/reference/en/economy/store.mdx
+Reviewed-SHA: cb36b576254bedb9009ec82b61d7e7c47a083a095e5a095cb734c5d244215c1c
+
+## Independent overhaul review, 2026-11-05
+
+The incomplete purchase surface is up front. Effect label versus binding is explained; ordinary configuration remains separate from developer purchase integration.
+
+Reviewed independently of the article author, in actual navigation order. Current product source 54da8b631 and relevant changes since b12f4f696 were read without starting the bot, executing platform actions or changing channel data. The reader judgment follows the user's natural teaching style; old pilot mimicry, sentence caps and unrelated Atlas style gates were not applied. See [review-moderation-economy-community.md](../overhaul/review-moderation-economy-community.md) for the review scope and findings.
+
+## Prior review history
+
+The earlier text below is retained as history; it does not independently approve a later article hash.
 
 Route: /reference/economy/store
 Read with: docs-work/page-conventions.md, docs-work/ledger.md, the map row for /reference/economy/store, pilot page commands/create-a-command.mdx.

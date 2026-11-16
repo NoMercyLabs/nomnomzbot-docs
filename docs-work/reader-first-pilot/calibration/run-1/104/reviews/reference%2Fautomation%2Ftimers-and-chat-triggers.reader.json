@@ -1,0 +1,78 @@
+{
+  "fingerprint": "6f495ebe9d74597968ba6c66213210148cfca3a1559b159ecd5e8cad28904aab",
+  "verdict": "PASS",
+  "answers": [
+    {
+      "question": 1,
+      "answer": "Open Triggers and timers, Timers, New timer. Give it a name such as Break reminder. Keep Reaction at Simple reply and enter Stretch and get water. and New here? Welcome! as two separate lines in Messages. Keep Minutes between posts at 30 and Send the reply to at Twitch chat; leave Chat lines needed at 0 and other options alone. Choose Create timer; it starts enabled. Its first message is due at the next check, usually within about 30 seconds, rather than after 30 minutes. Later firings rotate the two lines in order.",
+      "quote": [
+        "A new timer starts switched on with Chat lines needed at 0. Its first message is due at the next timer check, usually within about 30 seconds; it does not wait a full 30 minutes first.",
+        "Open Triggers and timers, then Timers, and choose New timer.",
+        "Type Break reminder in Name.",
+        "Leave Reaction at Simple reply. In Messages, enter these two lines:",
+        "Keep Minutes between posts at its default, 30, and Send the reply to at Twitch chat. Leave the other options alone for now.",
+        "Choose Create timer. The dialog closes and the timer appears in the list, switched on.",
+        "Several messages rotate in order, one per firing, then wrap back to the first."
+      ]
+    },
+    {
+      "question": 2,
+      "answer": "Neither a live stream nor an existing pipeline is required for a simple reply timer. Sign in, select the channel, and have the bot running and connected. By default Moderator, Lead moderator, Editor or Broadcaster can change timers; the broadcaster may raise that requirement. A VIP granted read access cannot edit.",
+      "quote": [
+        "Sign in and select your channel. By default, a Moderator, Lead moderator, Editor or Broadcaster can change its timers and chat triggers. The broadcaster can raise the required role on Permissions.",
+        "The bot must be running and connected to the channel to check timers and receive chat. Timers can post while the stream is offline, so switch off a reminder when you finish if you only want it during broadcasts. A simple reply needs no existing command or pipeline.",
+        "A VIP sees that tab’s list, without an editor. New timer and New trigger show “You can view this, but your role cannot change it.”"
+      ]
+    },
+    {
+      "question": 3,
+      "answer": "Watch Twitch chat for the first saved line at the next check, then the second after the next 30-minute wait and eligible check; subsequent firings should wrap to the first. Chat delivery must be accepted to advance a Twitch-chat simple reply. Switch the timer off when finishing the stream to prevent offline posts; Enabled saves immediately and an Off timer posts nothing.",
+      "quote": [
+        "Watch your channel’s chat for “Take a moment to stretch and get some water.” After the next 30-minute wait and an eligible timer check, the bot posts the second line.",
+        "Several messages rotate in order, one per firing, then wrap back to the first.",
+        "The stream being offline does not stop a timer in a connected channel. Switch it off to stop a live-only reminder.",
+        "Saves immediately. An off timer stays listed as Off and posts nothing."
+      ]
+    },
+    {
+      "question": 4,
+      "answer": "this is nice matches because hi occurs inside this. HI matches with capitalization matching off. !hi is excluded when ! is the channel's command prefix, as in the article's command example. Matching lines still need an eligible sender and a clear channel reply wait, which starts at 30 seconds for a new trigger. To match only the greeting, choose Is exactly the words in the editor, keep hi as the watched text and capitalization matching off if HI should also count, then Save changes.",
+      "quote": [
+        "The text appears anywhere, including inside a longer word.",
+        "For example, hi with Contains the words also matches this. Choose Is exactly the words to answer only the greeting, or use a suitable pattern for a more specific rule.",
+        "With Match capital letters off, Hello and hello match the same way.",
+        "Chat triggers watch ordinary chat lines. A line starting with the channel’s command prefix is excluded, even when it does not run a valid command.",
+        "Choose Save changes to keep edits, or Discard to return to the saved trigger. Saving clears the unsaved count and updates the words in the list."
+      ]
+    },
+    {
+      "question": 5,
+      "answer": "No material obstacle. The article explains one message per line, first-fire timing, rotation, offline behavior, substring matching, prefix exclusions and how to save the narrower match. The requested reminder text can be entered using the described Messages field.",
+      "quote": ""
+    },
+    {
+      "question": 6,
+      "answer": "No material read-aloud obstacle. The timing and match examples make the important behaviors explicit; the reference tables do not introduce an incompatible instruction.",
+      "quote": ""
+    }
+  ],
+  "findings": [],
+  "warnings_released": true,
+  "warning_review": [
+    {
+      "id": "length",
+      "decision": "keep",
+      "reason": "The page covers two related workflows with settings tables and explains first firing, rotation, delivery counting, offline behavior and substring matching. These details answer the assigned timer and chat-trigger scenarios without a material guess; reference length alone is not a defect."
+    },
+    {
+      "id": "first-numbered-step",
+      "decision": "keep",
+      "reason": "The text before creation identifies timers versus chat triggers, access and connection prerequisites, offline posting and the immediate first check. Those details prevent choosing the wrong feature or unexpectedly posting a new enabled timer before a full 30 minutes has passed."
+    },
+    {
+      "id": "paragraph-25",
+      "decision": "keep",
+      "reason": "This paragraph distinguishes successful simple-reply delivery from counted attempts by bound commands, actions and pipelines. It explains retry timing and why a recorded firing does not prove success, which is consequential for interpreting timer results rather than unnecessary sentence volume."
+    }
+  ]
+}

@@ -1,5 +1,26 @@
-# Reader review: src/content/reference/en/settings/features.mdx
+# Independent reader review: /reference/settings/features
 Verdict: PASS
+Reviewed: src/content/reference/en/settings/features.mdx
+Reviewed-SHA: 9f13c36a15ea8795
+Reviewed-SHA256: 9f13c36a15ea8795b0799ea5f606e802f8915e7dac12ac832f080fba9d28f94a
+Reviewed-Date: 2026-11-05
+Reviewer: independent reviewer, separate from article author
+Product-Revision: 54da8b6318de63b5205a0ff8db35e0b9045dd959
+
+The complete current article was read independently of its author, in the established settings, self-hosting and Code and SDK navigation order. The user's natural explainer/progressive-disclosure requirements take precedence over historical pilot mimicry, sentence caps and repeated page templates.
+
+## Learning and lookup result
+
+The opening relates optional features to permissions and quotas before the catalog. The repaired zero-grant runtime exception is consistent with Script basics; reference tables and denied-switch explanation remain useful.
+
+No outstanding substantive reader finding.
+
+Related routes were checked as contextual continuations rather than prerequisites for ordinary bot use. Draft labels remain appropriate for code material. This is a text/structure review, not a claim of rendered browser QA.
+
+## Historical review (superseded)
+
+# Reader review: src/content/reference/en/settings/features.mdx
+Historical verdict: PASS
 Reviewed: C:/Projects/NoMercyLabs/nomnomzbot-docs/src/content/reference/en/settings/features.mdx
 Reviewed-SHA: eccdda86f9e9f32c
 

@@ -1,3 +1,22 @@
+# Current independent reader review
+
+Verdict: PASS
+Reviewed: src/content/reference/en/getting-started/bot-account.mdx
+Reviewed-SHA: 8aff774b7f204f22f22972aebaa833d18a6f42a32c4ecc8f7633e1255a722154
+Reviewed-SHA256: 8aff774b7f204f22f22972aebaa833d18a6f42a32c4ecc8f7633e1255a722154
+Reviewed-Date: 2026-11-05
+Reviewer: independent section reviewer
+
+The page explains which account sends chat, why someone might connect a separate one, and how to tell it is working. The separate bot account remains optional; it is not confused with a TTS voice.
+
+The full page was read with the preceding/following navigation context and related links. This review applies the owner's explanatory, progressive-disclosure guidance; it does not impose Atlas sentence caps, pilot mimicry or fixed article headings. No substantive reader finding remains at this hash. Build/render/link checks are recorded separately by the lead reviewer.
+
+Report: docs-work/overhaul/review-learning-commands-helpers.md.
+
+## Historical evidence
+
+The material below is retained as historical evidence; its older verdict is not the current review.
+
 # Reader review: src/content/reference/en/getting-started/bot-account.mdx
 Verdict: PASS
 Reviewed: src/content/reference/en/getting-started/bot-account.mdx

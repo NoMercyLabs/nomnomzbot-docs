@@ -1,0 +1,77 @@
+[
+  {
+    "route": "commands/create-a-command",
+    "factual_corrections_only_original": {
+      "rendered_non_code_words_including_tables": 2300,
+      "table_rows_including_headers": 40,
+      "list_items": 31,
+      "headings_h2_h3": 18
+    },
+    "new": {
+      "rendered_non_code_words_including_tables": 2092,
+      "table_rows_including_headers": 31,
+      "list_items": 23,
+      "headings_h2_h3": 18
+    }
+  },
+  {
+    "route": "commands/cooldowns-and-permissions",
+    "factual_corrections_only_original": {
+      "rendered_non_code_words_including_tables": 1688,
+      "table_rows_including_headers": 20,
+      "list_items": 9,
+      "headings_h2_h3": 10
+    },
+    "new": {
+      "rendered_non_code_words_including_tables": 1592,
+      "table_rows_including_headers": 13,
+      "list_items": 12,
+      "headings_h2_h3": 10
+    }
+  },
+  {
+    "route": "automation/timers-and-chat-triggers",
+    "factual_corrections_only_original": {
+      "rendered_non_code_words_including_tables": 2101,
+      "table_rows_including_headers": 39,
+      "list_items": 30,
+      "headings_h2_h3": 13
+    },
+    "new": {
+      "rendered_non_code_words_including_tables": 2040,
+      "table_rows_including_headers": 41,
+      "list_items": 26,
+      "headings_h2_h3": 13
+    }
+  },
+  {
+    "route": "commands/built-in-commands",
+    "factual_corrections_only_original": {
+      "rendered_non_code_words_including_tables": 2274,
+      "table_rows_including_headers": 62,
+      "list_items": 17,
+      "headings_h2_h3": 11
+    },
+    "new": {
+      "rendered_non_code_words_including_tables": 2170,
+      "table_rows_including_headers": 62,
+      "list_items": 16,
+      "headings_h2_h3": 11
+    }
+  },
+  {
+    "route": "self-hosting/first-run-setup",
+    "factual_corrections_only_original": {
+      "rendered_non_code_words_including_tables": 1177,
+      "table_rows_including_headers": 11,
+      "list_items": 13,
+      "headings_h2_h3": 11
+    },
+    "new": {
+      "rendered_non_code_words_including_tables": 1199,
+      "table_rows_including_headers": 11,
+      "list_items": 14,
+      "headings_h2_h3": 14
+    }
+  }
+]

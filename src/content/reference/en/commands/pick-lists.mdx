@@ -3,138 +3,137 @@ title: Pick lists
 description: Make a named list of entries, so a command reply or a pipeline answers with one random entry from it.
 ---
 
-You make the channel's pick lists on the **Pick lists** page, in the **Build** group of the sidebar.
-A pick list is a named list of entries, for example a list of snacks.
-A reply or a pipeline draws one random entry from it each time it runs.
+A pick list is a named set of entries that lives on the **Pick lists** page, in the dashboard's **Build** group.
+A reply draws one random entry from it with a helper such as `{list.pick.snacks}`, where `snacks` is the list name, and a pipeline draws from it with the **Pick from list** step.
+The bot reads the list each time it draws, so a change to the entries reaches every command and pipeline that uses the list, with nothing else to edit.
 
-Many commands can share one pick list.
-A change to the list reaches every command that uses it.
+A command's own random replies are enough when the lines belong to that one command.
+Make a pick list when several commands, timers or pipelines should share the same lines.
+Every reply and step finds the list by its exact name, so pick the name with care: a rename leaves the old name behind in each of them.
 
 ## Who can use this page
 
 By default, a **Moderator**, **Lead moderator**, **Editor** or **Broadcaster** may open the page and make, change and delete lists.
-The **Broadcaster** may raise each of these to a higher role.
-The roles are explained on [Permissions](/reference/settings/permissions).
+The **Broadcaster** can change this on the [Permissions](/reference/settings/permissions) settings page, under **Pick lists**: raise any of these to a higher role, or let a **VIP** see, make and change pick lists.
+Deleting a list cannot go lower than **Moderator**.
 
-The **Broadcaster** may also let a **VIP** see, make and change pick lists.
-This is set on the **Permissions** settings page, under **Pick lists**.
-A VIP can never delete a list.
-
-**New pick list** shows only to someone who may make lists.
-The edit and delete buttons on a row show only to someone who may use them.
+**New pick list** shows only to someone who may make lists, and the edit and delete buttons on a row show only to someone who may use them.
 
 ## Make a pick list
 
 1. Open **Pick lists** in the sidebar and choose **New pick list**.
    The **New pick list** dialog opens: "A list a reply can draw one random entry from."
 2. Type a name in **Name**, for example `snacks`.
-   A reply uses this name to draw from the list.
+   Use only letters, numbers, underscores and hyphens, because the name goes inside the helper.
+   The name is case-sensitive: a helper must use the same capital and small letters, so `{list.pick.Snacks}` does not find `snacks`.
 3. Optionally, type a short **Description**.
 4. Type the entries in **Entries**, one entry per line.
+   For this example, enter `Pizza`, `Chips` and `Cookies` on separate lines.
 5. Choose **Add pick list**.
-   The dialog closes and the list shows on the page.
 
-Each row shows the name, the entry count, the helper that draws from the list and the description.
-For a list named `snacks` with three entries, the row reads "3 entries · `{list.pick.snacks}`".
-The list is in name order.
+The dialog closes and the list shows on the page, in name order.
+Its row shows the entry count, the helper that draws from it and the description, so a list named `snacks` with three entries reads "3 entries · `{list.pick.snacks}`".
 
 When the channel has no lists, the page shows "No pick lists yet."
 
 ### Rules for a pick list
 
-The dialog removes spaces at the ends of each line.
-It drops empty lines.
+The dialog removes spaces at the ends of each line and drops empty lines.
+**Name** takes up to 100 characters and **Description** up to 500, and each field stops taking text at its limit.
+For the other rules, the dialog or the bot shows a message:
 
 | Rule | What happens |
 | --- | --- |
 | The name is empty | The dialog shows "Type a name." |
-| The name is longer than 100 characters | The field stops at 100 characters. |
-| The name has a character that is not a letter, a number, `_` or `-` | The bot refuses it: "A pick list name may contain only letters, numbers, underscores, and hyphens." |
-| Another pick list has the same name | The bot refuses it: "A pick list named 'snacks' already exists." |
-| The description is longer than 500 characters | The field stops at 500 characters. |
+| The name has a character that is not a letter, a number, an underscore or a hyphen | The bot refuses it: "A pick list name may contain only letters, numbers, underscores, and hyphens." |
+| Another pick list has the same name | The bot refuses it: "A pick list named 'snacks' already exists." Names that differ only in capital letters are different names, so `Snacks` and `snacks` can both exist. |
 | The list has more than 500 entries | The dialog shows "A list may hold at most 500 entries." |
 | An entry is longer than 500 characters | The dialog shows "An entry may have at most 500 characters." |
 
-When the dialog or the bot refuses, the dialog stays open with the reason.
-Nothing is saved.
+When the dialog or the bot refuses, the dialog stays open with the reason, and nothing is saved.
 
 ## Use a pick list in a reply
 
-Put the helper `{list.pick.` with the list name and `}` in a command reply.
-Helpers are explained on [Variables and templates](/reference/commands/variables-and-templates).
-How to write a reply is on [Create a command](/reference/commands/create-a-command).
+Put the helper in a command reply, with the list name after `list.pick.`.
+How helpers work is on [Variables and templates](/reference/commands/variables-and-templates), and how to write a reply is on [Create a command](/reference/commands/create-a-command).
 
 ```text
 Today's snack is {list.pick.snacks}.
 ```
 
 When the list holds Pizza, Chips and Cookies, chat sees a line such as "Today's snack is Chips."
-The bot sends it in the channel's one bot voice.
 
-The bot does not pick the same entry twice in a row from a list of two or more entries.
-After the bot restarts, one repeat can happen.
+The helper works in any bot text that takes helpers, such as timers and event responses, not only in command replies.
+An entry can hold helpers of its own, such as `{user}`, which are filled in after the draw.
 
-A helper that names a list that does not exist, or a list with no entries, shows nothing.
-The rest of the reply still goes out.
-
-Each `{list.pick.snacks}` in a reply draws again.
-Two of them in one reply can show two different entries.
+Each `{list.pick.snacks}` in a reply draws again, so two of them can show two different entries, but from a list of two or more entries the bot does not pick the same entry twice in a row.
+When the helper names a list that does not exist, or a list with no entries, it shows nothing, and the rest of the reply still goes out.
 
 ## Use a pick list in a pipeline
 
 A [pipeline](/reference/commands/pipelines) has the step **Pick from list**, in the **Pick Lists** group of steps: "Pick a random entry from a saved list".
-The step draws once and keeps the entry for the later steps.
+Use it when the reply and a later step, such as an overlay or a spoken line, must agree on what was picked.
+The step draws once and keeps the entry, with its helpers filled in, so every later step that reads it sees the same entry.
 
 | Field | What it sets | Default |
 | --- | --- | --- |
-| **Pick-list** | "The pick-list to draw a random entry from." It must be filled in. | None |
-| **Variable** | The name later steps use to read the entry, in braces. | `pick`, read as `{pick}` |
+| **Pick-list** | The pick list to draw a random entry from. It must be filled in. | **Not set** |
+| **Variable** | The name later steps use to read the entry. Type the plain name, for example `prize`, and later steps read it as `{prize}`. | Empty, read as `{pick}` |
 
-Every later step that reads the variable sees the same entry.
-Helpers inside the entry are filled in when the step draws it.
+To fill in **Pick-list**, choose the field.
+A list of the channel's pick lists opens, each with its entry count, and you choose one.
+You can also type in **Search** to narrow the list, or type a name, such as `snacks`, and choose **Use "snacks"** to keep the typed name.
 
 If the list does not exist or has no entries, the step fails.
+In the pipeline's **Runs**, under **What each step did**, the step shows **Failed** with the reason under it in red, such as "Pick list 'snacks' was not found." or "Pick list 'snacks' is empty."
+Unless the step has **Keep going if this step fails** on, the pipeline stops at that step.
 
 ## Find a pick list
 
-Type in **Search the pick lists** at the top of the page.
-The page shows the lists whose name or description holds the text.
+Type in **Search the pick lists** at the top of the page, and the page shows the lists whose name or description holds the text.
 When none match, it shows "No pick list matches your search."
 
-The page shows 50 lists at a time.
-**Show more pick lists** under the list loads the next 50.
+The page shows 50 lists at a time, and **Show more pick lists** under the list adds more.
 
-## Edit a pick list
+## Change the entries of a list
 
-1. Choose the **Edit snacks** button on the row, where `snacks` is the list name.
+1. Open **Pick lists** in the sidebar and find the row of the list.
+   To find it fast, type its name in **Search the pick lists**.
+   When the channel has more than 50 lists, choose **Show more pick lists** until the row shows.
+2. Choose the edit button, the first icon button at the end of the row.
+   Its name, shown when you point at it, is "Edit snacks", where `snacks` is the list name.
    The dialog opens with the list name in its title, for example "Edit snacks".
-2. Change the name, the description or the entries.
-3. Choose **Save pick list**.
-   The dialog closes and the row shows the new values.
+3. Add, change or remove lines in **Entries**.
+4. Choose **Save pick list**.
 
-The saved entries replace all of the old entries.
+The dialog closes and the row shows the new entry count.
+The saved entries replace all of the old entries, so the next draw from any command, timer or pipeline that uses the list picks from the new entries.
+
+The same dialog can also change the name and the description.
 
 ::Callout
 
-Renaming a list breaks replies that use the old name.
-Change the helper in each of those replies to the new name.
+Renaming a list breaks every reply and every **Pick from list** step that uses the old name.
+A reply helper then shows nothing, and the step fails.
+Change each of them to the new name.
 
 ::
 
 ## Delete a pick list
 
-1. Choose the **Delete snacks?** button on the row.
-   The dialog asks "Delete snacks?": "This removes the list and all of its entries for good."
-2. Read the line under it.
+Deleting a list leaves every reply, timer and event response that uses its helper showing nothing.
+The confirm dialog does not count those: it counts only the pipeline steps that draw from the list.
+
+1. Open **Pick lists** in the sidebar and find the row of the list, as in the steps above.
+   Choose the delete button, the last icon button at the end of the row.
+   Its name, shown when you point at it, is "Delete snacks?", where `snacks` is the list name.
+   A dialog with the same title opens, with the line "This removes the list and all of its entries for good."
+2. Read the count line under that sentence.
    It counts the pipeline steps that draw from this list and names their pipelines, for example "2 pipeline steps: Raid flow, Hype".
    When none do, it reads "No pipeline step uses this list."
 3. Choose **Delete pick list**.
-   The dialog closes and the list leaves the page.
 
-The count covers pipeline steps only.
-A command reply that uses the helper is not counted.
-After the delete, that helper shows nothing.
-A **Pick from list** step on that list fails.
+The dialog closes and the list leaves the page, and a **Pick from list** step on that list now fails.
 
 ## Troubleshooting
 
@@ -143,7 +142,7 @@ A **Pick from list** step on that list fails.
 **The helper shows nothing in the reply.**
 Check these, in order:
 
-1. The name in the helper matches the list name exactly, with no space.
+1. The name in the helper matches the list name exactly, including capital letters. `Snacks` is not `snacks`.
 2. The list still exists on the **Pick lists** page. A renamed or deleted list leaves the old helper empty.
 3. The list has at least one entry. The row shows the entry count.
 
@@ -154,4 +153,3 @@ Check these, in order:
 - [Create a command](/reference/commands/create-a-command)
 - [Variables and templates](/reference/commands/variables-and-templates)
 - [Pipelines](/reference/commands/pipelines)
-- [Permissions](/reference/settings/permissions)

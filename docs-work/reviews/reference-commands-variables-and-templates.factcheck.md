@@ -1,3 +1,26 @@
+# Current independent fact check
+
+Verdict: PASS
+Reviewed: src/content/reference/en/commands/variables-and-templates.mdx
+Reviewed-SHA: 6a3208da2951710f8995728055700745804b027b66d04afb5d81a3205c7e46af
+Reviewed-SHA256: 6a3208da2951710f8995728055700745804b027b66d04afb5d81a3205c7e46af
+Reviewed-Date: 2026-11-05
+Reviewer: independent section reviewer
+Product: 54da8b6318de63b5205a0ff8db35e0b9045dd959 (initial source tracing b12f4f69638553c03ed64c1518c90d7bcccd6907)
+
+The full article was read in navigation order; consequential behavior and reference details were checked against current source. All reported documentation findings affecting this page were repaired and re-reviewed. This is a source review, not a live-channel test.
+
+- Save-time helper/context rejection: server/src/NomNomzBot.Infrastructure/Platform/Templating/TemplateHelperValidator.cs:30-127.
+- Nested rendering, lazy providers, unknown fallback and render-local values: server/src/NomNomzBot.Infrastructure/Platform/Templating/TemplateResolver.cs:98-185; server/src/NomNomzBot.Infrastructure/Platform/Templating/Helpers/Variables/VariableTemplateHelpers.cs:20-84.
+- Plain versus HTML overlay delivery: server/src/NomNomzBot.Application/Chat/Services/ReplyTemplateRenderer.cs:30-79.
+- Truthiness and lazy fallback: server/src/NomNomzBot.Infrastructure/Platform/Templating/Helpers/Logic/LogicArguments.cs:28-95; Helpers/Logic/DefaultTemplateHelpers.cs:20-41.
+
+Report: docs-work/overhaul/review-learning-commands-helpers.md.
+
+## Historical evidence
+
+The material below is retained as historical evidence. Its older hashes, verdicts and values do not constitute the current review.
+
 # Fact check: src/content/reference/en/commands/variables-and-templates.mdx
 Verdict: PASS
 Reviewed: C:/Projects/NoMercyLabs/nomnomzbot-docs/src/content/reference/en/commands/variables-and-templates.mdx

@@ -1,30 +1,77 @@
 ---
 title: Goal helpers
-description: Lists 14 template helpers, each with what it gives and an example.
+description: Show progress toward your active Twitch follower, subscription and new-subscription goals in a reply, with 14 template helpers.
 ---
 
 Helpers on this page: `{goal.*}`.
 
-These helpers read the channel goals, such as follower goals and sub goals.
-Use them to show progress in chat, on an overlay or read aloud.
+These helpers read the creator goals that are active on your Twitch channel.
+Every goal helper in one reply reads the same list of goals, so the numbers in that reply always agree.
+They work in commands, event responses, timers, pipeline steps, Discord notifications and webhook bodies.
+None of them take arguments.
 
-Each row is its own example, so the rows on this page do not all come from one moment.
+## Before you use them
 
-| Helper | What it gives | Example |
-| --- | --- | --- |
-| `{goal.followers.bar}` | A bar of how far the follower goal is: ████████░░ 82% | `████████░░ 82%` |
-| `{goal.followers.current}` | The followers counted for the follower goal: 1,234 | `1,234` |
-| `{goal.followers.description}` | The description the streamer gave the follower goal: Road to 1.5k | `Road to 1.5k` |
-| `{goal.followers.percent}` | How far the follower goal is: 82% | `82%` |
-| `{goal.followers.remaining}` | The followers still needed for the goal: 266 | `266` |
-| `{goal.followers.target}` | The target of the follower goal: 1,500 | `1,500` |
-| `{goal.list}` | Every active goal with its progress: followers 82%, subs 80% | `followers 82%, subs 80%` |
-| `{goal.newSubs.current}` | The new subscriptions counted for the new-subscription goal: 6 | `6` |
-| `{goal.newSubs.percent}` | How far the new-subscription goal is: 30% | `30%` |
-| `{goal.subs.bar}` | A bar of how far the subscription goal is: ████████░░ 80% | `████████░░ 80%` |
-| `{goal.subs.current}` | The subscriptions counted for the subscription goal: 80 | `80` |
-| `{goal.subs.percent}` | How far the subscription goal is: 80% | `80%` |
-| `{goal.subs.remaining}` | The subscriptions still needed for the goal: 20 | `20` |
-| `{goal.subs.target}` | The target of the subscription goal: 100 | `100` |
+A goal has to be running on Twitch, or there is nothing to read.
+When the channel has no active goal of the kind a helper asks for, the reply shows that helper exactly as you wrote it, braces and all.
+The same happens when the bot cannot read the goals from Twitch.
+
+So put goal helpers in a reply you use while a goal is running, such as a `!goal` command, rather than in a timer that posts all the time.
+
+## Pick the goal
+
+The middle part of the name picks which kind of goal the helper reads:
+
+- `followers` reads a follower goal.
+- `subs` reads a subscription goal. That covers both kinds of subscription goal Twitch offers.
+- `newSubs` reads a new-subscription goal. It has only `current` and `percent`.
+
+When more than one active goal is of the same kind, the helper reads the first one Twitch lists.
+
+## What each part gives
+
+- `current` and `target` are the goal's numbers as Twitch has them, such as `1,234` and `1,500`.
+- `remaining` is what is still needed, and `0` once the goal is reached, never a negative number.
+- `percent` is the progress rounded to a whole number, such as `82%`. It keeps going past `100%` when the goal is beaten.
+- `bar` draws 10 marks and adds the percent: `████████░░ 82%`. The bar stops at full, and the percent after it keeps counting.
+- `description` is the text the streamer gave the follower goal on Twitch.
+
+Numbers use the thousands separator of the channel's **Language**, and English when it is not set.
+
+A goal with a target of `0` has nothing to measure against. Its `percent` and `bar` show as written, and `{goal.list}` leaves that goal out. Its `current`, `target` and `remaining` still show.
+A follower goal without a description shows `{goal.followers.description}` as written.
+
+## Show progress in a reply
+
+A follower goal of 1,500, with 1,234 followers so far:
+
+`Follower goal: {goal.followers.current} of {goal.followers.target}, {goal.followers.remaining} to go! {goal.followers.bar}`
+
+gives `Follower goal: 1,234 of 1,500, 266 to go! ████████░░ 82%`.
+
+To show every goal at once, use `{goal.list}`.
+It names each active goal as `followers`, `subs` or `new subs` with its percent, in the order Twitch lists them, such as `followers 82%, subs 80%`.
+When no goal can be shown, it prints as written.
+
+## All goal helpers
+
+The examples use a follower goal at 1,234 of 1,500 described as "Road to 1.5k", a subscription goal at 80 of 100, and a new-subscription goal at 6 of 20.
+
+| Helper | What it gives | Example | Use in |
+| --- | --- | --- | --- |
+| `{goal.followers.bar}` | A bar of 10 marks for the follower goal, with its percent | `████████░░ 82%` | Commands, event responses, timers, pipelines, Discord, webhooks |
+| `{goal.followers.current}` | The follower count of the follower goal | `1,234` | Commands, event responses, timers, pipelines, Discord, webhooks |
+| `{goal.followers.description}` | The text the streamer gave the follower goal | `Road to 1.5k` | Commands, event responses, timers, pipelines, Discord, webhooks |
+| `{goal.followers.percent}` | How far the follower goal is, as a whole percent | `82%` | Commands, event responses, timers, pipelines, Discord, webhooks |
+| `{goal.followers.remaining}` | The followers still needed, never below 0 | `266` | Commands, event responses, timers, pipelines, Discord, webhooks |
+| `{goal.followers.target}` | The target of the follower goal | `1,500` | Commands, event responses, timers, pipelines, Discord, webhooks |
+| `{goal.list}` | Every active goal with its percent | `followers 82%, subs 80%, new subs 30%` | Commands, event responses, timers, pipelines, Discord, webhooks |
+| `{goal.newSubs.current}` | The new subscriptions counted by the new-subscription goal | `6` | Commands, event responses, timers, pipelines, Discord, webhooks |
+| `{goal.newSubs.percent}` | How far the new-subscription goal is, as a whole percent | `30%` | Commands, event responses, timers, pipelines, Discord, webhooks |
+| `{goal.subs.bar}` | A bar of 10 marks for the subscription goal, with its percent | `████████░░ 80%` | Commands, event responses, timers, pipelines, Discord, webhooks |
+| `{goal.subs.current}` | The current amount of the subscription goal | `80` | Commands, event responses, timers, pipelines, Discord, webhooks |
+| `{goal.subs.percent}` | How far the subscription goal is, as a whole percent | `80%` | Commands, event responses, timers, pipelines, Discord, webhooks |
+| `{goal.subs.remaining}` | What the subscription goal still needs, never below 0 | `20` | Commands, event responses, timers, pipelines, Discord, webhooks |
+| `{goal.subs.target}` | The target of the subscription goal | `100` | Commands, event responses, timers, pipelines, Discord, webhooks |
 
 Back to [Template helpers](/reference/templates/overview). For the places helpers work, special characters and HTML, read [Variables and templates](/reference/commands/variables-and-templates).

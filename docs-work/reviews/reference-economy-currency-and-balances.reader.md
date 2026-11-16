@@ -1,7 +1,17 @@
-# Reader review: economy/currency-and-balances
+# Independent reader review: /reference/economy/currency-and-balances
 Verdict: PASS
-Reviewed: C:\Projects\NoMercyLabs\nomnomzbot-docs\src\content\reference\en\economy\currency-and-balances.mdx
-Reviewed-SHA: 5dd9d83b4a872df4
+Reviewed: src/content/reference/en/economy/currency-and-balances.mdx
+Reviewed-SHA: 39e44ef63603ba038e6446c01352e822060fd44bf45d965139b87327bb84eecd
+
+## Independent overhaul review, 2026-11-05
+
+The earn/spend loop and signed-adjustment example teach useful tasks. Bot currency is distinguished from Twitch points; incomplete jar acceptance is explicit.
+
+Reviewed independently of the article author, in actual navigation order. Current product source 54da8b631 and relevant changes since b12f4f696 were read without starting the bot, executing platform actions or changing channel data. The reader judgment follows the user's natural teaching style; old pilot mimicry, sentence caps and unrelated Atlas style gates were not applied. See [review-moderation-economy-community.md](../overhaul/review-moderation-economy-community.md) for the review scope and findings.
+
+## Prior review history
+
+The earlier text below is retained as history; it does not independently approve a later article hash.
 
 Reader profile: a streamer who has read only `getting-started/dashboard-tour` (the map's Assumes column). The tour places Economy in the Loyalty group, names the roles moderator, lead moderator, broadcaster and VIP, and sends the role order to Permissions. It does not name Editor.
 

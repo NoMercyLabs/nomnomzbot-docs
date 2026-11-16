@@ -3,43 +3,39 @@ title: Install with Docker
 description: Run NomNomzBot on your own machine with Docker, pick the lite or the full setup, and find where your data lives.
 ---
 
-You can run NomNomzBot on your own machine with Docker.
-This is called self-hosting.
-You pick one of two setups: lite or full.
+NomNomzBot ships two Docker Compose setups in the project folder.
+Lite is one container with a SQLite database, and it pulls the ready-made image, so you build nothing.
+Full runs the bot next to Postgres, Redis and a Caddy proxy.
+For a bot that serves your own channel, start with lite.
 
 ## Pick lite or full
 
-Pick **lite** when you run the bot for your own channel.
-Lite is one container and needs no database server.
-
-Pick **full** when you want a database server, or updates with no pause.
-Full runs Postgres and Redis next to the bot.
+Pick **full** only when you want a database server, or updates with no pause.
 
 | | Lite | Full |
 | --- | --- | --- |
 | Compose file | `docker-compose.lite.yml` | `docker-compose.yml` |
-| Containers | 1 | The bot, Postgres, Redis and a Caddy proxy |
+| Containers | The bot only | The bot, Postgres, Redis and a Caddy proxy |
 | Database | A SQLite file | Postgres |
-| Updates with no pause | No | Yes |
-| Settings file | Optional | Needed |
+| Updates | The bot pauses for a few seconds | No pause |
+| `.env` file | Only to change the port or the address, or to build the image yourself | Needed |
 
 ## What you need
 
-- Docker with Compose v2.
-- A Twitch application, for its Client ID and Client Secret.
-  You make it in the Twitch developer console, at `https://dev.twitch.tv/console/apps`.
-  The console shows the Client ID and the Client Secret of the application.
-- The NomNomzBot project files, in one folder on your machine.
-  The next section shows how to get them.
+- Docker with Compose v2, and Docker running before you start.
+- A Twitch account for your channel.
+  The [first-run setup](/reference/self-hosting/first-run-setup) helps you choose the Twitch app the bot uses.
+- The NomNomzBot project files in one folder, as in the next section.
 
 ## Get the project files
 
 The project files are on [the NomNomzBot page on GitHub](https://github.com/NoMercyLabs/nomnomzbot).
 
 1. Open that page and choose **Code**, then **Download ZIP**.
-2. Unpack the ZIP file into a folder of your choice.
-   The folder holds `docker-compose.lite.yml`, `docker-compose.yml` and `.env.example`.
-3. Open a terminal in that folder.
+2. Unpack the ZIP file where you want the bot to live.
+   The ZIP holds one folder, `nomnomzbot-master`, and that folder is the project folder.
+   It holds `docker-compose.lite.yml`, `docker-compose.yml` and `.env.example`.
+3. Open a terminal in the project folder.
 
 <Platform os="windows">
 
@@ -60,7 +56,8 @@ Open a terminal, type `cd ` with a space and the path of the folder, and press E
 
 </Platform>
 
-If you use Git, you can clone the project instead:
+If you use Git, you can clone the project instead.
+The project folder is then `nomnomzbot`:
 
 ```bash
 git clone https://github.com/NoMercyLabs/nomnomzbot.git
@@ -69,57 +66,60 @@ cd nomnomzbot
 
 ## Install the lite setup
 
-1. Open a terminal in the project folder.
-2. Run this command:
+Lite runs without a `.env` file, unless you build the image yourself.
+When the secret keys are empty, the bot makes its own keys on the first start and saves them in its data folder.
+
+Two settings are best made before the first start.
+If you will open the bot from another computer, or port 5080 is taken, first do [If you open the bot from another computer](#if-you-open-the-bot-from-another-computer).
+If you want the data in a folder you can see and copy, first do [If you want the data in a folder you can see](#if-you-want-the-data-in-a-folder-you-can-see).
+Otherwise, start now.
+
+### Start the lite bot
+
+1. In the project folder, run this command and press Enter:
 
    ```bash
    docker compose -f docker-compose.lite.yml up -d
    ```
 
-   Docker downloads the ready-made image and starts the bot.
-3. Open `http://localhost:5080` in your browser.
-   The setup page opens.
+   Docker downloads the ready-made stable image and starts the bot.
+   In the Compose file the bot is the service `api`, and Docker names its container `nomnomzbot-lite`.
+   Commands that start with `docker compose` use the service name, and commands that start with plain `docker` use the container name.
+2. Run this command and press Enter to check the bot:
+
+   ```bash
+   docker compose -f docker-compose.lite.yml ps
+   ```
+
+   The container shows as running, and it turns healthy after a short start-up.
+3. Open the setup page in your browser.
+   On the computer that runs the bot, open `http://localhost:5080/setup`.
+   If you set another port in `API_HTTP_PORT`, use that port instead of `5080`.
+   From another computer, open your `API_BASE_URL` with `/setup` added, such as `http://192.168.1.20:5080/setup`.
 4. Follow the [first-run setup](/reference/self-hosting/first-run-setup).
-   You can enter your Twitch keys there.
+   You can enter your Twitch client ID and client secret there.
 
-Lite needs no settings file.
-When the secret keys are empty, the bot makes its own keys and saves them in its data folder.
+When the setup page loads, the bot is installed.
+After the setup, you sign in, and the dashboard opens at `/app` on the same address.
 
-<details>
-<summary>Put settings in a file first</summary>
-
-Copy `.env.example` to `.env` in the project folder.
-Then change two lines in `.env` before you start the bot.
-
-| Line in `.env` | What to do | Why |
-| --- | --- | --- |
-| `ENCRYPTION_KEY` | Make it empty, or set your own random value. | The example value is a development key. The bot does not start with it. |
-| `API_IMAGE` | Make it `ghcr.io/nomercylabs/nomnomzbot:stable`. | The example value makes Docker build the image on your machine. |
-
-The other values can stay as they are in lite.
-
-To use another port than 5080, set `API_HTTP_PORT` in `.env`.
-
-</details>
+If you change `.env` later, run the same `up -d` command again.
+Docker recreates the container with the new values, and your data stays where it is.
 
 <details>
 <summary>Build the image yourself</summary>
 
-Set `API_IMAGE=nomnomzbot-api:local` in `.env`.
-Then add `--build` to the command:
-
-```bash
-docker compose -f docker-compose.lite.yml up -d --build
-```
-
-The build needs a lot of memory for Docker.
-With too little memory, the build can stop.
-
-</details>
-
-## Install the full setup
+This needs a `.env` file, so make one first.
+The copied `.env.example` holds the development `ENCRYPTION_KEY`, and the bot does not start with it.
 
 1. Copy `.env.example` to `.env` in the project folder.
+
+<Platform os="windows">
+
+```powershell
+Copy-Item .env.example .env
+```
+
+</Platform>
 
 <Platform os="linux macos">
 
@@ -129,46 +129,93 @@ cp .env.example .env
 
 </Platform>
 
-2. Fill in `TWITCH_CLIENT_ID` and `TWITCH_CLIENT_SECRET` from your Twitch application.
-   Fill in `TWITCH_BOT_USERNAME` with the Twitch name of the account the bot types in chat as.
-3. Fill in `JWT_SECRET` and `ENCRYPTION_KEY`.
-   The comment above each value in the file shows how to make one.
-4. Change `POSTGRES_PASSWORD` from the example value.
-5. Run this command:
+2. Open `.env` in a text editor.
+   Make `ENCRYPTION_KEY` empty, as `ENCRYPTION_KEY=`, so the bot creates its own key.
+   Check that `API_IMAGE` is `nomnomzbot-api:local`, which is the value in the example, and save the file.
+3. Add `--build` to the start command:
 
    ```bash
-   docker compose up -d --build
+   docker compose -f docker-compose.lite.yml up -d --build
    ```
 
-   Docker builds the image and starts Postgres, Redis, the proxy and the bot.
-   The bot sets up its database on the first start.
-6. Open `http://localhost:5080` in your browser and follow the [first-run setup](/reference/self-hosting/first-run-setup).
+The build needs a lot of memory for Docker.
+With too little memory, the build stops with an out-of-memory error.
+Give Docker more memory, or use the ready-made image.
 
-To download the ready-made image instead of building it, set `API_IMAGE=ghcr.io/nomercylabs/nomnomzbot:stable` in `.env`.
-Then run `docker compose up -d` with no `--build`.
+</details>
 
-::Callout
+### If you open the bot from another computer
 
-Never share your `.env` file.
-It holds your secrets.
-If you change `ENCRYPTION_KEY` later, the bot must sign in to Twitch again.
+Do this before the first start, and before you register your Twitch app in the first-run setup.
+Use it when the bot runs on another computer, such as a small home server you open from your laptop, or when port 5080 is taken.
+The bot builds the Twitch sign-in return address from `API_BASE_URL`.
 
-::
+1. Copy `.env.example` to `.env` in the project folder.
 
-## Where your data lives
+<Platform os="windows">
 
-The bot keeps its files in `/app/data` inside the container.
-These are the database in lite, the secret keys it made, your uploads and the logs.
+```powershell
+Copy-Item .env.example .env
+```
 
-| Setup | Where the data is kept |
-| --- | --- |
-| Lite | A Docker volume named `nomnomzbot_lite_data` |
-| Full | A volume for Postgres and a volume for the bot's files |
+</Platform>
 
-In lite, you can use a plain folder instead of the volume.
-Open `docker-compose.lite.yml`.
-Remove the `#` before the line `./data:/app/data`, and remove the line with `lite_data:/app/data`.
-Make the folder before you start the bot.
+<Platform os="linux macos">
+
+```bash
+cp .env.example .env
+```
+
+</Platform>
+
+2. Open `.env` in a text editor, change these four lines, and save the file.
+
+   | Line in `.env` | What to do | Why |
+   | --- | --- | --- |
+   | `ENCRYPTION_KEY` | Make it empty, as `ENCRYPTION_KEY=`. | The example value is the development key, and the bot does not start with it. Empty makes the bot create its own key. |
+   | `API_IMAGE` | Make it `ghcr.io/nomercylabs/nomnomzbot:stable`. | The example value makes Docker build the image on your machine. |
+   | `API_HTTP_PORT` | Keep `5080`, or set a free port. | The bot is reached on this port. |
+   | `API_BASE_URL` | Set the address you will open the bot at, with the port, such as `http://192.168.1.20:5080`. | Twitch sends you back to this address after you sign in. |
+
+   Leave the other lines as they are.
+   `JWT_SECRET` holds an example value too, and the bot replaces it with a key of its own.
+3. If a firewall runs on the computer with the bot, allow incoming connections on the port in `API_HTTP_PORT`.
+   You need this only so another computer can reach the bot.
+   This page cannot cover every firewall, so look up "allow an incoming port" in the help for yours: Windows Defender Firewall on Windows, ufw or firewalld on Linux, or the firewall in System Settings on macOS.
+4. Start the bot as in [Start the lite bot](#start-the-lite-bot).
+
+Open the bot at the exact address you set in `API_BASE_URL`.
+
+On a plain `http` address other than `localhost`, the browser does not count the page as secure, so the sign-in page offers only the code sign-in.
+With the code sign-in, the page shows a short code, and you enter that code on Twitch's own site to sign in.
+
+For a public address, Twitch needs HTTPS, and the bot itself serves only plain `http`.
+This page cannot cover HTTPS setup.
+Pick one tool to handle HTTPS in front of the bot: a tunnel or a reverse proxy.
+Point it at the bot's address on your network, such as `http://192.168.1.20:5080`, then set `API_BASE_URL` to the `https` address the tool gives you.
+
+### If you want the data in a folder you can see
+
+Do this before the first start.
+If the bot has already started, its data is in the Docker volume, and a new folder starts empty.
+In that case, first do steps 1 and 2 of [Back up the lite data](#back-up-the-lite-data) and skip its step 3, so the bot stays stopped.
+
+By default, lite keeps its data in the Docker volume `nomnomzbot_lite_data`.
+These steps keep it in a `data` folder inside the project folder instead.
+
+1. Open `docker-compose.lite.yml` in a text editor.
+2. Remove the `#` before the line `./data:/app/data`.
+3. Remove the line with `lite_data:/app/data`, and save the file.
+   The `lite_data:` block at the bottom of the file can stay, because no service uses it after this change.
+4. Make the folder.
+
+<Platform os="windows">
+
+```powershell
+mkdir data
+```
+
+</Platform>
 
 <Platform os="linux macos">
 
@@ -177,50 +224,315 @@ mkdir data
 sudo chown 1654:1654 data
 ```
 
+The second command gives the folder to the user the bot runs as inside the container, so the bot can write to it.
+
 </Platform>
 
-Keep the lite data folder together.
-The database has side files that end in `-wal` and `-shm`.
-Never copy the database file alone.
+5. Only if you made a backup: with `nomnomzbot-backup.tgz` in the project folder, run this command to unpack it into the new folder.
+   It is one command, so copy it whole.
+
+   ```bash
+   docker run --rm -v "$PWD/data":/data -v "$PWD":/backup:ro alpine tar xzf /backup/nomnomzbot-backup.tgz -C /data
+   ```
+
+   On Linux, the unpacked files keep the owner they had in the backup, which is the bot's user.
+6. Start the bot as in [Start the lite bot](#start-the-lite-bot).
+
+## Install the full setup
+
+Full always needs a `.env` file.
+You open the bot on the port in `API_HTTP_PORT`, as in lite.
+
+By default, full builds the image on your machine.
+The build needs a lot of memory for Docker, and with too little it stops with an out-of-memory error.
+
+### Start full with the script
+
+The project folder has a script that makes `.env` and starts the stack for you.
+Run it in a project folder that has no `.env` yet.
+
+<Platform os="windows">
+
+```powershell
+.\deploy.ps1 docker
+```
+
+</Platform>
+
+<Platform os="linux macos">
+
+```bash
+./deploy.sh docker
+```
+
+</Platform>
+
+The word `docker` picks the full setup. Without it, the script only lists its choices.
+The script copies `.env.example` to `.env` and fills in new values for `ENCRYPTION_KEY`, `JWT_SECRET` and `POSTGRES_PASSWORD`.
+It then asks for the Twitch client ID, the client secret, the bot username and the bot user ID.
+Press Enter to skip each one, and enter the Twitch client ID and client secret in the [first-run setup](/reference/self-hosting/first-run-setup) instead.
+Then it builds the image, starts the stack and waits until the bot is ready, which takes up to 3 minutes.
+The script does not ask for the port or the address.
+It leaves them at `5080` and `http://localhost:5080`, and it prints that address when the bot is ready.
+
+If you will open the bot from another computer, or port 5080 is taken, set the port and the address now, before you register your Twitch app in the first-run setup.
+The bot builds the Twitch sign-in return address from `API_BASE_URL`.
+
+1. Open `.env` in the project folder in a text editor.
+2. Set `API_HTTP_PORT` to the port you will open, and `API_BASE_URL` to the address you will open, such as `http://192.168.1.20:5080`.
+   Leave the other lines as they are, and save the file.
+3. Run `docker compose up -d`.
+   Docker recreates the container with the new values.
+
+Then open your `API_BASE_URL` with `/setup` added and follow the [first-run setup](/reference/self-hosting/first-run-setup).
+If you open the bot only on this computer, open the address the script printed with `/setup` added instead.
+For a plain `http` address, a public address and the firewall, see [If you open the bot from another computer](#if-you-open-the-bot-from-another-computer).
+
+### Start full by hand
+
+To skip the build, also set `API_IMAGE=ghcr.io/nomercylabs/nomnomzbot:stable` in `.env`, and in step 7 run `docker compose up -d` without `--build`.
+
+1. Copy `.env.example` to `.env` in the project folder.
+
+<Platform os="windows">
+
+```powershell
+Copy-Item .env.example .env
+```
+
+</Platform>
+
+<Platform os="linux macos">
+
+```bash
+cp .env.example .env
+```
+
+</Platform>
+
+2. Make a random value, and set `ENCRYPTION_KEY` to it in `.env`.
+   The example value is the development key, and the bot does not start with it.
+
+<Platform os="windows">
+
+```powershell
+$b = New-Object byte[] 32; [Security.Cryptography.RandomNumberGenerator]::Create().GetBytes($b); [Convert]::ToBase64String($b)
+```
+
+</Platform>
+
+<Platform os="linux macos">
+
+```bash
+openssl rand -base64 32
+```
+
+</Platform>
+
+3. Run the same command again, and set `JWT_SECRET` to the new value.
+4. Make a password, and set `POSTGRES_PASSWORD` to it.
+
+<Platform os="windows">
+
+```powershell
+$b = New-Object byte[] 32; [Security.Cryptography.RandomNumberGenerator]::Create().GetBytes($b); -join ($b | ForEach-Object { $_.ToString('x2') })
+```
+
+</Platform>
+
+<Platform os="linux macos">
+
+```bash
+openssl rand -hex 32
+```
+
+</Platform>
+
+5. Set `API_HTTP_PORT` to the port you will open, and `API_BASE_URL` to the address you will open, as in [If you open the bot from another computer](#if-you-open-the-bot-from-another-computer).
+   Change only these two lines from that table, and keep your own `ENCRYPTION_KEY` from step 2.
+6. Fill in `TWITCH_CLIENT_ID` and `TWITCH_CLIENT_SECRET` with the Twitch client ID and client secret, or leave them blank and enter them in the [first-run setup](/reference/self-hosting/first-run-setup). Save the file.
+7. Run this command and press Enter:
+
+   ```bash
+   docker compose up -d --build
+   ```
+
+   Docker builds the image, then starts Postgres, Redis, Caddy and the bot.
+8. Open the setup page at your `API_BASE_URL` with `/setup` added, such as `http://localhost:5080/setup`, and follow the [first-run setup](/reference/self-hosting/first-run-setup).
+
+::Callout
+
+Never share your `.env` file.
+It holds your secrets.
+If you change `ENCRYPTION_KEY` later, the bot can no longer read the secrets it saved, so you enter your Twitch client ID and client secret again in the first-run setup and sign in again.
+
+::
+
+## Where your data lives
+
+Inside the container, the bot keeps its files in its data folder, `/app/data`.
+In lite, that is everything: the SQLite database, the keys the bot made, your uploads and the logs.
+Outside the container, Docker keeps that folder in a Docker volume, or in the visible `data` folder if you made one.
+
+| Setup | Where Docker keeps the data |
+| --- | --- |
+| Lite | The Docker volume `nomnomzbot_lite_data`, or your visible `data` folder |
+| Full | The `postgres_data` volume for the database, and the `api_data` volume for the bot's files |
+
+The lite volume has a fixed name.
+In full, Compose puts the project folder's name in front of each volume name, such as `nomnomzbot_postgres_data` after a clone.
+
+An update replaces the container and keeps the volume.
+Removing a volume removes the data, so never use `docker compose down -v` to update.
+
+When `ENCRYPTION_KEY` is empty, the bot saves its own key in `keys/root-kek.key` in the data folder.
+Without that file, the bot can no longer read the secrets it saved, so you enter your Twitch client ID and client secret again in the first-run setup and sign in again.
+Keep the whole data folder together, and never copy the database file alone.
 
 ### Back up the lite data
 
-1. Stop the bot:
+Stop the bot before you copy its data, so the database is complete.
+If you keep the data in a visible `data` folder, stop the bot, copy that whole folder, and start the bot again.
+
+1. Run this command and press Enter to stop the bot:
 
    ```bash
    docker compose -f docker-compose.lite.yml stop
    ```
 
-2. Copy the volume to a file in the current folder:
+2. Copy the whole volume to `nomnomzbot-backup.tgz` in the current folder.
+   It is one command, so copy it whole.
+   If you restored a backup before, put the volume name from the `name:` line at the bottom of `docker-compose.lite.yml` in place of `nomnomzbot_lite_data`.
 
    ```bash
    docker run --rm -v nomnomzbot_lite_data:/data -v "$PWD":/backup alpine tar czf /backup/nomnomzbot-backup.tgz -C /data .
    ```
 
-3. Start the bot:
+3. Run this command and press Enter to start the bot:
 
    ```bash
    docker compose -f docker-compose.lite.yml start
    ```
 
-The backup includes the key file the bot made.
-Without that file, the bot cannot read the secrets you saved.
+The backup holds `keys/root-kek.key`, the key file the bot made.
+If you set your own `ENCRYPTION_KEY` in `.env`, there is no key file, so keep a private copy of `.env` with the backup.
+
+### Restore a lite backup
+
+Restore into a new volume, so the old data stays as it is until you have checked the result.
+Pick a name no volume has yet, such as `nomnomzbot_lite_restored`, and `nomnomzbot_lite_restored_2` the next time.
+Put your name in place of `nomnomzbot_lite_restored` in steps 2 to 4.
+
+1. Stop the bot with the same `stop` command.
+2. Run this command and press Enter to make the new volume:
+
+   ```bash
+   docker volume create nomnomzbot_lite_restored
+   ```
+
+3. With `nomnomzbot-backup.tgz` in the current folder, run this command to unpack it into the new volume.
+   It is one command, so copy it whole.
+
+   ```bash
+   docker run --rm -v nomnomzbot_lite_restored:/data -v "$PWD":/backup:ro alpine tar xzf /backup/nomnomzbot-backup.tgz -C /data
+   ```
+
+   On Linux, the unpacked files keep the owner they had in the backup, which is the bot's user.
+4. At the bottom of `docker-compose.lite.yml`, change the `name:` line to the new volume, such as `name: nomnomzbot_lite_restored`, and save the file.
+5. Run `docker compose -f docker-compose.lite.yml up -d`.
+   Check the dashboard and your saved settings before you remove the old volume.
+
+From now on, the bot uses the new volume, and the backup command names it through the `name:` line.
+
+If you keep the data in a visible `data` folder, stop the bot, put the whole saved folder back in place of `data`, and start the bot.
+Never mix files from two backups.
+
+### Back up the full setup
+
+In full, the bot runs in one of two containers, `api-blue` or `api-green`, and an update can switch between them.
+Both use the same `api_data` volume.
+Compose leaves `api-green` out of its commands unless you add `--profile green`, so the commands below add it where both must be seen.
+
+A full backup needs both volumes, your `.env` file and your Compose file.
+
+1. Run `docker compose --profile green ps`, and note which one runs, `api-blue` or `api-green`.
+2. Run this command and press Enter to stop the whole stack:
+
+   ```bash
+   docker compose --profile green stop
+   ```
+
+3. Run `docker volume ls`, and note the two names that end in `_postgres_data` and `_api_data`.
+4. Copy each volume to its own file.
+   Replace `YOUR_DATABASE_VOLUME` and `YOUR_BOT_VOLUME` with the names from step 3.
+   Replace `YOUR_DATABASE_BACKUP` and `YOUR_BOT_BACKUP` with file names of your choice.
+   Each line is one command, so copy each one whole and press Enter after it.
+
+   ```bash
+   docker run --rm -v YOUR_DATABASE_VOLUME:/data:ro -v "$PWD":/backup alpine tar czf /backup/YOUR_DATABASE_BACKUP.tgz -C /data .
+   docker run --rm -v YOUR_BOT_VOLUME:/data:ro -v "$PWD":/backup alpine tar czf /backup/YOUR_BOT_BACKUP.tgz -C /data .
+   ```
+
+5. Copy `.env` and `docker-compose.yml` from the project folder to a safe place, next to the two backup files.
+   `.env` holds your `ENCRYPTION_KEY`, so keep this copy private.
+6. Start the stack again with the container you noted.
+   For `api-blue`, run `docker compose start postgres redis api-blue caddy`.
+   For `api-green`, run `docker compose --profile green start postgres redis api-green caddy`.
+
+To restore, put each file into a new, empty volume, then point the Compose file at the new volumes.
+Restore on a new computer in a fresh project folder, with the saved `.env` and `docker-compose.yml` copied into it before you start.
+
+1. Stop the whole stack with `docker compose --profile green stop`.
+2. Make two new volumes, and press Enter after each command:
+
+   ```bash
+   docker volume create nomnomzbot_postgres_restored
+   docker volume create nomnomzbot_api_restored
+   ```
+
+3. Unpack each backup file into its new volume.
+   Use the same `YOUR_DATABASE_BACKUP` and `YOUR_BOT_BACKUP` file names as in the backup.
+   Each line is one command, so copy each one whole and press Enter after it.
+
+   ```bash
+   docker run --rm -v nomnomzbot_postgres_restored:/data -v "$PWD":/backup:ro alpine tar xzf /backup/YOUR_DATABASE_BACKUP.tgz -C /data
+   docker run --rm -v nomnomzbot_api_restored:/data -v "$PWD":/backup:ro alpine tar xzf /backup/YOUR_BOT_BACKUP.tgz -C /data
+   ```
+
+4. At the bottom of `docker-compose.yml`, give each volume a `name:` line with its new volume, and save the file:
+
+   ```yaml
+   volumes:
+     postgres_data:
+       name: nomnomzbot_postgres_restored
+     api_data:
+       name: nomnomzbot_api_restored
+   ```
+
+5. Run `docker compose up -d`.
+   Docker recreates the containers on the new volumes and starts `api-blue`.
+   Check the dashboard and your saved settings before you remove the old volumes.
 
 ## Limits of lite
 
-- Run one lite container only. Do not run two copies on the same data.
-- Each update pauses the bot for a short time.
-- Do not put the data folder on a network drive.
+- Run one lite container only. SQLite allows one writer, so never run two copies on the same data.
+- Each update pauses the bot for a few seconds.
+- Keep the data on a local disk, not on a network drive. SQLite needs a local disk.
 
-## Run the bot for other people
+## If the dashboard does not open
 
-::Callout
+This covers the setup page and the dashboard alike.
+Check the container with the `ps` command from [Start the lite bot](#start-the-lite-bot), then read the startup messages:
 
-Running it for yourself, your friends and your community is free. You may not earn money with it: no selling it, and no paid hosting or paid service built on it.
+```bash
+docker compose -f docker-compose.lite.yml logs --tail 100 api
+```
 
-::
+For full, use `docker compose --profile green ps` and `docker compose logs --tail 100 api-blue`, or `api-green` when that one runs.
 
-The full rule about use is on the [Overview](/reference/overview).
+A container that stays unhealthy names its startup error in these messages.
+If the error says the encryption key is still the development key, set your own `ENCRYPTION_KEY` in `.env`, or make it empty in lite, and run `up -d` again.
+If the container is healthy, check that you opened the address in `API_BASE_URL`, with the port you set in `API_HTTP_PORT`.
 
 ## Related pages
 

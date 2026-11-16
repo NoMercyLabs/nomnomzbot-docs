@@ -1,3 +1,23 @@
+# Current independent reader review
+
+Verdict: PASS
+Reviewed: src/content/reference/en/integrations/webhooks-and-event-feeds.mdx
+Reviewed-SHA: 5f95383cf13a01e20e9fbd4b2e9fefa7598a472acc0db06cea3742a1c0da2c31
+Reviewed-SHA256: 5f95383cf13a01e20e9fbd4b2e9fefa7598a472acc0db06cea3742a1c0da2c31
+Reviewed-Date: 2026-11-05
+Reviewer: independent media-section reviewer
+Product: 54da8b6318de63b5205a0ff8db35e0b9045dd959 plus preserved current music UI edits
+
+The guide teaches inbound, outbound and feed relationships before configuration, gives a useful heart-rate field-map example and keeps provider signing/sender code in optional detail. Exact retry, rotation, host, field-failure and duplicate behavior remain available; the reviewed single-brace repair makes the example pasteable.
+
+The full page was read with adjacent navigation and related links. The owner's natural explanatory style governs: no Atlas sentence caps, pilot imitation or rigid article template was imposed. No substantive reader finding remains at this hash. Combined build, rendered-output and link/frontmatter checks belong to the lead's separate validation.
+
+Report: docs-work/overhaul/review-automation-media-integrations.md.
+
+## Historical evidence
+
+Older hashes and verdicts below are retained for history and are not the current review.
+
 # Reader review: C:\Projects\NoMercyLabs\nomnomzbot-docs\src\content\reference\en\integrations\webhooks-and-event-feeds.mdx
 Verdict: PASS
 Reviewed: C:\Projects\NoMercyLabs\nomnomzbot-docs\src\content\reference\en\integrations\webhooks-and-event-feeds.mdx

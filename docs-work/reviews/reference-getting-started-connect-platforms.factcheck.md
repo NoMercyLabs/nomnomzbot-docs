@@ -1,3 +1,24 @@
+# Current independent fact check
+
+Verdict: PASS
+Reviewed: src/content/reference/en/getting-started/connect-platforms.mdx
+Reviewed-SHA: f858c3643cc20681bb4102151093db2a77a7d789ca42622f8a3912673560e512
+Reviewed-SHA256: f858c3643cc20681bb4102151093db2a77a7d789ca42622f8a3912673560e512
+Reviewed-Date: 2026-11-05
+Reviewer: independent section reviewer
+Product: 54da8b6318de63b5205a0ff8db35e0b9045dd959 (initial source tracing b12f4f69638553c03ed64c1518c90d7bcccd6907)
+
+The full article was read in navigation order; consequential behavior and reference details were checked against current source. All reported documentation findings affecting this page were repaired and re-reviewed. This is a source review, not a live-channel test.
+
+- Streaming-platform connection cards, status versus live state and permitted reconnect controls: dashboard/src/views/dashboard/home/components/ConnectionsPanel.vue:41-155.
+- Integration write default role: server/src/NomNomzBot.Infrastructure/Content/Identity/ActionDefinitionSeeder.cs:402.
+
+Report: docs-work/overhaul/review-learning-commands-helpers.md.
+
+## Historical evidence
+
+The material below is retained as historical evidence. Its older hashes, verdicts and values do not constitute the current review.
+
 # Fact check: src/content/reference/en/getting-started/connect-platforms.mdx
 Verdict: PASS
 Reviewed: C:\Projects\NoMercyLabs\nomnomzbot-docs\src\content\reference\en\getting-started\connect-platforms.mdx

@@ -1,7 +1,34 @@
-# Fact-check: /reference/settings/billing
+# Independent source review: /reference/settings/billing
 Verdict: PASS
+Reviewed: src/content/reference/en/settings/billing.mdx
+Reviewed-SHA: 258f1a33757c26f1
+Reviewed-SHA256: 258f1a33757c26f146251188a0912e5311c740cae1a19dc766016a8e1ea655d1
+Reviewed-Date: 2026-11-05
+Reviewer: independent reviewer, separate from article author
+Product-Revision: 54da8b6318de63b5205a0ff8db35e0b9045dd959
+
+The complete current article was read in navigation order and checked against current product source. Historical PASS entries below are leads, not approval of this revision. Atlas voice/template gates do not govern this review.
+
+## Current evidence and result
+
+Repaired and reread: invoice rows show issued/due/paid dates and any refunded amount, matching InvoicesPanel.vue:52-70.
+
+Source files opened in this review: dashboard/settings/billing/BillingView.vue:20-39; components/TiersPanel.vue:45-143; PlanPanel.vue:53-132; InvitePanel.vue:35-181; InvoicesPanel.vue:25-91; billing/planLimits.ts:19-74.
+
+Unqualified paths beginning Identity, CustomCode, Billing, EventStore, Engagement, Rewards, Widgets or Platform are under server/src/NomNomzBot.Infrastructure; Api and Domain identify their corresponding server projects. Dashboard shorthand is under dashboard/src/views/dashboard.
+
+Verification is read-only source review. No bot/API startup, live account authorization, channel writes, C# host/Jint execution, Docker install or restore was performed. Documentation build/render QA belongs to the combined parent pass. The SDK reference and worked-example checks additionally ran the existing read-only nnz-code-doc-check.mjs with production JavaScript bootstrap and substituted host I/O.
+
+## Historical review (superseded)
+
+# Fact-check: /reference/settings/billing
+Historical verdict: PENDING
+
+2026-11-04 overhaul: the article changed, so the previous PASS and hash below are historical evidence, not approval of the current revision.
+Fresh writer source checks and article inventory are recorded under S5/S6 in `docs-work/overhaul/settings-hosting-code.md`.
+Independent review of the changed text is pending.
 Reviewed: C:\Projects\NoMercyLabs\nomnomzbot-docs\src\content\reference\en\settings\billing.mdx
-Reviewed-SHA: 316ebb3de9667ead
+Reviewed-SHA: 78194b4b23774d6f
 
 Paths are in C:\Projects\NoMercyLabs\nomnomzbot. B = dashboard/src/views/dashboard/settings/billing.
 

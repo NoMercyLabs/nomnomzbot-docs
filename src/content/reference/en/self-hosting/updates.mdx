@@ -3,96 +3,186 @@ title: Updates
 description: Know where your data stays, pick the stable, beta or nightly release channel, and update a self-hosted bot.
 ---
 
-You update a self-hosted bot by downloading a newer image and starting it.
-This page assumes you followed [Install with Docker](/reference/self-hosting/install-with-docker).
+When you run the bot with [Docker](/reference/self-hosting/install-with-docker), an update replaces the bot's image and keeps its data where it is.
+The lite setup restarts its one container, so the bot pauses for a short time.
+The full setup starts the new version next to the running one, and only stops the old one when the new one is ready.
+
+## Before you update
+
+The new version can change the database when it starts.
+Make a complete backup first, and note the image you run now, so you can go back.
+For the full setup, you also need PowerShell to run the switchover script.
+
+| Setup | What a complete backup holds |
+| --- | --- |
+| Lite | The `nomnomzbot_lite_data` volume, which also holds the key file the bot made. If you set the keys in `.env`, keep a copy of `.env` with it. |
+| Full | The `postgres_data` volume (the database), the `api_data` volume (the bot's files) and your `.env` file. |
+
+The steps are on Install with Docker: [back up the lite data](/reference/self-hosting/install-with-docker#back-up-the-lite-data) or [back up the full setup](/reference/self-hosting/install-with-docker#back-up-the-full-setup).
+
+::Callout
+
+Do not let an automatic updater, such as Watchtower, update the bot containers, in lite or in full.
+In the full setup it stops the running version before the new one is ready, so the bot goes offline during every update.
+In the lite setup it updates without the backup you make first, while the new version can change the database.
+Update by hand with the steps on this page.
+
+::
+
+### Note the image you run now
+
+For lite, run this command:
+
+```bash
+docker image inspect --format '{{index .RepoDigests 0}}' $(docker inspect --format '{{.Image}}' nomnomzbot-lite)
+```
+
+The full setup runs its bot in one of two containers, blue or green.
+To see which one runs, use this command:
+
+```bash
+docker ps --filter name=nomnomzbot-api- --format '{{.Names}}'
+```
+
+It prints `nomnomzbot-api-blue` or `nomnomzbot-api-green`.
+Use that name in this command; the example uses blue:
+
+```bash
+docker image inspect --format '{{index .RepoDigests 0}}' $(docker inspect --format '{{.Image}}' nomnomzbot-api-blue)
+```
+
+The command prints a line that starts with `ghcr.io/nomercylabs/nomnomzbot@sha256:`.
+That line names exactly this version, even after the release channel moves on, so keep it with your backup.
+
+When the command prints an error instead, the bot runs an image built on your own machine.
+That image has no published version to go back to, but the full setup can keep it: [If the full setup builds its own image](#if-the-full-setup-builds-its-own-image) shows how, so read it before you update.
+
+::Callout
+
+If you set `ENCRYPTION_KEY` in `.env`, keep it the same across the update.
+When it changes, the bot cannot read the sign-ins it stored, and you must connect Twitch and every other service again.
+
+::
 
 ## Pick a release channel
 
 A release channel is the image tag you run.
-Each channel gets a copy of a build that was already tested on the channel before it.
+It sets how often you get a new version.
 
-| Channel | Image | When it gets a new build |
+| Release channel | Image | When it gets a new version |
 | --- | --- | --- |
-| **stable** | `ghcr.io/nomercylabs/nomnomzbot:stable` | When a stable release is made. It takes the current beta build. |
-| **beta** | `ghcr.io/nomercylabs/nomnomzbot:beta` | Every Monday. It takes the current nightly build. |
-| **nightly** | `ghcr.io/nomercylabs/nomnomzbot:nightly` | Every night. It takes the newest tested build. |
+| **stable** | `ghcr.io/nomercylabs/nomnomzbot:stable` | When NoMercy Labs starts a stable release. It takes the current beta version. |
+| **beta** | `ghcr.io/nomercylabs/nomnomzbot:beta` | Every Monday at 04:00 UTC. It takes the current nightly version. |
+| **nightly** | `ghcr.io/nomercylabs/nomnomzbot:nightly` | Every night at 03:00 UTC. It takes the newest build that passed its tests. |
 
-Pick **stable** when you want the fewest surprises.
-A channel that has no new build skips its release.
+Pick **stable** when the bot runs your streams and you want the fewest surprises.
 
-Set the channel with `API_IMAGE` in `.env`, for example:
+Set the release channel with `API_IMAGE` in `.env`, for example:
 
 ```text
 API_IMAGE=ghcr.io/nomercylabs/nomnomzbot:beta
 ```
 
-The lite setup uses **stable** when `API_IMAGE` is empty.
+When `API_IMAGE` is empty, the lite setup runs the **stable** release channel.
+The full setup then builds its own image on your machine from the project files, so it never gets a release.
+For the full setup, set `API_IMAGE` to a release channel image before you update.
 
 <details>
 <summary>Stay on one exact release</summary>
 
 Each release also has its own tag, such as `stable-2026.10.26-12`.
-The tag is the channel, the date and a run number.
+The tag is the release channel, the date and a run number.
 Put that tag in `API_IMAGE` to stay on exactly that release.
+
+Stable tags are the release names on the [releases page](https://github.com/NoMercyLabs/nomnomzbot/releases).
+Beta and nightly tags are on the [tags page](https://github.com/NoMercyLabs/nomnomzbot/tags) of the project.
 
 </details>
 
-## Where your data stays
-
-An update keeps your data in place.
-
-| Setup | Where the data lives |
-| --- | --- |
-| Lite | The `nomnomzbot_lite_data` volume. |
-| Full | The `postgres_data` volume (the database), the `api_data` volume (the bot's files) and your `.env` file. |
-
-For the lite setup, you can back up the volume before you update.
-The steps are on [Install with Docker](/reference/self-hosting/install-with-docker#back-up-the-lite-data).
-
-::Callout
-
-Keep `ENCRYPTION_KEY` the same across an update.
-If it changes, the bot cannot read the sign-ins it stored.
-You must connect Twitch and every other connected service again.
-
-::
-
 ## Update the lite setup
 
-Run this command in the project folder:
+To change the release channel, set `API_IMAGE` in `.env` first.
+Then run these commands in the project folder:
 
 ```bash
-docker compose -f docker-compose.lite.yml pull && docker compose -f docker-compose.lite.yml up -d
+docker compose -f docker-compose.lite.yml pull
+docker compose -f docker-compose.lite.yml up -d
 ```
 
-Docker downloads the newest image of your channel and starts it.
-The bot pauses for a short time while it restarts.
+Docker downloads the newest image of your release channel and starts the bot again on the same volume.
+Run `docker compose -f docker-compose.lite.yml ps` after about a minute.
+The update worked when the status of the bot shows `healthy`.
+While the bot starts, the status shows `starting`; if it is not `healthy` after two minutes, read [If the update fails](#if-the-update-fails).
 
 ## Update the full setup
 
-1. Set `API_IMAGE` in `.env` to the image of your channel.
-2. Run the switchover script from the project folder in PowerShell:
+1. Set `API_IMAGE` in `.env` to the image of your release channel.
+2. Run the switchover script from the project folder in PowerShell.
+   The script waits up to 120 seconds for the new version to be ready.
+   On a slow machine, give it more time with `.\scripts\switchover.ps1 -ReadyTimeoutSec 180` instead.
 
    ```powershell
    .\scripts\switchover.ps1
    ```
 
    The script downloads the image and starts the new version next to the old one.
-   When the new version is ready, the script stops the old one.
-   The bot has no pause.
 
-If the new version never gets ready, the script stops it.
-The old version keeps running.
+The update worked when the script ends with `SWITCHOVER: DONE`: by then the new version is ready and the old one has stopped.
 
-When `API_IMAGE` is empty or names a local image, the script builds the image instead of downloading it.
+### If the full setup builds its own image
 
-::Callout
+When `API_IMAGE` is empty, the bot runs `nomnomzbot-api:local`, an image built on your machine.
+It has no published version, so the `docker image inspect` command prints an error instead of a line to go back to.
+Docker keeps that image under its name until you build again, so you can still go back to it.
 
-Do not let an automatic updater, such as Watchtower, update the bot containers in the full setup.
-It stops the old version before the new one is ready, so the bot pauses.
-Update with the switchover script only.
+1. Back up both volumes and `.env`, as [Back up the full setup](/reference/self-hosting/install-with-docker#back-up-the-full-setup) describes.
+2. Set `API_IMAGE` in `.env` to a release channel image, such as `ghcr.io/nomercylabs/nomnomzbot:stable`.
+3. Run `.\scripts\switchover.ps1`.
+   With a release channel image, the script downloads it and builds nothing, so the old image stays.
 
-::
+To go back to your own build, follow the steps to go back in the full setup below, with one change: in the `API_IMAGE` step, make `API_IMAGE` empty again.
+Do not add `--build` to the start command, or Docker replaces the old image with a new build.
+
+## Check the result
+
+Check that the bot's containers are running and healthy.
+For lite, use `docker compose -f docker-compose.lite.yml ps`.
+For full, use `docker compose --profile green ps`, which lists the running bot together with the database, cache and proxy containers.
+
+Then open the dashboard at `http://localhost:5080`, or at the address you set as `API_BASE_URL` in `.env`.
+In your Twitch chat, type a simple command such as `!accountage`, and check that the bot answers.
+Also try an integration you rely on during a stream, such as music or an overlay, before you go live.
+To read the bot's logs, use [the log commands on Install with Docker](/reference/self-hosting/install-with-docker#if-the-dashboard-does-not-open).
+
+## If the update fails
+
+In the lite setup, a status of `unhealthy`, or `starting` after two minutes, means the new version did not start, so read [the logs](/reference/self-hosting/install-with-docker#if-the-dashboard-does-not-open) for its startup error.
+When you can fix the error in `.env`, fix it and run the `up -d` command again.
+When you cannot fix it, or the bot is healthy but your data or settings look wrong, go back to the image you noted.
+
+If the new full-setup version is not ready in time, the script stops it and the old version keeps running.
+The script then shows a line that starts with `SWITCHOVER: FAILED`.
+Read that message and the new container's logs before you try again.
+
+If the new version started, it may have changed the database, so going back to the older image alone is not enough.
+Restore the backup from before the update, with the same encryption key, and run the image you noted.
+
+To go back in the lite setup:
+
+1. Set `API_IMAGE` in `.env` to the line you noted, such as `ghcr.io/nomercylabs/nomnomzbot@sha256:` followed by its code.
+2. Follow [Restore a lite backup](/reference/self-hosting/install-with-docker#restore-a-lite-backup).
+   Its last step starts the bot on the restored data with the older image.
+
+To go back in the full setup, restore into new volumes and keep the previous volumes until you have checked the result:
+
+1. Stop the stack with `docker compose --profile green stop`.
+2. Restore both volumes from your backup into new volumes, as the end of [Back up the full setup](/reference/self-hosting/install-with-docker#back-up-the-full-setup) describes.
+3. Set `API_IMAGE` in `.env` to the line you noted.
+4. Start the stack with `docker compose up -d`.
+   This starts the blue bot with the database, cache and proxy.
+   The green bot stays stopped, and both colors use the same data, so blue is right even when green ran before.
+5. Run `docker ps --filter name=nomnomzbot-api- --format '{{.Names}}'`.
+   It prints only `nomnomzbot-api-blue`.
 
 ## See when an update exists
 
@@ -101,16 +191,32 @@ It "Checks GitHub every few hours for a newer stable release."
 
 | The card shows | Meaning |
 | --- | --- |
-| **New version**, the release name and **What changed** | A newer stable release exists. **What changed** opens its release page. |
-| "This bot runs the newest stable release." | No update is needed. |
-| "No stable release to compare with yet, or this build has no version to compare." | The card cannot compare. |
-| "GitHub did not answer the update check." | The check failed. Try again later. |
+| **New version**, the release name, its date and **What changed** | **What changed** opens the release page, which lists the update steps for your kind of install. Make your backup first, as this page describes. |
+| "This bot runs the newest stable release." | You have nothing to do. The card also shows this when you run a beta or nightly version that is newer than the latest stable release. |
+| "No stable release to compare with yet, or this build has no version to compare." | Compare by hand: the [releases page](https://github.com/NoMercyLabs/nomnomzbot/releases) lists every stable release with its date. |
+| "GitHub did not answer the update check." | Select **Try again**, or come back later. The check runs in your browser, so the bot keeps running as before. |
 
-The card compares with the **stable** channel only.
+The card compares with the **stable** release channel only.
+Nightly and beta versions get image tags but no release page on GitHub.
 
-Each release page lists its changes and the update steps for the lite and the full setup.
+## Update without Docker
+
+When you run the bot from the [release archive](/reference/self-hosting/install-without-docker), an update is a new archive.
+Archives come with stable releases only.
+Your data folder is separate from the program folder, so it stays in place.
+
+1. Stop the bot: on Windows choose **Stop NomNomzBot** from the tray icon, and on Linux or macOS press Ctrl+C in its terminal.
+2. [Back up the data folder](/reference/self-hosting/install-without-docker#back-up-the-data).
+3. Open the [latest release on GitHub](https://github.com/NoMercyLabs/nomnomzbot/releases/latest), download the new archive for your computer and unpack it.
+   It makes a new folder named after the new version.
+4. Start the program from the new folder: `nomnomz.exe` on Windows, or `./nomnomz` on Linux or macOS.
+   Use the whole new folder, because the dashboard files come in the archive next to the program.
+
+The bot finds its data folder again and opens with your settings.
+When it works, you can delete the old program folder.
 
 ## Related pages
 
 - [Install with Docker](/reference/self-hosting/install-with-docker)
+- [Install without Docker](/reference/self-hosting/install-without-docker)
 - [First-run setup](/reference/self-hosting/first-run-setup)

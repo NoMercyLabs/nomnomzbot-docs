@@ -3,9 +3,16 @@ title: YouTube
 description: Connect YouTube to the channel, read its row on the Stream page and the Integrations page, and see what the music player does with it.
 ---
 
-YouTube connects to the channel as a second stream platform, beside Twitch.
-This page shows where the YouTube connection appears and what the bot does with it.
-How you connect it is on [Connect platforms](/reference/getting-started/connect-platforms).
+YouTube has two different roles in NomNomzBot: it can be a streaming-platform connection for your channel, and it can supply videos for music requests.
+Connecting your YouTube account lets the bot work with that channel through Google sign-in.
+Once it is connected, the bot reads your YouTube live chat while you are live and feeds those messages into the same chat stream as your Twitch chat.
+It also notes when your YouTube channel goes live, and it counts your viewers while you stream.
+While you are offline, the bot only checks every 2 minutes whether you went live.
+Playing a YouTube song request uses the **Music Player** source in OBS and does not require that account connection.
+
+If you stream on YouTube, follow [Connect platforms](/reference/getting-started/connect-platforms), then check its status on **Stream** or **Integrations**.
+If you only want YouTube music, go straight to [Music player](/reference/music/music-player) and [Song requests](/reference/music/song-requests).
+This keeps music setup independent of permissions to manage your YouTube channel.
 
 ## Who can use this
 
@@ -43,8 +50,65 @@ The **Connected services** list has a **YouTube** row.
 | **Sign in again** | The saved YouTube login no longer works. |
 | **Sign in again (the saved login is unreadable)** | The bot cannot read the saved login. |
 
-Choose **Details** on the row to see **Permission sets: Manage your channel**.
+Choose **Details** on the row to see the permission sets the channel allowed, such as **Permission sets: Manage your channel**.
+After you allow the analytics, the list also shows **Read your channel**, because the analytics need it.
 Choose **Reconnect** to sign in to Google again.
+
+### Allow the member list and the analytics
+
+**Connect** asks only for **Manage your channel**.
+Two more permissions are separate, so a channel that does not need them never grants them.
+When you may connect services, **Details** shows **You can also allow:** with one button for each permission not yet granted.
+
+| Button | What it unlocks |
+| --- | --- |
+| **See your channel members** | The **YouTube members** tab on [People](/reference/community/people), the **\{channel.members\}** template value and the YouTube member count on the Supporters page. |
+| **See your YouTube analytics** | The **YouTube** view on [Analytics](/reference/community/analytics): views, watch time, subscribers gained and lost, and estimated revenue per day. |
+
+A button opens Google's consent page for that one permission.
+What the channel already allowed stays allowed.
+**Reconnect** on a connected channel asks for **Manage your channel** and both extra permissions on one consent page, so use it when you want all three.
+Until a permission is allowed, the **YouTube members** tab on People and the **YouTube** view on Analytics say so and point you back to **Details** on the YouTube row.
+The Supporters page leaves out the YouTube members count.
+Google must also give the bot access to the member list.
+Until it does, the members stay hidden even after you allow **See your channel members**.
+Revenue also needs the YouTube Partner Program; without it the analytics show no revenue.
+A channel without channel memberships shows no members.
+
+The YouTube member count is kept for 5 minutes, because every read costs Google quota.
+When the bot cannot read the members, a template prints the placeholder as written, not as 0.
+
+## Upload a clip to YouTube
+
+The **Clips** panel on the [Stream page](/reference/community/stream-page) lists your Twitch clips, newest first.
+Each clip can go to your own YouTube channel as a video.
+This uses the YouTube connection, so connect YouTube first.
+
+1. On the clip, choose **Upload to YouTube**.
+2. Fill in **Title**, **Description** and **Who can see it**.
+   The title starts as the clip's Twitch title.
+3. Choose **Upload**.
+
+**Who can see it** has three choices.
+The first one, **Private: only you**, is the starting choice.
+
+| Choice | Who sees the video |
+| --- | --- |
+| **Private: only you** | Only you. |
+| **Unlisted: anyone with the link** | Anyone who has the link. |
+| **Public: everyone** | Everyone. |
+
+Google caps the uploads per day.
+The panel shows how many are left, for example "1 YouTube upload left today".
+When the upload works, the panel says "The clip is on your YouTube channel." and offers **Open the video**.
+
+When an upload is refused, the dialog stays open and shows the reason.
+
+| Message | What to do |
+| --- | --- |
+| This channel is not connected to YouTube. | Connect YouTube under **Connected services** first. |
+| YouTube refused the upload for your account. | Connect YouTube again and allow the bot to manage your account. |
+| The YouTube upload limit for today is used up. | Try again tomorrow. |
 
 ## What the music player does with YouTube
 
@@ -64,10 +128,15 @@ Song requests from YouTube do not need the channel's YouTube connection.
 
 1. On the **YouTube** row of **Connected services**, choose **Disconnect**.
    A dialog **Disconnect YouTube?** opens.
-   It counts the [pipelines](/reference/commands/pipelines) that use music actions, because they stop working.
+   It lists related [pipelines](/reference/commands/pipelines) that use music actions.
 2. Choose **Disconnect** in the dialog.
    A message says "YouTube is disconnected."
    The row shows **Not connected**.
+
+After you disconnect, clip uploads to YouTube stop until you connect again.
+
+The disconnect dialog's music list is broader than the account's actual role.
+YouTube song requests do not need the channel's YouTube sign-in, so disconnecting this account is not the same as disabling YouTube music or removing its OBS player.
 
 ## Related pages
 

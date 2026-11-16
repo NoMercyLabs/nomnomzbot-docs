@@ -3,13 +3,20 @@ title: Giveaways
 description: Make a giveaway, let viewers enter, draw the winners, give a prize and keep a pool of codes for a code prize.
 ---
 
-You run the channel's giveaways on the **Giveaways** page in the sidebar.
-A giveaway lets viewers enter, then the bot draws one or more winners and gives each winner the prize.
+Giveaways let you collect entries during a stream and draw one or more viewers at random.
+You choose who may enter, whether entries cost channel currency, and what the bot does for a winner.
+Manage the whole process on **Giveaways** in the sidebar.
+
+For a first giveaway, keep entry free, allow one entry per viewer, and use **An announcement in chat** as the prize.
+That gives you a simple way to see entry, drawing and the winner announcement before adding currency payments, weighted tickets or a pool of prize codes.
+The detailed options below let you build on that same process.
 
 ## Who can use this
 
-A moderator, a lead moderator, an editor or the broadcaster may see, make, change, run and delete giveaways.
+By default, a moderator, a lead moderator, an editor or the broadcaster may see, make, change, run and delete giveaways.
 Only the broadcaster sees the **Code pools** panel and may make or delete a code pool (see Keep a pool of codes below).
+Only the broadcaster can choose **A code from a pool** as the prize, because only the broadcaster can see the code pools.
+For every other role, the **Code pool** list in the giveaway dialog stays empty.
 
 ## Make a giveaway
 
@@ -22,6 +29,10 @@ Only the broadcaster sees the **Code pools** panel and may make or delete a code
    The dialog closes and the giveaway shows in the list with the status **Draft**.
 
 Each row shows the title, then the entries, the number of winners and how viewers enter, for example "0 entries · 1 winner · Keyword !enter".
+
+Once the draft is ready, choose **Open for entries** and tell viewers which keyword to type.
+Choose **Close entries** when you are ready, then **Draw winners** to select the winner and deliver the configured prize.
+The [running instructions](#run-a-giveaway) explain the states and the options for drawing again.
 
 ### Entering
 
@@ -47,8 +58,9 @@ When a viewer enters, the bot takes the **Entry cost** from their [channel curre
 A viewer who does not have enough currency does not enter.
 With **Active viewers, no keyword**, the bot takes no **Entry cost**.
 
-Each viewer holds one entry, and a value above 1 in **Entries per viewer** changes nothing.
-An entry holds tickets, and the draw counts the tickets (see Tickets per viewer below).
+A viewer may enter again up to **Entries per viewer**.
+Each accepted entry adds its tickets and charges the **Entry cost** again, if there is one.
+For example, with a cost of 10 and a limit of 3, entering three times costs 30 currency and gives three entries' worth of tickets.
 
 ### Who may enter
 
@@ -59,9 +71,39 @@ An entry holds tickets, and the draw counts the tickets (see Tickets per viewer 
 | **Viewers must confirm they are 18 or older** | Only a viewer who confirmed they are 18 or older may enter. | Keyword, **Enter giveaway** step | Off |
 | **Least standing level** | A viewer needs at least this community standing level. | Keyword, **Enter giveaway** step, active viewers | Empty (no limit) |
 | **Least watch minutes** | A viewer needs at least this many minutes of watch time in the channel. | Keyword, **Enter giveaway** step, active viewers | Empty (no limit) |
+| **Least account age (days)** | The viewer's Twitch account must be at least this old. An unknown account creation date does not pass. | Keyword, **Enter giveaway** step, active viewers | Empty (no limit) |
 
 The draw never picks the broadcaster, for every way in.
 A viewer who is muted or shadowbanned by the bot cannot enter with the keyword, and cannot claim a win in chat.
+
+Subscriber eligibility, ticket weighting and **Leave out moderators** use the community standing saved in the bot.
+The moderator exclusion checks the **Moderator** community standing; assigning a dashboard Lead moderator or Editor role alone does not put someone in that exclusion.
+
+Before turning on the age-confirmation requirement, arrange a way for viewers to record that confirmation through an integration.
+The current viewer pages do not provide an age-confirmation form, and an unconfirmed viewer cannot pass this requirement through keyword or pipeline entry.
+
+The watch-minutes check uses the bot's observed Twitch activity history, adding the span between the first and last sighting on each day.
+It is not a guarantee of continuous viewing, and a viewer without matching Twitch history cannot satisfy a positive requirement.
+
+<details>
+<summary>Set the standing requirement</summary>
+
+The **Least standing level** field currently asks for a number rather than a role name.
+It compares the viewer's community standing, using these values.
+Leave it empty when you want no additional standing requirement.
+
+| Value | Minimum community standing |
+| --- | --- |
+| 0 | Everyone |
+| 2 | Twitch subscriber |
+| 4 | VIP |
+| 6 | Artist |
+| 10 | Moderator |
+
+These are community standings, separate from the dashboard's lead moderator and editor roles.
+Using a value above 10 excludes every community standing.
+
+</details>
 
 ### Tickets per viewer
 
@@ -90,24 +132,33 @@ With a claim window, a winner claims the win by typing any chat message in the w
 A winner who does not chat in time loses the win, and the badge shows **Forfeited**.
 With an empty claim window, every winner counts as **Claimed** at once.
 
+The claim window tracks whether the winner answers; it does not delay delivery of the prize.
+The bot fulfills prizes during the draw, even while a winner is still waiting to claim.
+Marking an unanswered win **Forfeited** does not automatically take back currency, a code or an action that already ran.
+
 The bot checks the claim window and the close time once a minute.
 The close time must be in the future when you save.
+The chat listener accepts a claim while the winner still has the **Drawn** status, so a message after the nominal deadline can still claim the prize before that minute's expiry check runs.
 
 ### Prize
 
 | **What winners get** | What the bot does for each winner | Extra field |
 | --- | --- | --- |
-| **An announcement in chat** | Saves the winner in the winners list. | None |
+| **An announcement in chat** | Announces the winner in chat and records them in the winners list. | None |
 | **Currency** | Adds the channel currency to the winner's balance. | **Currency per winner**, **Pay from the pot** |
 | **A command or pipeline runs** | Runs the command, pipeline or action you pick, with the winner as the viewer who ran it. | **Command or pipeline** |
 | **A code from a pool** | Takes the next free code from the pool and sends it to the winner in a whisper. | **Code pool** |
 
 The default is **An announcement in chat**.
-With this choice, a draw only records the winner in the winners list, and the bot posts nothing in chat.
-To have the bot name a winner in chat, choose **A command or pipeline runs** with a command that posts a chat line.
+Its message congratulates the winner and names the giveaway.
+Choose **A command or pipeline runs** when you want a custom response or additional actions instead.
 
 With **Pay from the pot** on, the prize is the entry costs that viewers paid, split evenly over the winners.
 The first winner also gets what is left after the split.
+The dialog still asks for a **Currency per winner** when **Pay from the pot** is on.
+Type any whole number of 1 or more; with the pot on, the bot pays the pot share instead.
+The split uses the number of winners actually drawn, including when there are fewer eligible entrants than **Number of winners**.
+Keep **Entry cost** unchanged after collecting entries: the pot calculation uses the entry count and the saved cost at payout, rather than adding the historical charges.
 
 A giveaway with **A code from a pool** and an **Entry cost** above 0 needs **Viewers must confirm they are 18 or older** on.
 Without it, the bot does not save the giveaway.
@@ -138,6 +189,9 @@ Choose **Draw a new winner** on a winner's row.
 The bot picks a new winner who has not won this giveaway before, and gives them the prize.
 The new winner's row carries **Redrawn**.
 
+Drawing again does not reclaim the earlier winner's prize.
+The replacement receives a new fulfillment, so account for that before redrawing a currency or code prize.
+
 ## Change or delete a giveaway
 
 Only a **Draft** or **Closed** giveaway shows **Edit giveaway**.
@@ -149,13 +203,15 @@ Only a **Draft** or **Closed** giveaway shows **Edit giveaway**.
 3. To delete a giveaway, choose the trash button on its row.
    A dialog opens with the title "Delete", the giveaway's title and a question mark.
    It shows "This removes the giveaway for good." and a line for each count that goes with it.
+   When nothing goes with it, the dialog shows "Nothing else is removed."
 4. Choose **Delete giveaway** to confirm.
    The dialog closes and the giveaway leaves the list.
 
 ## Keep a pool of codes
 
-A code pool holds the codes that winners get for the prize **A code from a pool**.
-The page shows only how many codes a pool has, never the codes.
+A code pool lets you prepare individual prize codes before the draw, so each winner receives a different unused code.
+Only the broadcaster manages these pools, and the list shows counts rather than exposing the codes to everyone who can run a giveaway.
+Prepare enough codes for the number of winners you intend to draw.
 
 1. In the **Code pools** panel, choose **New pool**.
    The **New code pool** dialog opens.
@@ -169,6 +225,11 @@ The page shows only how many codes a pool has, never the codes.
 Each winner takes the oldest free code.
 When the pool runs out, the winners after that get no code.
 When the whisper cannot be sent, the code stays with that winner and no other winner gets it.
+
+Delivery also depends on the entry path and platform.
+Keyword and pipeline entries currently record the viewer's Twitch identity for prize delivery, even when the keyword came from another connected chat.
+Active-viewer draws preserve the recently used chat identity, preferring Twitch when the same person chatted on several platforms.
+If that platform has no supported private-message sender, the code remains assigned without being delivered.
 
 To delete a pool, choose **Delete** on its row, then **Delete pool**.
 The pool and its unused codes are removed.

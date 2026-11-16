@@ -1,0 +1,249 @@
+---
+title: Install without Docker
+description: Download the NomNomzBot program for your computer, start it, open the setup page and know where your data is kept.
+---
+
+Download the archive for your system from the latest stable release, unpack it and start the program inside.
+Nothing else needs to be installed.
+The archive unpacks into one program folder with the program, its settings file, the dashboard and the other pages it shows, so keep that folder together.
+The bot keeps all its data in a second folder for your user account, the data folder, so that folder is all you need to back up.
+
+The bot runs on the computer where you start it, so that computer needs to stay on whenever you want the bot in your chat.
+If you would rather run it in containers, use [Install with Docker](/reference/self-hosting/install-with-docker) instead.
+
+## What you need
+
+- A computer with Windows, Linux or macOS on a 64-bit processor.
+  Windows needs an x64 processor; Linux and macOS have builds for both x64 and arm64.
+- A Twitch account for the channel.
+  The [first-run setup](/reference/self-hosting/first-run-setup) explains how to register the Twitch application the bot uses.
+- A free port 5080.
+  The bot listens on port 5080, and no other program may use that port.
+  If another program needs 5080, give the bot another port before the first start, as [Use another port](#use-another-port) shows.
+
+If you want the data on another drive, decide that now.
+The bot makes its data folder the first time it starts, so set the folder first, as [Choose another data folder](#choose-another-data-folder) shows.
+
+## Download the archive
+
+Only stable releases have an archive; beta and nightly builds are Docker images.
+Open the [latest release on GitHub](https://github.com/NoMercyLabs/nomnomzbot/releases/latest) and download the archive for your computer.
+Each one is named `nomnomz-VERSION-RID`.
+`VERSION` is the release name, such as `stable-2026.11.01-412`.
+`RID` is the system part, such as `linux-x64`.
+
+| Computer | Pick the archive ending in | Program inside |
+| --- | --- | --- |
+| Windows | `win-x64.zip` | `nomnomz.exe` |
+| Linux on x64 | `linux-x64.tar.gz` | `nomnomz` |
+| Linux on arm64 | `linux-arm64.tar.gz` | `nomnomz` |
+| Mac with an Intel processor | `osx-x64.tar.gz` | `nomnomz` |
+| Mac with Apple silicon | `osx-arm64.tar.gz` | `nomnomz` |
+
+## Start the bot
+
+Unpack the archive into a folder of your choice, then start the program.
+The archive holds one folder, the program folder, with the same name as the archive file without the `.zip` or `.tar.gz` ending.
+
+<Platform os="windows">
+
+1. Right-click the `.zip` file and choose **Extract All**.
+2. Open the extracted folder, then the `nomnomz-VERSION-RID` program folder inside it, and double-click `nomnomz.exe`.
+
+No window opens: the bot runs in the background, and the NomNomzBot tray icon appears in the system tray next to the clock.
+A short notice from the tray icon says `NomNomzBot is running on http://localhost:5080`, with the address the bot uses.
+
+To open the address at any time, right-click the tray icon and choose **Open in browser**.
+To see the address, point at the tray icon: its tip shows the same address.
+
+</Platform>
+
+<Platform os="linux macos">
+
+1. Open a terminal in the folder with the archive.
+2. Unpack it and start the program.
+   Put the name of the file you downloaded in place of `nomnomz-VERSION-RID`:
+
+   ```bash
+   tar -xzf nomnomz-VERSION-RID.tar.gz
+   cd nomnomz-VERSION-RID
+   ./nomnomz
+   ```
+
+The bot runs in that terminal and prints its startup messages there.
+One of them names the port, such as `Listening on 5080.`
+Keep the terminal open while the bot runs.
+
+</Platform>
+
+No browser opens by itself, so open the bot's address in a browser on the same computer.
+On Windows, choose **Open in browser** in the tray icon menu.
+On Linux and macOS, type `http://localhost:5080` in the browser, or use the port from the startup message when it names another one.
+[The bot keeps its port](#the-bot-keeps-its-port) explains when the port is different.
+
+On the first start the bot makes its data folder, and the dashboard opens on the setup.
+Follow the [first-run setup](/reference/self-hosting/first-run-setup) from there.
+
+When the setup page opens in your browser, the bot is running.
+
+## Stop and start it again
+
+<Platform os="windows">
+
+Right-click the tray icon.
+Choose **Open in browser** to open the dashboard, or **Stop NomNomzBot** to stop the bot.
+When the bot stops, the tray icon goes away.
+Double-click `nomnomz.exe` again to start it the next time.
+
+</Platform>
+
+<Platform os="linux macos">
+
+Press Ctrl+C in the terminal to stop the bot.
+Run `./nomnomz` from the program folder to start it the next time.
+If you chose another data folder, start it the same way every time, as [Choose another data folder](#choose-another-data-folder) shows.
+
+</Platform>
+
+## The bot keeps its port
+
+The bot uses port 5080 unless another program already holds it on the first start.
+In that case it takes a free port instead.
+
+Whatever port the bot gets on its first start, it keeps on every later start.
+The sign-in addresses you register for Twitch and the other services include this port, so a moving port would break those sign-ins.
+The bot writes the port to a file named `listen-port` in its data folder.
+
+### Find the port the bot uses
+
+- On Windows, point at the tray icon.
+  Its tip shows the address, such as `http://localhost:5080`.
+- On Linux and macOS, read the startup message in the terminal, such as `Listening on 5080.`
+  If 5080 was taken on the first start, the message begins with `Port 5080 is held by another application` and names the port the bot took instead.
+- On every system, open the `listen-port` file in the data folder, which holds the port number.
+
+### When port 5080 is taken
+
+If another program held 5080 on the first start, the bot runs on another port.
+You can keep that port and use the address the bot shows.
+To move the bot to 5080, close the other program, stop the bot, delete the `listen-port` file and start the bot again.
+
+If another program holds the bot's port on a later start, the bot does not start.
+On Windows no tray icon appears, so open the `listen-port` file in the data folder to learn the bot's port.
+On Linux and macOS the terminal shows a message that says the bot's own port number is reserved for this bot.
+It begins with `Port`, then that number, then `is reserved for this bot`.
+Close the program that uses that port, or free the port, and start the bot again.
+
+When the port changes, register the new sign-in addresses with Twitch and the other services you connected.
+
+### Use another port
+
+The settings file in the program folder, `appsettings.json`, sets the port.
+Its first setting is `"Urls": "http://localhost:5080"`.
+
+1. Stop the bot.
+2. Open `appsettings.json` in a text editor and put the port you want in place of `5080`.
+3. If the bot started before, delete the `listen-port` file in the data folder.
+   Otherwise the bot keeps its old port.
+4. Start the bot.
+
+The bot now uses the new port, and the address changes to match, such as `http://localhost:5090`.
+A newer program folder comes with its own `appsettings.json` set to 5080.
+The bot still takes its port from the `listen-port` file, so a newer folder keeps your port.
+
+## Where your data lives
+
+The bot keeps its database, its keys and its logs in one folder for your user account:
+
+| System | Data folder |
+| --- | --- |
+| Windows | `%LOCALAPPDATA%\NomNomzBot` |
+| Linux | `~/.local/share/NomNomzBot` |
+| macOS | `~/Library/Application Support/NomNomzBot` |
+
+The program folder holds no data.
+You can move the whole program folder or replace it with a newer one, and the bot finds its data again the next time it starts.
+
+On Windows the keys in the data folder are locked to your Windows user account, so the folder only works for the same user on the same computer.
+Moving it to another Windows user or another computer leaves the saved secrets, such as your Twitch sign-in, unreadable.
+
+### Choose another data folder
+
+Set the `NOMNOMZ_DATA_DIR` environment variable to the folder you want before you start the bot.
+The bot reads it on every start, so keep it set; without it, the bot goes back to the default folder.
+
+<Platform os="windows">
+
+1. Open PowerShell from the Start menu.
+2. Run this command with your own folder:
+
+   ```powershell
+   setx NOMNOMZ_DATA_DIR "D:\NomNomzBot"
+   ```
+
+3. Close PowerShell.
+4. Double-click `nomnomz.exe` to start the bot.
+
+`setx` saves the variable for your user account, so it stays set for every later start.
+It applies only to programs started after the command, not to the PowerShell window it ran in.
+So close that window and start the bot by double-clicking, not from that window.
+
+</Platform>
+
+<Platform os="linux macos">
+
+The variable applies only to the command it is set for.
+Put it in front of the start command every time, with your own folder:
+
+```bash
+NOMNOMZ_DATA_DIR=/mnt/data/nomnomzbot ./nomnomz
+```
+
+To keep it set for every start in your terminal, add this line to your shell startup file, such as `~/.bashrc` or `~/.zshrc`:
+
+```bash
+export NOMNOMZ_DATA_DIR=/mnt/data/nomnomzbot
+```
+
+Open a new terminal after you save the file, then start the bot with `./nomnomz`.
+
+</Platform>
+
+To move a bot that already ran, stop it, move the whole data folder to the new place, set the variable to it and start the bot.
+
+### Back up the data
+
+1. Stop the bot.
+2. Copy the whole data folder to your backup place.
+3. Start the bot again.
+
+Copy the whole data folder, never only the database.
+The keys in it unlock the secrets you saved, such as your Twitch sign-in, so a database copied without its keys cannot read them.
+
+On Windows a backup only works when you restore it for the same Windows user on the same computer, because the keys are locked to that user.
+
+To restore, stop the bot, put the saved folder back in place of the data folder, and start the bot.
+
+## If the bot does not start
+
+The bot writes its logs to the `logs` folder inside its data folder.
+Open the newest file there and read the last lines.
+
+On Windows the bot did not start when no tray icon appears after you double-click `nomnomz.exe`.
+One reason is that another program holds the bot's port, as [When port 5080 is taken](#when-port-5080-is-taken) shows.
+On Linux and macOS, the reason also shows in the terminal where you started the bot.
+
+A terminal message that says the bot's port number `is reserved for this bot` means another program holds the port the bot locked.
+It ends with `The bot will not move to a different port because that would break every saved login.`
+See [When port 5080 is taken](#when-port-5080-is-taken).
+
+## Updates
+
+An update uses the whole program folder from a newer archive, and your data folder stays where it is.
+[Update without Docker](/reference/self-hosting/updates#update-without-docker) has the steps.
+
+## Related pages
+
+- [First-run setup](/reference/self-hosting/first-run-setup)
+- [Install with Docker](/reference/self-hosting/install-with-docker)
+- [Updates](/reference/self-hosting/updates)

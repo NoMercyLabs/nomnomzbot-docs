@@ -1,115 +1,98 @@
 ---
 title: Connect platforms
-description: Connect Twitch to the channel, then Kick and YouTube, and read the connection health on the Home page and the Stream page.
+description: Connect Kick or YouTube to the channel beside Twitch, and read the connection status on the Home page and the Stream page.
 ---
 
-A platform connection links the channel to a streaming platform account.
-Twitch comes first, then you can add Kick and YouTube.
-You read the state of each connection on the **Home** page and on the **Stream** page.
+**Home** is the first page in the sidebar.
+Its **Connections** panel lists Twitch, Kick and YouTube for your channel, and under them the bot account and the services.
+Twitch is already connected, because you signed in with it, as [Sign in](/reference/getting-started/sign-in) explains.
+Kick and YouTube each connect from a **Connect** button on their own row.
 
-## Connect Twitch
-
-Twitch connects when the broadcaster signs in with **Continue as broadcaster**, as [Sign in](/reference/getting-started/sign-in) shows.
-There is no separate connect step for Twitch.
-The dashboard shows Twitch as connected for the channel.
-
-You can stop here if you stream on Twitch only.
-
-## Who can connect a platform
-
-Anyone who may read the channel's connections sees them.
-By default that is a **Moderator** and every role above it.
-
-Only a person who may change the channel's connections sees the **Connect** button.
-By default that is an **Editor** and the **Broadcaster**.
-A moderator sees "Not connected" with no button.
-
-The roles are explained on [Permissions](/reference/settings/permissions).
+To see that button, you need the role that may connect and disconnect integrations.
+By default that is an **Editor** or the **Broadcaster**.
+The broadcaster can change that role on the **Permissions** page in **Settings**.
+You also need your own account on the platform you connect.
 
 ## Connect Kick or YouTube
 
-You can connect from the **Home** page or from the **Stream** page.
-Both start the same connection.
+1. On **Home**, find the platform's row in the **Connections** panel. Its line reads "Not connected", and the row has a **Connect** button.
+2. Choose the row's **Connect** button. The row now asks "Connect YouTube to this channel?", or the same for Kick. Beside the question are a second **Connect** button and a **Cancel** button.
+3. Choose the **Connect** button beside the question. The platform's sign-in opens in a new window. While that window is open, the row shows a **Done** button. You do not need to press it.
+4. In the new window, sign in to the platform and approve the connection. The window says "Connected" and closes by itself. On Home, the **Done** button goes away, and the row shows your account name on that platform.
 
-1. Open **Home** in the sidebar.
-   The **Connections** panel lists Twitch, Kick and YouTube.
-2. Choose **Connect** on the row of the platform.
-   The panel asks "Connect Kick to this channel?" or "Connect YouTube to this channel?".
-3. Choose **Connect** again to confirm.
-   A new window opens on the platform's site.
-4. Sign in on the platform and approve the connection.
-   The window closes, and the row shows the account name.
+If you close the window before you approve, nothing connects.
+Choose **Done** on the row to bring the **Connect** button back.
 
-On the **Stream** page, the same button is in the **Where it goes** panel of the **Overview** tab.
-There the panel asks "Open Kick to connect?" or "Open YouTube to connect?".
+If the browser blocks the new window, the dashboard tab itself goes to the platform.
+After you approve, the tab comes back to the page you started from, and the row shows your account name.
 
-When the browser blocks the new window, the whole tab goes to the platform instead.
-When the connection fails, the dashboard shows "The connect did not work:" with the reason, and "Try again."
+## Read the status on Home
 
-What the bot does with a YouTube connection is on [YouTube](/reference/integrations/youtube).
+Each platform row in the **Connections** panel has a dot, the platform name and one line:
 
-## Read the connection health on the Home page
+- "Not connected" with a gray dot: the channel has no connection to this platform.
+- Your account name and Live, with a green dot: you are live on that platform now.
+- Your account name and Offline, with a gray dot: you are not broadcasting there. The connection is fine.
+- Only your account name, with a gray dot: connected, and the stream state has not loaded yet.
 
-The **Connections** panel on **Home** has two groups.
+The Twitch row works the same way, with the name of the channel you have open.
 
-### The platforms
+Under the platform rows, the **Bot and services** group has a badge on each row and no button:
 
-Each platform row has a dot, the platform name and one line.
+- **Bot account** with "Connected": the bot can chat in this channel, and the row names the account it types from.
+- **Bot account** with "Not in chat": the bot has no working account to chat with in this channel. Only the broadcaster may read the bot's status, so for every other role it always reads "Not in chat". [Bot account](/reference/getting-started/bot-account) explains how to connect one.
+- A service, such as Spotify, with "Connected" or "Not connected".
+  A service whose saved sign-in no longer works also reads "Not connected", so Home never says "Sign in again". Renew it as [Renew a service](#renew-a-service) shows.
 
-| Line | Dot | Meaning |
-| --- | --- | --- |
-| "Not connected" | gray | The channel has no connection to this platform. |
-| the account and "· Live" | green | The platform is connected and the channel is live there. |
-| the account and "· Offline" | gray | The platform is connected and the channel is not live there. |
-| the account only | gray | The stream state has not loaded yet. |
+## Other routes
 
-### Bot and services
+### Renew a service
 
-The **Bot and services** group shows status only, with no button.
+An Editor reaches **Integrations** only through **Open connected services** on the **YouTube** tab of **Analytics** or the **YouTube members** tab of **People**.
+That link shows while YouTube is not connected, or while the bot may not read your YouTube analytics (on **Analytics**) or your YouTube members (on **People**).
+Then an Editor renews the service like this:
 
-| Row | Badge | Meaning |
-| --- | --- | --- |
-| **Bot account** | "Connected" | The bot account is connected. The row names the account. |
-| **Bot account** | "Not in chat" | The bot account is not connected. |
-| a service, for example Spotify | "Connected" | The service is connected and works. |
-| a service | "Sign in again" | The service is connected, but it needs a new sign-in. |
-| a service | "Not connected" | The service is not connected. |
+1. Choose **Analytics** in the sidebar.
+2. Choose the **YouTube** tab.
+3. Choose **Open connected services**. The **Integrations** page opens.
+4. Choose **Reconnect** on the service's row, and sign in again in the new window.
+5. When the window closes, choose **Back to dashboard** in the sidebar. Home opens, and the service's badge reads "Connected".
 
-Which account the bot types from is on [Bot account](/reference/getting-started/bot-account).
-You connect a service on the **Integrations** settings page.
+At any other time, the broadcaster renews it, because only the broadcaster sees **Settings** in the sidebar:
 
-When the panel cannot load, it shows "Connections could not load." and a way to try again.
+1. Choose **Settings**, the last entry in the sidebar. The sidebar changes to the list of settings pages.
+2. Under the **Connections** heading of that list, choose **Integrations**.
+3. Choose **Reconnect** on the service's row, and sign in again in the new window.
+4. When the window closes, choose **Back to dashboard**, the first entry in the sidebar. Home opens, and the service's badge reads "Connected".
 
-## Read the platforms on the Stream page
+### Connect from Stream
 
-The **Where it goes** panel is on the **Overview** tab of the **Stream** page.
-It says "Your stream info goes to every platform you connect."
-The title, category and tags you set there are on [Stream page](/reference/community/stream-page).
+**Stream** is the page after **Chat** in the sidebar.
+On its **Overview** tab, the **Where it goes** panel has Kick and YouTube rows with the same **Connect** button and steps.
+There the question reads "Open YouTube to connect?", and a load error reads "The connections could not load."
 
-| Row | Badge | Meaning |
-| --- | --- | --- |
-| Twitch | "Connected" | Always connected. The row names the channel's account. |
-| Kick or YouTube | "Connected" | Connected. The row names the account. |
-| Kick or YouTube | "Not connected" | Not connected. A person who may change connections sees **Connect** beside the badge. |
-| X Live | "Not available yet" | "X Live support is not built yet." |
-
-When the panel cannot load, it shows "The connections could not load."
+Each platform has a badge instead of a dot: "Connected" next to the account name, or "Not connected".
+Twitch always reads "Connected".
+This panel does not say whether you are live.
 
 ## Troubleshooting
 
 ::Troubleshooting
 
 **You do not see the Connect button.**
-Your role may not change the channel's connections.
+Your role may not connect integrations.
 Ask the broadcaster or an editor to connect the platform.
 
-::
+**The row shows "That did not work." after you confirm.**
+The bot could not start the connection, so no window opened.
+Choose **Done** on the row, then start again from step 2.
 
-::Troubleshooting
+**A message starting "The connect did not work:" shows as the window closes.**
+The platform did not finish the connection, and the message names the reason.
+Choose **Done** on the row, then start again from step 2.
 
-**A service shows "Sign in again".**
-The service is connected, but it needs a new sign-in.
-Choose **Reconnect** for it on the **Integrations** settings page.
+**The panel says the connections could not load.**
+Choose the panel's **Try again** button.
 
 ::
 

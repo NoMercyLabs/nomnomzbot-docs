@@ -1,25 +1,118 @@
 ---
 title: Lookup helpers
-description: Lists 10 template helpers, each with what it gives and an example.
+description: Ten template helpers that fetch a fact from outside your channel, from a Twitch user to the weather, a city's time, an exchange rate or a translation.
 ---
 
-Helpers on this page: `{lookup.*}`.
+A lookup asks Twitch or an outside service for a fact when the bot builds a reply, so the same reply can answer differently later. The bot keeps most answers for a short time. The Twitch, weather, currency and translation sections say how long. You write lookups in a reply field that takes template braces, like the other [template helpers](/reference/templates/overview).
 
-These helpers look up facts outside the channel: a game, the weather, a time zone, a currency rate or a translation.
+Each lookup takes its arguments after a colon, split by `|`. Several also take a field after a dot, such as `.temp`. An argument can be another helper, so `{lookup.weather:{args}}` looks up the place a viewer typed after the command. If braces and arguments are new to you, read [Variables and templates](/reference/commands/variables-and-templates) first.
 
-Each row is its own example, so the rows on this page do not all come from one moment.
+## Where lookups work
 
-| Helper | What it gives | Example |
+Every lookup works in commands, event responses, timers, pipelines, Discord posts and webhooks. The one exception is `{lookup.translate.chat}`, which translates the text that started the reply. A timer has no such text, so it is not allowed there: a timer message that holds it cannot be saved.
+
+No lookup works in text a viewer writes, such as a reward input. The braces print exactly as the viewer typed them.
+
+When the bot runs in saas mode, `{lookup.weather}` and `{lookup.time}` always print their unavailable note, such as `(weather unavailable)`. Their data source allows noncommercial use only. [When a lookup cannot answer](#when-a-lookup-cannot-answer) lists every unavailable note.
+
+Saas mode is set for the whole bot by whoever runs it, and your channel dashboard does not show it, so ask them. A bot you run yourself is in saas mode only when you set it. Saas mode is restricted: no one but NoMercy Labs may earn money with NomNomzBot.
+
+## Twitch users
+
+`{lookup.twitch:login.field}` reads a fact about any Twitch account, even one that has never visited your channel. Write the login with or without a leading `@`. The field after the dot picks the fact.
+
+| Field | What it gives | Example |
 | --- | --- | --- |
-| `{lookup.currency}` | An amount in another currency, written `{lookup.currency:amount\|from\|to}`. Example: 10 EUR = 11.62 USD | `{lookup.currency:10\|EUR\|USD}` gives `10 EUR = 11.62 USD` |
-| `{lookup.currency.date}` | The day of the latest exchange rates, with an optional from\|to pair (EUR\|USD by default): 2026-10-26 | `2026-10-26` |
-| `{lookup.currency.rate}` | The exchange rate between two currencies, written `{lookup.currency.rate:from\|to}`. Example: 1.162 | `{lookup.currency.rate:EUR\|USD}` gives `1.162` |
-| `{lookup.game}` | The box art link of a Twitch category, written `{lookup.game:name.boxart}`. Example: https://static-cdn.jtvnw.net/ttv-boxart/27471-285x380.jpg | `https://static-cdn.jtvnw.net/ttv-boxart/27471-285x380.jpg` |
-| `{lookup.game.top}` | The most watched Twitch category right now: Just Chatting | `Just Chatting` |
-| `{lookup.time}` | The local time in a city, written `{lookup.time:city}` with the optional fields date and offset. Off when the bot runs in saas mode. Example: 23:30 | `{lookup.time:Tokyo}` gives `23:30` |
-| `{lookup.translate}` | A translation, written `{lookup.translate:language\|text}` (from English) or `{lookup.translate:from\|to\|text}`. Example: goedemorgen | `{lookup.translate:nl\|good morning}` gives `goedemorgen` |
-| `{lookup.translate.chat}` | The text of the command (or the chat message) translated into a language, written `{lookup.translate.chat:language}`. The text is taken to be in the channel language. Example: good morning | `good morning` |
-| `{lookup.twitch}` | A fact about any Twitch user, written `{lookup.twitch:login.field}`. Fields: game, title, isLive, viewers, display, avatar, createdAt, uptime, lastGame, url. The fields followers and followage:channel work for your own channel only. Example: Minecraft | `{lookup.twitch:viewertwo.game}` gives `Minecraft` |
-| `{lookup.weather}` | The weather in a city, written `{lookup.weather:city.field}`. Fields: temp, temp.f, feels, condition, emoji, wind, humidity, tomorrow. Without a field it prints the city, the temperature and the condition. Off when the bot runs in saas mode. Example: Amsterdam: 12 °C, light rain | `{lookup.weather:Amsterdam}` gives `Amsterdam: 12 °C, light rain` |
+| `game` | The category set on the channel | `{lookup.twitch:viewertwo.game}` gives `Minecraft` |
+| `lastGame` | The same value as `game` | `{lookup.twitch:viewertwo.lastGame}` gives `Minecraft` |
+| `title` | The stream title set on the channel | `{lookup.twitch:viewertwo.title}` gives `Building a castle` |
+| `display` | The display name | `{lookup.twitch:viewertwo.display}` gives `ViewerTwo` |
+| `avatar` | A link to the profile picture | `{lookup.twitch:viewertwo.avatar}` gives an image link |
+| `createdAt` | The day the account was made | `{lookup.twitch:viewertwo.createdAt}` gives `2021-03-14` |
+| `isLive` | `true` while the channel is live, otherwise `false` | `{lookup.twitch:viewertwo.isLive}` gives `true` |
+| `viewers` | How many people watch now; empty while offline | `{lookup.twitch:viewertwo.viewers}` gives `1,204` |
+| `uptime` | How long the stream has run; empty while offline | `{lookup.twitch:viewertwo.uptime}` gives `2h 15m` |
+| `url` | The channel link, built without asking Twitch | `{lookup.twitch:viewertwo.url}` gives `https://twitch.tv/viewertwo` |
+| `followers` | The follower count, for your own channel only | `{lookup.twitch:yourchannel.followers}` gives `5,310` |
+| `followage:yourchannel` | How long the login has followed your channel; empty when they do not follow | `{lookup.twitch:viewertwo.followage:yourchannel}` gives `1 year, 3 months` |
 
-Back to [Template helpers](/reference/templates/overview). For the places helpers work, special characters and HTML, read [Variables and templates](/reference/commands/variables-and-templates).
+The follower count and the follow age work only for the channel the reply runs in. For any other channel, the braces print as written. An uptime under an hour reads like `15m 4s`.
+
+The bot keeps most Twitch answers for 60 seconds, so a second use within that minute gets the same answer. The follower count and the follow check for `followage` are the exception: the bot asks Twitch for them each time.
+
+## Twitch categories
+
+`{lookup.game:category name.boxart}` gives a link to the box art of a category, sized 285 by 380 pixels. Write the category name exactly as Twitch shows it. For example, `{lookup.game:Minecraft.boxart}` gives an image link you can post or use in an overlay.
+
+`{lookup.game.top}` takes no arguments and gives the name of the top category on Twitch right now, for example `Just Chatting`.
+
+## Weather
+
+`{lookup.weather:city}` gives the place, the temperature and the sky. `{lookup.weather:Amsterdam}` gives `Amsterdam: 12 °C, light rain`. The place name comes from the place search, so it can read slightly different from what you typed.
+
+Add a field after the city for one fact. Temperatures are whole degrees. The sky and wind words are in English, or in Dutch for a channel set to Dutch.
+
+| Field | What it gives | Example |
+| --- | --- | --- |
+| `temp` | The temperature in Celsius | `{lookup.weather:Amsterdam.temp}` gives `12 °C` |
+| `temp.f` | The temperature in Fahrenheit | `{lookup.weather:Amsterdam.temp.f}` gives `54 °F` |
+| `feels` | The temperature it feels like, in Celsius | `{lookup.weather:Amsterdam.feels}` gives `10 °C` |
+| `condition` | The sky in words | `{lookup.weather:Amsterdam.condition}` gives `light rain` |
+| `emoji` | The sky as an emoji | `{lookup.weather:Amsterdam.emoji}` gives `🌧️` |
+| `wind` | The wind speed in km/h and the direction it blows from | `{lookup.weather:Amsterdam.wind}` gives `14 km/h SW` |
+| `humidity` | The humidity in percent | `{lookup.weather:Amsterdam.humidity}` gives `81%` |
+| `tomorrow` | Tomorrow's low and high in Celsius, and the sky | `{lookup.weather:Amsterdam.tomorrow}` gives `9–14 °C, light rain` |
+
+For a weather command, put `{lookup.weather:{args}}` in the reply. A viewer types `!weather New York` and gets the weather there. The bot keeps a forecast for 10 minutes.
+
+## City time
+
+`{lookup.time:city}` gives the time in a city on a 24-hour clock. `{lookup.time:Tokyo}` gives `23:30`.
+
+Add `.date` for the weekday and date there, written in your channel language. `{lookup.time:Tokyo.date}` gives `Tuesday 17 November`.
+
+Add `.offset` for the difference from your channel's time zone, or from UTC when the channel has none. `{lookup.time:Tokyo.offset}` gives `+8h from here`. A half-hour zone reads like `+5h30m from here`, and your own zone gives `same time as here`. A channel set to Dutch gets these words in Dutch.
+
+## Exchange rates
+
+The rates come from Frankfurter, and the bot keeps each rate for 6 hours. Currency codes have three letters, in upper or lower case.
+
+`{lookup.currency:amount|from|to}` converts an amount. `{lookup.currency:10|EUR|USD}` gives `10 EUR = 11.62 USD`. Write the amount with a dot for decimals, from 0 up to one trillion. The result has two decimals.
+
+`{lookup.currency.rate:from|to}` gives the rate alone, with up to four decimals. `{lookup.currency.rate:EUR|USD}` gives `1.162`.
+
+`{lookup.currency.date}` gives the day of the rate, such as `2026-10-26`. On its own it reads the EUR to USD rate. Add a pair to read another one: `{lookup.currency.date:GBP|JPY}`.
+
+For a currency command, put `{lookup.currency:{args.1}|{args.2}|{args.3}}` in the reply. A viewer types `!convert 25 USD EUR` and gets the converted amount. Numbers in the result follow the number style of your channel language. To write an amount as money without converting it, use the [number format helpers](/reference/templates/num).
+
+## Translation
+
+Translations come from MyMemory, and the text you translate is sent there. Text longer than 500 bytes is never sent and gives the unavailable note, `(translation unavailable)`. That is roughly 500 letters of plain English, and fewer with accents, emoji or other scripts.
+
+`{lookup.translate:to|text}` translates from English. `{lookup.translate:nl|good morning}` gives `goedemorgen`. To start from another language, give it first: `{lookup.translate:de|en|guten Morgen}`.
+
+`{lookup.translate.chat:to}` translates the text that started the reply. That is the text after the command, or the chat message when there is none. The service cannot detect the language, so the bot treats the text as your channel language. Put `{lookup.translate.chat:nl}` in an `!nl` command, and `!nl good morning` gives `goedemorgen`.
+
+Language codes have two or three letters, with an optional region such as `pt-BR`. When both languages are the same, the bot prints the text unchanged and sends nothing. Each translation is kept for one day.
+
+## When a lookup cannot answer
+
+What chat shows when a lookup has no answer tells you the cause.
+
+**The braces print as written.** The lookup itself is wrong: the wrong number of arguments, a bad code or an amount out of range. For a Twitch user or a category, an unknown field or a missing field also prints the braces, and so does a follower count or follow age for another channel. Text a viewer wrote prints as written too. Check the lookup against the tables above.
+
+For weather and city time, an unknown field after a dot stays part of the city name. `{lookup.weather:Amsterdam.rain}` searches for a place named `Amsterdam.rain`. No such place is found, so it gives the unavailable note, `(weather unavailable)`.
+
+**The unavailable note prints.** This is a short note in brackets: the lookup is right, but the answer did not come. The service failed or took longer than 2 seconds, 3 seconds for a translation. Saas mode gives the unavailable note for weather and time. A place that does not exist gives it, and so does a category. For a Twitch login that does not exist, `game`, `title`, `display`, `avatar`, `createdAt` and `followage` give it. `isLive` gives `false`. `viewers` and `uptime` print nothing, just as for a channel that is offline. `url` always builds the link, because it does not ask Twitch.
+
+| Lookup | Unavailable note |
+| --- | --- |
+| Twitch users and categories | `(Twitch lookup unavailable)` |
+| Weather | `(weather unavailable)` |
+| City time | `(local time unavailable)` |
+| Exchange rates | `(exchange rate unavailable)` |
+| Translation | `(translation unavailable)` |
+
+A channel set to Dutch gets these unavailable notes in Dutch.
+
+**Nothing prints.** The answer is real but empty. `viewers` and `uptime` are empty while the channel is offline. The follow age is empty for someone who does not follow you. To print your own words in that case, wrap the lookup in an [if helper](/reference/templates/if).

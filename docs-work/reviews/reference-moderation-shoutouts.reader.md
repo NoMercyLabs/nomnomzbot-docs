@@ -1,7 +1,17 @@
-# Reader review: C:\Projects\NoMercyLabs\nomnomzbot-docs\src\content\reference\en\moderation\shoutouts.mdx
+# Independent reader review: /reference/moderation/shoutouts
 Verdict: PASS
-Reviewed: C:\Projects\NoMercyLabs\nomnomzbot-docs\src\content\reference\en\moderation\shoutouts.mdx
-Reviewed-SHA: 2762e15d292daab9
+Reviewed: src/content/reference/en/moderation/shoutouts.mdx
+Reviewed-SHA: b51a646bc6dfaf0bc55183c098ca82ff50a59fe400fe1b6a26f40adffbea54c2
+
+## Independent overhaul review, 2026-11-05
+
+The manual-first explanation and command tutorial provide a usable path before scheduling. Speech and cooldown exceptions stay beside their relevant behavior.
+
+Reviewed independently of the article author, in actual navigation order. Current product source 54da8b631 and relevant changes since b12f4f696 were read without starting the bot, executing platform actions or changing channel data. The reader judgment follows the user's natural teaching style; old pilot mimicry, sentence caps and unrelated Atlas style gates were not applied. See [review-moderation-economy-community.md](../overhaul/review-moderation-economy-community.md) for the review scope and findings.
+
+## Prior review history
+
+The earlier text below is retained as history; it does not independently approve a later article hash.
 
 Reader state: I judged the current page text, sha256 2762e15d292daab9 (full 2762e15d292daab9eb070ca77765105f55cb7c56bc81489827f8fea095c16333), checked before and after my review. The older verdict on disk judged sha 505c4d4066c71c1c; I carried none of its findings forward. Its blocking finding (the placeholder described as the channel name) does not apply: the current text at line 43 says `{target.displayname}` is the shouted-out streamer, which matches line 100-101. My map row (docs-work/map.md line 90) gives Assumes: create-a-command, pipelines, chat-page, people, bot-basics-and-personality. I did not open those pages; I judged against docs-work/ledger.md and the pilot page commands/create-a-command.mdx. I did not read the product repository.
 

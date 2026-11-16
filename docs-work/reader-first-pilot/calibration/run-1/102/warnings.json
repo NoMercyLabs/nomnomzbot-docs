@@ -1,0 +1,22 @@
+{
+  "fingerprint": "23ad6c9d5c5d35f476c1ef362a9865c8b63a69e0e8b7060f321b03769b67d957",
+  "metrics": {
+    "non_code_words": 2189,
+    "table_rows": 62,
+    "first_numbered_step_after_words": 1554
+  },
+  "warnings": [
+    {
+      "id": "paragraph-5",
+      "message": "paragraph 5: approximately 5 sentences"
+    },
+    {
+      "id": "paragraph-9",
+      "message": "paragraph 9: approximately 5 sentences"
+    },
+    {
+      "id": "sentence-13-2",
+      "message": "40 words: Other known built-ins reply “works in chat only.” If the bot reaches its daily whisper limit for new recipients, it can post a short pointer in a channel where it has seen you chatting, asking you to use chat instead."
+    }
+  ]
+}

@@ -1,52 +1,140 @@
 ---
 title: Channel helpers
-description: Lists 34 template helpers, each with what it gives and an example.
+description: The template helpers that name your channel and read its counts, profile, settings, raids and live status, whoever runs the command.
 ---
 
-Helpers on this page: `{channel}`, `{channel.*}`, `{streamer}`, `{status}`.
+Every helper on this page reads your channel, never the person who triggered the reply.
+When a moderator runs a command with `{channel}` in it, the reply names your channel, not the moderator's.
+For how braces work and which fields take them, read [Variables and templates](/reference/commands/variables-and-templates) first.
 
-These helpers describe the channel: its name, links, followers and settings.
-Use the `{channel}`, `{channel.display}` and `{streamer}` helpers in any reply that names the channel.
-`{channel.id}` gives the platform ID, a number such as 123456789, not a name.
-A row marked "Discord seed alias" works only in a Discord notification, which fills in the value itself when it sends the message. In a command or an event response it stays as typed.
+A link to your Twitch channel, in a command any moderator can use:
 
-Each row is its own example, so the rows on this page do not all come from one moment.
+```
+Follow {channel.display} at https://www.twitch.tv/{channel}
+```
+
+The example writes the Twitch address out, because `{channel.url}` works only in a Discord notification.
+For Kick, replace the whole address with `{platform.link.kick}`, as in `Follow {channel.display} at {platform.link.kick}`.
+It gives the full link to the Kick channel you connected, and nothing when no Kick channel is connected.
+
+All of these helpers work in commands, event responses, timers, pipelines, Discord notifications and webhooks, unless a section says otherwise.
+Only the two raid counts take an input.
+
+The name and settings helpers read your channel in the bot.
+The counts and profile helpers come from your Twitch channel, and `{channel.members}` comes from YouTube.
+A helper with no value to give prints exactly as you typed it, braces and all, and so does a count or profile helper when Twitch gives no answer.
+A few helpers give empty text instead, and their rows say so.
+
+## Name and ID
 
 | Helper | What it gives | Example |
 | --- | --- | --- |
-| `{channel}` | The channel login name | `example_channel` |
-| `{channel.age}` | How old the channel account is, in words: 6 years, 2 months | `6 years, 2 months` |
-| `{channel.avatar}` | The link to the streamer profile picture (Discord seed alias) | `https://static-cdn.jtvnw.net/jtv_user_pictures/example_channel.png` |
-| `{channel.ccls}` | The content labels of the channel, empty when it has none | `MatureGame` |
-| `{channel.display}` | The channel display name | `Example_Channel` |
-| `{channel.editors.count}` | How many editors the channel has | `2` |
-| `{channel.followers}` | How many followers the channel has | `1,234` |
-| `{channel.followers.compact}` | How many followers the channel has, short: 1.2k | `1.2k` |
-| `{channel.game}` | The stream current game/category (Discord seed alias) | `Just Chatting` |
-| `{channel.id}` | The channel platform ID | `123456789` |
-| `{channel.isBranded}` | Whether the stream is marked as branded content: true or false | `false` |
-| `{channel.language}` | The language of the channel | `en` |
-| `{channel.localTime}` | The time now in the channel time zone | `15:30` |
-| `{channel.login}` | The channel login name used in links (Discord seed alias) | `example_channel` |
-| `{channel.mention}` | The channel name with an @, to mention it in chat | `@SampleChannel` |
-| `{channel.mods.count}` | How many moderators the channel has | `6` |
-| `{channel.name}` | The channel display name (Discord seed alias) | `Example_Channel` |
-| `{channel.personality}` | The personality the bot uses in this channel | `Informative` |
-| `{channel.prefix}` | The command prefix of the channel | `!` |
-| `{channel.raids.inCount}` | How many times a given channel raided this channel | `{channel.raids.inCount:otherstreamer}` gives `5` |
-| `{channel.raids.lastIn.at}` | The date another channel raided this channel last | `2026-10-24` |
-| `{channel.raids.lastOut}` | The channel this channel raided last | `OtherStreamer` |
-| `{channel.raids.outCount}` | How many times the channel raided a given channel | `{channel.raids.outCount:otherstreamer}` gives `3` |
-| `{channel.subs}` | How many subscribers the channel has | `80` |
-| `{channel.tags}` | The tags of the channel, as a list | `English, Coding` |
-| `{channel.team}` | The name of the channel team | `SampleTeam` |
-| `{channel.timezone}` | The time zone of the channel | `Europe/Amsterdam` |
-| `{channel.title}` | The stream current title (Discord seed alias) | `Cozy coding night` |
-| `{channel.url}` | The link to the channel on its platform (Discord seed alias) | `https://www.twitch.tv/example_channel` |
-| `{channel.vips.count}` | How many VIPs the channel has | `4` |
-| `{channel.vod.latest}` | The link to the latest past broadcast | `https://www.twitch.tv/videos/123` |
-| `{channel.vod.latest.title}` | The title of the latest past broadcast | `Chill Saturday` |
-| `{status}` | The stream live status (live or offline) | `live` |
-| `{streamer}` | The channel owner display name | `Example_Channel` |
+| `{channel}` | Your channel's login name, the one in your channel link | `example_channel` |
+| `{channel.display}` | Your channel's display name, or the login name when it has none | `Example_Channel` |
+| `{streamer}` | The same display name as `{channel.display}` | `Example_Channel` |
+| `{channel.mention}` | Your display name with an `@` in front, to mention your channel in chat | `@Example_Channel` |
+| `{channel.id}` | Your channel's Twitch ID, a number, not a name | `123456789` |
 
-Back to [Template helpers](/reference/templates/overview). For the places helpers work, special characters and HTML, read [Variables and templates](/reference/commands/variables-and-templates).
+Use `{channel}` when a reply needs your login name. It works in every field listed above.
+
+`{channel}`, `{channel.display}` and `{streamer}` also work in text that viewers type after a command or in a reward input.
+Two things must both be true for that.
+The **Viewer Templates** feature is on, in the **Chat** area of [Features](/reference/settings/features); it is on by default.
+The viewer also holds the template permission, which subscribers and higher hold by default.
+For anyone else, the text stays exactly as they typed it.
+
+## Channel settings
+
+These read your channel's settings in the bot.
+
+| Helper | What it gives | Example |
+| --- | --- | --- |
+| `{channel.language}` | Your channel's language code, `en` when none is set | `en` |
+| `{channel.timezone}` | Your channel's time zone, `UTC` when none is set | `Europe/Amsterdam` |
+| `{channel.localTime}` | The time now in your channel's time zone, on a 24-hour clock | `15:30` |
+| `{channel.personality}` | The personality the bot uses in your channel | `Informative` |
+| `{channel.prefix}` | The prefix your commands start with | `!` |
+
+## Counts
+
+| Helper | What it gives | Example |
+| --- | --- | --- |
+| `{channel.followers}` | How many followers your channel has, with a thousands separator | `1,234` |
+| `{channel.followers.compact}` | The same count, short, with one decimal at most: k for thousands, M for millions | `1.2k` |
+| `{channel.subs}` | How many subscribers your channel has | `80` |
+| `{channel.members}` | How many members your YouTube channel has; as typed when no YouTube account is connected or YouTube does not show its members | `12` |
+| `{channel.editors.count}` | How many editors your channel has | `2` |
+| `{channel.mods.count}` | How many moderators your channel has | `6` |
+| `{channel.vips.count}` | How many VIPs your channel has | `4` |
+
+The bot keeps the YouTube member count for 5 minutes, so `{channel.members}` can be up to 5 minutes old.
+
+## Profile
+
+| Helper | What it gives | Example |
+| --- | --- | --- |
+| `{channel.tags}` | Your channel's tags, separated by commas, empty when you have none | `English, Coding` |
+| `{channel.ccls}` | Your channel's content labels (ccls is short for content classification labels), separated by commas, empty when you have none | `MatureGame` |
+| `{channel.isBranded}` | `true` when your stream is marked as branded content, otherwise `false` | `false` |
+| `{channel.team}` | The name of your Twitch team; with more than one team, the first one Twitch lists | `SampleTeam` |
+| `{channel.vod.latest}` | The link to your latest past broadcast | `https://www.twitch.tv/videos/123` |
+| `{channel.vod.latest.title}` | The title of your latest past broadcast | `Chill Saturday` |
+| `{channel.age}` | How old your Twitch account is, in years and months | `6 years, 2 months` |
+
+An account under a month old gets its age in days instead, and one under a day old in hours or minutes.
+
+Content labels are the Twitch warnings on your stream, such as drugs, gambling or profanity.
+`{channel.ccls}` gives them as Twitch names them, for example `DrugsIntoxication` or `ProfanityVulgarity`.
+Twitch adds `MatureGame` itself, from your category.
+
+`{channel.team}` prints as typed when your channel is in no team, and `{channel.vod.latest}` and `{channel.vod.latest.title}` do when you have no past broadcast.
+
+## Raids
+
+These read the raids the bot has on record for your channel, from the raids it saw come in and go out.
+
+| Helper | What it gives | Example |
+| --- | --- | --- |
+| `{channel.raids.outCount:login}` | How many times your channel raided the channel you name | `3` |
+| `{channel.raids.inCount:login}` | How many times the channel you name raided yours | `5` |
+| `{channel.raids.lastOut}` | The display name of the channel you raided most recently | `OtherStreamer` |
+| `{channel.raids.lastIn.at}` | The date of the most recent raid into your channel, as year-month-day in UTC | `2026-10-24` |
+
+The two counts need the other channel's login name after a colon, as in `{channel.raids.inCount:otherstreamer}`.
+An `@` in front of the name is fine.
+A name with no raids on record gives `0`.
+So does a name Twitch does not know, or cannot look up at that moment.
+Without a name, the count prints as typed.
+
+The counts are for the channel you name.
+The last-raid helpers give your most recent raid in that direction, with any channel.
+When there is no raid in that direction yet, they print as typed.
+
+## Live status
+
+| Helper | What it gives | Example |
+| --- | --- | --- |
+| `{status}` | `live` while your stream is live, otherwise `offline` | `live` |
+
+In a shoutout reply, `{status}` is about the channel you shout out, not yours.
+
+## Discord notifications
+
+These six are filled in only in a Discord notification, and some only in certain posts.
+
+| Helper | What it gives | Which posts | Example |
+| --- | --- | --- | --- |
+| `{channel.url}` | The link to your channel on Twitch or Kick | Every post | `https://www.twitch.tv/example_channel` |
+| `{channel.login}` | Your login name in lowercase, the name inside that link | Every post | `example_channel` |
+| `{channel.avatar}` | The link to your profile picture | Every post | `https://static-cdn.jtvnw.net/jtv_user_pictures/example_channel.png` |
+| `{channel.name}` | Your display name, the same name `{channel.display}` gives | Go-live and stream-end posts | `Example_Channel` |
+| `{channel.title}` | Your stream title | Go-live posts | `Cozy coding night` |
+| `{channel.game}` | Your stream category | Go-live posts | `Just Chatting` |
+
+In a Discord post they are not listed for, `{channel.name}`, `{channel.title}` and `{channel.game}` print as typed.
+A command, event response or timer that uses one of the six is not saved, and the error says where the helper works.
+
+On a platform other than Twitch or Kick, `{channel.url}` is empty, and so is `{channel.avatar}` when you have no profile picture.
+A link or picture field of the embed that ends up empty is left out of the post, so the rest of it still goes out.
+
+Back to [Template helpers](/reference/templates/overview).

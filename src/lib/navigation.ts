@@ -35,7 +35,7 @@ export interface NavigationResult {
   products: ProductNavigation[];
 }
 
-const PRODUCTS: Array<{ product: Product; label: string; collection: string; href: string; order: number; urlBase?: string }> = [
+const PRODUCTS: Array<{ product: Product; label: string; collection: Product; href: string; order: number; urlBase?: string }> = [
   { product: 'reference', label: 'User guide', collection: 'reference', href: '/reference/overview', order: 1 },
 ];
 
@@ -43,7 +43,7 @@ export async function getNavigation(): Promise<NavigationResult> {
   const results = await Promise.all(
     PRODUCTS.map(async (meta) => {
       try {
-        const entries = await getCollection(meta.collection as any, ({ data }: any) => data.draft !== true);
+        const entries = await getCollection(meta.collection, ({ data }) => data.draft !== true);
         const groups = buildGroups(meta.collection, entries, meta.urlBase ?? meta.collection);
         return {
           product: meta.product,
@@ -89,7 +89,7 @@ function stripLocalePrefix(id: string): string {
 // Group order and page order are the array order in the manifest — frontmatter `order`
 // and `category` are not consulted. Titles come from each entry's frontmatter `title`.
 // Any non-draft page not listed in the manifest is surfaced under "Other" so it never
-// vanishes silently; `yarn check:nav` turns that case into a build failure.
+// vanishes silently; `yarn check:reference` turns that case into a build failure.
 function buildGroups(
   collection: string,
   docs: Array<{ id: string; data: { title: string } }>,
@@ -137,7 +137,7 @@ export async function getNavigationForProduct(product: Product): Promise<NavGrou
   if (!meta) return [];
 
   try {
-    const entries = await getCollection(meta.collection as any, ({ data }: any) => data.draft !== true) as Array<{ id: string; data: { title: string } }>;
+    const entries = await getCollection(meta.collection, ({ data }) => data.draft !== true);
     return buildGroups(meta.collection, entries, meta.urlBase ?? meta.collection);
   } catch {
     return [];

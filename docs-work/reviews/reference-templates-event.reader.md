@@ -1,3 +1,22 @@
+# Current independent reader review
+
+Verdict: PASS
+Reviewed: src/content/reference/en/templates/event.mdx
+Reviewed-SHA: 6c11ab1c4d4c36b490ceb0eac4849b9e649b2872a337745e56d00fcc00060d4a
+Reviewed-SHA256: 6c11ab1c4d4c36b490ceb0eac4849b9e649b2872a337745e56d00fcc00060d4a
+Reviewed-Date: 2026-11-05
+Reviewer: independent section reviewer
+
+The introduction ties values to matching event responses rather than general replies. Names, kinds, currencies, IDs and platform payload fields remain precise; Discord seed aliases have an explicit explanation.
+
+The full page was read with the preceding/following navigation context and related links. This review applies the owner's explanatory, progressive-disclosure guidance; it does not impose Atlas sentence caps, pilot mimicry or fixed article headings. No substantive reader finding remains at this hash. Build/render/link checks are recorded separately by the lead reviewer.
+
+Report: docs-work/overhaul/review-learning-commands-helpers.md.
+
+## Historical evidence
+
+The material below is retained as historical evidence; its older verdict is not the current review.
+
 # Reader review: src/content/reference/en/templates/event.mdx
 Verdict: PASS
 Reviewed: C:/Projects/NoMercyLabs/nomnomzbot-docs/src/content/reference/en/templates/event.mdx

@@ -1,7 +1,17 @@
-# Reader review: /reference/community/chat-page
+# Independent reader review: /reference/community/chat-page
 Verdict: PASS
-Reviewed: C:\Projects\NoMercyLabs\nomnomzbot-docs\src\content\reference\en\community\chat-page.mdx
-Reviewed-SHA: 8b8ee1dfd0eee3fd
+Reviewed: src/content/reference/en/community/chat-page.mdx
+Reviewed-SHA: ad1a2c8b98bcdd1a26af488f49dad9117e6b1b7c416c9f8747a97cee3ab3c7c9
+
+## Independent overhaul review, 2026-11-05
+
+Repaired F2 is accepted. The reply instructions now explain the popup when it appears, keep thread browsing distinct from reply targeting, and tell readers what typing, Escape and closing do. Stored-history scope and viewer-page exclusions are explained in plain language. The native-event section helps readers distinguish Twitch records from bot event responses without inserting developer details into the workflow.
+
+Reviewed independently of the article author, in actual navigation order. Current product source 54da8b631 and relevant changes since b12f4f696 were read without starting the bot, executing platform actions or changing channel data. The reader judgment follows the user's natural teaching style; old pilot mimicry, sentence caps and unrelated Atlas style gates were not applied. See [review-moderation-economy-community.md](../overhaul/review-moderation-economy-community.md) for the review scope and findings.
+
+## Prior review history
+
+The earlier text below is retained as history; it does not independently approve a later article hash.
 
 Scope: current page text read in this run (285 lines, SHA above). Assumes read: /reference/getting-started/dashboard-tour (owns sidebar groups, Home, header tools, Coming soon entries). Pilot read: /reference/commands/create-a-command. Also read: docs-work/page-conventions.md, docs-work/ledger.md. The product source was not read.
 

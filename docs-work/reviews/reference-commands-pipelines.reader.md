@@ -1,3 +1,40 @@
+# Current targeted reader review
+
+Verdict: PARTIAL
+Reviewed: src/content/reference/en/commands/pipelines.mdx
+Reviewed-SHA: 7aa395026a50fd06b6746ff8093b207514c4637df686933eb440f4c3f574eadc
+Reviewed-SHA256: 7aa395026a50fd06b6746ff8093b207514c4637df686933eb440f4c3f574eadc
+Reviewed-Date: 2026-11-06
+Reviewer: final-learning editing author; self-review, not independent
+Product: 2dfefbb0c393f439954d79b32ac11511678d7f44
+
+The full article was read for editorial clarity. Source verification is limited to the claims below and the focused checks in docs-work/ecosystem-validation/final-learning.md. This is not an exhaustive factual PASS, independent approval, rendered-site review or live application test.
+
+Capacity: server/src/NomNomzBot.Infrastructure/Platform/Pipeline/PipelineEngine.cs:195-218 uses the injected limit; PipelineConcurrencyLimitProvider.cs:51-85 resolves it; server/src/NomNomzBot.Infrastructure/Platform/ScalingDefaults.cs:24-50 gives SQLite=3, PostgreSQL=processor count clamped to 3..16 and override precedence; DependencyInjection.cs:1129 wires the provider. The change replaces only the fixed-five promise.
+
+## Preserved historical reviews
+
+The earlier hashes, verdicts and claims below are retained as historical evidence; they do not approve this revision.
+
+# Current independent reader review
+
+Verdict: PASS
+Reviewed: src/content/reference/en/commands/pipelines.mdx
+Reviewed-SHA: affa7c03d2a260208903bf54b8f27b7a54cfbfd0b899bf0bcce0e86666377681
+Reviewed-SHA256: affa7c03d2a260208903bf54b8f27b7a54cfbfd0b899bf0bcce0e86666377681
+Reviewed-Date: 2026-11-05
+Reviewer: independent section reviewer
+
+Trigger versus sequence is explained before editor controls; the welcome sequence gives a reachable first result. Dry run versus live consequences are now explicit and the full action reference is retained. The reviewed caller/input exception explains how supplied values affect real targets.
+
+The full page was read with the preceding/following navigation context and related links. This review applies the owner's explanatory, progressive-disclosure guidance; it does not impose Atlas sentence caps, pilot mimicry or fixed article headings. No substantive reader finding remains at this hash. Build/render/link checks are recorded separately by the lead reviewer.
+
+Report: docs-work/overhaul/review-learning-commands-helpers.md.
+
+## Historical evidence
+
+The material below is retained as historical evidence; its older verdict is not the current review.
+
 # Reader review: src/content/reference/en/commands/pipelines.mdx
 Verdict: PASS
 Reviewed: src/content/reference/en/commands/pipelines.mdx

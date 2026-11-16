@@ -1,0 +1,34 @@
+{
+  "fingerprint": "032e43942e441a5bf77f8f2a60419519bd88ce11f6b021d39c85ee72ecffaf71",
+  "verdict": "PASS",
+  "findings": [],
+  "coverage": [
+    {
+      "id": "fixed-coverage",
+      "result": "supported",
+      "evidence": "Independently reviewed complete candidate at product source C:/Projects/NoMercyLabs/nomnomzbot HEAD f741789bf6b8d90ae2fd07f33a307a5a11623606: 11/11 required contract groups retained;43/43 built-in catalog rows. Actual source paths/ranges and closed findings in C:/Projects/NoMercyLabs/nomnomzbot-docs/docs-work/reader-first-pilot/fact-review/built-in-commands.md; factual requirements in contracts/built-in-commands.md. New Run2 case110 answers1-4 independently re-read and judged; current page/card/render fingerprint recomputed after frozen final. Source/answer support only, not runtime or human usability."
+    }
+  ],
+  "reader_answers": [
+    {
+      "question": 1,
+      "result": "supported",
+      "evidence": "Run2 case110 NEW frozen answer Q1: !pause pauses music. Effective access requires a moderator or someone granted the right to moderate the music queue, even if the editor's base role says Everyone; a raised base-role requirement also applies. Its normal defaults are 30 seconds for chat and 0 seconds per person. Platform-identified broadcasters/moderators bypass normal waits, while a bot-only role does not. Independent source check: Pause is !pause; effective Moderator or music:queue:moderate grant; normal shared/personal defaults30/0, Everyone base floor does not remove runtime safeguard. Source: server/src/NomNomzBot.Infrastructure/Commands/Builtins/PlaybackControlBuiltins.cs:27-39,90-103; MusicModerationGate.cs:33-56 in same Builtins directory. Its final article excerpts were individually verified present; answer text unchanged from initial."
+    },
+    {
+      "question": 2,
+      "result": "supported",
+      "evidence": "Run2 case110 NEW frozen answer Q2: No. The catalog does not connect a music player; music must be configured, and the bot must be connected with the command enabled and available to the caller. By default Moderator, Lead moderator, Editor and Broadcaster can customize it through Commands > System commands, subject to a broadcaster-raised requirement. Select !pause, choose Customize, change supported fields, then Save changes. Read-only access does not expose the tab. Independent source check: Catalog does not configure music/Spotify; connected feature and command availability needed; System commands requires commands write, default Moderator and higher subject to raised floor; read-only users do not see tab. Source: dashboard/src/views/dashboard/commands/CommandsView.vue:54-68; server/src/NomNomzBot.Infrastructure/Content/Identity/ActionDefinitionSeeder.cs:179-180; server/src/NomNomzBot.Infrastructure/Commands/Builtins/PlaybackControlBuiltins.cs:90-103. Its final article excerpts were individually verified present; answer text unchanged from initial."
+    },
+    {
+      "question": 3,
+      "result": "supported",
+      "evidence": "Run2 case110 NEW frozen answer Q3: For just one changed cooldown, choose Back to default beneath that field; it saves immediately and returns to Using the default without Save changes. Reset to default is broader: confirm it in the footer dialog to discard the command's saved edits, restore default cooldowns, role and all reply wording, switch Read it aloud off and re-enable the command. Shared reply wording is also restored for the other command, while that other command keeps its own enabled state, role, cooldowns and Read it aloud setting. Independent source check: Back to default on field saves immediately; whole Reset confirms loss of all own overrides/replies/TTS and enables command; shared sibling replies reset without unrelated sibling settings. Source: dashboard/src/views/dashboard/commands/components/BuiltinEditor.vue:205-251; server/src/NomNomzBot.Infrastructure/Commands/BuiltinCommandService.cs:262-301. Its final article excerpts were individually verified present; answer text unchanged from initial."
+    },
+    {
+      "question": 4,
+      "result": "supported",
+      "evidence": "Run2 case110 NEW frozen answer Q4: Normal moderator bypass does not allow both successful skips five seconds apart. A successful moderated bare !skip starts a separate 30-second shared wait, so the second moderator cannot skip at five seconds. An ordinary eligible viewer can use !skip 4 to remove their own fourth pending request, counting only their own requests in queue order; it does not skip the playing song and still must pass normal access checks and applicable viewer availability/cooldown rules. Independent source check: Successful moderated bare skip starts independent channel-wide30-second window, blocking second moderator at5 seconds; !skip4 removes caller fourth own pending request only, not playing song or global queue item4, subject to normal outer gates. Source: server/src/NomNomzBot.Infrastructure/Commands/Builtins/MusicBuiltins.cs:35-116,227-288; server/src/NomNomzBot.Infrastructure/Chat/EventHandlers/ChatMessageHandler.cs:321-376. Its final article excerpts were individually verified present; answer text unchanged from initial."
+    }
+  ]
+}

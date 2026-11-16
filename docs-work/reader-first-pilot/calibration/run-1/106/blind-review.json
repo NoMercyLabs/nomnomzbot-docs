@@ -1,0 +1,69 @@
+{
+  "fingerprint": "e2c3515810858dc6168e372afe2986251d7813c4027b1f1a6afe67d54d82f4a0",
+  "verdict": "PENDING",
+  "answers": [
+    {
+      "question": 1,
+      "answer": "Open !schedule on Commands in the selected channel, keep Who can use it at Everyone, open Trigger and cooldowns, enter 10 in Chat cooldown (seconds) and 60 in Per-person cooldown (seconds), and choose Save changes. The unsaved-change count disappears and the save button turns off.",
+      "quote": [
+        "Open the command and keep Who can use it at Everyone.",
+        "Open Trigger and cooldowns.",
+        "Enter 10 in Chat cooldown (seconds) and 60 in Per-person cooldown (seconds).",
+        "Choose Save changes. The unsaved-change count disappears and the save button turns off."
+      ]
+    },
+    {
+      "question": 2,
+      "answer": "No. A bot-assigned Editor who is an ordinary platform viewer experiences normal waits. Use an account that is neither the platform broadcaster nor a platform moderator, still meets the command's access requirement, and has the required live/offline conditions. Platform broadcasters and moderators bypass both normal checks, and their uses still start waits for others.",
+      "quote": [
+        "The broadcaster and moderators identified by the incoming platform message bypass both normal cooldown checks on Twitch, Kick and YouTube, including Twitch lead moderators.",
+        "Their uses still start the waits, including the shared wait for everyone else, so repeatedly trying the command as a moderator does not reproduce a viewer’s experience.",
+        "An Editor who is an ordinary platform viewer experiences the normal waits. To test ordinary behavior, use an account that is neither the platform broadcaster nor a platform moderator and still meets the command’s access requirement."
+      ]
+    },
+    {
+      "question": 3,
+      "answer": "UNKNOWN as a consistent rule. The article explicitly says A can use it at 60 after B uses it at 50 and says a refusal starts neither wait. However, the same example says A's refused attempt at 5 restarts both waits. That would conflict with its stated 60-second end for A, so I cannot determine whether the refusal restarts anything or confidently act on the time without choosing which statement to disregard.",
+      "quote": [
+        "At 5 seconds, A tries again. The attempt is refused and both waits start again from that moment.",
+        "At 10 seconds, another viewer could use it. A still has to wait until 60 seconds.",
+        "If viewer B uses it at 50 seconds, B starts a new shared wait. A’s personal wait and that shared wait both end at 60 seconds, so A can use it then if nothing else intervenes.",
+        "A refusal for access or cooldown starts neither wait."
+      ]
+    },
+    {
+      "question": 4,
+      "answer": "The Artist badge alone does not pass Artists, so with no stored standing or permit the command does not run and the bot normally posts the permission refusal. Yes, it also attempts to speak the refusal even with Read it aloud off, provided TTS setup, settings and playback allow it. A positive Minimum bits blocks this speech; approval settings, the per-viewer 30-second denial-speech throttle, or delivery failure can also prevent audible output.",
+      "quote": [
+        "An Artist badge alone does not pass an Artists command requirement. The person needs Artist standing recorded in the bot or a higher qualifying role.",
+        "The command does not run. By default, the bot replies in chat in the channel’s one bot voice: “You don’t have permission to use that command.”",
+        "It also attempts to speak that line in the channel’s bot voice, even when the command’s Read it aloud switch is off.",
+        "To hear a refusal, the channel’s TTS setup, settings and playback must allow it.",
+        "A positive Minimum bits setting blocks this speech because the refusal carries 0 bits.",
+        "The bot attempts denial speech at most once every 30 seconds for each viewer in a channel, shared across all denied commands."
+      ]
+    },
+    {
+      "question": 5,
+      "answer": "The timing example requires a material guess: a refused attempt is said both to restart both waits and to start neither. The reader cannot reliably predict the next eligible use or distinguish expected cooldown behavior from a fault, and must reread or seek another source to resolve it.",
+      "quote": [
+        "At 5 seconds, A tries again. The attempt is refused and both waits start again from that moment.",
+        "A refusal for access or cooldown starts neither wait."
+      ]
+    },
+    {
+      "question": 6,
+      "answer": "The contradictory refusal rule is confusing when read aloud as well: the listener receives incompatible instructions about when A can retry and must stop and revisit the example. No separate material obstacle arises merely from the reference tables or wording.",
+      "quote": [
+        "At 5 seconds, A tries again. The attempt is refused and both waits start again from that moment.",
+        "At 10 seconds, another viewer could use it. A still has to wait until 60 seconds.",
+        "A refusal for access or cooldown starts neither wait."
+      ]
+    }
+  ],
+  "findings": [
+    "The example says the refused attempt at 5 seconds restarts both waits, but later says a refusal starts neither wait and still places A's personal end at 60. These incompatible rules prevent a reliable answer about A's next allowed use and force the reader to choose a statement or consult another source."
+  ],
+  "warnings_released": false,
+  "warning_review": []
+}

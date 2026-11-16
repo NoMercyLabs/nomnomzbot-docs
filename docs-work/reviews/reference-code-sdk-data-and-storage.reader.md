@@ -1,7 +1,41 @@
-# Reader review: C:\Projects\NoMercyLabs\nomnomzbot-docs\src\content\reference\en\code\sdk-data-and-storage.mdx
+# Current targeted editorial review — 2026-11-06
+
+Verdict: TARGETED AUTHOR SELF-REVIEW; no independent or exhaustive PASS.
+Reviewed: src/content/reference/en/code/sdk-data-and-storage.mdx
+Reviewed-SHA256: c37359f9abac2c781c912d83a8322fbf8466cf51059e44b1112fa3eeda21d4be
+Reviewer: editing agent (author self-review)
+
+Full editorial read; replaced ambiguous KB with 65,536 UTF-8 bytes, explained multibyte text, removed blanket Draft. Direct source: Infrastructure/CustomCode/ScriptStorageService.cs:31-166; Application/Contracts/CustomCode/IScriptStorageService.cs:26-32. Shared channel scope, idempotent deletion and non-atomic read/write are retained. Not every metric/reward/fetch path was re-audited.
+
+Coverage details and final static-check results: [final-developer.md](../ecosystem-validation/final-developer.md). Full reading is distinct from focused source verification. No live application/provider test or whole-project build in this batch.
+
+## Historical records below — verdicts and hashes preserved
+
+# Independent reader review: /reference/code/sdk-data-and-storage
 Verdict: PASS
+Reviewed: src/content/reference/en/code/sdk-data-and-storage.mdx
+Reviewed-SHA: 176a6d3e739ce2d9
+Reviewed-SHA256: 176a6d3e739ce2d968b160aa6c60102ca00f93ae02b59ddb6c7c027d08c62b55
+Reviewed-Date: 2026-11-05
+Reviewer: independent reviewer, separate from article author
+Product-Revision: 54da8b6318de63b5205a0ff8db35e0b9045dd959
+
+The complete current article was read independently of its author, in the established settings, self-hosting and Code and SDK navigation order. The user's natural explainer/progressive-disclosure requirements take precedence over historical pilot mimicry, sentence caps and repeated page templates.
+
+## Learning and lookup result
+
+Practical uses introduce the reference; optional unknown statistics are guarded in the example. Shared keys, persistence, 64KB values, 200 keys, non-atomic increments and real fetches during tests are named where an author would need them.
+
+No outstanding substantive reader finding.
+
+Related routes were checked as contextual continuations rather than prerequisites for ordinary bot use. Draft labels remain appropriate for code material. This is a text/structure review, not a claim of rendered browser QA.
+
+## Historical review (superseded)
+
+# Reader review: C:\Projects\NoMercyLabs\nomnomzbot-docs\src\content\reference\en\code\sdk-data-and-storage.mdx
+Historical verdict: PASS
 Reviewed: C:\Projects\NoMercyLabs\nomnomzbot-docs\src\content\reference\en\code\sdk-data-and-storage.mdx
-Reviewed-SHA: 4679154be4a9ec4f
+Reviewed-SHA: e57b39b255e9ad29
 
 Reader: a streamer or script writer new to the SDK. Assumes page read: /reference/code/sdk-script-basics (read this run: Custom Code steps, grant table, error-code table, `nnz.lastError`). Owns: none (map row, Owns column is "-").
 

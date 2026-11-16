@@ -1,3 +1,23 @@
+# Current independent reader review
+
+Verdict: PASS
+Reviewed: src/content/reference/en/audio/sounds.mdx
+Reviewed-SHA: a75b99017b71c287c2901498898dd7784e11c71d132e74c37c06989fc10637b3
+Reviewed-SHA256: a75b99017b71c287c2901498898dd7784e11c71d132e74c37c06989fc10637b3
+Reviewed-Date: 2026-11-05
+Reviewer: independent media-section reviewer
+Product: 54da8b6318de63b5205a0ff8db35e0b9045dd959 plus preserved current music UI edits
+
+The article starts with Bot Audio and a realistic bare chat-word test, then explains saved clip reuse and independent chat versus pipeline gating. File/count limits, disabling, deletion consequences, handles/synced playback and overall volume remain available for lookup.
+
+The full page was read with adjacent navigation and related links. The owner's natural explanatory style governs: no Atlas sentence caps, pilot imitation or rigid article template was imposed. No substantive reader finding remains at this hash. Combined build, rendered-output and link/frontmatter checks belong to the lead's separate validation.
+
+Report: docs-work/overhaul/review-automation-media-integrations.md.
+
+## Historical evidence
+
+Older hashes and verdicts below are retained for history and are not the current review.
+
 # Reader review: reference-audio-sounds (round 2)
 Verdict: PASS
 Reviewed: src/content/reference/en/audio/sounds.mdx

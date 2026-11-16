@@ -1,5 +1,54 @@
-# Fact-check: /reference/economy/leaderboards-and-games
+# Targeted final review — 2026-11-06
+
+Verdict: PENDING
+Reviewed: src/content/reference/en/economy/leaderboards-and-games.mdx
+Reviewed-SHA: acd67cebb41fd23aa74d41a0340c36f7152ad56b60958bdf0ad4104bf05c4342
+Reviewed-SHA256: acd67cebb41fd23aa74d41a0340c36f7152ad56b60958bdf0ad4104bf05c4342
+Reviewer: final-features correction author; self-review, not independent PASS
+Product-Revision: 2dfefbb0c393f439954d79b32ac11511678d7f44 plus working tree
+
+The full article was read editorially. The correction was independently traced from the staged lead to current source, then applied by this reviewer. This is targeted author verification, not a new exhaustive source audit, independent final-text approval or runtime test. See [final-features.md](../ecosystem-validation/final-features.md) for exact source anchors, coverage and remaining limits.
+
+## Historical reviews
+
+The original records below are preserved verbatim and apply only to their recorded hashes.
+
+# Independent source verification: /reference/economy/leaderboards-and-games
 Verdict: PASS
+Reviewed: src/content/reference/en/economy/leaderboards-and-games.mdx
+Reviewed-SHA: 727590461211cf954641607d7dc3612d8ddc1bec4334b12ddd67be79a30e43d9
+
+## Independent overhaul review, 2026-11-05
+
+EconomyLeaderboardService.cs:287-465; LeaderboardBuiltin.cs:30-110; viewer route.ts:24-28: wallet/ledger windows, UTC boundaries, opt-outs, actual jar-contribution ranking, private-board fallback/top five and placeholders.
+
+Reviewed independently of the article author, in actual navigation order. Current product source 54da8b631 and relevant changes since b12f4f696 were read without starting the bot, executing platform actions or changing channel data. This verdict is source verification, not proof of live platform delivery. See [review-moderation-economy-community.md](../overhaul/review-moderation-economy-community.md) for the review scope and findings.
+
+## Prior review history
+
+The earlier text below is retained as history; it does not independently approve a later article hash.
+
+Author source audit: 2026-11-04. Independent review of the revised article is pending; the historical PASS below does not approve this text.
+Product source: C:/Projects/NoMercyLabs/nomnomzbot at b12f4f696, inspected without starting the bot or changing data.
+
+Explains balance versus activity rankings, corrects the stale empty-jar claim and surfaces the private-board chat fallback.
+
+| Revised claim or retained core behavior | Current source opened |
+| --- | --- |
+| UI defaults, choices and private badge | dashboard/src/views/dashboard/economy/components/LeaderboardDialog.vue; components/LeaderboardsPanel.vue; i18n/en.json:173-230 |
+| Whole-channel ranking and period handling | server/src/NomNomzBot.Infrastructure/Economy/EconomyLeaderboardService.cs:287-360,445-465 |
+| Jar contributor ranking is implemented and ignores selected metric | server/src/NomNomzBot.Infrastructure/Economy/EconomyLeaderboardService.cs:371-445 |
+| Command chooses first public then first private and returns top five | server/src/NomNomzBot.Infrastructure/Commands/Builtins/LeaderboardBuiltin.cs:30-110 |
+| Coming-soon viewer screens | dashboard/src/views/viewer/nav/route.ts:24-28; dashboard/src/router/dashboard.ts |
+
+The practical scenarios are recommended uses of these verified controls, not promises of a new feature. Unchanged reference details were compared with the current view, labels and relevant implementation. Runtime platform calls were not performed.
+
+## Historical evidence
+
+The prior review is retained for its detailed claim inventory. Its verdict and file hashes refer to the earlier article; where the new evidence differs, the new evidence takes precedence.
+
+# Fact-check: /reference/economy/leaderboards-and-games
+Historical verdict: PASS
 Reviewed: src/content/reference/en/economy/leaderboards-and-games.mdx
 Reviewed-SHA: 245bef96db057ce9
 

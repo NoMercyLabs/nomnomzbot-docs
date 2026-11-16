@@ -1,7 +1,39 @@
-# Fact check: src/content/reference/en/audio/sounds.mdx
+# Current independent fact check
+
 Verdict: PASS
 Reviewed: src/content/reference/en/audio/sounds.mdx
-Reviewed-SHA: ff0b35829c5551d5
+Reviewed-SHA: a75b99017b71c287c2901498898dd7784e11c71d132e74c37c06989fc10637b3
+Reviewed-SHA256: a75b99017b71c287c2901498898dd7784e11c71d132e74c37c06989fc10637b3
+Reviewed-Date: 2026-11-05
+Reviewer: independent media-section reviewer
+Product: 54da8b6318de63b5205a0ff8db35e0b9045dd959 plus preserved current music UI edits
+
+The full article was read in sidebar order. Consequential defaults, permissions, prerequisites, state lifetime and effects were traced against current source; repaired findings were re-read before this verdict. This is source verification, not a live-channel or visible/audible output test.
+
+- server/src/NomNomzBot.Infrastructure/Sound/Audio/SoundClipAudioRules.cs:24-80 validates actual audio bytes, 10 MiB and 3 minutes; SoundClipService.cs:31-32,121-123,203-205,331-365 enforces count/cooldown and enabled playback.
+- server/src/NomNomzBot.Infrastructure/Chat/EventHandlers/ChatMessageHandler.cs:223-236,1435-1495 enforces chat-word role/cooldown and precedence; server/src/NomNomzBot.Infrastructure/Sound/PipelineActions/PlaySoundAction.cs:35-116 resolves the same enabled clip but uses independent pipeline options and at most 60 seconds waiting.
+- server/src/NomNomzBot.Infrastructure/Content/Widgets/FirstPartyWidgetCatalogue.cs:60-107 distinguishes the sound-only system source from TTS caption.
+
+Source paths without a repeated layer prefix in a bullet are relative to its preceding Infrastructure or dashboard scope. The section report records method, repaired findings, external sources and remaining product limitations: docs-work/overhaul/review-automation-media-integrations.md.
+
+## Historical evidence
+
+Older hashes, verdicts and values below are retained for history and are not the current review.
+
+# Fact check: src/content/reference/en/audio/sounds.mdx
+Verdict: PENDING
+Reviewed: src/content/reference/en/audio/sounds.mdx
+Reviewed-SHA: a75b99017b71c287c2901498898dd7784e11c71d132e74c37c06989fc10637b3
+
+## 2026-11-05 author source verification
+
+Author source audit complete; independent verdict pending. This hash binds the current text, not the historical PASS below. The article was read in full and revised toward the user's explainer style while preserving precise reference detail. SoundClipService.cs; SoundClipAudioRules.cs; PlaySoundAction.cs; ChatMessageHandler.cs; ChannelAudioMixService.cs. Bot Audio is the audible endpoint; upload, cooldown, volume and pipeline behavior remain available as reference.
+
+The section inventory and known implementation gaps are in [automation-media-integrations.md](../overhaul/automation-media-integrations.md). This is source verification, not a live-channel execution claim. Independent review must account for product changes after the original author pass at b12f4f696.
+
+## Historical review (SHA ff0b35829c5551d5)
+
+Historical verdict: PASS. The earlier evidence below is retained as history and is superseded where the current article or source changed.
 
 ## Round 2
 

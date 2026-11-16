@@ -1,3 +1,22 @@
+# Current independent reader review
+
+Verdict: PASS
+Reviewed: src/content/reference/en/templates/hypetrain.mdx
+Reviewed-SHA: 6670554cc702896c6e8bca3fee4af083cbf03055c258ba715c5aeff6f5f0093b
+Reviewed-SHA256: 6670554cc702896c6e8bca3fee4af083cbf03055c258ba715c5aeff6f5f0093b
+Reviewed-Date: 2026-11-05
+Reviewer: independent section reviewer
+
+The reference preserves event-only hype_train rows separately from live hypetrain state; the shared availability note makes the event prerequisite clear.
+
+The full page was read with the preceding/following navigation context and related links. This review applies the owner's explanatory, progressive-disclosure guidance; it does not impose Atlas sentence caps, pilot mimicry or fixed article headings. No substantive reader finding remains at this hash. Build/render/link checks are recorded separately by the lead reviewer.
+
+Report: docs-work/overhaul/review-learning-commands-helpers.md.
+
+## Historical evidence
+
+The material below is retained as historical evidence; its older verdict is not the current review.
+
 # Reader review: C:\Projects\NoMercyLabs\nomnomzbot-docs\src\content\reference\en\templates\hypetrain.mdx
 Verdict: PASS
 Reviewed: C:\Projects\NoMercyLabs\nomnomzbot-docs\src\content\reference\en\templates\hypetrain.mdx

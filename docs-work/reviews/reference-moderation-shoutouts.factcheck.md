@@ -1,7 +1,41 @@
-# Fact-check: /reference/moderation/shoutouts
+# Independent source verification: /reference/moderation/shoutouts
 Verdict: PASS
 Reviewed: src/content/reference/en/moderation/shoutouts.mdx
-Reviewed-SHA: 2762e15d292daab9
+Reviewed-SHA: b51a646bc6dfaf0bc55183c098ca82ff50a59fe400fe1b6a26f40adffbea54c2
+
+## Independent overhaul review, 2026-11-05
+
+ShoutoutSender.cs:65-105,145-240; ShoutoutAction.cs:210-323; AutoShoutoutScheduler.cs:41-44,292-316: message precedence, native acceptance, conditional speech, per-user announce-only exception, queue and automatic waits.
+
+Reviewed independently of the article author, in actual navigation order. Current product source 54da8b631 and relevant changes since b12f4f696 were read without starting the bot, executing platform actions or changing channel data. This verdict is source verification, not proof of live platform delivery. See [review-moderation-economy-community.md](../overhaul/review-moderation-economy-community.md) for the review scope and findings.
+
+## Prior review history
+
+The earlier text below is retained as history; it does not independently approve a later article hash.
+
+Author source audit: 2026-11-04. Independent review of the revised article is pending; the historical PASS below does not approve this text.
+Product source: C:/Projects/NoMercyLabs/nomnomzbot at b12f4f696, inspected without starting the bot or changing data.
+
+Adds purpose and a manual-first path while retaining detailed verified setup/reference. Corrects the claim that every pipeline shoutout speaks.
+
+| Revised claim or retained core behavior | Current source opened |
+| --- | --- |
+| Message priority and native shoutout before announcement | server/src/NomNomzBot.Infrastructure/Stream/ShoutoutSender.cs:65-105,145-215 |
+| Speech conditional on request.Speak; channel bot voice | server/src/NomNomzBot.Infrastructure/Stream/ShoutoutSender.cs:215-240 |
+| Step speech parameter and defaults | server/src/NomNomzBot.Infrastructure/Stream/PipelineActions/ShoutoutAction.cs:34-75 |
+| Current UI and profile introduction labels | dashboard/src/views/dashboard/settings/shoutouts/ShoutoutsView.vue; its i18n/en.json; dashboard/src/components/layout/profile/ProfileShoutoutLine.vue |
+| Auto scheduler and suggestion behavior | server/src/NomNomzBot.Infrastructure/Stream/AutoShoutout/AutoShoutoutScheduler.cs:41-44,292-316,446-456; server/src/NomNomzBot.Infrastructure/Moderation/ShoutoutSuggestionService.cs |
+
+The practical scenarios are recommended uses of these verified controls, not promises of a new feature. Unchanged reference details were compared with the current view, labels and relevant implementation. Runtime platform calls were not performed.
+
+## Historical evidence
+
+The prior review is retained for its detailed claim inventory. Its verdict and file hashes refer to the earlier article; where the new evidence differs, the new evidence takes precedence.
+
+# Fact-check: /reference/moderation/shoutouts
+Historical verdict: PASS
+Reviewed: src/content/reference/en/moderation/shoutouts.mdx
+Reviewed-SHA: 66744d444a644567
 
 This review judges the current page text (sha256 2762e15d292daab9...). Product repository: nomnomzbot, master, read only.
 S = server/src/NomNomzBot.Infrastructure/Stream. L = dashboard/src/i18n/locales/en.json. SV = dashboard/src/views/dashboard/settings/shoutouts.

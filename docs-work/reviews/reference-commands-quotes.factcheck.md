@@ -1,3 +1,25 @@
+# Current independent fact check
+
+Verdict: PASS
+Reviewed: src/content/reference/en/commands/quotes.mdx
+Reviewed-SHA: 97f7d95e2a1c929b6f13b32af3046264273c3cb4521aa4d0831d8aa5e1ed2ea3
+Reviewed-SHA256: 97f7d95e2a1c929b6f13b32af3046264273c3cb4521aa4d0831d8aa5e1ed2ea3
+Reviewed-Date: 2026-11-05
+Reviewer: independent section reviewer
+Product: 54da8b6318de63b5205a0ff8db35e0b9045dd959 (initial source tracing b12f4f69638553c03ed64c1518c90d7bcccd6907)
+
+The full article was read in navigation order; consequential behavior and reference details were checked against current source. All reported documentation findings affecting this page were repaired and re-reviewed. This is a source review, not a live-channel test.
+
+- Sequential allocation/insert transaction and random live-set read: server/src/NomNomzBot.Infrastructure/Quotes/QuoteService.cs:80-184.
+- Quote verb/reply-to-message dispatch and separate write checks: server/src/NomNomzBot.Infrastructure/Quotes/Builtins/QuoteBuiltin.cs:91-147.
+- VIP read/write and Moderator delete defaults: server/src/NomNomzBot.Infrastructure/Content/Identity/ActionDefinitionSeeder.cs:498-500.
+
+Report: docs-work/overhaul/review-learning-commands-helpers.md.
+
+## Historical evidence
+
+The material below is retained as historical evidence. Its older hashes, verdicts and values do not constitute the current review.
+
 # Fact check: src/content/reference/en/commands/quotes.mdx
 Verdict: PASS
 Reviewed: src/content/reference/en/commands/quotes.mdx

@@ -1,3 +1,22 @@
+# Current independent reader review
+
+Verdict: PASS
+Reviewed: src/content/reference/en/getting-started/dashboard-tour.mdx
+Reviewed-SHA: 2c5bfc3522fee070eb3c3e9713a892ac95888b0705d631990b50e2a73983f56d
+Reviewed-SHA256: 2c5bfc3522fee070eb3c3e9713a892ac95888b0705d631990b50e2a73983f56d
+Reviewed-Date: 2026-11-05
+Reviewer: independent section reviewer
+
+The opening gives newcomers a useful home base before the longer navigation lookup. Responsive navigation, roles and the difference between visible controls and granted access are explained; categories match the actual dashboard.
+
+The full page was read with the preceding/following navigation context and related links. This review applies the owner's explanatory, progressive-disclosure guidance; it does not impose Atlas sentence caps, pilot mimicry or fixed article headings. No substantive reader finding remains at this hash. Build/render/link checks are recorded separately by the lead reviewer.
+
+Report: docs-work/overhaul/review-learning-commands-helpers.md.
+
+## Historical evidence
+
+The material below is retained as historical evidence; its older verdict is not the current review.
+
 # Reader review: C:\Projects\NoMercyLabs\nomnomzbot-docs\src\content\reference\en\getting-started\dashboard-tour.mdx
 Verdict: PASS
 Reviewed: C:\Projects\NoMercyLabs\nomnomzbot-docs\src\content\reference\en\getting-started\dashboard-tour.mdx

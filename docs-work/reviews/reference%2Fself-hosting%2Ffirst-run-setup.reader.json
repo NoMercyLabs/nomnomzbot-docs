@@ -1,0 +1,65 @@
+{
+  "fingerprint": "bca2c9c9ac15c9fb2336189f8a54fc61a34028601b7703b44d345b1774010cc6",
+  "verdict": "PASS",
+  "answers": [
+    {
+      "question": 1,
+      "answer": "The setup page needs one thing: a Twitch app on step 1. You either register your own app or choose Use the shared NomNomzBot app. Steps 2 to 5 (Bot account, Spotify, Discord, YouTube) can wait, and you add those keys later. Then you choose the Finish setup button on the last card and sign in as the broadcaster. I walked each numbered list in order, and every action the prose needs has a step.",
+      "quote": "Only the Twitch app step is required. You can skip every other step and add those keys later."
+    },
+    {
+      "question": 2,
+      "answer": "You need the bot running and open in your browser. If you register your own Twitch app, you also need a Twitch account with a verified email address and two-factor authentication. The page states both near the top, before the steps. Step 2 also needs your own app with its secret saved in step 1, and the page says so in step 1 and again at the start of step 2.",
+      "quote": "You need the bot running and open in your browser, as in Install with Docker."
+    },
+    {
+      "question": 3,
+      "answer": "On step 1, success is Next turning on after Save or after choosing the shared app. On step 2, the card shows Connected: and the account name. The last card lists every step as Done or Not set. After Finish setup, the bot leaves the setup page for the dashboard and asks you to sign in.",
+      "quote": "The last card lists every step with Done or Not set."
+    },
+    {
+      "question": 4,
+      "answer": "On step 1 the streamer chooses Use the shared NomNomzBot app, then Next. They choose Skip on steps 2 to 5, then the Finish setup button. This works because only the Twitch app step is required and the shared app means registering nothing. It has three costs: they sign in with a code (Sign in with a code instead on the sign-in page), they cannot add a bot account, and the broadcaster account speaks as the bot in chat.",
+      "quote": "Choose Skip on steps 2 to 5."
+    },
+    {
+      "question": 5,
+      "answer": "I had to guess at one point. The YouTube step says Google may ask for the OAuth consent screen, and the page gives no values for it, so I would fill it in by trial. That step is optional, so this costs time only for someone who wants YouTube. No requirement came after the action it affects. The warning to finish setup soon comes before the steps, and the secret needed for step 2 is named in step 1.",
+      "quote": "Google may ask you to set up the OAuth consent screen first."
+    },
+    {
+      "question": 6,
+      "answer": "The Event feed paragraph describes a box the new user cannot use and needs nothing from, which costs a few sentences when read aloud. The narrow-screen note about Step 1 of 6 is minor detail. Neither one blocks the task.",
+      "quote": "It has no button, and you need nothing from it to finish."
+    }
+  ],
+  "findings": [],
+  "warnings_released": true,
+  "warning_review": [
+    {
+      "id": "length",
+      "decision": "keep",
+      "reason": "About 1,700 words covering six steps, two optional routes and a troubleshooting section. The reader gets the one required step and the shortest route near the top, and the extra length costs time only to readers who want the optional services. A word count alone is not a defect."
+    },
+    {
+      "id": "first-numbered-step",
+      "decision": "keep",
+      "reason": "The 272 words before step 1 are the access requirements (a running bot, and a verified Twitch account with two-factor authentication for an own app), the warning that keys stay open until Finish setup, and the shortest route. Each one changes what the reader does in the steps, so placing them first is correct."
+    },
+    {
+      "id": "paragraph-3",
+      "decision": "keep",
+      "reason": "The callout says to finish setup soon, because until the last card is finished anyone who can open the address can change the keys. A new reader needs that before the steps. The admin sentences add a few seconds and name who can change the keys afterward."
+    },
+    {
+      "id": "paragraph-19",
+      "decision": "keep",
+      "reason": "The paragraph explains what happens if the reader signs in before choosing Finish setup and how to come back, which are consequences the reader acts on. Its length is a sentence count only; the sentences state a cause and the action that follows, and they read clearly when spoken."
+    },
+    {
+      "id": "paragraph-26",
+      "decision": "keep",
+      "reason": "The paragraph states a cause and the action that follows it in the setup order, which the reader needs in sequence. The sentence count is a number alone; nothing in it is unrelated detail that blocks a step."
+    }
+  ]
+}

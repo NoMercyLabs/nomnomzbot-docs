@@ -1,3 +1,23 @@
+# Current independent reader review
+
+Verdict: PASS
+Reviewed: src/content/reference/en/audio/media-share.mdx
+Reviewed-SHA: d9be380b8d3d13afa046f60ac45cf80833fd76f2fa7ad1cac9d4ab50cd2ce8b6
+Reviewed-SHA256: d9be380b8d3d13afa046f60ac45cf80833fd76f2fa7ad1cac9d4ab50cd2ce8b6
+Reviewed-Date: 2026-11-05
+Reviewer: independent media-section reviewer
+Product: 54da8b6318de63b5205a0ff8db35e0b9045dd959 plus preserved current music UI edits
+
+One free approved-video test teaches submission, review and playback before opening the feature. The source-versus-dashboard distinction is clear. Pricing/refund behavior, silent passive Twitch submissions, queue order and player controls retain their practical consequences.
+
+The full page was read with adjacent navigation and related links. The owner's natural explanatory style governs: no Atlas sentence caps, pilot imitation or rigid article template was imposed. No substantive reader finding remains at this hash. Combined build, rendered-output and link/frontmatter checks belong to the lead's separate validation.
+
+Report: docs-work/overhaul/review-automation-media-integrations.md.
+
+## Historical evidence
+
+Older hashes and verdicts below are retained for history and are not the current review.
+
 # Reader review: src/content/reference/en/audio/media-share.mdx
 Verdict: PASS
 Reviewed: src/content/reference/en/audio/media-share.mdx

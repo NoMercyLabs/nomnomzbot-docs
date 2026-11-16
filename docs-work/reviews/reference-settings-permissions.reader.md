@@ -1,5 +1,26 @@
-# Reader review: C:\Projects\NoMercyLabs\nomnomzbot-docs\src\content\reference\en\settings\permissions.mdx
+# Independent reader review: /reference/settings/permissions
 Verdict: PASS
+Reviewed: src/content/reference/en/settings/permissions.mdx
+Reviewed-SHA: c86cf23ecafc75d1
+Reviewed-SHA256: c86cf23ecafc75d1fb313a6bc3ee7745ce83ca14c4b01ae5bfbeaf9c8779b8d0
+Reviewed-Date: 2026-11-05
+Reviewer: independent reviewer, separate from article author
+Product-Revision: 54da8b6318de63b5205a0ff8db35e0b9045dd959
+
+The complete current article was read independently of its author, in the established settings, self-hosting and Code and SDK navigation order. The user's natural explainer/progressive-disclosure requirements take precedence over historical pilot mimicry, sentence caps and repeated page templates.
+
+## Learning and lookup result
+
+The three decisions (team, role requirement, named exception) establish a useful mental model, followed by concrete procedures and scoped capability tables. Platform authorization is distinguished from bot access. The Artist rung remains a small lookup gap, not a blocker.
+
+No outstanding substantive reader finding.
+
+Related routes were checked as contextual continuations rather than prerequisites for ordinary bot use. Draft labels remain appropriate for code material. This is a text/structure review, not a claim of rendered browser QA.
+
+## Historical review (superseded)
+
+# Reader review: C:\Projects\NoMercyLabs\nomnomzbot-docs\src\content\reference\en\settings\permissions.mdx
+Historical verdict: PASS
 Reviewed: C:\Projects\NoMercyLabs\nomnomzbot-docs\src\content\reference\en\settings\permissions.mdx
 Reviewed-SHA: 310e46d0423a67f7
 

@@ -1,0 +1,55 @@
+{
+  "fingerprint": "0d294f839670264c8bb30bc7b1778031d80d708c4b7dbf4481b7db14e518d025",
+  "verdict": "PASS",
+  "answers": [
+    {
+      "question": 1,
+      "answer": "Use the helper that the triggering event fills, typed in braces in the line of the event response, for example {tier}, {months} or {bits}. To see which helpers an event fills, open the response and read the help under Your line, which lists them. The page names no arguments for these helpers; each one is used as a bare name in braces. The Reference table gives each helper's value and the places that accept it.",
+      "quote": "When you edit a response, the help under Your line says “You can use:” and lists the helpers that event fills."
+    },
+    {
+      "question": 2,
+      "answer": "You need an event response on the Event responses page, or a pipeline that an event starts, and that event must fill the helper. The second and third paragraphs say this. A few helpers also work in Discord notifications, as the Use in column shows. For viewer-written text, the Viewer Templates setting and permissions also apply; the paragraph above the Reference table says so.",
+      "quote": "You use them in the line of an event response, on the Event responses page of the dashboard, and in a pipeline that an event starts."
+    },
+    {
+      "question": 3,
+      "answer": "It worked if the sent line shows the value, such as 1 for {tier}. If the event does not fill the helper, the bot sends the helper text exactly as typed, braces included. Events are told apart by the helpers each one fills, as listed per section and under Your line.",
+      "quote": "A helper that the event does not fill is not replaced: the bot sends it exactly as you typed it, braces included."
+    },
+    {
+      "question": 4,
+      "answer": "A chat command has no event behind it, so it cannot supply {tier}. The command does not save. Instead, the dashboard names the helper and says where it works, such as event responses, pipelines and Discord notifications. For a value a command can use, the page points to Variables and templates.",
+      "quote": "If you copy {tier} from a sub response into a chat command, the command does not save."
+    },
+    {
+      "question": 5,
+      "answer": "Small detours only. The note that a ban, timeout or unban response is sent only for an action the bot itself made comes after the {moderator} explanation, and it changes when those responses fire at all. The Viewer Templates condition for viewer-written text ({message}, {input}) comes only in the Reference section, after the sections that explain those helpers. Each costs a reread, not a failed action.",
+      "quote": "The bot sends a ban, timeout or unban response only for an action the bot itself made."
+    },
+    {
+      "question": 6,
+      "answer": "The opening list of every helper name is long when read aloud, and the Reference table repeats it. It costs the listener time before the first explanation, but the list lets a reader scan the page, so it is not a defect.",
+      "quote": "Helpers on this page:"
+    }
+  ],
+  "findings": [],
+  "warnings_released": true,
+  "warning_review": [
+    {
+      "id": "sentence-7-1",
+      "decision": "keep",
+      "reason": "The 48 words are the helper list for the resub response, which a streamer scans while setting up that response. Each name is defined in the same sentence or the next one ({months} total, {streak} in a row, {message} empty when nothing was written), so the length carries needed meaning and no step is hidden. Not a material defect."
+    },
+    {
+      "id": "sentence-11-1",
+      "decision": "keep",
+      "reason": "The sentence gives the four cheer helpers and the one non-obvious behavior a streamer would otherwise get wrong: {message} has the emotes removed, shown with the Cheer100 great stream example. The length is the cost of that concrete example, so it stays."
+    },
+    {
+      "id": "sentence-21-2",
+      "decision": "keep",
+      "reason": "The worked example (5 euro gives 5, 12.50 euro gives 12.5) prevents a surprise in the amount format and shows what a streamer will see in chat. The three-letter currency code and the empty-when-not-sent rule are needed to use the helpers. The number of words is not a defect."
+    }
+  ]
+}

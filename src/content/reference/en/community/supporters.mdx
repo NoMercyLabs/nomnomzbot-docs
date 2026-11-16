@@ -1,0 +1,94 @@
+---
+title: Supporters
+description: See who subscribed, gifted subs, cheered bits or tipped your channel recently, and who gave the most.
+---
+
+**Supporters** puts the people who back your channel in one place.
+You can thank a new subscriber, see who gifted subs during a raid of generosity, or check who cheered the most bits, without scrolling through chat or the event log.
+Twitch subscriptions, gifts and cheers sit on the left side of the page.
+Tips and memberships from services such as Ko-fi or Streamlabs sit in the last panel.
+
+Open **Supporters** in the **Loyalty** group of the sidebar.
+
+## Who can use this page
+
+By default, a **Moderator**, **Lead moderator**, **Editor** or **Broadcaster** may open the page.
+The sidebar shows **Supporters** only to people who may open it.
+The roles are explained on [Permissions](/reference/settings/permissions).
+
+Two panels have their own requirement.
+The number tiles, **Twitch subscriptions and gifts**, **Cheers** and **Top supporters** need the right to read the dashboard.
+**Tips and memberships** needs the right to read supporters.
+Someone who lacks one of them sees the page without that part.
+
+## Read the numbers at the top
+
+The row of tiles gives a quick count.
+A tile for YouTube members appears only when the bot can read your YouTube members.
+When it cannot, the tile is left out instead of showing 0.
+
+| Tile | What it counts |
+| --- | --- |
+| **Twitch subscribers** | The subscribers your channel has on Twitch right now. |
+| **YouTube members** | The members your channel has on YouTube right now. |
+| **Gift events** | How many gift events appear in the recent activity. One event can hold several subs, so this counts gifts, not gifted subs. |
+| **Bits cheered** | The bits added up from the cheers in the recent activity. |
+
+The first two tiles are live totals from the platforms.
+The last two cover only the **recent activity** the page loaded, so they are not all-time totals.
+Connect YouTube first if you want the members tile (see [YouTube](/reference/integrations/youtube)).
+
+## See subscriptions and gifts
+
+**Twitch subscriptions and gifts** lists the newest first.
+Each row shows an icon, the name of the person and the time.
+
+| Icon | Meaning |
+| --- | --- |
+| Star | A new Twitch subscription. The line reads **Subscribed on Twitch** with the tier. |
+| Repeat | A resubscription. The line adds the number of months when it is more than 1. |
+| Gift card | A gift. For someone who gives, the line reads **Gifted** with the number of subs and the tier. For someone who gets one, the name is followed by **received as a gift** and **from** the person who gave it. |
+
+A viewer who resubscribes and shares a message can send Twitch two events for one action.
+The page shows one row when both come from the same person within a minute.
+A gift sent anonymously shows **Anonymous**, and the name has no profile to open.
+Choose a name to open that person's profile.
+
+## See cheers
+
+**Cheers** lists each cheer with its **bits** count, newest first.
+An anonymous cheer shows **Anonymous**.
+
+## See the top supporters
+
+**Top supporters** ranks the five people who gave the most in the recent activity.
+The panel has two lists.
+
+- **Most bits** adds up each person's cheers.
+- **Most gifted Twitch subs** adds up the subs each person gifted.
+
+Anonymous givers are left out of the ranking, because the page cannot tell whether two anonymous gifts came from the same person.
+A list with nobody to rank stays empty.
+
+## Read tips and memberships
+
+**Tips and memberships** lists the events the bot received from your connected supporter services, newest first.
+Each row shows the name, the kind (**Tip**, **Membership**, **Merch** or **Charity**), the amount in the currency the service sent, the tier when there is one, and the time.
+The panel loads up to 50 events.
+
+This panel stays empty until you connect a service.
+Set one up under **Settings**, then **Supporter sources**, as described on [Supporter sources](/reference/integrations/supporter-sources).
+To have the bot thank people when these events arrive, use an [event response](/reference/automation/event-responses).
+
+## Long lists and errors
+
+Each list shows 10 rows at first.
+Choose the button at the bottom of a panel to show 10 more.
+If a panel cannot load, it says so and offers a retry.
+Each panel retries on its own, so one failure does not hide the rest.
+
+## What the page does not show
+
+The Twitch panels read recent activity, not your whole history.
+An older subscription or cheer falls out of view as newer ones arrive.
+For the full record, use the [event journal](/reference/settings/event-journal).

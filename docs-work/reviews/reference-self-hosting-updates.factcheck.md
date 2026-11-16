@@ -1,5 +1,32 @@
-# Fact check: /reference/self-hosting/updates
+# Independent source review: /reference/self-hosting/updates
 Verdict: PASS
+Reviewed: src/content/reference/en/self-hosting/updates.mdx
+Reviewed-SHA: 935850203c5a6929
+Reviewed-SHA256: 935850203c5a6929a5ddb3ec9f38fd64c77aa5e5253f37d00a19dc02091dc578
+Reviewed-Date: 2026-11-05
+Reviewer: independent reviewer, separate from article author
+Product-Revision: 54da8b6318de63b5205a0ff8db35e0b9045dd959
+
+The complete current article was read in navigation order and checked against current product source. Historical PASS entries below are leads, not approval of this revision. Atlas voice/template gates do not govern this review.
+
+## Current evidence and result
+
+Repaired and reread against 54da8b631: visible GitHub release pages apply only to stable; beta/nightly create Git and image tags. Schedule, promotion sequence and pinned tag format remain correct.
+
+Source files opened in this review: .github/workflows/release.yml:19-59,90-149 at 54da8b631; scripts/switchover.ps1:104-225; docker-compose.lite.yml:29-77; docker-compose.yml:65-205.
+
+Unqualified paths beginning Identity, CustomCode, Billing, EventStore, Engagement, Rewards, Widgets or Platform are under server/src/NomNomzBot.Infrastructure; Api and Domain identify their corresponding server projects. Dashboard shorthand is under dashboard/src/views/dashboard.
+
+Verification is read-only source review. No bot/API startup, live account authorization, channel writes, C# host/Jint execution, Docker install or restore was performed. Documentation build/render QA belongs to the combined parent pass. The SDK reference and worked-example checks additionally ran the existing read-only nnz-code-doc-check.mjs with production JavaScript bootstrap and substituted host I/O.
+
+## Historical review (superseded)
+
+# Fact check: /reference/self-hosting/updates
+Historical verdict: PENDING
+
+2026-11-04 overhaul: the article changed, so the previous PASS and hash below are historical evidence, not approval of the current revision.
+Fresh writer source checks and article inventory are recorded under H1/H4 in `docs-work/overhaul/settings-hosting-code.md`.
+Independent review of the changed text is pending.
 Reviewed: C:\Projects\NoMercyLabs\nomnomzbot-docs\src\content\reference\en\self-hosting\updates.mdx
 Reviewed-SHA: 3c69744dc445df70
 

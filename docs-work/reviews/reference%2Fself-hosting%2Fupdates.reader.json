@@ -1,0 +1,55 @@
+{
+  "fingerprint": "27c3628c9e98e6bbc4d399e5caa5ebf9f596c179a8bd0cf0b4b136f1d80f247a",
+  "verdict": "PASS",
+  "answers": [
+    {
+      "question": 1,
+      "answer": "Run stable if the bot runs your streams. Set the channel with API_IMAGE in .env. For lite, run the pull and up -d commands in the project folder. For full, set API_IMAGE to a channel image and run the switchover script in PowerShell. You could lose the database changes, which is why you make a backup first. You also lose your stored sign-ins if ENCRYPTION_KEY changes.",
+      "quote": "Pick stable when the bot runs your streams and you want the fewest surprises."
+    },
+    {
+      "question": 2,
+      "answer": "A complete backup and a note of the image you run now, plus PowerShell for the full setup. This is stated under Before you update. For the full setup, API_IMAGE must also be set to a release channel image, which is stated under Pick a release channel.",
+      "quote": "Make a complete backup first, and note the image you run now, so you can go back."
+    },
+    {
+      "question": 3,
+      "answer": "Lite worked when the ps status shows healthy. Full worked when the script ends with SWITCHOVER: DONE. The release channels differ by tag and by how often each gets a new version.",
+      "quote": "The update worked when the script ends with SWITCHOVER: DONE: by then the new version is ready and the old one has stopped."
+    },
+    {
+      "question": 4,
+      "answer": "Do not hand the full setup's bot containers to Watchtower. It would stop the running version before the new one is ready, so the bot goes offline during every update. The switchover script avoids that by starting the new version next to the old one. Update by hand instead.",
+      "quote": "In the full setup it stops the running version before the new one is ready, so the bot goes offline during every update."
+    },
+    {
+      "question": 5,
+      "answer": "Restoring into new volumes when going back in the full setup depends on a step on another page. I would detour to Install with Docker to learn how new volumes get used. It also is not clear whether the database warning applies when the full-setup switchover failed and the old version kept running. That costs a reread of the failure section.",
+      "quote": "Restore both volumes from your backup into new volumes, as the end of Back up the full setup describes."
+    },
+    {
+      "question": 6,
+      "answer": "The long docker inspect commands with format strings are hard to read aloud. They are meant to be copied, so the cost is small.",
+      "quote": "docker image inspect --format '{{index .RepoDigests 0}}' $(docker inspect --format '{{.Image}}' nomnomzbot-lite)"
+    }
+  ],
+  "findings": [],
+  "warnings_released": true,
+  "warning_review": [
+    {
+      "id": "length",
+      "decision": "keep",
+      "reason": "The page covers two setups, the release channels, the checks and going back, so its length follows the content. The reader found every answer on it, and the reference sections come after the update steps where a reader can skip them."
+    },
+    {
+      "id": "first-numbered-step",
+      "decision": "keep",
+      "reason": "The backup, the Watchtower warning, the noted image and the release channel choice change how the steps run, so they belong before the first numbered step. Nothing unrelated sits in that span, and the exact-release tags are collapsed in a details block."
+    },
+    {
+      "id": "sentence-9-2",
+      "decision": "keep",
+      "reason": "The sentence is long and its link label reads awkwardly aloud, but the meaning is plain: the bot's own build can be kept, and the linked section shows how. No answer depended on parsing it, so this is wording rather than a defect."
+    }
+  ]
+}

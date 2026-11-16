@@ -3,22 +3,22 @@ title: Bans and blocked terms
 description: See who is banned in your channel and unban them, and block or unblock the words and phrases Twitch holds back from chat.
 ---
 
-You see and unban banned people on the **Banned people** settings page.
-You block words and phrases on the **Blocked terms** settings page.
-Both pages are in the **Access** group of the settings sidebar.
-At the top of each page, the title line reads **Moderation** / and then the page name.
+Use a ban when a person should no longer be able to chat, and a blocked term when a word or phrase needs Twitch's moderation check wherever it appears.
+NomNomzBot shows Twitch's current lists on **Banned people** and **Blocked terms**, both in the **Access** group of **Settings**.
+These pages manage what Twitch enforces, rather than a separate list kept only by the bot.
+
+You apply a new ban from a person's [profile](/reference/community/people) or the [Chat page](/reference/community/chat-page).
+Return to **Banned people** when you want to review the list or let someone chat again.
+For rules that delete messages or trigger a timeout automatically, use [chat filters](/reference/moderation/automod-and-chat-filters).
 
 | Page | What it holds |
 | --- | --- |
-| **Banned people** | Everyone banned in your channel, as Twitch holds the list. |
+| **Banned people** | Everyone permanently banned in your channel, as Twitch holds the list. |
 | **Blocked terms** | The words and phrases Twitch holds back from your chat. |
-
-Twitch keeps both lists.
-What you see on these pages is what Twitch enforces.
 
 ## Who can use these pages
 
-The roles below are explained on [Permissions](/reference/settings/permissions).
+The roles below are the defaults and can be adjusted on [Permissions](/reference/settings/permissions).
 
 | Who | What they may do |
 | --- | --- |
@@ -35,8 +35,12 @@ Someone who may not block sees the **Blocked now** list only, without the **Bloc
 1. Open **Banned people** in the settings.
    The page shows the **Banned people** panel.
 2. Read each row.
-   A row shows the person's name and a line like "Banned by a moderator 2 hours ago".
-   When the ban has a reason, the line shows the reason, then a dot, then "Banned by a moderator 2 hours ago".
+   A row shows the person's name and a line like "Banned by Stoney_Eagle 2 hours ago", with the name of the moderator who banned them.
+   When the ban has a reason, the line shows the reason, then a dot, then "Banned by Stoney_Eagle 2 hours ago".
+
+The list shows permanent bans only.
+A timeout does not appear here.
+The newest ban is at the top.
 
 When nobody is banned, the panel shows "Nobody is banned in your channel."
 
@@ -51,6 +55,9 @@ Banning the person again undoes it.
 If the unban fails, the page shows "`{name}` could not be unbanned." with the person's name in place of `{name}`.
 
 ## Block a word or phrase
+
+For example, you can add an unwanted promotional phrase here instead of deleting each occurrence by hand.
+This adds the phrase to Twitch's blocked terms; it does not create one of NomNomzBot's custom filters.
 
 1. Open **Blocked terms** in the settings.
    The page shows the **Block a word or phrase** panel and the **Blocked now** list.

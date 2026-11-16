@@ -8,16 +8,29 @@ Helpers on this page: `{var.*}`, `{set}`, `{custom.*}`, `{include.*}`, `{transfo
 These helpers keep a value for the rest of a reply, read custom data, or put another command's reply inside this one.
 Use them to keep a long reply short.
 
-Each row is its own example, so the rows on this page do not all come from one moment.
+## Reuse a value inside one reply
 
-| Helper | What it gives | Example |
-| --- | --- | --- |
-| `{custom.<name>.<field>}` | A field from an ingested custom data source (e.g. `{custom.mysource.field}`) | `{custom.heartrate.bpm}` gives `128` |
-| `{include.builtin}` | Prints the reply of a built-in command that only reads information any viewer may see, for example uptime: `{include.builtin:uptime}` | `{include.builtin:uptime}` gives `The stream has been live for 2h 5m.` |
-| `{include.cmd}` | Prints the reply of another command of the channel, filled in for the same viewer: `{include.cmd:name}` | `{include.cmd:hug}` gives `ViewerOne sends a hug` |
-| `{include.list}` | Prints one entry of a pick list by its position, counted from 1: `{include.list:name\|position}` | `{include.list:snacks\|2}` gives `cookies` |
-| `{set}` | Keeps a value under a name for the rest of this reply and prints nothing. Read it with `{name}` or `{var.name}`: `{set:name=value}` | - |
-| `{transform.<name>:<text>}` | Applies a text transform (upper/lower/title/reverse/etc.) to the wrapped text | `{transform.upper:hi}` gives `HI` |
-| `{var.<name>}` | Reads a value that `{set:name=value}` kept earlier in this reply: `{var.name}` | `{set:x=5}{var.x}` gives `5` |
+Use `{set:mood=happy}I feel {var.mood}.` when you want to name a value once and read it later in the same reply.
+The assignment produces no visible text, so the result is `I feel happy.`
+It lasts only for this rendering; the next command use does not remember it.
+
+For something that should survive another use or a restart, use the relevant stored feature, such as a named counter or viewer data.
+An include helper is different again: it reads another command's reply or a list entry so you can reuse wording rather than copy it into several commands.
+It does not turn a template into a pipeline of actions.
+
+The examples illustrate possible values; your results depend on the channel and trigger.
+**Use in** lists the template fields that accept each helper.
+A pipeline still needs a trigger that supplies the relevant person, message, or event; event-specific helpers need that event.
+For viewer-written text, the [Viewer Templates setting and permissions](/reference/settings/features) also apply.
+
+| Helper | What it gives | Example | Use in |
+| --- | --- | --- | --- |
+| `{custom.<name>.<field>}` | A field from an ingested custom data source (e.g. `{custom.mysource.field}`) | `{custom.heartrate.bpm}` gives `128` | Commands, event responses, timers, pipelines, Discord, webhooks |
+| `{include.builtin}` | Prints the reply of a built-in command that only reads information any viewer may see, for example uptime: `{include.builtin:uptime}` | `{include.builtin:uptime}` gives `The stream has been live for 2h 5m.` | Commands, event responses, timers, pipelines, Discord, webhooks |
+| `{include.cmd}` | Prints the reply of another command of the channel, filled in for the same viewer: `{include.cmd:name}` | `{include.cmd:hug}` gives `ViewerOne sends a hug` | Commands, event responses, timers, pipelines, Discord, webhooks |
+| `{include.list}` | Prints one entry of a pick list by its position, counted from 1: `{include.list:name\|position}` | `{include.list:snacks\|2}` gives `cookies` | Commands, event responses, timers, pipelines, Discord, webhooks |
+| `{set}` | Keeps a value under a name for the rest of this reply and prints nothing. Read it with `{name}` or `{var.name}`: `{set:name=value}` | - | Commands, event responses, timers, pipelines, Discord, webhooks |
+| `{transform.<name>:<text>}` | Applies a text transform (upper/lower/title/reverse/etc.) to the wrapped text | `{transform.upper:hi}` gives `HI` | Commands, event responses, timers, pipelines, Discord, webhooks |
+| `{var.<name>}` | Reads a value that `{set:name=value}` kept earlier in this reply: `{var.name}` | `{set:x=5}{var.x}` gives `5` | Commands, event responses, timers, pipelines, Discord, webhooks |
 
 Back to [Template helpers](/reference/templates/overview). For the places helpers work, special characters and HTML, read [Variables and templates](/reference/commands/variables-and-templates).

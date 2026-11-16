@@ -6,6 +6,7 @@ import { mdxAnnotations } from 'mdx-annotations';
 import * as shiki from 'shiki';
 import { SKIP, visit } from 'unist-util-visit';
 import type { Root, Element, ElementContent } from 'hast';
+import type { RehypePlugins } from '@astrojs/markdown-remark';
 
 function rehypeParseCodeBlocks() {
   return (tree: Root) => {
@@ -438,7 +439,7 @@ function rehypeWrapCodeBlocks() {
       if (
         node.tagName === 'pre' &&
         parent &&
-        index !== null &&
+        typeof index === 'number' &&
         // Only wrap standalone code blocks. Skip pre's inside a JSX component
         // (e.g. the `::code-group` <CodeGroup>, type 'mdxJsxFlowElement'), which
         // owns its own chrome — wrapping them would nest two containers. Root- and
@@ -523,6 +524,7 @@ function rehypeWrapCodeBlocks() {
               tagName: 'button',
               properties: {
                 type: 'button',
+                'aria-label': 'Copy code to clipboard',
                 className: ['group/button', 'absolute', 'top-3', 'right-3', 'overflow-hidden', 'rounded-lg', 'py-1', 'pl-2', 'pr-3', 'text-2xs', 'font-medium', 'opacity-0', 'backdrop-blur', 'transition', 'focus:opacity-100', 'group-hover:opacity-100', 'bg-zinc-900/5', 'hover:bg-zinc-900/10', 'ring-1', 'ring-zinc-900/10', 'dark:bg-white/5', 'dark:hover:bg-white/10', 'dark:ring-white/10'],
                 'data-code': code || '',
               },
@@ -807,7 +809,7 @@ function rehypeCodeLines() {
   }
 }
 
-export const rehypePlugins = [
+export const rehypePlugins: RehypePlugins = [
   mdxAnnotations.rehype,
   rehypeParseCodeBlocks,
   rehypeShiki,

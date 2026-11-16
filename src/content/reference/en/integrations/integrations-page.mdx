@@ -1,0 +1,125 @@
+---
+title: Integrations page
+description: See every outside service your channel uses, connect or reconnect one, allow more permissions, and disconnect it safely.
+---
+
+The **Integrations** page lists the outside services your channel uses, such as Spotify, YouTube, Kick, Patreon, Treatstream and Shopify.
+Each service has one row that shows whether it works, which account it uses, and what it may do for you.
+You open it under **Settings**, and its heading reads **Connected services**.
+
+Use this page to connect a service, fix one that stopped working, give it more permissions, or cut it off.
+Each service keeps its own setup guide: [Spotify](/reference/integrations/spotify), [YouTube](/reference/integrations/youtube), [Discord](/reference/integrations/discord), [OBS](/reference/integrations/obs), [VTube Studio](/reference/integrations/vtube-studio) and [supporter sources](/reference/integrations/supporter-sources).
+This page explains what the rows and buttons have in common.
+
+## Who can use this page
+
+| What | Who may do it |
+| --- | --- |
+| Open the page and see the rows | A **Moderator** and up |
+| Connect, reconnect, allow more permissions, disconnect, and manage the Spotify app | An **Editor** and up |
+
+Without that right, you see the rows but no buttons.
+The roles are explained on [Permissions](/reference/settings/permissions).
+
+## Read a row
+
+A row shows the service's logo and name, a short description, a status badge, and the account it is connected as.
+The badge tells you what to do next.
+
+| Badge | What it means | What to do |
+| --- | --- | --- |
+| **Connected** | The service is linked and working. | Nothing. |
+| **Not connected** | The service is not linked to your channel. | Choose **Connect**. |
+| **Sign in again** | The service no longer accepts the saved sign-in. | Choose **Reconnect**. |
+| **Sign in again (the saved login is unreadable)** | The bot could not read the sign-in it saved. | Choose **Reconnect**. |
+| **Signed in only** | You signed in, but the service holds no permissions for the bot to act. | Choose **Reconnect** and accept the permissions. |
+
+Sign in again and the unreadable login both show the row in the attention color.
+You can fix both yourself, so they appear here and not only in a log.
+Twitch is your main account and always shows as the signed-in account.
+It has no **Disconnect** button on this page.
+
+## See the details
+
+When the bot knows more about a service, the row has a **Details** button.
+It opens a short list.
+
+- **Permission sets** names the groups of permissions you gave the service, in plain words. For Spotify these are **Control playback**, **Read your library** and **Play in the browser**.
+- **Can do** lists what the service allows right now, such as control playback or read your library.
+- **Last sync** shows the date and time of the last successful sync.
+- **You can also allow** shows buttons for permissions you have not given yet. Today YouTube offers **See your channel members** and **See your YouTube analytics**.
+
+A permission set is a bundle you accept on the service's own page.
+Giving only what a feature needs keeps the rest closed.
+Choosing one **You can also allow** button sends you to the service to approve that one set.
+
+## Connect a service
+
+1. Find the row and choose **Connect**.
+2. A window opens on the service's own sign-in page.
+3. Sign in and accept the permissions.
+4. Return to the dashboard. The badge changes to **Connected**.
+
+The bot never sees your password.
+It only keeps the permission the service gives it.
+If something goes wrong, a red line appears under the list with the reason.
+
+### Reconnect
+
+On a connected service the same button reads **Reconnect**.
+Use it when the badge says **Sign in again**, or when you want to grant more permissions.
+A reconnect asks for the main permission set and every extra one the service offers in one go.
+You can still untick a set on the service's own page.
+
+### Shopify needs your shop name
+
+The Shopify row has a **Shop name** field.
+Type your shop name first.
+**Connect** stays grayed out until the field has text.
+The field disappears once the shop is connected.
+
+### OBS shows Set up
+
+OBS does not sign in on a web page.
+Its row has **Set up** instead, which opens the OBS page.
+See [OBS](/reference/integrations/obs) for the steps.
+
+## Disconnect a service
+
+1. Choose **Disconnect** on the row.
+2. The bot counts what depends on the service right now and shows it in a dialog titled **Disconnect** followed by the service name.
+3. Read the list. The dialog says these parts of your channel stop working until you connect again.
+4. Confirm with **Disconnect**, or close the dialog to keep the service.
+
+The counts come from your channel at that moment, such as how many things use it.
+A count that reads "at least" is a minimum, because the bot could not count everything.
+After you confirm, a message says the service is disconnected.
+You can connect it again at any time.
+
+## The Spotify app panel
+
+The Spotify row has an extra panel for the Spotify app the bot uses to ask for permission.
+It is shown only to people who can manage integrations.
+Its title tells you which app is in use.
+
+| Title | Meaning | Button |
+| --- | --- | --- |
+| **Your own Spotify app** | Your own app is saved. The detail shows the last four characters of its client ID. | **Edit** |
+| **The shared Spotify app** | Every channel on this bot uses the operator's app. | **Use your own Spotify app** |
+| **No Spotify app yet** | No shared app exists and you saved none. | **Add your Spotify app** |
+
+The button opens a dialog with **Client ID** and **Client secret**.
+**Save** replaces both values.
+The secret is stored sealed and never shown again, so the field only says a secret is stored.
+Leave the secret blank in the field only if you plan to type a new one.
+**Remove my app** deletes your own app.
+When a shared app exists, the button reads **Use the shared app** and returns you to it.
+
+When Spotify is not connected, no shared app exists and you saved no app, the dialog opens by itself, because nothing else can make Spotify work.
+For the Spotify side of setup, see [Spotify](/reference/integrations/spotify).
+
+## Related pages
+
+- [Webhooks and event feeds](/reference/integrations/webhooks-and-event-feeds)
+- [Stream Deck and API devices](/reference/integrations/stream-deck-and-api-devices)
+- [Song requests](/reference/music/song-requests)

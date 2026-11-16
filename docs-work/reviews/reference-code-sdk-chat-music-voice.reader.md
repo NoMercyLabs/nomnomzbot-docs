@@ -1,7 +1,41 @@
-# Reader review: src/content/reference/en/code/sdk-chat-music-voice.mdx
+# Current targeted editorial review — 2026-11-06
+
+Verdict: TARGETED AUTHOR SELF-REVIEW; no independent or exhaustive PASS.
+Reviewed: src/content/reference/en/code/sdk-chat-music-voice.mdx
+Reviewed-SHA256: c7f3a358d4cbbabe25db186a3fd7cdc89b5b73f90ee70e442760e94c09b9d8c8
+Reviewer: editing agent (author self-review)
+
+Full editorial read; removed blanket Draft callout/title. Focused source check: Infrastructure/CustomCode/Jint/JintScriptExecutor.cs:188-245 synchronous wrappers, optional speech arguments, sequence serialization and results. Provider execution, all chat-variable producers and voice lifecycle paths were not exhaustively reverified.
+
+Coverage details and final static-check results: [final-developer.md](../ecosystem-validation/final-developer.md). Full reading is distinct from focused source verification. No live application/provider test or whole-project build in this batch.
+
+## Historical records below — verdicts and hashes preserved
+
+# Independent reader review: /reference/code/sdk-chat-music-voice
 Verdict: PASS
+Reviewed: src/content/reference/en/code/sdk-chat-music-voice.mdx
+Reviewed-SHA: 9e2dcdda9b227339
+Reviewed-SHA256: 9e2dcdda9b227339613b7a4d9fa817205f8cea9d0f72671bbc70992bb287abe9
+Reviewed-Date: 2026-11-05
+Reviewer: independent reviewer, separate from article author
+Product-Revision: 54da8b6318de63b5205a0ff8db35e0b9045dd959
+
+The complete current article was read independently of its author, in the established settings, self-hosting and Code and SDK navigation order. The user's natural explainer/progressive-disclosure requirements take precedence over historical pilot mimicry, sentence caps and repeated page templates.
+
+## Learning and lookup result
+
+Separate chat/music/speech outputs are introduced first. Queue versus immediate playback, per-call voice choices and grant requirements are precise. The final example honestly explains capped sleep rather than claiming confirmed playback completion.
+
+No outstanding substantive reader finding.
+
+Related routes were checked as contextual continuations rather than prerequisites for ordinary bot use. Draft labels remain appropriate for code material. This is a text/structure review, not a claim of rendered browser QA.
+
+## Historical review (superseded)
+
+# Reader review: src/content/reference/en/code/sdk-chat-music-voice.mdx
+Historical verdict: PASS
 Reviewed: C:\Projects\NoMercyLabs\nomnomzbot-docs\src\content\reference\en\code\sdk-chat-music-voice.mdx
-Reviewed-SHA: e3a379fc6ffbb4b3
+Reviewed-SHA: 81d6961b93acb4c4
 
 Reader: a streamer or script writer new to the SDK.
 Read before this page: `sdk-script-basics.mdx`, in full, including "One rule for a bad value" (lines 184-195).

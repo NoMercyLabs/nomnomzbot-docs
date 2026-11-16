@@ -3,9 +3,12 @@ title: Discord
 description: Link a Discord server, post a message there for stream events, let viewers pick roles, and get a role while you are live.
 ---
 
-You link a Discord server on the **Discord** page.
-Open **Settings** in the sidebar, then **Discord** in the **Connections** group.
-One linked server lets the bot do three things:
+Discord connects what happens on stream with the place your community talks between streams.
+You can post a go-live message automatically, let people choose a notification role, or show that you are live with a role on your Discord account.
+Open **Settings**, then **Discord** in **Connections** to link the server and set those behaviors.
+
+Start with a go-live notification in a channel your community already uses for announcements.
+Once it posts correctly, you can add role pings and richer message cards without troubleshooting several new pieces at once.
 
 | What the bot does | Section |
 | --- | --- |
@@ -47,11 +50,20 @@ When the bot is not in the server, the panel shows **Add the bot to your server*
 **Check again** asks Discord again if the bot is there.
 
 The bot posts only when the server approved it and **Post to this server** is on.
-A post that cannot go out for this reason shows as **Skipped** under **Recent posts**.
+A post that cannot go out for this reason shows the reason "Discord link is not active" under **Recent posts**.
 
-The bot types every post in the channel's one bot voice.
+Posts come from the Discord bot you added.
+They read exactly as the **Message** and **Embed** say, after the bot fills in the placeholders.
+
+When the server is linked, approved and **Post to this server** is on, viewers can type `!discord` in chat to get an invite link to the server.
+The command needs an active link.
+[Built-in commands](/reference/commands/built-in-commands) lists it.
 
 ## Turn on notifications
+
+For the first notification, choose **Stream goes live**.
+Its supplied message includes the title, game and channel link, so you can begin with that text rather than writing a template.
+Leave **Ping role** on **No ping** until you have checked the destination and wording.
 
 The **Notifications** panel has one row per event.
 Each row shows **Not set up**, **On** or **Off**.
@@ -68,6 +80,7 @@ Each row shows **Not set up**, **On** or **Off**.
    The row shows **On**.
 
 **Preview** saves the rule first, then shows the message as the bot fills it in.
+It is not a way to preview unsaved changes without keeping them.
 
 | Event | Placeholders the bot fills |
 | --- | --- |
@@ -142,6 +155,10 @@ A viewer who presses the button gets the role, or loses it when they had it.
 Discord shows only that viewer a short line that says the role was added or removed.
 The list shows how many viewers opted in.
 
+To use this as a notification opt-in, choose that same role under **Ping role** in a notification rule.
+People choose whether to take the role; the notification then mentions the people who have it.
+**Send a direct message** below concerns the notification, not a message confirming that someone joined or left the role.
+
 | Setting | Default | What it does |
 | --- | --- | --- |
 | **Viewers can pick this role** | On | Off makes the button answer "Self-assign is currently disabled for this role." |
@@ -161,6 +178,9 @@ The live role is a Discord role the bot gives to you while you are live.
 2. Leave **Give the role while live** on.
 3. Choose **Save**.
 
+The bot gives the role only while the server approved it and **Post to this server** is on.
+When posting is off or approval was withdrawn, the bot quietly does not give the role.
+
 The bot gives the role when the stream goes live, and takes it back when the stream ends.
 When the bot missed the end of a stream, it takes the role back when it starts again.
 While the role is on you, the panel shows **Applied right now**, and you cannot change the role.
@@ -177,17 +197,17 @@ To remove the live role, choose **Remove rule**.
 
 | Status | What it means |
 | --- | --- |
-| **Posted** | The message is in Discord. |
-| **Failed** | Discord refused the message. The row shows the reason. |
-| **Skipped** | The bot did not send it, for example because posting is off. The row shows the reason. |
-| **Skipped, already posted** | The bot already posted this event once. |
+| **Posted** | The message is in Discord. The row shows **Posted**. |
+| Failed | Discord refused the message. The row shows only Discord's reason, not the word Failed. |
+| Skipped | The bot did not send it, for example because the link is not active. The row shows only the reason, not the word Skipped. |
+| **Skipped, already posted** | The bot already posted this event once. The row shows **Skipped, already posted**. |
 
 ## Pause, withdraw or disconnect
 
 | Action | What happens |
 | --- | --- |
-| Turn off **Post to this server** | Every Discord message from this channel pauses. |
-| **Withdraw approval**, then **Withdraw approval** | Posting halts until the server is approved again. Nothing is deleted. |
+| Turn off **Post to this server** | Every Discord message from this channel pauses, and the live role is not given. |
+| **Withdraw approval**, then **Withdraw approval** | Posting and the live role halt until the server is approved again. Nothing is deleted. |
 | **Disconnect server**, then **Disconnect** | The bot stops posting to this server. |
 
 To approve the server again, choose **Use another server** and pick the same server on Discord's page.

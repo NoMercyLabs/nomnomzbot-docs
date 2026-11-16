@@ -1,23 +1,22 @@
 ---
-title: Script basics (Draft)
+title: Script basics
 description: Know the bot and nnz names a script can use without a grant, how a script gets its grants, and how to read why a bot call failed.
 ---
 
-A script has two names to work with: `bot` and `nnz`.
-A grant is the bot's permission for one kind of bot call, such as sending a chat line.
-This page lists the parts that need no grant and explains how a script gets its grants.
-The order of a run and its limits are on [How a script runs](/reference/code/how-a-script-runs).
+Inside a script, `bot` gives you the trigger arguments and pipeline variables, while `nnz` provides helpers and calls into the bot.
+Use the local helpers for calculations and text; use `nnz.api` when you need to read channel data or cause an effect such as sending a chat message.
+The order of a run and its limits are explained in [How a script runs](/reference/code/how-a-script-runs).
 
-::Callout
-
-**Draft**: this part of the guide is not finished yet.
-
-::
+A grant authorizes one kind of call from that saved script version.
+The bot derives grants from your code, so you do not maintain a separate list by hand.
+Grants are different from the team roles on the Permissions page: a role governs who can manage a script, while a script grant governs which calls its code can make.
 
 ## Turn on Custom Code
 
 Custom Code is off for a new channel.
 While it is off, every grant is refused, and a script that makes a bot call does not run.
+You also cannot open, write, save or test scripts.
+The bot answers: "Custom code is not enabled for this channel. Enable it on the Features page."
 
 1. Open the **Features** settings page.
 2. Find **Custom Code** in the **Automation** area.
@@ -26,7 +25,7 @@ While it is off, every grant is refused, and a script that makes a bot call does
 
 ## The bot name
 
-The `bot` name holds the values of the run and the raw bridge to the bot.
+The `bot` object holds the inputs and outputs of the current run.
 [How a script runs](/reference/code/how-a-script-runs) explains what each part hands back to the pipeline.
 
 | Member | Type |
@@ -40,6 +39,9 @@ The `bot` name holds the values of the run and the raw bridge to the bot.
 
 `bot.call` is the one door that every `nnz.api` call goes through.
 It takes a grant key and text arguments.
+
+Prefer the named `nnz.api` calls when one exists: they convert arguments and results for you.
+For example, `bot.send` only collects step output, whereas `nnz.api.chat.send` actually asks the bot to post in chat.
 
 A missing value in a `bot` member works as [One rule for a bad value](#one-rule-for-a-bad-value) says.
 
@@ -67,7 +69,7 @@ It gives `NaN` when the two units do not match.
 | `nnz.time.format(epochMs)` | The time as ISO 8601 text. |
 | `nnz.time.add(iso, ms)` | The time moved by `ms`; a negative number goes back. |
 | `nnz.time.diff(a, b)` | `a` minus `b`, in milliseconds. |
-| `nnz.time.sleep(ms)` | A pause before the next statement, at most 5 seconds. |
+| `nnz.time.sleep(ms)` | A pause before the next statement, at most 5 seconds. A missing value or one that is not a number stops the run. |
 
 The pause counts against the run's time limit.
 
@@ -82,7 +84,7 @@ The pause counts against the run's time limit.
 | `nnz.math.avg(values)` | The average of the list, or 0 for an empty list. |
 | `nnz.math.min(values)` | The smallest value. |
 | `nnz.math.max(values)` | The largest value. |
-| `nnz.math.randomInt(min, max)` | A random whole number from `min` to `max`, both included. |
+| `nnz.math.randomInt(min, max)` | A random whole number from `min` to `max`, both included. The ends can be in either order; `NaN` when no whole number lies between them. |
 
 ### Text
 
@@ -108,7 +110,7 @@ Neither one throws.
 
 | Member | What it gives |
 | --- | --- |
-| `nnz.random.int(min, max)` | A random whole number from `min` to `max`, both included. |
+| `nnz.random.int(min, max)` | A random whole number from `min` to `max`, both included. The ends can be in either order; `NaN` when no whole number lies between them. |
 | `nnz.random.pick(items)` | A random item of the list. An empty list stops the whole run with an error. |
 | `nnz.random.shuffle(items)` | A shuffled copy; the list itself stays as it is. |
 | `nnz.random.uuid()` | A random version 4 UUID. |
@@ -125,11 +127,18 @@ When you save the code, the bot reads which bot calls the code names, and keeps 
 
 1. Each `nnz.api` call in the code adds its grant key.
 2. Each `bot.call('key', ...)` with a key in quotes adds that key.
+   The scan only reads keys made of letters, digits and dots.
+   An action key (`actions.invoke:` and a type) is not picked up from `bot.call`, so use `nnz.api.actions.invoke('type', ...)` for actions.
 3. `nnz.template.render` adds the grant `template.render`.
 4. Each `nnz.api.actions.invoke('type', ...)` adds the grant for that one action type.
 
 When the script runs, the bot checks every key on the list.
 A key that does not exist stops the whole run before it starts.
+
+Keep host calls in their named form, such as `nnz.api.chat.send(...)`.
+The save-time scan recognizes these expressions and literal `bot.call` keys; it does not follow arbitrary aliases or computed property names.
+For example, `nnz.api['chat']['send'](...)` does not add a grant by itself, so the call is denied unless that saved version already declares `chat.send` elsewhere.
+Use `nnz.api.actions.invoke('type', ...)` for an action, with the action type written as a string literal.
 
 When Custom Code is off, a list with at least one key also stops the whole run before it starts.
 A script with an empty list makes no bot call, so it still runs.
@@ -190,10 +199,13 @@ A call to a key that is not on the list is not a failed call, as [How a script g
 | `not_found` | No viewer, widget or reward matches the name, or Twitch has no user with that login. |
 | `refused` | The bot will not do it, for example the widget is turned off. |
 | `rate_limited` | The work behind the call reported too many requests. |
-| `limit_exceeded` | The call went over a limit of the run. |
+| `limit_exceeded` | The call went over a limit, for example the lookups or the data allowed in one run, or the 200 script keys a channel can hold. |
 | `upstream_failed` | The service behind the call did not answer with success. |
 
 Every bot call clears `nnz.lastError` first, so it only ever describes the last call.
+
+Read or copy the error before making another call.
+A later successful call clears it, and a later failed call replaces it with its own reason.
 
 ### One rule for a bad value
 

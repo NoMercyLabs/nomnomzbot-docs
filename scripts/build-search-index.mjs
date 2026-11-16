@@ -18,21 +18,27 @@ import { glob } from 'glob';
 import matter from 'gray-matter';
 
 const collections = [
-  { dir: './src/content/reference', baseUrl: '/reference', section: 'Reference' },
+  { dir: './src/content/reference', baseUrl: '/reference', section: 'User guide' },
 ];
 
 const outputPath = './public/searchIndex.json';
 
 function toPlainText(markdown) {
+  const code = [];
+  const preserveCode = (_match, _fence, content) => {
+    code.push(content);
+    return '\u0000' + (code.length - 1) + '\u0000';
+  };
   return markdown
     .replace(/^---[\s\S]*?---/m, '')
+    .replace(/^([`]{3,}|~{3,})[^\r\n]*\r?\n([\s\S]*?)^\1[ \t]*$/gm, preserveCode)
+    .replace(/([`]+)([\s\S]*?)\1/g, preserveCode)
     .replace(/import\s+.*?from\s+['"].*?['"]/g, '')
     .replace(/<[^>]+>/g, ' ')
-    .replace(/```[\s\S]*?```/g, '')
-    .replace(/`[^`]+`/g, '')
     .replace(/^#+\s+/gm, '')
     .replace(/\[([^\]]+)\]\([^)]+\)/g, '$1')
-    .replace(/[#*_`\[\](){}]/g, '')
+    .replace(/[#*`\[\]]/g, '')
+    .replace(/\u0000(\d+)\u0000/g, (_match, index) => code[Number(index)])
     .replace(/\s+/g, ' ')
     .trim();
 }

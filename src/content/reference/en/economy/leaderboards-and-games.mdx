@@ -3,12 +3,13 @@ title: Leaderboards and games
 description: Add, change and delete leaderboards that rank viewers by the channel currency, and see which game pages are not built yet.
 ---
 
-You add the channel's leaderboards on the **Leaderboards** tab of the **Economy** page in the sidebar.
-A leaderboard ranks viewers by the [channel currency](/reference/economy/currency-and-balances).
+Leaderboards make different kinds of participation visible through the [channel currency](/reference/economy/currency-and-balances).
+A balance leaderboard shows who holds the most now, while an earned or spent leaderboard can highlight activity during a particular period.
+Configure them on the **Leaderboards** tab of **Economy**, then use the chat command to show a ranking to viewers.
 
 ## Who can use this
 
-A **Moderator**, **Lead moderator**, **Editor** or **Broadcaster** may see, add, change and delete leaderboards.
+By default, a **Moderator**, **Lead moderator**, **Editor** or **Broadcaster** may see, add, change and delete leaderboards.
 Someone who may not see leaderboards does not see the **Leaderboards** tab.
 
 ## Add a leaderboard
@@ -26,7 +27,7 @@ Someone who may not see leaderboards does not see the **Leaderboards** tab.
 | **Ranks by** | **Balance**, **Earned**, **Spent** | **Balance** |
 | **Period** | **All time**, **Daily**, **Weekly**, **Monthly** | **All time** |
 | **Over** | **Whole channel**, **One jar** | **Whole channel** |
-| **Places shown** | A number from 1 to 100 | 10 |
+| **Places shown** | A whole number of 1 or more (the field suggests up to 100) | 10 |
 | **Visible to viewers** | On or off | On |
 
 When **Over** is **One jar**, a **Jar** field shows.
@@ -35,35 +36,52 @@ Without a jar, the dialog shows "Pick a jar."
 
 Each row in the list shows what it ranks, then the set, the period and the places, for example "Whole channel · All time · top 10".
 A leaderboard with **Visible to viewers** off carries the badge **Private**.
+A value of 0 or less in **Places shown** is refused.
 
 ## How the bot ranks viewers
 
 | **Ranks by** | What counts |
 | --- | --- |
-| **Balance** | The viewer's balance now. The **Period** does not change it. |
-| **Earned** | The currency the viewer gained in the period. |
-| **Spent** | The currency the viewer spent in the period. |
+| **Balance** | For a **Whole channel** leaderboard, the viewer's balance now. The **Period** does not change it. |
+| **Earned** | For a **Whole channel** leaderboard, currency gained during the period. |
+| **Spent** | For a **Whole channel** leaderboard, currency spent during the period. |
 
 **Daily** starts at midnight UTC today.
-**Weekly** starts on the last Sunday at midnight UTC.
+**Weekly** starts at midnight UTC on the most recent Sunday (today, if it is Sunday).
 **Monthly** starts on the first day of the month at midnight UTC.
 **All time** counts everything.
 
-A viewer who opted out of leaderboards is not ranked.
+A viewer with the economy's leaderboard exclusion recorded is not ranked.
+This exclusion is separate from the **Appear on leaderboards** consent and **Opt out** button on [Your data](/reference/settings/your-data-and-privacy): those controls currently do not update the exclusion used here.
+The viewer leaderboard page is still **Coming soon**, so it does not provide an exclusion control either; setting the economy exclusion currently requires an integration.
+A moderator can see whether a viewer is excluded in the viewer's profile, on the **Leaderboard** row of the points section: **Shown**, or **Hidden by their choice**.
+See [People](/reference/community/people).
 
-::Callout
+With **Over** set to **One jar**, the ranking instead totals each viewer's contributions to that jar during the period.
+This uses contributions rather than the viewer's current wallet balance, regardless of **Ranks by**.
+Your channel must own the jar or have an accepted membership in it; otherwise the ranking is empty.
 
-The bot ranks only **Whole channel** leaderboards.
-A **One jar** leaderboard is saved, but it ranks no viewers.
-
-::
+For example, a **Whole channel**, **Earned**, **Weekly** board recognizes points earned since Sunday rather than rewarding only the largest long-term balance.
+A jar board with **Monthly** recognizes contributions made to that shared goal since the first of the month.
 
 ## Show a leaderboard in chat
 
 A viewer types `!leaderboard` in chat.
 The bot answers in the channel's one bot voice with the top 5 viewers of one leaderboard.
-It picks the first leaderboard with **Visible to viewers** on.
-When none is on, it picks the first leaderboard of the channel.
+It always shows 5 places, whatever **Places shown** says.
+It picks the first leaderboard in the list with **Visible to viewers** on.
+When none is on, it picks the first leaderboard in the list.
+The list is sorted by **Ranks by** (**Balance**, **Earned**, **Spent**), not by the order you created the boards.
+
+The reply lists each rank, the viewer's Twitch ID and the amount.
+Names do not show yet.
+
+Everyone can use the command.
+By default it has a 90-second cooldown.
+You can change it or turn it off with the other [built-in commands](/reference/commands/built-in-commands).
+
+Use your channel's command prefix if it differs from `!`.
+Because the command falls back to a private leaderboard when no public one exists, **Visible to viewers** off does not by itself keep every ranking out of chat.
 
 | Result | What the bot answers by default |
 | --- | --- |

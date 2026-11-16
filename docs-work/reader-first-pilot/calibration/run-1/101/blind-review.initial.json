@@ -1,0 +1,39 @@
+{
+  "fingerprint": "a2ba2092f13ec6857927a3bd67905c6796f0fd5c8447b67fab7eced730495cc0",
+  "verdict": "PENDING",
+  "answers": [
+    {
+      "question": 1,
+      "answer": "On the selected channel’s Commands page, open schedule, keep Who can use it at Everyone, open Trigger and cooldowns, set Chat cooldown (seconds) to 10 and Per-person cooldown (seconds) to 60, then choose Save changes. The unsaved-change count disappears and the save button turns off.",
+      "quote": "Open the command and keep Who can use it at Everyone.\nOpen Trigger and cooldowns.\nEnter 10 in Chat cooldown (seconds) and 60 in Per-person cooldown (seconds).\nChoose Save changes. The unsaved-change count disappears and the save button turns off."
+    },
+    {
+      "question": 2,
+      "answer": "No. A bot-assigned Editor who is an ordinary platform viewer experiences normal waits. Use an account that is neither the platform broadcaster nor a platform moderator and that still meets command access. The bot must be running and connected, the command enabled, the message must match, and the viewer needs a live stream or the offline setting on.",
+      "quote": "A Moderator, Lead moderator or Editor role assigned inside the bot can grant command access, but does not by itself grant that cooldown bypass.\nAn Editor who is an ordinary platform viewer experiences the normal waits. To test ordinary behavior, use an account that is neither the platform broadcaster nor a platform moderator and still meets the command’s access requirement.\nTest with an ordinary viewer account to experience these waits. The bot must be running and connected, the command enabled, and the message must fit its trigger.\nOrdinary viewers also need enough command access and a live stream, unless Keep commands and rewards on while offline is on."
+    },
+    {
+      "question": 3,
+      "answer": "Yes, A can use at t=60 if nothing else intervenes: A’s personal wait and the shared wait started by B at t=50 both end then. The refused t=5 attempt restarts neither wait.",
+      "quote": "At 5 seconds, A tries again. The attempt is refused and restarts neither wait.\nIf viewer B uses it at 50 seconds, B starts a new shared wait. A’s personal wait and that shared wait both end at 60 seconds, so A can use it then if nothing else intervenes."
+    },
+    {
+      "question": 4,
+      "answer": "The Artist badge alone does not pass the Artists requirement, so the command does not run and by default posts a permission refusal. The refusal can still attempt speech with Read it aloud off. Audible speech depends on TTS setup, settings and playback; positive Minimum bits blocks it, approval can hold it, and the per-viewer denial-speech throttle or a delivery failure can prevent audio.",
+      "quote": "An Artist badge alone does not pass an Artists command requirement. The person needs Artist standing recorded in the bot or a higher qualifying role.\nThe command does not run. By default, the bot replies in chat in the channel’s one bot voice: “You don’t have permission to use that command.”\nIt also attempts to speak that line in the channel’s bot voice, even when the command’s Read it aloud switch is off.\nTo hear a refusal, the channel’s TTS setup, settings and playback must allow it.\nA positive Minimum bits setting blocks this speech because the refusal carries 0 bits.\nThe bot attempts denial speech at most once every 30 seconds for each viewer in a channel, shared across all denied commands.\nIf the identity lookup or speech delivery fails, the chat notice can appear without audio."
+    },
+    {
+      "question": 5,
+      "answer": "No material obstacle. The article directly gives the requested settings, the exact timing example, the distinction between platform and bot-assigned roles, and the Artist and refusal-speech rules.",
+      "quote": ""
+    },
+    {
+      "question": 6,
+      "answer": "No material read-aloud obstacle found. The tables provide useful role and platform reference information; their length alone does not prevent answering or acting.",
+      "quote": ""
+    }
+  ],
+  "findings": [],
+  "warnings_released": false,
+  "warning_review": []
+}

@@ -1,3 +1,22 @@
+# Current independent reader review
+
+Verdict: PASS
+Reviewed: src/content/reference/en/templates/fun.mdx
+Reviewed-SHA: 403bc7e8365bff36e3abdd2918852c9cf74259376f5a5ebed8d9062d27015399
+Reviewed-SHA256: 403bc7e8365bff36e3abdd2918852c9cf74259376f5a5ebed8d9062d27015399
+Reviewed-Date: 2026-11-05
+Reviewer: independent section reviewer
+
+Playful outputs are presented as one possible result. Dice limits, stable-per-day values, required 8ball list and same-message slots state remain available rather than being hidden by a shorter introduction.
+
+The full page was read with the preceding/following navigation context and related links. This review applies the owner's explanatory, progressive-disclosure guidance; it does not impose Atlas sentence caps, pilot mimicry or fixed article headings. No substantive reader finding remains at this hash. Build/render/link checks are recorded separately by the lead reviewer.
+
+Report: docs-work/overhaul/review-learning-commands-helpers.md.
+
+## Historical evidence
+
+The material below is retained as historical evidence; its older verdict is not the current review.
+
 # Reader review: src/content/reference/en/templates/fun.mdx
 Verdict: PASS
 Reviewed: C:/Projects/NoMercyLabs/nomnomzbot-docs/src/content/reference/en/templates/fun.mdx

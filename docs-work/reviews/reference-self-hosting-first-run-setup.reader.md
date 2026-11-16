@@ -1,5 +1,41 @@
-# Reader review: /reference/self-hosting/first-run-setup
+# Targeted final review — 2026-11-06
+
+Verdict: PENDING
+Reviewed: src/content/reference/en/self-hosting/first-run-setup.mdx
+Reviewed-SHA: 6dcb47919d325ef7652b3746b55877b9f2ab0f7c69b3516b31150c1e8df74cd8
+Reviewed-SHA256: 6dcb47919d325ef7652b3746b55877b9f2ab0f7c69b3516b31150c1e8df74cd8
+Reviewer: final-features correction author; self-review, not independent PASS
+Product-Revision: 2dfefbb0c393f439954d79b32ac11511678d7f44 plus working tree
+
+The full article was read editorially. The correction was independently traced from the staged lead to current source, then applied by this reviewer. This is targeted author verification, not a new exhaustive source audit, independent final-text approval or runtime test. See [final-features.md](../ecosystem-validation/final-features.md) for exact source anchors, coverage and remaining limits.
+
+## Historical reviews
+
+The original records below are preserved verbatim and apply only to their recorded hashes.
+
+# Independent reader review: /reference/self-hosting/first-run-setup
 Verdict: PASS
+Reviewed: src/content/reference/en/self-hosting/first-run-setup.mdx
+Reviewed-SHA: f61f7298b766bf29
+Reviewed-SHA256: f61f7298b766bf29d7cfc46b7c5e13fbc7e46ec2e014b744a87fe4f77a9ff13a
+Reviewed-Date: 2026-11-05
+Reviewer: independent reviewer, separate from article author
+Product-Revision: 54da8b6318de63b5205a0ff8db35e0b9045dd959
+
+The complete current article was read independently of its author, in the established settings, self-hosting and Code and SDK navigation order. The user's natural explainer/progressive-disclosure requirements take precedence over historical pilot mimicry, sentence caps and repeated page templates.
+
+## Learning and lookup result
+
+Application identifiers versus account authorization are explained without assuming coding knowledge. Required Twitch setup comes before optional services; exact callback and optional secret are clear. Finish leads directly to sign-in and the first command.
+
+No outstanding substantive reader finding.
+
+Related routes were checked as contextual continuations rather than prerequisites for ordinary bot use. Draft labels remain appropriate for code material. This is a text/structure review, not a claim of rendered browser QA.
+
+## Historical review (superseded)
+
+# Reader review: /reference/self-hosting/first-run-setup
+Historical verdict: PASS
 Reviewed: C:\Projects\NoMercyLabs\nomnomzbot-docs\src\content\reference\en\self-hosting\first-run-setup.mdx
 Reviewed-SHA: 7aaee6064fb775d4
 

@@ -1,3 +1,22 @@
+# Current independent reader review
+
+Verdict: PASS
+Reviewed: src/content/reference/en/templates/date.mdx
+Reviewed-SHA: 422e711397dc595173ed9ec2220bd63243277a6a37edaf5ce15b17ed7ffa7ccf
+Reviewed-SHA256: 422e711397dc595173ed9ec2220bd63243277a6a37edaf5ce15b17ed7ffa7ccf
+Reviewed-Date: 2026-11-05
+Reviewer: independent section reviewer
+
+The worked time-zone and fixed-date examples show expected results and explain that presentation does not alter channel settings. Detailed operations, formats, units and daylight-saving-sensitive examples remain in the reference.
+
+The full page was read with the preceding/following navigation context and related links. This review applies the owner's explanatory, progressive-disclosure guidance; it does not impose Atlas sentence caps, pilot mimicry or fixed article headings. No substantive reader finding remains at this hash. Build/render/link checks are recorded separately by the lead reviewer.
+
+Report: docs-work/overhaul/review-learning-commands-helpers.md.
+
+## Historical evidence
+
+The material below is retained as historical evidence; its older verdict is not the current review.
+
 # Reader review: src/content/reference/en/templates/date.mdx
 Verdict: PASS
 Reviewed: C:/Projects/NoMercyLabs/nomnomzbot-docs/src/content/reference/en/templates/date.mdx

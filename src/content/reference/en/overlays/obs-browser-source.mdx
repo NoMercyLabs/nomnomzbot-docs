@@ -3,9 +3,12 @@ title: OBS browser source
 description: Copy an overlay link, add it to OBS as a browser source, and check that the overlay shows on stream.
 ---
 
-You put an [overlay](/reference/overlays/set-up-overlays) on your stream by adding its link to OBS as a browser source.
-A browser source is an OBS source that shows a web page.
-You add each overlay once.
+OBS can keep a web page open as part of a scene using a **Browser** source.
+NomNomzBot uses that source to display alerts and captions or play sounds, music and videos.
+You copy an overlay's address from the dashboard once, then OBS loads it whenever that source is active.
+
+For example, a command can successfully request speech while the stream stays silent if the speech source is missing.
+Setting up the source connects the bot's output to the stream; it is separate from giving the bot [remote control of OBS](/reference/integrations/obs).
 
 ## The overlay link
 
@@ -25,8 +28,14 @@ The link starts with the address you used to open the dashboard, unless the bot'
 
 ## Add an overlay to OBS
 
-1. Open **Overlays** in the sidebar.
-   Each overlay row has a button **Connect**, or **Configure** when OBS has it open already.
+1. For the supplied sources, open **OBS**, choose **Overlays in OBS**, and find **Required overlays**.
+   For an overlay in your custom list, open **Overlays** instead.
+   The **Browser sources** list on the same tab has the same button for every overlay, including your own.
+   Each row has **Connect**, or **Configure** when a browser source already has it open.
+   **Required overlays** ends with **OBS control**, the browser source the bot uses to control OBS when OBS runs on another computer.
+   Its dialog says 1 x 1, it draws nothing, and both boxes are off.
+   You need permission to change the OBS link to copy it; without it the row reads **Needs permission to change the OBS link**.
+   See [OBS](/reference/integrations/obs).
 2. Choose **Connect** on the overlay you want.
    The dialog **Set up** `{name}` **in OBS** opens, with the name of the overlay.
 3. Read the setup lines in the dialog, if it shows them.
@@ -51,15 +60,19 @@ Paste with Command+V.
 7. Set **Control audio via OBS** and **Shutdown source when not visible** as the dialog shows.
 8. Save the source in OBS.
 
-The dialog shows **Loaded in OBS** once the browser source has the overlay open.
+The dialog shows **Loaded in OBS** once a browser source has the overlay open.
 Until then it shows **Not loaded in OBS**.
 The button on the row then reads **Configure**.
+
+Now trigger the feature you added the source for.
+For a custom overlay, use **Test** under **Reacts to**; for speech, use a command with **Read it aloud** enabled.
+Check the OBS preview and audio mixer as well as the connection badge: an open page alone does not prove that viewers can see or hear the intended result.
 
 | Line in the dialog | What to do in OBS |
 | --- | --- |
 | **Width and height** | Enter these two numbers. "full screen" marks 1920 x 1080. "it draws nothing" means the overlay only plays sound and needs no space. |
 | **Control audio via OBS** | **Tick it**, or **Leave it off**, as the dialog says. |
-| **Shutdown source when not visible** | **Tick it**, or **Leave it off**. When it is ticked, the overlay misses events while hidden. |
+| **Shutdown source when not visible** | The dialog says **Leave it off, or the overlay misses events while hidden**. |
 
 The setup lines come with the overlays that are built in.
 An overlay you made yourself shows no setup lines.
@@ -119,11 +132,27 @@ Switch it on, or open **Edit code** and choose **Save & Compile**, as [Set up ov
 
 ::Troubleshooting
 
-**The row shows "Not connected to the bot".**
-The overlay is switched on, but no browser source has it open, so nothing shows on stream.
-The row shows this only when the bot does not control OBS.
+**The overlay shows "Not connected to the bot."**
+The overlay is switched on, but no live browser source has it open, so nothing shows on stream.
+On the overlay, **Health** shows **Nothing attached** in red.
 Add or refresh the browser source in OBS.
-When the [OBS connection](/reference/integrations/obs) is on, the bot refreshes an open source for you.
+When the [OBS connection](/reference/integrations/obs) is on, and in bridge mode when a bridge page is open, the bot refreshes the source for you.
+
+::
+
+::Troubleshooting
+
+**The browser source shows "Add ?widgetId= to load a widget."**
+The link lost its overlay ID.
+Copy the address again and paste the full address.
+
+::
+
+::Troubleshooting
+
+**The browser source shows "This widget has not been built yet."**
+The overlay has no built code.
+Open **Edit code** and choose **Save & Compile**, as [Set up overlays](/reference/overlays/set-up-overlays) explains.
 
 ::
 

@@ -16,6 +16,44 @@ import { clipUrl, createClipCache, textsAhead, whenBuffered } from '../src/lib/r
 
 const BASE = 'https://bot.example/api/v1/public/read-aloud';
 
+test('an unresponsive request aborts and releases all waiting sentences', async () => {
+  const signals = [];
+  const cache = createClipCache(BASE, (_url, options) => {
+    signals.push(options.signal);
+    return new Promise(() => {});
+  }, 0, 15);
+  const pending = Array.from({ length: 5 }, (_, i) => cache.clip(`Line ${i}`, 'en'));
+  assert.deepEqual(await Promise.all(pending), [null, null, null, null, null]);
+  assert.equal(signals.length, 3);
+  assert.ok(signals.every(signal => signal.aborted));
+  assert.equal(cache.serverDown(), true);
+});
+
+test('the deadline also covers a stalled response body', async () => {
+  let signal;
+  const cache = createClipCache(BASE, async (_url, options) => {
+    signal = options.signal;
+    return { ok: true, status: 200, blob: () => new Promise(() => {}) };
+  }, 0, 15);
+  assert.equal(await cache.clip('Stalled body.', 'en'), null);
+  assert.equal(signal.aborted, true);
+});
+
+test('reset cancels a hung reading without blocking the next reading', async () => {
+  const signals = [];
+  const cache = createClipCache(BASE, (_url, options) => {
+    signals.push(options.signal);
+    return signals.length <= 3 ? new Promise(() => {}) : Promise.resolve(answer(200));
+  }, 0);
+  const old = ['A', 'B', 'C'].map(text => cache.clip(text, 'en'));
+  cache.reset();
+  assert.deepEqual(await Promise.all(old), [null, null, null]);
+  assert.ok(signals.every(signal => signal.aborted));
+  assert.equal(cache.serverDown(), false);
+  assert.match(await cache.clip('New reading.', 'en'), /^blob:/);
+  cache.reset();
+});
+
 function answer(status, bytes = [1, 2, 3]) {
   return { ok: status === 200, status, blob: async () => new Blob([new Uint8Array(bytes)], { type: 'audio/mpeg' }) };
 }

@@ -1,3 +1,23 @@
+# Current independent reader review
+
+Verdict: PASS
+Reviewed: src/content/reference/en/integrations/obs.mdx
+Reviewed-SHA: a35ec15b33a6e2aa8fb39ed7101d1e2de6837f7b41eeae4cc001eead483ee638
+Reviewed-SHA256: a35ec15b33a6e2aa8fb39ed7101d1e2de6837f7b41eeae4cc001eead483ee638
+Reviewed-Date: 2026-11-05
+Reviewer: independent media-section reviewer
+Product: 54da8b6318de63b5205a0ff8db35e0b9045dd959 plus preserved current music UI edits
+
+The article distinguishes remote control from an overlay output source, explains host/container prerequisites, and uses a recognizable scene change to verify the intended OBS instance. Role differences, output safety, state meanings, event groups and automation paths retain their lookup detail.
+
+The full page was read with adjacent navigation and related links. The owner's natural explanatory style governs: no Atlas sentence caps, pilot imitation or rigid article template was imposed. No substantive reader finding remains at this hash. Combined build, rendered-output and link/frontmatter checks belong to the lead's separate validation.
+
+Report: docs-work/overhaul/review-automation-media-integrations.md.
+
+## Historical evidence
+
+Older hashes and verdicts below are retained for history and are not the current review.
+
 # Reader review: src/content/reference/en/integrations/obs.mdx
 Verdict: PASS
 Reviewed: src/content/reference/en/integrations/obs.mdx

@@ -3,9 +3,9 @@ title: Resource limits
 description: Read the limits that apply to your channel, how much of each you use, and what the bot does when you reach one.
 ---
 
-You read the channel's limits on the **Resource limits** page in the settings sidebar.
-The page shows each limited resource, how much of it the channel uses, and the plan behind the limits.
-The page only shows limits; you cannot change them here.
+Resource limits explain why the bot may accept one upload or new command and refuse the next.
+The **Resource limits** page shows what the channel can use and how much is already in use, so you can make room before a limit interrupts your setup.
+You can read the limits here, but you change the items that use them on their own pages.
 
 The settings sidebar is described on the [dashboard tour](/reference/getting-started/dashboard-tour).
 
@@ -39,14 +39,18 @@ Running it for yourself, your friends and your community is free. You may not ea
 
 ## Limits
 
+Read the kind of limit before comparing the numbers.
+Storage adds up across files, a monthly allowance adds up over a period, and a per-message cap applies separately to each message.
+Shortening one text-to-speech message can resolve a per-message refusal; deleting a sound clip affects storage instead.
+
 The **Limits** card puts each resource in one of four groups.
 A group with no resource in it does not show.
 
 | Group | What it means on the page | Resources |
 | --- | --- | --- |
 | **Storage** | "Disk space for your uploads. Deleting a file frees its space at once." | **Sound clip storage**, **Channel asset storage** |
-| **Monthly allowance** | "Time you can use each month. It starts again every period." | **Script run time per month** |
-| **Per message** | "The longest a single message can be. It is a cap, not a total." | **Text-to-speech message length** |
+| **Monthly allowance** | "Time and characters you can use each month. It starts again every period." | **Script run time per month**, **TTS characters this month** |
+| **Per message** | "The longest a single message can be. It is a cap, not a total." | **Length of one TTS line** |
 | **Abuse protection** | "The same generous limit for every channel. It only stops runaway use." | **Custom commands**, **Timers** |
 
 ### Read a meter
@@ -62,13 +66,17 @@ Storage shows as a file size, and script time as a length of time.
 | 80% or more | A darker bar. |
 | At or over the limit | A red bar and red figures. |
 | No limit | The amount and "no limit", with no bar. |
+| Not included | The resource is excluded, rather than a positive allowance you have used up. |
 
 A **Per message** row has no bar.
 It shows the cap as a number of characters per message, or **No cap**.
+The maximum length in your text-to-speech settings also applies, with 500 characters as the default.
+The stricter of the two wins, so **No cap** here does not mean a line has no length limit.
+A viewer's message that is too long is refused. A bot reply that is too long is read out shortened.
 
 ### Abuse protection limits
 
-These limits do not change with the plan.
+Changing plans does not raise these safety baselines.
 Each row also shows "Safety limit for every channel:" and the value.
 
 | Resource | Safety limit |
@@ -76,16 +84,21 @@ Each row also shows "Safety limit for every channel:" and the value.
 | **Custom commands** | 1,500 |
 | **Timers** | 200 |
 
-Storage and the monthly allowance come from the plan.
-On a bot you host yourself, they have no limit.
+Storage and the monthly allowance normally come from the plan.
+On a bot you host yourself, those defaults have no limit.
+
+The installation's operator can apply a channel-specific override, including an override to a safety limit.
+That override takes precedence while it is active, so the amount shown and enforced for your channel can differ from the defaults above.
+Use the channel's displayed limit when checking a refusal; changing plans does not remove an operator override.
 
 ## Usage this period
 
-The **Usage this period** card lists metered use in the current period, such as **Text-to-speech characters**.
-Its description shows the first and last day of the period.
+The **Usage this period** card lists metered use in the current period that is not already a limit.
+Its description shows the start date and the end date of the period, for example "Nov 1, 2026 to Dec 1, 2026".
 A resource already shown under **Limits** is not shown here again.
 
-When nothing is metered yet, the card shows "Nothing is metered yet this period."
+The monthly TTS characters and the script run time already show under **Limits**.
+So the card normally shows "Nothing is metered yet this period."
 
 ## What happens at a limit
 
@@ -96,16 +109,24 @@ Nothing is made, and the page where you saved shows the reason.
 | --- | --- |
 | Make a command past the limit | "Your plan allows up to 1500 custom commands. Upgrade your tier or remove one first." |
 | Make a timer past the limit | "Your plan allows up to 200 timers. Upgrade your tier or remove one first." |
+| Add a response variation past the limit | "Your plan allows up to 100 response variations per command. Upgrade your tier or remove one first." |
+| Add a message variation to a timer past the limit | "Your plan allows up to 100 message variations per timer. Upgrade your tier or remove one first." |
+| Use text-to-speech after the monthly allowance is spent | "This channel has used its TTS characters for this month." |
 | Upload a sound clip past the storage limit | "This upload would use … MB of your … MB sound clip storage limit." |
 | Upload a channel asset past the storage limit | "This upload would use … MB of your … MB channel asset storage limit." |
 
-The command and timer reasons name your plan.
-Their limits are the abuse protection limits.
+The command and timer reasons say "your plan", but their limits are the abuse protection limits.
 A different plan does not raise them.
+The limit of 100 variations per command or per timer applies too, but it does not show on this page.
 
 A command or a timer that already exists keeps working.
 To make room, delete a command, a timer or a file.
 A deleted file frees its storage at once.
+
+Deleting an upload does not restore a monthly allowance already spent.
+The monthly TTS total counts accepted text over the period, separately from the maximum length of one line.
+Text-to-speech with your own provider key does not count toward the monthly total.
+If scripts are excluded, the page shows **Not included** rather than a running-time allowance you can use.
 
 Some features have their own switch on [Features](/reference/settings/features).
 

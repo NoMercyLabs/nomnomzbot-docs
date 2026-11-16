@@ -1,7 +1,17 @@
-# Reader review: C:\Projects\NoMercyLabs\nomnomzbot-docs\src\content\reference\en\community\stream-page.mdx
+# Independent reader review: /reference/community/stream-page
 Verdict: PASS
-Reviewed: C:\Projects\NoMercyLabs\nomnomzbot-docs\src\content\reference\en\community\stream-page.mdx
-Reviewed-SHA: 63de7a652873498f
+Reviewed: src/content/reference/en/community/stream-page.mdx
+Reviewed-SHA: 60042da4a1d9cd853c07f4ef733385b54521554f3400749fad630783f37ea6a4
+
+## Independent overhaul review, 2026-11-05
+
+Preparation, planning and end-of-stream tasks form a coherent sequence. Schedule/metadata versus broadcast start and raid preference limitations are explicit.
+
+Reviewed independently of the article author, in actual navigation order. Current product source 54da8b631 and relevant changes since b12f4f696 were read without starting the bot, executing platform actions or changing channel data. The reader judgment follows the user's natural teaching style; old pilot mimicry, sentence caps and unrelated Atlas style gates were not applied. See [review-moderation-economy-community.md](../overhaul/review-moderation-economy-community.md) for the review scope and findings.
+
+## Prior review history
+
+The earlier text below is retained as history; it does not independently approve a later article hash.
 
 This review replaces the one stamped 57db41e6d164bcaf. The writer changed the page after that review. This run read the whole current page (205 lines) at SHA 63de7a652873498f.
 

@@ -1,35 +1,109 @@
 ---
 title: Math helpers
-description: Lists 20 template helpers, each with what it gives and an example.
+description: Twenty template helpers that calculate with numbers or draw a number as a progress bar, hearts or stars, with the input each one takes and what it gives.
 ---
 
-Helpers on this page: `{math}`, `{math.*}`, `{meter}`, `{meter.*}`.
+Math helpers work out a number while the bot builds a reply. Meter helpers turn a number into a bar, hearts or stars. Put them in any reply field that takes template braces, the same way as the other [template helpers](/reference/templates/overview). The helper name is followed by a colon and its input, and pipes separate the inputs. [Variables and templates](/reference/commands/variables-and-templates) covers this syntax.
 
-These helpers do math with numbers, and draw a number as a meter.
+A helper can take another helper as its input, so a command reply can calculate with what a viewer typed. If a helper has no answer, chat shows the helper text with its braces. For example, `{math.div:7|0}` shows up in chat as `{math.div:7|0}`, because 7 cannot be divided by 0.
 
-Each row is its own example, so the rows on this page do not all come from one moment.
+## Where they work
 
-| Helper | What it gives | Example |
+Every helper on this page works in commands, event responses, timers, pipelines, Discord posts and webhook bodies. They also work in a viewer's own text, such as a reward input. For that, **Viewer Templates** must be on in [Features](/reference/settings/features), and the viewer must hold the template permission. Subscribers and higher hold that permission by default. In a viewer's text, a bar is never wider than 20 marks, even when a wider one is asked for.
+
+## Numbers you type
+
+Write a number with a dot for decimals and no separators between thousands, such as `2.5` or `-4`. A space before or after a number is fine. `2,5`, `1,000` and `1e3` are not numbers here, so a helper given one stays in braces.
+
+A result has at most 10 decimals and no zeros at the end. It always uses a dot, whatever language the channel uses. `{math:10/3}` gives `3.3333333333`, and `{math:2.50*2}` gives `5`.
+
+## Calculate a whole expression
+
+`{math:expression}` works out a calculation written the way you would type it into a calculator. `{math:2+3*4}` gives `14`, and `{math:(2+3)*4}` gives `20`.
+
+| You type | What it does | Example |
 | --- | --- | --- |
-| `{math}` | Calculates an expression: numbers, + - * / % ^, brackets and sqrt, abs, floor, ceil, pow, log | `{math:2+3*4}` gives `14` |
-| `{math.abs}` | Absolute value of a number | `{math.abs:-4}` gives `4` |
-| `{math.add}` | Adds two numbers | `{math.add:2\|3}` gives `5` |
-| `{math.avg}` | Average of the numbers | `{math.avg:1\|2\|6}` gives `3` |
-| `{math.ceil}` | Rounds a number up to a whole number | `{math.ceil:2.1}` gives `3` |
-| `{math.div}` | Divides the first number by the second (no answer when the second is 0) | `{math.div:7\|2}` gives `3.5` |
-| `{math.div.int}` | Divides and drops the fraction | `{math.div.int:7\|2}` gives `3` |
-| `{math.floor}` | Rounds a number down to a whole number | `{math.floor:2.7}` gives `2` |
-| `{math.log}` | Logarithm of a number, with your own base or the natural base | `{math.log:100\|10}` gives `2` |
-| `{math.median}` | Middle value of the numbers | `{math.median:1\|9\|3}` gives `3` |
-| `{math.mod}` | Remainder of the first number divided by the second | `{math.mod:7\|2}` gives `1` |
-| `{math.mul}` | Multiplies two numbers | `{math.mul:4\|3}` gives `12` |
-| `{math.pow}` | First number to the power of the second | `{math.pow:3\|3}` gives `27` |
-| `{math.sqrt}` | Square root of a number | `{math.sqrt:81}` gives `9` |
-| `{math.sub}` | Subtracts the second number from the first | `{math.sub:5\|3}` gives `2` |
-| `{math.sum}` | Adds all the numbers | `{math.sum:1\|2\|3}` gives `6` |
-| `{meter}` | A progress bar from a percentage, with its number; width and marks are optional | `{meter:60}` gives `██████░░░░ 60%` |
-| `{meter.hearts}` | Five hearts that show a percentage | `{meter.hearts:60}` gives `❤️❤️❤️🖤🖤` |
-| `{meter.plain}` | A progress bar from a percentage, without the number | `{meter.plain:60}` gives `██████░░░░` |
-| `{meter.stars}` | Stars that show a value out of a maximum | `{meter.stars:3\|5}` gives `★★★☆☆` |
+| `+` and `-` | Add and subtract | `{math:10-4+1}` gives `7` |
+| `*` and `/` | Multiply and divide | `{math:6*7/2}` gives `21` |
+| `%` | The remainder after dividing | `{math:7%3}` gives `1` |
+| `^` | To the power of | `{math:2^10}` gives `1024` |
+| `( )` | Work this part out first | `{math:(1+2)^2}` gives `9` |
 
-Back to [Template helpers](/reference/templates/overview). For the places helpers work, special characters and HTML, read [Variables and templates](/reference/commands/variables-and-templates).
+Powers go first. Then come multiplying, dividing and remainders. Adding and subtracting go last. A minus sign in front of a number is applied after the power, so `{math:-2^2}` gives `-4`. Write `{math:(-2)^2}` to get `4`. Two powers in a row work from the right, so `{math:2^3^2}` gives `512`.
+
+An expression can also use six functions. Put the input in brackets, and separate two inputs with a comma.
+
+| Function | What it gives | Example |
+| --- | --- | --- |
+| `sqrt(n)` | The square root | `{math:sqrt(81)}` gives `9` |
+| `abs(n)` | The number without its minus sign | `{math:abs(3-10)}` gives `7` |
+| `floor(n)` | The number rounded down to a whole number | `{math:floor(7/2)}` gives `3` |
+| `ceil(n)` | The number rounded up to a whole number | `{math:ceil(7/2)}` gives `4` |
+| `pow(n,p)` | `n` to the power of `p` | `{math:pow(2,3)+1}` gives `9` |
+| `log(n)` or `log(n,b)` | The logarithm of `n` in base `b`, or the natural logarithm without a base | `{math:log(100,10)}` gives `2` |
+
+The whole expression is one input, so it cannot hold a pipe. An expression longer than 200 characters stays in braces. An expression that does not finish, such as `{math:2+}`, also stays in braces. So does an expression with an unknown function. A value inside the expression counts toward the 200 characters after the bot fills it in.
+
+A command such as `!double 21` can calculate with the word after the command: `{math:{args.1}*2}` gives `42`. When the viewer types `!double lots`, the reply shows `{math:lots*2}`. Word the reply so it still reads well if someone types a word instead of a number.
+
+## Calculate with one helper per step
+
+The math helpers each do one operation, and you separate the numbers with pipes.
+
+| Helper | Takes | What it gives | Example |
+| --- | --- | --- | --- |
+| `{math.add}` | Two numbers | The first plus the second | `{math.add:2\|3}` gives `5` |
+| `{math.sub}` | Two numbers | The first minus the second | `{math.sub:5\|3}` gives `2` |
+| `{math.mul}` | Two numbers | The first times the second | `{math.mul:4\|3}` gives `12` |
+| `{math.div}` | Two numbers | The first divided by the second | `{math.div:7\|2}` gives `3.5` |
+| `{math.div.int}` | Two numbers | The division with the fraction dropped | `{math.div.int:7\|2}` gives `3` |
+| `{math.mod}` | Two numbers | The remainder after dividing the first by the second | `{math.mod:7\|2}` gives `1` |
+| `{math.pow}` | Two numbers | The first to the power of the second | `{math.pow:3\|3}` gives `27` |
+| `{math.sqrt}` | One number | The square root | `{math.sqrt:81}` gives `9` |
+| `{math.abs}` | One number | The number without its minus sign | `{math.abs:-4}` gives `4` |
+| `{math.floor}` | One number | The number rounded down to a whole number | `{math.floor:2.7}` gives `2` |
+| `{math.ceil}` | One number | The number rounded up to a whole number | `{math.ceil:2.1}` gives `3` |
+| `{math.log}` | A number, and a base if you want one | The logarithm, or the natural logarithm without a base | `{math.log:100\|10}` gives `2` |
+| `{math.sum}` | One or more numbers | All the numbers added up | `{math.sum:1\|2\|3}` gives `6` |
+| `{math.avg}` | One or more numbers | The average | `{math.avg:1\|2\|6}` gives `3` |
+| `{math.median}` | One or more numbers | The middle number in size order | `{math.median:1\|9\|3}` gives `3` |
+
+A helper given more or fewer numbers than it takes stays in braces, so `{math.add:1|2|3}` does not add up; use `{math.sum}` for that. With an even count of numbers, `{math.median}` gives the average of the middle two, so `{math.median:1|2|3|10}` gives `2.5`.
+
+With a minus sign, `{math.div.int}` drops the fraction toward 0, so `{math.div.int:-7|2}` gives `-3`. The remainder keeps the sign of the first number, so `{math.mod:-7|2}` gives `-1`.
+
+Some numbers have no answer. For these, the helper stays in braces:
+
+- Dividing by 0, or the remainder after dividing by 0.
+- The square root of a negative number.
+- 0 to a negative power.
+- The logarithm of 0 or of a negative number.
+
+A logarithm base of 1, or of 0 or less, does not work either. A result too large for the bot to hold also stays in braces. The same numbers fail the same way inside `{math:expression}`.
+
+## Draw a number as a meter
+
+The meter helpers turn a number into a row of marks. Three of them read a percentage, and `{meter.stars}` reads a value out of a maximum.
+
+| Helper | Takes | What it gives | Example |
+| --- | --- | --- | --- |
+| `{meter}` | A percentage, then a width, then a full mark and an empty mark if you want them | A bar, a space and the percentage | `{meter:60}` gives `██████░░░░ 60%` |
+| `{meter.plain}` | A percentage, then a width if you want one | A bar without the number | `{meter.plain:60}` gives `██████░░░░` |
+| `{meter.hearts}` | A percentage | Five hearts, red for full and black for empty | `{meter.hearts:60}` gives `❤️❤️❤️🖤🖤` |
+| `{meter.stars}` | A value and a maximum | Stars, as many as the maximum, filled up to the value | `{meter.stars:3\|5}` gives `★★★☆☆` |
+
+A percentage below 0 counts as 0, and one above 100 counts as 100. The number printed beside the bar is limited the same way, so `{meter:150}` gives `██████████ 100%`. The count of full marks is rounded to the nearest mark, and a half rounds up, so `{meter:55}` fills 6 of 10 marks.
+
+The width is how many marks the bar has: a whole number from 1 to 50, and 10 when you leave it out. `{meter:60|5}` gives `███░░ 60%`. A width of 0, above 50, or with a sign or decimals stays in braces, so `{meter:60|80}` shows up in chat as `{meter:60|80}`. In a viewer's text, a width above 20 becomes 20 before this check, so there a width of 80 draws 20 marks. The full mark and the empty mark can be any text, such as an emoji, and `{meter}` needs both or neither. `{meter:40|5|🟩|⬜}` gives `🟩🟩⬜⬜⬜ 40%`, but `{meter:40|5|🟩}` stays in braces.
+
+The maximum for `{meter.stars}` is a whole number from 1 to 20. A maximum below 1, above 20, or with decimals stays in braces, so `{meter.stars:3|25}` shows up in chat as `{meter.stars:3|25}`. A value above the maximum fills every star, and a value below 0 fills none.
+
+A command such as `!progress 45 60` can draw its own bar from the two words after the command:
+
+```
+Progress: {meter:{math:{args.1}/{args.2}*100}}
+```
+
+This gives `Progress: ████████░░ 75%`. For `!progress 45 0` there is no answer to divide by, so chat shows `Progress: {meter:{math:45/0*100}}`.
+
+Back to [Template helpers](/reference/templates/overview).

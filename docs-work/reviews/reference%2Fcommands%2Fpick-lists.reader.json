@@ -1,0 +1,70 @@
+{
+  "fingerprint": "29804cd596729d273ffa4e8bad2f4614cf9d9c66d4ee9eeccba3d9f5e582eaba",
+  "verdict": "PASS",
+  "answers": [
+    {
+      "question": 1,
+      "answer": "Open Pick lists in the sidebar and choose New pick list. Type a name in Name, such as snacks, using only letters, numbers, underscores and hyphens. Optionally type a Description. Type the entries in Entries, one per line, then choose Add pick list. After that, put {list.pick.snacks} in a command reply, or use the Pick from list step in a pipeline.",
+      "quote": "Type the entries in Entries, one entry per line."
+    },
+    {
+      "question": 2,
+      "answer": "You need one of the roles Moderator, Lead moderator, Editor or Broadcaster. The Broadcaster can change these on the Permissions settings page, and can let a VIP in. The name must use only letters, numbers, underscores and hyphens, and it is case-sensitive. Both are stated in the 'Who can use this page' section and in step 2 of 'Make a pick list'.",
+      "quote": "By default, a Moderator, Lead moderator, Editor or Broadcaster may open the page and make, change and delete lists."
+    },
+    {
+      "question": 3,
+      "answer": "The dialog closes and the list's row appears on the page, sorted by name. The row shows the entry count and the helper, for example '3 entries · {list.pick.snacks}'. In chat, the reply shows one of the entries. The page separates a command's own random replies (lines for one command) from a pick list (lines shared by several commands, timers or pipelines). It also separates the reply helper (a new draw every time) from the Pick from list step (one draw, kept for later steps).",
+      "quote": "The dialog closes and the list shows on the page, in name order."
+    },
+    {
+      "question": 4,
+      "answer": "The moderator opens the list's edit dialog, adds lines in Entries and chooses Save pick list. Nothing else needs editing. The bot reads the list each time it draws, so the next draw from every command, timer or pipeline that uses the list picks from the new entries.",
+      "quote": "The saved entries replace all of the old entries, so the next draw from any command, timer or pipeline that uses the list picks from the new entries."
+    },
+    {
+      "question": 5,
+      "answer": "Very little guessing is needed. The page warns early that a name is hard to change. The full warning that a rename breaks every reply and Pick from list step comes after the edit steps, below 'The same dialog can also change the name and the description.' A reader who renames as part of those steps meets the warning only afterwards. The cost is small, because the intro already says to pick the name with care.",
+      "quote": "Renaming a list breaks every reply and every Pick from list step that uses the old name."
+    },
+    {
+      "question": 6,
+      "answer": "Read aloud, edit step 2 says 'Edit snacks' twice: once as the button's tooltip and once as the dialog title. That is mild repetition. It costs a moment, but it confirms the right dialog opened, so I did not make it a finding.",
+      "quote": "Its name, shown when you point at it, is “Edit snacks”, where snacks is the list name."
+    }
+  ],
+  "findings": [],
+  "warnings_released": true,
+  "warning_review": [
+    {
+      "id": "length",
+      "decision": "keep",
+      "reason": "The 1469 words cover separate tasks (create, rules, reply use, pipeline use, find, edit, delete, troubleshooting), and each section is read once when its task comes up. The reader answered all six questions from the page without a miss. The count alone is not a defect."
+    },
+    {
+      "id": "first-numbered-step",
+      "decision": "keep",
+      "reason": "The 235 words before the first step are the access rule and the reply-versus-list choice. Access requirements that affect the steps go first (voice.md item 4), and the reader found the first step without trouble."
+    },
+    {
+      "id": "sentence-1-2",
+      "decision": "keep",
+      "reason": "This definition names the helper and the Pick from list step in one place, which is what the reader needs to know what the page covers. Splitting it would add no clarity."
+    },
+    {
+      "id": "sentence-3-2",
+      "decision": "keep",
+      "reason": "It states who can change the roles, a requirement the reader needs before acting. The sentence is long but holds one connected fact set that the reader would otherwise have to hunt for."
+    },
+    {
+      "id": "sentence-12-1",
+      "decision": "keep",
+      "reason": "It states a surprise the reader would otherwise get wrong: two helpers in one reply can show different entries, and the bot does not pick the same entry twice in a row from a list of two or more. The clause is dense but clear, and no question went unanswered on it."
+    },
+    {
+      "id": "sentence-15-2",
+      "decision": "keep",
+      "reason": "It gives the observable failure in Runs and the consequence that the pipeline stops unless Keep going if this step fails is on. The quoted messages are the exact text the reader would see. The sentence is long but not a defect."
+    }
+  ]
+}

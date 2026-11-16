@@ -1,0 +1,38 @@
+{
+  "fingerprint": "e2c3515810858dc6168e372afe2986251d7813c4027b1f1a6afe67d54d82f4a0",
+  "metrics": {
+    "non_code_words": 1596,
+    "table_rows": 13,
+    "first_numbered_step_after_words": 162
+  },
+  "warnings": [
+    {
+      "id": "length",
+      "message": "1596 non-code words, including table text; diagnostic threshold 900"
+    },
+    {
+      "id": "paragraph-2",
+      "message": "paragraph 2: approximately 5 sentences"
+    },
+    {
+      "id": "paragraph-18",
+      "message": "paragraph 18: approximately 5 sentences"
+    },
+    {
+      "id": "paragraph-19",
+      "message": "paragraph 19: approximately 5 sentences"
+    },
+    {
+      "id": "sentence-20-2",
+      "message": "43 words: By default, the bot replies in chat in the channel’s one bot voice: “You don’t have permission to use that command.” It also attempts to speak that line in the channel’s bot voice, even when the command’s Read it aloud switch is off."
+    },
+    {
+      "id": "paragraph-21",
+      "message": "paragraph 21: approximately 5 sentences"
+    },
+    {
+      "id": "paragraph-22",
+      "message": "paragraph 22: approximately 5 sentences"
+    }
+  ]
+}

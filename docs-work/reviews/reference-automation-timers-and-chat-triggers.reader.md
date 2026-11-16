@@ -1,3 +1,23 @@
+# Current independent reader review
+
+Verdict: PASS
+Reviewed: src/content/reference/en/automation/timers-and-chat-triggers.mdx
+Reviewed-SHA: f38720e61cd0518f982347f591a74fb8d44b972a7e9f478e211c56be2985fe60
+Reviewed-SHA256: f38720e61cd0518f982347f591a74fb8d44b972a7e9f478e211c56be2985fe60
+Reviewed-Date: 2026-11-05
+Reviewer: independent media-section reviewer
+Product: 54da8b6318de63b5205a0ff8db35e0b9045dd959 plus preserved current music UI edits
+
+Timer versus chat-trigger purpose is explained before controls. The rotating reminder and greeting examples show useful outcomes; first-fire, activity, offline behavior and cooldown exceptions remain precise. The reviewed repair explains that overlay-only or Nowhere delivery does not invoke Read it aloud.
+
+The full page was read with adjacent navigation and related links. The owner's natural explanatory style governs: no Atlas sentence caps, pilot imitation or rigid article template was imposed. No substantive reader finding remains at this hash. Combined build, rendered-output and link/frontmatter checks belong to the lead's separate validation.
+
+Report: docs-work/overhaul/review-automation-media-integrations.md.
+
+## Historical evidence
+
+Older hashes and verdicts below are retained for history and are not the current review.
+
 # Reader review: src/content/reference/en/automation/timers-and-chat-triggers.mdx
 Verdict: PASS
 Reviewed: src/content/reference/en/automation/timers-and-chat-triggers.mdx

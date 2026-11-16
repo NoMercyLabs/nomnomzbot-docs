@@ -1,0 +1,70 @@
+{
+  "fingerprint": "72d44cc742f8abef1b793f17cb1d94dfdec729df0175e93c5f800939e843cdfe",
+  "verdict": "PENDING",
+  "answers": [
+    {
+      "question": 1,
+      "answer": "Open Triggers and timers > Timers > New timer, name it (for example Break reminder), leave Reaction at Simple reply, and enter Stretch and get water. and New here? Welcome! as two separate lines in Messages. Set Minutes between posts to 30 and Send the reply to to Twitch chat, then choose Create timer. It appears switched on and rotates one message per firing in order. Only the very end of the article explains that a new timer has Chat lines needed 0 and its first message is due at the next timer check, usually within about 30 seconds, rather than after 30 minutes.",
+      "quote": [
+        "Open Triggers and timers, then Timers, and choose New timer.",
+        "Type Break reminder in Name.",
+        "Leave Reaction at Simple reply. In Messages, enter these two lines:",
+        "Keep Minutes between posts at its default, 30, and Send the reply to at Twitch chat. Leave the other options alone for now.",
+        "Choose Create timer. The dialog closes and the timer appears in the list, switched on.",
+        "Several messages rotate in order, one per firing, then wrap back to the first.",
+        "A new timer starts switched on with Chat lines needed at 0. Its first message is due at the next timer check, usually within about 30 seconds; it does not wait a full 30 minutes first."
+      ]
+    },
+    {
+      "question": 2,
+      "answer": "Neither a live stream nor an existing pipeline is required for this simple reply. Sign in, select the channel and have the bot running and connected. Moderator, Lead moderator, Editor or Broadcaster can change timers by default, subject to a raised requirement; VIP read access cannot edit. A timer can post offline, so it must be switched off when a live-only reminder should stop.",
+      "quote": [
+        "Sign in and select your channel. By default, a Moderator, Lead moderator, Editor or Broadcaster can change its timers and chat triggers. The broadcaster can raise the required role on Permissions.",
+        "The bot must be running and connected to the channel to check timers and receive chat. Timers can post while the stream is offline, so switch off a reminder when you finish if you only want it during broadcasts. A simple reply needs no existing command or pipeline.",
+        "The broadcaster can also grant a VIP read access to either tab independently. A VIP sees that tab’s list, without an editor."
+      ]
+    },
+    {
+      "question": 3,
+      "answer": "Creation closes the dialog and shows an enabled timer, but chat delivery is the practical proof: see Stretch and get water. on the first eligible check, then New here? Welcome! after the next 30-minute interval and eligible check. The messages rotate one per firing. To keep it from posting offline, switch Enabled off when finishing the broadcast; that saves immediately, leaves it listed as Off and posts nothing.",
+      "quote": [
+        "Choose Create timer. The dialog closes and the timer appears in the list, switched on.",
+        "Watch your channel’s chat for “Take a moment to stretch and get some water.” After the next 30-minute wait and an eligible timer check, the bot posts the second line.",
+        "The stream being offline does not stop a timer in a connected channel. Switch it off to stop a live-only reminder.",
+        "Saves immediately. An off timer stays listed as Off and posts nothing."
+      ]
+    },
+    {
+      "question": 4,
+      "answer": "this is nice matches because Contains the words can match hi inside a longer word. HI matches with capitalization matching off. With the ! command prefix illustrated in the article, !hi is excluded because prefix-starting lines are not ordinary chat-trigger input, even if no valid command runs. The article does not establish the actual selected channel prefix, so that exclusion is conditional on ! being its prefix. Set How chat must match to Is exactly the words and Save changes to narrow it to a whole-line hi greeting; capitalization remains ignored unless Match capital letters is enabled.",
+      "quote": [
+        "For example, hi with Contains the words also matches this. Choose Is exactly the words to answer only the greeting, or use a suitable pattern for a more specific rule.",
+        "With Match capital letters off, Hello and hello match the same way. Turning it on makes them different. An invalid regular expression is refused when you save.",
+        "Chat triggers watch ordinary chat lines. A line starting with the channel’s command prefix is excluded, even when it does not run a valid command. A line claimed by another command or by a soundboard trigger is excluded too.",
+        "Choose Save changes to keep edits, or Discard to return to the saved trigger. Saving clears the unsaved count and updates the words in the list."
+      ]
+    },
+    {
+      "question": 5,
+      "answer": "The first-post timing is a late consequence of Create timer. The procedure says to create a switched-on timer with a 30-minute interval and then watch chat, but it does not explain the first deadline. Only after Related pages does it disclose Chat lines needed starts at 0 and the first post is due at the next check, usually within 30 seconds. The practical cost is an unexpectedly immediate public reminder before a reader who expects a 30-minute first wait can prepare or switch it off; learning the deadline requires reading to the end.",
+      "quote": [
+        "Keep Minutes between posts at its default, 30, and Send the reply to at Twitch chat. Leave the other options alone for now.",
+        "Choose Create timer. The dialog closes and the timer appears in the list, switched on.",
+        "A new timer starts switched on with Chat lines needed at 0. Its first message is due at the next timer check, usually within about 30 seconds; it does not wait a full 30 minutes first."
+      ]
+    },
+    {
+      "question": 6,
+      "answer": "The same late first-post fact is a material listening problem: a listener following the creation instructions has already enabled public posting long before hearing that it can happen within 30 seconds. Beyond that ordering problem, no separate material spoken failure is established; table formatting or the length of the reference alone is not a failure.",
+      "quote": [
+        "Choose Create timer. The dialog closes and the timer appears in the list, switched on.",
+        "A new timer starts switched on with Chat lines needed at 0. Its first message is due at the next timer check, usually within about 30 seconds; it does not wait a full 30 minutes first."
+      ]
+    }
+  ],
+  "findings": [
+    "Create timer enables the reminder before the article discloses that a new timer's first message is due at the next check, usually within about 30 seconds with Chat lines needed 0. This fact appears after Related pages. A reader may expect the selected 30-minute interval to delay the first post and can get an unexpectedly immediate public reminder while still reading."
+  ],
+  "warnings_released": false,
+  "warning_review": []
+}

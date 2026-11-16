@@ -1,0 +1,39 @@
+{
+  "fingerprint": "032e43942e441a5bf77f8f2a60419519bd88ce11f6b021d39c85ee72ecffaf71",
+  "verdict": "PENDING",
+  "answers": [
+    {
+      "question": 1,
+      "answer": "!pause pauses music. A moderator or someone the broadcaster granted the right to moderate the song queue can use it, subject to the command’s configured access and a configured music feature. An ordinary viewer without that right is refused. Default normal cooldowns are 30 seconds for chat and 0 seconds per person. Platform-identified broadcasters and moderators bypass normal waits; a bot-stored role alone does not.",
+      "quote": "!pause\nPauses the music.\nModerators\n30 s\n0 s\nDefault effective access includes a command’s own safeguards. For example, !pause needs a moderator or someone granted the right to moderate the music queue, even though its base role in the editor is Everyone.\nFor music controls, Moderators includes someone the broadcaster granted the right to moderate the song queue. That gate applies to !pause, !resume, setting !volume, !bansong, !closequeue, !openqueue and !clearsongs. An ordinary viewer without that right receives a refusal.\nThe broadcaster and moderators identified on the incoming platform message bypass these normal waits. A role stored only in the bot does not grant that bypass, and the extra moderator skip window described below still applies."
+    },
+    {
+      "question": 2,
+      "answer": "No. The catalog does not connect a music player; the underlying music feature must be configured. Manage it under Commands then System commands. By default Moderator, Lead moderator, Editor and Broadcaster can change commands, but the broadcaster can raise that requirement. Read-only access does not show the tab. Choose Customize to unlock supported fields, then Save changes.",
+      "quote": "Music and economy commands need their underlying feature configured. Having !pause in the catalog does not connect a music player.\nTo manage a built-in, open Commands, then System commands. By default, Moderator, Lead moderator, Editor and Broadcaster can change commands; the broadcaster can raise the required role. Read-only access does not show this tab.\nChoose Customize to unlock the supported fields.\nChange what you need and choose Save changes."
+    },
+    {
+      "question": 3,
+      "answer": "Choose Back to default beneath the changed cooldown field. It saves immediately without Save changes, and the field shows Using the default. Reset to default is broader: choose it in the footer and confirm in its dialog to lose saved edits, restore both cooldowns, role and all reply wording, switch Read it aloud off, and switch the command back on. Shared wording is restored for the paired command too, but its other settings remain its own.",
+      "quote": "Choose Back to default beneath a changed field. It saves immediately, without another Save changes, and the field returns to Using the default.\nA reset loses the command’s saved edits and switches it back on. If it shares replies with another command, the reset also restores that shared wording. The other command keeps its own enabled state, role, cooldowns and Read it aloud setting.\nOpen the command and choose Reset to default in the footer.\nRead “Reset !name to its default?” and the list of settings that will be lost.\nChoose Reset to default in the dialog.\nThe fields show their defaults and the command is switched on.\nRestores the default chat cooldown.\nRestores the default per-person cooldown.\nRestores the default role.\nRestores the default words of every reply.\nSwitches Read it aloud off.\nEnables the command again."
+    },
+    {
+      "question": 4,
+      "answer": "No. After the first successful moderated bare !skip, a separate 30-second channel-wide moderator skip window prevents another moderator skipping five seconds later even though normal cooldowns are bypassed. An ordinary viewer can use !skip 4 to remove their own fourth pending request, counted only among their own queued requests; it does not skip the playing song and normal access/availability checks still apply.",
+      "quote": "Bare !skip lets a viewer skip only their own currently playing request. A moderator or music-right holder can skip any playing song, but a successful moderated skip starts a separate 30-second wait for the whole channel. Another moderator cannot skip again five seconds later, even though moderators bypass normal cooldowns. A numbered command such as !skip 4 instead removes the caller’s fourth pending request, counting only their own requests in queue order. It leaves the playing song alone and still requires the command’s normal access checks."
+    },
+    {
+      "question": 5,
+      "answer": "No material obstacle. The catalog row supplies pause and its normal defaults, adjacent prose explains effective music access and the extra skip window, and the editing sections distinguish field restoration from full reset.",
+      "quote": ""
+    },
+    {
+      "question": 6,
+      "answer": "No material read-aloud obstacle found. The catalog is long but its columns are defined and its music safeguards are explained in prose; length alone does not create an unanswered task or contradictory action.",
+      "quote": ""
+    }
+  ],
+  "findings": [],
+  "warnings_released": false,
+  "warning_review": []
+}

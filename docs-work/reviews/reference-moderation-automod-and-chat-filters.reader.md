@@ -1,7 +1,17 @@
-# Reader review: src/content/reference/en/moderation/automod-and-chat-filters.mdx
+# Independent reader review: /reference/moderation/automod-and-chat-filters
 Verdict: PASS
 Reviewed: src/content/reference/en/moderation/automod-and-chat-filters.mdx
-Reviewed-SHA: a8bfacac5d9731b2
+Reviewed-SHA: 9ec3c8ae6d1aed3f79e32e1f7446a7969826c6781de96c29b5e8e99d8ea2249e
+
+## Independent overhaul review, 2026-11-05
+
+The three systems are explained before controls. The unwanted-link review example leads to Try it; defaults, priority and bypasses remain findable.
+
+Reviewed independently of the article author, in actual navigation order. Current product source 54da8b631 and relevant changes since b12f4f696 were read without starting the bot, executing platform actions or changing channel data. The reader judgment follows the user's natural teaching style; old pilot mimicry, sentence caps and unrelated Atlas style gates were not applied. See [review-moderation-economy-community.md](../overhaul/review-moderation-economy-community.md) for the review scope and findings.
+
+## Prior review history
+
+The earlier text below is retained as history; it does not independently approve a later article hash.
 
 Reader: a streamer who has read only the overview page. Reference page, judged against page-conventions.md and the Atlas reader rules. Pilot page `commands/create-a-command` open next to it for voice.
 

@@ -1,3 +1,22 @@
+# Current independent reader review
+
+Verdict: PASS
+Reviewed: src/content/reference/en/templates/poll.mdx
+Reviewed-SHA: d3d4b1b6a2e96e4e6bfe06670e190e250f4a42c5b997b894b4b0ba05adfd7bb9
+Reviewed-SHA256: d3d4b1b6a2e96e4e6bfe06670e190e250f4a42c5b997b894b4b0ba05adfd7bb9
+Reviewed-Date: 2026-11-05
+Reviewer: independent section reviewer
+
+Separate poll and prediction tables support lookup without merging their concepts. Current-state values, event values, zero-participation cases and locked prediction timing remain available.
+
+The full page was read with the preceding/following navigation context and related links. This review applies the owner's explanatory, progressive-disclosure guidance; it does not impose Atlas sentence caps, pilot mimicry or fixed article headings. No substantive reader finding remains at this hash. Build/render/link checks are recorded separately by the lead reviewer.
+
+Report: docs-work/overhaul/review-learning-commands-helpers.md.
+
+## Historical evidence
+
+The material below is retained as historical evidence; its older verdict is not the current review.
+
 # Reader review: C:/Projects/NoMercyLabs/nomnomzbot-docs/src/content/reference/en/templates/poll.mdx
 Verdict: PASS
 Reviewed: C:/Projects/NoMercyLabs/nomnomzbot-docs/src/content/reference/en/templates/poll.mdx

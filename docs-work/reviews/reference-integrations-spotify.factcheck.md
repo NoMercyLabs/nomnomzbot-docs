@@ -1,7 +1,39 @@
-# Fact check: src/content/reference/en/integrations/spotify.mdx
+# Current independent fact check
+
 Verdict: PASS
 Reviewed: src/content/reference/en/integrations/spotify.mdx
-Reviewed-SHA: c7d3e0e8e3db4706
+Reviewed-SHA: 6baffbcd331924968f8cf0f9703b87480108829a2e8d79be7a7d521cad3257c5
+Reviewed-SHA256: 6baffbcd331924968f8cf0f9703b87480108829a2e8d79be7a7d521cad3257c5
+Reviewed-Date: 2026-11-05
+Reviewer: independent media-section reviewer
+Product: 54da8b6318de63b5205a0ff8db35e0b9045dd959 plus preserved current music UI edits
+
+The full article was read in sidebar order. Consequential defaults, permissions, prerequisites, state lifetime and effects were traced against current source; repaired findings were re-read before this verdict. This is source verification, not a live-channel or visible/audible output test.
+
+- server/src/NomNomzBot.Infrastructure/Integrations/ChannelSpotifyCredentialsService.cs:39-140 requires both app fields, seals the secret and permits shared fallback. dashboard/src/api/integrations.ts:37-44 requests playback+library; server/src/NomNomzBot.Infrastructure/Integrations/OAuthProviderRegistry.cs:64-92 defines streaming separately.
+- server/src/NomNomzBot.Infrastructure/Music/SpotifyMusicProvider.cs:546-586 refuses embedded tokens without streaming; Content/Widgets/Assets/music_player.vue:294-414 registers a selectable device without transferring playback.
+- External requirements verified 2026-11-05: https://developer.spotify.com/documentation/web-api/concepts/quota-modes (Premium app owner, 5 users and allowlist); https://developer.spotify.com/documentation/web-api/concepts/redirect_uri (exact match/loopback exceptions).
+
+Source paths without a repeated layer prefix in a bullet are relative to its preceding Infrastructure or dashboard scope. The section report records method, repaired findings, external sources and remaining product limitations: docs-work/overhaul/review-automation-media-integrations.md.
+
+## Historical evidence
+
+Older hashes, verdicts and values below are retained for history and are not the current review.
+
+# Fact check: src/content/reference/en/integrations/spotify.mdx
+Verdict: PENDING
+Reviewed: src/content/reference/en/integrations/spotify.mdx
+Reviewed-SHA: 6baffbcd331924968f8cf0f9703b87480108829a2e8d79be7a7d521cad3257c5
+
+## 2026-11-05 author source verification
+
+Author source audit complete; independent verdict pending. This hash binds the current text, not the historical PASS below. The article was read in full and revised toward the user's explainer style while preserving precise reference detail. SpotifyCredentialsPanel.vue; ChannelSpotifyCredentialsService.cs; IntegrationOAuthService.cs; OAuthProviderRegistry.cs; integrations.ts; SpotifyMusicProvider.cs. Shared-app fallback exists; browser streaming permissions remain a separate unresolved authorization path.
+
+The section inventory and known implementation gaps are in [automation-media-integrations.md](../overhaul/automation-media-integrations.md). This is source verification, not a live-channel execution claim. Independent review must account for product changes after the original author pass at b12f4f696.
+
+## Historical review (SHA a3deb528dc6c017e)
+
+Historical verdict: PASS. The earlier evidence below is retained as history and is superseded where the current article or source changed.
 
 Round 2. Product paths are relative to C:\Projects\NoMercyLabs\nomnomzbot (master, includes b6204c36c). Page en.json = dashboard/src/views/dashboard/settings/integrations/i18n/en.json. View = dashboard/src/views/dashboard/settings/integrations/IntegrationsView.vue. Panel = dashboard/src/views/dashboard/settings/integrations/components/SpotifyCredentialsPanel.vue.
 

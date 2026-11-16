@@ -1,7 +1,39 @@
-# Fact check: src/content/reference/en/automation/timers-and-chat-triggers.mdx
+# Current independent fact check
+
 Verdict: PASS
 Reviewed: src/content/reference/en/automation/timers-and-chat-triggers.mdx
-Reviewed-SHA: e7a4e7ee46b53b22
+Reviewed-SHA: f38720e61cd0518f982347f591a74fb8d44b972a7e9f478e211c56be2985fe60
+Reviewed-SHA256: f38720e61cd0518f982347f591a74fb8d44b972a7e9f478e211c56be2985fe60
+Reviewed-Date: 2026-11-05
+Reviewer: independent media-section reviewer
+Product: 54da8b6318de63b5205a0ff8db35e0b9045dd959 plus preserved current music UI edits
+
+The full article was read in sidebar order. Consequential defaults, permissions, prerequisites, state lifetime and effects were traced against current source; repaired findings were re-read before this verdict. This is source verification, not a live-channel or visible/audible output test.
+
+- server/src/NomNomzBot.Infrastructure/Commands/Jobs/TimerService.cs:50-63,108-135,162-215,265-329: 30-second tick, connected channels, interval/activity checks, persisted fire/rotation, delivery retry and successful-chat-only speech.
+- dashboard/src/views/dashboard/timers/components/timerDraft.ts:37-46: 30-minute/0-line defaults and 1..1440-minute/10000-line bounds; NewTimerDialog.vue:66-120 validates required reaction input.
+- server/src/NomNomzBot.Infrastructure/Chat/EventHandlers/ChatMessageHandler.cs:194-253,1388-1495: ordinary-line precedence, one matching chat trigger, role gate, shared cooldown and operator exception; server/src/NomNomzBot.Infrastructure/Commands/ChatTriggerService.cs:101-116 stores clamped cooldown and permission.
+
+Source paths without a repeated layer prefix in a bullet are relative to its preceding Infrastructure or dashboard scope. The section report records method, repaired findings, external sources and remaining product limitations: docs-work/overhaul/review-automation-media-integrations.md.
+
+## Historical evidence
+
+Older hashes, verdicts and values below are retained for history and are not the current review.
+
+# Fact check: src/content/reference/en/automation/timers-and-chat-triggers.mdx
+Verdict: PENDING
+Reviewed: src/content/reference/en/automation/timers-and-chat-triggers.mdx
+Reviewed-SHA: 0363119c0c80d907c43c84e04532e4b477542016973e0a88595ac3363291e266
+
+## 2026-11-05 author source verification
+
+Author source audit complete; independent verdict pending. This hash binds the current text, not the historical PASS below. The article was read in full and revised toward the user's explainer style while preserving precise reference detail. TimerService.cs; ChatTriggerService.cs; ChatMessageHandler.cs; timerDraft.ts. Timer defaults, ordinary-chat matching, delivery, cooldowns and offline connected-channel behavior were traced.
+
+The section inventory and known implementation gaps are in [automation-media-integrations.md](../overhaul/automation-media-integrations.md). This is source verification, not a live-channel execution claim. Independent review must account for product changes after the original author pass at b12f4f696.
+
+## Historical review (SHA e7a4e7ee46b53b22)
+
+Historical verdict: PASS. The earlier evidence below is retained as history and is superseded where the current article or source changed.
 
 ## Round 4: line 71
 

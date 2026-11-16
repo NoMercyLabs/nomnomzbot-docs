@@ -1,0 +1,447 @@
+<article><p>For a reminder you want to repeat during a stream, use a timer. It waits for time to pass and, if you choose, for enough new chat messages. To answer something viewers say in conversation, use a chat trigger: someone writes <code>good morning</code>, and the bot welcomes them.</p>
+
+<p>Open <strong>Triggers and timers</strong> in the sidebar. <strong>Timers</strong> holds the scheduled reminders; <strong>Chat triggers</strong> holds the replies to ordinary messages. Either can send a simple reply or run a command, action or pipeline, which combines several actions.</p>
+
+<p>A chat trigger does not need the leading <code>!</code> that starts a command such as <code>!hello</code>. That leading text is the command’s <em>prefix</em>. To make a command viewers ask for by name, use <a href="/reference/commands/create-a-command">Create a command</a>.</p>
+
+<h2 id="who-can-use-this-page"><a href="#who-can-use-this-page">Who can use this page</a></h2>
+
+<p>Sign in and select your channel. By default, a <strong>Moderator</strong>, <strong>Lead moderator</strong>, <strong>Editor</strong> or <strong>Broadcaster</strong> can change its timers and chat triggers. The broadcaster can raise the required role on <strong>Permissions</strong>.</p>
+
+<p>The bot must be running and connected to the channel to check timers and receive chat. Timers can post while the stream is offline, so switch off a reminder when you finish if you only want it during broadcasts. A simple reply needs no existing command or pipeline.</p>
+
+<p>The broadcaster can also grant a <strong>VIP</strong> read access to either tab independently. A VIP sees that tab’s list, without an editor. <strong>New timer</strong> and <strong>New trigger</strong> show “You can view this, but your role cannot change it.” The roles and access settings are explained on <a href="/reference/settings/permissions">Permissions</a>.</p>
+
+<h2 id="make-a-timer"><a href="#make-a-timer">Make a timer</a></h2>
+
+<p>Make a break reminder with two messages. The bot will post one each time, in order, so it can vary the reminder without sending both at once.</p>
+
+
+<ol>
+<li>
+<p>Open <strong>Triggers and timers</strong>, then <strong>Timers</strong>, and choose <strong>New timer</strong>.</p>
+
+</li>
+
+<li>
+<p>Type <code>Break reminder</code> in <strong>Name</strong>.</p>
+
+</li>
+
+<li>
+<p>Leave <strong>Reaction</strong> at <strong>Simple reply</strong>. In <strong>Messages</strong>, enter these two lines:</p>
+
+<pre><code>Take a moment to stretch and get some water.<br>New here? You are welcome to join the conversation or just watch.<br></code></pre>
+
+</li>
+
+<li>
+<p>Keep <strong>Minutes between posts</strong> at its default, <strong>30</strong>, and <strong>Send the reply to</strong> at <strong>Twitch chat</strong>. Leave the other options alone for now.</p>
+
+</li>
+
+<li>
+<p>Choose <strong>Create timer</strong>. The dialog closes and the timer appears in the list, switched on.</p>
+
+</li>
+
+</ol>
+<p>Watch your channel’s chat for “Take a moment to stretch and get some water.” After the next 30-minute wait and an eligible timer check, the bot posts the second line.</p>
+
+<p>When the tab has no timers, <strong>Make the first timer</strong> opens the same dialog as <strong>New timer</strong>. Blank lines in <strong>Messages</strong> are dropped.</p>
+
+<p>For a different reaction, choose what the timer should do:</p>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<table><thead><tr><th><strong>Reaction</strong></th><th>What to enter</th></tr>
+</thead><tbody><tr><td><strong>Simple reply</strong></td><td><strong>Messages</strong>, one message per line.</td></tr>
+<tr><td><strong>Pipeline</strong></td><td>An existing command, <a href="/reference/commands/pipelines">pipeline</a> or action in <strong>Pipeline</strong>.</td></tr>
+</tbody></table>
+
+<p>A message can include a helper such as <code>{channel}</code>, which the bot replaces with the channel’s value. See <a href="/reference/commands/variables-and-templates">Variables and templates</a> when you want changing information in a reminder.</p>
+
+<p>The dialog stays open and shows a reason in red if it cannot create the timer:</p>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<table><thead><tr><th>Problem</th><th>Message</th></tr>
+</thead><tbody><tr><td>No name</td><td>“Give the timer a name.”</td></tr>
+<tr><td><strong>Simple reply</strong> with no message</td><td>“Write at least one message.”</td></tr>
+<tr><td><strong>Pipeline</strong> with nothing selected</td><td>“Pick the command, action or pipeline the timer runs.”</td></tr>
+<tr><td>Minutes are not a whole number from 1 to 1440</td><td>“Use a whole number from 1 to 1440 minutes.”</td></tr>
+</tbody></table>
+
+<h2 id="when-a-timer-posts"><a href="#when-a-timer-posts">When a timer posts</a></h2>
+
+<p>The bot checks timers about every 30 seconds, and only for channels it is connected to. After a timer fires, both its waits must pass before it fires again:</p>
+
+<ul>
+<li><strong>Minutes between posts</strong> measures time since the last firing.</li>
+
+<li><strong>Chat lines needed</strong> counts new chat lines since that firing.</li>
+
+</ul>
+
+<p><strong>Duplicate</strong> keeps the original timer’s chat-line requirement and starts switched off. Once enabled, the copy can first fire when the channel has had that many messages since the bot began watching it. After that first firing, its activity wait is measured from the previous firing, like any other timer.</p>
+
+<p>Several messages rotate in order, one per firing, then wrap back to the first. Changing a simple-reply timer to <strong>Pipeline</strong> in the dashboard clears its messages; each firing runs the selected command, pipeline or action instead.</p>
+
+<p>For simple replies, <strong>Send the reply to</strong> starts at <strong>Twitch chat</strong>. You can choose <strong>Chat overlay</strong>, <strong>Both</strong> or <strong>Nowhere</strong>. Overlay delivery needs its browser source loaded in OBS. The shared delivery and appearance controls are explained on <a href="/reference/commands/create-a-command">Create a command</a>.</p>
+
+<p>For a simple reply, the timer counts a firing according to the delivery you chose:</p>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<table><thead><tr><th>Delivery</th><th>What counts</th></tr>
+</thead><tbody><tr><td><strong>Twitch chat</strong></td><td>Chat accepts the message.</td></tr>
+<tr><td><strong>Chat overlay</strong></td><td>An open overlay receives the line.</td></tr>
+<tr><td><strong>Both</strong></td><td>At least one of chat or the overlay receives it.</td></tr>
+<tr><td><strong>Nowhere</strong></td><td>The firing counts without visible output.</td></tr>
+</tbody></table>
+
+<p>If delivery does not meet that rule, the timer keeps the same line and timing state for the next check. A bound command or action counts its attempt even when it reports failure. A pipeline attempt also counts when it reports failure or the pipeline is missing, disabled or has no executable graph. Repeating timers then wait for their interval and new chat-line requirement; the recorded firing does not prove the action succeeded. An unexpected error before the reaction returns leaves that firing unrecorded.</p>
+
+<p>The stream being offline does not stop a timer in a connected channel. Switch it off to stop a live-only reminder.</p>
+
+<h2 id="edit-a-timer"><a href="#edit-a-timer">Edit a timer</a></h2>
+
+<p>Choose a timer in the list to open its editor. The list shows its name and how often it posts.</p>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<table><thead><tr><th>Field</th><th>What it changes</th></tr>
+</thead><tbody><tr><td><strong>Enabled</strong></td><td>Saves immediately. An off timer stays listed as <strong>Off</strong> and posts nothing.</td></tr>
+<tr><td><strong>Name</strong></td><td>The name in the list.</td></tr>
+<tr><td><strong>Reaction</strong></td><td>The message replies or the command, pipeline or action to run.</td></tr>
+<tr><td><strong>Send the reply to</strong></td><td><strong>Twitch chat</strong>, <strong>Chat overlay</strong>, <strong>Both</strong> or <strong>Nowhere</strong> for a simple reply.</td></tr>
+<tr><td><strong>Minutes between posts</strong></td><td>A whole number from 1 to 1440.</td></tr>
+<tr><td><strong>Chat lines needed</strong></td><td>A whole number from 0 to 10000.</td></tr>
+<tr><td><strong>Post once</strong></td><td>Switches off after one counted firing, using the rules in <a href="#when-a-timer-posts">When a timer posts</a>.</td></tr>
+<tr><td><strong>Read it aloud</strong></td><td>For a simple reply, requires the channel’s text-to-speech setup to be ready and speaks after successful chat delivery; an overlay-only reply or <strong>Nowhere</strong> stays silent. Bound reactions follow their target’s behavior.</td></tr>
+</tbody></table>
+
+<p>For a simple reply, <strong>Post once</strong> waits for successful delivery under those rules; <strong>Nowhere</strong> intentionally counts without a message. For a bound reaction, a recorded failed attempt can switch the timer off too, including a skipped missing or disabled pipeline. It does not guarantee one successful action.</p>
+
+<p>The footer counts unsaved changes. Choose <strong>Save changes</strong> to keep them, or <strong>Discard</strong> to return to the saved timer. After saving, the count clears and the list shows the new values.</p>
+
+<p><strong>Duplicate</strong> copies the saved settings, including the chat-line requirement, rather than your unsaved edits. It adds “copy” to the name, such as <code>Break reminder copy</code>, and opens the copy in the editor, switched off.</p>
+
+<h2 id="delete-a-timer"><a href="#delete-a-timer">Delete a timer</a></h2>
+
+<ol>
+<li>Open the timer and choose <strong>Delete</strong>. The confirmation asks “Delete <em>name</em>?”</li>
+
+<li>Choose <strong>Delete timer</strong>.</li>
+
+</ol>
+<p>The timer is permanently removed and stops posting. Its editor closes to “Pick a timer to edit it.”</p>
+
+<h2 id="make-a-chat-trigger"><a href="#make-a-chat-trigger">Make a chat trigger</a></h2>
+
+<p>Let the bot answer a morning greeting without asking viewers to remember a command.</p>
+
+<ol>
+<li>Open <strong>Triggers and timers</strong>, then <strong>Chat triggers</strong>, and choose <strong>New trigger</strong>.</li>
+
+<li>In <strong>Words to watch for</strong>, type <code>good morning</code>.</li>
+
+<li>In <strong>Reply</strong>, type <code>Good morning! Settle in and enjoy the stream.</code> Keep <strong>Send the reply to</strong> at <strong>Twitch chat</strong> and leave the other options alone.</li>
+
+<li>Choose <strong>Create trigger</strong>. The dialog closes and the trigger appears in the list, switched on.</li>
+
+</ol>
+<p>Write <code>good morning everyone</code> as an ordinary message in your channel’s chat. The bot replies “Good morning! Settle in and enjoy the stream.” The default match accepts those words anywhere in the message, without caring about capital letters.</p>
+
+<p>The reply can also use helpers from <a href="/reference/commands/variables-and-templates">Variables and templates</a>. When the tab is empty, <strong>Make the first trigger</strong> opens the same dialog. Missing fields show “Give the trigger some words to watch for.” or “Write the reply.”</p>
+
+<p>A new trigger uses these settings, which you can change in its editor:</p>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<table><thead><tr><th>Setting</th><th>Default</th></tr>
+</thead><tbody><tr><td><strong>How chat must match</strong></td><td><strong>Contains the words</strong></td></tr>
+<tr><td><strong>Match capital letters</strong></td><td>Off</td></tr>
+<tr><td><strong>Seconds between replies</strong></td><td>30</td></tr>
+<tr><td><strong>Who can set it off</strong></td><td><strong>Everyone</strong></td></tr>
+</tbody></table>
+
+<h2 id="how-chat-must-match"><a href="#how-chat-must-match">How chat must match</a></h2>
+
+<p>Choose how closely a chat line must follow <strong>Words to watch for</strong>:</p>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<table><thead><tr><th>Choice</th><th>When it matches</th></tr>
+</thead><tbody><tr><td><strong>Contains the words</strong></td><td>The text appears anywhere, including inside a longer word.</td></tr>
+<tr><td><strong>Is exactly the words</strong></td><td>The whole chat line is that text.</td></tr>
+<tr><td><strong>Starts with the words</strong></td><td>The chat line begins with that text.</td></tr>
+<tr><td><strong>Matches a pattern</strong></td><td>The chat line matches a regular expression, a pattern language for text.</td></tr>
+</tbody></table>
+
+<p>For example, <code>hi</code> with <strong>Contains the words</strong> also matches <code>this</code>. Choose <strong>Is exactly the words</strong> to answer only the greeting, or use a suitable pattern for a more specific rule.</p>
+
+<p>With <strong>Match capital letters</strong> off, <code>Hello</code> and <code>hello</code> match the same way. Turning it on makes them different. An invalid regular expression is refused when you save.</p>
+
+<h2 id="when-a-chat-trigger-fires"><a href="#when-a-chat-trigger-fires">When a chat trigger fires</a></h2>
+
+<p>Chat triggers watch ordinary chat lines. A line starting with the channel’s command prefix is excluded, even when it does not run a valid command. A line claimed by another command or by a soundboard trigger is excluded too.</p>
+
+<p>One line can fire at most one chat trigger. The bot checks the text, then <strong>Who can set it off</strong>, then <strong>Seconds between replies</strong>. It can skip a matching trigger if the sender does not meet its role requirement. If an eligible match is cooling down, the search stops; another trigger does not answer instead.</p>
+
+<p><strong>Who can set it off</strong> is the lowest role allowed, from <strong>Everyone</strong> through <strong>Broadcaster</strong>. <strong>Seconds between replies</strong> is a wait for the whole channel, from 0 to 86400 seconds (one day), starting when an eligible match fires.</p>
+
+<p>The broadcaster and moderators identified on the incoming platform message bypass that wait. A role stored only in the bot does not grant the bypass.</p>
+
+<h2 id="edit-a-chat-trigger"><a href="#edit-a-chat-trigger">Edit a chat trigger</a></h2>
+
+<p>Choose a trigger in the list to open its editor. The list shows its words and match choice.</p>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<table><thead><tr><th>Field</th><th>What it changes</th></tr>
+</thead><tbody><tr><td><strong>Enabled</strong></td><td>Saves immediately. An off trigger stays listed as <strong>Off</strong> and answers nothing.</td></tr>
+<tr><td><strong>Words to watch for</strong></td><td>The text the bot looks for.</td></tr>
+<tr><td><strong>How chat must match</strong></td><td>The rule in <a href="#how-chat-must-match">How chat must match</a>.</td></tr>
+<tr><td><strong>Match capital letters</strong></td><td>Whether <code>Hello</code> and <code>hello</code> are different.</td></tr>
+<tr><td><strong>Reaction</strong></td><td><strong>Simple reply</strong> sends the <strong>Reply</strong>. <strong>Pipeline</strong> runs an existing command, pipeline or action instead.</td></tr>
+<tr><td><strong>Send the reply to</strong></td><td>Where a simple reply appears; <strong>Twitch chat</strong> is the default.</td></tr>
+<tr><td><strong>Seconds between replies</strong></td><td>The channel’s wait before the trigger fires again.</td></tr>
+<tr><td><strong>Who can set it off</strong></td><td>The lowest role allowed to fire it.</td></tr>
+</tbody></table>
+
+<p>The default reply comes from the channel’s bot account in Twitch chat. To show it on stream, keep the chat overlay’s browser source loaded in OBS and choose <strong>Chat overlay</strong> or <strong>Both</strong>.</p>
+
+<p>Choose <strong>Save changes</strong> to keep edits, or <strong>Discard</strong> to return to the saved trigger. Saving clears the unsaved count and updates the words in the list.</p>
+
+<h2 id="delete-a-chat-trigger"><a href="#delete-a-chat-trigger">Delete a chat trigger</a></h2>
+
+<ol>
+<li>Open the trigger and choose <strong>Delete</strong>. The confirmation asks “Delete <em>words</em>?”</li>
+
+<li>Choose <strong>Delete trigger</strong>.</li>
+
+</ol>
+<p>The trigger is permanently removed and stops answering. Its editor closes to “Pick a trigger to edit it.”</p>
+
+<h2 id="troubleshooting"><a href="#troubleshooting">Troubleshooting</a></h2>
+
+<h2>When something is not right</h2>
+<p><strong>A timer never posts.</strong></p>
+<ol>
+<li>Check <strong>Enabled</strong>. A timer marked <strong>Off</strong> posts nothing; <strong>Post once</strong> switches it off after one counted firing, which can be a failed bound-reaction attempt.</li>
+
+<li>Check <strong>Chat lines needed</strong>. A quiet chat holds the timer until enough new lines arrive.</li>
+
+<li>Check <strong>Minutes between posts</strong>. After the interval passes, the next check can add about 30 seconds to the wait.</li>
+
+</ol><p><strong>A chat trigger does not answer.</strong></p>
+<ol>
+<li>Check <strong>Enabled</strong>. An off trigger answers nothing.</li>
+
+<li>Send an ordinary chat line. A line starting with the command prefix cannot fire it.</li>
+
+<li>Check <strong>Who can set it off</strong> against the sender’s role.</li>
+
+<li>Check <strong>Seconds between replies</strong>. The channel may still be waiting after the previous firing.</li>
+
+</ol>
+<h2 id="related-pages"><a href="#related-pages">Related pages</a></h2>
+
+<ul>
+<li><a href="/reference/commands/create-a-command">Create a command</a></li>
+
+<li><a href="/reference/commands/pipelines">Pipelines</a></li>
+
+<li><a href="/reference/commands/variables-and-templates">Variables and templates</a></li>
+
+<li><a href="/reference/settings/permissions">Permissions</a></li>
+
+</ul><p>A new timer starts switched on with <strong>Chat lines needed</strong> at 0. Its first message is due at the next timer check, usually within about 30 seconds; it does not wait a full 30 minutes first.</p>
+<p>With <strong>Chat lines needed</strong> at 0, time alone is enough. A timer that has never fired is already due, subject to its chat-line requirement. That is why a new timer can post at the next check.</p>
+</article>

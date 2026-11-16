@@ -1,3 +1,24 @@
+# Current independent fact check
+
+Verdict: PASS
+Reviewed: src/content/reference/en/getting-started/sign-in.mdx
+Reviewed-SHA: 5589cf741348040cefa7add750a05898bc41250a6746b549bce9fbb902a6b11f
+Reviewed-SHA256: 5589cf741348040cefa7add750a05898bc41250a6746b549bce9fbb902a6b11f
+Reviewed-Date: 2026-11-05
+Reviewer: independent section reviewer
+Product: 54da8b6318de63b5205a0ff8db35e0b9045dd959 (initial source tracing b12f4f69638553c03ed64c1518c90d7bcccd6907)
+
+The full article was read in navigation order; consequential behavior and reference details were checked against current source. All reported documentation findings affecting this page were repaired and re-reviewed. This is a source review, not a live-channel test.
+
+- Login buttons, secure-context fallback and instance chooser: dashboard/src/views/site/login/LoginView.vue:32-130.
+- Provider flow support: server/src/NomNomzBot.Infrastructure/Identity/LoginProviderRegistry.cs:20-99; Twitch role scope sets: server/src/NomNomzBot.Infrastructure/Identity/TwitchLoginScopes.cs:18-70; callback role distinction: server/src/NomNomzBot.Api/Controllers/V1/AuthController.cs:370-435.
+
+Report: docs-work/overhaul/review-learning-commands-helpers.md.
+
+## Historical evidence
+
+The material below is retained as historical evidence. Its older hashes, verdicts and values do not constitute the current review.
+
 # Fact-check: /reference/getting-started/sign-in
 Verdict: PASS
 Reviewed: C:\Projects\NoMercyLabs\nomnomzbot-docs\src\content\reference\en\getting-started\sign-in.mdx

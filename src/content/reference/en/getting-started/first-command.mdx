@@ -1,54 +1,69 @@
 ---
 title: Your first command
-description: Make one chat command, see it switched on, and watch the bot answer it in your chat.
+description: Make one chat command in the dashboard and see the bot answer it in your chat.
 ---
 
-On this page you make one chat command and see the bot answer it.
-A command is a word that chat types, such as `!hello`.
-It takes about a minute.
+Commands live on the **Commands** page of the dashboard.
+A new command is switched on the moment you create it, so you can try it in chat right away.
+Here you make a `schedule` command that answers with your stream times.
 
-You need the **Moderator**, **Lead moderator**, **Editor** or **Broadcaster** role in the channel.
-The roles are explained on [Permissions](/reference/settings/permissions).
+Before you start:
+
+- You need to be the broadcaster, or a moderator or editor of the channel on Twitch. The dashboard takes its moderators and editors from the channel on Twitch.
+- If you help with more than one channel, switch the dashboard to the right channel first (see the [Dashboard tour](/reference/getting-started/dashboard-tour)).
+- Check the channel prefix. You call a command with the channel prefix, which is `!` until the channel sets a different one. To see it, open **Settings** in the sidebar, then **Bot basics**, and look at **Command prefix**.
 
 ## Make the command
 
-1. Open **Commands** in the sidebar (see the [Dashboard tour](/reference/getting-started/dashboard-tour)).
-   The list of channel commands opens.
-2. Choose **New command**.
-   On an empty list, **Make the first command** does the same.
-   The **New command** dialog opens.
-3. Type `hello` in **Name**.
-4. Leave **What it does** at **Sends a reply**.
-5. Type the line the bot sends in **Reply**, for example `Hello, welcome to the stream!`.
-6. Leave the other fields as they are.
-7. Choose **Create command**.
-   The dialog closes and `!hello` opens in the editor beside the list.
+A new command starts with **Who can use it** set to **Everyone**.
 
-The new command is switched on at once.
-You do not need to choose **Save changes**.
+1. Open **Commands** in the sidebar and choose **New command**.
+   The **New command** dialog opens.
+   On an empty list, **Make the first command** opens the same dialog.
+2. Type `schedule` in **Name**.
+   The dialog drops a leading `!` and saves the name in lowercase.
+3. Leave **What it does** at **Sends a reply**.
+4. In **Reply**, write your stream times the way you would say them in chat, for example `Live Monday and Thursday from 8 PM`.
+5. Leave everything else alone for now, and choose **Create command**.
+
+The new command opens in the editor.
+The **Enabled** switch at the top of the editor turns it off and on.
+If you change the reply later, choose **Save changes** before you try it again.
 
 ## Try it in chat
 
-1. Open your channel's chat.
-2. Type `!hello`.
-   The bot answers with your line, in the channel's one bot voice.
+In the channel's Twitch chat, as the broadcaster or a moderator, type the channel prefix and the name, for example `!schedule`, and press Enter.
+The bot answers with your reply.
 
-The `!` is the channel prefix when you have set none.
-If your channel uses a different prefix, type that instead of `!`.
+You can test while the channel is offline, because the broadcaster and moderators always get an answer.
+Viewers get an answer only while the channel is live.
 
-You can stop here.
-Your first command works.
+The broadcaster can change that: open **Settings** in the sidebar, then **Bot basics**, and turn on **Keep commands and rewards on while offline**.
 
 ::Troubleshooting
 
-**The bot does not answer.**
-Check that the switch on the command's row in the list is on.
-A command that is **Off** answers nobody.
-For the other causes, see Troubleshooting on [Create a command](/reference/commands/create-a-command).
+**The bot does not answer me.**
+Check these first:
+
+1. You typed in the chat of the channel you picked in the dashboard.
+2. You typed the prefix shown under **Command prefix**, not a `!` from habit.
+3. The **Enabled** switch in the editor is on. A command that is off answers nobody.
+4. If you edited the reply, you chose **Save changes**.
+
+For other causes, such as cooldowns, see Troubleshooting on [Create a command](/reference/commands/create-a-command).
+
+**The bot answers me but not a viewer.**
+If the channel is offline, viewers get no answer.
+Test again while the channel is live, or ask the broadcaster to turn on **Keep commands and rewards on while offline**.
+If someone changed **Who can use it** in the editor, the viewer may not be allowed to use the command.
 
 ::
 
 ## Next steps
 
-- Add helpers to the reply, such as the game you play, on [Variables and templates](/reference/commands/variables-and-templates).
-- Change who may use the command, the prefix, or the cooldown, on [Create a command](/reference/commands/create-a-command).
+Each command also has its own **Prefix** setting.
+It starts at **Channel default**, which uses the channel's **Command prefix**.
+**Custom** or **None** replaces the channel prefix for that one command.
+
+- Add details that change from one use to the next, such as the game being played, on [Variables and templates](/reference/commands/variables-and-templates).
+- Change who may use the command, its prefix or its cooldown on [Create a command](/reference/commands/create-a-command).

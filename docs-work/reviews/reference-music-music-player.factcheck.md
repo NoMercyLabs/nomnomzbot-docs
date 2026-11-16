@@ -1,7 +1,54 @@
-# Fact check: src/content/reference/en/music/music-player.mdx
+# Targeted final review — 2026-11-06
+
+Verdict: PENDING
+Reviewed: src/content/reference/en/music/music-player.mdx
+Reviewed-SHA: b9592030736d7adaae53ad5c13830ac41a4faaf3f28d29de0c6b03137111da30
+Reviewed-SHA256: b9592030736d7adaae53ad5c13830ac41a4faaf3f28d29de0c6b03137111da30
+Reviewer: final-features correction author; self-review, not independent PASS
+Product-Revision: 2dfefbb0c393f439954d79b32ac11511678d7f44 plus working tree
+
+The full article was read editorially. The first-task prerequisite correction was checked against current source and applied by this reviewer. This is targeted author verification, not an exhaustive source audit, independent final-text approval or runtime test. See [final-features.md](../ecosystem-validation/final-features.md) for the exact claims and limits.
+
+## Historical reviews
+
+Original records below are preserved verbatim and apply only to their recorded hashes.
+
+# Current independent fact check
+
 Verdict: PASS
 Reviewed: src/content/reference/en/music/music-player.mdx
-Reviewed-SHA: d71c81b704133b1e
+Reviewed-SHA: 98c6051a2a074d6d9c5741a3d65ae54423dcc778c3dd5c33a3b928dedab293c9
+Reviewed-SHA256: 98c6051a2a074d6d9c5741a3d65ae54423dcc778c3dd5c33a3b928dedab293c9
+Reviewed-Date: 2026-11-05
+Reviewer: independent media-section reviewer
+Product: 54da8b6318de63b5205a0ff8db35e0b9045dd959 plus preserved current music UI edits
+
+The full article was read in sidebar order. Consequential defaults, permissions, prerequisites, state lifetime and effects were traced against current source; repaired findings were re-read before this verdict. This is source verification, not a live-channel or visible/audible output test.
+
+- server/src/NomNomzBot.Infrastructure/Content/Widgets/Assets/music_player.vue:294-414 registers a Spotify Connect device without transferring playback automatically; server/src/NomNomzBot.Infrastructure/Music/SpotifyMusicProvider.cs:546-586 requires the separate streaming grant for an embedded token.
+- dashboard/src/api/music.ts:683-717 uses 50 history rows and 10 top requesters; dashboard/src/views/dashboard/music/components/ThanksPanel.vue:25-81 renders ranks/counts/bars. The current dirty UI files were read and preserved.
+- server/src/NomNomzBot.Application/Music/Dtos/MusicConfigDefaults.cs:20-32 establishes Playback/requests defaults; server/src/NomNomzBot.Infrastructure/Content/Widgets/FirstPartyWidgetCatalogue.cs:87-107 defines the audio-only OBS source setup.
+
+Source paths without a repeated layer prefix in a bullet are relative to its preceding Infrastructure or dashboard scope. The section report records method, repaired findings, external sources and remaining product limitations: docs-work/overhaul/review-automation-media-integrations.md.
+
+## Historical evidence
+
+Older hashes, verdicts and values below are retained for history and are not the current review.
+
+# Fact check: src/content/reference/en/music/music-player.mdx
+Verdict: PENDING
+Reviewed: src/content/reference/en/music/music-player.mdx
+Reviewed-SHA: 8fb0cd044cc7d542b03007cd451f3e5a628b1d11802bc85a4e3cddee6df2680a
+
+## 2026-11-05 author source verification
+
+Author source audit complete; independent verdict pending. This hash binds the current text, not the historical PASS below. The article was read in full and revised toward the user's explainer style while preserving precise reference detail. MusicPlayerConnect.vue; music_player.vue; SpotifyPlaybackEngine.cs; SpotifyMusicProvider.cs; integrations.ts. YouTube browser audio and Spotify active-device audio differ; ordinary OAuth does not ask streaming.
+
+The section inventory and known implementation gaps are in [automation-media-integrations.md](../overhaul/automation-media-integrations.md). This is source verification, not a live-channel execution claim. Independent review must account for product changes after the original author pass at b12f4f696.
+
+## Historical review (SHA d71c81b704133b1e)
+
+Historical verdict: PASS. The earlier evidence below is retained as history and is superseded where the current article or source changed.
 
 Round 2. Paths are in the product repo (master, includes b6204c36c). EN = dashboard/src/views/dashboard/music/i18n/en.json. MV = dashboard/src/views/dashboard/music/MusicView.vue. MP = server/src/NomNomzBot.Infrastructure/Content/Widgets/Assets/music_player.vue. INT = dashboard/src/views/dashboard/settings/integrations/i18n/en.json.
 

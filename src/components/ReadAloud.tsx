@@ -10,13 +10,6 @@ import { createClipCache, textsAhead, whenBuffered } from '../lib/readAloudClip'
 import { rowText, tableIsRead } from '../lib/readAloudLabels';
 import { pickVoice } from '../lib/readAloudVoice';
 
-// Read aloud with the browser's own speech engine: no service, no key, and
-// the reader's system voices. The page is split into blocks (headings,
-// paragraphs, list items, cells) and each block into sentences; one sentence
-// is one utterance, because Chrome cuts a long utterance off after about 15
-// seconds. Pause is a cancel that remembers the sentence: speechSynthesis
-// .pause() is unreliable on Android Chrome.
-
 const BLOCKS = 'h1, h2, h3, h4, p, li, dt, dd, tr, figcaption';
 // A block with one of these inside is read through them instead, so a list
 // item that holds a paragraph is not read twice.
@@ -40,7 +33,10 @@ let runId = 0;
 // The bot's own voice. A site that runs its own bot sets PUBLIC_READ_ALOUD_URL.
 const READ_ALOUD_URL
   = import.meta.env.PUBLIC_READ_ALOUD_URL ?? 'https://dev.nomnomz.bot/api/v1/public/read-aloud';
-const clips = createClipCache(READ_ALOUD_URL, (url, options) => fetch(url, options?.fresh ? { cache: 'reload' } : undefined));
+const clips = createClipCache(READ_ALOUD_URL, (url, options) => fetch(url, {
+  cache: options?.fresh ? 'reload' : 'default',
+  signal: options?.signal,
+}));
 let player: HTMLAudioElement | null = null;
 
 // Audio elements made ahead of their turn, by clip address: a sentence is fetched and decoded while the one
@@ -76,7 +72,7 @@ const BUFFER_AHEAD = 10;
 // Of those, how many already have an audio element built; the rest are only fetched.
 const WARM_AHEAD = 2;
 // Reading starts once this many clips (the first line and the ones after it) are ready, so the lines that follow
-// are already there when the first ends. The wait is capped, so a slow bot delays the start and never blocks it.
+// are already there when the first ends. The buffer wait and each active clip request have separate limits.
 const START_BUFFER = 4;
 const START_BUFFER_MAX_WAIT_MS = 12000;
 
@@ -276,9 +272,10 @@ export const useReadAloud = create<ReadAloudState>()((set, get) => {
   // Fetches a sentence ahead of its turn. A sentence that is next in line also gets its audio element built now,
   // so it starts the moment it is wanted.
   function prepare(text: string, lang: string, buildElement: boolean): Promise<string | null> {
+    const id = runId;
     const pending = clips.clip(text, lang);
     void pending.then((clip) => {
-      if (!clip || !buildElement || warm.has(clip)) return;
+      if (id !== runId || !clip || !buildElement || warm.has(clip)) return;
       const audio = new Audio();
       audio.preload = 'auto';
       audio.src = clip;
@@ -292,13 +289,17 @@ export const useReadAloud = create<ReadAloudState>()((set, get) => {
     warm.delete(clip);
     audio.playbackRate = get().rate;
     audio.onended = () => finished(id);
-    audio.onerror = () => {
-      if (id === runId) speakWithBrowser(text, lang, id);
+    let failed = false;
+    const fallback = () => {
+      if (id !== runId || failed) return;
+      failed = true;
+      release(audio);
+      if (player === audio) player = null;
+      speakWithBrowser(text, lang, id);
     };
+    audio.onerror = fallback;
     player = audio;
-    audio.play().catch(() => {
-      if (id === runId) speakWithBrowser(text, lang, id);
-    });
+    void audio.play().catch(fallback);
   }
 
   // `fillBuffer` is true when the queue is cold (start, resume, a jump): the first line then waits for the lines

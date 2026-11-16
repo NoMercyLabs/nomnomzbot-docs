@@ -1,3 +1,40 @@
+# Current targeted reader review
+
+Verdict: PARTIAL
+Reviewed: src/content/reference/en/commands/built-in-commands.mdx
+Reviewed-SHA: 16d7f2bd055dde4cfd1d4c6ae06870397b7068ebf1451b10640efcd9e4bb4cd6
+Reviewed-SHA256: 16d7f2bd055dde4cfd1d4c6ae06870397b7068ebf1451b10640efcd9e4bb4cd6
+Reviewed-Date: 2026-11-06
+Reviewer: final-learning editing author; self-review, not independent
+Product: 2dfefbb0c393f439954d79b32ac11511678d7f44
+
+The full article was read for editorial clarity. Source verification is limited to the claims below and the focused checks in docs-work/ecosystem-validation/final-learning.md. This is not an exhaustive factual PASS, independent approval, rendered-site review or live application test.
+
+Whisper routing: server/src/NomNomzBot.Infrastructure/Chat/EventHandlers/WhisperCommandHandler.cs:39-69 fixes the prefix at !; :106-135 resolves an explicit channel or exactly one session channel; :139-175 sends a cap notice without disclosing the answer. The channel example gives readers a recovery path.
+
+## Preserved historical reviews
+
+The earlier hashes, verdicts and claims below are retained as historical evidence; they do not approve this revision.
+
+# Current independent reader review
+
+Verdict: PASS
+Reviewed: src/content/reference/en/commands/built-in-commands.mdx
+Reviewed-SHA: 39c4fdf7f0487344858cb6d3d263fd22e827fccb4737cdec9584cf2277af21f9
+Reviewed-SHA256: 39c4fdf7f0487344858cb6d3d263fd22e827fccb4737cdec9584cf2277af21f9
+Reviewed-Date: 2026-11-05
+Reviewer: independent section reviewer
+
+The opening explains why built-ins are useful; the alphabetical catalog supports lookup, feature links explain prerequisites, and editing/reset/troubleshooting remain precise. The reviewed repair distinguishes the editor base role from effective music access.
+
+The full page was read with the preceding/following navigation context and related links. This review applies the owner's explanatory, progressive-disclosure guidance; it does not impose Atlas sentence caps, pilot mimicry or fixed article headings. No substantive reader finding remains at this hash. Build/render/link checks are recorded separately by the lead reviewer.
+
+Report: docs-work/overhaul/review-learning-commands-helpers.md.
+
+## Historical evidence
+
+The material below is retained as historical evidence; its older verdict is not the current review.
+
 # Reader review: src/content/reference/en/commands/built-in-commands.mdx
 Verdict: PASS
 Reviewed: src/content/reference/en/commands/built-in-commands.mdx

@@ -1,0 +1,34 @@
+{
+  "fingerprint": "032e43942e441a5bf77f8f2a60419519bd88ce11f6b021d39c85ee72ecffaf71",
+  "verdict": "PASS",
+  "findings": [],
+  "coverage": [
+    {
+      "id": "fixed-coverage",
+      "result": "supported",
+      "evidence": "Independently reviewed both complete candidate variants against current product source C:/Projects/NoMercyLabs/nomnomzbot HEAD f741789bf6b8d90ae2fd07f33a307a5a11623606: 11/11 fixed contract groups retained;43/43 unique catalog rows. Actual primary source paths/ranges and resolved findings recorded in C:/Projects/NoMercyLabs/nomnomzbot-docs/docs-work/reader-first-pilot/fact-review/built-in-commands.md and contracts/built-in-commands.md. This is source/reader-answer support, not runtime delivery or calibration acceptance."
+    }
+  ],
+  "reader_answers": [
+    {
+      "question": 1,
+      "result": "supported",
+      "evidence": "Pause is !pause; effective Moderator or music:queue:moderate grant; normal shared/personal defaults30/0, Everyone base floor does not remove runtime safeguard. Source: server/src/NomNomzBot.Infrastructure/Commands/Builtins/PlaybackControlBuiltins.cs:27-39,90-103; MusicModerationGate.cs:33-56 in same Builtins directory. Independently checked final reader Q1 against that source/contract and its rendered excerpts; answer text is unchanged from initial review."
+    },
+    {
+      "question": 2,
+      "result": "supported",
+      "evidence": "Catalog does not configure music/Spotify; connected feature and command availability needed; System commands requires commands write, default Moderator and higher subject to raised floor; read-only users do not see tab. Source: dashboard/src/views/dashboard/commands/CommandsView.vue:54-68; server/src/NomNomzBot.Infrastructure/Content/Identity/ActionDefinitionSeeder.cs:179-180; server/src/NomNomzBot.Infrastructure/Commands/Builtins/PlaybackControlBuiltins.cs:90-103. Independently checked final reader Q2 against that source/contract and its rendered excerpts; answer text is unchanged from initial review."
+    },
+    {
+      "question": 3,
+      "result": "supported",
+      "evidence": "Back to default on field saves immediately; whole Reset confirms loss of all own overrides/replies/TTS and enables command; shared sibling replies reset without unrelated sibling settings. Source: dashboard/src/views/dashboard/commands/components/BuiltinEditor.vue:205-251; server/src/NomNomzBot.Infrastructure/Commands/BuiltinCommandService.cs:262-301. Independently checked final reader Q3 against that source/contract and its rendered excerpts; answer text is unchanged from initial review."
+    },
+    {
+      "question": 4,
+      "result": "supported",
+      "evidence": "Successful moderated bare skip starts independent channel-wide30-second window, blocking second moderator at5 seconds; !skip4 removes caller fourth own pending request only, not playing song or global queue item4, subject to normal outer gates. Source: server/src/NomNomzBot.Infrastructure/Commands/Builtins/MusicBuiltins.cs:35-116,227-288; server/src/NomNomzBot.Infrastructure/Chat/EventHandlers/ChatMessageHandler.cs:321-376. Independently checked final reader Q4 against that source/contract and its rendered excerpts; answer text is unchanged from initial review."
+    }
+  ]
+}

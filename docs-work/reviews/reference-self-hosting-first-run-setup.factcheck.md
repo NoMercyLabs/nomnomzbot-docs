@@ -1,5 +1,47 @@
-# Fact-check: /reference/self-hosting/first-run-setup
+# Targeted final review — 2026-11-06
+
+Verdict: PENDING
+Reviewed: src/content/reference/en/self-hosting/first-run-setup.mdx
+Reviewed-SHA: 6dcb47919d325ef7652b3746b55877b9f2ab0f7c69b3516b31150c1e8df74cd8
+Reviewed-SHA256: 6dcb47919d325ef7652b3746b55877b9f2ab0f7c69b3516b31150c1e8df74cd8
+Reviewer: final-features correction author; self-review, not independent PASS
+Product-Revision: 2dfefbb0c393f439954d79b32ac11511678d7f44 plus working tree
+
+The full article was read editorially. The correction was independently traced from the staged lead to current source, then applied by this reviewer. This is targeted author verification, not a new exhaustive source audit, independent final-text approval or runtime test. See [final-features.md](../ecosystem-validation/final-features.md) for exact source anchors, coverage and remaining limits.
+
+## Historical reviews
+
+The original records below are preserved verbatim and apply only to their recorded hashes.
+
+# Independent source review: /reference/self-hosting/first-run-setup
 Verdict: PASS
+Reviewed: src/content/reference/en/self-hosting/first-run-setup.mdx
+Reviewed-SHA: f61f7298b766bf29
+Reviewed-SHA256: f61f7298b766bf29d7cfc46b7c5e13fbc7e46ec2e014b744a87fe4f77a9ff13a
+Reviewed-Date: 2026-11-05
+Reviewer: independent reviewer, separate from article author
+Product-Revision: 54da8b6318de63b5205a0ff8db35e0b9045dd959
+
+The complete current article was read in navigation order and checked against current product source. Historical PASS entries below are leads, not approval of this revision. Atlas voice/template gates do not govern this review.
+
+## Current evidence and result
+
+No substantive finding. Deliberate app choice, optional device-flow secret, first-run write window and optional service follow-through checked.
+
+Source files opened in this review: Api/Controllers/V1/SystemController.cs:188-358,465-492; dashboard/site/setup/SetupView.vue:34-55,104-148; official Twitch application registration guide steps 1,4,9-10 reviewed 2026-11-05.
+
+Unqualified paths beginning Identity, CustomCode, Billing, EventStore, Engagement, Rewards, Widgets or Platform are under server/src/NomNomzBot.Infrastructure; Api and Domain identify their corresponding server projects. Dashboard shorthand is under dashboard/src/views/dashboard.
+
+Verification is read-only source review. No bot/API startup, live account authorization, channel writes, C# host/Jint execution, Docker install or restore was performed. Documentation build/render QA belongs to the combined parent pass. The SDK reference and worked-example checks additionally ran the existing read-only nnz-code-doc-check.mjs with production JavaScript bootstrap and substituted host I/O.
+
+## Historical review (superseded)
+
+# Fact-check: /reference/self-hosting/first-run-setup
+Historical verdict: PENDING
+
+2026-11-04 overhaul: the article changed, so the previous PASS and hash below are historical evidence, not approval of the current revision.
+Fresh writer source checks and article inventory are recorded under H2/H3 in `docs-work/overhaul/settings-hosting-code.md`.
+Independent review of the changed text is pending.
 Reviewed: C:\Projects\NoMercyLabs\nomnomzbot-docs\src\content\reference\en\self-hosting\first-run-setup.mdx
 Reviewed-SHA: 7aaee6064fb775d4
 

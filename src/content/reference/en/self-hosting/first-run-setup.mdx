@@ -3,107 +3,142 @@ title: First-run setup
 description: Finish the setup page of a new bot, with the Twitch app, the optional bot account and the optional Spotify, Discord and YouTube keys.
 ---
 
-A new self-hosted bot opens the setup page before anything else.
-You choose the Twitch app the bot uses, and you can add a bot account and the keys for other services.
-You sign in after the last step.
+A new self-hosted bot opens a setup page before anyone can sign in.
+Choose **Sign in** on the bot's home page, or open `<bot address>/setup`, and the bot shows it.
+Only the Twitch app step is required. You can skip every other step and add those keys later.
 
-You reach this page after you [install with Docker](/reference/self-hosting/install-with-docker) and open the bot in your browser.
-
-## The steps
-
-The page shows the steps in a row at the top, with the current step marked.
-On a narrow screen, the row shows "Step 1 of 6" and the name of the current step.
-
-| Step | Title on the card | Needed |
-| --- | --- | --- |
-| **Twitch app** | **Connect your Twitch application** | Yes |
-| **Bot account** | **Authorize the bot account (optional)** | No |
-| **Spotify** | **Spotify (optional)** | No |
-| **Discord** | **Discord (optional)** | No |
-| **YouTube** | **YouTube (optional)** | No |
-| **Finish setup** | **Finish setup** | Yes |
-
-Under each card, **Back** goes to the step before.
-On a needed step, **Next** stays off until the step is done.
-On an optional step that is not done, the button reads **Skip**.
+You need the bot running and open in your browser, as in [Install with Docker](/reference/self-hosting/install-with-docker).
+To register your own Twitch app, you also need a Twitch account with a verified email address and two-factor authentication. Twitch asks for both before it lets you register an application.
 
 ::Callout
 
 Finish the setup soon after you start the bot.
-Until you choose **Finish setup**, anyone who can open the bot's address can change the keys on this page.
+Until you choose the **Finish setup** button on the last card, anyone who can open the bot's address can change the keys on this page.
 After that, only an admin of the bot can change them.
+An admin signs in to the dashboard, opens the account menu at the bottom of the sidebar and chooses **Platform admin**. The **Providers** and **Platform bot** pages are under **Configuration** there.
 
 ::
 
-## 1. Choose the Twitch app
+## The steps
+
+The page has six steps, numbered 1 to 6 in a row at the top: **Twitch app**, **Bot account**, **Spotify**, **Discord**, **YouTube** and **Finish setup**.
+On a narrow screen, the row shows "Step 1 of 6" and the name of the current step instead.
+
+Under each card, **Back** goes to the step before.
+On the Twitch app step, **Next** stays off until the step is done.
+On an optional step you have not done, the same button reads **Skip**, and once you save that step it reads **Next**.
+
+The shortest route uses the shared NomNomzBot app, so you register nothing:
+
+1. On the Twitch app step, choose **Use the shared NomNomzBot app**, then choose **Next**. The shared app costs you three things:
+   - You sign in to the dashboard with a code, never with one tap.
+   - You cannot add a bot account in step 2.
+   - The broadcaster account speaks as the bot in chat.
+2. Choose **Skip** on steps 2 to 5.
+3. On the last card, choose the **Finish setup** button.
+
+## 1. Twitch app
 
 The bot talks to Twitch through a Twitch app.
-You can register your own app, or use the shared NomNomzBot app.
-Your own app is encouraged.
+The card recommends that you register your own, or you can choose **Use the shared NomNomzBot app** as in the shortest route.
+The **Client ID** field starts empty, and only **Save** with your own Client ID or **Use the shared NomNomzBot app** finishes this step.
+
+A secret in **Client Secret (optional)** adds one-tap sign-in, on buttons such as **Continue as broadcaster**, and lets you add a bot account in step 2.
+One-tap sign-in works only when you open the bot on an https address, or on `localhost` on the computer that runs it. On any other address, you sign in with a code, with or without the secret.
+Keep the secret private, like a password.
 
 To use your own app:
 
-1. Open the Twitch Developer Console from the link on the card, and register a new application.
-2. Set the OAuth Redirect URL to the address the card shows.
-   Use the copy button beside the address, so the address matches exactly.
-3. Choose the "Chat Bot" category, create the app, and copy the Client ID.
-4. Paste it into **Client ID** and choose **Save**.
-   The step is now done, and **Next** turns on.
+1. Open the Twitch Developer Console from the link on the card, and sign in to Twitch there.
+2. Choose **Register Your Application**.
+3. Fill in the Twitch form:
+   - **Name**: any name for your bot. It must be unique among all Twitch applications.
+   - **OAuth Redirect URLs**: the address the card shows. Use the copy button beside it, paste it, and choose **Add**.
+   - **Category**: choose "Chat Bot".
+4. Tick the "I'm not a robot" box, and choose **Create**.
+5. Choose **Manage** on your new app, copy its Client ID, and paste it into **Client ID** on the card.
+6. For one-tap sign-in and a bot account, choose **New Secret** on the same Twitch page, and paste the secret into **Client Secret (optional)**.
+   Twitch shows the secret only once, so paste it before you leave that page.
+7. Choose **Save**. **Next** turns on, so choose **Next**.
 
-**Client Secret (optional)** can stay empty.
-Without it, you sign in with a code.
-With it, you can also sign in with one tap.
-
-To use the shared app instead, choose **Use the shared NomNomzBot app**.
-You fill in no fields, and the step is done.
-
-Only a saved Client ID or a click on the shared app finishes this step.
-
-## 2. Add a bot account
+## 2. Bot account
 
 This step is optional.
-Skip it, and the broadcaster account types in chat as the bot.
-The [bot account](/reference/getting-started/bot-account) page explains which account the bot types from.
+Skip it, and the broadcaster account acts as the bot in chat. The [bot account](/reference/getting-started/bot-account) page explains which account the bot types from.
+The step needs your own Twitch app with its secret saved in **Client Secret (optional)** in step 1.
 
-To add a separate bot account:
+Twitch approves the account that is signed in to Twitch in the browser where the Twitch link opens.
+If you sign in to Twitch as the bot in this browser, it stays signed in as the bot afterward. Twitch would then sign you in to the dashboard as the bot instead of as the broadcaster, so the last step below signs you out of Twitch.
 
-1. Sign in to Twitch as the bot's own account in this browser first.
-2. Choose **Authorize the bot account**.
-   Twitch opens in a new tab, and the card shows "Waiting for you to approve the account on Twitch…".
+To add the bot account in this browser:
+
+1. Sign in to Twitch as the bot's own account in this browser.
+2. Choose **Authorize the bot account**. Twitch opens in a new tab, and the card shows "Waiting for you to approve the account on Twitch…".
 3. Approve the chat permissions that Twitch asks for.
-   The card shows "Connected:" and the name of the account, and the step is done.
+4. Go back to the setup tab. Within a few seconds, the card shows "Connected:" and the name of the account. Choose **Next**.
+5. Sign out of Twitch in this browser before you sign in to the dashboard.
 
-While the card waits, it also shows the link to Twitch with a copy button.
-Use it when the bot account is signed in to another browser or profile.
+If the bot account is signed in to Twitch in another browser or profile:
 
-## 3. Add Spotify, Discord or YouTube
+1. Choose **Authorize the bot account**.
+2. Close the Twitch tab that opens in this browser.
+3. Under "Use another browser or profile? Copy this link there.", choose the copy button beside the link.
+4. In the other browser, paste the link into the address bar, press Enter, and approve the chat permissions there.
+5. Go back to the setup tab. Within a few seconds, the card shows "Connected:" and the name of the account. Choose **Next**.
+
+## 3 to 5. Spotify, Discord and YouTube
 
 These three steps are optional.
-Each one asks for a **Client ID** and a **Client Secret** from an app that you make at that service.
-The card links to the place where you make the app.
+Each card links to that service's developer console and shows an address, with a copy button, to add to the app you make there.
+Each card has two fields, **Client ID** and **Client Secret**, and **Save** turns on only when both are filled in.
+After **Save**, the button under the card reads **Next**, so choose **Next**.
 
-| Step | What it turns on | Where you add the address the card shows |
-| --- | --- | --- |
-| **Spotify** | Song requests | The Redirect URI of a Spotify app |
-| **Discord** | Notifications and server sync | The OAuth2 Redirect of a Discord application |
-| **YouTube** | The YouTube music provider | The Authorized redirect URI of a Google OAuth credential |
+Saving stores the keys on the bot. It does not connect your account yet.
+After you sign in, connect each service as its own page explains: [Spotify](/reference/integrations/spotify), [Discord](/reference/integrations/discord) and [YouTube](/reference/integrations/youtube).
 
-1. Make the app at the service, and add the address that the card shows.
-   Use the copy button beside the address.
-2. Copy the Client ID and the Client Secret into the two fields.
+### Spotify
+
+Spotify keys turn on song requests.
+
+1. Make the app as in [Make your Spotify app](/reference/integrations/spotify#make-your-spotify-app), with the address from the card as its redirect address.
+2. Paste the app's Client ID into **Client ID**, and its Client secret into **Client Secret**.
 3. Choose **Save**.
-   The step is done.
 
-You can also leave these out now.
+### Discord
 
-## 4. Finish setup
+Discord keys turn on notifications and server sync.
+
+1. Open the Discord developer portal from the link on the card, and create an application.
+2. On the application's OAuth2 page, add the address from the card as a Redirect.
+3. From the same OAuth2 page, paste the Client ID into **Client ID**, and the Client Secret into **Client Secret**.
+4. Choose **Save**.
+
+### YouTube
+
+YouTube keys turn on YouTube as a music source.
+
+1. In the [Google Cloud console](https://console.cloud.google.com/), create a project or choose one.
+2. In the [API Library](https://console.cloud.google.com/apis/library) of that project, enable the YouTube Data API v3.
+3. Open the credentials link on the card, and choose to create an OAuth client ID.
+   Google may ask you to set up the OAuth consent screen first. The setup card gives no values for that screen, so this page cannot either: fill it in as Google asks, then go back to the credentials page.
+4. Choose the "Web application" type, add the address from the card as an Authorized redirect URI, and create the client.
+5. Paste the Client ID into **Client ID**, and the Client secret into **Client Secret**.
+6. Choose **Save**.
+
+## 6. Finish setup
 
 The last card lists every step with **Done** or **Not set**.
-Below the list is the **Event feed** check.
-On a new bot it says "Sign in after you finish setup. Then this page can check that Twitch events reach the bot."
+Below the list is a box titled **Event feed**. For a signed-in streamer, it checks that Twitch events such as follows, raids and subs reach the bot.
+Nobody has signed in to a new bot yet, so the box shows only "Sign in after you finish setup. Then this page can check that Twitch events reach the bot." It has no button, and you need nothing from it to finish.
 
-Choose **Finish setup**.
-The bot opens the dashboard, and you [sign in](/reference/getting-started/sign-in).
+Choose the **Finish setup** button.
+The bot leaves the setup page for the dashboard and asks you to [sign in](/reference/getting-started/sign-in).
+Sign in as the broadcaster to connect your channel. If you chose the shared app in step 1, choose **Sign in with a code instead** on the sign-in page.
+
+Once the Twitch app step is done, you can sign in even if you leave before you choose the **Finish setup** button.
+The keys then stay open to anyone.
+To come back, sign out of the dashboard first: open the account menu at the bottom of the sidebar and choose **Sign out**.
+Then open `<bot address>/setup`.
 
 ## Troubleshooting
 
@@ -111,23 +146,14 @@ The bot opens the dashboard, and you [sign in](/reference/getting-started/sign-i
 
 **The page says "This bot does not answer. Check that it runs, then try again."**
 The browser cannot reach the bot.
-In a terminal in the project folder, run the command for your setup:
-
-```bash
-docker compose -f docker-compose.lite.yml ps
-```
-
-For the full setup, run `docker compose ps`.
-The bot's row must show `Up` and `healthy`.
-If it does not, start the bot again with the command from [Install with Docker](/reference/self-hosting/install-with-docker), then choose **Try again**.
+Check that the bot runs, as described in [Install with Docker](/reference/self-hosting/install-with-docker), then choose **Try again**.
 
 ::
 
 ::Troubleshooting
 
 **Next stays off on the Twitch app step.**
-A Client ID that the bot already knows does not count.
-Choose **Save** with your own Client ID, or choose **Use the shared NomNomzBot app**.
+The step needs one of its two choices. See [1. Twitch app](#1-twitch-app).
 
 ::
 
@@ -141,8 +167,26 @@ If the setup is already finished, only an admin of the bot can save new keys.
 
 ::Troubleshooting
 
-**Finish shows "The bot could not finish setup. Try again."**
-Choose **Finish setup** again.
+**The bot account step shows "The bot could not start the authorization. Try again."**
+The bot has no Twitch Client Secret saved, for example because you chose the shared app.
+Go back to step 1, save your own app with its secret, or choose **Skip** on this step.
+If the setup is already finished, only an admin of the bot can authorize the bot account.
+
+::
+
+::Troubleshooting
+
+**The bot account card keeps waiting after you approve on Twitch.**
+The bot did not accept the approval.
+Twitch may have failed to hand over the approval. Choose **Authorize the bot account** again.
+The bot may already have a different bot account. Approve on Twitch with that same account instead.
+
+::
+
+::Troubleshooting
+
+**The Finish setup button shows "The bot could not finish setup. Try again."**
+Choose the **Finish setup** button again.
 If the setup was already finished from another browser, only an admin of the bot can finish it again.
 
 ::

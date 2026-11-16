@@ -1,0 +1,32 @@
+[
+  {
+    "case": "C:\\Projects\\NoMercyLabs\\nomnomzbot-docs\\docs-work\\reader-first-pilot\\additional-reader\\201",
+    "route": "/reference/commands/create-a-command",
+    "card": "C:\\Projects\\NoMercyLabs\\nomnomzbot-docs\\docs-work\\reader-first-pilot\\additional-reader\\201\\card.md",
+    "page": "C:\\Projects\\NoMercyLabs\\nomnomzbot-docs\\docs-work\\reader-first-pilot\\comparison-original\\commands\\create-a-command.mdx"
+  },
+  {
+    "case": "C:\\Projects\\NoMercyLabs\\nomnomzbot-docs\\docs-work\\reader-first-pilot\\additional-reader\\202",
+    "route": "/reference/commands/cooldowns-and-permissions",
+    "card": "C:\\Projects\\NoMercyLabs\\nomnomzbot-docs\\docs-work\\reader-first-pilot\\additional-reader\\202\\card.md",
+    "page": "C:\\Projects\\NoMercyLabs\\nomnomzbot-docs\\docs-work\\reader-first-pilot\\comparison-original\\commands\\cooldowns-and-permissions.mdx"
+  },
+  {
+    "case": "C:\\Projects\\NoMercyLabs\\nomnomzbot-docs\\docs-work\\reader-first-pilot\\additional-reader\\203",
+    "route": "/reference/automation/timers-and-chat-triggers",
+    "card": "C:\\Projects\\NoMercyLabs\\nomnomzbot-docs\\docs-work\\reader-first-pilot\\additional-reader\\203\\card.md",
+    "page": "C:\\Projects\\NoMercyLabs\\nomnomzbot-docs\\docs-work\\reader-first-pilot\\comparison-original\\automation\\timers-and-chat-triggers.mdx"
+  },
+  {
+    "case": "C:\\Projects\\NoMercyLabs\\nomnomzbot-docs\\docs-work\\reader-first-pilot\\additional-reader\\204",
+    "route": "/reference/commands/built-in-commands",
+    "card": "C:\\Projects\\NoMercyLabs\\nomnomzbot-docs\\docs-work\\reader-first-pilot\\additional-reader\\204\\card.md",
+    "page": "C:\\Projects\\NoMercyLabs\\nomnomzbot-docs\\docs-work\\reader-first-pilot\\comparison-original\\commands\\built-in-commands.mdx"
+  },
+  {
+    "case": "C:\\Projects\\NoMercyLabs\\nomnomzbot-docs\\docs-work\\reader-first-pilot\\additional-reader\\205",
+    "route": "/reference/self-hosting/first-run-setup",
+    "card": "C:\\Projects\\NoMercyLabs\\nomnomzbot-docs\\docs-work\\reader-first-pilot\\additional-reader\\205\\card.md",
+    "page": "C:\\Projects\\NoMercyLabs\\nomnomzbot-docs\\docs-work\\reader-first-pilot\\comparison-original\\self-hosting\\first-run-setup.mdx"
+  }
+]

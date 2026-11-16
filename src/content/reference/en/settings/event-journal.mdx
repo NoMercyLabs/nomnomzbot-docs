@@ -1,31 +1,33 @@
 ---
 title: Event journal
-description: Read everything the bot saw in your channel, save or load the journal as a file, and rebuild the pages built from it.
+description: Inspect recorded channel events, export or import their history, and rebuild the summaries that use it.
 ---
 
-You read the history of your channel on the **Event journal** page in the settings sidebar.
-It sits in the **Access** group.
-The page has two tabs.
+The **Event journal** records the events the bot receives or creates for your channel.
+Use it to investigate when something happened, move recorded history to another installation, or rebuild summaries after an import.
+It sits in the **Access** group of the settings sidebar.
 
 | Tab | What it holds |
 | --- | --- |
-| **What happened** | The list of everything the bot saw in your channel, newest first. |
+| **What happened** | Recorded channel events, newest first. |
 | **Backup and rebuild** | Save or load the journal, rebuild the pages built from it, and copy history from the old bot. |
 
 ## What the event journal is
 
-The event journal is the record of everything that happened in your channel.
-Each follow, chat message, raid, ban and settings change is one event in it.
-The journal only grows: the tools on this page add events or rebuild other pages from it.
+The journal stores events such as follows, chat messages, raids, bans and settings changes that the bot recorded.
+It is the underlying history from which the bot builds viewer profiles, analytics and the event log.
+It cannot recover an event the bot never recorded.
 
 Viewer profiles, analytics and the event log are built from the journal.
-When the journal gets new events from a file, those pages show them only after a rebuild.
+When the journal gets new events from a file, the bot moves these pages forward by itself within a short time.
+After a large load, run **Rebuild pages** to build the pages again from a clean state.
 
 ## Who can use this page
 
-The **Broadcaster** may open the page and use every button on it.
-The broadcaster cannot give the save, load and old-history buttons to a lower role.
-The roles are explained on [Permissions](/reference/settings/permissions).
+Only the **Broadcaster** may open the page and use its buttons.
+No lower role can be given these actions.
+**Export journal**, **Import journal** and **Import old history** cannot be given to one person either, on the **Per person** tab.
+The roles and the per-person grants are explained on [Permissions](/reference/settings/permissions).
 The way around the dashboard is on the [Dashboard tour](/reference/getting-started/dashboard-tour).
 
 ## Read what happened
@@ -43,6 +45,9 @@ Older events can have no person and no badge.
 
 The same event from the same place and the same person, several times in a row, shows as one line.
 That line ends with the count, such as "10 times".
+
+The card header shows how many events match the filters.
+Each line shows how long ago the event happened, such as "5 minutes ago".
 
 ### Filter the list
 
@@ -80,6 +85,9 @@ When nothing matches, the list shows "No events match these filters."
 The file holds the whole journal of the channel, one event per line.
 Keep it as a backup, or load it into another NomNomzBot.
 
+A journal export backs up event history, rather than the complete installation.
+For a self-hosted bot, also preserve the database, uploaded files and secret keys using the [self-hosting backup guidance](/reference/self-hosting/install-with-docker#where-your-data-lives).
+
 ## Load a saved journal
 
 1. On the **Backup and rebuild** tab, in the **Journal file** card, choose **Import journal**.
@@ -90,7 +98,9 @@ Loading adds only the events that are missing.
 An event that is already in the journal is skipped, so you can load the same file twice.
 If one line in the file fails, nothing from the file is added.
 
-After a load, choose **Rebuild pages** (see the next section), so the new events show up.
+The new events reach the pages by themselves within a short time.
+After a large load, choose **Rebuild pages** (see the next section).
+It builds the pages again from a clean state and links event-log rows to viewers.
 
 ## Use the pages built from the journal
 
@@ -98,21 +108,19 @@ The **Pages built from the journal** card has two buttons.
 
 | Button | What it does |
 | --- | --- |
-| **Replay imported events** | Runs the imported events through the bot again, so triggers and replies fire for them. |
+| **Replay imported events** | Advances the import replay checkpoint. It does not re-send chat, play audio or repeat outside actions. |
 | **Rebuild pages** | Clears the pages built from the journal and builds them again from the first event. |
 
-**Replay imported events** handles only the imported events that were not replayed before.
-Choosing it again with nothing new imported does nothing.
-When it ends, the card shows how many events it applied.
-
-Replies that fire during a replay are lines the bot types in chat, in the channel's one bot voice.
+Use **Rebuild pages** when your aim is to make imported history appear in profiles and analytics.
+The separate **Replay imported events** button is silent in the current implementation, despite dashboard help that describes firing triggers and replies.
+Its count reports checkpoint progress; it does not mean old alerts or commands ran again.
 
 ### Rebuild the pages
 
 1. Choose **Rebuild pages**.
    A dialog asks "Rebuild the pages built from the journal?"
 2. Choose **Rebuild pages** in the dialog.
-   The card lists each rebuilt page with the number of events applied to it.
+   The card lists each rebuilt part by its technical name, with the number of events applied, for example "viewer-profile: 1200 events applied".
 
 The journal itself stays as it is.
 Only the pages built from it are cleared and filled again.
@@ -130,7 +138,7 @@ Each kind of row it did not recognize gets its own line with a count.
 Running it again adds nothing twice.
 The bot only reads the old bot's history file.
 It never changes that file.
-Run **Rebuild pages** afterward, so the old history shows up on the other pages.
+Run **Rebuild pages** afterward, so the pages are built again cleanly and event-log rows are linked to viewers.
 
 ::Troubleshooting
 

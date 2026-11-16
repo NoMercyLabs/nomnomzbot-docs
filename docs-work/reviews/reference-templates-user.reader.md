@@ -1,3 +1,22 @@
+# Current independent reader review
+
+Verdict: PASS
+Reviewed: src/content/reference/en/templates/user.mdx
+Reviewed-SHA: 7b3beb93f37b6eedabbf0d2f55e81f67be64c000fb0622cdfb23088228d1aa20
+Reviewed-SHA256: 7b3beb93f37b6eedabbf0d2f55e81f67be64c000fb0622cdfb23088228d1aa20
+Reviewed-Date: 2026-11-05
+Reviewer: independent section reviewer
+
+The greeting example distinguishes caller and target; bare versus user-prefixed helpers and display versus login names are explained. Pronouns, balances, identity and long-term statistics remain grouped, with a clear bot-currency distinction.
+
+The full page was read with the preceding/following navigation context and related links. This review applies the owner's explanatory, progressive-disclosure guidance; it does not impose Atlas sentence caps, pilot mimicry or fixed article headings. No substantive reader finding remains at this hash. Build/render/link checks are recorded separately by the lead reviewer.
+
+Report: docs-work/overhaul/review-learning-commands-helpers.md.
+
+## Historical evidence
+
+The material below is retained as historical evidence; its older verdict is not the current review.
+
 # Reader review: src/content/reference/en/templates/user.mdx
 Verdict: PASS
 Reviewed: C:\Projects\NoMercyLabs\nomnomzbot-docs\src\content\reference\en\templates\user.mdx

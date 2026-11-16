@@ -1,7 +1,39 @@
-# Fact-check: /reference/integrations/webhooks-and-event-feeds
+# Current independent fact check
+
 Verdict: PASS
 Reviewed: src/content/reference/en/integrations/webhooks-and-event-feeds.mdx
-Reviewed-SHA: 41e4ff973723c89b
+Reviewed-SHA: 5f95383cf13a01e20e9fbd4b2e9fefa7598a472acc0db06cea3742a1c0da2c31
+Reviewed-SHA256: 5f95383cf13a01e20e9fbd4b2e9fefa7598a472acc0db06cea3742a1c0da2c31
+Reviewed-Date: 2026-11-05
+Reviewer: independent media-section reviewer
+Product: 54da8b6318de63b5205a0ff8db35e0b9045dd959 plus preserved current music UI edits
+
+The full article was read in sidebar order. Consequential defaults, permissions, prerequisites, state lifetime and effects were traced against current source; repaired findings were re-read before this verdict. This is source verification, not a live-channel or visible/audible output test.
+
+- server/src/NomNomzBot.Infrastructure/Webhooks/OutboundWebhookSigner.cs:24-44 signs id.timestamp.body with HMAC-SHA256/base64; OutboundWebhookBackoffPolicy.cs:21-36 gives15..30-second initial retry and30..60-minute cap; OutboundWebhookDispatcher.cs:314-377 sets JSON/plain content type and disables after20 failures.
+- server/src/NomNomzBot.Infrastructure/Webhooks/InboundWebhookEndpointService.cs:90-125,170-183 validates bindings and rotates the token; CustomEvents/CustomDataSourceService.cs:31-32,674-737 validates approved egress and50-feed/10-second limits.
+- server/src/NomNomzBot.Infrastructure/CustomEvents/EventHandlers/CustomDataVariables.cs:20-28 seeds custom.source.field; Platform/Templating/Helpers/Legacy/LegacyTemplateHelpers.cs:283-330 and Parsing/TemplateParser.cs:137-169 require single-brace helper syntax. The repaired worked example now uses {custom.heartrate.bpm} and the expected72.
+
+Source paths without a repeated layer prefix in a bullet are relative to its preceding Infrastructure or dashboard scope. The section report records method, repaired findings, external sources and remaining product limitations: docs-work/overhaul/review-automation-media-integrations.md.
+
+## Historical evidence
+
+Older hashes, verdicts and values below are retained for history and are not the current review.
+
+# Fact-check: /reference/integrations/webhooks-and-event-feeds
+Verdict: PENDING
+Reviewed: src/content/reference/en/integrations/webhooks-and-event-feeds.mdx
+Reviewed-SHA: 5ff1eedf428b3ff25ea248a3a53deb487c34168baff855f2643bed8beae59cca
+
+## 2026-11-05 author source verification
+
+Author source audit complete; independent verdict pending. This hash binds the current text, not the historical PASS below. The article was read in full and revised toward the user's explainer style while preserving precise reference detail. OutboundWebhookSigner.cs; OutboundWebhookDispatcher.cs; OutboundWebhookBackoffPolicy.cs; CustomDataSourceService.cs. Signing, retries, plain text, JSON selection and data-source controls were traced.
+
+The section inventory and known implementation gaps are in [automation-media-integrations.md](../overhaul/automation-media-integrations.md). This is source verification, not a live-channel execution claim. Independent review must account for product changes after the original author pass at b12f4f696.
+
+## Historical review (SHA 41e4ff973723c89b)
+
+Historical verdict: PASS. The earlier evidence below is retained as history and is superseded where the current article or source changed.
 
 This verdict judges the current page text (sha256 41e4ff973723c89b...). It does not carry an older verdict forward.
 Product repo: C:\Projects\NoMercyLabs\nomnomzbot (master, read only). S = server/src, W = dashboard/src/views/dashboard/settings/webhooks, F = dashboard/src/views/dashboard/settings/custom-event-feeds.

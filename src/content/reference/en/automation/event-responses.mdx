@@ -3,10 +3,44 @@ title: Event responses
 description: Choose what the bot says or does for follows, subs, cheers, raids and other events, and reset a response to its default line.
 ---
 
-You choose how the bot answers channel events on the **Event responses** page in the sidebar.
-An event response is what the bot does when something happens in the channel, such as a follow, a sub or a raid.
-It can post a line in chat, or run a command, a [pipeline](/reference/commands/pipelines) or an action.
-An action is a built-in bot task, chosen from the **Actions** part of the picker.
+When someone follows, subscribes or raids your channel, an event response lets the bot acknowledge it without waiting for you to type a message.
+You choose the response once on **Event responses**, then the bot uses it whenever that event happens.
+A simple reply is enough for a welcome or thank-you; a [pipeline](/reference/commands/pipelines) can combine several actions when you want a fuller reaction.
+
+The event and the response are separate things.
+Turning a response off silences that reaction; it does not prevent the follow, subscription or other event itself.
+An on-screen alert is another part of the presentation, explained in [Widgets and alerts](/reference/overlays/widgets-and-alerts).
+
+## Write a welcome for a new follower
+
+By default, a moderator or higher can edit responses.
+Start with one event so you can see how the response behaves before customizing the whole list.
+
+1. Open **Event responses** and select **New follower** from **Events**.
+2. Leave **Reaction** on **Simple reply**.
+3. If the editor shows default lines, choose the pencil (**Edit this line**) button beside one of them.
+4. In **Your line**, enter `Thanks for following, {user}! Welcome to the stream.`
+5. Leave **Send the reply to** on **Twitch chat** for this first example.
+6. Choose **Save changes**, then check that **Enabled** is on.
+7. Choose **Test** to try the saved response.
+
+The bot replaces `{user}` with the person associated with the event.
+The help beside **Your line** lists the helpers that this particular event supplies; a raid has different information available from a follow.
+[Variables and templates](/reference/commands/variables-and-templates) explains how to build on that first reply.
+
+## Test the saved response
+
+**Test** appears on the event row and in the editor for people who can edit responses.
+It sends a sample through the saved response and opens a result dialog with **Chat line**, **Speech**, **Overlay alerts** and **Pipeline steps**.
+Save your edits before testing them.
+
+The test can be visible and audible on your stream: it sends chat, speech and overlay output through the real presentation path.
+It uses the person running the test as its viewer and does not create a real follow, subscription or redemption.
+However, a selected pipeline runs its actions for real: an economy action can change the tester's points, for example.
+Review the pipeline before testing it.
+
+The result explains a disabled response, no pipeline picked, a picked pipeline that is missing or switched off, or an overlay with no open browser source.
+Use it to find which part of a response needs attention instead of repeatedly changing the reply text.
 
 ## Who can use this page
 
@@ -28,12 +62,15 @@ Each row shows the event name and where its reply comes from.
 | --- | --- |
 | **Platform default** | The event follows the default that comes with the bot. |
 | **Your own text** | The event was saved from this page at least once. |
-| **Off** | The event is switched off. It stays in the list and says nothing. |
+
+A switched-off event also shows an **Off** badge at the end of its row.
+It keeps its **Platform default** or **Your own text** text, stays in the list and says nothing.
 
 **Search events** above the list filters the rows by name.
 When nothing fits, the list shows "No event matches your search."
 
-### Every event
+<details>
+<summary>Every event and the initial defaults</summary>
 
 | Group | Events in the list |
 | --- | --- |
@@ -66,6 +103,10 @@ All others start off.
 | Ad breaks | All 3 |
 
 **Twitch gift sub received** is the one event whose **Read it aloud** starts on (see [Read the line aloud](#read-the-line-aloud)).
+
+The operator can change platform defaults, so the values shown in your installation may differ from a new install.
+
+</details>
 
 ## The default lines
 
@@ -110,7 +151,7 @@ The section **What the bot posts** shows where the line comes from.
 
 32 of the 50 events have no default lines on a new install, so they open with the empty box.
 
-To start from a default line, choose **Edit this line** beside it.
+To start from a default line, choose the pencil (**Edit this line**) button beside it.
 The line moves into the **Your line** box.
 The editor shows "Saving makes this your only line: it replaces the 3 default lines." when the list had three lines.
 
@@ -118,7 +159,11 @@ The **Your line** box holds up to 500 characters.
 The info icon beside **Your line** reads "You can use:" and lists the helpers this event fills in, such as `{user}` and `{viewers}` for a raid.
 Helpers are explained on [Variables and templates](/reference/commands/variables-and-templates).
 
-A helper the event does not know shows "Not a known helper here:" under the box.
+Type \{ in the box to get suggestions for this event's helpers, or use **Show all helpers** (and **Hide helpers**) in the label row.
+A counter shows how much of the 500 characters you used.
+
+A helper the event does not know shows a quiet note, "Not a known helper here:", under the box.
+The note never stops you from typing.
 The bot refuses to save a helper that works only in commands.
 
 <details>
@@ -134,8 +179,13 @@ It keeps picking from the default lines in the channel's tone.
 
 **Read it aloud** shows only with **Simple reply**.
 Its info icon reads "The reply also plays as speech on your stream."
-The bot speaks the line only after it posts it in chat.
+The bot speaks the line only after it successfully posts it in chat.
 It starts off for every event except **Twitch gift sub received**.
+
+**Send the reply to** offers **Twitch chat**, **Chat overlay**, **Both** and **Nowhere**.
+Choose **Both** when chat readers and stream viewers should see the reply, or **Chat overlay** to keep it off Twitch chat.
+An overlay-only reply does not use **Read it aloud**, because that switch follows a successful chat delivery.
+The shared delivery, HTML and appearance controls are explained on [Create a command](/reference/commands/create-a-command).
 
 ### Run a command, a pipeline or an action
 
@@ -144,11 +194,16 @@ With **Pipeline**, the event runs something instead of posting a line.
 1. Under **Reaction**, choose **Pipeline**.
    Until you pick something, an info icon beside **Pipeline** reads "This answers nothing until you pick a pipeline. The pipeline has its own reply step."
 2. Open the **Pipeline** picker.
-   It lists **Commands**, **Pipelines** and **Actions**, with a search box.
+   It lists **Commands** and **Pipelines**, then the actions grouped under their own category headings.
+   The search box reads "Search commands, pipelines and actions".
 3. Choose one, or choose **Create a new pipeline**.
    A new pipeline is named after the event.
 4. Choose **Save changes**.
    The event now runs your choice each time it happens.
+
+When you pick an action, its settings open below the picker.
+Fill them in before you save.
+When you pick a pipeline, **Open in the pipeline editor** appears beside the picker.
 
 The picker's **Nothing** clears the choice.
 A pipeline or a command sends and speaks through its own steps.
@@ -187,8 +242,9 @@ The event no longer runs it.
 
 ## Alerts on your stream
 
-This page sets what the bot says or runs.
-The pictures and sounds on your stream are set as widgets and alerts (see [Widgets and alerts](/reference/overlays/widgets-and-alerts)).
+An event response sets the chat reply or automation that runs for an event.
+The stream's alert widgets also listen for events, so an alert can appear alongside that reply.
+Set up and test that visual part separately, as [Widgets and alerts](/reference/overlays/widgets-and-alerts) explains.
 
 ## Troubleshooting
 

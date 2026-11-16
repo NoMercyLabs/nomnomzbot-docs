@@ -1,7 +1,32 @@
-# Reader review: C:\Projects\NoMercyLabs\nomnomzbot-docs\src\content\reference\en\moderation\spam-defense.mdx
+# Targeted final review — 2026-11-06
+
+Verdict: PENDING
+Reviewed: src/content/reference/en/moderation/spam-defense.mdx
+Reviewed-SHA: 0dff3811d01958cae4bd7269196ce0e0ee03ad6bd176b581351bcc97b3877dc0
+Reviewed-SHA256: 0dff3811d01958cae4bd7269196ce0e0ee03ad6bd176b581351bcc97b3877dc0
+Reviewer: final-features correction author; self-review, not independent PASS
+Product-Revision: 2dfefbb0c393f439954d79b32ac11511678d7f44 plus working tree
+
+The full article was read editorially. The correction was independently traced from the staged lead to current source, then applied by this reviewer. This is targeted author verification, not a new exhaustive source audit, independent final-text approval or runtime test. See [final-features.md](../ecosystem-validation/final-features.md) for exact source anchors, coverage and remaining limits.
+
+## Historical reviews
+
+The original records below are preserved verbatim and apply only to their recorded hashes.
+
+# Independent reader review: /reference/moderation/spam-defense
 Verdict: PASS
-Reviewed: C:\Projects\NoMercyLabs\nomnomzbot-docs\src\content\reference\en\moderation\spam-defense.mdx
-Reviewed-SHA: 6f82127ac970ec7c
+Reviewed: src/content/reference/en/moderation/spam-defense.mdx
+Reviewed-SHA: 8f66fc5a7d0a932632d1f4f1b16be882d73201f3ee21ff579925ac296ecb4af1
+
+## Independent overhaul review, 2026-11-05
+
+Concept and watch-only starting point precede the dense reference. Campaign-versus-community-joke context makes thresholds meaningful; inactive controls are candid.
+
+Reviewed independently of the article author, in actual navigation order. Current product source 54da8b631 and relevant changes since b12f4f696 were read without starting the bot, executing platform actions or changing channel data. The reader judgment follows the user's natural teaching style; old pilot mimicry, sentence caps and unrelated Atlas style gates were not applied. See [review-moderation-economy-community.md](../overhaul/review-moderation-economy-community.md) for the review scope and findings.
+
+## Prior review history
+
+The earlier text below is retained as history; it does not independently approve a later article hash.
 
 Run rule: FAIL only for a blocking finding. A blocking finding is a step a non-coder cannot follow, or a wrong fact visible from the page and the pilot page. None found.
 

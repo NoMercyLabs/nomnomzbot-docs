@@ -1,50 +1,132 @@
 ---
-title: Chat message helpers
-description: Lists 29 template helpers, each with what it gives and an example.
+title: Chat helpers
+description: The template helpers that read the chat message behind a reply and your chat settings, fit a reply to the chat length limit, build share links and prepare text for speech.
 ---
 
-Helpers on this page: `{chat.*}`, `{tts.*}`, `{link.*}`, `{raw.*}`.
+Use these to quote the message that started the reply, read your chat settings, or cut a reply to the chat length limit.
+You type them in the text of a command, an event response, a timer, a pipeline, a Discord notification or a webhook. A section says so when its helpers work in fewer places.
+None of them work in text that viewers write themselves. That stays true while **Viewer Templates** is on in [Features](/reference/settings/features), which it is by default.
 
-These helpers read the chat message that started the reply, and the chat settings.
-They also fit a reply to the chat length limit, share a message to a social site and prepare text for speech.
+An input goes after a colon and a second input after a pipe `|`, such as `{chat.fit:text|end}`. Helpers inside an input fill in first.
+A pipe or a brace that arrives inside a filled-in value, such as a viewer who types `|` in their message, is plain text and does not split the inputs. A pipe you type in the reply itself does.
+A helper that needs an input, such as `{chat.fit:text}`, does nothing without it: a bare `{chat.fit}` prints exactly as you typed it. The same goes for too many inputs, except that the helpers inside it show filled in.
 
-The row `{raw.message}` is marked "Discord pipeline seed alias".
-It works only in a Discord notification that a pipeline sends. The bot then fills in the chat message that started the pipeline.
-In a command or an event response it stays as typed. In a command, use `{chat.message}` to read the chat message.
-The [channel helpers](/reference/templates/channel) page explains the same mark for its rows.
+A reply that quotes the viewer and is cut to the chat length limit:
 
-Each row is its own example, so the rows on this page do not all come from one moment.
+```
+{chat.fit:{chat.mention.user} wants to know: {chat.message.noCommand}|(cut short)}
+```
+
+## The message behind the reply
+
+These read the chat message and the person that started the reply.
+Where they get a value depends on what started the reply:
+
+| Where | The message helpers | `{chat.mention.user}` |
+| --- | --- | --- |
+| Commands | Yes | Yes |
+| Pipelines and webhooks | Only when a chat message or a viewer event started the run. A pipeline that a timer starts gets none, and neither does a webhook sent for an event it is subscribed to | The same as the message helpers |
+| Event responses | Only for **Twitch resub message** and **Cheer**. `{chat.message.bits}` only for **Cheer** | When the event names a viewer |
+| Discord notifications | Only for **Cheer** and **Renewed subscription**, with the message the viewer sent along. A notification that a pipeline sends gets the message that started the pipeline. `{chat.message.bits}` never | For **New follower**, **New subscriber**, **Gifted subs**, **Renewed subscription**, **Cheer** and **Incoming raid** |
+| Timers | No. A timer with one of these does not save | No. A timer with it does not save |
+
+When a helper has nothing to read, such as a message helper in a **Stream goes live** post or in a pipeline that a timer starts, it prints exactly as you typed it, braces and all.
+
+The examples are for a viewer called ViewerOne who typed `!lurk back in five`, in a channel whose command prefix is `!`.
 
 | Helper | What it gives | Example |
 | --- | --- | --- |
-| `{chat.fit}` | The text cut to fit one chat line of the platform. A cut text ends in an ellipsis, or in your own end text after a pipe; a text that already fits stays whole | `{chat.fit:short text\|(more on the page)}` gives `short text` |
-| `{chat.fit.words}` | The text cut to fit one chat line, at the last whole word: short text | `{chat.fit.words:short text}` gives `short text` |
-| `{chat.isShared}` | true while the channel is in a shared chat session, false when not | `false` |
-| `{chat.limit}` | The most characters one chat line may hold on the platform that delivers it: 500 | `500` |
-| `{chat.me}` | The text as an action line on Twitch (/me), plain text elsewhere: /me dances | `{chat.me:dances}` gives `/me dances` |
-| `{chat.mention}` | A name with an @ in front so chat pings it: @ViewerTwo | `{chat.mention:ViewerTwo}` gives `@ViewerTwo` |
-| `{chat.mention.off}` | A name without the @, so nobody is pinged: ViewerTwo | `{chat.mention.off:ViewerTwo}` gives `ViewerTwo` |
-| `{chat.mention.soft}` | A name with an invisible space inside it, so it shows but does not ping: ViewerTwo | `{chat.mention.soft:ViewerTwo}` gives `V​iewerTwo` |
-| `{chat.mention.user}` | The viewer who triggered this, with an @ in front: @ViewerOne | `@ViewerOne` |
-| `{chat.message}` | The chat message that triggered this: hello big world | `hello big world` |
-| `{chat.message.bits}` | How many bits came with the trigger message: 0 | `0` |
-| `{chat.message.length}` | How many characters the trigger message has: 15 | `15` |
-| `{chat.message.noCommand}` | The trigger message without its command word (the first word, when it starts with the channel's command prefix): hello big world | `hello big world` |
-| `{chat.pinned}` | The text of the pinned chat message, empty when nothing is pinned: Welcome to the stream | `Welcome to the stream` |
-| `{chat.settings.emoteOnly}` | true while emote-only chat is on, false when not | `false` |
-| `{chat.settings.followersOnly}` | How long a viewer must follow before chatting (on when any follower may chat), or off: 10m | `10m` |
-| `{chat.settings.slow}` | The slow mode wait time, or off: 3s | `3s` |
-| `{chat.settings.subOnly}` | true while subscribers-only chat is on, false when not | `false` |
-| `{chat.shared.channels}` | The other channels in the shared chat session, separated by commas: OtherStreamer | `OtherStreamer` |
-| `{link.bluesky}` | A link that opens Bluesky with the text ready to post: https://bsky.app/intent/compose?text=Live%20now | `{link.bluesky:Live now}` gives `https://bsky.app/intent/compose?text=Live%20now` |
-| `{link.mastodon}` | A link that opens a Mastodon server with the text ready to post. Type the server host name first, then a pipe and the text | `{link.mastodon:mastodon.social\|Live now}` gives `https://mastodon.social/share?text=Live%20now` |
-| `{link.threads}` | A link that opens Threads with the text ready to post: https://www.threads.net/intent/post?text=Live%20now | `{link.threads:Live now}` gives `https://www.threads.net/intent/post?text=Live%20now` |
-| `{link.x}` | A link that opens X with the text ready to post: https://x.com/intent/post?text=Live%20now | `{link.x:Live now}` gives `https://x.com/intent/post?text=Live%20now` |
-| `{raw.message}` | The raw triggering chat message (Discord pipeline seed alias) | `!hello world` |
-| `{tts.audioconnected}` | Whether an Audio widget page is open for the channel, so TTS can be heard (true or false) | `true` |
-| `{tts.lexicon}` | The text with the channel pronunciation list applied: good game | `{tts.lexicon:gg}` gives `good game` |
-| `{tts.numbers}` | Whole numbers in the text written as words, in the channel language: I have three cats | `{tts.numbers:I have 3 cats}` gives `I have three cats` |
-| `{tts.plain}` | Text made ready to be spoken: no links, no @, no emotes of the channel, fancy letters turned to plain ones: hi ViewerTwo hi | `{tts.plain:hi @ViewerTwo KEKW https://a.b 𝐡𝐢}` gives `hi ViewerTwo hi` |
-| `{tts.plain.keepEmotes}` | Text made ready to be spoken, with the emote names kept: hi KEKW | `{tts.plain.keepEmotes:hi KEKW}` gives `hi KEKW` |
+| `{chat.message}` | The whole message, as typed. In a **Cheer** event response, the cheer emotes such as `Cheer100` are taken out | `!lurk back in five` |
+| `{chat.message.noCommand}` | The message without the command word. When the message does not start with your command prefix, it stays whole; a message that is only the command word gives nothing | `back in five` |
+| `{chat.message.length}` | How many characters the message has. An emoji counts as one | `18` |
+| `{chat.message.bits}` | How many bits came with the message | `0` |
+| `{chat.mention.user}` | The person's display name with an `@` in front. When their display name is not written like their login name, such as one in Japanese letters, it uses the login name, so the mention still pings | `@ViewerOne` |
 
-Back to [Template helpers](/reference/templates/overview). For the places helpers work, special characters and HTML, read [Variables and templates](/reference/commands/variables-and-templates).
+## Fit a reply to the length limit
+
+Without these helpers, the bot sends a long reply as several chat lines, split between words.
+To cut a reply to the limit instead, put the whole reply inside `{chat.fit:text}`. Other helpers inside it fill in first, then the result is cut.
+
+The limit depends on the platform of the person who started the reply: 500 characters on Twitch and Kick, and 200 on YouTube.
+A reply with nobody behind it, such as a timer line, uses the Twitch limit.
+The ending counts toward the limit, either the space and `…` or the space and your own end text, so a long end text leaves less room.
+`{chat.fit.words:text}` takes only the text. With `|end` added, it prints as typed.
+
+| Helper | What it gives | Example |
+| --- | --- | --- |
+| `{chat.limit}` | How many characters one chat line may hold on that platform | `500` |
+| `{chat.fit:text}` | The text cut to the limit, ending in a space and `…`. The cut can fall in the middle of a word. Text that already fits stays whole | `{chat.fit:short text}` gives `short text` |
+| `{chat.fit:text\|end}` | The same, but a cut text ends in a space and your own end text instead of `…` | `{chat.fit:short text\|(more on the page)}` gives `short text` |
+| `{chat.fit.words:text}` | The text cut at the last whole word that fits, ending in a space and `…`. A single word longer than the line is cut where it must be | `{chat.fit.words:short text}` gives `short text` |
+
+To see the difference, say a long reply ends in `thanks for watching the stream today`, and the room runs out after the `str` of `stream`.
+With `{chat.fit:text}`, the reply ends in `thanks for watching the str …`, cut inside the word.
+With `{chat.fit.words:text}`, it ends in `thanks for watching the …`, cut before the word.
+With `{chat.fit:text|(cut short)}`, the cut leaves room for the space and the end text, and the reply ends in ` (cut short)`.
+
+## Mentions and action lines
+
+These take a name or a text after the colon.
+
+| Helper | What it gives | Example |
+| --- | --- | --- |
+| `{chat.mention:name}` | The name with an `@` in front, so chat pings that person. An `@` you typed yourself is not doubled | `{chat.mention:ViewerTwo}` gives `@ViewerTwo` |
+| `{chat.mention.off:name}` | The name without an `@`, so nobody is pinged | `{chat.mention.off:@ViewerTwo}` gives `ViewerTwo` |
+| `{chat.mention.soft:name}` | The name with an invisible character after its first letter. It looks the same in chat but does not ping | `{chat.mention.soft:ViewerTwo}` gives `ViewerTwo` with an invisible character after the `V` |
+| `{chat.me:text}` | On Twitch, the text as an action line, written with `/me` in front. On other platforms, the plain text | `{chat.me:dances}` gives `/me dances` |
+
+## Chat settings and shared chat
+
+The chat settings helpers, the pinned message and the shared channel names ask Twitch at the moment the reply goes out.
+They always read your Twitch channel, also when the reply answers a viewer on Kick or YouTube.
+When Twitch gives no answer, the helper prints exactly as you typed it.
+Wait times are written in the largest units that fit, such as `3s`, `10m` or `1h 30m`.
+
+| Helper | What it gives | Example |
+| --- | --- | --- |
+| `{chat.settings.slow}` | The slow mode wait, or `off` | `3s` |
+| `{chat.settings.followersOnly}` | How long a viewer must follow before they can chat, `on` when any follower can chat, or `off` | `10m` |
+| `{chat.settings.subOnly}` | `true` while subscribers-only chat is on, else `false` | `false` |
+| `{chat.settings.emoteOnly}` | `true` while emote-only chat is on, else `false` | `false` |
+| `{chat.pinned}` | The text of the pinned chat message, or nothing when no message is pinned | `Welcome to the stream` |
+| `{chat.isShared}` | `true` while your channel is in a shared chat session, else `false` | `false` |
+| `{chat.shared.channels}` | The display names of the other channels in the shared chat session, separated by commas. Nothing when you are not in one | `OtherStreamer` |
+
+## Share links
+
+These turn a text into a link that opens the site with the text ready to post. Spaces and other special characters in the text are made safe for a link.
+For Mastodon, type the server first, as a plain host name with a dot in it, such as `mastodon.social`. With `https://`, a path or a port before the pipe, the helper prints as you typed it.
+
+| Helper | What it gives | Example |
+| --- | --- | --- |
+| `{link.x:text}` | A link to post the text on X | `{link.x:Live now}` gives `https://x.com/intent/post?text=Live%20now` |
+| `{link.bluesky:text}` | A link to post the text on Bluesky | `{link.bluesky:Live now}` gives `https://bsky.app/intent/compose?text=Live%20now` |
+| `{link.threads:text}` | A link to post the text on Threads | `{link.threads:Live now}` gives `https://www.threads.net/intent/post?text=Live%20now` |
+| `{link.mastodon:server\|text}` | A link to post the text on that Mastodon server | `{link.mastodon:mastodon.social\|Live now}` gives `https://mastodon.social/share?text=Live%20now` |
+
+## Text for speech
+
+These prepare a text before text to speech reads it. Put the text after the colon, often another helper such as `{chat.message}`.
+
+| Helper | What it gives | Example |
+| --- | --- | --- |
+| `{tts.plain:text}` | The text without links, without the `@` in front of names, and without the emotes your chat can show. Styled letters, such as bold math letters, become plain letters | `{tts.plain:hi @ViewerTwo KEKW https://a.b 𝐡𝐢}` gives `hi ViewerTwo hi` when KEKW is one of your emotes |
+| `{tts.plain.keepEmotes:text}` | The same, but emote names stay in | `{tts.plain.keepEmotes:hi KEKW}` gives `hi KEKW` |
+| `{tts.numbers:text}` | Whole numbers written as words, in your channel language. A number with a decimal point or a thousands separator stays as written | `{tts.numbers:I have 3 cats}` gives `I have three cats` |
+| `{tts.lexicon:text}` | The text with your pronunciation rules applied. You make these rules on the **Text to speech** page of the dashboard menu, on its **Pronunciation** tab | `{tts.lexicon:gg}` gives `good game` with a rule that says good game for gg |
+| `{tts.audioconnected}` | `true` while a **TTS Caption** widget is open in a browser source such as OBS, so speech can be heard, else `false` | `true` |
+
+You set up that browser source on the **Overlays** page.
+`{tts.plain:text}` removes your Twitch channel and global emotes and your 7TV, BTTV and FFZ emotes.
+Your channel language is the one `{channel.language}` gives on the [channel helpers](/reference/templates/channel) page. English is used when none is set.
+
+## Discord only
+
+| Helper | What it gives | Example |
+| --- | --- | --- |
+| `{raw.message}` | The chat message that started the pipeline, as typed | `!lurk back in five` |
+
+`{raw.message}` works only in a Discord notification that a pipeline sends. There it gives the same text as `{chat.message}` when a chat message started the pipeline.
+Use `{chat.message}` everywhere else: it also fills the Discord **Cheer** and **Renewed subscription** posts. A command, an event response or a timer with `{raw.message}` does not save.
+
+Back to [Template helpers](/reference/templates/overview). For more on templates, read [Variables and templates](/reference/commands/variables-and-templates).

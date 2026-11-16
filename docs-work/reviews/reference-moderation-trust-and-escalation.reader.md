@@ -1,7 +1,17 @@
-# Reader review: src/content/reference/en/moderation/trust-and-escalation.mdx
+# Independent reader review: /reference/moderation/trust-and-escalation
 Verdict: PASS
 Reviewed: src/content/reference/en/moderation/trust-and-escalation.mdx
-Reviewed-SHA: eb4561e6473f2a95
+Reviewed-SHA: c2934d90f46cca6b7e9fdd590049c40c9d6442ead4c1f2b1f441ad9ec38b5ef4
+
+## Independent overhaul review, 2026-11-05
+
+Trust, heat and sanctions remain distinct. The ladder example and repaired actor paragraph explain conditions; saved policy effects and retained counts are findable.
+
+Reviewed independently of the article author, in actual navigation order. Current product source 54da8b631 and relevant changes since b12f4f696 were read without starting the bot, executing platform actions or changing channel data. The reader judgment follows the user's natural teaching style; old pilot mimicry, sentence caps and unrelated Atlas style gates were not applied. See [review-moderation-economy-community.md](../overhaul/review-moderation-economy-community.md) for the review scope and findings.
+
+## Prior review history
+
+The earlier text below is retained as history; it does not independently approve a later article hash.
 
 Reader: a streamer who does not write code.
 Assumes: /reference/moderation/overview (src/content/reference/en/moderation/overview.mdx). I read that page and judged against it. Pilot read: src/content/reference/en/commands/create-a-command.mdx.

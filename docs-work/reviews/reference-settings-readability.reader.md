@@ -1,5 +1,26 @@
-# Reader review: /reference/settings/readability
+# Independent reader review: /reference/settings/readability
 Verdict: PASS
+Reviewed: src/content/reference/en/settings/readability.mdx
+Reviewed-SHA: bbbc6bd1bb025660
+Reviewed-SHA256: bbbc6bd1bb025660e24a45dda90e132b2ba6d48fd07ec1620b01fc9a2dc5dd81
+Reviewed-Date: 2026-11-05
+Reviewer: independent reviewer, separate from article author
+Product-Revision: 54da8b6318de63b5205a0ff8db35e0b9045dd959
+
+The complete current article was read independently of its author, in the established settings, self-hosting and Code and SDK navigation order. The user's natural explainer/progressive-disclosure requirements take precedence over historical pilot mimicry, sentence caps and repeated page templates.
+
+## Learning and lookup result
+
+The browser-local purpose is clear before controls; preset-then-adjust gives a practical starting path. All choices and defaults can be found in two compact tables, and the separate chat layout link avoids a scope misunderstanding.
+
+No outstanding substantive reader finding.
+
+Related routes were checked as contextual continuations rather than prerequisites for ordinary bot use. Draft labels remain appropriate for code material. This is a text/structure review, not a claim of rendered browser QA.
+
+## Historical review (superseded)
+
+# Reader review: /reference/settings/readability
+Historical verdict: PASS
 Reviewed: C:\Projects\NoMercyLabs\nomnomzbot-docs\src\content\reference\en\settings\readability.mdx
 Reviewed-SHA: cac05e66c2a0ec79
 

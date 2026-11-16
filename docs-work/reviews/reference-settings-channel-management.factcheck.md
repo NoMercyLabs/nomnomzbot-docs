@@ -1,5 +1,32 @@
-# Fact-check: /reference/settings/channel-management
+# Independent source review: /reference/settings/channel-management
 Verdict: PASS
+Reviewed: src/content/reference/en/settings/channel-management.mdx
+Reviewed-SHA: 806591151235ad5d
+Reviewed-SHA256: 806591151235ad5d3081c2352ef6ae4bef96b8b409bc1819274d1c24aab0b727
+Reviewed-Date: 2026-11-05
+Reviewer: independent reviewer, separate from article author
+Product-Revision: 54da8b6318de63b5205a0ff8db35e0b9045dd959
+
+The complete current article was read in navigation order and checked against current product source. Historical PASS entries below are leads, not approval of this revision. Atlas voice/template gates do not govern this review.
+
+## Current evidence and result
+
+Repaired and reread: reset removes only tenant Configuration rows counted by ChannelResetScope. It preserves Channel fields, feature/engagement entities and vaulted connections; the preview categories describe configuration-key groups.
+
+Source files opened in this review: Identity/ChannelResetScope.cs:28-45,84-96; Identity/ChannelService.cs:820-882; Identity/ChannelDeletePreviewService.cs:109-139; dashboard/settings/channel-management/ChannelManagementView.vue:24-65.
+
+Unqualified paths beginning Identity, CustomCode, Billing, EventStore, Engagement, Rewards, Widgets or Platform are under server/src/NomNomzBot.Infrastructure; Api and Domain identify their corresponding server projects. Dashboard shorthand is under dashboard/src/views/dashboard.
+
+Verification is read-only source review. No bot/API startup, live account authorization, channel writes, C# host/Jint execution, Docker install or restore was performed. Documentation build/render QA belongs to the combined parent pass. The SDK reference and worked-example checks additionally ran the existing read-only nnz-code-doc-check.mjs with production JavaScript bootstrap and substituted host I/O.
+
+## Historical review (superseded)
+
+# Fact-check: /reference/settings/channel-management
+Historical verdict: PENDING
+
+2026-11-04 overhaul: the article changed, so the previous PASS and hash below are historical evidence, not approval of the current revision.
+Fresh writer source checks and article inventory are recorded under S9 in `docs-work/overhaul/settings-hosting-code.md`.
+Independent review of the changed text is pending.
 Reviewed: C:\Projects\NoMercyLabs\nomnomzbot-docs\src\content\reference\en\settings\channel-management.mdx
 Reviewed-SHA: ae9d862ad9112f63
 

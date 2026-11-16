@@ -1,3 +1,22 @@
+# Current independent reader review
+
+Verdict: PASS
+Reviewed: src/content/reference/en/templates/goal.mdx
+Reviewed-SHA: ccae5cba6dbd25309a3f1a650131784ee31590381f6c64587c97c9129d1288c8
+Reviewed-SHA256: ccae5cba6dbd25309a3f1a650131784ee31590381f6c64587c97c9129d1288c8
+Reviewed-Date: 2026-11-05
+Reviewer: independent section reviewer
+
+The progress-display purpose is clear, with separate follower, subscriber and new-sub goal rows. Current, target, remaining and bar values are easy to compare.
+
+The full page was read with the preceding/following navigation context and related links. This review applies the owner's explanatory, progressive-disclosure guidance; it does not impose Atlas sentence caps, pilot mimicry or fixed article headings. No substantive reader finding remains at this hash. Build/render/link checks are recorded separately by the lead reviewer.
+
+Report: docs-work/overhaul/review-learning-commands-helpers.md.
+
+## Historical evidence
+
+The material below is retained as historical evidence; its older verdict is not the current review.
+
 # Reader review: C:/Projects/NoMercyLabs/nomnomzbot-docs/src/content/reference/en/templates/goal.mdx
 Verdict: PASS
 Reviewed: C:/Projects/NoMercyLabs/nomnomzbot-docs/src/content/reference/en/templates/goal.mdx

@@ -1,3 +1,22 @@
+# Current independent reader review
+
+Verdict: PASS
+Reviewed: src/content/reference/en/templates/stream.mdx
+Reviewed-SHA: 40e6342de3a534cce16b40f897d7f9e582a05e4bb88356c932e28ba5883985bd
+Reviewed-SHA256: 40e6342de3a534cce16b40f897d7f9e582a05e4bb88356c932e28ba5883985bd
+Reviewed-Date: 2026-11-05
+Reviewer: independent section reviewer
+
+Headed tables separate live state, the previous stream and aggregate counts. The introduction explains Discord-only seed aliases, and lookup retains exact categories, counts, units and truncation behavior.
+
+The full page was read with the preceding/following navigation context and related links. This review applies the owner's explanatory, progressive-disclosure guidance; it does not impose Atlas sentence caps, pilot mimicry or fixed article headings. No substantive reader finding remains at this hash. Build/render/link checks are recorded separately by the lead reviewer.
+
+Report: docs-work/overhaul/review-learning-commands-helpers.md.
+
+## Historical evidence
+
+The material below is retained as historical evidence; its older verdict is not the current review.
+
 # Reader review: C:/Projects/NoMercyLabs/nomnomzbot-docs/src/content/reference/en/templates/stream.mdx
 Verdict: PASS
 Reviewed: C:/Projects/NoMercyLabs/nomnomzbot-docs/src/content/reference/en/templates/stream.mdx

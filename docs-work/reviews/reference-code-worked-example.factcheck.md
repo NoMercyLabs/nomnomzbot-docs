@@ -1,7 +1,47 @@
-# Fact check: src/content/reference/en/code/worked-example.mdx
+# Current targeted source review — 2026-11-06
+
+Verdict: TARGETED AUTHOR SELF-REVIEW; no independent or exhaustive PASS.
+Reviewed: src/content/reference/en/code/worked-example.mdx
+Reviewed-SHA256: 55f87fc8432a2c55922ed79210cd65e3d89df3d55e3de85ee5bcd4511a69ddc4
+Reviewer: editing agent (author self-review)
+
+Full editorial read; removed blanket Draft. Direct source: Infrastructure/CustomCode/ScriptStorageService.cs:31-166 and Jint/JintScriptExecutor.cs bootstrap for storage/chat wrappers. Counter remains explicitly non-atomic. Live chat and full command creation flow were not executed.
+
+Coverage details and final static-check results: [final-developer.md](../ecosystem-validation/final-developer.md). Full reading is distinct from focused source verification. No live application/provider test or whole-project build in this batch.
+
+## Historical records below — verdicts and hashes preserved
+
+# Independent source review: /reference/code/worked-example
 Verdict: PASS
+Reviewed: src/content/reference/en/code/worked-example.mdx
+Reviewed-SHA: 594291d55fc9c7da
+Reviewed-SHA256: 594291d55fc9c7da17652ddd917a23ce0a471db0755a8571ab4c1d8671839261
+Reviewed-Date: 2026-11-05
+Reviewer: independent reviewer, separate from article author
+Product-Revision: 54da8b6318de63b5205a0ff8db35e0b9045dd959
+
+The complete current article was read in navigation order and checked against current product source. Historical PASS entries below are leads, not approval of this revision. Atlas voice/template gates do not govern this review.
+
+## Current evidence and result
+
+No substantive finding. Three bootstrap executions (first count, stored count, refused write) produce expected replies; real C# host/Jint not run.
+
+Source files opened in this review: CustomCode/CodeScriptService.cs:188-212; ScriptRunner.cs:45-180; CaptureScriptHostBridge.cs:37-92; ScriptHostBridge.cs:500-548,553-625; ScriptStorageService.cs:32-154; production bootstrap example check.
+
+Unqualified paths beginning Identity, CustomCode, Billing, EventStore, Engagement, Rewards, Widgets or Platform are under server/src/NomNomzBot.Infrastructure; Api and Domain identify their corresponding server projects. Dashboard shorthand is under dashboard/src/views/dashboard.
+
+Verification is read-only source review. No bot/API startup, live account authorization, channel writes, C# host/Jint execution, Docker install or restore was performed. Documentation build/render QA belongs to the combined parent pass. The SDK reference and worked-example checks additionally ran the existing read-only nnz-code-doc-check.mjs with production JavaScript bootstrap and substituted host I/O.
+
+## Historical review (superseded)
+
+# Fact check: src/content/reference/en/code/worked-example.mdx
+Historical verdict: PENDING
+
+2026-11-04 overhaul: the article changed, so the previous PASS and hash below are historical evidence, not approval of the current revision.
+Fresh writer source checks and article inventory are recorded under C1/C3/C4 in `docs-work/overhaul/settings-hosting-code.md`.
+Independent review of the changed text is pending.
 Reviewed: C:\Projects\NoMercyLabs\nomnomzbot-docs\src\content\reference\en\code\worked-example.mdx
-Reviewed-SHA: 81c21ce8f77a61f3
+Reviewed-SHA: 4784df9f0857d816
 
 Fresh review of the text edited after the reader FAIL. The older verdict was not carried forward.
 Product repo: C:\Projects\NoMercyLabs\nomnomzbot (master, read only). Paths below are under server/src unless marked.

@@ -1,0 +1,50 @@
+{
+  "fingerprint": "f595e90e87edb54d85633b2553f729193ba7c8055309016c1037ccdb9b388767",
+  "verdict": "PASS",
+  "answers": [
+    {
+      "question": 1,
+      "answer": "Use the channel helpers. They always read the broadcaster's channel: {channel} for the login name, {channel.display} for the display name, {channel.mention} for an @mention and {channel.id} for the Twitch ID. They take no arguments. Only the two raid counts take an input, which is a login name after a colon.",
+      "quote": "Every helper on this page reads your channel, never the person who triggered the reply."
+    },
+    {
+      "question": 2,
+      "answer": "You need to know how braces work and which fields take them, from the Variables and templates page, which the first paragraph names. Viewer-typed text also needs the Viewer Templates feature and the template permission, which the Name and ID section states.",
+      "quote": "For how braces work and which fields take them, read Variables and templates first."
+    },
+    {
+      "question": 3,
+      "answer": "It worked when a moderator runs the command and the reply names the broadcaster's channel, not the moderator's. A helper that cannot resolve prints as typed, braces and all. A few, such as {channel.tags}, give empty text instead.",
+      "quote": "When a moderator runs a command with {channel} in it, the reply names your channel, not the moderator’s."
+    },
+    {
+      "question": 4,
+      "answer": "Put the example reply in the command. {channel} gives the broadcaster's login name, so the link points to the broadcaster's channel whichever moderator runs it. {channel.url} cannot be used because it works only in a Discord notification. For Kick, use {platform.link.kick} instead.",
+      "quote": "Follow {channel.display} at https://www.twitch.tv/{channel}"
+    },
+    {
+      "question": 5,
+      "answer": "The page says the helpers that give empty text say so in their rows. But the {channel.url} row in the Discord table does not say it is empty on other platforms; that comes only in the last paragraph. I also learned only at the end that using a Discord-only helper in a command stops the command from saving. The cost is a reread, not a blocked task.",
+      "quote": "A few helpers give empty text instead, and their rows say so."
+    },
+    {
+      "question": 6,
+      "answer": "Read aloud, the raid helper names with colons and dotted parts are hard to follow. The ccls row's bracketed expansion breaks the sentence. The cost is a slower listen, not a wrong action.",
+      "quote": "Your channel’s content labels (ccls is short for content classification labels), separated by commas, empty when you have none"
+    }
+  ],
+  "findings": [],
+  "warnings_released": true,
+  "warning_review": [
+    {
+      "id": "paragraph-7",
+      "decision": "keep",
+      "reason": "The five sentences each state one part of the rule: the feature must be on, the viewer needs the template permission, and everyone else sees the text as typed. A reader who wants viewers to use these helpers needs all of them. The sentence count alone is not a defect."
+    },
+    {
+      "id": "paragraph-14",
+      "decision": "keep",
+      "reason": "The sentences give the input format (a colon and the other login name), the zero and unknown-name results, and the print-as-typed fallback. A moderator writing a raid count needs each one to know what the reply will show. The length costs little."
+    }
+  ]
+}

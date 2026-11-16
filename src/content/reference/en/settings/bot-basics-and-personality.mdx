@@ -1,16 +1,17 @@
 ---
 title: Bot basics and personality
-description: Set the command prefix, language, timezone and viewer activity levels, pick the bot's reply voice, and set greetings and streak milestones.
+description: Shape the bot's chat behavior, choose its reply tone, and configure greetings while understanding how watch-streak responses work.
 ---
 
-You set how the bot behaves in your chat on three settings pages.
-Open them from the settings part of the sidebar, explained in the [dashboard tour](/reference/getting-started/dashboard-tour).
+Your commands give the bot things to do; these settings shape how it fits into your channel.
+You can change how viewers call commands, choose the wording of built-in replies, and decide when the bot welcomes people chatting during a stream.
+Open the three pages from the settings sidebar, described in the [dashboard tour](/reference/getting-started/dashboard-tour).
 
 | Sidebar entry | Card on the page | What you set |
 | --- | --- | --- |
 | **Bot basics** | **Commands and language** | The command prefix, the language, the timezone and the viewer activity levels. |
 | **Bot personality** | **Reply voice** | The tone of the bot's built-in commands. |
-| **Engagement triggers** | **Greetings and streaks** | Which moments the bot greets, and which watch streaks it celebrates. |
+| **Engagement triggers** | **Greetings and streaks** | First-time and returning greetings, plus saved streak controls whose current limitation is explained below. |
 
 ## Who can use these pages
 
@@ -26,6 +27,10 @@ The roles are explained on [Permissions](/reference/settings/permissions).
 
 ## Change the bot basics
 
+Start here when the bot works but does not yet behave the way you want.
+For example, changing the command prefix changes what viewers type, while the bot line marker helps them recognize automated messages sent through your own account.
+Those settings serve different purposes: a marker does not become part of a command.
+
 1. Open **Bot basics** in the sidebar.
    The **Commands and language** card opens.
 2. Change one or more fields (see the table below).
@@ -39,13 +44,14 @@ A new prefix and a new language work in chat at once, with no restart.
 | Field | What it does | Default |
 | --- | --- | --- |
 | **Command prefix** | The first characters of a command, such as `!`. One to five characters, no spaces. | `!` |
-| **Bot line marker** | Shown before lines the bot posts through your own account. Leave it empty for none. Up to four characters. | Empty (none) |
+| **Bot line marker** | Shown before lines the bot posts through your own account. Leave it empty for none. Up to four characters, no spaces. A marker with a space lets **Save** stay on, but the save fails with an error. | Empty (none) |
 | **Language** | The default language of the bot's replies. The list names each language in its own language. | Not set |
 | **Timezone** | Used for schedules and for times shown in replies. | Not set |
 | **Join chat automatically** | The bot joins your chat by itself when it starts. | On |
 | **Keep commands and rewards on while offline** | Off: when your stream ends, viewer commands stop and your rewards turn off. They come back when you go live. Mods and you can always use commands. | Off |
 
-The prefix is the one your [built-in commands](/reference/commands/built-in-commands) and your own commands start with.
+The prefix is the one your [built-in commands](/reference/commands/built-in-commands) and commands using the channel prefix start with.
+An individual command can use a different trigger, as explained in [Create a command](/reference/commands/create-a-command).
 When you switch **Join chat automatically** off, the bot leaves your channel's events at once.
 When you switch it on, the bot joins them at once.
 
@@ -66,8 +72,11 @@ A wrong step shows its message under the field, and **Save** stays off until you
 
 ## Pick the reply voice
 
-The reply voice is the tone your built-in commands answer in.
-It is still the channel's one bot voice: only the wording of the built-in replies changes.
+The reply voice changes the wording of built-in command replies.
+It also words the chat lines of [Event responses](/reference/automation/event-responses) that use the default text, such as follows, subs, cheers, raids and bans.
+An event response with your own text keeps it.
+Choose a tone that fits your chat: **Informative** gives straightforward answers, while **Hype** adds a more energetic style.
+This choice does not select a spoken voice or change the text you wrote for a custom command; spoken voices belong to [Text to speech](/reference/audio/text-to-speech).
 
 1. Open **Bot personality** in the sidebar.
    The **Reply voice** card lists the tones.
@@ -87,35 +96,55 @@ Custom commands keep their own text.
 
 ## Set greetings and streaks
 
+Greetings let the bot recognize a viewer's first tracked live-stream message or their first message in a later stream without requiring a command.
+They start off, so you can choose how much attention the bot draws to people joining the conversation.
+Both greetings operate while your stream is live; offline messages do not trigger them.
+The greeting interval limits how often those messages appear across viewers.
+For example, with a five-second interval, two people arriving a second apart do not both receive a greeting.
+
 1. Open **Engagement triggers** in the sidebar.
    The **Greetings and streaks** card opens.
-2. Switch on the moments you want the bot to greet, and set the numbers (see the tables below).
+2. Switch on the moments you want the bot to detect, and set the numbers (see the tables below).
 3. Choose **Save changes**.
+4. Open [Event responses](/reference/automation/event-responses) and turn on the matching greeting, as the note under the table explains.
 
 | Moment | What the bot does | Default |
 | --- | --- | --- |
-| **First message ever** | Greets a viewer the first time they chat in your channel. | Off |
-| **Back after a break** | Welcomes a viewer who has not chatted for a while. | Off |
-| **Watch streaks** | Celebrates a viewer who watches stream after stream. | Off |
+| **First time the bot sees a viewer** | Detects the moment the bot first records a viewer chatting during a live stream. | Off |
+| **Back after a break** | Detects a previously recorded viewer on their first message in a new stream. There is no minimum number of days away. | Off |
+| **Watch streaks** | The watch-streak response does not consult this switch. See below. Any switch on this card makes the bot start recording viewers' live-stream chat, and that record decides who counts as first-time or returning later. | Off |
+
+These switches only detect the moment.
+The bot posts nothing until you also turn on the matching entry on [Event responses](/reference/automation/event-responses): **Engagement first time chatter** or **Engagement returning chatter**.
+Every channel starts with those entries off, and you choose the reply or pipeline there.
+The returning response can use `\{engagement.daysSinceLastSeen\}`, the number of days since the viewer last chatted.
 
 | Field | What it does | Default |
 | --- | --- | --- |
 | **Time between greetings** | The bot greets at most one viewer in this time, in seconds. Use 0 for no limit. | 5 seconds |
-| **Streak milestones** | The streak counts the bot celebrates, in streams in a row. | None, which celebrates every stream |
+| **Streak milestones** | Saves your chosen counts; these currently do not filter watch-streak responses. | None |
 
 Each field on the page also shows its own default.
 **Reset to defaults** puts the defaults in the form.
 Nothing is saved until you choose **Save changes**.
 
-### Add or remove a streak milestone
+### How watch-streak responses actually work
+
+A watch-streak response begins with a viewer submitting Twitch's own watch-streak notification.
+It is not an automatic announcement based on the bot counting attendance.
+Configure **Engagement watch streak** on [Event responses](/reference/automation/event-responses) to choose the reply or pipeline for that notification.
+
+The **Watch streaks** switch and **Streak milestones** values on this settings page are saved, but the current notification handler does not use them.
+In particular, an empty milestone list does not cause a celebration every stream, and adding milestones does not restrict incoming Twitch notifications.
+The page's help text describes that filtering, but it is not implemented in the response path.
+
+You can still edit the stored milestone list:
 
 1. Choose **Add milestone**.
    A new row opens with a count 5 higher than the last one.
 2. Change the count if you want. A count is a whole number of 1 or more.
 3. To remove a milestone, choose the trash button on its row.
 4. Choose **Save changes**.
-
-With no milestones, the page shows "No milestones: the bot celebrates a viewer's streak on every stream. Add a count to limit it."
 
 ## Troubleshooting
 
@@ -131,7 +160,8 @@ Use a whole number of 0 or more for **Time between greetings**, and 1 or more fo
 
 **Save stays off on Commands and language.**
 A field breaks a rule.
-The prefix needs one to five characters with no spaces, and the bot line marker takes up to four characters.
+The prefix needs one to five characters with no spaces, and the bot line marker takes up to four characters, no spaces.
+A marker with a space leaves **Save** on, but the save shows an error.
 
 ::
 

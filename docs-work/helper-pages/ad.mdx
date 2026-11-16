@@ -1,0 +1,98 @@
+---
+title: Ad break helpers
+description: The ad helpers for the next and last Twitch ad break, your snoozes, and the three ad break events.
+---
+
+Ad helpers come in two kinds.
+The schedule helpers ask Twitch for your ad schedule at the moment the reply goes out, so they work in any field that takes helpers: a command, a timer, an event response, a pipeline step, a Discord notification or a webhook.
+The event helpers carry the details of one ad break event, so they work only in a response to that event, or in a pipeline it starts.
+None of the ad helpers take an input.
+How braces, conditions and the other template rules work is on [Variables and templates](/reference/commands/variables-and-templates).
+
+## Before you start
+
+The schedule helpers and the **Ad break coming** event read your ad schedule through your own Twitch sign-in, with the Twitch permission `channel:read:ads`.
+Your first Twitch sign-in does not ask for it, because the bot asks for extra Twitch permissions only when a feature needs them.
+When the bot finds the permission missing, the **Needs attention** panel on **Home** shows "Twitch permission missing: channel:read:ads".
+Until the permission is granted, the schedule helpers print as typed and **Ad break coming** stays silent.
+A schedule reply inside the check under [Check for a planned break](#check-for-a-planned-break) then gives its second text, so chat sees no braces.
+
+## Choose a reminder
+
+For a warning just before each break, use the **Ad break coming** event.
+It goes out once for each planned break, about 3 minutes before it starts, while you are live, so chat gets one message at the right time:
+
+```
+Ad break {ad.when}. Grab a drink, we'll be right back.
+```
+
+It stays quiet for a break that falls in the first 10 minutes of the stream.
+Without the `channel:read:ads` permission it never goes out, so the reminder stays silent and chat sees nothing.
+
+When a viewer asks, or for a line that repeats on its own schedule, use the schedule helpers in a command or a timer.
+They answer at any moment, but a timer runs on its own interval, not on the ad schedule, so wrap them in the check under [Check for a planned break](#check-for-a-planned-break).
+
+For a reply after the break, use the **Ad break ends** event:
+
+```
+Thanks for sitting through {ad.duration} of ads. Welcome back!
+```
+
+`{ad.last.ago}` and `{ad.last.at}` also describe the last break, but they read the schedule, so use them in a command that can run at any time.
+
+## The next and last ad break
+
+These helpers work in commands, event responses, timers, pipelines, Discord and webhooks.
+Clock times use the **Timezone** on the **Bot basics** page (see [Bot basics and personality](/reference/settings/bot-basics-and-personality)), and UTC when none is set.
+
+| Helper | What it gives | Example |
+| --- | --- | --- |
+| `{ad.isScheduled}` | `true` while Twitch has an ad break planned, `false` when it has none | `true` |
+| `{ad.next.in}` | How long until the next ad break, rounded to the minute; under a minute it counts seconds, as in `45s` | `12m` |
+| `{ad.next.in.long}` | How long until the next ad break in words, up to two units, as in `1 hour, 5 minutes` | `12 minutes` |
+| `{ad.next.at}` | The clock time of the next ad break | `15:42` |
+| `{ad.next.seconds}` | The seconds until the next ad break, as a plain number | `720` |
+| `{ad.next.duration}` | How long the next ad break lasts, in minutes and seconds | `1m 30s` |
+| `{ad.last.ago}` | How long ago the last ad break ran, rounded to the minute | `48m` |
+| `{ad.last.at}` | The clock time of the last ad break | `14:42` |
+| `{ad.snoozes.left}` | How many ad snoozes you have left; a snooze pushes the next break back by 5 minutes | `2` |
+| `{ad.snoozes.refreshIn}` | How long until Twitch refills your snoozes | `34m` |
+| `{ad.prerollFree}` | How much pre-roll free time Twitch reports you have left | `20m` |
+
+Without an answer from Twitch or the permission, every helper in this table prints as typed, `{ad.isScheduled}` too.
+
+With no break planned, `{ad.isScheduled}` gives `false` and the next-break helpers print as typed.
+The exception is `{ad.next.duration}`, which gives `0s`.
+A last-break helper prints as typed when Twitch has no last break, and `{ad.snoozes.refreshIn}` does the same when Twitch has no refill time.
+`{ad.snoozes.left}` gives `0` with no snoozes left, and `{ad.prerollFree}` gives `0s` with no pre-roll free time.
+
+### Check for a planned break
+
+In a reply that can run at any time, test `{ad.isScheduled}` with the path form of [`{if}`](/reference/templates/if), `{if.ad.isScheduled:then|else}`:
+
+```
+{if.ad.isScheduled:Next ad break in {ad.next.in}, at {ad.next.at}.|No ad break planned right now.}
+```
+
+This prints the second text when no break is planned, and also when Twitch does not answer or the permission is missing.
+Do not use the value form `{if:{ad.isScheduled}|...}` for this.
+Without the permission, `{ad.isScheduled}` stays as typed, the value form treats that text as true, and chat sees the braces.
+
+## Ad break events
+
+These helpers are filled in by the event that runs the response.
+They work in event responses and pipelines.
+The three events are on the **Event responses** page, which is in the **Build** group of the sidebar.
+
+| Event | Helper | What it gives | Example |
+| --- | --- | --- | --- |
+| **Ad break coming** | `{ad.when}` | How soon the break starts, rounded to the minute, or in seconds when 30 seconds or less are left | `in ~3 minutes` |
+| **Ad break coming** | `{ad.seconds}` | The length of the coming break in seconds, as a plain number | `90` |
+| **Ad break starts** | `{ad.duration}` | The length of the break: whole minutes when it divides evenly, otherwise seconds | `3 minutes` |
+| **Ad break starts** | `{ad.automatic}` | `true` when Twitch started the break on its own, `false` when a person started it | `true` |
+| **Ad break starts** | `{user}` | The person who started the break; empty when Twitch started it on its own | `SampleMod` |
+| **Ad break ends** | `{ad.duration}` | The length of the break that just ended, in the same words as at the start | `3 minutes` |
+
+**Ad break ends** goes out when the break's length has passed, and only if you are still live on the same stream.
+
+Back to [Template helpers](/reference/templates/overview). For the places helpers work, special characters and HTML, read [Variables and templates](/reference/commands/variables-and-templates).

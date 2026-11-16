@@ -3,9 +3,26 @@ title: Music player
 description: Add the Music Player to your streaming software, control the song that plays now, set the player buttons and read the song history.
 ---
 
-You control the channel's music on the **Music** page in the sidebar.
-The music comes from [Spotify](/reference/integrations/spotify) or [YouTube](/reference/integrations/youtube).
-It plays on the stream through the **Music Player** widget, an overlay page in your streaming software.
+The **Music** page lets you manage the soundtrack while viewers contribute [song requests](/reference/music/song-requests).
+You can see what is playing, pause or skip it, and keep the next requests in order without leaving the dashboard.
+The music can come from [Spotify](/reference/integrations/spotify) or [YouTube](/reference/integrations/youtube), but the two sources reach your stream differently.
+
+YouTube requests play through the **Music Player** browser source in OBS.
+Spotify plays on the active playback device in your connected Spotify account.
+The **Music Player** can also register as a Spotify device, which lets you put that audio in its own OBS source; the bot never picks that device for you; you choose it yourself, in Spotify or with the device button in the **Request queue** header.
+When Spotify has no active device, the bot first tries the last device that played during this stream.
+If that fails, the **Request queue** shows the "Spotify has no active device" line and you pick a device yourself.
+
+## Get your first song playing
+
+Connect Spotify if you want to use it, then open Spotify on the device where you want the audio to play.
+For YouTube, add **Music Player** from **Required overlays** on the **OBS** page before testing a request.
+In **Request rules**, open **Sources**, turn on **Allow YouTube songs** and choose **Save**; YouTube requests start disabled.
+You do not need to connect a YouTube channel account just to request YouTube music.
+
+Open **Music**, check that **Playback** is on and the request queue is open, then request a song in chat with `!sr` followed by a single-track link or song name.
+The [Song requests](/reference/music/song-requests) guide explains the source permissions and limits; YouTube requests are restricted to the broadcaster by default.
+Check both **Now playing** and the OBS audio mixer to confirm that the sound is reaching your stream.
 
 | Panel | What it holds |
 | --- | --- |
@@ -34,10 +51,9 @@ The roles are explained on [Permissions](/reference/settings/permissions).
 
 ## Add the Music Player to your streaming software
 
-The **Music Player** widget is the one page where the bot's music plays.
-It holds a hidden YouTube player.
-It also adds a Spotify playback device to your Spotify account, named "NomNomzBot" followed by the widget name.
-So the music has its own browser source and its own level.
+The **Music Player** holds a hidden YouTube player and can add a Spotify playback device named "NomNomzBot" followed by the widget name.
+That device needs Spotify Premium and a connection with streaming permission.
+Select it in Spotify, or with the device button on the Music page, when you want Spotify audio to play through this browser source.
 
 The page shows nothing while the music plays well.
 It shows something in two cases:
@@ -48,22 +64,25 @@ It shows something in two cases:
 | Message on the page | What to do |
 | --- | --- |
 | "Click to enable audio playback" | Click the message in the browser source, so the page may play sound. |
-| "Reconnect Spotify with streaming permission to enable this device (Integrations page)." | Reconnect Spotify, as shown on [Spotify](/reference/integrations/spotify). |
+| "Reconnect Spotify with streaming permission to enable this device (Integrations page)." | The extra browser-playback permission is missing. See the current dashboard limitation on [Spotify](/reference/integrations/spotify#spotify-audio-in-an-obs-browser-source). |
 | "Couldn't start playback — check Spotify Premium and try reloading this source." | Check that the Spotify account has Premium, then reload the browser source. |
 
-1. Add the **Music Player** widget, as shown on [Widgets and alerts](/reference/overlays/widgets-and-alerts).
-2. Add its link to your streaming software as a browser source, as shown on [Add an overlay to OBS](/reference/overlays/obs-browser-source).
-3. Size the source 1 by 1 pixel and keep **Control audio via OBS** on.
-   With it off, the stream does not hear the music.
+1. Open **OBS**, choose **Overlays in OBS**, and find **Music Player** under **Required overlays**.
+2. Choose **Connect** and copy its address into an OBS **Browser** source, as shown on [Add an overlay to OBS](/reference/overlays/obs-browser-source).
+3. Follow the dialog: size the source 1 by 1 pixel, keep **Control audio via OBS** on, and leave **Shutdown source when not visible** off.
+   This gives the source its own audio channel in the OBS mixer.
 
 A YouTube request that waits for this page shows "Waiting for the Music Player in OBS" in the **Request queue**.
 Its row has a button that opens the same setup steps.
 
 ### Music Player settings
 
-You change these settings on the widget, as shown on [Widgets and alerts](/reference/overlays/widgets-and-alerts).
+These are the settings supported by the player widget.
+The required **Music Player** source is currently excluded from the custom **Overlays** list, and its OBS connection dialog does not expose this settings form.
+Treat this table as reference for an existing customized player, rather than a dashboard setup step.
 **Play audio on this page** is the widget's own switch: with it off, the page plays no music at all.
-**Control audio via OBS** is a setting of the browser source in OBS: with it off, the page plays but the stream does not hear it.
+**Control audio via OBS** is an OBS setting that routes the browser source's sound through the OBS mixer.
+Check that mixer channel when the page is playing but your stream is silent.
 
 | Setting | Default | What it does |
 | --- | --- | --- |
@@ -71,7 +90,7 @@ You change these settings on the widget, as shown on [Widgets and alerts](/refer
 | **Mute the music on this page** | Off | Silences both players. |
 | **Play audio on this page** | On | Lets this page play the music. |
 | **Show a status dot (setup only)** | Off | Shows a dot that proves the source is alive. |
-| **Accent color** | `#9146ff` | The color of the status dot and the page's own status messages. |
+| **Accent color** | The theme accent (`#9146ff` unless your theme changes it) | The color of the status dot and the page's own status messages. |
 
 ## Control the song that plays now
 
@@ -84,6 +103,9 @@ When nothing plays, it shows "Nothing is playing right now."
 | **Pause** | Pauses the song. |
 | **Next song** | Skips to the next song. |
 
+The card also shows **Previous song**, **Shuffle**, **Repeat**, a **Song position** bar and a **Music volume** slider, to people who may use them.
+These controls show but are not active on this page yet, so use the player buttons below for those actions.
+
 A badge under the song name shows a special state.
 
 | Badge | Meaning |
@@ -93,25 +115,37 @@ A badge under the song name shows a special state.
 | **Starting** | The song is starting. |
 | **Music muted** | The music is muted. |
 
+### Pick the Spotify device
+
+When Spotify has a device you can move playback to, a button in the **Request queue** header shows the active device by name, or **Choose a device** when no device is active.
+Open it and choose another device to move playback there.
+When a request waits because Spotify has no active device, the **Request queue** shows "Spotify has no active device. Open Spotify on a device to play requests."
+Choosing a device then also starts the music on it.
+In every other case, choosing a device only moves playback there.
+The button is hidden when there is no device to move to, and it shows only to people who may control the remote player.
+
 ### Turn song requests off
 
 The **Playback** switch sits in the header of the **Now playing** panel.
 It is on by default.
 When it is off, the bot refuses every new song request.
 
-## Set the player buttons
+## Keep useful controls close
 
-Player buttons are your own shortcuts under the song.
-They are the same buttons as the Stream Deck music plugin.
-A channel can have at most 12 buttons.
+Player buttons put the controls you use most often under the current song.
+For example, you can pin pause, skip and a fixed volume instead of looking for those controls during a busy moment.
+They use the same actions as the Stream Deck music plugin, and you can keep up to 12 in the channel.
 
 1. In the **Now playing** panel header, choose **Add button**.
    The **Add a player button** dialog opens.
 2. Pick one of the buttons in the list.
    The dialog shows what it does, and the fields it needs.
-3. Change the **Label** if you want, at most 24 characters.
-   Leave it empty for a button with only an icon.
-4. Choose **Add button**.
+3. Choose an **Icon**.
+   An icon is required.
+4. Change the **Label** if you want, at most 24 characters.
+   It starts as the button's name.
+   Clear it for a button with only an icon.
+5. Choose **Add button**.
    The dialog closes and the new button shows under the song.
 
 With 12 buttons, **Add button** is off and says "A channel can pin at most 12 buttons."
@@ -157,13 +191,17 @@ The list holds all 23 buttons.
 
 ## Read the song history
 
-The **History** panel lists the 12 latest song requests, newest first.
+The **History** panel lists the 50 latest counted song requests, newest played first.
 Each row shows the song, the artist, the viewer who requested it and when.
 A row with no known title shows "Unknown song".
 
-The **Thanks for the music** panel lists the 8 viewers who requested the most songs.
-A bar and a count show how many songs each one requested.
+The **Thanks for the music** panel lists the 10 viewers with the most counted requests, with their rank beside their name.
+A bar and a count show how many of their requests played.
 **Open people** opens the **People** page.
+
+A newly accepted request counts when playback starts, rather than when it enters the queue.
+Removing it before it plays does not add to history or the requester ranking, and replaying an already counted request does not count it again.
+Imported historical requests can also appear in these totals.
 
 ## Related pages
 

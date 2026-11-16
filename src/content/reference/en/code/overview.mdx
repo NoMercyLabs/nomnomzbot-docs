@@ -1,0 +1,74 @@
+---
+title: Developer documentation
+description: Choose the right integration surface, understand its credentials and contracts, and find the script, widget and API references.
+---
+
+You can extend a channel with a script or widget, connect an external tool, or contribute to the bot itself.
+These paths use different runtimes and credentials.
+Choose the surface that fits where your code runs before copying an example.
+
+This subsection is part of the bot's documentation.
+The references cover scripts, widgets, webhooks, dashboard subscriptions and the Automation API; they are not a complete reference for every server endpoint.
+For HTTP endpoints outside these guides, use the generated schema and the current controllers and DTOs.
+For ordinary dashboard tasks, start with the [user guide](/reference/overview).
+
+## Choose where your code runs
+
+| What you are building | Surface | What you need |
+| --- | --- | --- |
+| Logic triggered by a command or pipeline | The synchronous `bot` and `nnz` script SDK | A channel with Custom Code turned on, permission to manage scripts, and a script that is switched on and has a valid published version. |
+| An OBS browser-source widget | The browser's `NomNomz` SDK | A widget attached to an overlay/browser source. The rendered page supplies the SDK and its connection; a standalone HTML file does not acquire that context automatically. |
+| A Stream Deck plugin, local service or other external tool | Automation REST and raw WebSocket | The bot's reachable base URL and an automation token with the scopes the tool needs. |
+| Dashboard features or application contributions | The server REST API and dashboard SignalR hubs | A development checkout, the relevant dashboard identity and channel permissions; use the generated HTTP schema for DTOs. |
+| A public page that reads its text aloud | Public read-aloud HTTP endpoint | An operator-allowed origin and a visitor's play control; no sign-in token. |
+
+An automation token is not a dashboard JWT.
+Widget connection credentials are not script grants.
+Scripts receive only the host-call capabilities discovered in their saved code; widgets have a separate asynchronous API.
+Do not copy event names between the widget, dashboard and automation streams: their names and payloads differ.
+
+## Write a script or widget
+
+Start with [Code scripts](/reference/code/scripts), then try the [worked example](/reference/code/worked-example).
+The [execution reference](/reference/code/how-a-script-runs) explains inputs, outputs and budgets.
+[Script basics](/reference/code/sdk-script-basics) covers grants and the difference between a failed host call and a stopped run.
+
+For calls into the bot, use [Chat, music and voice](/reference/code/sdk-chat-music-voice),
+[Data and storage](/reference/code/sdk-data-and-storage), and [Widgets, actions and templates](/reference/code/sdk-widgets-actions-templates).
+Widget calls that return promises need `await`; script SDK calls return synchronously.
+The [SDK contract lookup](/reference/code/sdk-contracts) provides exact method signatures, action inputs, event payloads and stream-metric types alongside the explanatory guides.
+A script test captures writes but still performs reads and HTTPS fetches.
+A successful test does not enable a script or prove a live provider action succeeded.
+
+The authenticated server also serves SDK declarations at `GET /api/v1/sdk/types.d.ts?context=script`
+or `?context=widget`, and event schemas at `GET /api/v1/sdk/event-catalog?context=widget`.
+These require the dashboard's `sdk:read` permission, not an automation token.
+Omitting `context` selects script; an unknown context returns 400.
+The type endpoint returns plain text; the catalog returns a status envelope whose `data` rows contain `wireName`, `tier`, `payloadSchema` and a nullable `samplePayloadJson`.
+Catalog metadata does not make a script a persistent event listener: scripts run from their configured triggers.
+
+## Connect an external tool
+
+Use the [Automation API contract](/reference/code/automation-api) for token scopes, exact routes, request and response shapes, subscriptions, limits and errors.
+Its WebSocket endpoint is raw JSON over WebSocket, not SignalR.
+An accepted invocation means the bot queued the work; it does not confirm the work finished.
+
+For signed webhook deliveries, inbound notifications, custom feeds or dashboard SignalR subscriptions, use [Webhook and dashboard event contracts](/reference/code/webhooks-and-events).
+Its examples distinguish those transports from the Automation API and explain their delivery and retry behavior.
+
+For a public webpage, use [Read aloud for a page](/reference/audio/read-aloud-api).
+That endpoint returns MP3 bytes on success and uses its own origin and rate-limit checks.
+
+## Work on the application
+
+The [product repository](https://github.com/NoMercyLabs/nomnomzbot) contains the .NET backend and Vue dashboard.
+Read its [contribution guide](https://github.com/NoMercyLabs/nomnomzbot/blob/master/CONTRIBUTING.md), [backend guide](https://github.com/NoMercyLabs/nomnomzbot/blob/master/server/README.md) and [dashboard guide](https://github.com/NoMercyLabs/nomnomzbot/blob/master/dashboard/README.md).
+The backend targets .NET 10; the dashboard requires Node.js `^22.18.0` or `>=24.12.0`, and repository scripts use PowerShell 7.
+Use [deployment instructions](https://github.com/NoMercyLabs/nomnomzbot/blob/master/DEPLOY.md) when you want to run the bot rather than change its source.
+
+On a Development instance, Scalar is at `/scalar` and the OpenAPI document is at `/openapi/v1.json`.
+Production exposes them only when the operator sets `Api:ExposeDocs=true`.
+You can inspect the [committed snapshot and generation instructions](https://github.com/NoMercyLabs/nomnomzbot/blob/master/server/openapi/README.md) without starting a bot.
+The snapshot drives `dashboard/src/api/schema.d.ts`; it does not describe every WebSocket event or the read-aloud endpoint, which is excluded from OpenAPI.
+For an endpoint absent from these guides, check the matching current controller and DTO rather than inferring a contract from a UI label.
+

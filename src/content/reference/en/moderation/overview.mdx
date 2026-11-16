@@ -3,12 +3,13 @@ title: Moderation overview
 description: Handle the review queue on the Home page, read a viewer's moderation history, and find each other moderation tool.
 ---
 
-You find moderation in three places on the dashboard.
-The review queue is on the **Home** page.
-The moderation history of one person is in the profile dialog.
+Moderation combines decisions you make during a stream with rules you set beforehand.
+You can deal with a message directly in [Chat](/reference/community/chat-page), review messages that need a decision on **Home**, and look at a person's history before deciding what to do next.
+Filters and other automatic protections help with repeated problems, while the review queue gives moderators a place to handle cases that need judgment.
 
-The profile dialog is the window that opens when you choose a person's name.
-The settings for filters, bans and trust are in the **Access** group of the settings.
+For day-to-day moderation, start with chat and the queue rather than changing every policy at once.
+If the same problem keeps returning, use the settings in the **Access** group to adjust how the bot handles it.
+Choosing a person's name opens their profile dialog, where the **Moderation** tab provides the context for that person.
 
 | Where | What you do there |
 | --- | --- |
@@ -20,18 +21,24 @@ The dashboard is explained on [Dashboard tour](/reference/getting-started/dashbo
 
 ## Who can use these tools
 
-A **Moderator**, **Lead moderator**, **Editor** or **Broadcaster** may see the review queue.
+By default, a **Moderator**, **Lead moderator**, **Editor** or **Broadcaster** may see the review queue.
 The same roles may allow and deny items in the queue.
 The same roles may read the moderation history.
+The channel can change these roles on the **Permissions** page in the **Access** group.
+See [Permissions](/reference/settings/permissions).
 
 A role that may see the queue, but may not decide on it, sees the list without **Allow** or **Deny** buttons.
-A role that may not see the queue gets "The review queue could not load." in the panel.
+A role that may not see the queue does not get the **Review queue** panel on **Home**.
 In the profile dialog, a role that may not read the history sees "Your role cannot see the moderation history."
 
 ## Review queue
 
-The **Review queue** panel on the **Home** page lists the items that wait for a decision.
-The panel shows the count, for example "3 waiting".
+The **Review queue** panel on **Home** brings together messages and flags from several kinds of protection.
+The count, such as "3 waiting", tells you how many decisions remain.
+The source matters: Twitch can release a message that its AutoMod is still holding, but a message the bot already deleted cannot be restored by choosing **Allow**.
+
+For example, when a viewer's harmless message is held by Twitch AutoMod, choose **Allow** to let it appear in chat.
+When a bot filter already removed a message, **Allow** closes the review in the bot; it does not repost the viewer's words.
 
 An item comes into the queue in these cases:
 
@@ -40,9 +47,9 @@ An item comes into the queue in these cases:
 | Twitch AutoMod | AutoMod holds the message. It is not in chat yet. |
 | A chat filter set to hold | The bot removed the message from chat. |
 | A chat filter set to flag | The message stays in chat. |
-| The newcomer gate | The bot removed the message of an account or follow younger than the channel's limit. |
+| The newcomer gate | The bot removed the message of an account or follow younger than the channel's limit. The message goes into the queue only when the newcomer gate is set to hold messages for review (the default). If the bot could not remove the message, it does not go into the queue. See [Spam defense](/reference/moderation/spam-defense). |
 | A suspicious user on Twitch | Twitch marks the chatter as restricted or monitored. The bot leaves the message alone. |
-| The heat limit | A viewer crossed the channel's heat limit, and the bot did not time the viewer out by itself. This item has no message. |
+| The heat limit | A viewer crossed the channel's heat limit while the automatic heat timeout is off, or the viewer is the broadcaster or a moderator. The row shows "Heat reached", the score and the limit instead of a chat message. |
 
 The platform of an item depends on its source:
 
@@ -61,10 +68,6 @@ The panel hint says: "Twitch drops a held message after a while. Allowing one te
 2. Find the item in **Review queue**.
 3. Choose **Allow**.
    The item leaves the queue.
-
-For a message that AutoMod holds, **Allow** sends the message to chat.
-For every other item, **Allow** only records your decision in the bot.
-A removed message does not come back to chat.
 
 ### Deny an item
 
@@ -90,7 +93,7 @@ If you leave the page before the 6 seconds end, the bot sends the denial at once
 | "Nothing waits for you right now." | The stream is live and nothing waits. |
 | "Nothing waits for you. Held messages and spam checks show up here during a stream." | The stream is offline and nothing waits. |
 | **Shield mode on** | Twitch shield mode is on for the channel, and your role may see shield mode. The list works as usual. |
-| "The review queue could not load." | The queue failed to load, or your role may not see it. |
+| "The review queue could not load." | The queue failed to load. Choose retry to try again. |
 
 ## Moderation history
 
@@ -126,9 +129,19 @@ Each entry has three lines:
 **Show older** at the bottom loads older entries.
 A person with no entries shows "Moderation has done nothing to this person here yet."
 
+The **Moderation** tab also holds:
+
+- **Moderator notes** about the person.
+- **Actions taken**, a count of each kind of action.
+- The **Twitch suspicious-user flag**.
+- The person's ban records, with the reason, who banned them and when.
+
+The profile also has **Warn** and **Ban** actions.
+
 ## Where the other tools live
 
-Each of these pages is in the **Access** group of the settings.
+Most of these pages are in the **Access** group of the settings. The table names the group of the others.
+The **Access** group also holds **Permissions** and **Event journal**; see [Permissions](/reference/settings/permissions) and [Event journal](/reference/settings/event-journal).
 
 | Settings page | What it holds | Guide page |
 | --- | --- | --- |
@@ -136,10 +149,17 @@ Each of these pages is in the **Access** group of the settings.
 | **Blocked terms** and **Banned people** | The words Twitch blocks, and the people who are banned. | [Bans and blocked terms](/reference/moderation/bans-and-blocked-terms) |
 | **Spam defense** | The spam policy and what it found. | [Spam defense](/reference/moderation/spam-defense) |
 | **Trust policy** and **Escalation** | The rules for new chatters, and the warn, timeout and ban steps. | [Trust and escalation](/reference/moderation/trust-and-escalation) |
-| **Viewer reports** | The reports viewers send about chat. | - |
+| **Viewer reports** | Reports about a person that need a moderator's decision. | [Reports](/reference/moderation/reports) |
+| **Shoutouts**, in the **Bot** group | Automatic shoutouts and the announcement text. | [Shoutouts](/reference/moderation/shoutouts) |
+| **Federation**, in the **Connections** group | What this channel shares with or accepts from other trusted bots (bans, ban list, trust list), and whether moderator mass bans and admin network blocks reach your channel. Everything is off until you turn it on. | [Linked channels](/reference/moderation/linked-channels) |
 
-You can moderate one chat line on the **Chat** page.
-You can moderate one person from the profile dialog.
+Slow mode, followers-only, emote-only, Twitch subscriber-only, Unique chat, Non-moderator delay and **Clear chat** live in the **Chat settings** panel of the [Chat page](/reference/community/chat-page).
+The same panel has a **Raid accounts** section with a **Mass ban...** button.
+Shield mode is the shield switch in the header of every dashboard page.
+
+If a message needs a timeout or ban, use its chat controls or the person's profile.
+The **Allow** and **Deny** buttons in the Home queue resolve the review; they do not themselves apply a timeout or ban.
+For a wider pattern, [spam defense](/reference/moderation/spam-defense) looks for coordinated activity, while [trust and escalation](/reference/moderation/trust-and-escalation) explains how recent trouble and repeated offenses are handled.
 
 ## Related pages
 

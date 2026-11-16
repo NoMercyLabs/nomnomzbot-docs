@@ -1,7 +1,40 @@
-# Fact-check: /reference/moderation/reports
+# Independent source verification: /reference/moderation/reports
 Verdict: PASS
 Reviewed: src/content/reference/en/moderation/reports.mdx
-Reviewed-SHA: 9adc5725e8857434
+Reviewed-SHA: a789da3356cdd993819b90e228dfd16e23f721ded4e1e8f59307a8d868b69a02
+
+## Independent overhaul review, 2026-11-05
+
+ViewerReportService.cs:62-145,180-224; ReportsView.vue; ActionDefinitionSeeder.cs:263-264: target/reason validation, channel-scoped list, status-only triage and read/write split.
+
+Reviewed independently of the article author, in actual navigation order. Current product source 54da8b631 and relevant changes since b12f4f696 were read without starting the bot, executing platform actions or changing channel data. This verdict is source verification, not proof of live platform delivery. See [review-moderation-economy-community.md](../overhaul/review-moderation-economy-community.md) for the review scope and findings.
+
+## Prior review history
+
+The earlier text below is retained as history; it does not independently approve a later article hash.
+
+Author source audit: 2026-11-04. Independent review of the revised article is pending; the historical PASS below does not approve this text.
+Product source: C:/Projects/NoMercyLabs/nomnomzbot at b12f4f696, inspected without starting the bot or changing data.
+
+Removes deployment-operator Trust and Safety instructions from the streamer journey; explains the incomplete submission path and useful follow-up.
+
+| Revised claim or retained core behavior | Current source opened |
+| --- | --- |
+| Review UI, statuses, controls and lack of submission form | dashboard/src/views/dashboard/settings/reports/ReportsView.vue; dashboard/src/views/dashboard/settings/reports/i18n/en.json |
+| Reason requirements, target identity and report creation | server/src/NomNomzBot.Infrastructure/Moderation/ViewerReportService.cs:62-145 |
+| Triage changes status and resolver metadata without sanctions | server/src/NomNomzBot.Infrastructure/Moderation/ViewerReportService.cs:180-224 |
+| Default read/triage roles | server/src/NomNomzBot.Infrastructure/Content/Identity/ActionDefinitionSeeder.cs:263-264 |
+
+The practical scenarios are recommended uses of these verified controls, not promises of a new feature. Unchanged reference details were compared with the current view, labels and relevant implementation. Runtime platform calls were not performed.
+
+## Historical evidence
+
+The prior review is retained for its detailed claim inventory. Its verdict and file hashes refer to the earlier article; where the new evidence differs, the new evidence takes precedence.
+
+# Fact-check: /reference/moderation/reports
+Historical verdict: PASS
+Reviewed: src/content/reference/en/moderation/reports.mdx
+Reviewed-SHA: 894b4678eaa926d4
 
 Checked against the current page text (sha above) and product repo master, read only. Older verdict not carried forward; each row re-checked.
 

@@ -1,7 +1,39 @@
-# Fact check: src/content/reference/en/overlays/widgets-and-alerts.mdx
+# Current independent fact check
+
 Verdict: PASS
 Reviewed: src/content/reference/en/overlays/widgets-and-alerts.mdx
-Reviewed-SHA: 0a0e351d3cf32089
+Reviewed-SHA: f4deeb3c9ecae6d0b960fa30d3c22d27a7c4e0f35217613bcfbb9d5d72fea148
+Reviewed-SHA256: f4deeb3c9ecae6d0b960fa30d3c22d27a7c4e0f35217613bcfbb9d5d72fea148
+Reviewed-Date: 2026-11-05
+Reviewer: independent media-section reviewer
+Product: 54da8b6318de63b5205a0ff8db35e0b9045dd959 plus preserved current music UI edits
+
+The full article was read in sidebar order. Consequential defaults, permissions, prerequisites, state lifetime and effects were traced against current source; repaired findings were re-read before this verdict. This is source verification, not a live-channel or visible/audible output test.
+
+- server/src/NomNomzBot.Infrastructure/Content/Widgets/FirstPartyWidgetCatalogue.cs:72-126 defines supplied alerts/subscriptions and one-at-a-time display configuration; dashboard/src/views/dashboard/overlays/OverlaysView.vue:64-70 and obs/components/RequiredOverlaysPanel.vue:103-145 establish the inaccessible required-widget settings boundary.
+- server/src/NomNomzBot.Infrastructure/Dashboard/Replay/ActivityReplayService.cs:63-160 reconstructs event chains and counts presentations/captured alerts without publishing a second source event; server/src/NomNomzBot.Infrastructure/Platform/Eventing/EventResponseExecutor.cs:500-590 can invoke attached real actions.
+- Preview/test separation and listed widget kinds were checked against the current overlay editor/reference evidence; no live test or browser presentation is asserted.
+
+Source paths without a repeated layer prefix in a bullet are relative to its preceding Infrastructure or dashboard scope. The section report records method, repaired findings, external sources and remaining product limitations: docs-work/overhaul/review-automation-media-integrations.md.
+
+## Historical evidence
+
+Older hashes, verdicts and values below are retained for history and are not the current review.
+
+# Fact check: src/content/reference/en/overlays/widgets-and-alerts.mdx
+Verdict: PENDING
+Reviewed: src/content/reference/en/overlays/widgets-and-alerts.mdx
+Reviewed-SHA: f4deeb3c9ecae6d0b960fa30d3c22d27a7c4e0f35217613bcfbb9d5d72fea148
+
+## 2026-11-05 author source verification
+
+Author source audit complete; independent verdict pending. This hash binds the current text, not the historical PASS below. The article was read in full and revised toward the user's explainer style while preserving precise reference detail. alerts.vue; ActivityReplayService.cs; EventResponseExecutor.cs; ObsSetupAction.vue. Replay can run real attached pipeline actions; supplied Alerts settings accessibility was checked.
+
+The section inventory and known implementation gaps are in [automation-media-integrations.md](../overhaul/automation-media-integrations.md). This is source verification, not a live-channel execution claim. Independent review must account for product changes after the original author pass at b12f4f696.
+
+## Historical review (SHA 0a0e351d3cf32089)
+
+Historical verdict: PASS. The earlier evidence below is retained as history and is superseded where the current article or source changed.
 
 Round 4. Product repo paths are relative to C:\Projects\NoMercyLabs\nomnomzbot.
 

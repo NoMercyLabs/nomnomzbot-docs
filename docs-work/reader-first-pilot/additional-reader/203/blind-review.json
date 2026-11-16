@@ -1,0 +1,77 @@
+{
+  "fingerprint": "1f0658615e0c01fcbe3eb6d63acf8e7f7ca63fad26c98813424f29a2ea4aa46b",
+  "verdict": "PENDING",
+  "answers": [
+    {
+      "question": 1,
+      "answer": "Open Triggers and timers > Timers > New timer. Name the reminder, choose Simple reply, enter Stretch and get water. and New here? Welcome! as separate lines in Messages, set Minutes between posts to 30 and choose Create timer. It starts enabled with Chat lines needed 0. Keep Post once off for repetition, saving any editor changes. The first message is due at the next check, within about 30 seconds; later counted firings are 30 minutes apart, checked about every 30 seconds, alternating the two lines.",
+      "quote": [
+        "Open Triggers and timers in the sidebar, then the Timers tab.",
+        "Choose New timer.",
+        "Under Reaction, choose Simple reply or Pipeline (see the table below).",
+        "Set Minutes between posts.",
+        "The default is 30 minutes.",
+        "Choose Create timer.",
+        "The dialog closes and the new timer shows in the list, switched on.",
+        "Messages: one line per message. Blank lines are dropped.",
+        "A new timer starts with Chat lines needed at 0, so it posts at the next check, within about 30 seconds.",
+        "After the first counted firing, it waits Minutes between posts between firings, and counts new chat lines from that firing.",
+        "Post once",
+        "The timer switches itself off after one counted firing."
+      ]
+    },
+    {
+      "question": 2,
+      "answer": "No live stream or existing pipeline is needed for Simple reply. Sign in, select the channel and have the bot running and connected. By default Moderator, Lead moderator, Editor or Broadcaster may change timers, unless the broadcaster raises the requirement. A VIP with tab access can only view.",
+      "quote": [
+        "By default, a Moderator, Lead moderator, Editor or Broadcaster may open the page and change timers and chat triggers.",
+        "The broadcaster can raise the required role on Permissions.",
+        "Sign in and select your channel first; the bot must be running and connected to receive its chat and check its timers.",
+        "A VIP then sees the list only, and the editor does not open.",
+        "Choose an existing suitable command, pipeline or action for that reaction; a simple reply needs none.",
+        "Timers are not restricted to a live broadcast: the bot checks channels it is connected to."
+      ]
+    },
+    {
+      "question": 3,
+      "answer": "With the default Twitch chat destination, observe Stretch and get water. first, New here? Welcome! at the next firing, then the first line again, one per firing rather than both together. The first post is within about 30 seconds and subsequent posts can be up to 30 seconds later than the 30-minute interval. Switch the reminder off when finishing the stream; being offline does not stop it.",
+      "quote": [
+        "A simple reply goes to Twitch chat by default.",
+        "A timer with several messages posts them in turn, one per post.",
+        "After the last message, it starts again at the first.",
+        "After a post, the next one can come up to 30 seconds later than the number you set.",
+        "Timers are not restricted to a live broadcast: the bot checks channels it is connected to.",
+        "If a reminder is useful only while you stream, switch it off when you finish.",
+        "A timer that is off stays in the list, marked Off, and posts nothing."
+      ]
+    },
+    {
+      "question": 4,
+      "answer": "this is nice matches because hi occurs inside this, and HI matches because capitalization matching is off, subject to access and the trigger cooldown. !hi is excluded if ! is the channel command prefix. To narrow the trigger to hi alone, select Is exactly the words and Save changes; capitalization can remain off to accept HI too.",
+      "quote": [
+        "Contains the words",
+        "Holds the words anywhere, even inside a longer word.",
+        "With Contains the words, the words hi also match this.",
+        "Use Is exactly the words or Matches a pattern when that is too wide.",
+        "Match capital letters off means Hello and hello are the same.",
+        "Is exactly the words",
+        "Is the words and nothing else.",
+        "A line that starts with the command prefix, or that runs a command, never sets off a chat trigger.",
+        "Choose Save changes to keep your edits, or Discard to go back."
+      ]
+    },
+    {
+      "question": 5,
+      "answer": "No material obstacle. The first-firing timing, offline behavior, repetition and broad substring matching are explicitly explained.",
+      "quote": ""
+    },
+    {
+      "question": 6,
+      "answer": "No material read-aloud obstacle. The firing rules and reference tables are relevant distinctions; their length alone does not block the requested actions.",
+      "quote": ""
+    }
+  ],
+  "findings": [],
+  "warnings_released": false,
+  "warning_review": []
+}

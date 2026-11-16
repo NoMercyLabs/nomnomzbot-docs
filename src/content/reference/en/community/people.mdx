@@ -3,13 +3,17 @@ title: People
 description: Browse the real viewers of your channel, find anyone by name, and open a person to see their profile and act on them.
 ---
 
-You browse the people of your channel on the **People** page in the sidebar.
-The list holds real people the bot has seen in your chat, and real Twitch data.
-Pick a person to open their profile beside the list.
+The **People** page gives you context about someone beyond the message they just sent.
+You can find a returning viewer, check earlier moderation, leave a note for your team or change how the bot treats that person.
+The list combines people the bot has seen with current Twitch lists such as subscribers, moderators and VIPs.
+
+Choose a person to open their profile beside the list.
+It is the same profile you open from a name in chat, so you can move from a live conversation to a broader view without learning a second set of controls.
+The available information and actions depend on what the bot knows about the person and your permissions in the channel.
 
 ## Who can use this page
 
-A **Moderator**, **Lead moderator**, **Editor** or **Broadcaster** may open the page.
+By default, a **Moderator**, **Lead moderator**, **Editor** or **Broadcaster** may open the page.
 The roles are explained on [Permissions](/reference/settings/permissions).
 Some actions on a profile need a higher role (see [Act on a person](#act-on-a-person)).
 
@@ -32,8 +36,10 @@ Some actions on a profile need a higher role (see [Act on a person](#act-on-a-pe
 | **Twitch subscribers** | People who subscribe to your channel on Twitch. |
 | **Regulars** | People with at least 50 chat messages, first seen 30 days ago or more. |
 | **New** | People first seen in the last 90 days, from the part of the list loaded so far. |
+| **YouTube members** | People who pay for a membership of your YouTube channel. |
 
-The **New** tab shows no count, because it counts only what is loaded.
+The **New** tab has no count on the tab itself, because it counts only what is loaded.
+The line under **People** shows how many new people are loaded so far.
 Scroll to load more people into it.
 
 Each row shows the avatar, the name, and **Last seen** with the time, or **Not seen yet**.
@@ -45,6 +51,23 @@ Each row shows the avatar, the name, and **Last seen** with the time, or **Not s
 | A shield icon | **Moderator** |
 | A gem icon | **VIP** |
 
+### See your YouTube members
+
+The **YouTube members** tab is a table of **Member**, **Level**, **Member since** and **Months**, with a count such as "3 members".
+The tab has no search and no sort.
+When there are more members than fit, choose **Show more** at the bottom to load the next part.
+On a phone the **Member since** column is hidden.
+A YouTube member is a YouTube channel, not someone the bot has a profile for, so a row opens no profile.
+The tab needs YouTube connected and the permission **See your channel members** allowed on the YouTube row of your connected services (see [YouTube](/reference/integrations/youtube)).
+Google must also give the bot access to the member list.
+
+| What the tab says | What it means |
+| --- | --- |
+| "This channel is not connected to YouTube." | Connect YouTube first. **Open connected services** takes you there. |
+| "The bot may not read your YouTube members yet." | Allow **See your channel members** under **Details** on the YouTube row. |
+| "Your YouTube channel has no channel memberships." | Memberships are not switched on for the channel. |
+| "YouTube lists no members for your channel." | The list is empty. |
+
 ## Find a person
 
 1. Type a name in **Search people**.
@@ -54,7 +77,8 @@ Each row shows the avatar, the name, and **Last seen** with the time, or **Not s
 
 The search looks at every person the bot knows, also from other channels.
 A match that your channel has never seen shows **Not in this channel**.
-When nothing matches, the list shows "Nobody matches" with your text.
+On most tabs, when nothing matches, the list shows "Nobody matches" with your text.
+On the **Twitch subscribers** and **Regulars** tabs, the list shows that tab's empty text instead, so choose **All** before you search.
 
 ### Look up a name on Twitch
 
@@ -87,10 +111,55 @@ The dialog has **Open full page**, which opens the person on this page.
 | **Moderation** | Notes, history, **Actions taken** counts, and **Ban history**. |
 | **Points** | Their points. Shows once the bot has a stored profile for them. |
 | **Data** | What the bot stores about them. Shows once the bot has a stored profile for them. |
-| **Settings** | How the bot treats them, and their text to speech voice. |
+| **Settings** | How the bot treats them, their **Trust tier** and **Trust score**, and their text to speech voice. On your own profile it shows only the voice. |
 
 **Ban history** lists each ban with its reason, who banned, the date, and the date it was lifted.
 With no bans, it shows "No bans stored for this person."
+
+### Leave context for other moderators
+
+Use **Moderator notes** on the **Moderation** tab when the next moderator needs information that a ban reason or a message alone would not explain.
+For example, a short note can record that the team has already spoken to someone about a recurring problem.
+By default, moderators and higher roles may add, edit and delete these notes.
+
+1. Type in **Add a note for the other moderators**.
+2. Select **Pin to the top** if the note needs to stay prominent.
+3. Choose **Add note**.
+
+The list records the author and date.
+Use **Edit** to correct a note and **Save note** to keep the change, or **Delete note** to remove one after confirming.
+
+### Change bot standing or Twitch monitoring
+
+**Bot standing** on the **Settings** tab changes how NomNomzBot responds to a person in this channel.
+It is separate from a Twitch ban: choosing **Muted**, for example, makes the bot ignore their commands and other bot interactions while their chat remains visible.
+By default, a lead moderator or higher may choose **Change standing**, select the treatment and an optional **Reason**, then **Save standing**.
+
+The choices are **Normal**, **Muted**, **Shadowbanned** and **Blacklisted**.
+The dialog explains each choice before you save it; **Normal** clears the special treatment.
+Use Twitch's **Ban** or **Timeout** controls when the goal is to prevent someone chatting on Twitch.
+
+The **Moderation** tab also offers **Twitch suspicious-user flag** to a lead moderator or higher.
+Choose **Watch closely**, **Hold messages** or **Clear flag** to change Twitch's monitoring of that person.
+The panel shows only Twitch's answer to your last change in the current session, so a blank status is not confirmation that Twitch has no flag.
+
+### Review personal settings and saved data
+
+The **Points** tab shows the person's wallet, total earned and spent, frozen state, giveaway participation and leaderboard visibility.
+Use [Currency and balances](/reference/economy/currency-and-balances) when you need to adjust or freeze the wallet; the profile is a summary of those records.
+
+The **Data** tab brings together their consent information, whether **Viewer statistics** count them or are turned off by their choice, active permits, command and song-request use, saved quotes, and data stored by the channel.
+A permit is a grant of access to a role or action, possibly with an expiry.
+Someone allowed to manage permits can choose **Revoke** beside an active permit; see [Permissions](/reference/settings/permissions) for how access is granted.
+
+The same tab contains **Own shoutout line**, where you can write a personal introduction for this streamer.
+[Shoutouts](/reference/moderation/shoutouts) explains which introduction wins when several are available.
+
+To change how this person's own messages sound, open **Settings** in their profile and choose **Change voice** beside **TTS voice**.
+Search the available voices, listen to a sample, select one and choose **Save voice**.
+Selecting **Channel voice** clears the person's saved voice; it does not permanently select the channel voice for them.
+On their next spoken viewer message, the bot can assign and save another random English or multilingual voice, as [Text to speech](/reference/audio/text-to-speech#which-voice-speaks) explains.
+By default, moderators and higher roles may change this setting; it affects the person's words, while the bot's own announcements use the channel voice.
 
 ## Act on a person
 
@@ -108,7 +177,10 @@ Your own channel's account has no action buttons.
 | **Make VIP** or **Remove VIP** | Gives or takes the VIP badge on Twitch. | The broadcaster |
 | **Make moderator** or **Remove moderator** | Gives or takes the moderator role on Twitch. | The broadcaster |
 
-A message at the bottom of the screen confirms each result, such as "is now a moderator."
+A message at the bottom of the screen confirms **Shout out**, **Warn**, **Timeout**, **Unban** and the moderator change, such as "is now a moderator."
+**Ban** and the VIP change show no message.
+The profile updates instead: **Ban** turns into **Unban**, and the VIP button changes its label.
+When one of them fails, an error shows.
 **Warn**, **Timeout** and **Ban** never show on your own profile.
 On a moderator's profile they show only to the broadcaster.
 **Make VIP** is grayed out with **VIP status unknown** when Twitch could not tell the bot.
@@ -134,7 +206,9 @@ Type the name in **Search people**, or choose **Look up on Twitch**.
 
 **The Twitch subscribers tab is empty.**
 It shows "Twitch lists no subscribers for your channel."
-The list comes from Twitch, so Twitch has no subscribers for the channel.
+This means Twitch returned an empty subscriber list.
+The tab shows the same text when a search finds nobody, so clear **Search people** first.
+An error loading the list is a different result; use the page's retry control when the list could not load.
 
 ::
 

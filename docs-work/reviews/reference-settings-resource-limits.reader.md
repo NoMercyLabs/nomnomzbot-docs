@@ -1,5 +1,26 @@
-# Reader review: C:\Projects\NoMercyLabs\nomnomzbot-docs\src\content\reference\en\settings\resource-limits.mdx
+# Independent reader review: /reference/settings/resource-limits
 Verdict: PASS
+Reviewed: src/content/reference/en/settings/resource-limits.mdx
+Reviewed-SHA: 0cfcb6fa90f1f38f
+Reviewed-SHA256: 0cfcb6fa90f1f38fcce89b29ade75ec54cb620025a83063c5377f84cdd93f19b
+Reviewed-Date: 2026-11-05
+Reviewer: independent reviewer, separate from article author
+Product-Revision: 54da8b6318de63b5205a0ff8db35e0b9045dd959
+
+The complete current article was read independently of its author, in the established settings, self-hosting and Code and SDK navigation order. The user's natural explainer/progressive-disclosure requirements take precedence over historical pilot mimicry, sentence caps and repeated page templates.
+
+## Learning and lookup result
+
+Storage, monthly use and per-line caps are explained through consequences before their meters. The repaired operator-override paragraph preserves defaults while explaining why displayed limits may differ. Deletion versus replenishment and plan-independent safety baselines are clear.
+
+No outstanding substantive reader finding.
+
+Related routes were checked as contextual continuations rather than prerequisites for ordinary bot use. Draft labels remain appropriate for code material. This is a text/structure review, not a claim of rendered browser QA.
+
+## Historical review (superseded)
+
+# Reader review: C:\Projects\NoMercyLabs\nomnomzbot-docs\src\content\reference\en\settings\resource-limits.mdx
+Historical verdict: PASS
 Reviewed: C:\Projects\NoMercyLabs\nomnomzbot-docs\src\content\reference\en\settings\resource-limits.mdx
 Reviewed-SHA: f392ac11ef64492b
 

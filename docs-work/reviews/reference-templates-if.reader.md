@@ -1,3 +1,40 @@
+# Current targeted reader review
+
+Verdict: PARTIAL
+Reviewed: src/content/reference/en/templates/if.mdx
+Reviewed-SHA: 902935a90f672e3eadff82b5e7f191e31a7edc311f1cc0426503cd8740e8d3e3
+Reviewed-SHA256: 902935a90f672e3eadff82b5e7f191e31a7edc311f1cc0426503cd8740e8d3e3
+Reviewed-Date: 2026-11-06
+Reviewer: final-learning editing author; self-review, not independent
+Product: 2dfefbb0c393f439954d79b32ac11511678d7f44
+
+The full article was read for editorial clarity. Source verification is limited to the claims below and the focused checks in docs-work/ecosystem-validation/final-learning.md. This is not an exhaustive factual PASS, independent approval, rendered-site review or live application test.
+
+Viewer regex exclusion: server/src/NomNomzBot.Infrastructure/Platform/Templating/Helpers/Logic/IfTemplateHelpers.cs:35-43,170-180 excludes regex in both registry metadata and runtime; LogicHelperProvider.cs:47-64 chooses Standard; ValuePredicate.cs:42-48 identifies matches. The table and docs-work/helpers.json now exclude Viewer; docs-work/helper-groups.md preserves the explanatory correction on regeneration.
+
+## Preserved historical reviews
+
+The earlier hashes, verdicts and claims below are retained as historical evidence; they do not approve this revision.
+
+# Current independent reader review
+
+Verdict: PASS
+Reviewed: src/content/reference/en/templates/if.mdx
+Reviewed-SHA: 7452eeb207aca9c07c835663527b6e1ac7c5f4fb67860d2a69ce81b1303c6753
+Reviewed-SHA256: 7452eeb207aca9c07c835663527b6e1ac7c5f4fb67860d2a69ce81b1303c6753
+Reviewed-Date: 2026-11-05
+Reviewer: independent section reviewer
+
+A meaningful live/offline reply shows how nesting supplies the condition. It distinguishes wording choices from permissions and action branches, then retains truthiness, lazy evaluation, comparisons and fallback syntax.
+
+The full page was read with the preceding/following navigation context and related links. This review applies the owner's explanatory, progressive-disclosure guidance; it does not impose Atlas sentence caps, pilot mimicry or fixed article headings. No substantive reader finding remains at this hash. Build/render/link checks are recorded separately by the lead reviewer.
+
+Report: docs-work/overhaul/review-learning-commands-helpers.md.
+
+## Historical evidence
+
+The material below is retained as historical evidence; its older verdict is not the current review.
+
 # Reader review: src/content/reference/en/templates/if.mdx
 Verdict: PASS
 Reviewed: C:/Projects/NoMercyLabs/nomnomzbot-docs/src/content/reference/en/templates/if.mdx

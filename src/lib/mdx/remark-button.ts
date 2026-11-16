@@ -21,7 +21,7 @@ function getParagraphText(node: any): string {
 }
 
 function isButtonStart(text: string): boolean {
-  const t = text.trim();
+  const t = text.trim().toLowerCase();
   return t === '::button' || t.startsWith('::button ');
 }
 

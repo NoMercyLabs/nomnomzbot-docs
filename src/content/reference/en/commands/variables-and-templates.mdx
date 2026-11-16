@@ -1,123 +1,224 @@
 ---
 title: Variables and templates
-description: Type a helper in braces to put the channel, a viewer, the time and random values into a reply, and find every helper.
+description: Type a helper in braces to put the channel, a viewer, the time and random values into a reply, and pick a helper that works where the reply runs.
 ---
 
-A reply is a template: plain text with helpers in it (see [Create a command](/reference/commands/create-a-command)).
-A helper is a name in braces, such as `{user}`.
-The bot puts the real value in its place wherever a viewer sees or hears the text: in chat, on an overlay or read aloud.
+Every reply box in the dashboard takes a template: a command's **Reply**, an event response's **Your line**, a timer's **Messages**.
+A template is your own words, with helpers in braces where a value changes.
+When the reply runs, the bot swaps each helper for its value, and everything outside the braces goes out exactly as you typed it.
+
+For example, put this in a command's **Reply** field:
 
 ```text
 Welcome {user}! Today we play {stream.game}.
 ```
 
-The bot types this as "Welcome Example_Viewer! Today we play Just Chatting."
-It types the line in the channel's one bot voice.
+When `Example_Viewer` uses the command while the category is Just Chatting, the bot types "Welcome Example_Viewer! Today we play Just Chatting."
+The next viewer gets their own name, and a new category shows the next time the reply runs.
 
-## How a template becomes the text a viewer sees or hears
+## Before you start
 
-1. The bot reads the template once and finds every helper.
-2. It fetches only the values that the template names.
-3. It puts each value in the place of its helper.
-4. It shows the result where it belongs: in chat, on an overlay or read aloud.
+You need a command that sends a reply.
+If you have none yet, make one first on [Create a command](/reference/commands/create-a-command).
 
-A helper that the bot does not know stays in the line exactly as you wrote it.
-So a typo such as `{usr}` shows as `{usr}`.
-The **Reply** field warns you about this before you save (see [Create a command](/reference/commands/create-a-command)).
+## Try a helper
 
-In an [event response](/reference/automation/event-responses), a value that the event carries wins over a value the bot looks up itself.
+1. Open **Commands** in the sidebar.
+   The **Channel commands** tab opens first.
+2. Choose your command in the list.
+   **Search commands** above the list finds it by name.
+   The command's editor opens, with the **Reply** field.
+3. In **Reply**, add `{user}` where your name should go.
+4. Choose **Save changes** at the right of the footer.
+5. In your Twitch chat, type the command's trigger, such as `!hello`.
+   The bot's reply shows your name where you typed `{user}`.
 
-### Where a reply goes
+Leave the other helpers alone until that works.
+The event response and timer editors save the same way, with **Save changes** in their footer.
+
+## Literal text and helpers
+
+Only the part inside braces is a helper.
+`Now playing: {stream.game}` keeps your label and fills in the category.
+`{Now playing}` asks for a helper named `Now playing`, which does not exist, so the save is refused.
+
+Braces that never close, empty braces `{}` and a stray `}` with no `{` before it stay in the line as plain text.
+To type a brace as itself, put a backslash before it, such as `\{`.
+The same works for the pipe, the colon and the backslash.
+
+## Give a helper its input
+
+Some helpers only read a value, such as `{user}`.
+Others take input from you, such as `{text.upper:hello}`, which gives `HELLO`.
+A helper name can hold dots, and the first colon ends it.
+The text after that colon is the input, and a pipe separates one input from the next.
+
+What a helper does with its input depends on the helper.
+Most helpers work on it, like `text.upper` above.
+A numbered command word such as `{args.1}` uses it as a fallback for a word that was not typed, as shown under [When a value is missing](#when-a-value-is-missing).
+
+| You write | What it does |
+| --- | --- |
+| `{if:value\|then\|else}` | Shows the `then` text when the value is set, and the `else` text when it is not. A value is not set when it is empty, `false`, `no` or `0`. |
+| `{default:value\|fallback}` | Shows the value, or the fallback when the value is empty. |
+| `{set:name=value}` | Keeps a value for the rest of the reply and prints nothing. Read it back with `{var.name}`. |
+
+A helper can hold another helper, and the inner one is filled in first.
+For example, `{if:{stream.isLive}|We are live|We are offline}` shows `We are live` while the stream is live and `We are offline` when it is not.
+
+`{set:mood=happy}I feel {var.mood}.` shows `I feel happy.`
+A name for `set` has letters, digits and underscores, and starts with a letter or an underscore.
+The value lasts for that one reply only.
+
+Spaces in a helper's input count.
+Text that a helper prints keeps every space as you typed it, so `{text.repeat:3|ha }` gives `ha ha ha `.
+An input that a helper reads as a number, a count or a name ignores the spaces around it, so `{text.repeat: 3 |ha}` gives `hahaha`.
+
+Inside a helper's input, `\s` gives a space and `\n` starts a new line.
+A plain space works too.
+Use `\s` when a space at the start or end of an input would be hard to see in the box, such as `{text.repeat:3|rofl\s}`.
+
+## Choose a helper that works where the reply runs
+
+A timer runs on a schedule, so it has no person and no chat message, and `{user}` does not work in one.
+A chat command has a person who typed it and the words after the command.
+An event response has the values of its event, such as the tier of a sub, but no command words.
+
+Each reply box knows its place: type `{` and it suggests only the helpers that work there.
+
+- The command, timer, chat trigger, pipeline step, reward and webhook boxes have **Show all helpers** in the label row. It opens the full list for that place, with an example for each helper.
+- The [event response](/reference/automation/event-responses) box has no **Show all helpers**. Instead, the info icon beside **Your line** reads "You can use:" and names the values the chosen event carries.
+- In a Discord notification, the **Message** box and the embed's **Description** box have **Show all helpers**. The other embed boxes, such as **Title** and **Footer**, have none. Type `{` there for suggestions.
+
+Viewer text is a viewer's own words, such as a reward input or the words after a command.
+The bot fills in helpers in viewer text only while **Viewer Templates** is on and the viewer holds the template permission.
+
+- **Viewer Templates** is in [Features](/reference/settings/features), in the **Chat** group. It is on by default.
+- Subscribers and higher hold the template permission by default. To change who holds it, open **Settings**, then [Permissions](/reference/settings/permissions), then the **Actions** tab, and type `template` in **Search actions**. The action is in the **Rewards** area. To give it to one person, use the **Per person** tab.
+
+Most places have the shared helpers: the channel, stream, time, random, counter and list helpers.
+
+| Place | What it has |
+| --- | --- |
+| Commands | The person who used the command, the words after the command, and the shared helpers. |
+| [Event responses](/reference/automation/event-responses) | The values of the event that fired it (for example a follow, a sub, a cheer, a raid, a poll, a prediction, a hype train, an ad break, a ban or the stream going online), the person behind it, and the shared helpers. No command words. |
+| Timers | The shared helpers. No person, no chat message and no command words. |
+| Pipeline steps | The helpers of the trigger the pipeline runs from: a command, an event or a timer. |
+| Discord notifications | The shared helpers, the values of the event that sent the post, and some helpers that only Discord has. Of the person helpers, only `{user}`, `{user.name}` and `{user.id}` work. No other `user.` helpers, no `target.` helpers, no `{name}` and no command words. |
+| Webhook bodies | The person helpers, the @target helpers and the shared helpers. No command words. |
+| Viewer text | Text helpers and read-only channel and viewer helpers. Nothing that changes data. |
+
+The channel helpers that work everywhere, viewer text included, are `{channel}` and `{channel.display}`.
+`{channel.id}` works in every place except viewer text.
+Some helpers with a similar name work only in Discord notifications: `{channel.name}`, `{channel.login}`, `{channel.title}`, `{channel.game}`, `{channel.url}`, `{channel.avatar}`, `{stream.url}` and `{stream.thumbnail}`.
+In a command reply, the save refuses them.
+
+### Copy a helper from one place to another
+
+Check a helper before you move it, because a helper from an event response often needs that event.
+When the save refuses a helper that works somewhere else, the message always has three parts in the same order:
+
+1. It starts with the helper and the place, such as "'`{args.1}`' is not available in event responses".
+2. Then it gives the reason after "because", such as "because it needs a chat command, and only commands and pipelines carry one".
+3. It ends with the places where the helper works, after "It works in:", such as "It works in: commands, pipelines".
+
+So `{args.1}` in an event response gives: "'`{args.1}`' is not available in event responses because it needs a chat command, and only commands and pipelines carry one. It works in: commands, pipelines".
+If you paste `{gifter}` from an event response into a command reply, the message ends with "It works in: event responses, pipelines".
+
+### Warnings while you type and errors on save
+
+The box warns you while you type, and the bot checks again when you save.
+
+| Message | When it shows | What it means |
+| --- | --- | --- |
+| "Not a known helper here:" and the names | Under the box, while you type. | This place does not offer that name. It may be misspelled, or it may only work somewhere else. |
+| "is not a recognized template helper" | When you save. | No helper has that name anywhere. |
+| "is not available in" and a place | When you save. | The helper exists, but not in this place. The message gives the reason, then the places where it works. |
+
+When you see the warning under the box, pick a helper from the box's own suggestions instead.
+
+## When a value is missing
+
+A helper can work in its place and still have no value.
+A command can be used without the words it expects, and a stream can be offline.
+
+A command word that was not typed stays in the reply as written.
+`Hello {args.1}!` gives `Hello {args.1}!` for a bare `!hello`.
+Add a fallback after a colon: `Hello {args.1:friend}!` gives `Hello chat!` for `!hello chat` and `Hello friend!` for `!hello`.
+`{args.1:}` with nothing after the colon prints nothing.
+
+For any other value that can be empty, wrap it in `{default:...|...}` or `{if:...|...|...}` so the line still reads well.
+
+A helper name the bot does not know stays in the line as written.
+The save check catches most of these first, but it cannot see a name that is built from another helper.
+
+## Where a reply goes
+
+**Send the reply to** sits right below the reply box in the command, event response and timer editors.
+It decides where the filled-in reply goes.
 
 | **Send the reply to** | What the bot does with the template |
 | --- | --- |
 | **Twitch chat** | Fills it in once, as plain text, and types it in chat. |
 | **Chat overlay** | Fills it in for the overlay only. |
-| **Both** | A plain reply: fills it in once and shows the same text in both places. A reply with HTML: fills it in twice, plain text for chat and HTML for the overlay. |
-| **Nowhere** | Fills in nothing. |
+| **Both** | A plain reply: fills it in once and shows the same text in both places. A reply with **HTML** on: fills it in twice, plain text for chat and HTML for the overlay. |
+| **Nowhere** | Sends no reply at all. The command or response still runs, and the text you typed stays saved. Choose it to silence a reply for a while without switching the command off or losing its text. |
 
-HTML is markup such as `<b>bold</b>` that styles text on the chat overlay; a plain reply does not need it.
-When a reply holds HTML, the values that come with the command (the name and the words after the command) are HTML-encoded.
-So a `<` in those values shows as the character `<`, not as the start of a tag.
-Values the bot looks up, such as a last chat message, are not encoded; the overlay keeps only its safe tags, such as `<b>`.
+When **Both** fills a reply in twice, each fill works on its own:
 
-### Names in chat and in speech
+- A random helper, such as `{random.number:6}`, draws again for the overlay. Chat and the overlay can show different values.
+- A counter helper, such as `{count.deaths}`, only reads the counter. The reply does not change it, so both places show the same value.
+- A `{set:...}` value is kept in each fill on its own. Both places get the same value, unless that value comes from a random helper.
+
+To show the same random value in both places, turn **HTML** off: a plain reply is filled in once.
+
+The **HTML** switch is right below **Send the reply to**.
+You can turn it on only when the reply goes to **Chat overlay** or **Both**.
+With **HTML** on, the overlay renders markup such as `<b>bold</b>`.
+The name and the words after the command are encoded first, so a `<` that a viewer types shows as the character `<` and never opens a tag.
+The bot also removes unsafe markup before the overlay shows the line.
+
+### Names in chat and on the overlay
 
 Twitch pings a person in chat only by their login name.
-When a display name differs from the login by more than letter case, the chat line uses the login.
-
+When a display name differs from the login by more than letter case, such as a name in another alphabet, the chat line uses the login.
 This applies to `{user}`, `{target.name}` and `{target.displayname}` in chat.
-When a pipeline reply is read aloud, the speech uses the display name of the person who used the command.
-When a shoutout is read aloud, the speech uses the target's display name.
+`{user.name}` always gives the login.
 
-### Special characters
+`{name}` keeps the display name, in chat too.
+With no @target, it shows the display name of the person who used the command.
+With an @target, it shows the target's display name, or the name as typed when the bot has no display name for that person.
 
-Put a backslash before a character to type it as itself: `\{`, `\}`, `\|`, `\:` and `\\`.
-A brace that is never closed, or empty braces, stay in the line as text.
-A helper can hold another helper, up to 8 levels deep.
+On the overlay, `{user}` shows the display name, and `{target.displayname}` shows the target's display name.
+To show the display name on the overlay, send the reply to **Chat overlay**, or to **Both** with **HTML** on.
+A plain **Both** reply shows the chat text on the overlay too, so it shows the login.
 
-## Type a helper with input
-
-A helper name may hold dots, such as `text.upper`.
-A colon ends the name, and the text after it is the input, such as `{text.upper:hello}`, which gives `HELLO`.
-
-| You write | What it does |
-| --- | --- |
-| `{if:value\|then\|else}` | Shows the `then` text when the value is set, and the `else` text when it is not. A value is not set when it is empty, `false`, `no` or `0`. |
-| `{default:value\|fallback}` | Shows the fallback when the value is empty. |
-| `{set:name=value}` | Keeps a value for the rest of the reply and prints nothing. Read it back with `{var.name}`. |
-
-For example, `{if:{stream.isLive}|We are live|We are offline}` shows `We are live` while the stream is live, and `We are offline` when it is not.
-The other forms of `{if}` are on [Condition helpers](/reference/templates/if).
-
-For example, `{set:mood=happy}I feel {var.mood}.` shows `I feel happy.`
-A name has letters, digits and underscores, and starts with a letter or an underscore.
-The value lasts for that one reply only.
-
-The **Reply** field lists every helper with an example, for the place you are writing in.
-
-## Where you can use templates
-
-Each place has its own set of helpers.
-
-| Place | What it has |
-| --- | --- |
-| Command replies | Most helpers on the helper pages, with the words after the command. A few helpers that belong to an event are not available. |
-| [Event responses](/reference/automation/event-responses) | The channel and viewer helpers, and the values of the event (a raid, a sub, a cheer). No words after a command. |
-| [Timers](/reference/automation/timers-and-chat-triggers) | The channel, time, random, counter and list helpers. No person and no words after a command. |
-| [Pipeline steps](/reference/commands/pipelines) | The helpers of the trigger the pipeline is bound to: a command, an event or a timer. |
-| Discord notifications | The channel, time, random, counter and list helpers, and Discord-only helpers such as `{channel.url}`. |
-| Webhook bodies | The channel, person, time, random, counter and list helpers. No event values and no words after a command. |
+Speech does not use the login either: a reply that is read aloud says the display name, or the pronunciation set for that name.
 
 ## Find a helper
 
-Every helper has its own row on the helper pages, with what it gives and an example.
-There is one page for each type of helper, and the type is the first word of the helper name.
-Start with the overview.
-See [Template helpers](/reference/templates/overview).
+[Template helpers](/reference/templates/overview) has a page per type of helper, and the type is the first word of the name, such as `user`, `stream`, `args` or `text`.
+Each helper has its own row, with what it gives and an example.
+For a reply that picks a random line from a list you keep, see [Pick lists](/reference/commands/pick-lists).
 
-| You want | Start here |
-| --- | --- |
-| The name, pronouns, follow age or stats of the person who used the command | [User helpers](/reference/templates/user) |
-| The same for the person a command names | [Target helpers](/reference/templates/target) |
-| A line that reads right for he, she and they | [Pronouns in templates](/reference/templates/pronouns) |
-| The stream title, the game or the uptime | [Stream helpers](/reference/templates/stream) |
-| The words typed after the command | [Command word helpers](/reference/templates/args) |
-| A value from a follow, sub, cheer or raid | [Event helpers](/reference/templates/event) |
-| The time and date | [Date and time helpers](/reference/templates/date) |
-| A choice or a fallback | [Condition helpers](/reference/templates/if) |
-| A random pick | [Random helpers](/reference/templates/random) |
-| Changed text | [Text helpers](/reference/templates/text) |
-
-Scripts and widgets use the same helpers (see [SDK for widgets, actions and templates](/reference/code/sdk-widgets-actions-templates)).
+Scripts and widgets use the same helpers; see [SDK for widgets, actions and templates](/reference/code/sdk-widgets-actions-templates).
 
 ## Troubleshooting
 
 ::Troubleshooting
 
-**Chat shows the name in braces, such as `{usr}`.**
-The bot does not know that helper, so it typed it as written.
-Check the spelling against the [helper pages](/reference/templates/overview).
+**Saving fails with "is not a recognized template helper".**
+The name in braces is not a helper.
+When a close match exists, the message adds "(did you mean ...)"; use that name, or check the spelling on [Template helpers](/reference/templates/overview).
+
+**Saving fails with "is not available in" and a place.**
+The helper exists but does not work here.
+The message gives the reason after "because", and the places where it does work after "It works in:".
+Pick a helper from this box's own suggestions instead.
+
+**Chat shows a helper in braces, such as `{args.1}`.**
+The value was missing, or the name was built inside another helper and skipped the save check.
+Add a fallback after a colon, such as `{args.1:friend}`, or check the spelling.
 
 ::
 
@@ -125,5 +226,6 @@ Check the spelling against the [helper pages](/reference/templates/overview).
 
 - [Template helpers](/reference/templates/overview)
 - [Create a command](/reference/commands/create-a-command)
+- [Event responses](/reference/automation/event-responses)
 - [Pick lists](/reference/commands/pick-lists)
 - [SDK for widgets, actions and templates](/reference/code/sdk-widgets-actions-templates)

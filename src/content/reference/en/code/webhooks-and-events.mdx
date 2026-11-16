@@ -1,0 +1,362 @@
+---
+title: Webhook and dashboard event contracts
+description: Implement signed webhook receivers, send custom feed data, and consume the dashboard's SignalR subscriptions.
+---
+
+Use webhooks when one system needs to notify another without keeping a client connected.
+A dashboard extension instead uses SignalR to follow live changes while a signed-in operator is watching.
+These transports have different credentials, payloads and delivery guarantees; an event name from one is not automatically valid in another.
+
+Start with [Webhooks and event feeds](/reference/integrations/webhooks-and-event-feeds) for dashboard setup.
+For an external control device, the [Automation API](/reference/code/automation-api) provides a separate token-scoped REST and raw WebSocket interface.
+Widgets use the [widget SDK](/reference/code/sdk-widgets-actions-templates).
+The contracts below describe the bot's implementation, including its current interoperability limits.
+
+## Receive outbound webhooks
+
+An outbound endpoint sends an HTTPS POST to its configured host and path.
+Creation requires an enabled approved-host entry in that channel.
+The HTTP transport rejects non-public destination addresses and does not follow redirects.
+The body is saved before the first delivery attempt, so retries send the same bytes even after the template changes.
+
+With no body template, the body is a JSON object whose values are strings.
+It contains `event.id`, `event.type`, `event.occurred_at` and, for a channel event, `event.broadcaster_id`.
+Top-level event payload properties become `event.snake_case_name` keys; nested objects and arrays become JSON strings, and null becomes an empty string.
+This is a flat variable map, not the original event object or an Automation event frame.
+Private moderation events and events whose text is held for review are never sent to outbound endpoints.
+
+A pipeline's `send_webhook` step is a second way to send.
+It posts to the endpoint you choose even if that endpoint has not subscribed to the event type.
+The event type is the step's value, or `pipeline.send_webhook` if none is set.
+With no body template, the default body is the pipeline's variables as a flat string map, not the `event.*` keys above.
+See the [pipeline action reference](/reference/code/sdk-widgets-actions-templates) for the step's fields.
+
+For a JSON body template, substitution runs inside string values after parsing the template.
+Values are escaped when the result is serialized; property names and numeric literals are not templated.
+For example, a template can place `"{event.type}"` inside a JSON string.
+JSON validation and helper validation happen when the endpoint is saved.
+With **Body is JSON** on, the request has `Content-Type: application/json`; off uses `text/plain` and plain-text substitution.
+
+### Verify the signature over the raw body
+
+| Header | Value |
+| --- | --- |
+| `webhook-id` | The delivery's message id, as GUID text. It stays the same for retries. |
+| `webhook-timestamp` | Unix seconds at the current attempt, as decimal text. |
+| `webhook-signature` | One or more space-separated `v1,<base64 digest>` values. |
+
+The digest is HMAC-SHA256 over the UTF-8 id, a dot, the timestamp, a dot, then the exact request body bytes.
+Use the **entire displayed signing secret as UTF-8 key bytes**, including its `whsec_` prefix.
+The implementation does not remove that prefix and base64-decode the rest.
+Although the header names resemble Standard Webhooks, a library that assumes that key decoding needs adaptation.
+
+This Node.js verifier accepts a raw body `Buffer`, the three header strings and the secret copied from the dashboard:
+
+```javascript
+import { createHmac, timingSafeEqual } from 'node:crypto';
+
+export function verifyBotWebhook(rawBody, headers, secret, now = Date.now()) {
+  const id = headers['webhook-id'];
+  const timestamp = headers['webhook-timestamp'];
+  const signatures = headers['webhook-signature'];
+  if (!id || !timestamp || !signatures || !/^\d+$/.test(timestamp)) return false;
+  if (Math.abs(now / 1000 - Number(timestamp)) > 600) return false;
+
+  const expected = createHmac('sha256', Buffer.from(secret, 'utf8'))
+    .update(`${id}.${timestamp}.`, 'utf8')
+    .update(rawBody)
+    .digest();
+
+  return signatures.split(' ').some((entry) => {
+    if (!entry.startsWith('v1,')) return false;
+    const supplied = Buffer.from(entry.slice(3), 'base64');
+    return supplied.length === expected.length && timingSafeEqual(supplied, expected);
+  });
+}
+```
+
+The ten-minute freshness check above is a receiver policy matching the bot's generic inbound tolerance, not an outbound server requirement.
+Read the body before a JSON middleware re-serializes it.
+Verify first, then deduplicate the `webhook-id` in your own durable store before applying the external effect.
+Return a 2xx response once your receiver has accepted responsibility for the event.
+
+Rotating the secret keeps the immediately preceding secret as a secondary key.
+Subsequent attempts carry signatures from both decryptable keys; another rotation replaces the previous secondary.
+There is no timed overlap expiry in this path.
+
+### Retries, replay and stopping delivery
+
+A 2xx result marks the delivery delivered and resets the endpoint's failure streak.
+Other HTTP results, transport failures and an unreadable signing secret count as failures.
+The first retry is scheduled after 15–30 seconds.
+The delay doubles by attempt, with jitter, up to 30–60 minutes per wait.
+A worker checks due rows every 30 seconds, in batches of 50, so a scheduled time is not an exact delivery deadline.
+Rows and retry times are stored in the database and survive a restart; the worker resumes due failed rows.
+A crash between saving a new `Pending` row and recording its outcome is a separate case: this worker selects due `Failed` rows, not all pending rows.
+An invalid stored JSON template produces a failed row without a next retry time instead of silently sending unvalidated text.
+
+The endpoint switches off after 20 consecutive failed **attempts across its deliveries**, rather than after each event has had 20 tries.
+Its current attempt becomes `DeadLetter`; another due retry that finds the endpoint disabled is also dead-lettered.
+Re-enabling clears the failure counter but does not automatically reschedule dead-letter rows.
+An explicit delivery replay creates a new message id and sends the old body with the current endpoint settings and signing keys.
+Treat that replay as a new send, not a retry that your original message-id deduplication will absorb.
+No exactly-once external effect is guaranteed.
+
+Disable the outbound endpoint itself to stop its sends.
+Turning off its approved-host row prevents new endpoint creation and poll-feed fetches, but the current outbound send path does not re-read that switch.
+Deleting the host additionally switches off its dependent outbound endpoints.
+For socket feeds, disable the feed itself: an existing socket also does not recheck approved hosts on every message.
+
+## Send an inbound webhook
+
+POST to the endpoint's returned `ingestUrl`, whose path is `/api/v1/webhooks/in/{token}`.
+The opaque URL token selects the endpoint; the endpoint's adapter verifies the signature or body secret.
+Do not send a dashboard bearer token instead of that verification.
+The controller accepts `application/json` and `application/x-www-form-urlencoded`, including a charset parameter, up to **262,144 bytes**.
+The content type accepted by the controller still needs to match the adapter's expected body.
+
+| Result | HTTP status |
+| --- | --- |
+| Accepted, or a duplicate already found in the journal | 200 |
+| Unknown or retired URL token | 404 |
+| Disabled endpoint | 503 |
+| Adapter reports malformed input/configuration | 400 |
+| Invalid signature, including generic HMAC outside its timestamp window | 401 |
+| Stored verification secret cannot be decrypted | 403 |
+| Unsupported content type / oversized request | 415 / 413 |
+| Journal append failure | 500 |
+
+The ingest action returns a bare status, not the dashboard JSON envelope.
+The public anonymous rate policy also applies: 120 requests per minute per IP, with no waiting queue; rate rejection is 429.
+Reverse proxies or hosting infrastructure can impose additional limits.
+
+### Configure endpoints through the dashboard API
+
+Management uses the dashboard's signed-in credential and channel permissions, separately from the public ingest URL.
+The base path is `/api/v1/channels/{channelId}/webhooks`.
+Read actions are `webhooks:inbound:read` and `webhooks:outbound:read`; modifications use the corresponding `:write` action.
+The default floors are Moderator for reads and Editor for writes.
+
+| Relative route | Methods and input |
+| --- | --- |
+| `/inbound` | GET paginated endpoints; POST with `name`, `adapter`, `verificationSecret`, optional `targetPipelineId`, `targetEventType`, `genericConfig`, `isEnabled` (default true). |
+| `/inbound/{endpointId}` | GET details; PUT optional changed fields (adapter is fixed); DELETE retires the URL. Null target fields on PUT leave the saved target unchanged. |
+| `/inbound/{endpointId}/rotate-token` | POST returns the endpoint with a new `ingestUrl`; the old URL stops resolving. |
+| `/outbound` | GET paginated endpoints; POST with `name`, `fqdn`, `subscribedEventTypes`, optional `path`, `bodyTemplate`, `bodyIsJson` (default true), `customHeaders` (string map), `isEnabled` (default true). Creation returns `endpoint` and the one-time `signingSecret`. |
+| `/outbound/{endpointId}` | GET details; PUT changed `name`, `subscribedEventTypes`, `bodyTemplate`, `bodyIsJson`, `customHeaders` or `isEnabled`; DELETE retires the endpoint. Host and path are fixed after creation. |
+| `/outbound/event-catalogue` | GET the exact `eventType`, `labelKey`, `categoryKey` rows accepted when saving subscriptions. Explicit unknown and webhook-lifecycle event names are refused. `subscribedEventTypes` may also contain `*`, which matches every event. |
+| `/outbound/{endpointId}/rotate-secret` | POST returns `endpoint` and the new one-time `signingSecret`. |
+| `/outbound/{endpointId}/reenable` | POST enables the endpoint and clears its failure counter/disabled reason. |
+| `/outbound/{endpointId}/test` | POST currently returns `SERVICE_UNAVAILABLE` with "Test delivery is not available yet."; it does not send a test. |
+| `/outbound/{endpointId}/deliveries` | GET paginated delivery rows (one per send; automatic retries update the row's `attempt` and outcome, and a manual retry adds a new row): `id`, `endpointId`, `eventType`, `attempt`, `status`, nullable `responseCode`, `durationMs`, `nextRetryAt`, `error`, and `createdAt`. The rendered body is omitted. |
+| `/outbound/{endpointId}/deliveries/{deliveryId}/retry` | POST replays the stored delivery; a disabled endpoint is refused with `ENDPOINT_DISABLED`. |
+| `/inbound/{endpointId}/blast-radius`, `/outbound/{endpointId}/blast-radius` | GET dependent-resource counts before deletion. |
+
+Detail results use the dashboard status envelope with `data`; lists use `data`, `hasMore`, `nextPage` and `total`.
+Page numbering starts at 1 and the default page size is 25; `pageSize` and `take` name the same input.
+The read DTOs never return verification secrets, signing secrets or saved custom-header values.
+On updates, null/omitted secret or custom-header input retains the saved value; an empty custom-header map replaces it with no extra headers.
+For `bodyTemplate`, null also retains the saved template.
+An empty string is not valid JSON, so clearing a JSON template in the current editor does not restore the default body; saving is refused.
+Create a new endpoint with no template when you need the default body again.
+The [webhook DTO declarations](https://github.com/NoMercyLabs/nomnomzbot/blob/master/server/src/NomNomzBot.Application/DTOs/Webhooks/WebhookDtos.cs) define exact field types and nullable fields for the same server revision.
+
+### Generic adapter
+
+`genericConfig` chooses HMAC mode when `signatureHeaderName` is non-null.
+With that field null, `sharedSecretBodyField` names the flattened JSON field that must exactly match the secret.
+Shared-secret mode does not sign the remaining fields or enforce a timestamp window.
+
+| Config field | HMAC behavior |
+| --- | --- |
+| `signatureHeaderName` | Required header containing the complete expected signature. Header lookup is case-insensitive. |
+| `signaturePrefix` | Literal prefix before lowercase hexadecimal HMAC-SHA256; null means no prefix. |
+| `timestampHeaderName` | Required header containing parseable integer Unix seconds. |
+| `signingStringTemplate` | Default `{id}.{timestamp}.{body}`. Only these three replacements are performed. |
+| `eventKindJsonPath` | JSONPath for the event kind; a missing value becomes `event`. |
+| `providerEventIdJsonPath` | JSONPath for the stable delivery id; a missing value falls back to the receive-time ticks, defeating normal retry deduplication. |
+
+In the signing string, `{id}` comes from the `webhook-id` header, independently of the body path used for deduplication.
+`{timestamp}` is the parsed timestamp re-rendered as decimal text, and `{body}` is the raw body decoded as UTF-8.
+The timestamp must be within ten minutes of the bot's clock in either direction.
+The signature comparison is exact, including the prefix and lowercase hex encoding.
+It does not accept the outbound `v1,<base64>` signature format.
+
+### Provider adapter formats
+
+These are the formats the current bot consumes; the provider's own provisioning and available events remain separate concerns.
+
+| Adapter | Verification | Kind and delivery id |
+| --- | --- | --- |
+| `Github` | `X-Hub-Signature-256`: `sha256=` plus lowercase hex HMAC-SHA256 of raw body. | `X-GitHub-Event`; `X-GitHub-Delivery`. |
+| `Kofi` | URL-encoded `data` field containing JSON; compare its `verification_token` with the secret. | Lowercased `type` (default `donation`); `kofi_transaction_id`. |
+| `Fourthwall` | `X-Fourthwall-Hmac-SHA256`: base64 HMAC-SHA256 of raw body. | Lowercased body `type` (default `unknown`); `webhookId`, then `id`. |
+| `Shopify` | `X-Shopify-Hmac-SHA256`: base64 HMAC-SHA256 of raw body. | Lowercased `X-Shopify-Topic`, with `/` changed to `.`; `X-Shopify-Webhook-Id`, then `X-Shopify-Event-Id`, then body `id`. |
+| `Patreon` | `X-Patreon-Signature`: lowercase hex HMAC-MD5 of raw body. | `X-Patreon-Event`, lowercased with `:` changed to `.`; body `data.id` plus `data.attributes.last_charge_date` (default `none`). The original header is also exposed as `payload.patreon.event`. |
+| `Buymeacoffee` | `X-Signature-Sha256`: lowercase hex HMAC-SHA256, with no prefix, of raw body. | Lowercased body `type` (default `unknown`); body `event_id`. |
+
+Except for the timestamped Generic mode, these adapters do not apply a timestamp freshness check.
+Where a delivery id is absent, adapters fall back to receive-time ticks.
+Use the real provider delivery id whenever available.
+
+### Deduplication and automation routing
+
+Verified payloads are flattened into dotted string keys and journaled before automation runs.
+The deterministic journal identity includes the channel and endpoint, so ids from different endpoints do not collide.
+GitHub and Generic HMAC use the provider event id alone within that endpoint; the other adapter paths also include the raw-body hash.
+Consequently, a changed body with the same id can be a new event on those other paths.
+Deduplication depends on the corresponding journal record remaining available.
+
+A duplicate found by the initial journal lookup returns 200 without updating the receive counter or firing the downstream handler again.
+This lookup followed by append is not an exactly-once transaction covering a pipeline or your external effects.
+A 200 acknowledgement does not certify successful pipeline completion, and retrying a journaled event is not a pipeline-failure recovery mechanism.
+
+If `targetPipelineId` is set, the automation bridge runs that pipeline.
+Otherwise, `targetEventType` selects an event response; with neither, the endpoint only journals the event for other consumers.
+The generated journal type is `webhook.<provider>.<kind>`.
+The automation context provides `webhook.event_type`, `webhook.provider`, `webhook.provider_event_id` and each flattened field under `payload.`.
+For example, body `{"data":{"amount":5}}` supplies `{payload.data.amount}` as the string `5`.
+Arrays use numeric dotted segments, and recursion stops at depth 32 by retaining deeper containers as JSON strings.
+
+## Custom event-feed senders
+
+A push feed creates its own Generic inbound endpoint.
+Use the feed's returned link, not a separately created webhook, and include stable `event` and `id` body fields:
+
+```javascript
+import { createHmac } from 'node:crypto';
+
+export function makeFeedRequest(secret, id, bpm, now = Date.now()) {
+  const body = JSON.stringify({ event: 'heart_rate', id, data: { heartRate: bpm } });
+  const timestamp = String(Math.floor(now / 1000));
+  const signature = createHmac('sha256', Buffer.from(secret, 'utf8'))
+    .update(`${timestamp}.${body}`, 'utf8')
+    .digest('hex');
+  return {
+    body,
+    headers: {
+      'content-type': 'application/json',
+      'x-timestamp': timestamp,
+      'x-signature': `sha256=${signature}`,
+    },
+  };
+}
+```
+
+POST the returned body and headers unchanged to the feed link.
+For a feed named `heartrate`, map `bpm` to `$.data.heartRate`.
+An accepted `72` reading then triggers `custom.heartrate` with `{custom.heartrate.bpm}` set to `72`.
+The body `event` identifies the incoming delivery; the configured feed name determines the bot trigger.
+Retry a delivery using the same id and body, with a fresh timestamp/signature if necessary.
+
+The feed bridge reconstructs JSON from the journal's flattened string map.
+Numeric values therefore reach field extraction as strings; dotted property names are interpreted as nesting by that reconstruction.
+Keep field names simple and test the actual payload shape, rather than assuming the original JSON types survive push ingestion.
+
+### Poll and socket differences
+
+| Behavior | Poll (`poll`) | Socket (`socket`) |
+| --- | --- | --- |
+| Address | HTTPS URL, GET request. | `wss:` URL. |
+| Optional secret | `Authorization: Bearer <secret>`. | URL-escaped secret appended directly to the configured address. No Authorization header. Put the required query prefix in the address. |
+| Approved host | Checked on save and before each fetch. | Checked on save; the connection runner does not recheck the row for each connection/message. |
+| Data limit | Responses larger than 65,536 bytes are refused. | Text messages larger than 65,536 bytes are dropped whole; binary messages are skipped. |
+| Scheduling | Five-second scan; saved interval is at least ten seconds. Null interval uses 60 seconds; the dashboard initially offers 30. | Reconciled every 30 seconds. Disconnects retry after 5, 10, 20, 40, then 60 seconds; a received frame resets the delay. |
+| Failure handling | After a failure the next fetch waits for the normal interval and for the retry backoff (30 seconds, doubling with jitter, capped near one hour), whichever ends later; 20 consecutive fetch failures disable the source. An empty 2xx counts as success without a data event. | A disabled/deleted or reconfigured source is stopped at reconciliation; individual connections retry independently. |
+
+The source's HypeRate template ends its address in `?token=`; Pulsoid uses `?access_token=`.
+The current dashboard preset selector only records `presetKey`: neither the editor nor source creation applies those address/field-map templates for you.
+Supply the address and field map explicitly.
+The socket runner does not implement an additional provider-specific subscription exchange.
+The **Fetch now** test is an HTTPS fetch, so it does not validate a `wss:` subscription.
+
+All three kinds use the same field extraction.
+Malformed JSONPath is refused at save; a valid path with no match is recorded as a per-field error while other values still proceed.
+The ingest path retains at most 65,536 .NET string characters, a different unit from the poll/socket byte caps.
+The latest mapped values have a 24-hour cache TTL; the source definition, last-received time and field errors are stored separately in the database.
+Do not treat that latest-value cache as an event-history archive.
+
+The management API is dashboard-authenticated `/api/v1/custom-data-sources`, using the selected channel context and `customdata:read` or `customdata:write`.
+It supports list/create, `GET`/`PUT`/`DELETE /{id}`, `GET /search`, `GET /presets`, `GET /{id}/blast-radius` (dependent event responses and widgets before deletion; needs `customdata:write`), `POST /{id}/test` with `samplePayload`, and `POST /{id}/test-fetch`.
+The test endpoint uses normal ingest and can trigger real automation; it is not a dry run.
+There are at most 50 source definitions per channel.
+
+## Dashboard SignalR connections
+
+Use a SignalR client with the dashboard's sign-in JWT for `/hubs/dashboard`.
+The server accepts the bearer header or the SignalR `access_token` query parameter on `/hubs` paths.
+An Automation `nnzb_ak_` secret is a different credential.
+Register handlers before joining, and restore channel subscriptions after a full reconnect.
+The server enables stateful reconnect buffers of 100,000 bytes, but that requires client support and does not provide durable event replay.
+Re-read current REST state when recovering from a lost session.
+
+Server limits are 128 KiB per received hub message, a 15-second handshake timeout, 15-second keepalive and 60-second client timeout.
+Use the SignalR protocol rather than sending Automation JSON frames to this route.
+
+### Join and send methods
+
+Pass a bot-owned channel id from REST, not a Twitch broadcaster id, except for the explicitly named Twitch methods.
+Normal channel joins accept ULID or GUID text.
+Joining requires channel access, and each requested push class is filtered by its read permission.
+A successful join can grant fewer classes than requested; inspect `grantedClasses`.
+
+| Method and arguments | Result and behavior |
+| --- | --- |
+| `JoinChannel(broadcasterId)` | Requests all five classes. Returns `success`, nullable `error`, nullable `streamStatus`, nullable `grantedClasses`. |
+| `Subscribe(broadcasterId, eventClasses)` | Replaces that channel's class set. Rejects unknown/case-mismatched class keys. An empty array still joins core pushes. |
+| `LeaveChannel(broadcasterId)` | Removes that channel's core and class subscriptions. Other joined channels remain. |
+| `JoinViewerMusic(broadcasterId)` / `LeaveViewerMusic(broadcasterId)` | Signed-in viewer access to queue and now-playing pushes, independent of management music permission. Join returns the join-result shape. |
+| `JoinViewerChat(broadcasterId)` / `LeaveViewerChat(broadcasterId)` | Requires channel access and `chat:viewer:read`. Viewer chat omits private hints and redacts moderator identity in supported deletion/clear payloads. |
+| `SendChatMessage(broadcasterId, message, senderIdentity = "you")` | Requires channel access and `chat:send`. Message must be nonblank and at most 500 characters. `bot` (case-insensitive) selects the bot; other values use the caller's account. Returns `success`, nullable `error`, nullable `messageId` (currently null). |
+| `JoinTwitchChat(twitchBroadcasterId)` / `LeaveTwitchChat(twitchBroadcasterId)` | Opens an off-bot Twitch channel on the caller's token. The id must contain only ASCII digits. Join returns `success`, `error`, `errorCode`, `missingScope`. |
+| `SendTwitchChatMessage(twitchBroadcasterId, message, replyToMessageId)` | Sends as the caller, with optional reply id; same 500-character validation, then trim. Returns the Twitch result shape above. Twitch permissions and token scopes still apply. |
+| `TriggerAction(broadcasterId, action, data)` | Currently returns `success: false`, `error: "Not implemented."`. Use Automation REST for action invocation. |
+
+The server method for selective subscriptions is `Subscribe`.
+`JoinChannelClasses` is not an exposed method in the current server, even though the dashboard client has a call with that name.
+Use the actual server contract when writing a new client.
+
+| Class | Required read action | Traffic |
+| --- | --- | --- |
+| `chat` | `chat:read` | Normal `ChatMessage`. |
+| `activity` | `dashboard:read` | Commands, reward activity and general channel events. |
+| `liveops` | `live-ops:polls:read` | Poll, prediction, hype-train and ad-break channel events. |
+| `music` | `music:config:read` | `MusicStateChanged`, song-request queue and now-playing channel events. |
+| `moderation` | `moderation:read` | Held `ChatMessage`, `ModAction`, clear/delete and shield-mode channel events. |
+
+Core pushes remain on for each normal joined channel regardless of class selection.
+`PermissionChanged` and `ConfigChanged` are invalidations: refresh the relevant state instead of inferring that every dependent object is present in the push.
+
+### Push payloads
+
+Handler names are the exact SignalR method names; JSON fields use camel case.
+Fields marked nullable can be absent from meaningful event data even when the connection is healthy.
+Keep owned ids in their returned wire form.
+
+| Handler | Payload |
+| --- | --- |
+| `ChannelEvent` | `type`, `broadcasterId`, nullable `userId`/`userDisplayName`, `data` (event-specific object), `timestamp`. Routed by `type`; it is not the Automation event envelope. |
+| `ChatMessage` | Rich message with `id`, `channelId`, native `userId`, `displayName`, `username`, plain fallback `message`, `fragments`, badges/role flags, `provider` and optional enrichments. [Chat DTO declaration](https://github.com/NoMercyLabs/nomnomzbot/blob/master/server/src/NomNomzBot.Api/Hubs/Dtos/ChatDtos.cs) defines the nested fragments. |
+| `ExternalChatEvent` | Off-bot Twitch traffic on the connection that requested it, rather than every channel subscriber. [External event declaration](https://github.com/NoMercyLabs/nomnomzbot/blob/master/server/src/NomNomzBot.Application/Chat/Dtos/ExternalChatEvent.cs). |
+| `CommandExecuted` | `broadcasterId`, `commandName`, `triggeredByUserId`, `succeeded`, `timestamp`. |
+| `RewardRedeemed` | `broadcasterId`, `rewardId`, `rewardTitle`, `redemptionId`, `userId`, `userDisplayName`, `cost`, nullable `userInput`, `timestamp`, nullable `avatarUrl`, `pronouns`, `communityStanding`, `eventId`. The event id is distinct from Twitch's redemption id. |
+| `RedemptionActivity` | `broadcasterId`, `kind`, `redemptionId`, `title`, `userId`, `userLogin`, `userDisplayName`, `cost`, `costUnit`, nullable `userInput`, `timestamp`. |
+| `RedemptionStatusChanged` | `broadcasterId`, `redemptionId`, `rewardId`, `status`, `timestamp`. Core push. |
+| `ModAction` | `action`, `moderatorId`, `targetUserId`, nullable `reason`/`durationSeconds`, optional target enrichments and moderator display name, `timestamp`, `broadcasterId`. |
+| `MusicStateChanged` | `isPlaying`, nullable `currentTrack` with `trackName`, `artist`, `album`, nullable `albumArtUrl`, `durationMs`, `provider`, `progressMs`, `observedAt`. Position is an anchor, not a per-second tick. |
+| `StreamStatusChanged` | `isLive`, nullable `streamId`, `title`, `gameName`, `startedAt`. Core push and join snapshot. |
+| `StreamInfoChanged` | `broadcasterId`, `broadcasterDisplayName`, `title`, `gameName`. Core push. |
+| `AlertTriggered` | `type`, nullable `message`, event-specific `data`. Core push. |
+| `PermissionChanged` | `subjectType`, `subjectId`, `resourceType`, `resourceId`, numeric `value`. Core push. |
+| `RewardChanged` | `broadcasterId`, `action`, `rewardId`, `title`, nullable `cost`/`isEnabled`, `timestamp`. Core push. |
+| `ConfigChanged` | `broadcasterId`, `domain`, nullable `entityId`, `action`. Core push. |
+| `ObsBridgeStateChanged` | `broadcasterId`, `instanceCount`, `hasLeader`, `timestamp`. Core push. |
+| `ObsLiveStateChanged` | `broadcasterId`, `streaming`, `recording`, `timestamp`. Core push. |
+| `ObsStateChanged` | `broadcasterId`, `kind`, `timestamp`, plus nullable state-specific fields such as `sceneName`, `active`, `paused`, `inputName`, `muted`, `volumeDb`, `sceneItemId`, `enabled`, `locked`, `sourceName`, `filterName`, `sceneNames`, `name`, `names`. Core push. |
+| `VtsStatusChanged` | `broadcasterId`, `status`, `timestamp`. Core push. |
+| `ChannelSuspensionChanged` | `broadcasterId`, `status`, nullable `reason`, `timestamp`. Sent to the channel and affected users' connections. |
+
+For the exact C# types and nullability of the shared push records, use the [hub DTO declarations](https://github.com/NoMercyLabs/nomnomzbot/blob/master/server/src/NomNomzBot.Api/Hubs/Dtos/HubResponseDtos.cs) from the same bot revision as your integration.
+The other mapped hubs have distinct jobs: `/hubs/overlay` serves widgets, `/hubs/obs` serves the OBS bridge, and `/hubs/admin` requires the platform `iam:manage` policy.
+Do not replace their authentication or invoke methods with the dashboard contract above.
+

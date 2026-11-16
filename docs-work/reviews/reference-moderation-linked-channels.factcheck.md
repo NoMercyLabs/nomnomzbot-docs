@@ -1,5 +1,39 @@
-# Fact-check: /reference/moderation/linked-channels
+# Independent source verification: /reference/moderation/linked-channels
 Verdict: PASS
+Reviewed: src/content/reference/en/moderation/linked-channels.mdx
+Reviewed-SHA: 0e17f3b5d9669e0fcab3648214fa6638eb89c897c8a4921882ea85716b98aaab
+
+## Independent overhaul review, 2026-11-05
+
+FederationInboundGateway.cs:52-146; SharedChatBanInboundHandler.cs:35-85; FederationOptInService.cs:124-132; MassBanChannelPlanner.cs:101-112,210-226,275. Repaired F3 correctly states that global Accept still permits a peer after its specific row is removed; own/attacked channels can act immediately while live, and other unserved live channels wait until offline.
+
+Reviewed independently of the article author, in actual navigation order. Current product source 54da8b631 and relevant changes since b12f4f696 were read without starting the bot, executing platform actions or changing channel data. This verdict is source verification, not proof of live platform delivery. See [review-moderation-economy-community.md](../overhaul/review-moderation-economy-community.md) for the review scope and findings.
+
+## Prior review history
+
+The earlier text below is retained as history; it does not independently approve a later article hash.
+
+Author source audit: 2026-11-04. Independent review of the revised article is pending; the historical PASS below does not approve this text.
+Product source: C:/Projects/NoMercyLabs/nomnomzbot at b12f4f696, inspected without starting the bot or changing data.
+
+Explains three separate sharing decisions, documents incomplete controls plainly and gives a narrow incoming-ban configuration example.
+
+| Revised claim or retained core behavior | Current source opened |
+| --- | --- |
+| UI choice pairs and immediate saved direction | dashboard/src/views/dashboard/settings/federation/FederationView.vue:50-135; components/FederationChoiceRow.vue:30-94; i18n/en.json |
+| Trust, signature and directed opt-in gates | server/src/NomNomzBot.Infrastructure/Federation/FederationInboundGateway.cs:52-146 |
+| Only implemented federated shared-ban handler and local application | server/src/NomNomzBot.Infrastructure/Moderation/Federation/SharedChatBanInboundHandler.cs:35-85; server/src/NomNomzBot.Infrastructure/Moderation/SharedBanService.cs:250-350 |
+| Mass-ban consent and channel planning | server/src/NomNomzBot.Infrastructure/Moderation/MassBan/MassBanConsentService.cs:70-145; MassBanChannelPlanner.cs |
+| Default access roles | server/src/NomNomzBot.Infrastructure/Content/Identity/ActionDefinitionSeeder.cs:281-284,481-483 |
+
+The practical scenarios are recommended uses of these verified controls, not promises of a new feature. Unchanged reference details were compared with the current view, labels and relevant implementation. Runtime platform calls were not performed.
+
+## Historical evidence
+
+The prior review is retained for its detailed claim inventory. Its verdict and file hashes refer to the earlier article; where the new evidence differs, the new evidence takes precedence.
+
+# Fact-check: /reference/moderation/linked-channels
+Historical verdict: PASS
 Reviewed: src/content/reference/en/moderation/linked-channels.mdx
 Reviewed-SHA: a34125137427bb7f
 

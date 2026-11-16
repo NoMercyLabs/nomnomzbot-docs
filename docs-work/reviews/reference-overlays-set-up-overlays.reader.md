@@ -1,3 +1,23 @@
+# Current independent reader review
+
+Verdict: PASS
+Reviewed: src/content/reference/en/overlays/set-up-overlays.mdx
+Reviewed-SHA: eb86df7a7627717335c40d44d52a2401443628d1d4853e708bb767d0a5accd0b
+Reviewed-SHA256: eb86df7a7627717335c40d44d52a2401443628d1d4853e708bb767d0a5accd0b
+Reviewed-Date: 2026-11-05
+Reviewer: independent media-section reviewer
+Product: 54da8b6318de63b5205a0ff8db35e0b9045dd959 plus preserved current music UI edits
+
+The guide teaches the configuration-to-OBS relationship and starts with supplied sources requiring no code. It explains where required versus custom sources live before offering optional custom creation and SDK links. Health and settings/code maintenance remain complete, and connectivity is distinguished from verified output in the linked walkthrough.
+
+The full page was read with adjacent navigation and related links. The owner's natural explanatory style governs: no Atlas sentence caps, pilot imitation or rigid article template was imposed. No substantive reader finding remains at this hash. Combined build, rendered-output and link/frontmatter checks belong to the lead's separate validation.
+
+Report: docs-work/overhaul/review-automation-media-integrations.md.
+
+## Historical evidence
+
+Older hashes and verdicts below are retained for history and are not the current review.
+
 # Reader review: src/content/reference/en/overlays/set-up-overlays.mdx
 Verdict: PASS
 Reviewed: src/content/reference/en/overlays/set-up-overlays.mdx

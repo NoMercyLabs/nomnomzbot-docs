@@ -1,5 +1,26 @@
-# Reader review: C:\Projects\NoMercyLabs\nomnomzbot-docs\src\content\reference\en\self-hosting\install-with-docker.mdx
+# Independent reader review: /reference/self-hosting/install-with-docker
 Verdict: PASS
+Reviewed: src/content/reference/en/self-hosting/install-with-docker.mdx
+Reviewed-SHA: 3b0e369e6693914b
+Reviewed-SHA256: 3b0e369e6693914bbea5011185c50c1fcbe310ed939f857dd0125af077127ae5
+Reviewed-Date: 2026-11-05
+Reviewer: independent reviewer, separate from article author
+Product-Revision: 54da8b6318de63b5205a0ff8db35e0b9045dd959
+
+The complete current article was read independently of its author, in the established settings, self-hosting and Code and SDK navigation order. The user's natural explainer/progressive-disclosure requirements take precedence over historical pilot mimicry, sentence caps and repeated page templates.
+
+## Learning and lookup result
+
+Lite gives a clear first path; full and image-building stay optional. Device-local localhost, public URL/callback, persistence and complete-volume backup are explained before operations. Recovery preserves the existing volume for checking. Procedures were source-reviewed, not executed.
+
+No outstanding substantive reader finding.
+
+Related routes were checked as contextual continuations rather than prerequisites for ordinary bot use. Draft labels remain appropriate for code material. This is a text/structure review, not a claim of rendered browser QA.
+
+## Historical review (superseded)
+
+# Reader review: C:\Projects\NoMercyLabs\nomnomzbot-docs\src\content\reference\en\self-hosting\install-with-docker.mdx
+Historical verdict: PASS
 Reviewed: C:\Projects\NoMercyLabs\nomnomzbot-docs\src\content\reference\en\self-hosting\install-with-docker.mdx
 Reviewed-SHA: 1d0518d661ea9ef4
 

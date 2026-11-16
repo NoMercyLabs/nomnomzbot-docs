@@ -3,8 +3,17 @@ title: Webhooks and event feeds
 description: Send channel events to an address you control, receive calls from outside services, and bring outside data in as custom event feeds.
 ---
 
-You connect the bot to outside services on two settings pages.
-Both are in the **Developers** group of the settings sidebar.
+Webhooks and event feeds let another service take part in your stream's automation.
+For example, a service can notify the bot when something happens, or a heart-rate feed can supply a value for a pipeline or overlay.
+You configure them under **Developers** in the settings sidebar.
+
+A webhook is an automatic message sent to a web address.
+An outbound webhook sends the bot's events to another system; an inbound webhook accepts events sent to the bot.
+A custom event feed is useful when you need to extract particular values from incoming data, including data the bot checks repeatedly or receives over a persistent connection.
+
+These are advanced connections: you need the receiving address, access details and data format from the other service.
+For a supported tip or membership service, start with [Supporter sources](/reference/integrations/supporter-sources), which chooses those connection details for you.
+You can also use [API and devices](/reference/integrations/stream-deck-and-api-devices) when a tool only needs to run bot actions.
 
 | Page | What it does |
 | --- | --- |
@@ -18,11 +27,12 @@ Both are in the **Developers** group of the settings sidebar.
 | **Moderator**, **Lead moderator** | Sees the webhooks, the deliveries and the approved hosts. | Sees, makes, changes and deletes feeds. |
 | **Editor**, **Broadcaster** | Also makes, changes, tests and deletes webhooks and approved hosts. | The same. |
 
-The roles are explained on the permissions settings page.
+These are the default permission floors; the channel's configured permissions still apply.
+The roles are explained on the [permissions settings page](/reference/settings/permissions).
 
 ## Approve a host first
 
-The bot posts and reads only to a host on the channel's **Approved hosts** list.
+Before you save an outbound webhook or a feed with an address, its host must be enabled on the channel's **Approved hosts** list.
 The list is the last card on the **Webhooks** page.
 
 1. Type the host name in **Host**, for example `hooks.example.com`.
@@ -30,10 +40,16 @@ The list is the last card on the **Webhooks** page.
    The host shows in the list, switched on.
 
 The switch **Allow posts to** the host turns it off or on.
-A host that is off stays on the list, but the bot refuses to post to it.
+A host that is off stays on the list and cannot be used for new connections you save.
+Polling feeds also check this switch before fetching.
+Existing outbound webhooks and socket feeds do not recheck it while sending or listening: switch off the webhook or feed itself to stop it.
 
-**Remove** asks first, and names the webhooks that use the host.
-After you remove a host, webhooks that post to it are refused.
+The address must be public HTTPS.
+The bot refuses a host that points to a private or local network address, and it does not follow redirects.
+This holds even when the host is approved.
+
+**Remove** asks first, and names the outbound webhooks and custom event feeds that use the host.
+Removing a host also switches off the outbound webhooks that use it.
 
 ## Send events out
 
@@ -58,43 +74,49 @@ A path that would move the post to a different host is refused.
 
 | Field | What it does | Default |
 | --- | --- | --- |
-| **Message body** | What each delivery sends. Empty sends the event's values as one JSON object. | Empty |
-| **Body is JSON** | On, the body is checked as JSON when you save, and sent as JSON. Off, it is sent as plain text, for example a form post. | On |
+| **Message body** | What each delivery sends. On a new webhook, empty sends the event's values as one JSON object. | Empty |
+| **Body is JSON** | On, the body is checked as JSON when you save, and sent as JSON. Off, it is sent as plain text. | On |
 | **Custom headers** | Extra headers, one per line, as `Name: value`. | None |
 
 Saved headers stay hidden.
 On an edit, leave **Custom headers** empty to keep them, or type new lines to replace them.
 
-### Check that a delivery is real
+<details>
+<summary>Verify delivery signatures on your receiving server</summary>
 
 Each delivery carries three headers: `webhook-id`, `webhook-timestamp` and `webhook-signature`.
-The signature is HMAC-SHA256 over the id, a dot, the timestamp, a dot and the body, made with your signing secret.
+The signature is HMAC-SHA256 over the id, a dot, the timestamp, a dot and the body, made with your complete signing secret.
 It is written as `v1,` and the result in base64.
 
 When you make a new signing secret, the bot signs with the new secret and with the one before it.
 The `webhook-signature` header then holds two signatures, split by a space.
 Your server can accept either while you change it over.
+The [developer contract](/reference/code/webhooks-and-events#verify-the-signature-over-the-raw-body) includes a verifier and the exact key encoding.
+
+</details>
 
 ### What happens when a delivery fails
 
 A delivery counts as delivered when your server answers with a 2xx code.
 Any other answer is retried later.
-The wait starts at about 30 seconds, doubles each time, and never goes over 1 hour.
+The first retry is scheduled 15–30 seconds later; the bot checks due retries every 30 seconds, so the actual send can be later.
+Later retries use an increasing delay with some randomness, capped at between 30 and 60 minutes per wait.
 
-After 20 failed deliveries in a row, the bot switches the webhook off.
+After 20 failed attempts in a row across the webhook's deliveries, the bot switches it off.
 The row shows **Switched off** and the reason.
 Choose **Turn back on** to start again.
+Previously abandoned deliveries need **Send again**; turning the webhook back on does not reschedule them automatically.
 
 ### Manage an outbound webhook
 
-Each row shows its events and **Last delivery**, or **Nothing delivered yet**.
+Each row shows how many events it sends, its address, and **Last delivery**, or **Nothing delivered yet**.
 
 | Action | What it does |
 | --- | --- |
 | The switch | Turns the webhook on or off. |
-| **Send a test** | Sends one test delivery, then shows the answer code and the time it took. |
+| **Send a test** | Currently reports that test delivery is unavailable. Use a deliberately triggered subscribed event to check a receiver. |
 | **Deliveries** | Opens the list of sent deliveries beside the page. |
-| **Edit** | Opens the same dialog, with **Save webhook**. |
+| **Edit** | Opens the same dialog, with **Save webhook**. **Host** and **Path** cannot be changed after you make the webhook. To send to a new address, make a new webhook. |
 | **Make a new signing secret** | Asks first, then shows the new secret once. |
 | **Delete** | Asks first, with the counts of what uses the webhook. |
 
@@ -104,13 +126,13 @@ In **Deliveries**, each line shows its status, the answer code, the attempt and 
 | --- | --- |
 | **Waiting** | Not sent yet. |
 | **Delivered** | Your server answered with a 2xx code. |
-| **Failed** | It did not arrive. The bot tries again later. |
+| **Failed** | The attempt was not confirmed successful. Check its error and next retry time; your server may still have received the request. |
 | **Gave up** | The bot stopped trying, because the webhook was switched off. |
 
 **Send again**, on a line in **Deliveries**, sends that delivery once more.
 A webhook that is switched off must be turned back on first.
 
-A [pipeline](/reference/commands/pipelines) can also send to an outbound webhook with its send-webhook step.
+A [pipeline](/reference/commands/pipelines) can also send to an outbound webhook with its **Send webhook** step.
 
 ## Receive calls from a provider
 
@@ -126,7 +148,7 @@ Each call can start a pipeline or raise an event.
 5. For the **Generic** provider only, fill in two paths in the body of a call:
    - **Event kind path**: where the kind of event sits, for example `$.event`.
    - **Event id path**: where the event's id sits, for example `$.id`.
-6. Choose a **Pipeline to start**, or type an **Event to raise**, or leave both empty.
+6. Open **Advanced**, then choose a **Pipeline to start**, or type an **Event to raise**, or leave both empty.
    **Event to raise** is an event type that event responses can listen for.
 7. Choose **Create webhook**.
    The dialog closes and the new row shows **Copy link**.
@@ -143,17 +165,19 @@ Each call can start a pipeline or raise an event.
 | **Patreon** | Patreon. |
 | **Buymeacoffee** | Buy Me a Coffee. |
 
-When a pipeline is chosen, the call starts that pipeline and raises no event.
+When a pipeline is chosen, it takes precedence over **Event to raise**.
 Without a pipeline, the call raises the **Event to raise** for [event responses](/reference/automation/event-responses).
-With both empty, the bot records the call and does nothing else.
+With both empty, the webhook records the call without starting a pipeline or event response selected here.
+Connections managed by a supporter source or custom event feed can still have their own processing.
 
-The bot takes a call only as JSON or as a form post, up to 256 KB.
-A call that the bot already took is not run a second time.
+The bot takes a call only as JSON or as a form post, up to 256 KiB.
+A matching delivery already found in its event journal is acknowledged without running the automation again.
+The provider must supply a stable event id for this to work reliably; this acknowledgement is not a guarantee that the pipeline completed successfully.
 
 <details>
 <summary>Fields for a Generic provider</summary>
 
-These optional fields are under **Advanced** in the dialog.
+These optional fields are under **Advanced** in the dialog, next to **Pipeline to start** and **Event to raise**.
 
 | Field | What it does |
 | --- | --- |
@@ -180,7 +204,7 @@ Update the provider with the new link.
 
 **Edit** opens the dialog with **Save webhook**.
 On an edit, leave **Secret** empty to keep the saved secret.
-**Delete** asks first, and names what uses the webhook.
+**Delete** asks first, and shows how many things use the webhook.
 
 ## Bring in outside data
 
@@ -193,6 +217,7 @@ The event can start pipelines, fill variables and feed overlays.
 3. Optional: choose a service under **Start from a service**.
 4. Type a **Name**, for example `Heart rate`.
 5. Type an **Event name**, for example `heartrate`.
+   The bot stores the event name in lowercase.
 6. Fill in **Address**, **Secret** and **Check every (seconds)**, as the kind needs.
 7. Under **Fields**, choose **Add field** and fill in a **Field name** and its **Path in the data**, for example `bpm` and `$.data.heartRate`.
 8. Switch **On** to take in data.
@@ -205,7 +230,7 @@ The event can start pipelines, fill variables and feed overlays.
 A path starts with `$` and names each step into the data, split by dots.
 For data like `{"data": {"heartRate": 72}}`, the path is `$.data.heartRate`.
 
-For a feed with an **Address**:
+For a polling feed with an HTTPS **Address**:
 
 1. Save the feed, then choose **Test** on its row.
 2. Choose **Fetch now**.
@@ -225,31 +250,40 @@ For a **Source posts to us** feed:
 | **How data arrives** | What the bot does | **Address** | **Secret** |
 | --- | --- | --- | --- |
 | **Check an address** | Reads the address on a timer. | Needed. | Sent as a bearer token. Optional. |
-| **Listen on a socket** | Keeps a connection open and takes in every message. | Needed. | Sent as a bearer token. Optional. |
+| **Listen on a socket** | Keeps a connection open and takes in text messages. | A secure `wss:` address is needed. | Appended to the address, URL-escaped. Optional. |
 | **Source posts to us** | Gives you a link that the source posts to. | None. | Needed. |
 
 The host of an **Address** must be on **Approved hosts** on the **Webhooks** page.
 Otherwise the feed is not saved.
+The address must be public HTTPS (or `wss:` for a socket).
+The bot refuses a host that points to a private or local network address, and a polling feed does not follow redirects.
+For a socket feed, include the service's required query prefix in the address, such as `?token=`.
+The bot appends the secret there; it does not send an Authorization header for a socket.
 
-**Check every (seconds)**: default 30 seconds.
-The bot never uses less than 10 seconds.
+**Check every (seconds)** initially offers 30 seconds for a polling feed.
+Saved values below 10 seconds are raised to 10; a feed created through the API without an interval uses 60 seconds.
 
 **Start from a service** offers **HypeRate (Heart Rate)** and **Pulsoid (Heart Rate)** for a socket feed.
+Choosing one records the service name but currently does not fill in the address or field paths; enter those yourself from the service's connection details.
 A channel can have up to 50 feeds, each with its own **Event name**.
 
 ### Use the feed's data
 
+For the heart-rate example, a source sends `{"data": {"heartRate": 72}}` and your field map names `bpm` at `$.data.heartRate`.
+The feed turns that outside value into a named bot event, so a pipeline can respond to it without needing to understand the source's full data format.
+
 Pipelines use `custom.` plus the event name as the trigger, for example `custom.heartrate`.
-Each field is a variable: `{{custom.heartrate.bpm}}`.
+Each field is a template variable: `{custom.heartrate.bpm}`.
+With the example data above, it prints `72` in a reply.
 
 When a field's path finds nothing in the data, the row shows "These fields failed on the last data", with the field names.
 The other fields still come through.
 
-### Post to a feed from your own code
+<details>
+<summary>Post to a feed from your own code</summary>
 
-This is a task for a developer.
-Skip it unless you write the code that sends the data yourself.
 A service that posts for you only needs the link and the secret.
+The following request details are for developers implementing the sender themselves.
 
 After you save a **Source posts to us** feed, its row shows **Copy link**.
 Give the link and the feed's **Secret** to the source.
@@ -265,15 +299,21 @@ The source posts JSON to the link, in this shape:
 A post more than 10 minutes away from the bot's clock is refused.
 When a post arrives, the feed's row shows **Last data** with the time.
 
+</details>
+
 ### Test, edit or delete a feed
 
 **Test** opens a dialog with **Sample data**.
 Choose **Send test event** to fire the custom event with your sample.
+A test can start the feed's real event responses and pipelines, so use sample data suitable for those actions.
 A feed with an address also has **Fetch now**, which reads the address once and lists the paths it found.
+It also fills **Sample data** with the answer, so you can choose **Send test event** right away.
+This is an HTTPS fetch, not a test of a socket subscription.
 
 **Edit** opens the same dialog, with **Save feed**.
 On an edit, leave **Secret** empty to keep the saved one.
-**Delete** asks first, and names the event responses and widgets that use the feed.
+**Delete** asks first, and shows how many event responses and widgets use the feed.
+The switch on the row turns the feed on or off.
 
 ## Troubleshooting
 
@@ -298,3 +338,4 @@ Check that the feed is switched **On**. A new feed starts off.
 - [Pipelines](/reference/commands/pipelines)
 - [Event responses](/reference/automation/event-responses)
 - [Stream Deck and API devices](/reference/integrations/stream-deck-and-api-devices)
+- [Webhook and dashboard event contracts](/reference/code/webhooks-and-events), for developers implementing senders and receivers.

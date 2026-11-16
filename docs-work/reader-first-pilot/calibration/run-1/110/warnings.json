@@ -1,0 +1,30 @@
+{
+  "fingerprint": "d963ffba0f8ea9656c6f29cfecc31bfdcbcd7ae43d73a1e9c92c52361284a288",
+  "metrics": {
+    "non_code_words": 2092,
+    "table_rows": 31,
+    "first_numbered_step_after_words": 171
+  },
+  "warnings": [
+    {
+      "id": "length",
+      "message": "2092 non-code words, including table text; diagnostic threshold 600"
+    },
+    {
+      "id": "first-numbered-step",
+      "message": "first numbered step follows 171 words; inspect prerequisites before changing order"
+    },
+    {
+      "id": "paragraph-6",
+      "message": "paragraph 6: approximately 5 sentences"
+    },
+    {
+      "id": "sentence-6-4",
+      "message": "31 words: An ordinary viewer needs the stream to be live, or Keep commands and rewards on while offline switched on, as well as permission to use the command and no active cooldown."
+    },
+    {
+      "id": "paragraph-31",
+      "message": "paragraph 31: approximately 5 sentences"
+    }
+  ]
+}

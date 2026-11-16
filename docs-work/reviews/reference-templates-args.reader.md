@@ -1,3 +1,22 @@
+# Current independent reader review
+
+Verdict: PASS
+Reviewed: src/content/reference/en/templates/args.mdx
+Reviewed-SHA: ac81ee79731bac2f0d81899cccae2ba440b7a5272955a5447a8106ad2eb92216
+Reviewed-SHA256: ac81ee79731bac2f0d81899cccae2ba440b7a5272955a5447a8106ad2eb92216
+Reviewed-Date: 2026-11-05
+Reviewer: independent section reviewer
+
+The greeting example explains positional input and fallback with visible outcomes. Viewer-template expansion versus original numbered words is retained, and the added currency clarification prevents confusion with Twitch Channel Points.
+
+The full page was read with the preceding/following navigation context and related links. This review applies the owner's explanatory, progressive-disclosure guidance; it does not impose Atlas sentence caps, pilot mimicry or fixed article headings. No substantive reader finding remains at this hash. Build/render/link checks are recorded separately by the lead reviewer.
+
+Report: docs-work/overhaul/review-learning-commands-helpers.md.
+
+## Historical evidence
+
+The material below is retained as historical evidence; its older verdict is not the current review.
+
 # Reader review: src/content/reference/en/templates/args.mdx
 Verdict: PASS
 Reviewed: C:/Projects/NoMercyLabs/nomnomzbot-docs/src/content/reference/en/templates/args.mdx

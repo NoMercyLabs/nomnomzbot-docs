@@ -3,8 +3,13 @@ title: Song requests
 description: Let viewers request songs in chat, work the request queue, and set who may request, the limits and the blocked songs.
 ---
 
-Viewers ask for songs in chat with `!sr`, and the songs wait in the **Request queue** panel on the **Music** page in the sidebar.
-You set who may request, the limits and the blocked songs in the **Request rules** panel on the same page.
+Song requests let viewers help choose the music while you keep control of what reaches the stream.
+A viewer types `!sr` with a song name or link, and an accepted request waits in **Request queue** on the **Music** page.
+You can move or remove requests during the stream, then use **Request rules** to set the boundaries for the next ones.
+
+Start with the service you already use for music.
+Spotify needs a connected account and an active playback device; YouTube needs the **Music Player** browser source loaded in OBS.
+The [music player setup](/reference/music/music-player) explains both paths before you open requests to viewers.
 
 The player and its controls are on [Music player](/reference/music/music-player).
 
@@ -30,10 +35,11 @@ A viewer types `!sr` and a song name or a song link:
    A song name goes to the service set under **Search first** (see [Sources tab](#sources-tab)).
 2. The bot checks the request rules (see [Why the bot refuses a request](#why-the-bot-refuses-a-request)).
 3. The song joins the queue.
-   The bot answers in chat in the channel's one bot voice, for example "Added Song Name by Artist Name to the queue." with a link to the song.
+   The bot confirms the song in chat with the song, the artist and a link.
+   When a channel-point reward or a pipeline adds the song, the reply also shows a short request code, for example `K7QM`.
 
 With no song after `!sr`, the bot answers `Usage: !sr <song name or URL>`.
-One viewer waits 5 seconds between two `!sr` messages by default.
+One viewer waits 12 seconds between two `!sr` messages by default.
 Cooldowns are explained on [Cooldowns and permissions](/reference/commands/cooldowns-and-permissions).
 
 A link must point to one song.
@@ -41,9 +47,16 @@ For a playlist, album, episode, show or artist page, the bot answers "Song reque
 
 ### Take back a request
 
-A viewer types `!wrongsong` to take back their own newest request.
+A viewer types `!wrongsong` to take back their own last request in the current queue.
+A viewer can name a particular request with its four-character code, for example `!wrongsong K7QM`.
+A viewer sees the code in the reply when a reward or a pipeline added the song.
 A viewer who knows the queue number of their request can type it after the command, for example `!wrongsong 3`.
+The queue number is the one `!queue` shows.
 The bot takes the song back only when it is theirs.
+
+The code identifies a waiting request as the queue changes; a queue number identifies its current place.
+Check the latest queue with `!queue` before using a number, especially after someone has reordered songs.
+With no argument and no request of theirs waiting, the command can skip their request that is playing now.
 
 | Where the song is | What the bot does |
 | --- | --- |
@@ -61,9 +74,11 @@ A music moderator is a moderator, or a viewer the broadcaster gave the right to 
 | --- | --- | --- |
 | `!sr` | Everyone | Requests a song. |
 | `!wrongsong` | Everyone | Takes back the viewer's own request. |
+| `!queue` | Everyone | Shows the next waiting songs with their queue numbers. |
+| `!skip` | Everyone | On its own, skips the song that plays now. A viewer can skip only their own song, and a music moderator can skip any song. With a number, for example `!skip 2`, removes the viewer's own waiting request with that number. |
 | `!closequeue` | A music moderator | Closes the queue to new requests. The music keeps playing and the queued songs stay. |
 | `!openqueue` | A music moderator | Opens the queue to new requests again. |
-| `!clearsongs` | A music moderator | Removes every queued song of one viewer, for example `!clearsongs viewername`. The song that plays now keeps playing. |
+| `!clearsongs` | A music moderator | Removes a viewer's queued requests, for example `!clearsongs viewername`. A provider-queued or just-started request can also be skipped. |
 | `!bansong` | A music moderator | Blocks the song that plays now and skips it. Text after the command is saved as the reason. |
 
 Their replies, and how to reword them, are on [Built-in commands](/reference/commands/built-in-commands).
@@ -73,6 +88,10 @@ Their replies, and how to reword them, are on [Built-in commands](/reference/com
 The **Request queue** panel lists the songs that wait, in the order they play.
 The header shows the count, for example "4 waiting", and a badge: **Open** or **Closed**.
 When nothing waits, it shows "No songs are waiting."
+
+New requests use a fair order rather than a single arrival-order list.
+A viewer's first waiting song can go ahead of another viewer's additional songs, and a song already playing also counts toward that viewer's turn.
+This gives more people a chance to contribute; the queue displayed now is the order to consult when requests arrive or a moderator moves them.
 
 | A row shows | Example |
 | --- | --- |
@@ -88,11 +107,27 @@ When nothing waits, it shows "No songs are waiting."
 | **Play next** | Moves the song to the top of the queue. |
 | The trash button | Asks "Remove this song?". **Remove** takes it out of the queue. |
 | The ban button | Asks "Ban this song?". **Ban song** takes it out of the queue and blocks it: "nobody can request it again." |
-| **Pick a requester** and **Remove all**, at the top of the panel | Pick a viewer, then **Remove all**. The dialog asks "Remove 3 songs from viewername?" with "Every song they queued leaves the queue. The song playing now keeps playing." |
+| **Pick a requester** and **Remove all**, at the top of the panel | The picker shows only when a viewer has two or more songs waiting, and only to people who may moderate the queue. For one song, use that row's trash button. Pick a viewer, then **Remove all**. The dialog asks "Remove 3 songs from viewername?". |
+
+The remove-all dialog currently says the playing song keeps playing, but that is not an unconditional guarantee.
+A request still listed in the bot's queue can already be starting or held in Spotify's own queue.
+Removing that request can skip it immediately if it has started, or arrange to skip it when Spotify reaches it.
+The same behavior applies to `!clearsongs` and the **Song clear requester** pipeline step.
 
 When Spotify has no device that plays, the panel shows "Spotify has no active device. Open Spotify on a device to play requests."
 
+### What survives a bot restart
+
+The bot saves pending requests and their order as the queue changes.
+On startup it restores a saved queue only when that queue was last changed within the previous 4 hours.
+An older saved queue is discarded rather than bringing an old stream's requests back to life.
+
 ## Set the request rules
+
+Think of the rules as a way to share time fairly.
+For example, a short **Longest song** limit stops one request from occupying a long part of the stream, while **Songs per person** leaves room for other viewers.
+These rules apply when a request arrives; changing them does not clear the songs already waiting.
+The one exception is **Allow YouTube songs**: turning it off takes the waiting YouTube songs out of the queue and stops a YouTube song that plays, within about 20 seconds.
 
 1. On the **Music** page, choose **Request rules** in the page header.
    The **Request rules** panel opens at the side, with three tabs: **Requests**, **Sources** and **Blocked**.
@@ -140,7 +175,7 @@ When any box holds a number, they get the highest number among the roles they re
 | --- | --- | --- |
 | **Allow Spotify songs** | Whether viewers may request from Spotify. | On |
 | **Spotify requests** | Who may request from Spotify. Shows when Spotify is allowed. | **Everyone** |
-| **Allow YouTube songs** | Whether viewers may request from YouTube. | Off |
+| **Allow YouTube songs** | Whether viewers may request from YouTube. Turning it off removes waiting YouTube songs and stops a YouTube song that plays, within about 20 seconds. | Off |
 | **YouTube requests** | Who may request from YouTube. Shows when YouTube is allowed. | **Only me** |
 | **Music videos only** | "Only videos in the Music category or from artist (- Topic) channels." Shows when YouTube is allowed. | On |
 | **Search first** | The service a song name is searched on: **Automatic**, **Spotify** or **YouTube**. | **Automatic** |
@@ -189,7 +224,9 @@ The bot answers each refused request in chat with the reason.
 
 | The request | The bot answers |
 | --- | --- |
+| **Playback** is off | "Song requests are turned off in this channel." |
 | The queue is closed | "The song queue is closed." |
+| The link's service is off on the **Sources** tab | "This channel does not take song requests from that music service. Send a song name instead." |
 | The queue holds **Songs in the queue, at most** | "The queue is full (50 max) — try again once it's shorter." |
 | The viewer has **Songs per person** queued | "You already have 5 request(s) queued — wait for one to play before adding more." |
 | The viewer hit **Songs per person per stream** | "You already requested 3 song(s) this stream. That is the limit." |
@@ -213,6 +250,9 @@ Three limits can be lifted for one song: the queue size, **Songs per person** an
 Only a moderator or the broadcaster may do this.
 The blocked list and the duplicate check still apply to a permitted song.
 
+The refused request is held for 15 minutes, and only the viewer's latest qualifying refusal is kept.
+A bot restart clears these held refusals, so ask the viewer to request again if the bot no longer has the song to permit.
+
 <details>
 <summary>Moderators who ban many songs</summary>
 
@@ -231,9 +271,9 @@ The rule is about that person, not about the viewer who asked for the song.
 
 ## The public request page
 
-The dashboard has no public request page and shows no link to one.
-The bot can take requests from a public page only through its API.
-Such a request has no role, so it counts as **Everyone** for **Spotify requests** and **YouTube requests**.
+Use chat requests for the dashboard workflow described here.
+The dashboard currently provides no public request-page link to give viewers.
+A separately built page can submit requests through the API; those requests have no viewer role and count as **Everyone** for source access.
 
 ## Troubleshooting
 

@@ -1,22 +1,18 @@
 ---
-title: A worked example (Draft)
+title: A worked example
 description: Build one short script that answers a chat command, keeps a count in storage, and replies with the new count.
 ---
 
-You build one script from start to end.
-A viewer types `!hugs` in chat, the script adds one to a stored count, and the bot replies with the new count.
-You use only calls from [Chat, music and voice](/reference/code/sdk-chat-music-voice) and [Data and storage](/reference/code/sdk-data-and-storage).
-
-::Callout
-
-**Draft**: this part of the guide is not finished yet.
-
-::
+Build a small shared hug counter: a viewer types `!hugs`, the script reads the saved count, adds one, and replies with the result.
+It demonstrates how a script can keep information between runs and use it in a chat response.
+The calls come from [Chat, music and voice](/reference/code/sdk-chat-music-voice) and [Data and storage](/reference/code/sdk-data-and-storage).
 
 ## Before you start
 
 Custom Code must be on for the channel.
 It is off for a new channel.
+The channel's plan must also include script time.
+Without it, the **Scripts** page shows "Code scripts need the Base plan."
 [Code scripts](/reference/code/scripts) shows where you switch it on.
 
 ## The script
@@ -31,9 +27,9 @@ const saved = nnz.api.storage.set(key, String(count));
 
 if (!saved) {
   nnz.api.chat.reply('The count was not saved: ' + nnz.lastError.message);
+} else {
+  nnz.api.chat.reply('Hugs given in this channel: ' + count);
 }
-
-nnz.api.chat.reply('Hugs given in this channel: ' + count);
 ```
 
 | Line | What it does |
@@ -44,8 +40,11 @@ nnz.api.chat.reply('Hugs given in this channel: ' + count);
 | `nnz.api.chat.reply(...)` | Answers the viewer's `!hugs` message as a threaded reply. |
 
 The count belongs to the channel, so every viewer adds to the same number.
-When the store refuses the value, the script goes on.
-The first reply then says why.
+The script sends the count only after storage accepts it.
+If the write fails, it sends the reason instead, so viewers are not told that an unsaved count was recorded.
+
+This is a read-and-write example, not an atomic counter.
+Simultaneous runs can read the same old value and overwrite an increment, so use it for learning rather than a total that must be exact under concurrent use.
 
 ## 1. Create the script
 
@@ -57,6 +56,10 @@ The first reply then says why.
 4. Replace the example code with the script above.
 5. Choose **Save & Compile**.
    The bot checks and builds the code and saves it as the next version.
+A clean save becomes the version the script runs.
+
+Leave the script switched off while you test it.
+The test card can run the saved version without enabling live triggers.
 
 When you save, the bot reads the calls the code names and keeps their grants with the version.
 This script gets three grants: `storage.get`, `storage.set` and `chat.reply`.
@@ -64,8 +67,8 @@ It needs nothing more.
 
 ## 2. Test run it
 
-1. On the script's **Test** card, leave **Trigger** at **No event**.
-2. Choose **Run test**.
+1. On the script's **Test** card, choose **Run test**.
+   The event picker shows only for a script that reads trigger values, so this script has none.
    The card shows **Worked** with the time in milliseconds.
 
 A test run is a dry run.
@@ -77,22 +80,24 @@ The store and the reply are only recorded, so the stored count does not change.
 
 | Step | What you see |
 | --- | --- |
-| **Started** | The run began. |
-| **Effect** | The `storage.set` call with its key and value. It was recorded, not stored. |
+| **Effect** | "Save values: hugs.count \| 1". The key and the value are joined by a bar. It was recorded, not stored. |
 | **Chat** | The reply line the bot would post. |
 
 ## 3. Run it from chat
 
-1. Open **Commands** in the sidebar and choose **New command**.
-2. Type `hugs` in **Name**.
-3. Choose **Runs a code script** in **What it does**.
-4. Under **Script**, pick `hugs`.
-5. Choose **Create command**.
+1. On **Scripts**, switch `hugs` on.
+   New scripts start off, so this is required for a live command to run it.
+2. Open **Commands** in the sidebar and choose **New command**.
+3. Type `hugs` in **Name**.
+4. Choose **Runs a code script** in **What it does**.
+5. Under **Script**, pick `hugs`.
+6. Choose **Create command**.
    The command is switched on.
 
 A viewer now types `!hugs` in chat.
 The bot replies under that message with "Hugs given in this channel: 1".
-The next `!hugs` gives 2.
+The next sequential run gives 2.
+Use your channel's prefix instead of `!` if you changed it, and choose a name that is not already used by another command.
 
 ## Follow one run through the bot
 
@@ -111,7 +116,7 @@ The next `!hugs` gives 2.
 
 When the run does not end cleanly, the bot answers the viewer with one failure notice.
 By default it says "Sorry, that command hit a snag and didn't finish."
-The **Scripts** page then shows **Last run failed** with the error.
+When the script itself fails, the **Scripts** page shows **Last run failed** with the error.
 
 ## When a call fails
 
@@ -122,7 +127,7 @@ A required value that is left out or `null` is not a failed call: it stops the w
 
 | What goes wrong | What happens |
 | --- | --- |
-| The store is full or the value is too long | `storage.set` gives `false`. The script replies with the reason and goes on. |
+| The store is full or the value is too long | `storage.set` gives `false`. The script replies with the reason instead of announcing a saved count. |
 | The reply does not reach chat | A failed call with the code `upstream_failed`. The script goes on. |
 | A value the bot cannot use, such as empty text | A failed call with the code `invalid_argument`. The script goes on. |
 | A required value that is left out or `null` | The whole run stops. The error names the call and the value, for example "chat.reply needs a message". |

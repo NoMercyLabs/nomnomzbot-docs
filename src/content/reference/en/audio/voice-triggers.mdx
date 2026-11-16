@@ -3,12 +3,13 @@ title: Voice triggers
 description: Count a word you say on stream, and pop a sticker on your stream each time the bot hears it.
 ---
 
-You set up voice triggers on the **Voice triggers** page, in the **Build** group of the sidebar.
-A voice trigger is a word you say out loud on stream.
-Each time the bot hears it, the bot adds one to its count and can show a sticker on your stream.
+Voice triggers turn something you say into a running count for your stream.
+For example, you can count a recurring greeting or phrase without asking a moderator to keep score.
+You choose the phrase on **Voice triggers**, in the **Build** group, and keep the voice listener open while you stream.
 
-A voice trigger listens to your microphone, not to chat.
-It does not speak: reading text aloud is [Text to speech](/reference/audio/text-to-speech).
+The listener uses your microphone, while [chat triggers](/reference/automation/timers-and-chat-triggers) watch typed messages.
+Reading a written message aloud is a separate feature, [Text to speech](/reference/audio/text-to-speech).
+Here the bot listens and counts; a configured alert can also show a sticker when a count increases.
 
 ## Who can use this page
 
@@ -46,8 +47,9 @@ Next to each phrase it shows the result.
 | The listener shows | What it means |
 | --- | --- |
 | Matched "word" (count N) | The phrase held a voice trigger word, and the count went up. |
-| (no trigger word) | No voice trigger counted for this phrase. |
+| (no trigger word) | No voice trigger counted for this phrase. The phrase held no trigger word, or the word was heard again within **Seconds between counts**. |
 | (not sent: this listener link is no longer valid) | The link is old. Copy a new one from the **Voice triggers** page. |
+| (not sent: the bot answered 400) or another number | The bot refused the phrase. A phrase longer than 200 characters is refused. It is not counted and not kept. |
 | (not sent: the bot could not be reached) | The listener could not reach the bot. |
 
 The listener restarts itself when Chrome stops listening.
@@ -57,7 +59,14 @@ A line under it says what to allow.
 While your stream is live, the bot also keeps every phrase the listener sends as the spoken transcript of that stream.
 When you are not live, the bot only looks for a trigger word in each phrase, and does not store the phrase.
 
+A paired program also hears each sentence the listener sends, live or not, when it has the events permission and subscribes to the `Voice.TranscriptHeard` event.
+The event carries the sentence text.
+
 ## Create a voice trigger
+
+Start with a phrase you can say clearly, such as `hello everyone`.
+After creating it, say the phrase with the listener open and watch **Heard so far** increase.
+Do this before adding a sticker so you can check recognition and counting independently of the overlay.
 
 1. Choose **New voice trigger** in the page header.
    The **New voice trigger** dialog opens.
@@ -91,19 +100,21 @@ Only one voice trigger counts for each phrase.
 A trigger that is switched off counts nothing.
 
 When the word is heard again within **Seconds between counts**, it is not counted.
-This stops one long word from counting twice.
+This keeps a phrase repeated in quick succession from increasing the count every time.
 
 ## Show the sticker on your stream
 
-The sticker shows through an **Alerts** overlay, as [Widgets and alerts](/reference/overlays/widgets-and-alerts) explains.
-A new **Alerts** overlay does not show voice triggers, so you switch them on once.
+The sticker is presented by an alert widget that listens for voice-trigger events, as [Widgets and alerts](/reference/overlays/widgets-and-alerts) explains.
+The bot sends the voice-trigger event only to a widget that subscribes to it.
+The supplied **Alerts** overlay does not subscribe to it today, so it does not receive voice-trigger events.
+A custom widget that listens for `voice_trigger` receives them.
+Such an alert widget must also have **Voice trigger** ticked in **Alert types**, which is not ticked by default.
+**Sticker on-screen time (ms)** sets its display time.
+Ticking **Alert types** alone does not make a sticker show.
 
-1. Open the **Alerts** overlay on the **Overlays** page.
-2. In **Settings**, add **Voice trigger** to **Alert types**.
-3. Choose **Save settings**.
-   The editor shows "Saved.", and open sources reload.
-
-**Sticker on-screen time (ms)** in the same **Settings** sets how long the sticker stays.
+There is a current dashboard limitation: the supplied **Alerts** source is under **Required overlays** on the **OBS** page, but its connection dialog does not expose these alert settings.
+It is also excluded from the custom **Overlays** list.
+Counting works without the sticker; setting up a new sticker display requires an already configured or custom alert widget until that settings path is available.
 
 Each time the word counts, the alert shows the word with the new count, such as "hello (3)", and the sticker image.
 
@@ -163,6 +174,8 @@ It does not prove that the listener is open now.
 Check that the listener window is open and shows **Listening**.
 Check that the trigger is switched on, and that **Seconds between counts** has passed.
 Look at the listener: it shows what Chrome heard, which may be a different spelling.
+The listener also shows "(no trigger word)" while the trigger waits out **Seconds between counts**.
+Only the first matching trigger is checked, so while it waits, no other matching trigger counts for that phrase.
 
 ::
 
@@ -170,8 +183,9 @@ Look at the listener: it shows what Chrome heard, which may be a different spell
 
 **The count goes up, but no sticker shows.**
 Check that the trigger has a **Sticker**.
-Check that **Voice trigger** is in **Alert types** of your **Alerts** overlay.
-Check that the **Alerts** overlay is in OBS.
+Check that the alert widget subscribes to the `voice_trigger` event, has **Voice trigger** ticked in **Alert types**, and is loaded in OBS.
+The supplied **Alerts** overlay does not subscribe to the event today.
+If you only have the supplied source, see the settings limitation above before looking for an editor on **Overlays**.
 
 ::
 

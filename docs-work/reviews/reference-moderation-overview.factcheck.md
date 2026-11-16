@@ -1,5 +1,38 @@
-# Fact check: src/content/reference/en/moderation/overview.mdx
+# Independent source verification: /reference/moderation/overview
 Verdict: PASS
+Reviewed: src/content/reference/en/moderation/overview.mdx
+Reviewed-SHA: 88b5bba221425934ccebaa95b2a2902c7afbd5fa7b16b4a14e85febeae91044d
+
+## Independent overhaul review, 2026-11-05
+
+ModerationQueueService.cs:302-370; ReviewQueuePanel.vue:49-90; ActionDefinitionSeeder.cs:241-251: Twitch-held release versus local decisions, six-second deny/Undo and commit-on-leave, default access.
+
+Reviewed independently of the article author, in actual navigation order. Current product source 54da8b631 and relevant changes since b12f4f696 were read without starting the bot, executing platform actions or changing channel data. This verdict is source verification, not proof of live platform delivery. See [review-moderation-economy-community.md](../overhaul/review-moderation-economy-community.md) for the review scope and findings.
+
+## Prior review history
+
+The earlier text below is retained as history; it does not independently approve a later article hash.
+
+Author source audit: 2026-11-04. Independent review of the revised article is pending; the historical PASS below does not approve this text.
+Product source: C:/Projects/NoMercyLabs/nomnomzbot at b12f4f696, inspected without starting the bot or changing data.
+
+Explains the stream-time workflow, gives an Allow example, distinguishes decisions from sanctions and adds the missing Reports link.
+
+| Revised claim or retained core behavior | Current source opened |
+| --- | --- |
+| Queue locations, permissions and controls | dashboard/src/views/dashboard/home/components/ReviewQueuePanel.vue:40-157; server/src/NomNomzBot.Infrastructure/Content/Identity/ActionDefinitionSeeder.cs:241-251 |
+| Allow/deny releases only Twitch AutoMod holds; other reviews are local decisions | server/src/NomNomzBot.Infrastructure/Moderation/ModerationQueueService.cs:302-370 |
+| Deny undo delay and commit on leaving | dashboard/src/views/dashboard/home/components/ReviewQueuePanel.vue:60-92; dashboard/src/composables/useInlineFlow.ts (DEFAULT_UNDO_MS) |
+| Profile notes/history and manual actions | dashboard/src/components/layout/profile/ProfileView.vue:140-240,370-402 |
+
+The practical scenarios are recommended uses of these verified controls, not promises of a new feature. Unchanged reference details were compared with the current view, labels and relevant implementation. Runtime platform calls were not performed.
+
+## Historical evidence
+
+The prior review is retained for its detailed claim inventory. Its verdict and file hashes refer to the earlier article; where the new evidence differs, the new evidence takes precedence.
+
+# Fact check: src/content/reference/en/moderation/overview.mdx
+Historical verdict: PASS
 Reviewed: src/content/reference/en/moderation/overview.mdx
 Reviewed-SHA: 9590c21e0bd2e4b0
 

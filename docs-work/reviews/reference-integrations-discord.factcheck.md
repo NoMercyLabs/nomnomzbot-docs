@@ -1,7 +1,38 @@
-# Fact check: src/content/reference/en/integrations/discord.mdx
+# Current independent fact check
+
 Verdict: PASS
 Reviewed: src/content/reference/en/integrations/discord.mdx
-Reviewed-SHA: d010830fac289699
+Reviewed-SHA: f0222a8a59006fb05acb6fa784c06c6f28c12bf200390f2cd82e9a4d65b2c296
+Reviewed-SHA256: f0222a8a59006fb05acb6fa784c06c6f28c12bf200390f2cd82e9a4d65b2c296
+Reviewed-Date: 2026-11-05
+Reviewer: independent media-section reviewer
+Product: 54da8b6318de63b5205a0ff8db35e0b9045dd959 plus preserved current music UI edits
+
+The full article was read in sidebar order. Consequential defaults, permissions, prerequisites, state lifetime and effects were traced against current source; repaired findings were re-read before this verdict. This is source verification, not a live-channel or visible/audible output test.
+
+- server/src/NomNomzBot.Infrastructure/Content/Identity/ActionDefinitionSeeder.cs:225-232 defines viewer/configuration/broadcaster roles. Discord/DiscordNotificationDispatcher.cs:95-155 applies active-link consent and dedup before posting; :187-320 persists outcomes and separately fans out opted-in role DMs.
+- dashboard/src/views/dashboard/discord/components/RuleEditor.vue:205-235 saves the current rule before Preview. Current notification/role panels and labels were checked against the full article.
+
+Source paths without a repeated layer prefix in a bullet are relative to its preceding Infrastructure or dashboard scope. The section report records method, repaired findings, external sources and remaining product limitations: docs-work/overhaul/review-automation-media-integrations.md.
+
+## Historical evidence
+
+Older hashes, verdicts and values below are retained for history and are not the current review.
+
+# Fact check: src/content/reference/en/integrations/discord.mdx
+Verdict: PENDING
+Reviewed: src/content/reference/en/integrations/discord.mdx
+Reviewed-SHA: f0222a8a59006fb05acb6fa784c06c6f28c12bf200390f2cd82e9a4d65b2c296
+
+## 2026-11-05 author source verification
+
+Author source audit complete; independent verdict pending. This hash binds the current text, not the historical PASS below. The article was read in full and revised toward the user's explainer style while preserving precise reference detail. DiscordView.vue; DiscordNotificationDispatcher.cs; DiscordLiveRoleService.cs. Notification destinations and Preview save behavior were reviewed; DM is tied to notification dispatch rather than role joins/leaves.
+
+The section inventory and known implementation gaps are in [automation-media-integrations.md](../overhaul/automation-media-integrations.md). This is source verification, not a live-channel execution claim. Independent review must account for product changes after the original author pass at b12f4f696.
+
+## Historical review (SHA d010830fac289699)
+
+Historical verdict: PASS. The earlier evidence below is retained as history and is superseded where the current article or source changed.
 
 Product repo: C:\Projects\NoMercyLabs\nomnomzbot (master, read only). `D` = dashboard/src/views/dashboard/discord; `EN` = D/i18n/en.json; `S` = server/src.
 This review judged the current page text (sha above). The writer's claims file was used as a lead; the rows marked "re-read" were opened in this run.

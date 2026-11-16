@@ -1,0 +1,50 @@
+{
+  "fingerprint": "2b259f3b6cf7904ab09e7e4a9104210bb1c7f5e427a5c45ae0a6fcf337ee0cde",
+  "verdict": "PASS",
+  "answers": [
+    {
+      "question": 1,
+      "answer": "Use {music.now} for the current track and {music.queue.next} for the next song in the queue. The Now playing, The queue, and Player and request settings tables list the other helpers. Some helpers take an input after a colon: {music.now.bar:5}, {music.queue.item:2}, {music.queue.list:3} and {music.history.list:3}. The request settings helpers are {music.requests.open}, {music.requests.maxDuration} and {music.requests.maxPerUser}. The player settings helpers are {music.volume}, {music.shuffle} and {music.repeat}.",
+      "quote": "So Now playing: {music.now} gives Now playing: Song A by Artist A, and Up next: {music.queue.next} gives Up next: Song B by Artist B."
+    },
+    {
+      "question": 2,
+      "answer": "You type the helpers into a reply, such as a command reply, an event response or a timer message. The music.now.* helpers and the volume, shuffle and repeat helpers need a connected music player. The request settings and history helpers answer without a player. The four music.favorite.* values and the two playlist values need a pipeline with the Song request favorite step or the Add to playlist step. The opening paragraphs and the section Values a pipeline step fills in state this.",
+      "quote": "read the connected music player"
+    },
+    {
+      "question": 3,
+      "answer": "A helper that works is replaced by a value like the examples in the tables. A helper with nothing to read prints as written, braces included. An empty player gives the raw {music.now} text. {music.now.isPlaying} gives false, and {music.now.status} gives one of its five states. An empty queue is a real answer: the length and requester count give 0, and isEmpty gives true. The helpers that name songs in the queue print as written.",
+      "quote": "{music.now.isPlaying} always answers, with false when no track plays."
+    },
+    {
+      "question": 4,
+      "answer": "The current-song reply uses {music.now} and sends Song A by Artist A. With no track, the reply goes out as Now playing: {music.now}, literally. The what-is-next reply uses {music.queue.next}. With an empty queue it also prints as written. In that case {music.queue.length} gives 0 and {music.queue.isEmpty} gives true. So an empty queue can be detected and answered with if or switch. An empty player gives no number. Only {music.now.isPlaying} as false or {music.now.status} tells you about it.",
+      "quote": "An empty queue is a real answer, not a missing one."
+    },
+    {
+      "question": 5,
+      "answer": "The Now playing table shows {music.now.bar:5} as an example, but the meaning of the width, and that it removes the clock, comes only in the paragraph after the table. A reader who copies the example from the table does not yet know that the clock disappears. The cost is small: one reread. I also checked whether {music.volume}, {music.shuffle} and {music.repeat} print as written with no track. The section When there is nothing to show covers this only in general terms, and the last section states it outright, so I had to read to the end to be sure.",
+      "quote": "For {music.now.bar}, add a width from 1 to 50 after a colon to get only the bar, that many marks long, with no clock."
+    },
+    {
+      "question": 6,
+      "answer": "The Use in column repeats the same long list in almost every row of every table. Read aloud, it buries the few rows that differ, such as the rows limited to pipelines or the rows without timers and Discord. The cost is listening time and a missed difference. The {music.queue.cost.total} row describes a helper that always gives 0, which is a detail no reader acts on.",
+      "quote": "Commands, event responses, timers, pipelines, Discord, webhooks"
+    }
+  ],
+  "findings": [],
+  "warnings_released": true,
+  "warning_review": [
+    {
+      "id": "paragraph-11",
+      "decision": "keep",
+      "reason": "Five short sentences, each one idea about a helper's scope. The count alone is not a defect, and a listener can follow it without rereading."
+    },
+    {
+      "id": "sentence-13-2",
+      "decision": "keep",
+      "reason": "One long sentence with two parts: the limit and its result. The helpers it covers are named in the sentence just before, so a reader can act on it when it is read aloud."
+    }
+  ]
+}

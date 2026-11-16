@@ -1,5 +1,26 @@
-# Reader review: /reference/settings/bot-basics-and-personality
+# Independent reader review: /reference/settings/bot-basics-and-personality
 Verdict: PASS
+Reviewed: src/content/reference/en/settings/bot-basics-and-personality.mdx
+Reviewed-SHA: e33d89eb002295f6
+Reviewed-SHA256: e33d89eb002295f6fa878e554866e0cf56cb64b964d80342a7da57746fbdaf13
+Reviewed-Date: 2026-11-05
+Reviewer: independent reviewer, separate from article author
+Product-Revision: 54da8b6318de63b5205a0ff8db35e0b9045dd959
+
+The complete current article was read independently of its author, in the established settings, self-hosting and Code and SDK navigation order. The user's natural explainer/progressive-disclosure requirements take precedence over historical pilot mimicry, sentence caps and repeated page templates.
+
+## Learning and lookup result
+
+The command-prefix/line-marker distinction, tone versus spoken voice, persistence and validation lead naturally into greetings. The repaired section explains live-only first-tracked and returning-per-stream greetings, a five-second interaction example, and the stored but unused streak controls without promising automatic attendance announcements.
+
+No outstanding substantive reader finding.
+
+Related routes were checked as contextual continuations rather than prerequisites for ordinary bot use. Draft labels remain appropriate for code material. This is a text/structure review, not a claim of rendered browser QA.
+
+## Historical review (superseded)
+
+# Reader review: /reference/settings/bot-basics-and-personality
+Historical verdict: PASS
 Reviewed: C:\Projects\NoMercyLabs\nomnomzbot-docs\src\content\reference\en\settings\bot-basics-and-personality.mdx
 Reviewed-SHA: 862e67535087c975
 

@@ -1,7 +1,17 @@
-# Reader review: C:\Projects\NoMercyLabs\nomnomzbot-docs\src\content\reference\en\moderation\bans-and-blocked-terms.mdx
+# Independent reader review: /reference/moderation/bans-and-blocked-terms
 Verdict: PASS
-Reviewed: C:\Projects\NoMercyLabs\nomnomzbot-docs\src\content\reference\en\moderation\bans-and-blocked-terms.mdx
-Reviewed-SHA: f86bf831a7aad311
+Reviewed: src/content/reference/en/moderation/bans-and-blocked-terms.mdx
+Reviewed-SHA: c1b696032f878c16ae0687aa13ce7505dead4524609f75b9204689abb1f1e10b
+
+## Independent overhaul review, 2026-11-05
+
+The opening helps readers choose person-level or term-level action and locates the actual ban entry point; concise reference flows suit the task.
+
+Reviewed independently of the article author, in actual navigation order. Current product source 54da8b631 and relevant changes since b12f4f696 were read without starting the bot, executing platform actions or changing channel data. The reader judgment follows the user's natural teaching style; old pilot mimicry, sentence caps and unrelated Atlas style gates were not applied. See [review-moderation-economy-community.md](../overhaul/review-moderation-economy-community.md) for the review scope and findings.
+
+## Prior review history
+
+The earlier text below is retained as history; it does not independently approve a later article hash.
 
 Reader: a streamer who has read only `/reference/moderation/overview` (the Assumes page on map row line 86). I read that page first. I read the pilot page `/reference/commands/create-a-command` for voice.
 

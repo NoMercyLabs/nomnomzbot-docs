@@ -1,3 +1,23 @@
+# Current independent reader review
+
+Verdict: PASS
+Reviewed: src/content/reference/en/overlays/obs-browser-source.mdx
+Reviewed-SHA: 192c7182405fb04e658230e17f0980425dfee0a952a8ded9d19babca1c6bdf26
+Reviewed-SHA256: 192c7182405fb04e658230e17f0980425dfee0a952a8ded9d19babca1c6bdf26
+Reviewed-Date: 2026-11-05
+Reviewer: independent media-section reviewer
+Product: 54da8b6318de63b5205a0ff8db35e0b9045dd959 plus preserved current music UI edits
+
+A nontechnical reader gets a concrete copy/add/configure/trigger/check path. Required-source discovery is included, secrets are explained at the point of use, and the preview/audio-mixer check prevents an open-connection badge from being mistaken for successful visible or audible output.
+
+The full page was read with adjacent navigation and related links. The owner's natural explanatory style governs: no Atlas sentence caps, pilot imitation or rigid article template was imposed. No substantive reader finding remains at this hash. Combined build, rendered-output and link/frontmatter checks belong to the lead's separate validation.
+
+Report: docs-work/overhaul/review-automation-media-integrations.md.
+
+## Historical evidence
+
+Older hashes and verdicts below are retained for history and are not the current review.
+
 # Reader review: reference-overlays-obs-browser-source (round 3)
 Verdict: PASS
 Reviewed: src/content/reference/en/overlays/obs-browser-source.mdx

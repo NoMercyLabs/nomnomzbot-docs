@@ -1,17 +1,11 @@
 ---
-title: Chat, music and voice (Draft)
+title: Chat, music and voice
 description: Use the nnz.api calls that post in chat, read and request music, and speak text aloud, with their parameters, results and grants.
 ---
 
-A script reaches chat, the music player and text to speech through `nnz.api.chat`, `nnz.api.music` and `nnz.api.tts`.
-This page lists each call with its parameters, its result and its grant.
-How grants work and how to read a failed call is on [Script basics](/reference/code/sdk-script-basics).
-
-::Callout
-
-**Draft**: this part of the guide is not finished yet.
-
-::
+Use `nnz.api.chat` to type in chat, `nnz.api.music` to read or control music, and `nnz.api.tts` to speak through the overlay.
+They are separate outputs: sending a chat reply does not also play it aloud, and a spoken line does not also appear in chat.
+[Script basics](/reference/code/sdk-script-basics) explains the grants and how to inspect a failed call.
 
 ## Before you start
 
@@ -53,6 +47,7 @@ A script that a chat command or a chat trigger runs can read these values with `
 | `user.id` | The viewer's id on the platform. |
 | `user.name` | The viewer's login. |
 | `user.provider` | The platform the viewer chats on. |
+| `provider` | The platform the chat message came from (the same as `user.provider`). |
 | `user.role` | The viewer's role in the channel. |
 | `user.bits` | The bits on this message. |
 | `message` | The whole chat line, the command word included. |
@@ -77,8 +72,8 @@ The player itself is on [Music player](/reference/music/music-player).
 
 | Field | Type | Meaning |
 | --- | --- | --- |
-| `track` | `string` | The track title. |
-| `artist` | `string` | The artist name. |
+| `track` | `string \| null` | The track title, or `null` when the service does not report it. |
+| `artist` | `string \| null` | The artist name, or `null` when the service does not report it. |
 | `album` | `string \| null` | The album name, or `null` when it is not known. |
 | `durationMs` | `number` | The length of the track, in milliseconds. |
 | `progressMs` | `number` | How far the playback is, in milliseconds. |
@@ -91,6 +86,9 @@ The player itself is on [Music player](/reference/music/music-player).
 `nnz.api.music.queue(uri)` requests a song. Pass a title, an artist or a link as `uri`.
 It gives `true` when the song is in the queue, and `false` when it was refused.
 
+Use this for a normal song request that should wait in the queue.
+Use `playNow` only when you intentionally want immediate playback outside that queue.
+
 The request counts as one from the viewer who started the script, with the rights of everyone.
 A music service that the channel limits to a higher role refuses it.
 
@@ -98,6 +96,7 @@ A music service that the channel limits to a higher role refuses it.
 
 `nnz.api.music.playNow(uri)` plays a track at once and skips the song-request queue.
 It gives `true` when the track plays, and `false` when it was refused.
+When the track ends, the bot plays the track that played before again, from the point where it stopped.
 It runs the pipeline action that plays one track, so its grant is the grant of that action: `actions.invoke:play_track_once`.
 
 ## Text to speech
@@ -127,6 +126,7 @@ Only `text` is required.
 
 The line speaks in the channel's one bot voice, unless you set `asUser`.
 Set `asUser` to `'viewer'` when the line holds the words of the viewer who started the script.
+`'user'` and `'trigger'` work the same as `'viewer'`, and `'bot'` is the same as leaving it out.
 A login or an id reads the line in that viewer's saved voice.
 Use it only for that viewer's own words.
 A name that matches no viewer is a failed call with the code `not_found`: the call gives `null`, and the script goes on.
@@ -145,16 +145,33 @@ Otherwise it gives this result:
 
 ### Speak in several voices
 
-`nnz.api.tts.speakSequence(segments)` speaks 1 to 20 parts as one audio clip.
-Each part can have its own voice.
+`nnz.api.tts.speakSequence(segments)` speaks a list of blocks as one audio clip.
+The list holds 1 to 20 blocks, in any order.
+A block is either a text block, which has words and its own voice, or a pause block.
 
-| Field | Meaning |
+| Field of a text block | Meaning |
 | --- | --- |
 | `text` | The words to speak. Required. |
-| `voice` | The voice id for this part. Leave it out for the normal voice. |
+| `voice` | The voice id for this block. Leave it out for the normal voice. |
 | `rate` | A change of speaking speed, in percent. |
 | `pitch` | A change of pitch, in percent. |
-| `breakAfterMs` | Silence after this part, from 0 to 10,000 milliseconds. The last part ignores it. |
+| `volume` | A change of loudness, in percent, for example `20`. |
+| `stress` | `true` to speak this block with stress. Leave it out or use `false` for none. |
+| `breakAfterMs` | Silence after this block, from 0 to 10,000 milliseconds. The last block ignores it. |
+
+A pause block has only `pause`, the silence in milliseconds from 0 to 10,000: `\{ pause: 500 \}`.
+The silence goes after the block before it, and adds to that block's `breakAfterMs` up to the 10,000 limit.
+A pause with no block before it is dropped.
+A `pause` field on a text block does nothing.
+Use `breakAfterMs` on a text block, or a separate pause block.
+
+Each speech provider reads the blocks its own way.
+Azure joins blocks of one voice that follow each other, so they flow as one sentence, and a stressed block comes out slower, higher and louder.
+Edge cannot stress, so it joins neighboring blocks that sound the same and cuts at a pause.
+ElevenLabs speaks a run of blocks with one voice as one text.
+It ignores rate, pitch, volume, stress and pauses.
+A provider that cannot stress speaks a stressed block plain.
+When the channel needs mod approval for text to speech, the blocks play as one text in the voice of the first block.
 
 The call gives the same result as `speak`, or `null`.
 This call is the exception to the one rule.
@@ -163,9 +180,11 @@ So a left-out or `null` list does not stop the run.
 These cases are each a failed call with the code `invalid_argument`:
 
 - a left-out, `null` or empty list
-- more than 20 parts
-- a part without text
-- a field of the wrong type, for example a `rate` that is text
+- more than 20 blocks, pause blocks included
+- a block without text and without a valid `pause`
+- a list that holds only pause blocks
+- a `breakAfterMs` outside 0 to 10,000
+- a field of the wrong type, for example a `rate` that is text or a `stress` that is not `true` or `false`
 
 The call gives `null`, and the script goes on.
 
@@ -173,8 +192,9 @@ The call gives `null`, and the script goes on.
 
 `nnz.api.tts.getVoice(userIdOrLogin)` gives the voice a viewer has, as `voiceId` and `displayName`.
 Leave out `userIdOrLogin` for the viewer who started the script.
-It gives `null` when the viewer uses the channel's normal voice.
-A name that matches no viewer is a failed call with the code `not_found`: the call gives `null`, and the script goes on.
+It gives `null` when the viewer uses the channel's normal voice, and when the name matches no viewer.
+Both cases are a failed call with the code `not_found`, and the script goes on.
+The error message tells them apart: "No viewer matches that user." means the name is unknown.
 
 ### Set a viewer's voice
 
@@ -198,11 +218,13 @@ Each voice has `voiceId`, `displayName`, `locale` and `gender`.
 
 ## Speak, then post
 
-This script speaks a line, waits, and then posts the same line in chat.
-The wait uses `nnz.time.sleep`, which waits at most 5 seconds.
-A line of up to 5 seconds has played when the chat line appears.
-A longer line still plays when the chat line appears.
-When `durationMs` is 0, or `speak` gives `null`, the script posts at once.
+This script requests a spoken line, waits for up to five seconds of its reported duration, then posts the same text in chat.
+It demonstrates combining outputs, rather than waiting for a confirmed playback-complete event.
+Overlay playback and approval can affect when a viewer actually hears the line.
+
+`nnz.time.sleep` caps each pause at five seconds and counts against the script's own execution budget.
+If the reported duration is longer, the chat message can appear while the audio is still playing.
+When `durationMs` is 0, or `speak` returns `null`, the script posts at once.
 
 ```js
 const line = 'Welcome to the stream!';

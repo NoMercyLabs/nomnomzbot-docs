@@ -1,3 +1,43 @@
+# Current targeted factcheck review
+
+Verdict: PARTIAL
+Reviewed: src/content/reference/en/commands/create-a-command.mdx
+Reviewed-SHA: 7f5c817af09246e2bf2b5ecd5a7c995d6a08180b2de197d8b2f92a1194705c6c
+Reviewed-SHA256: 7f5c817af09246e2bf2b5ecd5a7c995d6a08180b2de197d8b2f92a1194705c6c
+Reviewed-Date: 2026-11-06
+Reviewer: final-learning editing author; self-review, not independent
+Product: 2dfefbb0c393f439954d79b32ac11511678d7f44
+
+The full article was read for editorial clarity. Source verification is limited to the claims below and the focused checks in docs-work/ecosystem-validation/final-learning.md. This is not an exhaustive factual PASS, independent approval, rendered-site review or live application test.
+
+Speech delivery: server/src/NomNomzBot.Infrastructure/Chat/EventHandlers/ChatMessageHandler.cs:664-705 gates speech on SentToChat; server/src/NomNomzBot.Application/Chat/Services/ReplyTemplateRenderer.cs:38-65 returns no chat text for overlay-only/Nowhere. The clarification sits with the delivery controls and links to TTS setup.
+
+## Preserved historical reviews
+
+The earlier hashes, verdicts and claims below are retained as historical evidence; they do not approve this revision.
+
+# Current independent fact check
+
+Verdict: PASS
+Reviewed: src/content/reference/en/commands/create-a-command.mdx
+Reviewed-SHA: 7ffdf9aa691ef6bdf46f8cb8f5ac9350f8867c40c65b7da48031a10476346f62
+Reviewed-SHA256: 7ffdf9aa691ef6bdf46f8cb8f5ac9350f8867c40c65b7da48031a10476346f62
+Reviewed-Date: 2026-11-05
+Reviewer: independent section reviewer
+Product: 54da8b6318de63b5205a0ff8db35e0b9045dd959 (initial source tracing b12f4f69638553c03ed64c1518c90d7bcccd6907)
+
+The full article was read in navigation order; consequential behavior and reference details were checked against current source. All reported documentation findings affecting this page were repaired and re-reviewed. This is a source review, not a live-channel test.
+
+- Name/helper/action/role/delivery validation and ownership checks: server/src/NomNomzBot.Infrastructure/Commands/CommandService.cs:70-249; request bounds/defaults: server/src/NomNomzBot.Application/Commands/Dtos/CommandDtos.cs:96-156.
+- Duplicate uses saved settings, is disabled, omits aliases and reply-delivery override: dashboard/src/views/dashboard/commands/components/CommandEditor.vue:256-286.
+- Always-on/reserved built-ins win name collisions; authored matching and access/cooldowns: server/src/NomNomzBot.Infrastructure/Chat/EventHandlers/ChatMessageHandler.cs:290-485,734-847.
+
+Report: docs-work/overhaul/review-learning-commands-helpers.md.
+
+## Historical evidence
+
+The material below is retained as historical evidence. Its older hashes, verdicts and values do not constitute the current review.
+
 # Fact check: src/content/reference/en/commands/create-a-command.mdx
 Verdict: PASS
 Reviewed: src/content/reference/en/commands/create-a-command.mdx

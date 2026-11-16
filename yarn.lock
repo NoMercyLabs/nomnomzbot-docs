@@ -5053,6 +5053,7 @@ __metadata:
     framer-motion: "npm:^12.23.11"
     glob: "npm:^10.3.10"
     gray-matter: "npm:^4.0.3"
+    hast-util-from-html: "npm:^2.0.3"
     hast-util-to-string: "npm:^3.0.1"
     mdast-util-to-string: "npm:^4.0.0"
     mdx-annotations: "npm:^0.1.4"

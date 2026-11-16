@@ -1,5 +1,32 @@
-# Fact-check: /reference/settings/readability
+# Independent source review: /reference/settings/readability
 Verdict: PASS
+Reviewed: src/content/reference/en/settings/readability.mdx
+Reviewed-SHA: bbbc6bd1bb025660
+Reviewed-SHA256: bbbc6bd1bb025660e24a45dda90e132b2ba6d48fd07ec1620b01fc9a2dc5dd81
+Reviewed-Date: 2026-11-05
+Reviewer: independent reviewer, separate from article author
+Product-Revision: 54da8b6318de63b5205a0ff8db35e0b9045dd959
+
+The complete current article was read in navigation order and checked against current product source. Historical PASS entries below are leads, not approval of this revision. Atlas voice/template gates do not govern this review.
+
+## Current evidence and result
+
+No substantive finding. Presets, 12-20px range, immediate local persistence, density and motion behavior checked.
+
+Source files opened in this review: dashboard/src/composables/useReadability.ts:37-78,110-160; dashboard/src/views/dashboard/settings/ReadabilityView.vue:40-118.
+
+Unqualified paths beginning Identity, CustomCode, Billing, EventStore, Engagement, Rewards, Widgets or Platform are under server/src/NomNomzBot.Infrastructure; Api and Domain identify their corresponding server projects. Dashboard shorthand is under dashboard/src/views/dashboard.
+
+Verification is read-only source review. No bot/API startup, live account authorization, channel writes, C# host/Jint execution, Docker install or restore was performed. Documentation build/render QA belongs to the combined parent pass. The SDK reference and worked-example checks additionally ran the existing read-only nnz-code-doc-check.mjs with production JavaScript bootstrap and substituted host I/O.
+
+## Historical review (superseded)
+
+# Fact-check: /reference/settings/readability
+Historical verdict: PENDING
+
+2026-11-04 overhaul: the article changed, so the previous PASS and hash below are historical evidence, not approval of the current revision.
+Fresh writer source checks and article inventory are recorded under S4 in `docs-work/overhaul/settings-hosting-code.md`.
+Independent review of the changed text is pending.
 Reviewed: C:\Projects\NoMercyLabs\nomnomzbot-docs\src\content\reference\en\settings\readability.mdx
 Reviewed-SHA: cac05e66c2a0ec79
 

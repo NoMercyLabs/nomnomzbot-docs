@@ -1,7 +1,17 @@
-# Reader review: C:\Projects\NoMercyLabs\nomnomzbot-docs\src\content\reference\en\economy\polls-and-predictions.mdx
+# Independent reader review: /reference/economy/polls-and-predictions
 Verdict: PASS
-Reviewed: C:\Projects\NoMercyLabs\nomnomzbot-docs\src\content\reference\en\economy\polls-and-predictions.mdx
-Reviewed-SHA: f3d9519e6a862755
+Reviewed: src/content/reference/en/economy/polls-and-predictions.mdx
+Reviewed-SHA: e4f1812c015642f6ce6d6bab32231d21dd6b362a86f3dcbf9aa476b892951367
+
+## Independent overhaul review, 2026-11-05
+
+Purpose, example questions and lock/resolve/cancel consequences explain the lifecycle before exact option tables.
+
+Reviewed independently of the article author, in actual navigation order. Current product source 54da8b631 and relevant changes since b12f4f696 were read without starting the bot, executing platform actions or changing channel data. The reader judgment follows the user's natural teaching style; old pilot mimicry, sentence caps and unrelated Atlas style gates were not applied. See [review-moderation-economy-community.md](../overhaul/review-moderation-economy-community.md) for the review scope and findings.
+
+## Prior review history
+
+The earlier text below is retained as history; it does not independently approve a later article hash.
 
 Reader: no code knowledge. Read as a streamer who has read only the Dashboard tour (the one page in Assumes). Ledger checked: poll and prediction are owned here; channel role is owned by Permissions; home page and sidebar are owned by the tour and only linked.
 

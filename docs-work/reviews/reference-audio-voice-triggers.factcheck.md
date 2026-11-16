@@ -1,7 +1,39 @@
-# Fact check: src/content/reference/en/audio/voice-triggers.mdx
+# Current independent fact check
+
 Verdict: PASS
 Reviewed: src/content/reference/en/audio/voice-triggers.mdx
-Reviewed-SHA: 1001f86c0b45231a
+Reviewed-SHA: a69b74e672cae24beb5defc1dfec25073de7efd1f7578b0dc8e456cd50d2727c
+Reviewed-SHA256: a69b74e672cae24beb5defc1dfec25073de7efd1f7578b0dc8e456cd50d2727c
+Reviewed-Date: 2026-11-05
+Reviewer: independent media-section reviewer
+Product: 54da8b6318de63b5205a0ff8db35e0b9045dd959 plus preserved current music UI edits
+
+The full article was read in sidebar order. Consequential defaults, permissions, prerequisites, state lifetime and effects were traced against current source; repaired findings were re-read before this verdict. This is source verification, not a live-channel or visible/audible output test.
+
+- server/src/NomNomzBot.Infrastructure/Commands/VoiceTriggerService.cs:78-120,215-319 validates/stores phrases, preserves transcript only for a current live stream, applies case-insensitive substring/first-match/cooldown and increments once.
+- server/src/NomNomzBot.Api/Controllers/VoiceListenerPageController.cs:119-130,205-238 uses browser speech recognition, 20 displayed phrases, en-US and restart; the listener is not an OBS source.
+- dashboard/src/views/dashboard/overlays/OverlaysView.vue:64-70 and obs/components/RequiredOverlaysPanel.vue:103-145 confirm the supplied Alerts settings cannot be edited through those controls.
+
+Source paths without a repeated layer prefix in a bullet are relative to its preceding Infrastructure or dashboard scope. The section report records method, repaired findings, external sources and remaining product limitations: docs-work/overhaul/review-automation-media-integrations.md.
+
+## Historical evidence
+
+Older hashes, verdicts and values below are retained for history and are not the current review.
+
+# Fact check: src/content/reference/en/audio/voice-triggers.mdx
+Verdict: PENDING
+Reviewed: src/content/reference/en/audio/voice-triggers.mdx
+Reviewed-SHA: a69b74e672cae24beb5defc1dfec25073de7efd1f7578b0dc8e456cd50d2727c
+
+## 2026-11-05 author source verification
+
+Author source audit complete; independent verdict pending. This hash binds the current text, not the historical PASS below. The article was read in full and revised toward the user's explainer style while preserving precise reference detail. VoiceTriggerService.cs; VoiceListenerPageController.cs; VoiceTriggersView.vue; alerts.vue. Chrome listens in a real tab; counting and supplied-alert sticker settings availability are distinct.
+
+The section inventory and known implementation gaps are in [automation-media-integrations.md](../overhaul/automation-media-integrations.md). This is source verification, not a live-channel execution claim. Independent review must account for product changes after the original author pass at b12f4f696.
+
+## Historical review (SHA c319979c7d30b4bf)
+
+Historical verdict: PASS. The earlier evidence below is retained as history and is superseded where the current article or source changed.
 
 Round 2. Product repo paths are relative to C:\Projects\NoMercyLabs\nomnomzbot. S = server/src/NomNomzBot.Infrastructure/Commands/VoiceTriggerService.cs. L = server/src/NomNomzBot.Api/Controllers/VoiceListenerPageController.cs. D = dashboard/src/views/dashboard/voice-triggers. A = server/src/NomNomzBot.Infrastructure/Content/Widgets/Assets/alerts.vue.
 

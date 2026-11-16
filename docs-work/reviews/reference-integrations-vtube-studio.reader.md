@@ -1,3 +1,23 @@
+# Current independent reader review
+
+Verdict: PASS
+Reviewed: src/content/reference/en/integrations/vtube-studio.mdx
+Reviewed-SHA: c9fb1f3097c16c7915c89ac096ee5d4ba7b57d65498c0d482be1fd9d05ac84c5
+Reviewed-SHA256: c9fb1f3097c16c7915c89ac096ee5d4ba7b57d65498c0d482be1fd9d05ac84c5
+Reviewed-Date: 2026-11-05
+Reviewer: independent media-section reviewer
+Product: 54da8b6318de63b5205a0ff8db35e0b9045dd959 plus preserved current music UI edits
+
+The guide teaches the avatar-interaction purpose, external API prerequisite and a recognizable hotkey test before automation. Direct versus bridge dependencies and approval differ clearly; model/expression actions and advanced request fields remain findable.
+
+The full page was read with adjacent navigation and related links. The owner's natural explanatory style governs: no Atlas sentence caps, pilot imitation or rigid article template was imposed. No substantive reader finding remains at this hash. Combined build, rendered-output and link/frontmatter checks belong to the lead's separate validation.
+
+Report: docs-work/overhaul/review-automation-media-integrations.md.
+
+## Historical evidence
+
+Older hashes and verdicts below are retained for history and are not the current review.
+
 # Reader review: C:\Projects\NoMercyLabs\nomnomzbot-docs\src\content\reference\en\integrations\vtube-studio.mdx
 Verdict: PASS
 Reviewed: C:\Projects\NoMercyLabs\nomnomzbot-docs\src\content\reference\en\integrations\vtube-studio.mdx

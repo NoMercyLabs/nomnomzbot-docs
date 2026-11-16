@@ -1,3 +1,22 @@
+# Current independent reader review
+
+Verdict: PASS
+Reviewed: src/content/reference/en/commands/quotes.mdx
+Reviewed-SHA: 97f7d95e2a1c929b6f13b32af3046264273c3cb4521aa4d0831d8aa5e1ed2ea3
+Reviewed-SHA256: 97f7d95e2a1c929b6f13b32af3046264273c3cb4521aa4d0831d8aa5e1ed2ea3
+Reviewed-Date: 2026-11-05
+Reviewer: independent section reviewer
+
+The page teaches keeping memorable stream moments, gives dashboard/chat paths and expected results, and preserves numbered lookup, attribution, editing/deletion and TTS details. It distinguishes displaying a random dashboard quote from posting one to chat.
+
+The full page was read with the preceding/following navigation context and related links. This review applies the owner's explanatory, progressive-disclosure guidance; it does not impose Atlas sentence caps, pilot mimicry or fixed article headings. No substantive reader finding remains at this hash. Build/render/link checks are recorded separately by the lead reviewer.
+
+Report: docs-work/overhaul/review-learning-commands-helpers.md.
+
+## Historical evidence
+
+The material below is retained as historical evidence; its older verdict is not the current review.
+
 # Reader review: src/content/reference/en/commands/quotes.mdx
 Verdict: PASS
 Reviewed: src/content/reference/en/commands/quotes.mdx

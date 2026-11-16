@@ -1,5 +1,26 @@
-# Reader review: /reference/settings/white-label-bot
+# Independent reader review: /reference/settings/white-label-bot
 Verdict: PASS
+Reviewed: src/content/reference/en/settings/white-label-bot.mdx
+Reviewed-SHA: 18ffd57d3b597a36
+Reviewed-SHA256: 18ffd57d3b597a3668c08ae31d50e15353a501217f0b842e12cbc103f02bcf17
+Reviewed-Date: 2026-11-05
+Reviewer: independent reviewer, separate from article author
+Product-Revision: 54da8b6318de63b5205a0ff8db35e0b9045dd959
+
+The complete current article was read independently of its author, in the established settings, self-hosting and Code and SDK navigation order. The user's natural explainer/progressive-disclosure requirements take precedence over historical pilot mimicry, sentence caps and repeated page templates.
+
+## Learning and lookup result
+
+The article explains why a separate identity helps, makes it optional, and gives a clear connect/change/disconnect journey. Actual broadcaster fallback is stated after UI text that still calls it shared bot.
+
+No outstanding substantive reader finding.
+
+Related routes were checked as contextual continuations rather than prerequisites for ordinary bot use. Draft labels remain appropriate for code material. This is a text/structure review, not a claim of rendered browser QA.
+
+## Historical review (superseded)
+
+# Reader review: /reference/settings/white-label-bot
+Historical verdict: PASS
 Reviewed: C:\Projects\NoMercyLabs\nomnomzbot-docs\src\content\reference\en\settings\white-label-bot.mdx
 Reviewed-SHA: 671a0a2dc3a3d70f
 

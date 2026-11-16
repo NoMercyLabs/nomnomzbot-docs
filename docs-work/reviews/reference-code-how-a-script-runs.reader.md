@@ -1,7 +1,41 @@
-# Reader review: C:\Projects\NoMercyLabs\nomnomzbot-docs\src\content\reference\en\code\how-a-script-runs.mdx
+# Current targeted editorial review — 2026-11-06
+
+Verdict: TARGETED AUTHOR SELF-REVIEW; no independent or exhaustive PASS.
+Reviewed: src/content/reference/en/code/how-a-script-runs.mdx
+Reviewed-SHA256: 92c914b80f738352d1fca5c73dce2fa8967b9f483c92f30e09b30f5d34d6219c
+Reviewer: editing agent (author self-review)
+
+Full editorial read; removed blanket Draft callout/title. Focused source check: Infrastructure/CustomCode/ScriptRunner.cs:43-205 confirms script enabled, quota, valid version, saved grants, execution and history ordering. Engine/resource limits are not an exhaustive new validation.
+
+Coverage details and final static-check results: [final-developer.md](../ecosystem-validation/final-developer.md). Full reading is distinct from focused source verification. No live application/provider test or whole-project build in this batch.
+
+## Historical records below — verdicts and hashes preserved
+
+# Independent reader review: /reference/code/how-a-script-runs
 Verdict: PASS
+Reviewed: src/content/reference/en/code/how-a-script-runs.mdx
+Reviewed-SHA: 752d7406bd44d929
+Reviewed-SHA256: 752d7406bd44d9293ded88d4cba81bc144daf2a74703422947d715d1cc9299e6
+Reviewed-Date: 2026-11-05
+Reviewer: independent reviewer, separate from article author
+Product-Revision: 54da8b6318de63b5205a0ff8db35e0b9045dd959
+
+The complete current article was read independently of its author, in the established settings, self-hosting and Code and SDK navigation order. The user's natural explainer/progressive-disclosure requirements take precedence over historical pilot mimicry, sentence caps and repeated page templates.
+
+## Learning and lookup result
+
+The lifecycle connects trigger, fresh variables, pipeline outputs and persistent storage before limits. Exact errors are easy to find; the distinction between 8s script time, 15s host calls and 968s outer ceiling resolves the UI's old wording without hiding limits.
+
+No outstanding substantive reader finding.
+
+Related routes were checked as contextual continuations rather than prerequisites for ordinary bot use. Draft labels remain appropriate for code material. This is a text/structure review, not a claim of rendered browser QA.
+
+## Historical review (superseded)
+
+# Reader review: C:\Projects\NoMercyLabs\nomnomzbot-docs\src\content\reference\en\code\how-a-script-runs.mdx
+Historical verdict: PASS
 Reviewed: C:\Projects\NoMercyLabs\nomnomzbot-docs\src\content\reference\en\code\how-a-script-runs.mdx
-Reviewed-SHA: b27340a414ca5f26
+Reviewed-SHA: d3912427df1d0ec6
 
 Reader: a streamer or moderator who does not write code. Read before this page: only `/reference/code/scripts` (Assumes, map row). I was not given that page's text, so I did not judge against it.
 

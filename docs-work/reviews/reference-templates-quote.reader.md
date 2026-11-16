@@ -1,3 +1,22 @@
+# Current independent reader review
+
+Verdict: PASS
+Reviewed: src/content/reference/en/templates/quote.mdx
+Reviewed-SHA: 09d34cc4950a6c966d81c8de3e715156e0a7aefdfce5f7e2bd668b540b9553ce
+Reviewed-SHA256: 09d34cc4950a6c966d81c8de3e715156e0a7aefdfce5f7e2bd668b540b9553ce
+Reviewed-Date: 2026-11-05
+Reviewer: independent section reviewer
+
+The small reference cleanly separates numbered quote content from attribution, date, game, count and latest values. It serves lookup while linking back to the broader template explanation.
+
+The full page was read with the preceding/following navigation context and related links. This review applies the owner's explanatory, progressive-disclosure guidance; it does not impose Atlas sentence caps, pilot mimicry or fixed article headings. No substantive reader finding remains at this hash. Build/render/link checks are recorded separately by the lead reviewer.
+
+Report: docs-work/overhaul/review-learning-commands-helpers.md.
+
+## Historical evidence
+
+The material below is retained as historical evidence; its older verdict is not the current review.
+
 # Reader review: src/content/reference/en/templates/quote.mdx
 Verdict: PASS
 Reviewed: C:/Projects/NoMercyLabs/nomnomzbot-docs/src/content/reference/en/templates/quote.mdx

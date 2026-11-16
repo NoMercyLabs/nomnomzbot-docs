@@ -1,7 +1,27 @@
+# Current independent reader review
+
+Verdict: PASS
+Reviewed: src/content/reference/en/integrations/spotify.mdx
+Reviewed-SHA: 6baffbcd331924968f8cf0f9703b87480108829a2e8d79be7a7d521cad3257c5
+Reviewed-SHA256: 6baffbcd331924968f8cf0f9703b87480108829a2e8d79be7a7d521cad3257c5
+Reviewed-Date: 2026-11-05
+Reviewer: independent media-section reviewer
+Product: 54da8b6318de63b5205a0ff8db35e0b9045dd959 plus preserved current music UI edits
+
+Account versus app is explained before personal app setup, allowing the shared-app path to stay simple. The first-device check separates account connection from audio capture. It preserves exact callback/scopes/secrets and truthfully explains why normal Reconnect cannot add the missing streaming grant.
+
+The full page was read with adjacent navigation and related links. The owner's natural explanatory style governs: no Atlas sentence caps, pilot imitation or rigid article template was imposed. No substantive reader finding remains at this hash. Combined build, rendered-output and link/frontmatter checks belong to the lead's separate validation.
+
+Report: docs-work/overhaul/review-automation-media-integrations.md.
+
+## Historical evidence
+
+Older hashes and verdicts below are retained for history and are not the current review.
+
 # Reader review: src/content/reference/en/integrations/spotify.mdx
 Verdict: PASS
 Reviewed: src/content/reference/en/integrations/spotify.mdx
-Reviewed-SHA: c7d3e0e8e3db4706
+Reviewed-SHA: a3deb528dc6c017e
 
 Round 2. Read as rendered, all 117 lines. The round 1 blocking findings are cleared:
 - Moderator path: lines 17-19 now say a moderator, lead moderator or editor opens the page from a direct link.

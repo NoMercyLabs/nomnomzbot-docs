@@ -3,19 +3,23 @@ title: Chat page
 description: Read and send chat, reply, moderate a line, look at one chatter, search the history and change how the feed looks.
 ---
 
-You read and write the channel's chat on the **Chat** page, in the **Live** group of the sidebar.
-The page shows the live feed, a send box, tools on each line and four side panels.
-The header shows **Live** or **Offline** for the channel.
+The **Chat** page brings conversation and moderation into the same place, so you can follow the stream, reply to a viewer and deal with a problem without switching tools.
+Open it from the **Live** group of the sidebar.
+The live feed and message box are the starting point; the side panels add information or controls when you need them.
+
+When a message needs context, click the line to focus on that viewer or open their full [profile](/reference/community/people).
+When you need to find an earlier conversation, search the stored history.
+Changes to how your own feed looks belong in **Display**, while changes to who may chat belong in **Chat settings**.
 
 ## Who can use this page
 
-A **Moderator**, **Lead moderator**, **Editor** or **Broadcaster** may open **Chat**.
+By default, a **Moderator**, **Lead moderator**, **Editor** or **Broadcaster** may open **Chat**.
 The **Broadcaster** may also let a **VIP** open it.
 The roles are explained on [Permissions](/reference/settings/permissions).
 
 A signed-in viewer sees **Viewer chat** in the sidebar instead.
 **Viewer chat** is the same feed and send box, with the **Display** panel only.
-It has no search, no moderation tools, no **Chat identity** panel and no **Viewer** panel.
+On the full page it has no search, no moderation tools, no **Chat identity** panel and no **Viewer** panel.
 
 Someone who may open **Chat** but may not read the chat settings also gets this viewer version of the page.
 
@@ -33,15 +37,19 @@ The chat of a Twitch channel that does not use the bot opens from the viewer pag
 The message goes out on your own account, not as the bot.
 The bot's replies show in the feed as chat lines, in the channel's one bot voice.
 
+For example, typing a welcome here sends it as you.
+Creating a command reply or an [event response](/reference/automation/event-responses) makes the bot send that response through the channel's bot account instead.
+
 If sending fails, the text stays in the box and the page shows "The message was not sent."
 
 | Limit | Value |
 | --- | --- |
 | Longest message | 500 characters. Over 500, **Send** turns off and the page shows "A message is at most 500 characters." |
-| Character counter | Shows from 400 characters, for example "420/500". |
+| Character counter | Shows above 400 characters, for example "420/500". |
 | Emote and emoji suggestions | Type `:` and two letters. |
-| Chatter suggestions | Type `@` and one letter. The latest speaker comes first. |
+| Chatter suggestions | Type `@` and one letter. Names that start with what you typed come first, then shorter names, then A to Z. |
 | Suggestions shown | Up to 12. Up and Down move, Tab or Enter picks, Escape hides the list. |
+| Earlier messages | Up at the start of the box brings back an older message you sent. Down at the end brings a newer one, then your draft. Up to 50 are kept while the page is open. |
 
 The send box shows only to someone who may send chat.
 
@@ -73,10 +81,38 @@ Folded sections and skin tones are also kept in this browser.
    A row of buttons shows at the top right of the line.
 2. Choose **Reply**.
    "Replying to" and the name show above the send box.
+   A **Reply thread** popup shows the stored conversation above it.
 3. Type and send your answer.
 
-**Cancel reply** or Escape removes the reply.
+Typing closes the thread popup while keeping your reply addressed to that person.
+**Cancel reply** removes the reply target.
+With the thread popup open, Escape closes the popup first; another Escape cancels the reply when no suggestion list is open.
 A reply line in the feed shows what it answers, for example "Replying to a viewer: hello".
+
+Choose that reply preview to open **Reply thread** without starting a new reply.
+The thread lists recorded messages from oldest to newest, including replies that have scrolled out of the live feed.
+It can only show messages this bot has stored, so it is not a way to retrieve a conversation the bot never received.
+**Close reply thread** closes the popup without canceling a reply you are writing.
+
+The popup belongs to the send box, so leave search mode to see it; a read-only page without a send box does not show it.
+The viewer version excludes deleted messages from its thread history, while the moderation version can include them.
+
+## Read Twitch notices in the feed
+
+The feed includes Twitch events as well as things people type.
+Subscription and gift notices, raids and announcements appear as their own rows, and shared-chat notices can show the channel they came from.
+Announcements have a colored border and identify their author, helping you distinguish them from a viewer's ordinary message.
+
+Channel point redemptions and Power-ups also appear as their own quiet rows.
+A row shows who redeemed what, the cost ("120 points" or "50 Bits") and the text the viewer added.
+A message sent with a Power-up names its effect, such as "Message Effect" or "Gigantified Emote", above the text.
+
+Moderation notices can show that chat was cleared or that one person's messages were removed.
+People with permission to read moderation information can also see held-message records and their review status, such as **Held for review**, **Held message approved** or **Held message denied**.
+These are records of Twitch activity, separate from the bot's configurable [event responses](/reference/automation/event-responses).
+
+On the viewer pages, stored chat history excludes held-message records and deleted messages.
+It provides a conversation view rather than the moderator's record of removed content.
 
 ## Moderate a line
 
@@ -113,7 +149,10 @@ The moderation tools of the channel as a whole are on [Moderation](/reference/mo
 The balance shows only when the channel currency is on and the chatter has a balance.
 The full profile is explained on [People](/reference/community/people).
 
-To end the focus, choose **Clear focus on** and the name, press Escape, or close the panel.
+To end the focus, choose **Clear focus on** and the name, click one of their lines again, press Escape, or close the panel.
+
+The panel also has **In other channels you moderate**.
+It says the bot does not report what this person said in your other channels yet.
 
 ### Time out or ban from the Viewer panel
 
@@ -128,7 +167,7 @@ The **Undo** and **Unban** buttons are here only; a timeout or ban from the line
 
 ## Search the history
 
-1. Type at least two characters in **Search chat**.
+1. Choose **Search chat**, or press `/`, and type at least two characters.
    The feed becomes **Search results**, for example "4 messages match "hello"".
 2. Choose **Search further back** for older matches.
    At the end, the page shows "Searched back to the first message."
@@ -167,6 +206,21 @@ Another computer, another browser and an OBS dock start from the defaults.
 
 **Font and readability** has a **Change** link to the text size and font of the whole dashboard.
 
+### Notice first messages and new accounts
+
+The **Hints on messages** section can mark a person's first message and show when an account is new to Twitch.
+These hints add context to the feed; switching one on does not create a moderation rule or restrict the viewer.
+An absent account-age hint can also mean the bot has no account creation date to show.
+
+| Choice | Default | What it marks |
+| --- | --- | --- |
+| **First time the bot sees this viewer** | On | The first message the bot has seen from this person in this channel. |
+| **First message of the day** | Off | Their first message of the day, unless a more specific first-message hint is shown. |
+| **First message of the stream** | Off | Their first message this stream, unless the first-time hint is shown. |
+| **Chatters new to Twitch** | On | Accounts younger than the selected age, when the creation date is known. |
+| **New to Twitch means joined less than** | **7 days** | Choose **1 day**, **7 days**, **30 days** or **90 days**. |
+| **Twitch highlighted, sub-only and intro messages** | On | Twitch's message type, such as a highlighted message. |
+
 <details>
 <summary>Show HTML messages as plain text</summary>
 
@@ -186,6 +240,9 @@ One side panel fits beside the chat in a window narrower than 1800 pixels.
 From 1800 pixels, two fit.
 Opening one more closes the panel that was open longest.
 
+For a compact moderation workspace, keep **Viewer** beside the feed while you investigate a person, then switch to **Chat settings** only when you need a channel-wide change.
+Those settings affect Twitch chat for everyone; they are different from the personal choices in **Display**.
+
 ### Chat settings
 
 **Chat settings** holds the chat modes and two clean-up tools.
@@ -203,6 +260,8 @@ By default a moderator and up may see and change them.
 A switch saves at once.
 A number saves when you leave the box.
 A number out of range shows its range, for example "Enter 3 to 120 seconds.", and is not saved.
+If a save is refused, the panel shows the reason, or "The chat mode did not change. Try again.", and the number goes back to its saved value.
+A note explains that shield mode holds new accounts and turns on followers-only in one press.
 
 | Tool | What it does |
 | --- | --- |
@@ -238,6 +297,17 @@ When it is missing, the panel shows **Grant permission again**.
    The panel shows "Permission granted. Reload your identity to continue."
 
 </details>
+
+## Watch the stream beside the chat
+
+Choose **Stream** in the page header to play the channel's live Twitch stream in the page.
+On a phone, tap the player icon in the slim header ("Show the stream").
+It starts muted.
+In a wide window the player sits beside the chat.
+In a narrow window or on a phone it sits above the chat.
+When the channel is offline, the player area says "name is offline".
+The toggle is off until you switch it on, and the browser remembers your choice.
+The pop-out window and the OBS dock have no player.
 
 ## Open the chat in its own window
 

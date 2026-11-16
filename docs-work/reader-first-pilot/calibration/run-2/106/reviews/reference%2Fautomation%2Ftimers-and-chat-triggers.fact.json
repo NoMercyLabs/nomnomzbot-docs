@@ -1,0 +1,34 @@
+{
+  "fingerprint": "6f495ebe9d74597968ba6c66213210148cfca3a1559b159ecd5e8cad28904aab",
+  "verdict": "PASS",
+  "findings": [],
+  "coverage": [
+    {
+      "id": "fixed-coverage",
+      "result": "supported",
+      "evidence": "Independently reviewed complete candidate at product source C:/Projects/NoMercyLabs/nomnomzbot HEAD f741789bf6b8d90ae2fd07f33a307a5a11623606: 13/13 required contract groups retained. Actual source paths/ranges and closed findings in C:/Projects/NoMercyLabs/nomnomzbot-docs/docs-work/reader-first-pilot/fact-review/timers-and-chat-triggers.md; factual requirements in contracts/timers-and-chat-triggers.md. New Run2 case106 answers1-4 independently re-read and judged; current page/card/render fingerprint recomputed after frozen final. Source/answer support only, not runtime or human usability."
+    }
+  ],
+  "reader_answers": [
+    {
+      "question": 1,
+      "result": "supported",
+      "evidence": "Run2 case106 NEW frozen answer Q1: Open Triggers and timers, Timers, New timer. Give it a name such as Break reminder. Leave Reaction at Simple reply and put Stretch and get water. and New here? Welcome! on separate lines in Messages. Keep Minutes between posts at 30, Send the reply to at Twitch chat and Chat lines needed at its new-timer default 0. Choose Create timer; it starts on. The first message is due at the next timer check, usually within about 30 seconds, rather than after the first 30 minutes. Messages then rotate in order, one per firing. Independent source check: Timers > New timer, name, Simple reply, two requested lines,30 minutes, default Twitch chat, Create timer enabled with activity0; first due next eligible approximately30-second poll, then rotate. Source: dashboard/src/views/dashboard/timers/components/NewTimerDialog.vue:62-109; server/src/NomNomzBot.Application/Commands/Dtos/TimerDtos.cs:68-74; server/src/NomNomzBot.Infrastructure/Commands/Jobs/TimerService.cs:161-215. Its final article excerpts were individually verified present; answer text unchanged from initial."
+    },
+    {
+      "question": 2,
+      "result": "supported",
+      "evidence": "Run2 case106 NEW frozen answer Q2: It needs neither a live stream nor an existing command or pipeline for this Simple reply. Sign in and select the channel; by default Moderator, Lead moderator, Editor or Broadcaster can change timers, subject to a raised requirement. The bot must be running and connected. VIP read access does not permit editing. Independent source check: Simple timer needs no existing pipeline or live broadcast; selected signed-in channel, appropriate write permission and running connected bot; VIP tab access only reads. Source: server/src/NomNomzBot.Infrastructure/Commands/Jobs/TimerService.cs:108-150; server/src/NomNomzBot.Infrastructure/Content/Identity/ActionDefinitionSeeder.cs:188-195; dashboard/src/views/dashboard/timers write/read gates. Its final article excerpts were individually verified present; answer text unchanged from initial."
+    },
+    {
+      "question": 3,
+      "result": "supported",
+      "evidence": "Run2 case106 NEW frozen answer Q3: Watch connected Twitch chat for Stretch and get water. at the first eligible check, then New here? Welcome! after the next 30-minute wait and an eligible check, then the first line again. A switch-on list entry alone is not proof of delivery. To prevent offline posts, switch the reminder off when finishing the broadcast; offline status alone does not stop it. Enabled saves immediately. Independent source check: Observe first saved line then second after interval/activity and eligible poll, wrapping; simple chat acceptance advances state. Disable to stop offline posts because connected-channel timer selection has no live gate. Source: server/src/NomNomzBot.Infrastructure/Commands/Jobs/TimerService.cs:108-150,191-215,248-334. Its final article excerpts were individually verified present; answer text unchanged from initial."
+    },
+    {
+      "question": 4,
+      "result": "supported",
+      "evidence": "Run2 case106 NEW frozen answer Q4: For eligible ordinary lines, this is nice matches because hi occurs inside this, and HI matches because capital-letter matching is off. !hi is excluded if ! is the channel’s command prefix; the article does not establish the actual configured prefix for this channel. Matches can also be held by the channel-wide wait or excluded if claimed by another command or soundboard. To answer only the greeting, change How chat must match to Is exactly the words, keep Words to watch for at hi, and Save changes. With capitalization matching still off, HI remains an exact greeting match. Independent source check: Contains hi matches this and HI with case off; default-prefix !hi excluded even invalid command; eligible role/clear cooldown still needed. Is exactly the words plus Save narrows greeting. Source: server/src/NomNomzBot.Infrastructure/Chat/EventHandlers/ChatMessageHandler.cs:194-237,1388-1430,1589-1609. Its final article excerpts were individually verified present; answer text unchanged from initial."
+    }
+  ]
+}

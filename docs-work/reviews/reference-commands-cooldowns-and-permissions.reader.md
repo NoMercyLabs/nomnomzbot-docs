@@ -1,3 +1,45 @@
+# Current independent reader review
+
+Verdict: PASS
+Reviewed: src/content/reference/en/commands/cooldowns-and-permissions.mdx
+Reviewed-SHA: 414929d9f14474b8cddc2b718e7d3517125da2286ce78fc46faa14b904370f50
+Reviewed-SHA256: 414929d9f14474b8cddc2b718e7d3517125da2286ce78fc46faa14b904370f50
+Reviewed-Date: 2026-11-05
+Reviewer: independent targeted reviewer
+
+The full article was read again, including the final whole-seconds, restart and identity repairs. Permission versus pacing remains the opening concept; its existing headings and approachable voice are preserved. Tables support exact role/setting lookup, while prose explains the consequences and exceptions. The 10-second shared/60-second personal example correctly explains why another viewer can restart the shared wait before the first viewer's personal wait ends.
+
+The role section now distinguishes the bot ladder from each platform's incoming data. Artist, ordinary-versus-lead moderator badge, stored team/permit access and YouTube Studio Editor details answer practical access questions without inventing equivalent native roles. The later moderator-testing section separates access from bypass so a streamer can understand why testing from a native moderator account differs from testing a bot-assigned role.
+
+The denial section says a speech request is attempted rather than guaranteeing audible output. It connects Read it aloud independence, bot voice, the 30-second attempt wait, bits and approval to their consequences. The final identity wording states the implementation limitation conditionally. Preset reset is clearly broader than these three controls, and restart wording is confined to active command waits.
+
+Related Permissions, Create a command and Built-in commands were read for consistency. Their common ladder, cross-links, basic setup and separate music safeguards remain compatible with this detailed article. No substantive reader finding remains at this hash. The lead owns final rendered/build checks; this review does not certify a live UI or native-channel test.
+
+Detailed report: docs-work/overhaul/cooldowns-permissions-targeted.md.
+
+## Historical evidence
+
+The earlier review headers and their evidence below are archived. Their hashes and verdicts do not approve later article bytes.
+
+### Previous independent reader review
+
+Verdict: PASS
+Reviewed: src/content/reference/en/commands/cooldowns-and-permissions.mdx
+Reviewed-SHA: 845032f86ace33443e7256ad6d7682deb788b1930a685b3cd6a5c1ea7132ae2b
+Reviewed-SHA256: 845032f86ace33443e7256ad6d7682deb788b1930a685b3cd6a5c1ea7132ae2b
+Reviewed-Date: 2026-11-05
+Reviewer: independent section reviewer
+
+Permission and pacing are taught as distinct decisions, with a concrete 10-second shared/60-second personal interaction. Moderator testing, restart behavior and direct bindings explain real exceptions without diluting the beginner concept.
+
+The full page was read with the preceding/following navigation context and related links. This review applies the owner's explanatory, progressive-disclosure guidance; it does not impose Atlas sentence caps, pilot mimicry or fixed article headings. No substantive reader finding remains at this hash. Build/render/link checks are recorded separately by the lead reviewer.
+
+Report: docs-work/overhaul/review-learning-commands-helpers.md.
+
+## Historical evidence
+
+The material below is retained as historical evidence; its older verdict is not the current review.
+
 # Reader review: src/content/reference/en/commands/cooldowns-and-permissions.mdx
 Verdict: PASS
 Reviewed: src/content/reference/en/commands/cooldowns-and-permissions.mdx

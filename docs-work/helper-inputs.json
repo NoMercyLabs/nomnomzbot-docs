@@ -1,7 +1,7 @@
 {
  "meta": {
-  "rows": 1053,
-  "found": 607
+  "rows": 1118,
+  "found": 617
  },
  "examples": {
   "activity.busiestDay": {
@@ -335,24 +335,24 @@
    "source": "server/tests/NomNomzBot.Infrastructure.Tests/Platform/Templating/Helpers/Bot/BotHelpersTableTests.cs:27"
   },
   "chance": {
-   "typed": "{chance:50|yes|no}",
-   "result": "yes",
-   "source": "server/tests/NomNomzBot.Infrastructure.Tests/Platform/Templating/Helpers/Logic/LogicHelpersSeededTests.cs:33"
+   "typed": "{chance:100| sure |never}",
+   "result": " sure ",
+   "source": "server/tests/NomNomzBot.Infrastructure.Tests/Platform/Templating/ArgumentWhitespaceTemplateResolverTests.cs:98"
   },
   "channel.age": {
    "typed": "{channel.age}",
    "result": "6 years, 2 months",
-   "source": "server/tests/NomNomzBot.Infrastructure.Tests/Platform/Templating/Helpers/Stream/StreamHelpersTableTests.cs:118"
+   "source": "server/tests/NomNomzBot.Infrastructure.Tests/Platform/Templating/Helpers/Stream/StreamHelpersTableTests.cs:119"
   },
   "channel.ccls": {
    "typed": "{channel.ccls}",
    "result": "MatureGame",
-   "source": "server/tests/NomNomzBot.Infrastructure.Tests/Platform/Templating/Helpers/Stream/StreamHelpersTableTests.cs:159"
+   "source": "server/tests/NomNomzBot.Infrastructure.Tests/Platform/Templating/Helpers/Stream/StreamHelpersTableTests.cs:160"
   },
   "channel.editors.count": {
    "typed": "{channel.editors.count}",
    "result": "2",
-   "source": "server/tests/NomNomzBot.Infrastructure.Tests/Platform/Templating/Helpers/Stream/StreamHelpersTableTests.cs:109"
+   "source": "server/tests/NomNomzBot.Infrastructure.Tests/Platform/Templating/Helpers/Stream/StreamHelpersTableTests.cs:110"
   },
   "channel.followers": {
    "typed": "{channel.followers}",
@@ -367,17 +367,22 @@
   "channel.isBranded": {
    "typed": "{channel.isBranded}",
    "result": "false",
-   "source": "server/tests/NomNomzBot.Infrastructure.Tests/Platform/Templating/Helpers/Stream/StreamHelpersTableTests.cs:106"
+   "source": "server/tests/NomNomzBot.Infrastructure.Tests/Platform/Templating/Helpers/Stream/StreamHelpersTableTests.cs:107"
   },
   "channel.language": {
    "typed": "{channel.language}",
    "result": "en",
-   "source": "server/tests/NomNomzBot.Infrastructure.Tests/Platform/Templating/Helpers/Stream/StreamHelpersTableTests.cs:99"
+   "source": "server/tests/NomNomzBot.Infrastructure.Tests/Platform/Templating/Helpers/Stream/StreamHelpersTableTests.cs:100"
   },
   "channel.localTime": {
    "typed": "{channel.localTime}",
    "result": "15:30",
-   "source": "server/tests/NomNomzBot.Infrastructure.Tests/Platform/Templating/Helpers/Stream/StreamHelpersTableTests.cs:101"
+   "source": "server/tests/NomNomzBot.Infrastructure.Tests/Platform/Templating/Helpers/Stream/StreamHelpersTableTests.cs:102"
+  },
+  "channel.members": {
+   "typed": "{channel.members}",
+   "result": "12",
+   "source": "server/tests/NomNomzBot.Infrastructure.Tests/Platform/Templating/Helpers/Stream/StreamHelpersTableTests.cs:99"
   },
   "channel.mention": {
    "typed": "{channel.mention}",
@@ -387,37 +392,37 @@
   "channel.mods.count": {
    "typed": "{channel.mods.count}",
    "result": "6",
-   "source": "server/tests/NomNomzBot.Infrastructure.Tests/Platform/Templating/Helpers/Stream/StreamHelpersTableTests.cs:110"
+   "source": "server/tests/NomNomzBot.Infrastructure.Tests/Platform/Templating/Helpers/Stream/StreamHelpersTableTests.cs:111"
   },
   "channel.personality": {
    "typed": "{channel.personality}",
    "result": "Informative",
-   "source": "server/tests/NomNomzBot.Infrastructure.Tests/Platform/Templating/Helpers/Stream/StreamHelpersTableTests.cs:102"
+   "source": "server/tests/NomNomzBot.Infrastructure.Tests/Platform/Templating/Helpers/Stream/StreamHelpersTableTests.cs:103"
   },
   "channel.prefix": {
    "typed": "{channel.prefix}",
    "result": "!",
-   "source": "server/tests/NomNomzBot.Infrastructure.Tests/Platform/Templating/Helpers/Stream/StreamHelpersTableTests.cs:103"
+   "source": "server/tests/NomNomzBot.Infrastructure.Tests/Platform/Templating/Helpers/Stream/StreamHelpersTableTests.cs:104"
   },
   "channel.raids.inCount": {
    "typed": "{channel.raids.inCount:otherstreamer}",
    "result": "5",
-   "source": "server/tests/NomNomzBot.Infrastructure.Tests/Platform/Templating/Helpers/Stream/StreamHelpersTableTests.cs:115"
+   "source": "server/tests/NomNomzBot.Infrastructure.Tests/Platform/Templating/Helpers/Stream/StreamHelpersTableTests.cs:116"
   },
   "channel.raids.lastIn.at": {
    "typed": "{channel.raids.lastIn.at}",
    "result": "2026-10-24",
-   "source": "server/tests/NomNomzBot.Infrastructure.Tests/Platform/Templating/Helpers/Stream/StreamHelpersTableTests.cs:117"
+   "source": "server/tests/NomNomzBot.Infrastructure.Tests/Platform/Templating/Helpers/Stream/StreamHelpersTableTests.cs:118"
   },
   "channel.raids.lastOut": {
    "typed": "{channel.raids.lastOut}",
    "result": "OtherStreamer",
-   "source": "server/tests/NomNomzBot.Infrastructure.Tests/Platform/Templating/Helpers/Stream/StreamHelpersTableTests.cs:116"
+   "source": "server/tests/NomNomzBot.Infrastructure.Tests/Platform/Templating/Helpers/Stream/StreamHelpersTableTests.cs:117"
   },
   "channel.raids.outCount": {
    "typed": "{channel.raids.outCount:otherstreamer}",
    "result": "3",
-   "source": "server/tests/NomNomzBot.Infrastructure.Tests/Platform/Templating/Helpers/Stream/StreamHelpersTableTests.cs:114"
+   "source": "server/tests/NomNomzBot.Infrastructure.Tests/Platform/Templating/Helpers/Stream/StreamHelpersTableTests.cs:115"
   },
   "channel.subs": {
    "typed": "{channel.subs}",
@@ -427,32 +432,32 @@
   "channel.tags": {
    "typed": "{channel.tags}",
    "result": "English, Coding",
-   "source": "server/tests/NomNomzBot.Infrastructure.Tests/Platform/Templating/Helpers/Stream/StreamHelpersTableTests.cs:104"
+   "source": "server/tests/NomNomzBot.Infrastructure.Tests/Platform/Templating/Helpers/Stream/StreamHelpersTableTests.cs:105"
   },
   "channel.team": {
    "typed": "{channel.team}",
    "result": "SampleTeam",
-   "source": "server/tests/NomNomzBot.Infrastructure.Tests/Platform/Templating/Helpers/Stream/StreamHelpersTableTests.cs:108"
+   "source": "server/tests/NomNomzBot.Infrastructure.Tests/Platform/Templating/Helpers/Stream/StreamHelpersTableTests.cs:109"
   },
   "channel.timezone": {
    "typed": "{channel.timezone}",
    "result": "Europe/Amsterdam",
-   "source": "server/tests/NomNomzBot.Infrastructure.Tests/Platform/Templating/Helpers/Stream/StreamHelpersTableTests.cs:100"
+   "source": "server/tests/NomNomzBot.Infrastructure.Tests/Platform/Templating/Helpers/Stream/StreamHelpersTableTests.cs:101"
   },
   "channel.vips.count": {
    "typed": "{channel.vips.count}",
    "result": "4",
-   "source": "server/tests/NomNomzBot.Infrastructure.Tests/Platform/Templating/Helpers/Stream/StreamHelpersTableTests.cs:111"
+   "source": "server/tests/NomNomzBot.Infrastructure.Tests/Platform/Templating/Helpers/Stream/StreamHelpersTableTests.cs:112"
   },
   "channel.vod.latest": {
    "typed": "{channel.vod.latest}",
    "result": "https://www.twitch.tv/videos/123",
-   "source": "server/tests/NomNomzBot.Infrastructure.Tests/Platform/Templating/Helpers/Stream/StreamHelpersTableTests.cs:112"
+   "source": "server/tests/NomNomzBot.Infrastructure.Tests/Platform/Templating/Helpers/Stream/StreamHelpersTableTests.cs:113"
   },
   "channel.vod.latest.title": {
    "typed": "{channel.vod.latest.title}",
    "result": "Chill Saturday",
-   "source": "server/tests/NomNomzBot.Infrastructure.Tests/Platform/Templating/Helpers/Stream/StreamHelpersTableTests.cs:113"
+   "source": "server/tests/NomNomzBot.Infrastructure.Tests/Platform/Templating/Helpers/Stream/StreamHelpersTableTests.cs:114"
   },
   "charity.bar": {
    "typed": "{charity.bar}",
@@ -579,6 +584,11 @@
    "result": "false",
    "source": "server/tests/NomNomzBot.Infrastructure.Tests/Platform/Templating/Helpers/Chat/ChatHelpersTableTests.cs:46"
   },
+  "coalesce": {
+   "typed": "{coalesce:| second }",
+   "result": " second ",
+   "source": "server/tests/NomNomzBot.Infrastructure.Tests/Platform/Templating/ArgumentWhitespaceTemplateResolverTests.cs:99"
+  },
   "date": {
    "typed": "{date:now|format:yyyy-MM-dd HH:mm}",
    "result": "2026-10-26 15:30",
@@ -643,6 +653,11 @@
    "typed": "{date:2026-12-25|until:days}",
    "result": "59 days",
    "source": "server/tests/NomNomzBot.Infrastructure.Tests/Platform/Templating/TemplateResolverDateExpressionTests.cs:210"
+  },
+  "default": {
+   "typed": "{default:| fallback }",
+   "result": " fallback ",
+   "source": "server/tests/NomNomzBot.Infrastructure.Tests/Platform/Templating/ArgumentWhitespaceTemplateResolverTests.cs:94"
   },
   "emote": {
    "typed": "{emote:catJAM}",
@@ -749,6 +764,11 @@
    "result": "catJAM catJAM / catJAM catJAM",
    "source": "server/tests/NomNomzBot.Infrastructure.Tests/Platform/Templating/Helpers/Emotes/EmoteHelpersTableTests.cs:29"
   },
+  "fun.8ball": {
+   "typed": "{fun.8ball}",
+   "result": "{fun.8ball}",
+   "source": "server/tests/NomNomzBot.Infrastructure.Tests/Platform/Templating/ViewerLogicNumberFunTests.cs:367"
+  },
   "fun.card": {
    "typed": "{fun.card}",
    "result": "K♠",
@@ -795,9 +815,9 @@
    "source": "server/tests/NomNomzBot.Infrastructure.Tests/Platform/Templating/Helpers/Fun/FunHelpersTableTests.cs:29"
   },
   "fun.love": {
-   "typed": "{fun.love:solo}",
-   "result": "{fun.love:solo}",
-   "source": "server/tests/NomNomzBot.Infrastructure.Tests/Platform/Templating/Helpers/Fun/FunHelpersTableTests.cs:69"
+   "typed": "{fun.love: ViewerOne | ViewerTwo }",
+   "result": "{fun.love:ViewerOne|ViewerTwo}",
+   "source": "server/tests/NomNomzBot.Infrastructure.Tests/Platform/Templating/ArgumentWhitespaceTemplateResolverTests.cs:130"
   },
   "fun.meter": {
    "typed": "{fun.meter:60}",
@@ -850,9 +870,9 @@
    "source": "server/tests/NomNomzBot.Infrastructure.Tests/Platform/Templating/Helpers/Fun/FunHelpersTableTests.cs:44"
   },
   "fun.ship": {
-   "typed": "{fun.ship:a|}",
-   "result": "{fun.ship:a|}",
-   "source": "server/tests/NomNomzBot.Infrastructure.Tests/Platform/Templating/Helpers/Fun/FunHelpersTableTests.cs:70"
+   "typed": "{fun.ship: ViewerOne | ViewerTwo }",
+   "result": "{fun.ship:ViewerOne|ViewerTwo}",
+   "source": "server/tests/NomNomzBot.Infrastructure.Tests/Platform/Templating/ArgumentWhitespaceTemplateResolverTests.cs:131"
   },
   "fun.slots": {
    "typed": "{fun.slots}",
@@ -983,6 +1003,36 @@
    "typed": "{hypetrain.total}",
    "result": "5,400",
    "source": "server/tests/NomNomzBot.Infrastructure.Tests/Platform/Templating/Helpers/LiveEvents/HypeTrainHelpersTests.cs:32"
+  },
+  "if": {
+   "typed": "{if:true| yes |no}",
+   "result": " yes ",
+   "source": "server/tests/NomNomzBot.Infrastructure.Tests/Platform/Templating/ArgumentWhitespaceTemplateResolverTests.cs:89"
+  },
+  "if.<path>": {
+   "typed": "{if.not:false| yes |no}",
+   "result": " yes ",
+   "source": "server/tests/NomNomzBot.Infrastructure.Tests/Platform/Templating/ArgumentWhitespaceTemplateResolverTests.cs:93"
+  },
+  "if.all": {
+   "typed": "{if.all:yes|yes|both|not both}",
+   "result": "both",
+   "source": "server/tests/NomNomzBot.Infrastructure.Tests/Platform/Templating/ViewerLogicNumberFunTests.cs:134"
+  },
+  "if.any": {
+   "typed": "{if.any:no|yes|one|none}",
+   "result": "one",
+   "source": "server/tests/NomNomzBot.Infrastructure.Tests/Platform/Templating/ViewerLogicNumberFunTests.cs:135"
+  },
+  "if.empty": {
+   "typed": "{if.empty:|blank|filled}",
+   "result": "blank",
+   "source": "server/tests/NomNomzBot.Infrastructure.Tests/Platform/Templating/ViewerLogicNumberFunTests.cs:136"
+  },
+  "if.not": {
+   "typed": "{if.not:false| yes |no}",
+   "result": " yes ",
+   "source": "server/tests/NomNomzBot.Infrastructure.Tests/Platform/Templating/ArgumentWhitespaceTemplateResolverTests.cs:93"
   },
   "include.builtin": {
    "typed": "{include.builtin:uptime}",
@@ -1125,9 +1175,9 @@
    "source": "server/tests/NomNomzBot.Infrastructure.Tests/Platform/Templating/Helpers/Numbers/NumberHelpersTableTests.cs:49"
   },
   "math.add": {
-   "typed": "{math.add:2|3}",
+   "typed": "{math.add: 2 | 3 }",
    "result": "5",
-   "source": "server/tests/NomNomzBot.Infrastructure.Tests/Platform/Templating/Helpers/Numbers/NumberHelpersTableTests.cs:54"
+   "source": "server/tests/NomNomzBot.Infrastructure.Tests/Platform/Templating/ArgumentWhitespaceTemplateResolverTests.cs:75"
   },
   "math.avg": {
    "typed": "{math.avg:1|2|6}",
@@ -1600,9 +1650,9 @@
    "source": "server/tests/NomNomzBot.Infrastructure.Tests/Platform/Templating/Helpers/Numbers/NumberHelpersTableTests.cs:86"
   },
   "num.round": {
-   "typed": "{num.round:2.456|2}",
-   "result": "2.46",
-   "source": "server/tests/NomNomzBot.Infrastructure.Tests/Platform/Templating/Helpers/Numbers/NumberHelpersTableTests.cs:67"
+   "typed": "{num.round: 2.567 | 1 }",
+   "result": "2.6",
+   "source": "server/tests/NomNomzBot.Infrastructure.Tests/Platform/Templating/ArgumentWhitespaceTemplateResolverTests.cs:76"
   },
   "num.sign": {
    "typed": "{num.sign:5}",
@@ -1620,24 +1670,24 @@
    "source": "server/tests/NomNomzBot.Infrastructure.Tests/Platform/Templating/Helpers/Numbers/NumberHelpersTableTests.cs:85"
   },
   "pick": {
-   "typed": "{pick:solo}",
-   "result": "solo",
-   "source": "server/tests/NomNomzBot.Infrastructure.Tests/Platform/Templating/Helpers/Logic/LogicHelpersTableTests.cs:104"
+   "typed": "{pick: a }",
+   "result": " a ",
+   "source": "server/tests/NomNomzBot.Infrastructure.Tests/Platform/Templating/ArgumentWhitespaceTemplateResolverTests.cs:113"
   },
   "pick.inline": {
-   "typed": "{pick.inline:solo}",
-   "result": "solo",
-   "source": "server/tests/NomNomzBot.Infrastructure.Tests/Platform/Templating/Helpers/Logic/LogicHelpersTableTests.cs:105"
+   "typed": "{pick.inline: a ; a }",
+   "result": " a ",
+   "source": "server/tests/NomNomzBot.Infrastructure.Tests/Platform/Templating/ArgumentWhitespaceTemplateResolverTests.cs:116"
   },
   "pick.n": {
-   "typed": "{pick.n:2|a|b|c}",
-   "result": "b, c",
-   "source": "server/tests/NomNomzBot.Infrastructure.Tests/Platform/Templating/Helpers/Logic/LogicHelpersSeededTests.cs:36"
+   "typed": "{pick.n: 1 | a }",
+   "result": " a ",
+   "source": "server/tests/NomNomzBot.Infrastructure.Tests/Platform/Templating/ArgumentWhitespaceTemplateResolverTests.cs:114"
   },
   "pick.weighted": {
-   "typed": "{pick.weighted:1=rare|9=common}",
-   "result": "common",
-   "source": "server/tests/NomNomzBot.Infrastructure.Tests/Platform/Templating/Helpers/Logic/LogicHelpersSeededTests.cs:35"
+   "typed": "{pick.weighted: 1 = a }",
+   "result": " a ",
+   "source": "server/tests/NomNomzBot.Infrastructure.Tests/Platform/Templating/ArgumentWhitespaceTemplateResolverTests.cs:115"
   },
   "platform.chatters.stream": {
    "typed": "{platform.chatters.stream:youtube}",
@@ -1960,14 +2010,14 @@
    "source": "server/tests/NomNomzBot.Infrastructure.Tests/Platform/Templating/Helpers/Composing/ComposingHelpersTableTests.cs:101"
   },
   "random.decimal": {
-   "typed": "{random.decimal:2|2|2}",
-   "result": "2.00",
-   "source": "server/tests/NomNomzBot.Infrastructure.Tests/Platform/Templating/Helpers/Logic/LogicHelpersTableTests.cs:109"
+   "typed": "{random.decimal: 1 | 1 | 2 }",
+   "result": "1.00",
+   "source": "server/tests/NomNomzBot.Infrastructure.Tests/Platform/Templating/ArgumentWhitespaceTemplateResolverTests.cs:117"
   },
   "random.number": {
-   "typed": "{random.number:1}",
-   "result": "1",
-   "source": "server/tests/NomNomzBot.Infrastructure.Tests/Platform/Templating/Helpers/Logic/LogicHelpersTableTests.cs:107"
+   "typed": "{random.number: 5 | 5 }",
+   "result": "5",
+   "source": "server/tests/NomNomzBot.Infrastructure.Tests/Platform/Templating/ArgumentWhitespaceTemplateResolverTests.cs:118"
   },
   "random.number.<n>": {
    "typed": "{random.number.1}",
@@ -2295,9 +2345,9 @@
    "source": "server/tests/NomNomzBot.Infrastructure.Tests/Platform/Templating/Helpers/Stream/StreamHelpersTableTests.cs:48"
   },
   "switch": {
-   "typed": "{switch:they/them|she/her=queen|he/him=king|royal}",
-   "result": "royal",
-   "source": "server/tests/NomNomzBot.Infrastructure.Tests/Platform/Templating/Helpers/Logic/LogicHelpersTableTests.cs:83"
+   "typed": "{switch: b |a=x|b= chosen |d}",
+   "result": " chosen ",
+   "source": "server/tests/NomNomzBot.Infrastructure.Tests/Platform/Templating/ArgumentWhitespaceTemplateResolverTests.cs:96"
   },
   "switch.range": {
    "typed": "{switch.range:7|5=fine|10=hmm|oof}",
@@ -2450,9 +2500,9 @@
    "source": "server/tests/NomNomzBot.Infrastructure.Tests/Platform/Templating/Helpers/Text/TextHelpersTableTests.cs:74"
   },
   "text.cut": {
-   "typed": "{text.cut:hello world|max=8|end=...}",
+   "typed": "{text.cut:hello world| max = 8 |end=...}",
    "result": "hello...",
-   "source": "server/tests/NomNomzBot.Infrastructure.Tests/Platform/Templating/Helpers/Text/TextHelpersTableTests.cs:54"
+   "source": "server/tests/NomNomzBot.Infrastructure.Tests/Platform/Templating/ArgumentWhitespaceTemplateResolverTests.cs:73"
   },
   "text.cut.words": {
    "typed": "{text.cut.words:hello big world|2}",
@@ -2580,9 +2630,9 @@
    "source": "server/tests/NomNomzBot.Infrastructure.Tests/Platform/Templating/Helpers/Text/TextHelpersTableA2Tests.cs:75"
   },
   "text.pad.left": {
-   "typed": "{text.pad.left:7|3|0}",
-   "result": "007",
-   "source": "server/tests/NomNomzBot.Infrastructure.Tests/Platform/Templating/Helpers/Text/TextHelpersTableTests.cs:56"
+   "typed": "{text.pad.left:7|3| }",
+   "result": "  7",
+   "source": "server/tests/NomNomzBot.Infrastructure.Tests/Platform/Templating/ArgumentWhitespaceTemplateResolverTests.cs:40"
   },
   "text.pad.right": {
    "typed": "{text.pad.right:ab|4|.}",
@@ -2640,14 +2690,14 @@
    "source": "server/tests/NomNomzBot.Infrastructure.Tests/Platform/Templating/Helpers/Text/TextHelpersTableTests.cs:64"
   },
   "text.repeat": {
-   "typed": "{text.repeat:3|ha}",
-   "result": "hahaha",
-   "source": "server/tests/NomNomzBot.Infrastructure.Tests/Platform/Templating/Helpers/Text/TextHelpersTableTests.cs:59"
+   "typed": "{text.repeat:3|ha }",
+   "result": "ha ha ha ",
+   "source": "server/tests/NomNomzBot.Infrastructure.Tests/Platform/Templating/ArgumentWhitespaceTemplateResolverTests.cs:34"
   },
   "text.replace": {
-   "typed": "{text.replace:hello world|world|chat}",
-   "result": "hello chat",
-   "source": "server/tests/NomNomzBot.Infrastructure.Tests/Platform/Templating/Helpers/Text/TextHelpersTableTests.cs:61"
+   "typed": "{text.replace:a-b|-| + }",
+   "result": "a + b",
+   "source": "server/tests/NomNomzBot.Infrastructure.Tests/Platform/Templating/ArgumentWhitespaceTemplateResolverTests.cs:41"
   },
   "text.replace.first": {
    "typed": "{text.replace.first:a a a|a|b}",
@@ -2705,9 +2755,9 @@
    "source": "server/tests/NomNomzBot.Infrastructure.Tests/Platform/Templating/Helpers/Text/TextHelpersTableA2Tests.cs:44"
   },
   "text.spaced": {
-   "typed": "{text.spaced:hype}",
-   "result": "h y p e",
-   "source": "server/tests/NomNomzBot.Infrastructure.Tests/Platform/Templating/Helpers/Text/TextHelpersTableTests.cs:44"
+   "typed": "{text.spaced:hype| . }",
+   "result": "h . y . p . e",
+   "source": "server/tests/NomNomzBot.Infrastructure.Tests/Platform/Templating/ArgumentWhitespaceTemplateResolverTests.cs:42"
   },
   "text.spongecase": {
    "typed": "{text.spongecase:hello world}",
@@ -2800,9 +2850,9 @@
    "source": "server/tests/NomNomzBot.Infrastructure.Tests/Platform/Templating/Helpers/Text/TextHelpersTableA2Tests.cs:64"
   },
   "text.word": {
-   "typed": "{text.word:2|hello big world}",
-   "result": "big",
-   "source": "server/tests/NomNomzBot.Infrastructure.Tests/Platform/Templating/Helpers/Text/TextHelpersTableTests.cs:77"
+   "typed": "{text.word: 2 |big world}",
+   "result": "world",
+   "source": "server/tests/NomNomzBot.Infrastructure.Tests/Platform/Templating/ArgumentWhitespaceTemplateResolverTests.cs:77"
   },
   "text.word.first": {
    "typed": "{text.word.first:hello big world}",
@@ -2855,9 +2905,9 @@
    "source": "server/tests/NomNomzBot.Infrastructure.Tests/Platform/Templating/Helpers/Text/TextHelpersTableTests.cs:83"
   },
   "text.wrap": {
-   "typed": "{text.wrap:hi|[|]}",
-   "result": "[hi]",
-   "source": "server/tests/NomNomzBot.Infrastructure.Tests/Platform/Templating/Helpers/Text/TextHelpersTableTests.cs:65"
+   "typed": "{text.wrap: hi |[|]}",
+   "result": "[ hi ]",
+   "source": "server/tests/NomNomzBot.Infrastructure.Tests/Platform/Templating/ArgumentWhitespaceTemplateResolverTests.cs:38"
   },
   "text.yell": {
    "typed": "{text.yell:hello}",

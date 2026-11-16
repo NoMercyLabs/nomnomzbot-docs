@@ -3,13 +3,16 @@ title: Analytics
 description: Read how the channel did over 30 days, 90 days or 12 months, and save a stream recap as a picture.
 ---
 
-You read how the channel did on the **Analytics** page, in the **Live** group of the sidebar.
-Every number comes from what the bot recorded for the channel.
-The page has four tabs: **Overview**, **Streams**, **Chat** and **Recaps**.
+Analytics helps you look back on a stream or a longer period and understand how your community took part.
+Use **Overview** for the broad picture, **Streams** to compare individual broadcasts, **Chat** to see when conversation was busiest, and **YouTube** for your YouTube channel's numbers.
+**Recaps** lets you save a stream's end-credit picture to share afterward.
+
+Open **Analytics** in the **Live** group of the sidebar.
+Its numbers come from the channel activity the bot recorded, so read missing data as a gap in those records rather than as a measured zero.
 
 ## Who can use this page
 
-A **Moderator**, **Lead moderator**, **Editor** or **Broadcaster** may open the page.
+By default, a **Moderator**, **Lead moderator**, **Editor** or **Broadcaster** may open the page.
 The sidebar shows **Analytics** only to these roles.
 The roles are explained on [Permissions](/reference/settings/permissions).
 
@@ -18,7 +21,8 @@ The roles are explained on [Permissions](/reference/settings/permissions).
 1. Open **Analytics** in the sidebar.
    The **Overview** tab opens.
 2. Choose a value in **Range** at the top of the page.
-   The **Overview**, **Streams** and **Chat** tabs show that range.
+   On a narrow screen, **Range** sits in the bar at the bottom of the screen.
+   The **Overview**, **Streams**, **Chat** and **YouTube** tabs show that range.
 
 | **Range** | What it covers |
 | --- | --- |
@@ -51,10 +55,16 @@ Below the numbers are three panels:
 - **Chatters** shows how many different people chatted, per day.
 - **Highlights** shows the average stream length, the top category, and how many commands, rewards and song requests chat used.
 
+With **12 months**, both charts show one bar per month.
+
 ## Read every stream
 
 The **Streams** tab lists **Every stream** in the range.
 The line above the table gives the average stream length and the day with the busiest chat.
+
+When comparing broadcasts, consider duration as well as message totals.
+A longer stream gives viewers more time to chat, so the total alone does not explain whether conversation was more active.
+The overview's chat-lines-per-live-hour figure provides another way to read that activity.
 
 | Column | What it shows |
 | --- | --- |
@@ -66,8 +76,9 @@ The line above the table gives the average stream length and the day with the bu
 | **New follows** | The follows during the stream. |
 | **Peak viewers** | The highest viewer count, or "Not known". |
 
-On a narrow screen the table hides some columns.
-The chatters and new follows then show under the start time.
+On a narrow screen the table hides **Category**, **Chatters**, **New follows** and **Peak viewers**.
+The category, chatters and new follows then show under the start time.
+Peak viewers is not shown.
 
 ## See when chat is busy
 
@@ -77,14 +88,36 @@ The **Chat** tab has two panels:
 - **Busy days and hours** shows the chat lines **By day of the week** and the **Busiest hours**.
 
 The line under **When chat is busy** names the time zone of the grid, for example "Times are in UTC."
-Chat follows the stream days, because chat happens only while you are live.
+The grid groups recorded chat messages by weekday and hour in the channel's time zone, including messages recorded while the channel was offline.
+The current count also includes stored Twitch notices, held-message records and moderation notices, such as chat being cleared.
+The **Busy days and hours** panel counts the same way, so it also includes offline chat, even though its on-screen line says chat follows your stream days.
+It is therefore a count of recorded feed activity rather than a count of viewer-written messages alone.
+It shows when this channel's chat was active during the chosen range, not a forecast of how many viewers a different schedule would bring.
+
+## Read your YouTube numbers
+
+The **YouTube** tab shows your own YouTube channel per day, newest first, and follows the **Range**.
+A line above the table adds up the range, for example "1,200 views, 40 hr watched, 15 YouTube subscribers net."
+The numbers come from YouTube and can be two days behind.
+
+| Column | What it shows |
+| --- | --- |
+| **Day** | The day. |
+| **Views** | The views. |
+| **Watch time** | The time watched. |
+| **YouTube subscribers gained** and **YouTube subscribers lost** | Hidden on a narrow screen. |
+| **Estimated revenue** | Shown only when YouTube reports revenue for the channel. A day without a value shows "None". |
+
+Without revenue, the tab says "YouTube gives no revenue for this channel. Revenue needs the YouTube Partner Program."
+When YouTube is not connected, the tab says so. Choose **Open connected services** and connect YouTube.
+When the bot may not read your analytics yet, choose **Open connected services**, open **Details** on the YouTube row and allow **See your YouTube analytics**.
+See [YouTube](/reference/integrations/youtube) for connecting.
 
 ## Save a stream recap
 
-A stream recap is the end credits of one stream: the stream's numbers, drawn by the raid recap overlay.
-The bot keeps one recap for each stream.
-It keeps the recap when the stream goes offline, and again when the raid recap shows at the end of a [raid](/reference/community/stream-page).
-A new recap of the same stream replaces the old one.
+A stream recap is a shareable end-credit picture made with the raid recap overlay's layout.
+The bot keeps one recap per stream when it goes offline, and can refresh it when the raid recap is shown at the end of a [raid](/reference/community/stream-page).
+Saving a new recap for the same stream replaces the earlier one.
 
 1. Open the **Recaps** tab.
    The **Stream recaps** table lists every kept recap, newest first.
@@ -111,9 +144,9 @@ A recap that stored no stream size is saved at 1920 x 1080, and the dialog says 
 
 ::Troubleshooting
 
-**The Recaps tab says "No recap was kept yet."**
+**The Recaps tab says "No recap was kept yet. One is kept each time a raid starts."**
 The bot has no kept recap for the channel.
-A recap appears after the next stream goes offline or the next raid recap shows.
+The bot also keeps a recap when a stream goes offline, so a recap appears after the next stream goes offline or the next raid recap shows.
 
 ::
 

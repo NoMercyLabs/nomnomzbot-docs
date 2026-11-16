@@ -1,35 +1,119 @@
 ---
 title: Chat activity helpers
-description: Lists 19 template helpers, each with what it gives and an example.
+description: The activity helpers for chat speed, who is chatting now, stream and daily totals, and the top or a random chatter.
 ---
 
-Helpers on this page: `{activity.*}`.
+The `{activity.*}` helpers read your channel's chat at the moment the reply goes out.
+They work in a command reply, an event response, a timer, a pipeline step, a Discord notification and a webhook body.
+They do not work in a viewer's own text, even with **Viewer Templates** on in [Features](/reference/settings/features).
+If you have not used braces in a reply yet, read [Variables and templates](/reference/commands/variables-and-templates) first.
 
-These helpers count chat activity, such as messages per minute and active chatters.
-They can also name the top chatter and a random chatter.
+Pick the period first.
+For someone who is chatting right now, use the helpers in [Who is chatting right now](#who-is-chatting-right-now), which read the last hour.
+For the person who talked most all stream, use the helpers in [Your latest stream](#your-latest-stream).
+The live counts and the daily totals come after those.
 
-Each row is its own example, so the rows on this page do not all come from one moment.
+Counts use the digit grouping of your channel's language, so English gives `1,080`.
+That is the **Language** setting on **Bot basics**, in the **Commands and language** card, and English is used when none is set.
+Most counts give `0` when there is nothing to count, like `{activity.messages.today}` before the first message of the day.
+The counts of your latest stream, the live counts and `{activity.top.today.count}` are the exception: each section below says when its helpers print as typed instead of `0`.
+
+When a helper has nothing to show, it prints as you typed it, braces and all.
+That happens when a helper that names a person, an hour or a day has nobody to name, when an input is missing or out of range, and in the cases that the sections below name.
+One helper works differently: `{activity.top.list}` prints nothing at all when your latest stream has no counted chat.
+
+The helpers that name the top chatter can name the person who set off the reply.
+Only `{activity.last.chatter}` skips that person.
+In a command, that is the person who used it, and in an event response it is the viewer the event is about, such as a new follower.
+A timer has nobody behind it, so there `{activity.last.chatter}` names the last person who chatted.
+
+## Who is chatting right now
+
+These helpers read the last 60 minutes of chat, on every platform you connect.
+A helper that takes minutes accepts a whole number from 1 to 60, as in `{activity.chatters.active:10}`.
+The bot keeps this hour in memory.
+After the bot restarts, the counts start again from `0`, and the helpers that name someone print as typed until people chat again.
 
 | Helper | What it gives | Example |
 | --- | --- | --- |
-| `{activity.busiestDay}` | The busiest day of the week in chat over the last 90 days: Friday | `Friday` |
-| `{activity.busiestHour}` | The busiest hour of the day in chat over the last 90 days, in the channel time zone: 21:00 | `21:00` |
-| `{activity.chatters.active}` | Different people who chatted in the last minutes, for example activity.chatters.active:10 (1 to 60): 12 | `{activity.chatters.active:10}` gives `12` |
-| `{activity.chatters.lurkers}` | People connected to chat who have not chatted: 18 | `18` |
-| `{activity.chatters.now}` | People connected to chat right now: 51 | `51` |
-| `{activity.chatters.unique}` | Different people who have chatted since the bot joined: 33 | `33` |
-| `{activity.commands.stream}` | Commands that ran successfully since the bot joined the channel this session. The count does not restart when a stream starts | `88` |
-| `{activity.last.chatter}` | The last person who chatted, other than the person who triggered this | `ViewerTwo` |
-| `{activity.last.message.ago}` | How long ago the last chat activity was: 4s | `4s` |
-| `{activity.messages.hour}` | Chat messages in the last hour: 1,080 | `1,080` |
-| `{activity.messages.stream}` | Chat messages in this stream: 2,430 | `2,430` |
-| `{activity.messages.today}` | Chat messages today (channel day): 2,610 | `2,610` |
-| `{activity.mpm}` | Chat messages per minute over the last minute; activity.mpm:5 averages the last 5 minutes (1 to 60): 18 | `18` |
-| `{activity.random.recent}` | A random person who chatted in the last minutes, for example activity.random.recent:5 (1 to 60) | `ViewerTwo` |
-| `{activity.top.hour}` | The person who chatted most in the last hour | `ViewerTwo` |
-| `{activity.top.list}` | The top chatters of this stream with their counts, for example activity.top.list:3 (1 to 25): ViewerOne 140, ViewerTwo 96 | `{activity.top.list:3}` gives `ViewerOne 140, ViewerTwo 96, ViewerThree 40` |
-| `{activity.top.stream}` | The person who chatted most this stream, with the count: ViewerOne (140) | `ViewerOne (140)` |
-| `{activity.top.today}` | The person who chatted most today | `ViewerOne` |
-| `{activity.top.today.count}` | How many messages the top chatter of today sent: 140 | `140` |
+| `{activity.mpm}` | Messages in the last minute. With minutes, the average per minute over that many minutes, rounded to a whole number | `{activity.mpm:5}` gives `18` |
+| `{activity.messages.hour}` | Messages in the last 60 minutes | `1,080` |
+| `{activity.chatters.active}` | Different people who chatted in the last few minutes. It needs the number of minutes | `{activity.chatters.active:10}` gives `12` |
+| `{activity.random.recent}` | One person picked at random from those who chatted in the last few minutes. Everyone has the same chance, however many messages they sent. It needs the number of minutes | `{activity.random.recent:5}` gives `ViewerTwo` |
+| `{activity.top.hour}` | The person who sent the most messages in the last 60 minutes. On a tie, the one who chatted first in that hour | `ViewerTwo` |
+| `{activity.last.chatter}` | The last person who chatted in the last 60 minutes, other than the person who set off the reply | `ViewerTwo` |
 
-Back to [Template helpers](/reference/templates/overview). For the places helpers work, special characters and HTML, read [Variables and templates](/reference/commands/variables-and-templates).
+To name someone who is in chat now, rather than whoever talked most over a long stretch, pick from the last few minutes:
+
+```
+{activity.random.recent:5}, you have been chosen!
+```
+
+This gives `ViewerTwo, you have been chosen!`.
+The person who used the command can be picked too, if they chatted in those minutes.
+When nobody chatted in the last 5 minutes, the reply shows `{activity.random.recent:5}` as typed, so a short window suits a busy chat best.
+
+## Your latest stream
+
+These helpers count the saved chat of your latest stream: the one you are live in now, or the last one when you are offline.
+People who are banned in your channel are left out.
+Before your first stream, they print as typed.
+
+| Helper | What it gives | Example |
+| --- | --- | --- |
+| `{activity.messages.stream}` | Messages in the stream | `2,430` |
+| `{activity.top.stream}` | The person who sent the most messages, with their count in brackets | `ViewerOne (140)` |
+| `{activity.top.list}` | The top chatters, each name followed by its count after a space, separated by commas. It needs how many people to list | `{activity.top.list:3}` gives `ViewerOne 140, ViewerTwo 96, ViewerThree 40` |
+
+`{activity.top.stream}` puts the count in brackets and `{activity.top.list}` does not, so pick the one whose shape fits your sentence.
+You can ask for up to 25, but the list never shows more than 5, so `{activity.top.list:6}` prints the same as `{activity.top.list:5}`.
+When two people tie on messages, they go in order by name, with capital letters before lowercase letters, so `Zed` comes before `abe`.
+`{activity.top.stream}` names the first of them.
+When the stream has no counted chat yet, `{activity.top.stream}` prints as typed and `{activity.top.list}` prints nothing.
+
+## What the bot has counted live
+
+These helpers read what the bot holds right now, not the saved chat of a stream.
+The chatter count comes from Twitch at the moment of the reply, and when Twitch does not answer, `{activity.chatters.now}` and `{activity.chatters.lurkers}` print as typed.
+
+| Helper | What it gives | Example |
+| --- | --- | --- |
+| `{activity.chatters.now}` | People connected to your Twitch chat right now, as Twitch counts them | `51` |
+| `{activity.chatters.unique}` | Different people who have chatted since your stream went live, on every platform you connect | `33` |
+| `{activity.chatters.lurkers}` | People in chat who have not chatted: the Twitch count minus `{activity.chatters.unique}`, never below 0 | `18` |
+| `{activity.commands.stream}` | Commands that ran successfully since the bot joined your chat | `88` |
+| `{activity.last.message.ago}` | How long since the bot last saw a message that starts with your command prefix, even an unknown one such as `!typo` | `4s`, `3m 12s` or `1h 5m` |
+
+Unlike the stream helpers, `{activity.chatters.unique}` counts everyone who chatted since your stream went live, banned people and messages after the stream ended included.
+If the bot joined your chat after the stream started, it counts from that moment.
+Because of that, `{activity.chatters.lurkers}` can come out lower than the real number, down to `0`: people who chatted on another platform, or chatted and then left, still count as chatters.
+
+`{activity.commands.stream}` does not start again with a new stream.
+It starts again when the bot joins your chat again, such as after a restart, and after the quiet time described below.
+`{activity.last.message.ago}` also starts again when your stream goes live and when the bot joins your chat.
+
+The bot lets go of these live counts when your stream is offline and more than 2 hours have passed since the last of these: your stream went live, the bot joined your chat, or a message started with your command prefix.
+It starts them again with the next chat message or when your stream goes live.
+Until then, `{activity.chatters.unique}`, `{activity.commands.stream}` and `{activity.last.message.ago}` print as typed.
+This shows up in a Discord notification or a webhook body that goes out during that quiet time.
+
+## Today and the last 90 days
+
+These helpers read the bot's saved chat history, which it keeps in days that run from midnight to midnight UTC.
+Your channel time zone is the **Timezone** setting next to **Language**, and UTC is used when none is set.
+
+`{activity.messages.today}`, `{activity.top.today}` and `{activity.top.today.count}` read the UTC day that has today's date in your channel time zone.
+Outside UTC, near the start or the end of your day, the newest messages can be missing from today.
+
+| Helper | What it gives | Example |
+| --- | --- | --- |
+| `{activity.messages.today}` | Messages today, or `0` when nobody has chatted yet | `2,610` |
+| `{activity.top.today}` | The person who sent the most messages today. On a tie, either person can be named | `ViewerOne` |
+| `{activity.top.today.count}` | How many messages that person sent today. It prints as typed when nobody has chatted yet | `140` |
+| `{activity.busiestHour}` | The hour of the day with the most messages over the last 90 days, in your channel time zone, on the 24-hour clock | `21:00` |
+| `{activity.busiestDay}` | The day of the week with the most messages over the last 90 days, in your channel's language | `Friday` |
+
+When two hours have the same number of messages, the earlier hour wins.
+When two days tie, the day earlier in the week wins, with Sunday as the first day.
+
+Back to [Template helpers](/reference/templates/overview).

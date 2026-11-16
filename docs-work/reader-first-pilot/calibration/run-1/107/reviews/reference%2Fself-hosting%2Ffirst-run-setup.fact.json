@@ -1,0 +1,34 @@
+{
+  "fingerprint": "20d1af7de3afec43ecab4e1aa4109cff7d876e641345c3f0eebfdc1e878eac54",
+  "verdict": "PASS",
+  "findings": [],
+  "coverage": [
+    {
+      "id": "fixed-coverage",
+      "result": "supported",
+      "evidence": "Independently reviewed both complete candidate variants against current product source C:/Projects/NoMercyLabs/nomnomzbot HEAD f741789bf6b8d90ae2fd07f33a307a5a11623606: 8/8 fixed contract groups retained. Actual primary source paths/ranges and resolved findings recorded in C:/Projects/NoMercyLabs/nomnomzbot-docs/docs-work/reader-first-pilot/fact-review/first-run-setup.md and contracts/first-run-setup.md. This is source/reader-answer support, not runtime delivery or calibration acceptance."
+    }
+  ],
+  "reader_answers": [
+    {
+      "question": 1,
+      "result": "supported",
+      "evidence": "Explicit Use shared app, Next, skip four optional steps, Finish setup and broadcaster sign-in. Resolved default Client ID alone not decision. Source: server/src/NomNomzBot.Api/Models/SetupWizardDtos.cs:83-157; server/src/NomNomzBot.Api/Controllers/V1/SystemController.cs:227-229,348-366; dashboard/src/views/site/setup/SetupView.vue:39-50,112-127. Independently checked final reader Q1 against that source/contract and its rendered excerpts; answer text is unchanged from initial review."
+    },
+    {
+      "question": 2,
+      "result": "supported",
+      "evidence": "No separate bot account, Client Secret or healthy feed needed; own-app registrant must verify email and enable2FA before registering. Article own-app instructions attribute this to Twitch; URL reproduction not required. Source: server/src/NomNomzBot.Api/Models/SetupWizardDtos.cs:98-149; dashboard/src/views/site/setup/components/EventFeedHealth.vue:31-59; https://dev.twitch.tv/docs/authentication/register-app/ official prerequisite checked in contract. Independently checked final reader Q2 against that source/contract and its rendered excerpts; answer text is unchanged from initial review."
+    },
+    {
+      "question": 3,
+      "result": "supported",
+      "evidence": "Finish saves explicit completion flag and routes app/sign-in; closes anonymous credential-write window; subsequent replacement requires bot admin, not channel moderator. Source: server/src/NomNomzBot.Api/Controllers/V1/SystemController.cs:314-315,353-354,469-491; dashboard/src/views/site/setup/SetupView.vue:47-50. Independently checked final reader Q3 against that source/contract and its rendered excerpts; answer text is unchanged from initial review."
+    },
+    {
+      "question": 4,
+      "result": "supported",
+      "evidence": "YouTube requests use public/keyless path, not Google OAuth/account connection; Spotify app credentials do not authorize individual account or choose player device. Source: server/src/NomNomzBot.Infrastructure/Music/YouTubeMusicProvider.cs:139-164,348-374; server/src/NomNomzBot.Infrastructure/Music/SpotifyMusicProvider.cs:36-39,205-225,299-325; server/src/NomNomzBot.Api/Models/SetupWizardDtos.cs:159-232. Independently checked final reader Q4 against that source/contract and its rendered excerpts; answer text is unchanged from initial review."
+    }
+  ]
+}

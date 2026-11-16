@@ -1,3 +1,22 @@
+# Current independent reader review
+
+Verdict: PASS
+Reviewed: src/content/reference/en/templates/channel.mdx
+Reviewed-SHA: 488faf01eb0b12bf3b8ad418b25f6d1023704ee459333022adbe304cd7788bb1
+Reviewed-SHA256: 488faf01eb0b12bf3b8ad418b25f6d1023704ee459333022adbe304cd7788bb1
+Reviewed-Date: 2026-11-05
+Reviewer: independent section reviewer
+
+Channel identity and settings are grouped together. The introduction explains platform IDs and Discord-only seed aliases, so readers can distinguish a supported field from a value available only in a notification.
+
+The full page was read with the preceding/following navigation context and related links. This review applies the owner's explanatory, progressive-disclosure guidance; it does not impose Atlas sentence caps, pilot mimicry or fixed article headings. No substantive reader finding remains at this hash. Build/render/link checks are recorded separately by the lead reviewer.
+
+Report: docs-work/overhaul/review-learning-commands-helpers.md.
+
+## Historical evidence
+
+The material below is retained as historical evidence; its older verdict is not the current review.
+
 # Reader review: src/content/reference/en/templates/channel.mdx
 Verdict: PASS
 Reviewed: C:/Projects/NoMercyLabs/nomnomzbot-docs/src/content/reference/en/templates/channel.mdx

@@ -1,3 +1,37 @@
+# Targeted final review — 2026-11-06
+
+Verdict: PENDING
+Reviewed: src/content/reference/en/integrations/stream-deck-and-api-devices.mdx
+Reviewed-SHA: faaf9e1efea021291c6cf8d38a6c719b5ce30a46a1da147d636c1d5470b14be0
+Reviewed-SHA256: faaf9e1efea021291c6cf8d38a6c719b5ce30a46a1da147d636c1d5470b14be0
+Reviewer: final-features correction author; self-review, not independent PASS
+
+Full editorial reading completed. Added the parent's requested Automation API related link and confirmed its target exists. No fresh whole-article source audit or independent approval is claimed. See [final-features.md](../ecosystem-validation/final-features.md) for coverage and limits.
+
+## Historical reviews
+
+Original records below apply only to their recorded hashes and are preserved verbatim.
+
+# Current independent reader review
+
+Verdict: PASS
+Reviewed: src/content/reference/en/integrations/stream-deck-and-api-devices.mdx
+Reviewed-SHA: 579e4a30863c0af2d1e1c06d7b2e5075ea823899b2d32be0821ce508dc04d58b
+Reviewed-SHA256: 579e4a30863c0af2d1e1c06d7b2e5075ea823899b2d32be0821ce508dc04d58b
+Reviewed-Date: 2026-11-05
+Reviewer: independent media-section reviewer
+Product: 54da8b6318de63b5205a0ff8db35e0b9045dd959 plus preserved current music UI edits
+
+The plugin-install/browser-pairing journey makes this practical for noncoding Stream Deck users. Manual keys are a separate path with a concrete one-pipeline example. Allowed actions, expiry, single-view secrets, renewal, rotation and revocation are explained with their consequences.
+
+The full page was read with adjacent navigation and related links. The owner's natural explanatory style governs: no Atlas sentence caps, pilot imitation or rigid article template was imposed. No substantive reader finding remains at this hash. Combined build, rendered-output and link/frontmatter checks belong to the lead's separate validation.
+
+Report: docs-work/overhaul/review-automation-media-integrations.md.
+
+## Historical evidence
+
+Older hashes and verdicts below are retained for history and are not the current review.
+
 # Reader review: src/content/reference/en/integrations/stream-deck-and-api-devices.mdx
 Verdict: PASS
 Reviewed: C:\Projects\NoMercyLabs\nomnomzbot-docs\src\content\reference\en\integrations\stream-deck-and-api-devices.mdx

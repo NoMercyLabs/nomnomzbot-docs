@@ -1,5 +1,26 @@
-# Reader review: C:\Projects\NoMercyLabs\nomnomzbot-docs\src\content\reference\en\self-hosting\updates.mdx
+# Independent reader review: /reference/self-hosting/updates
 Verdict: PASS
+Reviewed: src/content/reference/en/self-hosting/updates.mdx
+Reviewed-SHA: 935850203c5a6929
+Reviewed-SHA256: 935850203c5a6929a5ddb3ec9f38fd64c77aa5e5253f37d00a19dc02091dc578
+Reviewed-Date: 2026-11-05
+Reviewer: independent reviewer, separate from article author
+Product-Revision: 54da8b6318de63b5205a0ff8db35e0b9045dd959
+
+The complete current article was read independently of its author, in the established settings, self-hosting and Code and SDK navigation order. The user's natural explainer/progressive-disclosure requirements take precedence over historical pilot mimicry, sentence caps and repeated page templates.
+
+## Learning and lookup result
+
+The guide explains persistence, backup prerequisites, lite versus full, and failed-update recovery in a coherent sequence. It avoids promising an old image alone reverses migrated data. Stable GitHub release pages and beta/nightly tags now match the advanced workflow.
+
+No outstanding substantive reader finding.
+
+Related routes were checked as contextual continuations rather than prerequisites for ordinary bot use. Draft labels remain appropriate for code material. This is a text/structure review, not a claim of rendered browser QA.
+
+## Historical review (superseded)
+
+# Reader review: C:\Projects\NoMercyLabs\nomnomzbot-docs\src\content\reference\en\self-hosting\updates.mdx
+Historical verdict: PASS
 Reviewed: C:\Projects\NoMercyLabs\nomnomzbot-docs\src\content\reference\en\self-hosting\updates.mdx
 Reviewed-SHA: 3c69744dc445df70
 

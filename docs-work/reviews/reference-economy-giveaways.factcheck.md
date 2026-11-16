@@ -1,5 +1,45 @@
-# Fact-check: /reference/economy/giveaways
+# Independent source verification: /reference/economy/giveaways
 Verdict: PASS
+Reviewed: src/content/reference/en/economy/giveaways.mdx
+Reviewed-SHA: 2e02dc0b7bae63f0a521451bef8cd298051bc34932a72137b55088743f21777b
+
+## Independent overhaul review, 2026-11-05
+
+GiveawayService.cs:302-434,480-545,833-929; GiveawayFulfillment.cs:80-180; GiveawayKeywordListener.cs:50-136; giveawayForm.ts; GiveawayCodePoolService.cs: repeated paid entries, immediate fulfillment, actual account age, observed watch spans, announcement/pot split/current cost, silent keyword entry and code controls.
+
+Reviewed independently of the article author, in actual navigation order. Current product source 54da8b631 and relevant changes since b12f4f696 were read without starting the bot, executing platform actions or changing channel data. This verdict is source verification, not proof of live platform delivery. See [review-moderation-economy-community.md](../overhaul/review-moderation-economy-community.md) for the review scope and findings.
+
+## Prior review history
+
+The earlier text below is retained as history; it does not independently approve a later article hash.
+
+Author source audit: 2026-11-04. Independent review of the revised article is pending; the historical PASS below does not approve this text.
+Product source: C:/Projects/NoMercyLabs/nomnomzbot at b12f4f696, inspected without starting the bot or changing data.
+
+Adds a first giveaway path; corrects stale multiple-entry and no-announcement claims; adds missing account-age/watch-time details and a verified entry-cost example.
+
+| Revised claim or retained core behavior | Current source opened |
+| --- | --- |
+| UI form labels, defaults and validation | dashboard/src/views/dashboard/giveaways/giveawayForm.ts:62-177; GiveawayDialog.vue; i18n/en.json:30-115 |
+| Multiple entries, each paid and weighted | server/src/NomNomzBot.Infrastructure/Giveaways/GiveawayService.cs:302-434 |
+| Actual account date and observed watch minutes | server/src/NomNomzBot.Infrastructure/Giveaways/GiveawayService.cs:833-929 |
+| Numeric standing requirement matches the actual number input and community ladder | dashboard/src/views/dashboard/giveaways/GiveawayDialog.vue:205-219; server/src/NomNomzBot.Domain/Identity/Enums/AuthorizationLadder.cs:54-64; GiveawayService.cs:867-872 |
+| Announcement now sends winner message | server/src/NomNomzBot.Infrastructure/Giveaways/GiveawayFulfillment.cs:80-142 |
+| Pot now sums entries and divides by actual winners | server/src/NomNomzBot.Infrastructure/Giveaways/GiveawayFulfillment.cs:145-180 |
+| Pot uses the current saved EntryCost; editing closed giveaway applies that field | server/src/NomNomzBot.Infrastructure/Giveaways/GiveawayFulfillment.cs:165-176; GiveawayService.cs:1082-1085 |
+| Claim window does not defer delivery; forfeit only changes status, redraw fulfills again | server/src/NomNomzBot.Infrastructure/Giveaways/GiveawayService.cs:513-545,618-640; GiveawayClaimSweepWorker.cs:87-104 |
+| Age consent is required in EnterAsync; no viewer form supplies it | server/src/NomNomzBot.Infrastructure/Giveaways/GiveawayService.cs:335-351; dashboard/src/views/viewer/account/AccountView.vue; search of dashboard/src/views for age-consent form references |
+| Code protection, masked listing and active-pool deletion guard | server/src/NomNomzBot.Infrastructure/Giveaways/GiveawayCodePoolService.cs:60-188 |
+| Keyword and claims, draw lifecycle, entry eligibility | server/src/NomNomzBot.Infrastructure/Giveaways/EventHandlers/GiveawayKeywordListener.cs:50-136; GiveawayService.cs:450-565,685-810 |
+
+The practical scenarios are recommended uses of these verified controls, not promises of a new feature. Unchanged reference details were compared with the current view, labels and relevant implementation. Runtime platform calls were not performed.
+
+## Historical evidence
+
+The prior review is retained for its detailed claim inventory. Its verdict and file hashes refer to the earlier article; where the new evidence differs, the new evidence takes precedence.
+
+# Fact-check: /reference/economy/giveaways
+Historical verdict: PASS
 Reviewed: src/content/reference/en/economy/giveaways.mdx
 Reviewed-SHA: 7fda655c060a7727
 

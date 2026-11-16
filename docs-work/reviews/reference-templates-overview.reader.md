@@ -1,3 +1,22 @@
+# Current independent reader review
+
+Verdict: PASS
+Reviewed: src/content/reference/en/templates/overview.mdx
+Reviewed-SHA: dceb316751072cf0dfb47e52a36dcdd10e3690b5795b3679ab71f61d779e504a
+Reviewed-SHA256: dceb316751072cf0dfb47e52a36dcdd10e3690b5795b3679ab71f61d779e504a
+Reviewed-Date: 2026-11-05
+Reviewer: independent section reviewer
+
+The task-to-helper index supports discovery, the syntax explanation distinguishes family placeholders from pasteable examples, and links back to the command tutorial provide a gentle learning path. The complete alphabetical lookup remains intact.
+
+The full page was read with the preceding/following navigation context and related links. This review applies the owner's explanatory, progressive-disclosure guidance; it does not impose Atlas sentence caps, pilot mimicry or fixed article headings. No substantive reader finding remains at this hash. Build/render/link checks are recorded separately by the lead reviewer.
+
+Report: docs-work/overhaul/review-learning-commands-helpers.md.
+
+## Historical evidence
+
+The material below is retained as historical evidence; its older verdict is not the current review.
+
 # Reader review: C:/Projects/NoMercyLabs/nomnomzbot-docs/src/content/reference/en/templates/overview.mdx
 Verdict: PASS
 Reviewed: C:/Projects/NoMercyLabs/nomnomzbot-docs/src/content/reference/en/templates/overview.mdx

@@ -1,0 +1,68 @@
+{
+  "fingerprint": "23ad6c9d5c5d35f476c1ef362a9865c8b63a69e0e8b7060f321b03769b67d957",
+  "verdict": "PENDING",
+  "answers": [
+    {
+      "question": 1,
+      "answer": "!pause pauses the music. A moderator or someone granted the right to moderate the song queue can actually pause it; a base editor role of Everyone does not remove that safeguard. Its normal default chat cooldown is 30 seconds and per-person cooldown is 0 seconds. Platform-identified broadcasters and moderators bypass those normal waits, while a role stored only in the bot does not grant that bypass.",
+      "quote": [
+        "!pause",
+        "Pauses the music.",
+        "Moderators",
+        "30 s",
+        "0 s",
+        "For music controls, Moderators includes someone the broadcaster granted the right to moderate the song queue. That gate applies to !pause, !resume, setting !volume, !bansong, !closequeue, !openqueue and !clearsongs. An ordinary viewer without that right receives a refusal.",
+        "The broadcaster and moderators identified on the incoming platform message bypass these normal waits. A role stored only in the bot does not grant that bypass, and the extra moderator skip window described below still applies."
+      ]
+    },
+    {
+      "question": 2,
+      "answer": "No. The catalog does not connect music or Spotify; the underlying feature must be configured, the bot connected, and the command enabled and available. To customize it, open Commands then System commands. Moderator, Lead moderator, Editor and Broadcaster can change commands by default, subject to any raised requirement; read-only users do not see the tab. Select it, choose Customize, make supported changes, and Save changes.",
+      "quote": [
+        "Music and economy commands need their underlying feature configured. Having !pause in the catalog does not connect a music player. To run a command, the bot must be connected and the command enabled and available to the person asking.",
+        "To manage a built-in, open Commands, then System commands. By default, Moderator, Lead moderator, Editor and Broadcaster can change commands; the broadcaster can raise the required role. Read-only access does not show this tab.",
+        "Choose Customize to unlock the supported fields.",
+        "Change what you need and choose Save changes."
+      ]
+    },
+    {
+      "question": 3,
+      "answer": "For a single changed cooldown, the Put one field back section says to choose Back to default beneath that field; it saves immediately and returns to Using the default. What Reset to default does differently is UNKNOWN consistently: one sentence says it changes only that one field, but the following procedure and table say it loses saved edits, restores all default replies, access and cooldowns, turns Read it aloud off and switches the command on. Those statements cannot both describe the same reset action.",
+      "quote": [
+        "Choose Back to default beneath a changed field. It saves immediately, without another Save changes, and the field returns to Using the default.",
+        "To return just one changed cooldown to its default, choose Reset to default. This changes only that one field.",
+        "A reset loses the command’s saved edits and switches it back on. If it shares replies with another command, the reset also restores that shared wording.",
+        "Open the command and choose Reset to default in the footer.",
+        "Read “Reset !name to its default?” and the list of settings that will be lost.",
+        "The fields show their defaults and the command is switched on."
+      ]
+    },
+    {
+      "question": 4,
+      "answer": "No. If the first bare moderated !skip succeeds, it starts a shared 30-second extra skip wait, so another moderator cannot skip five seconds later despite normal cooldown bypass. An ordinary viewer can use !skip 4 to remove their own fourth pending request, counting only their requests in queue order. It leaves the playing song alone and still needs normal access and availability checks and any applicable normal waits.",
+      "quote": "Bare !skip lets a viewer skip only their own currently playing request. A moderator or music-right holder can skip any playing song, but a successful moderated skip starts a separate 30-second wait for the whole channel. Another moderator cannot skip again five seconds later, even though moderators bypass normal cooldowns. A numbered command such as !skip 4 instead removes the caller’s fourth pending request, counting only their own requests in queue order. It leaves the playing song alone and still requires the command’s normal access checks."
+    },
+    {
+      "question": 5,
+      "answer": "The reset section creates a material obstacle: it presents Reset to default as a one-cooldown action and then describes a whole-command reset. A reader trying to undo one wait cannot trust that instruction without rereading and choosing between conflicting statements, and could lose unrelated saved settings or turn a command back on.",
+      "quote": [
+        "To return just one changed cooldown to its default, choose Reset to default. This changes only that one field.",
+        "A reset loses the command’s saved edits and switches it back on.",
+        "Read “Reset !name to its default?” and the list of settings that will be lost."
+      ]
+    },
+    {
+      "question": 6,
+      "answer": "The same reset contradiction is consequential when read aloud: the listener hears a specific single-field promise immediately followed by loss of the command's saved edits. They have to stop and resolve which action is safe. The alphabetical catalog's length alone is not a material failure.",
+      "quote": [
+        "To return just one changed cooldown to its default, choose Reset to default. This changes only that one field.",
+        "A reset loses the command’s saved edits and switches it back on."
+      ]
+    }
+  ],
+  "findings": [
+    "Reset to default is explicitly described as changing only one cooldown, then as discarding the command's saved edits, restoring other settings and enabling it. This contradicts the separate Back to default single-field instruction and risks unrelated setting loss or unintended reactivation when the reader wants to reset one cooldown."
+  ],
+  "warnings_released": false,
+  "warning_review": []
+}

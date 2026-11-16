@@ -1,0 +1,75 @@
+{
+  "fingerprint": "130e9bb0589ea7da30eba49ac483cf1fae6445680a10c3b611a92eca6b082fd7",
+  "verdict": "PASS",
+  "answers": [
+    {
+      "question": 1,
+      "answer": "The sidebar shows only the pages your role in the selected channel may open, so a friend with another role, or the same role in a channel with other permissions, sees a different list. Pages sit in groups (Live, Music and voice, Build, Loyalty), and Home, People and Settings have no heading. The Shield mode button shows Shield mode as it is now and a click flips it. The Action required button opens a list of things that need you, each with Dismiss and most with Open.",
+      "quote": "The sidebar lists only the pages your role in that channel may open, so a friend with another role sees a different list."
+    },
+    {
+      "question": 2,
+      "answer": "You must be signed in, and you need the right role in the selected channel. The header tools show for a moderator and up. Changing Shield mode takes a lead moderator and up by default, and only the broadcaster can grant that role, on Permissions under Team or Per person. The page states this in the Why a page is missing and Shield mode sections.",
+      "quote": "Changing it takes a lead moderator and up by default."
+    },
+    {
+      "question": 3,
+      "answer": "The Shield button label is the current state, not the action: Shield off means off, and Shield on with a check mark on the icon means on. If a plain moderator clicks it, no message shows and the label stays the same, so an unchanged label means the change was refused. Action required shows a number when items wait and says Nothing needs your attention. when the list is empty.",
+      "quote": "Shield off means Shield mode is off, and a click turns it on."
+    },
+    {
+      "question": 4,
+      "answer": "Only an icon column shows, so the window is 600 to 839 px wide. The channel switcher is then at the left of the top bar: click it and pick the other channel under Channels you moderate, and the same page opens there. Shield asks first because the window is under 768 px: on a narrower window a dialog names the channel and waits for Turn on, Turn off or Cancel. If this moderator is not a lead moderator, the bot still refuses the change after the dialog. Right after the switch, the Shield button can be missing for a moment while the dashboard reads the new channel's state.",
+      "quote": "On a narrower window, where the top bar and the page header stay at the top while you scroll, a dialog asks first and names the channel."
+    },
+    {
+      "question": 5,
+      "answer": "The silent refusal is explained right after the click behavior, and the account menu shows Moderator for both kinds, so a plain moderator could click, see nothing change, and think the button is broken. The page does say to ask the broadcaster, which covers it. I also guessed what the account menu says when the switcher opens the viewer chat of a channel I do not moderate (Recent channels, Visit a channel), because the menu text is given only for your own channel and every other channel.",
+      "quote": "A plain moderator can still click the button, but the bot refuses the change."
+    },
+    {
+      "question": 6,
+      "answer": "Read aloud, the pixel breakpoints pile up (448, 768, 840, 1080 to 1279, 600) and are hard to keep in your head. The reason the 448 px limit is the header width and not the window width is an internal detail I would not act on. The table rows that read (no heading) also sound odd aloud.",
+      "quote": "That limit is the width of the page header, not of the window, because the header shares the window with the sidebar or the column of icons."
+    }
+  ],
+  "findings": [],
+  "warnings_released": true,
+  "warning_review": [
+    {
+      "id": "length",
+      "decision": "keep",
+      "reason": "The page answers the three questions the reader asked: where the pages are, why the sidebar differs, and what Shield and Action required do. Each section serves a new reader looking for one of them, so the word count alone is not a defect."
+    },
+    {
+      "id": "paragraph-11",
+      "decision": "keep",
+      "reason": "Each sentence states one condition or outcome the reader acts on, in the order they need it. The sentence count alone is not a defect."
+    },
+    {
+      "id": "paragraph-14",
+      "decision": "keep",
+      "reason": "Each sentence states one condition or outcome the reader acts on, in the order they need it. The sentence count alone is not a defect."
+    },
+    {
+      "id": "paragraph-16",
+      "decision": "keep",
+      "reason": "Each sentence states one condition or outcome the reader acts on, in the order they need it. The sentence count alone is not a defect."
+    },
+    {
+      "id": "paragraph-18",
+      "decision": "keep",
+      "reason": "Each sentence states one condition or outcome the reader acts on, in the order they need it. The sentence count alone is not a defect."
+    },
+    {
+      "id": "sentence-20-4",
+      "decision": "keep",
+      "reason": "The long sentence names one cause (an open Display panel on Chat at 1080 to 1279 px), the controls it hides (channel switcher and account menu) and the fix (close Display). A new reader who cannot find those controls needs all three together, and splitting it would not lower the cost."
+    },
+    {
+      "id": "paragraph-23",
+      "decision": "keep",
+      "reason": "Each sentence states one condition or outcome the reader acts on, in the order they need it. The sentence count alone is not a defect."
+    }
+  ]
+}

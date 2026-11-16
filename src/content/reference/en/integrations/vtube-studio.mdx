@@ -3,9 +3,12 @@ title: VTube Studio
 description: Link VTube Studio to the bot, then load models, fire hotkeys and set expressions from the dashboard or a pipeline.
 ---
 
-You link VTube Studio on the **VTube Studio** page in the sidebar, in the **Live** group.
-After the link, the bot can load a model, fire a hotkey and turn an expression on or off.
-The page has three tabs: **Connection**, **Hotkeys** and **Expressions**.
+The VTube Studio connection lets your avatar take part in the stream's interactions.
+You can trigger a hotkey or expression from the dashboard, then use the same actions in a command, reward or event response through a [pipeline](/reference/commands/pipelines).
+Connect and test the model first on **VTube Studio**, in the sidebar's **Live** group.
+
+The page separates the connection from everyday controls: **Connection** sets up access, **Hotkeys** loads models and triggers hotkeys, and **Expressions** switches expressions on or off.
+Once the link works, moderators can use those controls without changing its connection details.
 
 ## Who can use this page
 
@@ -18,6 +21,10 @@ The **Load model**, **Trigger**, **Activate** and **Deactivate** buttons show on
 
 ## Link VTube Studio
 
+Start VTube Studio and enable plugin API access in its settings before asking the bot to connect.
+VTube Studio's [plugin setup guide](https://github.com/DenchiSoft/VTubeStudio/wiki/Plugins) explains that setting and where to check the actual port.
+The direct setup below assumes the bot can reach the computer running VTube Studio.
+
 1. Open **VTube Studio** in the sidebar.
    The **Connection** tab opens.
 2. Switch on **Link to VTube Studio**.
@@ -29,6 +36,10 @@ The **Load model**, **Trigger**, **Activate** and **Deactivate** buttons show on
    The button shows **Waiting for approval**, and the page shows "Click Allow in VTube Studio. This waits up to a minute."
 6. In VTube Studio, click **Allow**.
    **Approval** now shows "Approved. The bot keeps the key."
+
+After the status becomes **Connected**, open **Hotkeys** and trigger a hotkey you recognize.
+Confirm the change in VTube Studio before attaching it to a reward or automated response.
+This checks both access and the selected model's own hotkeys.
 
 The status at the top of the page and beside **VTube Studio** tells you the state of the link.
 
@@ -53,6 +64,11 @@ When the bot has connected once, **Last connected** shows how long ago that was.
 
 The events in **Events to listen to** are **Model loaded**, **Tracking status changed**, **Background changed**, **Model settings changed**, **Hotkey triggered**, **Model clicked**, **Items**, **Post processing**, **Model moved (high volume)**, **Model outline (high volume)** and **Model animation (high volume)**.
 The last three send many events per second, so they are off by default.
+
+**Bridge** is an advanced alternative for a bot on another computer.
+It sends requests through the **OBS control** browser source on the streaming PC, which then connects to local VTube Studio.
+That browser source must stay loaded; the direct **Authorize** button is not the bridge's approval flow.
+Use the [OBS browser-source setup](/reference/overlays/obs-browser-source) for the bridge page and approve the plugin request inside VTube Studio when the bridge connects.
 
 ## Load a model or fire a hotkey
 
@@ -85,6 +101,15 @@ A [pipeline](/reference/commands/pipelines) can control the model with the actio
 | Send a raw VTube Studio API request | Sends any VTube Studio request type with its data. |
 
 When an action fails, the pipeline step fails and the reason is kept in the `vts.last_error` variable.
+When **Send a raw VTube Studio API request** works, VTube Studio's answer is kept in the `vts.response` variable for a later step.
+
+## React to VTube Studio events
+
+Each event you switch on in **Events to listen to** can start an [event response](/reference/automation/event-responses).
+The event responses list these events with names that start with "VTube Studio", for example "VTube Studio model loaded".
+The three high-volume events stay off by default.
+The fields of the event are available as \{vts.event.&lt;field&gt;\} in the response.
+See the [event templates](/reference/templates/event) for how these variables work.
 
 <details>
 <summary>Rotate the bridge token</summary>
@@ -105,11 +130,24 @@ Switch on **Link to VTube Studio** and choose **Save** first.
 Then check that VTube Studio is running at the **Address**.
 
 **A message says "VTube Studio did not answer. Check the connection."**
-The bot could not reach VTube Studio.
-Check that VTube Studio is running, and that the status shows **Connected**.
+The page shows this one message for several causes.
+Check each one:
+
+- **Link to VTube Studio** is off or not saved.
+- **Connection type** is **Bridge**. **Authorize** works only with **Direct**.
+- VTube Studio is not running at the **Address**.
+- Nobody clicked **Allow** within a minute.
+- With **Bridge**, the **OBS control** browser source is not loaded.
 
 **Authorize stops after a minute.**
 Nobody clicked **Allow** in VTube Studio in time.
+The page shows the same "VTube Studio did not answer" message.
+Choose **Authorize** again and click **Allow**.
+
+**Authorize shows "You do not have the right for this."**
+VTube Studio refused the bot.
+You may have clicked **Deny**, or VTube Studio may have revoked the bot's key.
+This is not a role problem.
 Choose **Authorize** again and click **Allow**.
 
 ::

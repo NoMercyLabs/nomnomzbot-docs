@@ -1,3 +1,25 @@
+# Current independent fact check
+
+Verdict: PASS
+Reviewed: src/content/reference/en/getting-started/dashboard-tour.mdx
+Reviewed-SHA: 2c5bfc3522fee070eb3c3e9713a892ac95888b0705d631990b50e2a73983f56d
+Reviewed-SHA256: 2c5bfc3522fee070eb3c3e9713a892ac95888b0705d631990b50e2a73983f56d
+Reviewed-Date: 2026-11-05
+Reviewer: independent section reviewer
+Product: 54da8b6318de63b5205a0ff8db35e0b9045dd959 (initial source tracing b12f4f69638553c03ed64c1518c90d7bcccd6907)
+
+The full article was read in navigation order; consequential behavior and reference details were checked against current source. All reported documentation findings affecting this page were repaired and re-reviewed. This is a source review, not a live-channel test.
+
+- Current dashboard group/route hierarchy: dashboard/src/layouts/dashboard/navigation.ts:45-295 and dashboard/src/layouts/dashboard/useNavigation.ts:25-100.
+- Home activity replay is a presentation path rather than event-bus re-ingestion: server/src/NomNomzBot.Infrastructure/Dashboard/Replay/ActivityReplayService.cs:35-207.
+- Shield view/change roles: server/src/NomNomzBot.Infrastructure/Content/Identity/ActionDefinitionSeeder.cs:269-270.
+
+Report: docs-work/overhaul/review-learning-commands-helpers.md.
+
+## Historical evidence
+
+The material below is retained as historical evidence. Its older hashes, verdicts and values do not constitute the current review.
+
 # Fact check: /reference/getting-started/dashboard-tour
 Verdict: PASS
 Reviewed: C:\Projects\NoMercyLabs\nomnomzbot-docs\src\content\reference\en\getting-started\dashboard-tour.mdx

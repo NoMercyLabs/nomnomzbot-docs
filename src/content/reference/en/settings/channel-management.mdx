@@ -3,15 +3,21 @@ title: Channel management
 description: Let the bot join or leave your channel, reset the channel settings, delete the channel and bring it back.
 ---
 
-You manage the bot's place in your channel on the **Channel management** page in the settings sidebar.
-Here you let the bot join or leave, reset the settings, and delete the channel.
-A deleted channel can be brought back for a while.
+**Channel management** gives you several ways to stop or restart the bot's work for a channel.
+Making the bot leave is useful when you want a pause while keeping your setup.
+Resetting settings and deleting the channel have wider consequences, so choose the action that matches what you want to change.
 
 | Card | What it does |
 | --- | --- |
 | **The bot in your channel** | Shows whether the bot is in the channel, and lets it join or leave. |
-| **Reset the channel settings** | Puts the settings of this channel back to the defaults. |
-| **Delete this channel** | Removes the channel and everything in it from the bot. |
+| **Reset the channel settings** | Clears the channel's stored configuration entries, as counted in the preview. |
+| **Delete this channel** | Disables the channel and hides it from normal channel lists, with a 30-day restore window. |
+
+Leaving keeps the channel ready to rejoin.
+A settings reset keeps commands, viewers and history but clears the channel's configuration entries.
+It does not reset every value on every settings page or disconnect every linked account.
+Deletion disables the channel, cancels its active pipelines and starts its 30-day recovery window.
+It is not a substitute for disconnecting every external service; the [deletion limitations](#deletion-limitations) explain the difference.
 
 ## Who can use this page
 
@@ -46,9 +52,14 @@ Your settings stay as they are.
 
 ## Reset the channel settings
 
-A reset clears the stored settings of the channel.
+A reset clears the channel's configuration entries, grouped into the areas shown in the preview.
 The channel keeps its commands, viewers and history.
 A reset cannot be undone.
+
+Read the preview before confirming, especially the saved keys and sign-ins count.
+That label counts credentials stored as configuration entries; account connections kept in the separate credential vault are outside this reset.
+The command prefix, language, personality and viewer activity levels also remain, as do separately stored feature switches and engagement settings.
+Use an individual item's own controls when you only want to change that item.
 
 1. Choose **Reset settings** on the card **Reset the channel settings**.
    The dialog **Reset the settings of** your channel name opens.
@@ -56,38 +67,38 @@ A reset cannot be undone.
 3. Type the channel name in **Type the channel name to confirm**.
    The confirm button stays off until the name matches exactly.
 4. Choose **Reset settings**.
-   The settings go back to the defaults.
+   The counted configuration entries are removed. The bot then uses the fallback values for those entries.
 
 | Kind in the list | What it holds |
 | --- | --- |
-| **chat settings** | The chat settings of the channel. |
-| **text-to-speech settings** | The text to speech settings. |
-| **moderation settings** | The moderation settings. |
-| **music settings** | The music settings. |
-| **raid settings** | The raid settings. |
-| **saved keys and sign-ins** | Saved keys and sign-ins. |
-| **other settings** | Every other stored setting. |
+| **chat settings** | Configuration entries for chat and rendering. |
+| **text-to-speech settings** | Configuration entries for text to speech. |
+| **moderation settings** | Configuration entries for bans, shields, blocked terms and moderation. |
+| **music settings** | Configuration entries for music and Spotify. |
+| **raid settings** | Configuration entries for raids. |
+| **saved keys and sign-ins** | Provider, YouTube, Patreon and authentication configuration entries. |
+| **other settings** | Remaining channel configuration entries. |
 
 When nothing is stored, the list shows "No settings are stored. A reset changes nothing."
 
 ## Delete the channel
 
-A delete removes the channel and everything in it from the bot.
-The bot stops serving the channel at once.
+A delete marks the channel as deleted and disables it, while retaining its stored rows.
 You can bring the channel back for 30 days.
 
 1. Choose **Delete channel** on the card **Delete this channel**.
    The dialog **Delete** your channel name opens.
 2. Read the list of what the delete removes.
-   Each line is a count and a kind, such as commands, timers or widgets.
+   Each line is a count grouped into an area, such as chat records, viewer records or channel automations.
 3. Read the lines about what stops outside the bot.
    Each line starts with a count, such as "2 overlay sources in OBS go blank".
 4. Type the channel name in **Type the channel name to confirm**.
 5. Choose **Delete channel**.
    The card now shows **The channel is deleted** with the date until which you can bring it back.
 
-When nothing else depends on the channel, the list shows "Nothing else depends on this channel."
-Some lists end with "These numbers are a minimum. Some links can only be counted when they run."
+When no stored records are counted, the first line reads "Nothing else depends on this channel."
+Lines about what stops outside the bot can still follow it.
+The channel preview counts the stored rows in its listed categories; it does not certify that every external effect has completed.
 
 <details>
 <summary>What stops outside the bot</summary>
@@ -106,14 +117,32 @@ The dialog shows a line only when its count is above zero.
 
 </details>
 
+### Deletion limitations
+
+The table above quotes the current confirmation dialog.
+The delete operation itself does not delete Twitch reward definitions, revoke connected-service credentials or rotate the overlay token.
+Twitch event subscriptions are removed by the bot's periodic reconciliation, rather than by the delete request itself.
+An already loaded overlay or an external integration is therefore not guaranteed to stop immediately.
+Disconnect services or disable their individual integrations before deleting a channel when you need those connections to stop.
+
+The restore deadline is enforced by the application.
+It is not a promise that every retained database row is physically erased when the 30 days end.
+Use [Your data and privacy](/reference/settings/your-data-and-privacy) for your personal erasure choices, which are separate from channel deletion.
+
 ## Bring a deleted channel back
 
 After a delete, the card **Delete this channel** shows the deleted channel.
 It says "You can bring it back until" and the date.
-After that date, the channel is gone for good.
+After that date, the application no longer allows you to restore it.
+This notice stays only while the page is open.
+Later, open **Channel management** for another channel you own.
+The deleted channel is listed there with its own **Bring the channel back** button.
 
 1. Choose **Bring the channel back**.
-2. The channel and everything in it come back.
+2. The deletion mark is cleared and the channel is enabled again with its retained configuration.
+
+Check the bot's presence and connected services after restoring.
+Restoring the channel does not itself repeat the connection setup for every external service.
 
 The card also lists the other channels you own that are deleted and can still come back.
 Each one has its own **Bring the channel back** button.
@@ -121,9 +150,10 @@ Only the owner of a channel sees it in this list.
 
 ::Troubleshooting
 
-**Bring the channel back shows an error.**
-The 30 days are over.
-The channel cannot come back.
+**An action shows an error under the cards.**
+Join, leave, reset, delete and bring back all show their refusal reason in one line under the cards.
+If the reason is that the restore window has ended, the channel cannot come back.
+After the window ends, the channel no longer shows in the deleted list.
 
 ::
 

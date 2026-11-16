@@ -1,3 +1,23 @@
+# Current independent reader review
+
+Verdict: PASS
+Reviewed: src/content/reference/en/overlays/widgets-and-alerts.mdx
+Reviewed-SHA: f4deeb3c9ecae6d0b960fa30d3c22d27a7c4e0f35217613bcfbb9d5d72fea148
+Reviewed-SHA256: f4deeb3c9ecae6d0b960fa30d3c22d27a7c4e0f35217613bcfbb9d5d72fea148
+Reviewed-Date: 2026-11-05
+Reviewer: independent media-section reviewer
+Product: 54da8b6318de63b5205a0ff8db35e0b9045dd959 plus preserved current music UI edits
+
+The article distinguishes event, chat response and stream presentation, then guides the reader to supplied Alerts before optional customization. It accurately explains the current missing settings path and real replay effects while retaining widget-kind, preview and replay lookup details.
+
+The full page was read with adjacent navigation and related links. The owner's natural explanatory style governs: no Atlas sentence caps, pilot imitation or rigid article template was imposed. No substantive reader finding remains at this hash. Combined build, rendered-output and link/frontmatter checks belong to the lead's separate validation.
+
+Report: docs-work/overhaul/review-automation-media-integrations.md.
+
+## Historical evidence
+
+Older hashes and verdicts below are retained for history and are not the current review.
+
 # Reader review: src/content/reference/en/overlays/widgets-and-alerts.mdx
 Verdict: PASS
 Reviewed: src/content/reference/en/overlays/widgets-and-alerts.mdx

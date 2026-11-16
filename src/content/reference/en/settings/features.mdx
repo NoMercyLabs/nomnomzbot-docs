@@ -3,9 +3,12 @@ title: Features
 description: Switch the channel's features on and off, and read what each switch changes in chat, rewards and scripts.
 ---
 
-You switch parts of the bot on and off on the **Features** page.
-It sits in the **Bot** group of the settings sidebar (see [Dashboard tour](/reference/getting-started/dashboard-tour)).
-The page says: "Switch on the parts of NomNomzBot your channel uses. Each switch takes effect right away."
+The **Features** page lets you choose which optional parts of the bot your channel uses.
+For example, you can keep third-party emotes available while leaving code scripts off until you need them.
+Each switch takes effect immediately and applies to the channel, rather than just your browser.
+
+Find **Features** in the **Bot** group of the settings sidebar (see [Dashboard tour](/reference/getting-started/dashboard-tour)).
+Turning a feature on makes it available; [permissions](/reference/settings/permissions) still decide who may use it, and [resource limits](/reference/settings/resource-limits) still apply.
 
 ## Who can use this page
 
@@ -18,6 +21,7 @@ A moderator, a lead moderator or an editor does not see it, but may open **Featu
 The broadcaster can ask for a higher role.
 On the **Actions** tab of [Permissions](/reference/settings/permissions), the **Features** area holds two actions: "See which features are on" and "Turn features on and off".
 The broadcaster may raise the role of each one, but may not lower it below **Moderator**.
+A person who may see the features but not turn them on and off sees On or Off beside each feature instead of a switch.
 
 ## Switch a feature on or off
 
@@ -42,25 +46,35 @@ A group with no features is not shown.
 | **7TV Emotes** | **Chat** | Shows 7TV emotes in chat, animated emotes and emotes that sit on top of another emote included. | On |
 | **BetterTTV Emotes** | **Chat** | Shows BetterTTV emotes in chat. | On |
 | **FrankerFaceZ Emotes** | **Chat** | Shows FrankerFaceZ emotes in chat. | On |
-| **Link Previews** | **Chat** | Shows a preview card (title, description, image) for a link that a subscriber or higher shares. | Off |
-| **Chat HTML Fragments** | **Chat** | Lets a subscriber or higher post small, cleaned HTML pieces in chat. The overlay shows them. | Off |
+| **Link Previews** | **Chat** | Shows a preview card (title, description, image) for a link shared by a viewer who holds the link preview permission. Subscribers and higher hold it by default. | Off |
+| **Chat HTML Fragments** | **Chat** | Lets a viewer who holds the HTML permission post small, cleaned HTML pieces in chat. Subscribers and higher hold it by default. The overlay shows them. | Off |
 | **Viewer Templates** | **Chat** | Lets a viewer with the template permission use helpers such as `{stream.game}` in the text after a command or in a reward input. Subscribers and higher hold that permission by default. | On |
 | **Custom Code** | **Automation** | Lets you write JavaScript scripts and use them as pipeline actions. | Off |
 
 **Link Previews** is off by default because the bot fetches every shared link to build the card.
 A moderator's or the broadcaster's message meets the subscriber rule too.
+The broadcaster can change who holds the link preview and HTML permissions on [Permissions](/reference/settings/permissions).
+The `!permit` command can grant either one to a single viewer.
 
 ## What happens when Custom Code is off
 
-With **Custom Code** off, the bot refuses every script request.
-It answers: "Custom code is not enabled for this channel. Enable it on the Features page."
-A script can also use a bot ability only when the feature behind that ability is on.
+With **Custom Code** off, requests to the script-management pages are refused with "Custom code is not enabled for this channel. Enable it on the Features page."
+A script that needs a host permission grant also cannot run with this feature off.
+Other requirements, such as enabling text to speech or connecting a music service, still apply to the action the script requests.
+
+There is a runtime exception: an already saved, enabled script that declares no host grants can still run its local JavaScript through an existing binding.
+Turning off **Custom Code** is therefore not a universal stop switch for every saved script.
+See [SDK script basics](/reference/code/sdk-script-basics) for the distinction between local helpers and calls into the bot.
 
 ## A feature outside the channel's plan
 
 A feature that the channel's plan does not include shows a badge beside its name.
 The badge names the plan the feature needs, or reads **Higher plan**.
 A line under the description can give the reason.
+
+A feature's switch and its availability are separate.
+The switch records your channel's choice, while the badge and explanation tell you whether this bot currently allows that choice to take effect.
+Read that explanation before looking for a missing setting elsewhere.
 
 The switch of such a feature shows whether the feature is on or off.
 You cannot change the switch of such a feature on this page, also when the feature is on.

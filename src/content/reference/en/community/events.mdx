@@ -1,0 +1,124 @@
+---
+title: Events
+description: Look back through every follow, sub, raid, cheer and reward from your last streams, and replay one for chat and your overlays.
+---
+
+The **Events** page lists everything that happened on your channel during your current stream and the two streams before it.
+Use it when the short list on **Home** has scrolled past the thing you want, for example a raid from an hour ago or a gifted sub you missed.
+You can also replay an event, so chat, the voice and your overlays show it again.
+
+Open it by choosing **All events** on the **Happening now** panel of **Home**.
+The address is `/app/events`.
+
+## Who can use this page
+
+By default, a **Moderator** or higher may open the page, and the broadcaster may let a VIP open it too.
+The roles are explained on [Permissions](/reference/settings/permissions).
+The replay button needs its own permission, which a **Moderator** has by default (see [Replay an event](#replay-an-event)).
+
+## What the page shows
+
+The page has two cards.
+The top card holds the newest stream, and the card below it holds the stream before that.
+The card titles follow whether you are live.
+
+| State | Top card | Second card |
+| --- | --- | --- |
+| You are live | **This stream** | **Last stream** |
+| You are offline | **Last stream** | **The stream before** |
+
+Each card lists every event of its stream, with the newest event first.
+The bot counts a stream from the moment it started, so a stream that never started has no events on this page.
+If the bot has never recorded a stream, both cards stay empty.
+
+An empty top card says **No events yet.**
+An empty second card says **No events from an earlier stream.**
+If a card cannot load, it says **Events could not load.** and offers a retry.
+
+The page has no search box and no filter.
+It shows these streams and nothing older, so use [Analytics](/reference/community/analytics) when you need a longer look back.
+
+## What counts as an event
+
+The list holds channel milestones.
+Chat messages are not in it, because those live on the [Chat page](/reference/community/chat-page).
+
+Twitch also repeats a follow notification now and then.
+The list shows each follower once, so you never see the same person follow twice.
+Cheers, subs, raids and reward redemptions can happen more than once, and each shows as its own row.
+
+Each stream card shows at most 1,000 events.
+A normal stream stays well under that.
+
+## Read a row
+
+A row has an icon on the left, a line of text, and the time on the right.
+The time is a short weekday and a 24-hour clock time, such as Sat 21:40.
+The name in a row opens that person's profile, the same one you open from chat.
+
+The text under the name says what happened.
+
+| Event | What the row says |
+| --- | --- |
+| Follow | **Followed** |
+| New sub | **Subscribed on Twitch · Tier 1** (the tier varies) |
+| Resub | **Resubscribed on Twitch**, or the tier and the number of months when the sub is more than one month old |
+| Gift subs | **Gifted 5 Twitch subs · Tier 1** (the count and tier vary) |
+| Gift received | **Got a Twitch gift sub** |
+| Sub ended | **Twitch sub ended · Tier 1**, or **Twitch gift sub ended** for a gifted one |
+| Cheer | **Cheered 100 bits** |
+| Raid in | The raider's name, **raided you**, and the viewer count |
+| Raid out | **You raided** and the channel's name, with how many viewers went along |
+| Raid starting | **Raid to** a channel, **starting**, and the viewer count |
+| Reward redeemed | **Redeemed** and the reward's name |
+| Ban, unban | **Banned**, **Unbanned** |
+| Timeout | **Timed out for 10 min** (rounded to whole minutes, at least 1) |
+| Moderator added or removed | **Became a moderator**, **Is no longer a moderator** |
+| Hype train | **Hype train started**, **Hype train ended** |
+| Poll | **Poll started**, **Poll ended** |
+| Prediction | **Prediction started**, **Prediction locked**, **Prediction ended** |
+| Ad break | **Ad break started** |
+| Chat milestones | **First seen by the bot**, **Came back to chat**, **Watch streak**, **Moderator anniversary** |
+| Shoutouts | **Shoutout waiting**, **Auto shoutout waiting**, **Shoutout tried**, **Shoutout sent**, **Shouted you out** |
+
+A row for an event the page has no wording for says **Channel event**.
+When an event arrives without the detail the page needs, such as a missing tier on a sub, the row falls back to the plain label from the table instead of showing a guess.
+
+## Replay an event
+
+Each row has a **Replay** button on the right.
+It shows again what viewers saw at the time: the bot's chat reply, the voice, and the alerts on your overlays.
+A gift bomb replays its whole chain, the gifter's line first and then each recipient's, in the original order.
+
+Replay only shows things again.
+It does not pay out currency or points, fulfil a reward, change a counter or stat, or touch hype train state, and it does not add a new row to the list.
+So you can use it to test an alert, or to show a moment again, without giving anyone anything twice.
+
+Only people who hold the replay permission see the button.
+A **Moderator** has it by default.
+The broadcaster can change that on [Permissions](/reference/settings/permissions).
+
+After you choose **Replay**, a message tells you the result, for example **Replayed 1 event: 1 chat messages, 0 voice, 1 overlays, 0 widgets.**
+The numbers are what was sent out.
+Two other messages mean nothing went out.
+
+| Message | Meaning |
+| --- | --- |
+| **Found the event, but there was nothing to show again: no response is set up for it and no alert was saved.** | The event exists, but no chat reply, voice or alert belongs to it. Set one up on [Event responses](/reference/automation/event-responses) first. |
+| **Nothing to replay for this event.** | The bot can no longer find the event. |
+
+If something else goes wrong the message is **Could not replay this event.**
+Replay is rate limited, so choose it once and wait for the message.
+
+## Where the page gets its data
+
+The page reads the events the bot recorded for your channel.
+It shows what the bot saw, so a stream where the bot was offline has gaps.
+Your **Home** page reads the same events, limited to the newest stream.
+
+## Related pages
+
+- [Dashboard tour](/reference/getting-started/dashboard-tour) for **Home** and the other pages
+- [Chat page](/reference/community/chat-page) for messages, which this list leaves out
+- [Analytics](/reference/community/analytics) for longer ranges
+- [Permissions](/reference/settings/permissions) for who can open the page and replay

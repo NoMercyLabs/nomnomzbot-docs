@@ -1,0 +1,178 @@
+---
+title: Built-in commands
+description: Find a shipped command, its access and cooldowns, or change its supported replies and settings.
+---
+
+Built-in commands already know how to answer. `!uptime` checks how long the stream has been live; `!song` names the current track. Every channel has the same catalog, and built-ins cannot be deleted.
+
+Music and economy commands need their underlying feature configured. Having `!pause` in the catalog does not connect a music player. To run a command, the bot must be connected and the command enabled and available to the person asking.
+
+## Every built-in command
+
+The 43 commands below are listed alphabetically. Use the channel's command prefix in place of `!` if you changed it in [Bot basics](/reference/settings/bot-basics-and-personality).
+
+**Default effective access** includes a command's own safeguards. For example, `!pause` needs a moderator or someone granted the right to moderate the music queue, even though its base role in the editor is **Everyone**.
+
+A **chat cooldown** makes the whole channel wait between uses. A **per-person cooldown** makes each viewer wait on their own. Both columns show the normal defaults in seconds; 0 means no normal wait. The broadcaster and moderators identified on the incoming platform message bypass these normal waits. A role stored only in the bot does not grant that bypass, and the extra moderator skip window described below still applies.
+
+Ordinary viewer commands also need a live stream or **Keep commands and rewards on while offline** switched on. The platform's broadcaster and moderators bypass that offline gate, as do data-rights commands. Role and availability checks still apply.
+
+| Command | What it does | Default effective access | Chat cooldown | Per-person cooldown |
+| --- | --- | --- | --- | --- |
+| `!accountage` | Answers how old the caller's Twitch account is. | Everyone | 0 s | 12 s |
+| `!allow` | `!allow massban` lets a held mass ban run now (see [Bans and blocked terms](/reference/moderation/bans-and-blocked-terms)). | Lead moderators | 3 s | 0 s |
+| `!banger` | Adds the playing song to the channel's banger playlist. | Everyone | 30 s | 0 s |
+| `!bansong` | Blocks the playing song from later requests. | Moderators | 30 s | 0 s |
+| `!clearsongs` | Removes every queued song of one viewer. | Moderators | 60 s | 0 s |
+| `!closequeue` | Stops new song requests. The music keeps playing. | Moderators | 60 s | 0 s |
+| `!coinflip` | Plays a coin flip for a bet in channel currency. | Everyone | 0 s | 0 s |
+| `!commands` | Lists enabled channel and built-in commands available to the caller, using each trigger's own prefix. Authored commands that match a regular expression are left out. | Everyone | 120 s | 0 s |
+| `!dice` | Plays a dice roll for a bet in channel currency. | Everyone | 0 s | 0 s |
+| `!disallow` | `!disallow massban` stops a held mass ban. | Lead moderators | 3 s | 0 s |
+| `!discord` | Answers an invite link to the channel's Discord server (see [Discord](/reference/integrations/discord)). | Everyone | 60 s | 0 s |
+| `!followage` | Answers how long the caller has followed the channel. | Everyone | 0 s | 12 s |
+| `!forgetme` | Removes the caller's own data after a second confirmation. Data-rights command. | Everyone | 0 s | 0 s |
+| `!gdpr` | `!gdpr status`, `!gdpr forget` and `!gdpr export`. Data-rights command. | Everyone | 0 s | 0 s |
+| `!help` | Answers how to use a command, for example `!help sr`. | Everyone | 60 s | 0 s |
+| `!leaderboard` | Answers the top of the channel's leaderboard (see [Leaderboards and games](/reference/economy/leaderboards-and-games)). | Everyone | 90 s | 0 s |
+| `!lurk` | Marks the caller as lurking: watching without chatting. | Everyone | 0 s | 12 s |
+| `!media` | Sends a clip or video link to media share (see [Media share](/reference/audio/media-share)). | Everyone | 0 s | 0 s |
+| `!mydata` | Asks for a copy of the caller's own data. Data-rights command. | Everyone | 0 s | 0 s |
+| `!openqueue` | Takes new song requests again. | Moderators | 60 s | 0 s |
+| `!pause` | Pauses the music. | Moderators | 30 s | 0 s |
+| `!permit` | Gives a viewer a role or a right for a time. Always on. | Moderators | 0 s | 0 s |
+| `!play` | Submits a media link approved, or takes the link from a Twitch message you reply to (see [Media share](/reference/audio/media-share)). | Moderators | 0 s | 0 s |
+| `!playlist` | Answers the link to the channel's banger playlist. | Everyone | 60 s | 0 s |
+| `!profile` | Gives the same answer as `!stats`. | Everyone | 0 s | 12 s |
+| `!queue` | Lists the song queue or the caller's own requests. | Everyone | 0 s | 12 s |
+| `!quote` | Shows a random quote or a quote by number. Adding, editing and deleting have their own permissions (see [Quotes](/reference/commands/quotes)). | Everyone reads; changes have their own permissions | 45 s | 0 s |
+| `!resume` | Plays the music again. | Moderators | 30 s | 0 s |
+| `!skip` | Skips the caller's own playing request, or any playing song for a music moderator. `!skip N` removes the caller's own Nth pending request, counting only their requests in queue order. Music moderators share an extra 30-second wait for bare `!skip`. | Everyone; moderators skip any song | 0 s | 12 s |
+| `!slots` | Plays the slots for a bet in channel currency. | Everyone | 0 s | 0 s |
+| `!song` | Answers which song is playing. | Everyone | 30 s | 0 s |
+| `!sr` | Requests a song for the queue (see [Song requests](/reference/music/song-requests)). | Everyone | 0 s | 12 s |
+| `!stats` | Answers a viewer's channel stats. | Everyone | 0 s | 12 s |
+| `!unlurk` | Clears the caller's lurking mark. | Everyone | 0 s | 12 s |
+| `!unpermit` | Takes a granted role or right back. Always on. | Moderators | 0 s | 0 s |
+| `!unwhitelist` | Takes back the standing that `!whitelist` gives. | Broadcaster | 0 s | 0 s |
+| `!update` | Reads the caller's Twitch name and avatar again. A moderator may name another viewer. | Everyone | 0 s | 12 s |
+| `!uptime` | Answers how long the stream has been live. | Everyone | 30 s | 0 s |
+| `!voice` | Lets a viewer pick their own text-to-speech voice (see [Text to speech](/reference/audio/text-to-speech)). | Everyone | 0 s | 12 s |
+| `!volume` | Answers the music volume. With a number, sets the volume. | Everyone reads; moderators set | 30 s | 0 s |
+| `!whisper` | Sends a viewer a private message from the bot. | Moderators | 0 s | 12 s |
+| `!whitelist` | Gives a viewer Subscriber, VIP or Moderator standing for commands. | Broadcaster | 0 s | 0 s |
+| `!wrongsong` | Takes back the caller's own song request. | Everyone | 0 s | 12 s |
+
+For music controls, **Moderators** includes someone the broadcaster granted the right to moderate the song queue. That gate applies to `!pause`, `!resume`, setting `!volume`, `!bansong`, `!closequeue`, `!openqueue` and `!clearsongs`. An ordinary viewer without that right receives a refusal.
+
+Those commands can show **Everyone** as the base **Who can use it** setting in the editor. Raising that setting adds a role requirement; lowering it back to the default does not remove the music safeguard.
+
+Bare `!skip` lets a viewer skip only their own currently playing request. A moderator or music-right holder can skip any playing song, but a successful moderated skip starts a separate 30-second wait for the whole channel. Another moderator cannot skip again five seconds later, even though moderators bypass normal cooldowns. A numbered command such as `!skip 4` instead removes the caller's fourth pending request, counting only their own requests in queue order. It leaves the playing song alone and still requires the command's normal access checks.
+
+The three data-rights commands are always on with fixed settings and wording. See [Your data and privacy](/reference/settings/your-data-and-privacy) for what they return or remove.
+
+### Ask by whisper
+
+`!uptime`, `!song` and `!queue` also accept a Twitch whisper, a private message to the bot. The bot must be able to receive and send Twitch whispers and identify the connected channel you mean.
+
+Whispers always use `!`, even if the channel has another chat prefix. Put the channel first when needed: `!song yourchannel` or `!queue yourchannel`. Without a named channel, the bot uses the one channel where it has seen you chatting during the current session. If there are none or more than one, it asks which channel you mean.
+
+The answer returns as a whisper. Other known built-ins reply “works in chat only.” If the bot reaches its daily whisper limit for new recipients, it can post a short pointer in a channel where it has seen you chatting, asking you to use chat instead. That notice never includes the private answer.
+
+## The list
+
+To manage a built-in, open **Commands**, then **System commands**. By default, **Moderator**, **Lead moderator**, **Editor** and **Broadcaster** can change commands; the broadcaster can raise the required role. Read-only access does not show this tab. For roles and creating your own commands, see [Create a command](/reference/commands/create-a-command).
+
+The **Built-in commands** list has a **Search commands** box. Each row shows its trigger and current role and cooldown settings, for example “Everyone · 30s chat · 0s each”.
+
+| Row text | Meaning |
+| --- | --- |
+| **Using the default** | The role and cooldowns have not been changed. |
+| **Overrides the default (...)** | The role or a cooldown has changed; the default appears in brackets. |
+| **Always on · ...** | The command cannot be switched off, so the row has no switch. |
+| **This is a data-rights command. It always answers and its settings are fixed.** | The command lets a viewer see or remove their own data. Its settings and replies cannot be changed. |
+
+The row shows the base role setting. Use the effective access in the catalog above for commands with additional music safeguards. [Cooldowns and permissions](/reference/commands/cooldowns-and-permissions) explains normal waiting and role checks in more detail.
+
+## Switch a command on or off
+
+Use the row's switch or **Answers in chat** in the editor. Either saves immediately. An off built-in is ignored in chat as if the word were not a command.
+
+Always-on commands have no switch. The bot also refuses to disable a command while a reward, timer or another item still runs it.
+
+## Change a built-in command
+
+The bot supplies the behavior, but you can change supported reply wording, access and cooldowns.
+
+1. Select the command in the list. Its editor shows the name with **Built-in** beneath it. Unchanged commands open locked, with “These are the defaults. Customize to make them your own; each change overrides the default.”
+2. Choose **Customize** to unlock the supported fields.
+3. Change what you need and choose **Save changes**. The footer counts unsaved changes until they are saved.
+
+After saving, the count clears and changed fields show **Overrides the default (...)**. A command with saved customization opens unlocked next time. **Discard** returns every field to its last saved value.
+
+| Field | What you can change |
+| --- | --- |
+| A reply box for each outcome | Up to 500 characters for that reply, such as a success or refusal. |
+| **Who can use it** | The lowest allowed role. You can raise it from the command's default floor, never lower it. |
+| **Chat cooldown (seconds)** | A whole-channel wait from 0 to 3600 seconds. |
+| **Per-person cooldown (seconds)** | Each viewer's wait from 0 to 3600 seconds. |
+| **Read it aloud** | Off by default. Only `!quote` uses this setting to speak its reply. |
+
+Data-rights commands remain locked. Their fixed replies show “This reply is fixed and cannot be changed.”
+
+### Write a reply
+
+The reply box contains the words the bot sends in the channel's one bot voice. Until you change them, they follow the personality chosen in [Bot basics and personality](/reference/settings/bot-basics-and-personality).
+
+A helper is a name in braces, such as `{user}`. The bot replaces it with its value in the text a viewer sees or hears, including chat, overlays and speech. **Variables:** beneath a reply box lists that command's own values; `!stats`, for example, has `{stats.points}` and `{stats.watchtime}`. Shared helpers are on [Variables and templates](/reference/commands/variables-and-templates).
+
+`!lurk` and `!unlurk` share their replies, as do `!stats` and `!profile`. Editing shared wording changes it for both commands.
+
+## Put one field back
+
+Choose **Back to default** beneath a changed field. It saves immediately, without another **Save changes**, and the field returns to **Using the default**.
+
+## Reset a command to its default
+
+A reset loses the command's saved edits and switches it back on. If it shares replies with another command, the reset also restores that shared wording. The other command keeps its own enabled state, role, cooldowns and **Read it aloud** setting.
+
+1. Open the command and choose **Reset to default** in the footer.
+2. Read “Reset !name to its default?” and the list of settings that will be lost.
+3. Choose **Reset to default** in the dialog.
+
+The fields show their defaults and the command is switched on.
+
+| Item in the dialog | Result |
+| --- | --- |
+| **Chat cooldown** | Restores the default chat cooldown. |
+| **Per-person cooldown** | Restores the default per-person cooldown. |
+| **Who can use it** | Restores the default role. |
+| **Reply wording** | Restores the default words of every reply. |
+| **Read aloud** | Switches **Read it aloud** off. |
+| **Turned back on** | Enables the command again. |
+
+The reset button appears only when something differs from the default. Data-rights commands have no reset button.
+
+## Troubleshooting
+
+::Troubleshooting
+
+**A built-in command does nothing in chat.**
+
+1. Check its switch. An off command answers nobody.
+2. Check whether the stream is live. Ordinary viewer commands stay inactive offline unless **Keep commands and rewards on while offline** is on. The platform's broadcaster and moderators, and data-rights commands, bypass this gate.
+3. Check **Who can use it** and any additional feature permission. The sender must meet both.
+4. Check **Chat cooldown (seconds)** and **Per-person cooldown (seconds)**.
+5. Look for a channel command with the same name. It takes precedence over an ordinary built-in. The five always-on names—`!permit`, `!unpermit`, `!mydata`, `!gdpr` and `!forgetme`—always resolve to the built-in.
+
+See [Bot basics and personality](/reference/settings/bot-basics-and-personality) for the offline switch and [Create a command](/reference/commands/create-a-command) for naming and precedence.
+
+::
+
+## Related pages
+
+- [Create a command](/reference/commands/create-a-command)
+- [Variables and templates](/reference/commands/variables-and-templates)
+- [Cooldowns and permissions](/reference/commands/cooldowns-and-permissions)
+- [Bot basics and personality](/reference/settings/bot-basics-and-personality)
+- [Quotes](/reference/commands/quotes)

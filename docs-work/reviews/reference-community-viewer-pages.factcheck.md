@@ -1,5 +1,55 @@
-# Fact-check: /reference/community/viewer-pages
+# Targeted final review — 2026-11-06
+
+Verdict: PENDING
+Reviewed: src/content/reference/en/community/viewer-pages.mdx
+Reviewed-SHA: c5a36b4a1ae8b15bba40cbb3798ae713c7cd6e347f24c4f423257b90bab852b6
+Reviewed-SHA256: c5a36b4a1ae8b15bba40cbb3798ae713c7cd6e347f24c4f423257b90bab852b6
+Reviewer: final-features correction author; self-review, not independent PASS
+Product-Revision: 2dfefbb0c393f439954d79b32ac11511678d7f44 plus working tree
+
+The full article was read editorially. The correction was independently traced from the staged lead to current source, then applied by this reviewer. This is targeted author verification, not a new exhaustive source audit, independent final-text approval or runtime test. See [final-features.md](../ecosystem-validation/final-features.md) for exact source anchors, coverage and remaining limits.
+
+## Historical reviews
+
+The original records below are preserved verbatim and apply only to their recorded hashes.
+
+# Independent source verification: /reference/community/viewer-pages
 Verdict: PASS
+Reviewed: src/content/reference/en/community/viewer-pages.mdx
+Reviewed-SHA: 6528023147713b589979bad9755954b238867a76dac962725132f431517fef23
+
+## Independent overhaul review, 2026-11-05
+
+ViewerChannelFinder/ViewerChannelGroups.vue; ExternalChatView.vue; viewer route.ts:24-28; ChannelVoicePanel.vue:30-130; LinkedAccountsPanel.vue:30-132: viewer channel routes, ordinary off-bot live/send-only chat, four placeholders, channel voice and unlink-only controls.
+
+Reviewed independently of the article author, in actual navigation order. Current product source 54da8b631 and relevant changes since b12f4f696 were read without starting the bot, executing platform actions or changing channel data. This verdict is source verification, not proof of live platform delivery. See [review-moderation-economy-community.md](../overhaul/review-moderation-economy-community.md) for the review scope and findings.
+
+## Prior review history
+
+The earlier text below is retained as history; it does not independently approve a later article hash.
+
+Author source audit: 2026-11-04. Independent review of the revised article is pending; the historical PASS below does not approve this text.
+Product source: C:/Projects/NoMercyLabs/nomnomzbot at b12f4f696, inspected without starting the bot or changing data.
+
+Explains what a viewer can accomplish, removes irrelevant button-style narration and makes the absent account-linking control explicit.
+
+| Revised claim or retained core behavior | Current source opened |
+| --- | --- |
+| Signed-in viewer channel entry and own summary/queue | dashboard/src/views/viewer/channels/MyChannelsView.vue; dashboard/src/views/viewer/me/MeView.vue:40-182 |
+| Seven navigation destinations, four unfinished | dashboard/src/views/viewer/nav/viewerNavigation.ts:31-74; route.ts:24-28 |
+| Own account panels | dashboard/src/views/viewer/account/AccountView.vue:38-110 |
+| Pronouns own/global save and linked account unlink only | dashboard/src/views/viewer/account/PronounsPanel.vue:35-82; LinkedAccountsPanel.vue:35-132 |
+| Voice choice belongs to viewer words/channel | dashboard/src/views/viewer/account/ChannelVoicePanel.vue:69-109; i18n/en.json:44-59 |
+| Exact viewer-page labels | dashboard/src/views/viewer/me/i18n/en.json; dashboard/src/views/viewer/account/i18n/en.json |
+
+The practical scenarios are recommended uses of these verified controls, not promises of a new feature. Unchanged reference details were compared with the current view, labels and relevant implementation. Runtime platform calls were not performed.
+
+## Historical evidence
+
+The prior review is retained for its detailed claim inventory. Its verdict and file hashes refer to the earlier article; where the new evidence differs, the new evidence takes precedence.
+
+# Fact-check: /reference/community/viewer-pages
+Historical verdict: PASS
 Reviewed: C:\Projects\NoMercyLabs\nomnomzbot-docs\src\content\reference\en\community\viewer-pages.mdx
 Reviewed-SHA: f2b9f01d7de98248
 

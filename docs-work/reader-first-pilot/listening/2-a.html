@@ -1,0 +1,216 @@
+<!doctype html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>Cooldowns and permissions — Version A</title><style>body{font:20px/1.65 Arial,sans-serif;max-width:74ch;margin:2rem auto;padding:0 1rem;color:#202124;background:#fff}h1,h2,h3{line-height:1.25}table{border-collapse:collapse;display:block;overflow:auto;max-width:100%;font-size:.9em}th,td{border:1px solid #bbb;padding:.45rem;text-align:left;vertical-align:top}pre{overflow:auto;padding:1rem;background:#f2f3f5}a:focus-visible{outline:3px solid #1268c4;outline-offset:3px}</style></head><body><main><p><a href="index.html">Listening pairs</a> · Version A</p><h1>Cooldowns and permissions</h1><article><p>Permissions and cooldowns solve different problems.
+A permission decides whether a viewer can use a command at all; a cooldown spaces out uses by people who already have access.
+For example, you might leave a schedule command open to everyone while using a cooldown to keep its answer from filling chat.</p>
+<p>Open an existing command on the <strong>Commands</strong> page in the selected channel to change these settings.
+You need command-write access, which starts at <strong>Moderator</strong>, including higher roles; the broadcaster can raise the requirement.
+If you need to create one first, follow <a href="https://docs-dev.nomnomz.bot/reference/commands/create-a-command">Create a command</a>.
+These settings control messages that trigger a command in chat; a timer or reward that is directly bound to a command follows its own trigger rules.
+To observe the waits, use a running, connected bot, an enabled command and its correct trigger. Ordinary viewers need enough command access and a live stream or <strong>Keep commands and rewards on while offline</strong> switched on.
+An ordinary-viewer account is needed to test ordinary cooldowns. TTS setup is needed only to hear permission denial, not to set access or waits.</p>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<table><thead><tr><th>Setting</th><th>What it decides</th></tr></thead><tbody><tr><td><strong>Who can use it</strong></td><td>The lowest role that may run the command.</td></tr><tr><td><strong>Chat cooldown (seconds)</strong></td><td>How long ordinary viewers wait between uses of this command across the channel. 0 to 86400 seconds (24 hours).</td></tr><tr><td><strong>Per-person cooldown (seconds)</strong></td><td>How long the same viewer waits to use it again. 0 to 86400 seconds (24 hours).</td></tr></tbody></table>
+<h2 id="set-who-can-use-a-command"><a href="#set-who-can-use-a-command">Set who can use a command</a></h2>
+<p>Command access is the role a viewer needs to run the command.
+<strong>Who can use it</strong> is the first field in the editor.
+The default is <strong>Everyone</strong>.</p>
+<p>The list holds 8 NomNomzBot access levels, lowest first:</p>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<table><thead><tr><th>Choice</th><th>Who may run the command</th></tr></thead><tbody><tr><td><strong>Everyone</strong></td><td>Anyone in chat.</td></tr><tr><td><strong>Twitch subscribers</strong></td><td>Subscribers and every role above them.</td></tr><tr><td><strong>VIPs</strong></td><td>VIPs and every role above them.</td></tr><tr><td><strong>Artists</strong></td><td>Artists and every role above them.</td></tr><tr><td><strong>Moderators</strong></td><td>Moderators and every role above them.</td></tr><tr><td><strong>Lead moderators</strong></td><td>Lead moderators and every role above them.</td></tr><tr><td><strong>Editors</strong></td><td>Editors and every role above them.</td></tr><tr><td><strong>Only you</strong></td><td>The broadcaster only.</td></tr></tbody></table>
+<p>A viewer runs the command when their role is the chosen role or higher.
+The roles and how people get them are on <a href="https://docs-dev.nomnomz.bot/reference/settings/permissions">Permissions</a>.</p>
+<p>These are the bot’s access levels, rather than an identical set of native roles on every platform.
+From incoming chat, the bot recognizes the following:</p>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<table><thead><tr><th>Platform</th><th>Roles recognized for command access</th></tr></thead><tbody><tr><td><strong>Twitch</strong></td><td>Subscribers (including founders), VIPs, moderators, lead moderators identified by their lead-moderator badge, and the broadcaster.</td></tr><tr><td><strong>Kick</strong></td><td>Subscribers, VIPs, moderators and the broadcaster. Kick chat does not supply Artist, Lead moderator or Editor access to this command check.</td></tr><tr><td><strong>YouTube</strong></td><td>Channel members use the subscriber level; live-chat moderators use Moderator, and the channel owner uses Broadcaster. An ordinary YouTube subscription does not count as channel membership. The chat integration does not infer VIP, Artist, Lead moderator or Editor access.</td></tr></tbody></table>
+<p>Twitch has native Artist, Lead Moderator and Editor roles, but they reach the bot differently.
+If a Twitch lead moderator chooses the ordinary moderator badge, that message proves Moderator access; a stored Lead moderator role can still supply the higher level.
+The current command check does not grant Artist access from the Artist badge alone: the person needs Artist standing recorded in the bot, or a higher qualifying role.
+Twitch Editor access comes through the stored team membership, rather than a chat badge.</p>
+<p><strong>Lead moderator</strong> and <strong>Editor</strong> are also team roles you can assign inside NomNomzBot, including to people using Kick or YouTube.
+The command check also honors bot-assigned standing and active role permits.
+YouTube Studio’s own Editor role is separate and is not imported as NomNomzBot Editor access by the chat integration.
+Giving someone bot access does not itself make them a moderator on the streaming platform.</p>
+<ol>
+<li>Open the command in the editor.</li>
+<li>Choose a role in <strong>Who can use it</strong>.
+The footer counts the change, for example “1 unsaved change”.</li>
+<li>Choose <strong>Save changes</strong>.
+The count leaves the footer and <strong>Save changes</strong> turns off.</li>
+</ol>
+<h3 id="when-a-viewers-role-is-too-low">When a viewer’s role is too low</h3>
+<p>The command does not run.
+By default the bot answers in chat, in the channel’s one bot voice: “You don’t have permission to use that command.”</p>
+<p>The bot also requests <a href="https://docs-dev.nomnomz.bot/reference/audio/text-to-speech">text to speech</a> for that line in the channel’s bot voice, even when the command’s <strong>Read it aloud</strong> switch is off.
+Speech still depends on the channel’s TTS settings and playback being available; <strong>Moderators approve first</strong>, for example, holds the line for approval.
+The current dashboard cannot review that speech queue, as explained under <a href="https://docs-dev.nomnomz.bot/reference/audio/text-to-speech#approval-and-the-current-dashboard-limitation">Approval and the current dashboard limitation</a>.</p>
+<p>Text to speech skips the line when your channel sets a minimum bits amount for text to speech, because the line carries 0 bits.</p>
+<p>Denial speech is requested at most once every 30 seconds per viewer in this channel, shared across denied commands.
+The platform-identified broadcaster and moderators bypass this speech throttle too, including Twitch lead moderators.
+A bot-assigned role alone does not give that exemption, even when it lets the person use moderator-only commands.
+The 30-second wait starts with the speech attempt, so a refused or unavailable TTS request can still use up that wait; chat notices are not limited by this speech throttle.
+This guard is separate from command cooldowns and the TTS cooldown for a viewer’s own lines.</p>
+<p>Twitch, Kick and YouTube messages use this same denial path.
+Its speech lookup still treats the stored channel identity as Twitch, even for a Kick or YouTube message.
+If that lookup or speech delivery fails, the chat notice can still appear without audio.</p>
+<h2 id="choose-how-often-it-answers"><a href="#choose-how-often-it-answers">Choose how often it answers</a></h2>
+<p>A chat cooldown is useful when the answer is for everyone, such as the current song or your schedule.
+A per-person cooldown is useful when each viewer gets a personal response: one person waits without preventing someone else from trying.
+You can use both when you need to limit the overall pace as well as repeat requests from one viewer.</p>
+<p>A command cooldown is a wait after a use, in seconds, before the command runs again.
+Both cooldowns are in the editor’s <strong>Trigger and cooldowns</strong> group.
+For a new custom command, each starts at 0, which means no cooldown; built-in commands and presets can have different defaults.</p>
+<ol>
+<li>Open the command in the editor.</li>
+<li>Open <strong>Trigger and cooldowns</strong>.</li>
+<li>Type a number of seconds in <strong>Chat cooldown (seconds)</strong>, <strong>Per-person cooldown (seconds)</strong>, or both.
+Use whole seconds; 0 turns off that cooldown.</li>
+<li>Choose <strong>Save changes</strong>.
+The count leaves the footer and <strong>Save changes</strong> turns off.</li>
+</ol>
+<p>When the group is closed, its heading shows what is set.
+With a 30 second chat cooldown and a 10 second per-person cooldown, it reads “30 s chat · 10 s per person”.
+With both at 0, it reads “No cooldown”.</p>
+<h3 id="how-the-two-cooldowns-work">How the two cooldowns work</h3>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<table><thead><tr><th>Cooldown</th><th>Who waits</th><th>When it starts</th></tr></thead><tbody><tr><td><strong>Chat cooldown</strong></td><td>All viewers except the platform-identified broadcaster and moderators.</td><td>Each time a use passes the access and cooldown checks, including operator uses.</td></tr><tr><td><strong>Per-person cooldown</strong></td><td>Only the viewer who ran the command, with the same broadcaster/moderator exemptions.</td><td>Each time that viewer passes the access and cooldown checks.</td></tr></tbody></table>
+<p>When both are set, a viewer must be clear of both.
+A cooldown is checked after <strong>Who can use it</strong>.
+A viewer with too low a role gets the permission line, not the cooldown line.</p>
+<p>For example, set a 10-second chat cooldown and a 60-second per-person cooldown.
+After a viewer uses the command, another viewer can use it once the 10 seconds pass, but the first viewer must wait the full 60 seconds.
+Each accepted use starts a new 10-second chat cooldown, so the first viewer also needs that shared wait to be clear when their 60 seconds end.
+An attempt refused for permissions or cooldown does not restart either wait.
+Passing those checks starts the waits before the response or action; it does not guarantee that a later action succeeds.
+These are example values to help you choose a pace, not defaults.</p>
+<h3 id="testing-as-a-moderator">Testing as a moderator</h3>
+<p>The broadcaster and platform moderators bypass both normal command cooldown checks on Twitch, Kick and YouTube; Twitch lead moderators are included.
+This uses the role supplied with the incoming message, so a bot-assigned Moderator, Lead moderator or Editor role alone does not bypass the waits.
+Repeated tests from a platform moderator or broadcaster account therefore do not show what an ordinary viewer experiences.
+Their uses still start the chat cooldown for everyone else.
+Some built-in commands have additional safeguards, such as the shared moderator skip window described in <a href="https://docs-dev.nomnomz.bot/reference/commands/built-in-commands">Built-in commands</a>.</p>
+<h3 id="when-a-command-is-still-cooling-down">When a command is still cooling down</h3>
+<p>The command does not run.
+By default the bot answers in chat, in the channel’s one bot voice: “That command is still on cooldown.”</p>
+<p>These command cooldowns are held in the bot’s memory.
+Restarting the bot resets their active waits.
+The configured cooldown lengths stay saved, but their remaining waits are not restored: the next permitted use starts a fresh cooldown.</p>
+<h2 id="reset-to-the-preset"><a href="#reset-to-the-preset">Reset to the preset</a></h2>
+<p>A command made from a preset has <strong>Reset to preset</strong> in the footer (see <a href="https://docs-dev.nomnomz.bot/reference/commands/create-a-command">Create a command</a>).
+<strong>Who can use it</strong>, <strong>Chat cooldown (seconds)</strong> and <strong>Per-person cooldown (seconds)</strong> are among the settings it puts back.
+The dialog lists each one that differs from the preset.
+These return to the preset’s values, which are not necessarily zero.
+The reset also reapplies the preset’s reply, description, aliases and trigger settings; it is not a reset of just these three controls.
+The command’s name and on/off state stay as you chose them.</p>
+<h2 id="troubleshooting"><a href="#troubleshooting">Troubleshooting</a></h2>
+<h2>When something is not right</h2><p><strong>A viewer gets “You don’t have permission to use that command.”</strong>
+Their role is below the one in <strong>Who can use it</strong>.
+Choose a lower role, or give the viewer a role on <a href="https://docs-dev.nomnomz.bot/reference/settings/permissions">Permissions</a>.</p><p><strong>A moderator can spam a command that has a cooldown.</strong>
+That is expected.
+The platform-identified broadcaster and moderators bypass the normal command cooldowns on Twitch, Kick and YouTube.
+Extra built-in safeguards can still apply, as explained under <a href="#testing-as-a-moderator">Testing as a moderator</a>.</p><p><strong>A command runs again sooner than its cooldown after a bot restart.</strong>
+That is expected.
+A restart clears the active command waits rather than restoring their remaining time.</p>
+<h2 id="related-pages"><a href="#related-pages">Related pages</a></h2>
+<ul>
+<li><a href="https://docs-dev.nomnomz.bot/reference/commands/create-a-command">Create a command</a></li>
+<li><a href="https://docs-dev.nomnomz.bot/reference/settings/permissions">Permissions</a></li>
+</ul></article></main></body></html>

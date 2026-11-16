@@ -1,0 +1,227 @@
+---
+title: Create a command
+description: Make and test a useful chat reply, then change how the command answers and how viewers trigger it.
+---
+
+Viewers keep asking when you're live next. Give them `!schedule`, and the bot can answer with your stream times.
+You make it on **Commands** in the dashboard: the name connects the message someone types to your reply or chosen actions. Before answering, the bot checks their access and any cooldowns.
+
+Have the bot running, [sign in](/reference/getting-started/sign-in), and select your [connected channel](/reference/getting-started/connect-platforms) in the dashboard. The chat connection must work for the test below; use your connected Twitch chat for this first reply.
+
+## Who can use this page
+
+By default, a **Moderator**, **Lead moderator**, **Editor** or **Broadcaster** can open **Commands** and change commands. The broadcaster can raise the access requirement.
+
+The broadcaster can also give **VIPs** list access through **Permissions** → **Actions** → **Commands**. That access is read-only: **New command** says "You can view this, but your role cannot change it." The **System commands** tab is hidden.
+
+## Make a useful reply
+
+Start with your stream times in a plain reply. Leave the other options alone until you see that reply in chat.
+
+1. Open **Commands** and choose **New command**. On an empty list, **Make the first command** opens the same dialog.
+2. Enter `schedule` in **Name**.
+3. Keep **What it does** at **Sends a reply**, and write your times in **Reply**. For example: `Tuesdays at 19:00 Amsterdam time.`
+4. Keep **Send the reply to** at **Twitch chat**, **Prefix** at **Channel default**, and **Match** at **Starts with**.
+5. Choose **Create command**. Your saved command opens in the editor, already switched on.
+
+Type `!schedule` in your channel's Twitch chat as the broadcaster or a platform moderator. If your channel uses something other than `!` before command names, type that instead.
+Those accounts can test while you're offline. An ordinary viewer needs the stream to be live, or **Keep commands and rewards on while offline** switched on, as well as permission to use the command and no active cooldown.
+The bot posts `Tuesdays at 19:00 Amsterdam time.` if you used the example reply.
+
+[Your first command](/reference/getting-started/first-command) is the shorter starting guide when you need only one plain reply. The **Channel commands** tab holds the commands you make; **System commands** holds the bot's own [built-in commands](/reference/commands/built-in-commands).
+
+### Rules for the name
+
+Enter the name without the characters chat types before it. The dialog removes spaces at the ends, strips all leading `!` characters and makes the name lowercase, so `!!Hello` becomes `hello`.
+
+| If the name… | What happens |
+| --- | --- |
+| is empty | The dialog says "Give the command a name." |
+| has whitespace inside it | The bot refuses it: it cannot match a single chat word. |
+| is only the prefix | The bot refuses it: the prefix is added when the command runs. |
+| is already used by another channel command | The bot refuses it, comparing names without letter case. |
+| is longer than 100 characters | The bot refuses it. |
+
+A refusal leaves the dialog open with the reason in red. Nothing is created.
+
+## Edit a command
+
+To update your stream times, open `schedule` in the list and change **Reply**. The footer counts your edits, for example "1 unsaved change".
+Choose **Save changes**: the count disappears and the save button turns off. Type the command in chat again to see the new saved times.
+
+The same save applies to the other fields below. **Discard** restores every field to its saved value. If the bot refuses a save, the reason appears in red and your edits stay in the form.
+
+| Setting | When to change it | Starting value for a new command |
+| --- | --- | --- |
+| **Who can use it** | Restrict the command to a role or anyone above it. | **Everyone** |
+| **Send the reply to** | Choose **Twitch chat**, **Chat overlay**, **Both** or **Nowhere** for a text or random reply. | **Twitch chat** |
+| **Read it aloud** | Request speech for a text or random reply. | Off |
+| **Trigger and cooldowns** | Change the message that runs the command, or how long chat and each person wait between uses. | Both cooldowns are 0 seconds; the heading says "No cooldown". |
+
+The chat overlay is a browser source: a web page layer loaded in your streaming app. It shows the reply on stream as a bot line.
+
+**Send the reply to** is available while creating a text or random reply and when editing it. **Read it aloud** is in the editor. Neither control shows for a pipeline or code script, which sends and speaks through its own steps.
+
+For a text or random reply, speech is queued only after the reply is successfully sent to chat. **Chat overlay** alone and **Nowhere** therefore produce no speech, even with **Read it aloud** on. The channel's [text-to-speech setup](/reference/audio/text-to-speech) also needs to be ready.
+Use [Cooldowns and permissions](/reference/commands/cooldowns-and-permissions) to choose access and waits.
+
+<details>
+<summary>Reset a command to its preset</summary>
+
+A preset is a ready-made command the bot added to the channel. Only a command from a preset has **Reset to preset** in the footer.
+Its dialog lists the settings that will return to the preset and warns "Your edits to them are lost."
+
+If nothing differs, it says "This command already matches its preset. Resetting changes nothing."
+This restores a channel command's preset; system commands have their own reset controls.
+
+</details>
+
+## What a command does
+
+A text reply is enough for information such as your schedule or a community link. **Reaction** in the editor changes the response you first chose under **What it does**.
+New commands start with **Text** unless you choose another response in the creation dialog.
+
+### Choose a different response
+
+| What you need | **What it does** in the dialog | **Reaction** in the editor | What to fill in |
+| --- | --- | --- | --- |
+| One answer | **Sends a reply** | **Text** | **Reply**, the line the bot sends. |
+| Variety | **Sends a random reply** | **Random reply** | **Reply 1**, **Reply 2** and so on, with one answer per box. |
+| Several actions | **Runs a pipeline** | **Pipeline** | **Pipeline**: choose a [pipeline](/reference/commands/pipelines) with its own reply step. |
+| An optional response written in code | **Runs a code script** | **Code script** | **Script**: choose a script from **Scripts**. See [Scripts (Draft)](/reference/code/scripts). |
+
+Have a suitable pipeline or script ready when choosing that response. Text and random replies go to **Twitch chat** by default, in the channel's one bot voice; **Send the reply to** changes their destination.
+When your list has no commands, it says "No commands yet."
+
+### Write a reply
+
+You can keep the answer current without editing it every time. Helpers insert information when the command runs; for example:
+
+```text
+Welcome! Today we play {stream.game}.
+```
+
+If your current game is Example Game, chat sees "Welcome! Today we play Example Game."
+The reply box holds up to 500 characters. An unknown helper produces "Not a known helper here:" under the box, followed by the unknown names.
+Find the available helpers on [Variables and templates](/reference/commands/variables-and-templates).
+
+### Write random replies
+
+With **Reaction** set to **Random reply**, the bot picks an answer from your list each time someone uses the command.
+
+1. Choose **Edit replies**. The **Random replies** dialog says "One reply per line. The bot picks one of them each time."
+2. Enter an answer in each numbered box. **Add a reply** adds another box.
+3. Choose **Use these replies**. The editor shows the count, for example "3 replies".
+4. Choose **Save changes**. The unsaved count disappears and the save button turns off.
+
+The **X** beside a box removes it; the last box's **X** is disabled.
+A [pick list](/reference/commands/pick-lists) is a separate list that several commands can share.
+
+<details>
+<summary>Start from another command's replies</summary>
+
+Under **Or start from a list you already have**, the **Random replies** dialog lists your other random-reply commands.
+Choose **Use the replies of !name** to copy its list. The two commands then hold separate copies: editing one does not change the other.
+
+</details>
+
+## Triggers
+
+The trigger is the message that runs your command. **Prefix** chooses what goes before its name; **Match** chooses where that name may appear in the message.
+Both controls are in the **New command** dialog and the editor's **Trigger and cooldowns** group.
+
+### Prefix
+
+The channel's usual prefix is **Command prefix** on **Bot basics**, described on [Bot basics and personality](/reference/settings/bot-basics-and-personality).
+
+| **Prefix** choice | What chat types |
+| --- | --- |
+| **Channel default** | The channel prefix followed by the name. This is the default, and uses `!` if the channel has set none. |
+| **Custom** | The text you enter in **Custom prefix**, followed by the name. It needs nonempty text, up to 8 characters. |
+| **None** | The name on its own. |
+
+### Match
+
+Matching ignores letter case.
+
+| **Match** choice | When the command runs |
+| --- | --- |
+| **Starts with** | The message begins with the prefix and name, followed by whitespace or the end of the message. This is the default. Any trailing text is passed to the command as its input. |
+| **Exact** | The message is just the prefix and name. |
+| **Contains** | The prefix and name appear as a whole word anywhere. A command named `cat` with no prefix does not run on "category". |
+| **Regex** | **Regex pattern**, a text pattern you supply, finds a match in the message text. Choosing this mode does not require the pattern to match the entire message. |
+
+**Regex** needs a pattern. If it is missing, or **Custom** has no prefix text, creation stops with "Fill in the custom prefix or the regex pattern you picked."
+Nothing is created. In the editor, the same missing field keeps **Save changes** disabled.
+
+## Switch a command on or off
+
+Use the switch in its list row or **Enabled** at the top of its editor. Both save immediately, without **Save changes**.
+A command that is off stays listed with **Off** and answers nobody.
+
+The bot can refuse to switch a command off while something else still runs it. Move or remove those uses first, just as you must before [deleting it](#delete-a-command).
+
+## Copy a command
+
+Open a command and choose **Duplicate** in the footer. A copy of its saved settings opens with `-copy` after the name, for example `!hello-copy`.
+
+The copy starts **off**, so switch it on before testing. Most settings are copied, including **Read it aloud**, but aliases, preset identity, reply destination and enabled state are not.
+Aliases are additional names for the original command. The copy has no **Reset to preset** button and its reply goes to **Twitch chat**; you only need to choose a destination if you want a different one.
+Speech still needs successful chat delivery and a ready TTS setup.
+
+If that copy name already exists, the bot refuses the copy and the editor shows the reason.
+
+## Delete a command
+
+1. Open the command and choose **Delete** in the footer.
+2. In "Delete !name?", check that you want it removed for good: "Chat can no longer use it."
+3. Choose **Delete command**. The editor closes and the command leaves the list.
+
+If something else still runs the command, the confirmation does not open. The editor names each kind of use, its count and up to five names.
+For example: "Still used by 2 timers: …. Move or remove these first, then delete the command."
+
+| Kind named in the message | Where to look |
+| --- | --- |
+| rewards: channel-point rewards that run the command | **Channel points** |
+| timers: scheduled posts, and chat triggers | **Triggers and timers** |
+| event responses: actions for a follow, sub or raid | **Event responses** |
+| giveaways | **Giveaways** |
+| catalog items | **Economy** |
+
+An **other places** line can include pending scheduled tasks that run the command. Those uses also block deletion or switching the command off; resolve them before retrying.
+
+## Commands that repeat a system command
+
+A channel command can have the same name as a system command. Its row says **Repeats !name**, and the line above the list counts those commands.
+When the channel command's trigger matches, it answers instead of the ordinary system command.
+
+`!permit`, `!unpermit`, `!mydata`, `!gdpr` and `!forgetme` always use the system command instead.
+
+To remove all the channel copies, choose **Move copies to system**, then confirm with **Remove copies**. This permanently removes those channel commands.
+An ordinary system command's saved enabled state, access requirement and cooldowns still apply; removing a copy alone does not guarantee an answer in chat.
+
+## Troubleshooting
+
+::Troubleshooting
+
+**The command does nothing in chat.**
+Check these in order, with the bot running and connected to the selected channel:
+
+1. The command's switch. **Off** answers nobody.
+2. **Who can use it**. The viewer needs that role or a higher one.
+3. **Prefix** and **Match**. They must fit the message typed; see [Triggers](#triggers).
+4. **Send the reply to**. **Chat overlay** and **Nowhere** send nothing to Twitch chat.
+5. **Chat cooldown** and **Per-person cooldown**. Platform broadcasters and moderators bypass these waits; ordinary viewers do not.
+6. Whether the stream is offline. Ordinary viewers' commands are ignored unless **Keep commands and rewards on while offline** is on in [Bot basics](/reference/settings/bot-basics-and-personality). The platform broadcaster and moderators can still test.
+
+If you changed the reply after creating it, choose **Save changes** before trying again.
+
+::
+
+## Related pages
+
+- [Built-in commands](/reference/commands/built-in-commands)
+- [Variables and templates](/reference/commands/variables-and-templates)
+- [Cooldowns and permissions](/reference/commands/cooldowns-and-permissions)
+- [Pipelines](/reference/commands/pipelines)
+- [Permissions](/reference/settings/permissions)

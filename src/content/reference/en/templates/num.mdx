@@ -1,51 +1,140 @@
 ---
 title: Number format helpers
-description: Lists 36 template helpers, each with what it gives and an example.
+description: Thirty-six template helpers that round a number, write it with separators, or show it as money, a time, words or another unit, with the input each one takes and what it gives.
 ---
 
-Helpers on this page: `{num.*}`.
+A number helper takes a number and writes it out another way: rounded, with separators, as money, as a time or in words. It goes in any reply field where the other [template helpers](/reference/templates/overview) work. In `{num.round:2.567|1}`, the number follows the colon and the pipe comes before the second input. [Variables and templates](/reference/commands/variables-and-templates) has the full rules.
 
-These helpers format a number: round it, add separators, or write it as a currency or a duration.
+You can put one helper inside another. That is how a reply formats the number a viewer typed after a command, as the last section shows. A helper with no answer is left in the reply as you typed it, braces included. There is no Roman numeral for 0, so `{num.roman:0}` reaches chat as `{num.roman:0}`.
 
-Each row is its own example, so the rows on this page do not all come from one moment.
+## Where they work
 
-| Helper | What it gives | Example |
-| --- | --- | --- |
-| `{num.abs}` | Absolute value of a number | `{num.abs:-5}` gives `5` |
-| `{num.bar}` | A bar from a value and its maximum | `{num.bar:6\|10}` gives `██████░░░░` |
-| `{num.between}` | True when a number is inside a range, ends included | `{num.between:5\|1\|10}` gives `true` |
-| `{num.binary}` | A whole number in binary | `{num.binary:5}` gives `101` |
-| `{num.bytes}` | A size in bytes as KB, MB or GB | `{num.bytes:1536}` gives `1.5 KB` |
-| `{num.clamp}` | Keeps a number between a minimum and a maximum | `{num.clamp:120\|0\|100}` gives `100` |
-| `{num.compact}` | Short form of a big number: 1.2k, 3.4M, 2.1B | `{num.compact:1234}` gives `1.2k` |
-| `{num.convert}` | Converts length, weight, volume or temperature between units | `{num.convert:10\|km\|mi}` gives `6.21` |
-| `{num.currency}` | An amount of money with a currency code, for example 5 and USD | `{num.currency:5\|USD}` gives `$5.00` |
-| `{num.currency.compact}` | A short money amount with a currency code: $1.5k | `{num.currency.compact:1500\|USD}` gives `$1.5k` |
-| `{num.dec}` | A number minus one | `{num.dec:4}` gives `3` |
-| `{num.diff}` | Difference between two numbers, always positive | `{num.diff:2800\|2500}` gives `300` |
-| `{num.digitSum}` | Sum of the digits of a whole number | `{num.digitSum:123}` gives `6` |
-| `{num.digits}` | How many digits a whole number has | `{num.digits:12345}` gives `5` |
-| `{num.duration}` | Seconds as a short time: 2h 15m | `{num.duration:8100}` gives `2h 15m` |
-| `{num.duration.clock}` | Seconds as a clock: 1:23 | `{num.duration.clock:83}` gives `1:23` |
-| `{num.duration.long}` | Seconds as a time in words: 2 hours, 15 minutes | `{num.duration.long:8100}` gives `2 hours, 15 minutes` |
-| `{num.format}` | Writes a number with group marks in the channel language, with optional decimals | `{num.format:1234}` gives `1,234` |
-| `{num.fromRoman}` | A Roman numeral as a number | `{num.fromRoman:XIV}` gives `14` |
-| `{num.hex}` | A whole number in hexadecimal | `{num.hex:255}` gives `FF` |
-| `{num.inc}` | A number plus one | `{num.inc:4}` gives `5` |
-| `{num.isEven}` | True when a whole number is even, false when it is odd | `{num.isEven:7}` gives `false` |
-| `{num.max}` | Largest of the numbers | `{num.max:4\|9\|2}` gives `9` |
-| `{num.min}` | Smallest of the numbers | `{num.min:4\|9\|2}` gives `2` |
-| `{num.ordinal}` | Ordinal of a whole number: 3rd (3e in a Dutch channel) | `{num.ordinal:3}` gives `3rd` |
-| `{num.ordinal.words}` | Ordinal of a whole number in words: third | `{num.ordinal.words:3}` gives `third` |
-| `{num.parity}` | The word odd or even, in the channel language | `{num.parity:7}` gives `odd` |
-| `{num.parse}` | Reads a short number such as 1.2k or 3M as a plain number | `{num.parse:1.2k}` gives `1200` |
-| `{num.percent}` | Part of a whole as a percentage, with optional decimals | `{num.percent:1234\|1500}` gives `82%` |
-| `{num.percentOf}` | A percentage of a number | `{num.percentOf:10\|250}` gives `25` |
-| `{num.ratio}` | Ratio of two whole numbers in lowest terms | `{num.ratio:3\|12}` gives `1:4` |
-| `{num.roman}` | A whole number from 1 to 3999 as a Roman numeral | `{num.roman:2026}` gives `MMXXVI` |
-| `{num.round}` | Rounds a number to a number of decimals (default 0), halves away from zero | `{num.round:2.456\|2}` gives `2.46` |
-| `{num.sign}` | A number with a plus sign when it is positive | `{num.sign:5}` gives `+5` |
-| `{num.truncate}` | Cuts the decimals off a number | `{num.truncate:2.9}` gives `2` |
-| `{num.words}` | A whole number in words, in the channel language: forty-two | `{num.words:42}` gives `forty-two` |
+Every helper on this page works in commands, event responses, timers, pipelines, Discord posts and webhook bodies. They also work in a viewer's own text, such as a reward input. For that, **Viewer Templates** must be on in [Features](/reference/settings/features), and the viewer must hold the template permission. Subscribers and higher hold that permission by default.
 
-Back to [Template helpers](/reference/templates/overview). For the places helpers work, special characters and HTML, read [Variables and templates](/reference/commands/variables-and-templates).
+## Numbers you type
+
+Write a number with a dot for decimals and no separators between thousands, such as `2.5` or `-4`. A space before or after a number is fine. `2,5`, `1,000` and `1e3` are not numbers here, so a helper given one stays in braces.
+
+Some helpers need a whole number, and the tables say so. A helper that needs a whole number stays in braces if you give it `7.5`. A count of decimals is a whole number from 0 to 10.
+
+A result that is a plain number uses a dot and no separators, whatever language the channel uses. It has at most 10 decimals and no zeros at the end. The helpers that follow your channel language write their result the way that language does. The tables name them.
+
+## Round and limit a number
+
+| Helper | Takes | What it gives | Example |
+| --- | --- | --- | --- |
+| `{num.round}` | A number, then a count of decimals if you want one (default 0) | The number rounded to that many decimals | `{num.round:2.567\|1}` gives `2.6` |
+| `{num.truncate}` | A number | The number with its decimals cut off | `{num.truncate:2.9}` gives `2` |
+| `{num.min}` | One or more numbers | The smallest | `{num.min:4\|9\|2}` gives `2` |
+| `{num.max}` | One or more numbers | The largest | `{num.max:4\|9\|2}` gives `9` |
+| `{num.clamp}` | A number, a minimum and a maximum | The number, kept between the minimum and the maximum | `{num.clamp:120\|0\|100}` gives `100` |
+| `{num.between}` | A number and two ends | `true` when the number is between the ends or on one, else `false` | `{num.between:5\|1\|10}` gives `true` |
+| `{num.sign}` | A number | The number with a plus sign when it is above 0 | `{num.sign:5}` gives `+5` |
+| `{num.abs}` | A number | The number without its minus sign | `{num.abs:-5}` gives `5` |
+| `{num.inc}` | A number | The number plus one | `{num.inc:4}` gives `5` |
+| `{num.dec}` | A number | The number minus one | `{num.dec:4}` gives `3` |
+
+A half rounds away from 0, so `{num.round:2.5}` gives `3` and `{num.round:-2.5}` gives `-3`. `{num.truncate}` cuts toward 0, so `{num.truncate:-2.9}` gives `-2`.
+
+The two ends of `{num.between}` can come in either order. For `{num.clamp}` the minimum must come first: `{num.clamp:5|10|1}` stays in braces.
+
+## Measure one number against another
+
+| Helper | Takes | What it gives | Example |
+| --- | --- | --- | --- |
+| `{num.percent}` | A part, a whole, then a count of decimals if you want one (default 0) | The part as a percentage of the whole | `{num.percent:1234\|1500}` gives `82%` |
+| `{num.percentOf}` | A percentage and a number | That percentage of the number | `{num.percentOf:10\|250}` gives `25` |
+| `{num.diff}` | Two numbers | How far apart they are, never below 0 | `{num.diff:2500\|2800}` gives `300` |
+| `{num.ratio}` | Two whole numbers, 0 or more | The ratio in its smallest form | `{num.ratio:3\|12}` gives `1:4` |
+| `{num.bar}` | A value and a maximum | A bar of 10 marks, filled for the value | `{num.bar:6\|10}` gives `██████░░░░` |
+
+`{num.percent:1234|1500|1}` gives `82.3%`. A whole of 0 stays in braces, and so does a maximum of 0 or less for `{num.bar}`.
+
+The bar fills to the nearest mark and never past full, so a value above the maximum fills every mark. For a bar with another width or your own marks, use `{meter}` on [Math helpers](/reference/templates/math).
+
+## Change how a number is written
+
+| Helper | Takes | What it gives | Example |
+| --- | --- | --- | --- |
+| `{num.format}` | A number, then a count of decimals if you want one | The number with thousands separators, in the channel language | `{num.format:1234567.5}` gives `1,234,567.5` |
+| `{num.compact}` | A number | A short form with k, M, B or T | `{num.compact:1234}` gives `1.2k` |
+| `{num.parse}` | A short form such as `1.2k` | The plain number | `{num.parse:1.2k}` gives `1200` |
+| `{num.bytes}` | A size in bytes, 0 or more | The size in KB, MB, GB and up | `{num.bytes:1536}` gives `1.5 KB` |
+| `{num.words}` | A whole number | The number in words, in the channel language | `{num.words:42}` gives `forty-two` |
+| `{num.ordinal}` | A whole number | The ordinal, in the channel language | `{num.ordinal:3}` gives `3rd` |
+| `{num.ordinal.words}` | A whole number | The ordinal in words, in the channel language | `{num.ordinal.words:3}` gives `third` |
+| `{num.roman}` | A whole number from 1 to 3999 | The Roman numeral | `{num.roman:2026}` gives `MMXXVI` |
+| `{num.fromRoman}` | A Roman numeral | The number | `{num.fromRoman:XIV}` gives `14` |
+
+Without a count of decimals, `{num.format}` keeps the decimals the number has. With one, it always shows that many, so `{num.format:1234.5|2}` gives `1,234.50`. A Dutch channel gets `1.234,50`.
+
+`{num.compact}` keeps one decimal at most, so `{num.compact:12.34}` gives `12.3` and `{num.compact:3400000}` gives `3.4M`. `{num.parse}` reads k, m, b and t in either case, and `{num.parse:3M}` gives `3000000`.
+
+`{num.bytes}` counts 1024 bytes as 1 KB. `{num.fromRoman}` takes small or capital letters. Any other character keeps it in braces, so `{num.fromRoman:14}` stays as written.
+
+## Whole-number facts
+
+| Helper | Takes | What it gives | Example |
+| --- | --- | --- | --- |
+| `{num.isEven}` | A whole number | `true` when it is even, `false` when it is odd | `{num.isEven:7}` gives `false` |
+| `{num.parity}` | A whole number | The word `odd` or `even` | `{num.parity:7}` gives `odd` |
+| `{num.digits}` | A whole number | How many digits it has | `{num.digits:12345}` gives `5` |
+| `{num.digitSum}` | A whole number | Its digits added up | `{num.digitSum:123}` gives `6` |
+| `{num.hex}` | A whole number | The number in hexadecimal | `{num.hex:255}` gives `FF` |
+| `{num.binary}` | A whole number | The number in binary | `{num.binary:5}` gives `101` |
+
+A Dutch channel gets `oneven` for an odd number from `{num.parity}`. A minus sign does not count as a digit, and `{num.hex}` and `{num.binary}` keep it in front: `{num.hex:-255}` gives `-FF`.
+
+## Money
+
+| Helper | Takes | What it gives | Example |
+| --- | --- | --- | --- |
+| `{num.currency}` | An amount and a currency code | The amount with two decimals and the currency symbol, in the channel language | `{num.currency:5\|USD}` gives `$5.00` |
+| `{num.currency.compact}` | An amount and a currency code | The symbol and a short form of the amount | `{num.currency.compact:1500\|USD}` gives `$1.5k` |
+
+Use the currency three-letter code, such as `USD`, `EUR` or `GBP`, in either case. A code the bot does not know stays in braces, and so does an amount without a code.
+
+The code only picks the symbol. The amount is not converted, so `{num.currency:5|EUR}` gives `€5.00`. To turn an amount into another currency, use the currency rate on [Lookup helpers](/reference/templates/lookup).
+
+`{num.currency}` rounds to two decimals, and the channel language decides the thousands and decimal separators and where the symbol goes. `{num.currency.compact}` always writes the symbol first and uses a dot, like `{num.compact}`.
+
+## Time
+
+| Helper | Takes | What it gives | Example |
+| --- | --- | --- | --- |
+| `{num.duration}` | Seconds | Hours and minutes from one hour up, minutes and seconds from one minute up, else seconds alone | `{num.duration:8100}` gives `2h 15m` |
+| `{num.duration.long}` | Seconds | The time in words, at most two parts, in the channel language | `{num.duration.long:8100}` gives `2 hours, 15 minutes` |
+| `{num.duration.clock}` | Seconds | Minutes and seconds like a clock, with hours in front from one hour up | `{num.duration.clock:83}` gives `1:23` |
+
+The input is always a whole number of seconds, from 0 up to 100,000 days. A number is never read as minutes, so `{num.duration:90}` gives `1m 30s` and `{num.duration:45}` gives `45s`. In words, `{num.duration.long:90}` gives `1 minute, 30 seconds`.
+
+In the short form, hours do not turn into days, so `{num.duration:93600}` gives `26h 0m`. The clock keeps hours too: `{num.duration.clock:3723}` gives `1:02:03`. Only the words form uses days and weeks, so `{num.duration.long:93600}` gives `1 day, 2 hours`.
+
+## Units
+
+`{num.convert}` takes a number, the unit it is in, and the unit you want. `{num.convert:10|km|mi}` gives `6.21`. The result is rounded to two decimals.
+
+| Measures | Units |
+| --- | --- |
+| Length | `mm`, `cm`, `m`, `km`, `in`, `ft`, `yd`, `mi` |
+| Weight | `g`, `kg`, `oz`, `lb` |
+| Volume | `ml`, `l`, `qt`, `gal` (US quart and gallon) |
+| Temperature | `c`, `f`, `k` (Celsius, Fahrenheit, Kelvin) |
+
+Units can be in small or capital letters. Both units must measure the same thing, so `{num.convert:5|kg|km}` stays in braces. `{num.convert:100|c|f}` gives `212`.
+
+Converting to `ft` gives feet and whole inches, so `{num.convert:180|cm|ft}` gives `5'11"`. A length below 0 stays in braces there. From `ft`, the result is a plain number: `{num.convert:6|ft|cm}` gives `182.88`.
+
+## Format what a viewer typed
+
+A command such as `!timeleft 5400` can show the seconds after the command as a time:
+
+```
+Time left: {num.duration:{args.1}}
+```
+
+This gives `Time left: 1h 30m`. When the viewer types `!timeleft soon`, chat shows `Time left: {num.duration:soon}`. Word the reply so it still reads well if someone types a word instead of a number.
+
+An amount works the same way. For `!raised 1234.5`, the reply `Raised: {num.currency:{args.1}|USD}` gives `Raised: $1,234.50`.
+
+Back to [Template helpers](/reference/templates/overview).

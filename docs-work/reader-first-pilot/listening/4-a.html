@@ -1,0 +1,466 @@
+<!doctype html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>Built-in commands — Version A</title><style>body{font:20px/1.65 Arial,sans-serif;max-width:74ch;margin:2rem auto;padding:0 1rem;color:#202124;background:#fff}h1,h2,h3{line-height:1.25}table{border-collapse:collapse;display:block;overflow:auto;max-width:100%;font-size:.9em}th,td{border:1px solid #bbb;padding:.45rem;text-align:left;vertical-align:top}pre{overflow:auto;padding:1rem;background:#f2f3f5}a:focus-visible{outline:3px solid #1268c4;outline-offset:3px}</style></head><body><main><p><a href="index.html">Listening pairs</a> · Version A</p><h1>Built-in commands</h1><article><p>Built-in commands already know how to answer. <code>!uptime</code> checks how long the stream has been live; <code>!song</code> names the current track. Every channel has the same catalog, and built-ins cannot be deleted.</p>
+<p>Music and economy commands need their underlying feature configured. Having <code>!pause</code> in the catalog does not connect a music player. To run a command, the bot must be connected and the command enabled and available to the person asking.</p>
+<h2 id="every-built-in-command"><a href="#every-built-in-command">Every built-in command</a></h2>
+<p>The 43 commands below are listed alphabetically. Use the channel’s command prefix in place of <code>!</code> if you changed it in <a href="https://docs-dev.nomnomz.bot/reference/settings/bot-basics-and-personality">Bot basics</a>.</p>
+<p><strong>Default effective access</strong> includes a command’s own safeguards. For example, <code>!pause</code> needs a moderator or someone granted the right to moderate the music queue, even though its base role in the editor is <strong>Everyone</strong>.</p>
+<p>A <strong>chat cooldown</strong> makes the whole channel wait between uses. A <strong>per-person cooldown</strong> makes each viewer wait on their own. Both columns show the normal defaults in seconds; 0 means no normal wait. The broadcaster and moderators identified on the incoming platform message bypass these normal waits. A role stored only in the bot does not grant that bypass, and the extra moderator skip window described below still applies.</p>
+<p>Ordinary viewer commands also need a live stream or <strong>Keep commands and rewards on while offline</strong> switched on. The platform’s broadcaster and moderators bypass that offline gate, as do data-rights commands. Role and availability checks still apply.</p>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<table><thead><tr><th>Command</th><th>What it does</th><th>Default effective access</th><th>Chat cooldown</th><th>Per-person cooldown</th></tr></thead><tbody><tr><td><code>!accountage</code></td><td>Answers how old the caller’s Twitch account is.</td><td>Everyone</td><td>0 s</td><td>12 s</td></tr><tr><td><code>!allow</code></td><td><code>!allow massban</code> lets a held mass ban run now (see <a href="https://docs-dev.nomnomz.bot/reference/moderation/bans-and-blocked-terms">Bans and blocked terms</a>).</td><td>Lead moderators</td><td>3 s</td><td>0 s</td></tr><tr><td><code>!banger</code></td><td>Adds the playing song to the channel’s banger playlist.</td><td>Everyone</td><td>30 s</td><td>0 s</td></tr><tr><td><code>!bansong</code></td><td>Blocks the playing song from later requests.</td><td>Moderators</td><td>30 s</td><td>0 s</td></tr><tr><td><code>!clearsongs</code></td><td>Removes every queued song of one viewer.</td><td>Moderators</td><td>60 s</td><td>0 s</td></tr><tr><td><code>!closequeue</code></td><td>Stops new song requests. The music keeps playing.</td><td>Moderators</td><td>60 s</td><td>0 s</td></tr><tr><td><code>!coinflip</code></td><td>Plays a coin flip for a bet in channel currency.</td><td>Everyone</td><td>0 s</td><td>0 s</td></tr><tr><td><code>!commands</code></td><td>Lists enabled channel and built-in commands available to the caller, using each trigger’s own prefix. Authored commands that match a regular expression are left out.</td><td>Everyone</td><td>120 s</td><td>0 s</td></tr><tr><td><code>!dice</code></td><td>Plays a dice roll for a bet in channel currency.</td><td>Everyone</td><td>0 s</td><td>0 s</td></tr><tr><td><code>!disallow</code></td><td><code>!disallow massban</code> stops a held mass ban.</td><td>Lead moderators</td><td>3 s</td><td>0 s</td></tr><tr><td><code>!discord</code></td><td>Answers an invite link to the channel’s Discord server (see <a href="https://docs-dev.nomnomz.bot/reference/integrations/discord">Discord</a>).</td><td>Everyone</td><td>60 s</td><td>0 s</td></tr><tr><td><code>!followage</code></td><td>Answers how long the caller has followed the channel.</td><td>Everyone</td><td>0 s</td><td>12 s</td></tr><tr><td><code>!forgetme</code></td><td>Removes the caller’s own data after a second confirmation. Data-rights command.</td><td>Everyone</td><td>0 s</td><td>0 s</td></tr><tr><td><code>!gdpr</code></td><td><code>!gdpr status</code>, <code>!gdpr forget</code> and <code>!gdpr export</code>. Data-rights command.</td><td>Everyone</td><td>0 s</td><td>0 s</td></tr><tr><td><code>!help</code></td><td>Answers how to use a command, for example <code>!help sr</code>.</td><td>Everyone</td><td>60 s</td><td>0 s</td></tr><tr><td><code>!leaderboard</code></td><td>Answers the top of the channel’s leaderboard (see <a href="https://docs-dev.nomnomz.bot/reference/economy/leaderboards-and-games">Leaderboards and games</a>).</td><td>Everyone</td><td>90 s</td><td>0 s</td></tr><tr><td><code>!lurk</code></td><td>Marks the caller as lurking: watching without chatting.</td><td>Everyone</td><td>0 s</td><td>12 s</td></tr><tr><td><code>!media</code></td><td>Sends a clip or video link to media share (see <a href="https://docs-dev.nomnomz.bot/reference/audio/media-share">Media share</a>).</td><td>Everyone</td><td>0 s</td><td>0 s</td></tr><tr><td><code>!mydata</code></td><td>Asks for a copy of the caller’s own data. Data-rights command.</td><td>Everyone</td><td>0 s</td><td>0 s</td></tr><tr><td><code>!openqueue</code></td><td>Takes new song requests again.</td><td>Moderators</td><td>60 s</td><td>0 s</td></tr><tr><td><code>!pause</code></td><td>Pauses the music.</td><td>Moderators</td><td>30 s</td><td>0 s</td></tr><tr><td><code>!permit</code></td><td>Gives a viewer a role or a right for a time. Always on.</td><td>Moderators</td><td>0 s</td><td>0 s</td></tr><tr><td><code>!play</code></td><td>Submits a media link approved, or takes the link from a Twitch message you reply to (see <a href="https://docs-dev.nomnomz.bot/reference/audio/media-share">Media share</a>).</td><td>Moderators</td><td>0 s</td><td>0 s</td></tr><tr><td><code>!playlist</code></td><td>Answers the link to the channel’s banger playlist.</td><td>Everyone</td><td>60 s</td><td>0 s</td></tr><tr><td><code>!profile</code></td><td>Gives the same answer as <code>!stats</code>.</td><td>Everyone</td><td>0 s</td><td>12 s</td></tr><tr><td><code>!queue</code></td><td>Lists the song queue or the caller’s own requests.</td><td>Everyone</td><td>0 s</td><td>12 s</td></tr><tr><td><code>!quote</code></td><td>Shows a random quote or a quote by number. Adding, editing and deleting have their own permissions (see <a href="https://docs-dev.nomnomz.bot/reference/commands/quotes">Quotes</a>).</td><td>Everyone reads; changes have their own permissions</td><td>45 s</td><td>0 s</td></tr><tr><td><code>!resume</code></td><td>Plays the music again.</td><td>Moderators</td><td>30 s</td><td>0 s</td></tr><tr><td><code>!skip</code></td><td>Skips the caller’s own playing request, or any playing song for a music moderator. <code>!skip N</code> removes the caller’s own Nth pending request, counting only their requests in queue order. Music moderators share an extra 30-second wait for bare <code>!skip</code>.</td><td>Everyone; moderators skip any song</td><td>0 s</td><td>12 s</td></tr><tr><td><code>!slots</code></td><td>Plays the slots for a bet in channel currency.</td><td>Everyone</td><td>0 s</td><td>0 s</td></tr><tr><td><code>!song</code></td><td>Answers which song is playing.</td><td>Everyone</td><td>30 s</td><td>0 s</td></tr><tr><td><code>!sr</code></td><td>Requests a song for the queue (see <a href="https://docs-dev.nomnomz.bot/reference/music/song-requests">Song requests</a>).</td><td>Everyone</td><td>0 s</td><td>12 s</td></tr><tr><td><code>!stats</code></td><td>Answers a viewer’s channel stats.</td><td>Everyone</td><td>0 s</td><td>12 s</td></tr><tr><td><code>!unlurk</code></td><td>Clears the caller’s lurking mark.</td><td>Everyone</td><td>0 s</td><td>12 s</td></tr><tr><td><code>!unpermit</code></td><td>Takes a granted role or right back. Always on.</td><td>Moderators</td><td>0 s</td><td>0 s</td></tr><tr><td><code>!unwhitelist</code></td><td>Takes back the standing that <code>!whitelist</code> gives.</td><td>Broadcaster</td><td>0 s</td><td>0 s</td></tr><tr><td><code>!update</code></td><td>Reads the caller’s Twitch name and avatar again. A moderator may name another viewer.</td><td>Everyone</td><td>0 s</td><td>12 s</td></tr><tr><td><code>!uptime</code></td><td>Answers how long the stream has been live.</td><td>Everyone</td><td>30 s</td><td>0 s</td></tr><tr><td><code>!voice</code></td><td>Lets a viewer pick their own text-to-speech voice (see <a href="https://docs-dev.nomnomz.bot/reference/audio/text-to-speech">Text to speech</a>).</td><td>Everyone</td><td>0 s</td><td>12 s</td></tr><tr><td><code>!volume</code></td><td>Answers the music volume. With a number, sets the volume.</td><td>Everyone reads; moderators set</td><td>30 s</td><td>0 s</td></tr><tr><td><code>!whisper</code></td><td>Sends a viewer a private message from the bot.</td><td>Moderators</td><td>0 s</td><td>12 s</td></tr><tr><td><code>!whitelist</code></td><td>Gives a viewer Subscriber, VIP or Moderator standing for commands.</td><td>Broadcaster</td><td>0 s</td><td>0 s</td></tr><tr><td><code>!wrongsong</code></td><td>Takes back the caller’s own song request.</td><td>Everyone</td><td>0 s</td><td>12 s</td></tr></tbody></table>
+<p>For music controls, <strong>Moderators</strong> includes someone the broadcaster granted the right to moderate the song queue. That gate applies to <code>!pause</code>, <code>!resume</code>, setting <code>!volume</code>, <code>!bansong</code>, <code>!closequeue</code>, <code>!openqueue</code> and <code>!clearsongs</code>. An ordinary viewer without that right receives a refusal.</p>
+<p>Those commands can show <strong>Everyone</strong> as the base <strong>Who can use it</strong> setting in the editor. Raising that setting adds a role requirement; lowering it back to the default does not remove the music safeguard.</p>
+<p>Bare <code>!skip</code> lets a viewer skip only their own currently playing request. A moderator or music-right holder can skip any playing song, but a successful moderated skip starts a separate 30-second wait for the whole channel. Another moderator cannot skip again five seconds later, even though moderators bypass normal cooldowns. A numbered command such as <code>!skip 4</code> instead removes the caller’s fourth pending request, counting only their own requests in queue order. It leaves the playing song alone and still requires the command’s normal access checks.</p>
+<p>The three data-rights commands are always on with fixed settings and wording. See <a href="https://docs-dev.nomnomz.bot/reference/settings/your-data-and-privacy">Your data and privacy</a> for what they return or remove.</p>
+<h3 id="ask-by-whisper">Ask by whisper</h3>
+<p><code>!uptime</code>, <code>!song</code> and <code>!queue</code> also accept a Twitch whisper, a private message to the bot. The bot must be able to receive and send Twitch whispers and identify the connected channel you mean.</p>
+<p>Whispers always use <code>!</code>, even if the channel has another chat prefix. Put the channel first when needed: <code>!song yourchannel</code> or <code>!queue yourchannel</code>. Without a named channel, the bot uses the one channel where it has seen you chatting during the current session. If there are none or more than one, it asks which channel you mean.</p>
+<p>The answer returns as a whisper. Other known built-ins reply “works in chat only.” If the bot reaches its daily whisper limit for new recipients, it can post a short pointer in a channel where it has seen you chatting, asking you to use chat instead. That notice never includes the private answer.</p>
+<h2 id="the-list"><a href="#the-list">The list</a></h2>
+<p>To manage a built-in, open <strong>Commands</strong>, then <strong>System commands</strong>. By default, <strong>Moderator</strong>, <strong>Lead moderator</strong>, <strong>Editor</strong> and <strong>Broadcaster</strong> can change commands; the broadcaster can raise the required role. Read-only access does not show this tab. For roles and creating your own commands, see <a href="https://docs-dev.nomnomz.bot/reference/commands/create-a-command">Create a command</a>.</p>
+<p>The <strong>Built-in commands</strong> list has a <strong>Search commands</strong> box. Each row shows its trigger and current role and cooldown settings, for example “Everyone · 30s chat · 0s each”.</p>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<table><thead><tr><th>Row text</th><th>Meaning</th></tr></thead><tbody><tr><td><strong>Using the default</strong></td><td>The role and cooldowns have not been changed.</td></tr><tr><td><strong>Overrides the default (…)</strong></td><td>The role or a cooldown has changed; the default appears in brackets.</td></tr><tr><td><strong>Always on · …</strong></td><td>The command cannot be switched off, so the row has no switch.</td></tr><tr><td><strong>This is a data-rights command. It always answers and its settings are fixed.</strong></td><td>The command lets a viewer see or remove their own data. Its settings and replies cannot be changed.</td></tr></tbody></table>
+<p>The row shows the base role setting. Use the effective access in the catalog above for commands with additional music safeguards. <a href="https://docs-dev.nomnomz.bot/reference/commands/cooldowns-and-permissions">Cooldowns and permissions</a> explains normal waiting and role checks in more detail.</p>
+<h2 id="switch-a-command-on-or-off"><a href="#switch-a-command-on-or-off">Switch a command on or off</a></h2>
+<p>Use the row’s switch or <strong>Answers in chat</strong> in the editor. Either saves immediately. An off built-in is ignored in chat as if the word were not a command.</p>
+<p>Always-on commands have no switch. The bot also refuses to disable a command while a reward, timer or another item still runs it.</p>
+<h2 id="change-a-built-in-command"><a href="#change-a-built-in-command">Change a built-in command</a></h2>
+<p>The bot supplies the behavior, but you can change supported reply wording, access and cooldowns.</p>
+<ol>
+<li>Select the command in the list. Its editor shows the name with <strong>Built-in</strong> beneath it. Unchanged commands open locked, with “These are the defaults. Customize to make them your own; each change overrides the default.”</li>
+<li>Choose <strong>Customize</strong> to unlock the supported fields.</li>
+<li>Change what you need and choose <strong>Save changes</strong>. The footer counts unsaved changes until they are saved.</li>
+</ol>
+<p>After saving, the count clears and changed fields show <strong>Overrides the default (…)</strong>. A command with saved customization opens unlocked next time. <strong>Discard</strong> returns every field to its last saved value.</p>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<table><thead><tr><th>Field</th><th>What you can change</th></tr></thead><tbody><tr><td>A reply box for each outcome</td><td>Up to 500 characters for that reply, such as a success or refusal.</td></tr><tr><td><strong>Who can use it</strong></td><td>The lowest allowed role. You can raise it from the command’s default floor, never lower it.</td></tr><tr><td><strong>Chat cooldown (seconds)</strong></td><td>A whole-channel wait from 0 to 3600 seconds.</td></tr><tr><td><strong>Per-person cooldown (seconds)</strong></td><td>Each viewer’s wait from 0 to 3600 seconds.</td></tr><tr><td><strong>Read it aloud</strong></td><td>Off by default. Only <code>!quote</code> uses this setting to speak its reply.</td></tr></tbody></table>
+<p>Data-rights commands remain locked. Their fixed replies show “This reply is fixed and cannot be changed.”</p>
+<h3 id="write-a-reply">Write a reply</h3>
+<p>The reply box contains the words the bot sends in the channel’s one bot voice. Until you change them, they follow the personality chosen in <a href="https://docs-dev.nomnomz.bot/reference/settings/bot-basics-and-personality">Bot basics and personality</a>.</p>
+<p>A helper is a name in braces, such as <code>{user}</code>. The bot replaces it with its value in the text a viewer sees or hears, including chat, overlays and speech. <strong>Variables:</strong> beneath a reply box lists that command’s own values; <code>!stats</code>, for example, has <code>{stats.points}</code> and <code>{stats.watchtime}</code>. Shared helpers are on <a href="https://docs-dev.nomnomz.bot/reference/commands/variables-and-templates">Variables and templates</a>.</p>
+<p><code>!lurk</code> and <code>!unlurk</code> share their replies, as do <code>!stats</code> and <code>!profile</code>. Editing shared wording changes it for both commands.</p>
+<h2 id="put-one-field-back"><a href="#put-one-field-back">Put one field back</a></h2>
+<p>Choose <strong>Back to default</strong> beneath a changed field. It saves immediately, without another <strong>Save changes</strong>, and the field returns to <strong>Using the default</strong>.</p>
+<h2 id="reset-a-command-to-its-default"><a href="#reset-a-command-to-its-default">Reset a command to its default</a></h2>
+<p>A reset loses the command’s saved edits and switches it back on. If it shares replies with another command, the reset also restores that shared wording. The other command keeps its own enabled state, role, cooldowns and <strong>Read it aloud</strong> setting.</p>
+<ol>
+<li>Open the command and choose <strong>Reset to default</strong> in the footer.</li>
+<li>Read “Reset !name to its default?” and the list of settings that will be lost.</li>
+<li>Choose <strong>Reset to default</strong> in the dialog.</li>
+</ol>
+<p>The fields show their defaults and the command is switched on.</p>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<table><thead><tr><th>Item in the dialog</th><th>Result</th></tr></thead><tbody><tr><td><strong>Chat cooldown</strong></td><td>Restores the default chat cooldown.</td></tr><tr><td><strong>Per-person cooldown</strong></td><td>Restores the default per-person cooldown.</td></tr><tr><td><strong>Who can use it</strong></td><td>Restores the default role.</td></tr><tr><td><strong>Reply wording</strong></td><td>Restores the default words of every reply.</td></tr><tr><td><strong>Read aloud</strong></td><td>Switches <strong>Read it aloud</strong> off.</td></tr><tr><td><strong>Turned back on</strong></td><td>Enables the command again.</td></tr></tbody></table>
+<p>The reset button appears only when something differs from the default. Data-rights commands have no reset button.</p>
+<h2 id="troubleshooting"><a href="#troubleshooting">Troubleshooting</a></h2>
+<h2>When something is not right</h2><p><strong>A built-in command does nothing in chat.</strong></p><ol>
+<li>Check its switch. An off command answers nobody.</li>
+<li>Check whether the stream is live. Ordinary viewer commands stay inactive offline unless <strong>Keep commands and rewards on while offline</strong> is on. The platform’s broadcaster and moderators, and data-rights commands, bypass this gate.</li>
+<li>Check <strong>Who can use it</strong> and any additional feature permission. The sender must meet both.</li>
+<li>Check <strong>Chat cooldown (seconds)</strong> and <strong>Per-person cooldown (seconds)</strong>.</li>
+<li>Look for a channel command with the same name. It takes precedence over an ordinary built-in. The five always-on names—<code>!permit</code>, <code>!unpermit</code>, <code>!mydata</code>, <code>!gdpr</code> and <code>!forgetme</code>—always resolve to the built-in.</li>
+</ol><p>See <a href="https://docs-dev.nomnomz.bot/reference/settings/bot-basics-and-personality">Bot basics and personality</a> for the offline switch and <a href="https://docs-dev.nomnomz.bot/reference/commands/create-a-command">Create a command</a> for naming and precedence.</p>
+<h2 id="related-pages"><a href="#related-pages">Related pages</a></h2>
+<ul>
+<li><a href="https://docs-dev.nomnomz.bot/reference/commands/create-a-command">Create a command</a></li>
+<li><a href="https://docs-dev.nomnomz.bot/reference/commands/variables-and-templates">Variables and templates</a></li>
+<li><a href="https://docs-dev.nomnomz.bot/reference/commands/cooldowns-and-permissions">Cooldowns and permissions</a></li>
+<li><a href="https://docs-dev.nomnomz.bot/reference/settings/bot-basics-and-personality">Bot basics and personality</a></li>
+<li><a href="https://docs-dev.nomnomz.bot/reference/commands/quotes">Quotes</a></li>
+</ul></article></main></body></html>

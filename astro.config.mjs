@@ -64,7 +64,6 @@ export default defineConfig({
     processor: unified({
       remarkPlugins,
       rehypePlugins,
-      syntaxHighlight: "prism",
     }),
   },
   vite: {

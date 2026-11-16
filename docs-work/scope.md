@@ -35,6 +35,25 @@ Rule: document only what exists today. The section title carries "Draft".
 Source: `dashboard/src/views/dashboard/scripts`, `server/src/NomNomzBot.Infrastructure/DevPlatform` (including `SdkRuntimeSurface.cs`, `TypeScriptDefinitionWriter.cs`), `dashboard/src/api/nnz-widget.d.ts`, `server/src/NomNomzBot.Infrastructure/CustomCode`.
 The library page: the sidebar lists a library entry and a gallery entry, but no route named `dashboard-library` or `dashboard-gallery` exists in `dashboard/src/views`, so there is no library page to document today. Not a page.
 
+
+
+Audience: a Twitch viewer or streamer who has never met the topic.
+Source: the fact-check ledgers in `.scratch/identity-research/` of the product repository (read only, git-ignored) and the outside pages they opened. These are not product files. The first three ledgers leaned on US sources. The four world ledgers (`ledger-world-*.md`) re-check them against Dutch, Flemish, German, Swedish, Canadian, Australian, UK, Latin American, African, Asian and Pacific community sources and UN pages. The world ledgers win where they differ.
+Regional rule: a page leads with what the world sources agree on. Where usage differs by region, the page says so and names the region. Advice that only a US guide gives is labeled as US-guide advice.
+Differences from the product pages:
+- These pages are about people, not about a feature. No dashboard label or product code is cited.
+- These pages cite outside sources on the page, in a short "Sources" list. This is the one exception to the rule that a page carries no source citations.
+- Each claim still gets a line in the fact-check file: the ledger row, or the outside page for a claim that is not in a ledger.
+
+
+
+
+- A page opens with a scene a Twitch viewer or streamer knows, then teaches the idea from the ground up.
+- Every rule is positive: "use the word a person uses", never a list of bans.
+- Two readers at once: the person who has never met the topic, and the person the page is about. The page is fair to both. No judgment of either.
+- One topic per page: one identity, one orientation, one flag.
+- Sources: community groups from many regions first, UN and WHO next, US guides last and labeled.
+
 ## Excluded
 
 - The API reference.

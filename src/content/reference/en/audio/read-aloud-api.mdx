@@ -3,16 +3,13 @@ title: Read aloud for a page
 description: Let a web page read its text aloud with a neural voice from the bot, with one request per sentence.
 ---
 
-The bot can read a short piece of text aloud for a visitor of a web page.
-The visitor hears a neural voice from the bot's server, not the voice of their browser.
-The section "Which voice speaks" says which voice.
+This reference is for people building a web page that reads its text aloud to a visitor.
+The page requests an audio clip from NomNomzBot and plays it in the visitor's browser.
+For speech heard on your stream, use [Text to speech](/reference/audio/text-to-speech) instead.
 
-The dashboard uses this on its Privacy Policy and Terms of Service pages.
-A site that you build can use the same request, once the bot allows that site.
-
-This is a request that a page sends to your bot.
-It is not a setting in the dashboard.
-To make the bot speak on stream, see [Text to speech](/reference/audio/text-to-speech).
+The dashboard uses this service on its Privacy Policy and Terms of Service pages.
+Your own site can use it after the bot's operator allows that site's origin: its scheme, host and port.
+There is no dashboard switch for adding an allowed site, so self-hosting access is needed for that configuration.
 
 ## Send a request
 
@@ -24,6 +21,7 @@ Write the address of your own bot instead.
 ```http
 POST /api/v1/public/read-aloud
 Host: bot.example.com
+Origin: https://docs.nomnomz.bot
 Content-Type: application/json
 
 { "text": "Welcome to the stream.", "locale": "en" }
@@ -31,23 +29,46 @@ Content-Type: application/json
 
 | Field | What it holds |
 | --- | --- |
-| `text` | The text to speak. 1 to 500 characters, counted after the bot trims the spaces from both ends. |
+| `text` | The text to speak. 1 to 500 UTF-16 code units after trimming whitespace from both ends; some emoji count as two units. |
 | `locale` | The language of the page: `en`, `nl`, or a locale such as `nl-NL` or `pt_BR`. A request with no `locale`, or an empty one, gets a 400 answer. |
 
 The request needs no sign-in.
 A good answer is audio in the `audio/mpeg` format (MP3).
+The example's `Origin` must be one of the operator's allowed origins.
+Browser scripts let the browser supply this header; a command-line client must include it explicitly.
 
 The answer is the audio itself, not a link.
-In a script, read the answer as a blob, make a temporary address from it, and play that address in an audio element.
+In a script, check the response before treating it as audio.
+Read a successful response as a blob, play it through an audio element, and release the temporary address when playback ends.
+Call this function from a visitor's play control and show any error beside that control.
 
 ```js
-const response = await fetch("https://bot.example.com/api/v1/public/read-aloud", {
-  method: "POST",
-  headers: { "Content-Type": "application/json" },
-  body: JSON.stringify({ text: "Welcome to the stream.", locale: "en" }),
-});
-const clip = URL.createObjectURL(await response.blob());
-new Audio(clip).play();
+async function readSentence(text, locale) {
+  const response = await fetch("https://bot.example.com/api/v1/public/read-aloud", {
+    method: "POST",
+    headers: { "Content-Type": "application/json" },
+    body: JSON.stringify({ text, locale }),
+  });
+
+  if (!response.ok) {
+    throw new Error(`Read aloud failed (${response.status}).`);
+  }
+
+  const clip = URL.createObjectURL(await response.blob());
+  const audio = new Audio(clip);
+  const release = () => URL.revokeObjectURL(clip);
+  audio.addEventListener("ended", release, { once: true });
+  audio.addEventListener("error", release, { once: true });
+
+  try {
+    await audio.play();
+  } catch (error) {
+    release();
+    throw error;
+  }
+
+  return audio;
+}
 ```
 
 ### Choose POST or GET
@@ -57,14 +78,16 @@ The route also answers a `GET` request with the same two fields as the query val
 A good answer to the `GET` form carries a cache header, so the browser and any cache in front of the bot keep the clip.
 The header allows a browser to keep it for 7 days and a shared cache to keep it for 30 days.
 The `POST` form carries no such header.
+Use this service for public page text. GET places the text in the URL and explicitly permits shared caching of the audio; the origin check is not a privacy boundary.
 Do not point an audio element at the `GET` address.
 That request sends no `Origin` header, so the bot refuses it (see "Use it from another site").
 
 ## Pick one sentence at a time
 
-The limit of 500 characters is for a sentence, not for a page.
+The endpoint limits each request to 500 characters; it does not require the text to be a grammatical sentence.
+For a readable page, one sentence per request gives the visitor a useful unit for pause, repeat and navigation.
 Split the page into sentences and send one request for each sentence.
-Ask for the next sentence while the current one plays, so the voice never waits.
+Ask for the next sentence while the current one plays to reduce pauses. Network and synthesis delays can still leave a gap.
 
 Keep each clip in the memory of the page until the reading stops, so a repeat is free.
 The dashboard reads headings, paragraphs, list items and table cells.
@@ -78,10 +101,11 @@ It always picks the voice itself, from the language of the request.
 | Language | Voice |
 | --- | --- |
 | English (`en`, or a locale such as `en-US`) | The platform default voice. A channel follows it until the channel picks its own voice (see [Text to speech](/reference/audio/text-to-speech)). |
-| Any other language | The first Microsoft Edge voice of that language that the bot knows. A voice whose country code is the language code in capitals comes first, for example `nl-NL` for `nl`. Without one, the voices go in alphabetical order of their name, so the first country code wins. |
+| Any other language | A Microsoft Edge voice for that language. A locale whose country code repeats the language code comes first, for example `nl-NL` for `nl`; otherwise the bot sorts matching voice identifiers alphabetically. |
 | A language with no voice | The platform default voice. |
 
-The same page always sounds the same, because the choice does not change between requests.
+The choice comes from the locale and the bot's current voice catalog or platform default, rather than a visitor's channel voice.
+Changing that catalog or platform default can therefore change the voice used for later requests.
 
 ## Answers and limits
 
@@ -94,6 +118,8 @@ The same page always sounds the same, because the choice does not change between
 | 503 | The voice cannot speak right now. The page should stop and tell the visitor. |
 
 A 429 answer carries a `Retry-After` header with the number of seconds to wait.
+The current CORS policy does not expose this header to JavaScript on another origin.
+That page can detect status 429, but cannot read the delay with `response.headers.get('Retry-After')`; stop automatic requests and offer a later retry.
 An empty clip counts as a failure and also answers 503.
 
 A 400, 403 or 503 that the route itself sends carries the header `Cache-Control: no-store`, so no cache keeps a refusal.
@@ -102,12 +128,13 @@ A request that leaves out `text` or `locale`, or sends one of them empty or with
 This is the same for `GET` and `POST`.
 That answer carries no `no-store` header.
 
-The bot makes at most 2 clips at the same moment, for all visitors together.
-A request that finds both places busy waits up to 30 seconds for one, and then answers 503.
+The public read-aloud service admits at most 2 calls at the same moment per API process, shared by all visitors to that process.
+A request that finds both places busy waits up to 30 seconds for a slot, and then answers 503 if neither becomes available. This is a queue wait limit, not a total synthesis timeout. The slot is acquired before checking the TTS memory cache.
 
-The bot keeps the audio of up to 200 clips in memory, so the same text and voice cost one synthesis.
+The bot keeps up to 200 successful clips in process memory. A later request with the same text, voice and speech adjustments can reuse a cached clip; simultaneous cache misses can still synthesize the same text more than once.
 The text to speech of the bot shares that memory.
 When it is full, the bot drops one clip to make room, and a restart clears all of them.
+The configured voice can also fall back to an Edge voice when synthesis fails, so the selected catalog voice is not an unconditional guarantee of the voice heard.
 
 ## Use it from another site
 
@@ -115,6 +142,8 @@ The bot answers only a request whose `Origin` header names an allowed site.
 A browser sends that header when a script calls the route with `fetch` from another site, and on every `POST`.
 A plain audio element that points at the `GET` address sends none.
 A request with no `Origin` header gets a 403 answer, so that audio element, a plain script and a `curl` call are refused by default.
+The origin check is not caller authentication: a program outside the browser can supply the header itself.
+The endpoint also applies its text, rate, and synthesis-concurrency limits.
 
 The allowed sites are:
 

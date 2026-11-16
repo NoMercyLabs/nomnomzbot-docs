@@ -1,7 +1,39 @@
-# Fact check: src/content/reference/en/overlays/set-up-overlays.mdx
+# Current independent fact check
+
 Verdict: PASS
 Reviewed: src/content/reference/en/overlays/set-up-overlays.mdx
-Reviewed-SHA: 9c33e4a834db0e1e
+Reviewed-SHA: eb86df7a7627717335c40d44d52a2401443628d1d4853e708bb767d0a5accd0b
+Reviewed-SHA256: eb86df7a7627717335c40d44d52a2401443628d1d4853e708bb767d0a5accd0b
+Reviewed-Date: 2026-11-05
+Reviewer: independent media-section reviewer
+Product: 54da8b6318de63b5205a0ff8db35e0b9045dd959 plus preserved current music UI edits
+
+The full article was read in sidebar order. Consequential defaults, permissions, prerequisites, state lifetime and effects were traced against current source; repaired findings were re-read before this verdict. This is source verification, not a live-channel or visible/audible output test.
+
+- server/src/NomNomzBot.Infrastructure/Content/Widgets/FirstPartyWidgetCatalogue.cs:60-107 separates system surfaces and source dimensions/audio requirements; dashboard/src/views/dashboard/overlays/OverlaysView.vue:64-70 excludes them from the custom list.
+- dashboard/src/views/dashboard/obs/components/RequiredOverlaysPanel.vue:103-145 exposes setup actions, and dashboard/src/views/dashboard/overlays/components/ObsSetupAction.vue:155-195 renders connection/size/audio facts and a copy control, not a required-widget settings editor.
+- server/src/NomNomzBot.Api/Controllers/OverlayHostController.cs:69-110 refuses invalid/unknown/disabled/unbuilt widgets and serves current manifests.
+
+Source paths without a repeated layer prefix in a bullet are relative to its preceding Infrastructure or dashboard scope. The section report records method, repaired findings, external sources and remaining product limitations: docs-work/overhaul/review-automation-media-integrations.md.
+
+## Historical evidence
+
+Older hashes, verdicts and values below are retained for history and are not the current review.
+
+# Fact check: src/content/reference/en/overlays/set-up-overlays.mdx
+Verdict: PENDING
+Reviewed: src/content/reference/en/overlays/set-up-overlays.mdx
+Reviewed-SHA: eb86df7a7627717335c40d44d52a2401443628d1d4853e708bb767d0a5accd0b
+
+## 2026-11-05 author source verification
+
+Author source audit complete; independent verdict pending. This hash binds the current text, not the historical PASS below. The article was read in full and revised toward the user's explainer style while preserving precise reference detail. OverlaysView.vue; RequiredOverlaysPanel.vue; FirstPartyWidgetCatalogue.cs; WidgetsController.cs. Required and custom sources are distinguished; source settings availability is a product boundary.
+
+The section inventory and known implementation gaps are in [automation-media-integrations.md](../overhaul/automation-media-integrations.md). This is source verification, not a live-channel execution claim. Independent review must account for product changes after the original author pass at b12f4f696.
+
+## Historical review (SHA 9c33e4a834db0e1e)
+
+Historical verdict: PASS. The earlier evidence below is retained as history and is superseded where the current article or source changed.
 
 Round 2. Product paths are relative to C:\Projects\NoMercyLabs\nomnomzbot (master, includes b6204c36c). V = dashboard/src/views/dashboard/overlays. EN = V/i18n/en.json.
 
@@ -59,7 +91,7 @@ Round 2. Product paths are relative to C:\Projects\NoMercyLabs\nomnomzbot (maste
 | Failed save text | OverlaySettings.vue:147-148, :171-173; EN:177 | supported |
 | Reset button when value differs from default | OverlaySettings.vue:85-87, :199-201; OverlaySettingField.vue:194-202; EN:181 | supported |
 | No-settings text | OverlaySettings.vue:140-142, :186; EN:178 | supported |
-| Edit code; Save & Compile; compiled text | OverlayDetail.vue:300-309; shell en.json:1187, :1199; useEditorLabels.ts:44; useOverlayEditor.ts:130-142; EN:59, :146 | supported |
+| Edit code; Save & Compile; compiled text | OverlayDetail.vue:300-309; shell en.json:1187, :1199; useEditorLabels.ts:44; server/src/NomNomzBot.Api/Assets/editor/index.html:23, editor.js:1649; useOverlayEditor.ts:130-142; EN:59, :146 | supported |
 | Overlay on switch; On / Off; off does not run | OverlayDetail.vue:282-296, :188-193; EN:141-143, :156 | supported |
 | Duplicate opens the copy at once | OverlayDetail.vue:110-119, :387-400; OverlaysView.vue:201; EN:12 | supported |
 | Delete flow and texts; leaves list | OverlayDetail.vue:126-156, :388-397; OverlaysView.vue:200; EN:14-19 | supported |

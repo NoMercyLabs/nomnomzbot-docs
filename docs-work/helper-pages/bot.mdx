@@ -1,0 +1,105 @@
+---
+title: Bot helpers
+description: The bot helpers for the bot's name, version, uptime, commands and channel settings, for a help or about command.
+---
+
+Use these when a reply needs to say something about the bot, such as its name, its command list or how long it has been up.
+They work in commands, event responses, timers, pipelines, Discord notifications and webhooks.
+They do not work in text a viewer writes themselves, such as a reward input, even with **Viewer Templates** on in [Features](/reference/settings/features).
+
+None of the bot helpers take an input after a colon.
+Write `{bot.name:x}`, and the reply shows `{bot.name:x}` exactly as you typed it, braces and all.
+
+## The bot's name and moderator status
+
+Two accounts matter on this page.
+The shared bot is the one bot account this NomNomzBot install connects for every channel.
+The bot that speaks in your chat is your channel's own bot when you connected one, otherwise the shared bot, otherwise your own Twitch account.
+To see whether your channel has its own bot, open **Settings**, choose **White-label bot** in the **Bot** group of the sidebar, and look at the card **Your channel's own bot**.
+
+`{bot.name}` and `{bot.mention}` give the bot name that your NomNomzBot install has on record.
+That name does not depend on the channel, so it is not your channel name.
+It is also not read from the bot that speaks in your chat, so it can differ from the name of the account that posts the reply.
+When the install has no bot name on record, `{bot.name}` gives `NomNomzBot`.
+If the reply must name the account that posts it, type that name into the reply instead.
+`{botname}` is the older form of `{bot.name}` and reads the same name.
+
+`{bot.isMod}` is about the bot that speaks in your chat.
+When that is your own Twitch account, it gives `true`, because that account needs no moderator role.
+The bot checks its moderator status when your channel joins, again every 5 minutes, and whenever Twitch reports that it gained or lost the role.
+Until a check has an answer for the bot that speaks now, `{bot.isMod}` is empty.
+This happens, for example, just after you connect your own bot.
+
+| Helper | What it gives | Example |
+| --- | --- | --- |
+| `{bot.name}` | The bot name your install has on record, or `NomNomzBot` when it has none | `SampleBot` |
+| `{bot.mention}` | The same name with an `@` in front | `@SampleBot` |
+| `{botname}` | The same name, the older form of `{bot.name}` | `SampleBot` |
+| `{bot.isMod}` | `true` when the bot that speaks in your chat is a moderator there, or is your own account. `false` when it is not a moderator. Empty before its first check | `true` |
+| `{bot.version}` | The version of the bot that is running | `1.42.0` |
+| `{bot.license}` | The license of the bot's source code | `PolyForm-Noncommercial-1.0.0` |
+| `{bot.sourceCode}` | The address of the bot's source code | `https://github.com/NoMercyLabs/nomnomzbot` |
+
+## Your commands
+
+The command lists show each command the way a viewer types it, with a space between them.
+They hold only commands that are on: a command you switched off is left out.
+
+A custom command shows with the prefix it uses, which is the channel prefix, its own prefix, or no prefix.
+A custom command that answers to a pattern instead of a name is never listed, and an alias does not get its own entry.
+Custom commands come first, in alphabetical order.
+Built-in commands follow in the bot's own fixed order, not alphabetical, always with the channel prefix.
+
+`{bot.commands.list.forUser}` filters by the role of the person who started the reply, which is the person who typed the chat command or chat message.
+Each person sees only what their role allows, so a moderator also sees the commands for moderators.
+An event response, a Discord notification, a webhook and a timer have no chat role, so there it lists only the commands everyone may use.
+
+| Helper | What it gives | Example |
+| --- | --- | --- |
+| `{bot.commands.list}` | Your custom commands, then the built-in commands that are on. A name that is in both lists shows once | `!hug !lurk !so !uptime !sr` |
+| `{bot.commands.list.custom}` | Your custom commands that are on | `!hug !lurk` |
+| `{bot.commands.list.builtin}` | The built-in commands that are on | `!so !uptime !sr` |
+| `{bot.commands.list.forUser}` | The commands from `{bot.commands.list}` that the person who started the reply may use, by the minimum role each command needs | `!hug !lurk !sr` |
+| `{bot.commands.count}` | How many commands `{bot.commands.list}` holds | `5` |
+
+For a help command, use `{bot.commands.list.forUser}`, so each viewer sees what they can run:
+
+```
+Commands for you: {bot.commands.list.forUser}
+```
+
+It checks only the role, so a command it lists can still be on cooldown when the viewer tries it.
+
+If the bot cannot read your built-in commands at that moment, the command lists and the count come back empty.
+Only `{bot.commands.list.custom}` still gives your custom commands.
+
+## How long the bot has run
+
+These helpers count from the moment the bot itself last started.
+That moment is the same for every channel on the install, and a restart sets it back to zero.
+They are not the length of your stream, which `{stream.uptime}` gives.
+
+| Helper | What it gives | Example |
+| --- | --- | --- |
+| `{bot.uptime}` | How long the bot has run, in the two largest units that apply, such as `3d 4h`, `4h 10m` or `12m 5s`, and plain seconds under a minute | `3d 4h` |
+| `{bot.uptime.long}` | How long the bot has run in words, up to two units, in the channel language | `3 days, 4 hours` |
+| `{bot.startedAt}` | The date and time the bot started, in the channel time zone, or in UTC when no time zone is set | `2026-10-23 12:30` |
+| `{bot.lastRestart.relative}` | How long ago the bot started, rounded to the nearest day, hour or minute | `3 days ago` |
+| `{bot.channel.loadedAgo}` | How long ago the bot loaded your channel, in the same style as `{bot.uptime}` | `2h 20m` |
+
+The bot loads your channel when it first needs it, and lets it go again after 2 hours with no activity while you are offline.
+So `{bot.channel.loadedAgo}` can be much shorter than `{bot.uptime}`.
+
+## Your channel settings
+
+| Helper | What it gives | Example |
+| --- | --- | --- |
+| `{bot.prefix}` | The character that starts a command in your channel | `!` |
+| `{bot.personality}` | The personality of the bot in your channel: `Informative`, `Friendly`, `Sassy`, `Hype` or `Chill` | `Informative` |
+| `{bot.language}` | The language code of your channel, or `en` when none is set | `en` |
+| `{bot.dashboard}` | The link to the dashboard page of your channel. Empty when the bot's server has no public address | `https://nomnomz.bot/app/u/samplechannel` |
+| `{bot.timers.count}` | How many of your timers are on | `5` |
+
+The two counts, `{bot.commands.count}` and `{bot.timers.count}`, use the number style of the channel language, so a large count gets a thousands separator.
+
+Back to [Template helpers](/reference/templates/overview). For the places helpers work, special characters and HTML, read [Variables and templates](/reference/commands/variables-and-templates).

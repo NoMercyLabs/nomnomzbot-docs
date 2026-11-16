@@ -1,0 +1,39 @@
+{
+  "fingerprint": "bec00e0f02360c6ea62fdbef6c3db19c3a83de72a2e6ecaee81e3fdb6d24f047",
+  "verdict": "PENDING",
+  "answers": [
+    {
+      "question": 1,
+      "answer": "On the Twitch app card choose Use the shared NomNomzBot app, with no fields needed, then Next. Skip the optional Bot account, Spotify, Discord and YouTube steps. On the last card choose Finish setup. The dashboard opens; sign in as broadcaster to connect the channel.",
+      "quote": "To use the shared app instead, choose Use the shared NomNomzBot app.\nYou fill in no fields, and the step is done.\nOn an optional step that is not done, the button reads Skip.\nThis step is optional.\nThese three steps are optional.\nChoose Finish setup.\nThe bot opens the dashboard, and you sign in.\nSign in as the broadcaster to connect your channel, then try your first command."
+    },
+    {
+      "question": 2,
+      "answer": "No separate bot Twitch account, Twitch Client Secret or healthy Event feed is required. Skipping the bot account uses the broadcaster account in chat; an empty Client Secret allows code sign-in. Own-app registration cannot proceed under the stated email/2FA conditions: verify the Twitch email and enable two-factor authentication first. Section 1, Choose the Twitch app, explicitly establishes this as Twitch’s registration requirement after describing its Developer Console.",
+      "quote": "You do not need an existing bot login, a separate bot account, optional service apps, text-to-speech setup or a working event feed for the required setup.\nSkip it, and the broadcaster account types in chat as the bot.\nClient Secret (optional) can stay empty.\nWithout it, you sign in with a code.\nYou create a record in Twitch’s Developer Console and copy its Client ID into the bot.\nTwitch requires a verified email address and two-factor authentication before you register an application.\nThe optional Event feed check on the finish screen is not a prerequisite for that first sign-in: a new bot has no broadcaster connection to check yet."
+    },
+    {
+      "question": 3,
+      "answer": "Finish setup opens the dashboard for sign-in and ends the initial unrestricted credential setup. Afterward only an admin of the bot can replace application credentials; being a channel moderator is insufficient.",
+      "quote": "Choose Finish setup.\nThe bot opens the dashboard, and you sign in.\nUntil you choose Finish setup, anyone who can open the bot’s address can change the keys on this page.\nAfter that, only an admin of the bot can change them; being a channel moderator is not enough.\nIf the setup is already finished, only an admin of the bot can save new keys."
+    },
+    {
+      "question": 4,
+      "answer": "Yes, skip YouTube setup: YouTube song requests do not require a Google OAuth app or YouTube account connection. Saving Spotify application credentials alone neither chooses a playback device nor finishes an individual account connection.",
+      "quote": "YouTube song requests do not require this Google app or a YouTube account connection: music search and playback use a separate public/keyless path.\nThe setup page’s description of a “YouTube music provider” should not be read as a prerequisite for requesting YouTube music.\nSaving application credentials prepares the service connection; it does not select your Spotify playback device or finish linking an individual account."
+    },
+    {
+      "question": 5,
+      "answer": "No material obstacle. The required shared-app route, optional steps, initial event-feed exception and service-credential limits are explicit.",
+      "quote": ""
+    },
+    {
+      "question": 6,
+      "answer": "No material read-aloud obstacle. The OAuth explanation and prerequisites support the optional own-app route without obscuring the short shared-app route.",
+      "quote": ""
+    }
+  ],
+  "findings": [],
+  "warnings_released": false,
+  "warning_review": []
+}

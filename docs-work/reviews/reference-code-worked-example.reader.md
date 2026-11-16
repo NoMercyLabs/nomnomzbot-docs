@@ -1,7 +1,41 @@
-# Reader review: C:\Projects\NoMercyLabs\nomnomzbot-docs\src\content\reference\en\code\worked-example.mdx
+# Current targeted editorial review — 2026-11-06
+
+Verdict: TARGETED AUTHOR SELF-REVIEW; no independent or exhaustive PASS.
+Reviewed: src/content/reference/en/code/worked-example.mdx
+Reviewed-SHA256: 55f87fc8432a2c55922ed79210cd65e3d89df3d55e3de85ee5bcd4511a69ddc4
+Reviewer: editing agent (author self-review)
+
+Full editorial read; removed blanket Draft. Direct source: Infrastructure/CustomCode/ScriptStorageService.cs:31-166 and Jint/JintScriptExecutor.cs bootstrap for storage/chat wrappers. Counter remains explicitly non-atomic. Live chat and full command creation flow were not executed.
+
+Coverage details and final static-check results: [final-developer.md](../ecosystem-validation/final-developer.md). Full reading is distinct from focused source verification. No live application/provider test or whole-project build in this batch.
+
+## Historical records below — verdicts and hashes preserved
+
+# Independent reader review: /reference/code/worked-example
 Verdict: PASS
+Reviewed: src/content/reference/en/code/worked-example.mdx
+Reviewed-SHA: 594291d55fc9c7da
+Reviewed-SHA256: 594291d55fc9c7da17652ddd917a23ce0a471db0755a8571ab4c1d8671839261
+Reviewed-Date: 2026-11-05
+Reviewer: independent reviewer, separate from article author
+Product-Revision: 54da8b6318de63b5205a0ff8db35e0b9045dd959
+
+The complete current article was read independently of its author, in the established settings, self-hosting and Code and SDK navigation order. The user's natural explainer/progressive-disclosure requirements take precedence over historical pilot mimicry, sentence caps and repeated page templates.
+
+## Learning and lookup result
+
+A single useful result is carried from code through dry run, explicit enable, command binding and two sequential expected replies. Failed writes do not falsely announce success, and concurrent increments are honestly bounded as a learning example.
+
+No outstanding substantive reader finding.
+
+Related routes were checked as contextual continuations rather than prerequisites for ordinary bot use. Draft labels remain appropriate for code material. This is a text/structure review, not a claim of rendered browser QA.
+
+## Historical review (superseded)
+
+# Reader review: C:\Projects\NoMercyLabs\nomnomzbot-docs\src\content\reference\en\code\worked-example.mdx
+Historical verdict: PASS
 Reviewed: C:\Projects\NoMercyLabs\nomnomzbot-docs\src\content\reference\en\code\worked-example.mdx
-Reviewed-SHA: 81c21ce8f77a61f3
+Reviewed-SHA: 4784df9f0857d816
 
 Reader: a streamer who has not written a script. Pages read: the Assumes list in docs-work/map.md (sdk-chat-music-voice, sdk-data-and-storage). Also checked: sdk-script-basics "One rule for a bad value" (lines 186-208) and scripts.mdx (lines 10-16, 28-106) for the labels and the pointer on the page.
 

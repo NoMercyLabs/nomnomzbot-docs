@@ -3,9 +3,14 @@ title: Stream page
 description: Change the title, category and tags, check before you go live, plan streams, raid a channel, set the raid rules and run an ad.
 ---
 
-You run the channel's stream on the **Stream** page in the sidebar.
-The header shows **Live** or **Offline**.
-When the stream is live, it shows how long it has run and the category, for example "Live for 1h 20m · Just Chatting".
+The **Stream** page helps you prepare what viewers see, check the channel before going live, and handle Twitch tasks such as scheduling, raids and ads.
+Its **Live** or **Offline** header reports the channel's state; changing stream details here does not start your broadcasting software.
+When the stream is live, the header also shows its duration and category, such as "Live for 1h 20m · Just Chatting".
+When the channel is offline, the header shows the last stream, for example "Last stream ended" with the date and the length, such as 2h 30m, or "No stream yet".
+
+Before a stream, work through **Overview**: set the title and category, check the connected platforms, and look at **Before you go live**.
+Use the other tabs when you need to publish a schedule, send viewers to another channel or run an ad.
+Remote scene and recording controls belong to the separate [OBS integration](/reference/integrations/obs).
 
 | Tab | What it holds |
 | --- | --- |
@@ -13,6 +18,7 @@ When the stream is live, it shows how long it has run and the category, for exam
 | **Schedule** | The streams you plan on Twitch. |
 | **Raid rules** | **Raid a channel** and the **Raid rules**. |
 | **Ads** | **Run an ad**. |
+| **Clips** | Your Twitch clips, with **Upload to YouTube**. |
 
 ## Who can use this page
 
@@ -28,6 +34,7 @@ The roles are explained on [Permissions](/reference/settings/permissions).
 | Raid a channel | An editor or the broadcaster. |
 | Change the raid rules | An editor or the broadcaster. A moderator sees the rules but cannot change them. |
 | Run an ad | An editor or the broadcaster. |
+| See clips and upload a clip to YouTube | A moderator and up. |
 
 A tab shows to anyone who may read it.
 A moderator sees the **Ads** tab, but only an editor or the broadcaster sees **Run an ad**.
@@ -78,8 +85,9 @@ X Live shows **Not available yet**: "X Live support is not built yet."
 
 ## Check before you go live
 
-The **Before you go live** panel on the **Overview** tab checks the channel.
-Each line has a dot: a good result, a problem, or neutral.
+The **Before you go live** panel on **Overview** helps catch a missing title, a disconnected bot or chat restrictions you may have left on.
+It reports what it can check; it does not start the stream or decide whether a paused reward is a mistake.
+Each line uses a dot for a good result, a problem, or a neutral state.
 
 | Check | Good | Problem or neutral |
 | --- | --- | --- |
@@ -94,8 +102,9 @@ A check that cannot run says so, for example "Could not check the bot".
 
 ## Plan a stream
 
-The **Schedule** tab holds "The streams you plan on Twitch."
-A segment is one planned stream.
+Use **Schedule** to publish planned streams on Twitch, so viewers can see when to return.
+Each entry is called a segment and can be a one-time stream or a weekly repeat.
+The schedule describes the plan; it does not automatically start a broadcast at that time.
 
 1. Choose **Add segment**.
    The **Add segment** dialog opens.
@@ -137,7 +146,7 @@ If not, the tab shows "Pick a start and an end after it to save."
 
 **Raid a channel** on the **Raid rules** tab sends your viewers to another channel.
 
-1. Type the name in **Channel name** and choose **Raid**.
+1. Type the channel's name in the **Channel name** box and choose **Raid**.
    The bot looks the channel up on Twitch.
 2. The dialog asks "Raid" with the channel name: "Your viewers go to this channel when the countdown ends, and your stream ends for them."
 3. Choose **Start raid**.
@@ -148,12 +157,16 @@ A message then says "The raid is canceled."
 When no raid is running, it says "There is no raid to cancel."
 
 If Twitch has no channel with that name, the panel says so in red, for example "Twitch has no channel named "examplechannel"."
+If Twitch cannot be reached, a message says "Twitch could not be asked. Try again."
 
 ## Set the raid rules
 
-The **Raid rules** panel holds the point rules for raid targets on this channel.
-Its text reads "How the bot ranks channels to raid. Your rules, only for this channel."
-Each rule holds **Points** and a **Reason**: a short text that names the rule.
+The **Raid rules** panel lets you save preferences for scoring possible raid targets.
+For example, a preferred category can receive positive points, while a viewer band can favor channels of a size that suits your community.
+Each rule has **Points** and a **Reason** to explain that preference.
+
+The current **Raid a channel** form still asks you to enter a channel yourself; it does not display ranked suggestions or choose a target from these rules.
+Saving scoring preferences does not start or schedule a raid.
 
 A new channel starts with no rules and every point at 0.
 
@@ -196,6 +209,35 @@ The **Ads** tab holds **Run an ad**: "Starts an ad break on your channel."
    Default: 30 seconds.
 2. Choose **Run ad**.
    A line says "The ad started.", or shows the message Twitch sent.
+
+## Put a clip on YouTube
+
+The **Clips** tab lists your Twitch clips, most viewed first, with the author, the date and the views.
+The tab shows to a moderator and up.
+The video goes to the broadcaster's YouTube channel.
+Choose **Show more clips** to load more.
+When Twitch lists no clips, the tab says "Twitch lists no clips for your channel."
+
+1. Choose **Upload to YouTube** on a clip.
+   The **Upload this clip to YouTube** dialog opens, with the clip's Twitch title already in **Title**.
+2. Change **Title** (up to 100 characters) and **Description** if you want.
+3. Pick **Who can see it**: **Private: only you**, **Unlisted: anyone with the link** or **Public: everyone**.
+   Private is the starting choice.
+4. Choose **Upload**.
+   The tab says "The clip is on your YouTube channel." with **Open the video**.
+
+The upload needs YouTube connected under [YouTube](/reference/integrations/youtube).
+Google allows 100 uploads a day for the whole bot, shared by every channel on it.
+The line under **Clips** counts what is left, for example "12 YouTube uploads left today".
+At 0, every **Upload to YouTube** button is off until midnight Pacific time, when Google starts a new day.
+
+| Message | What it means |
+| --- | --- |
+| "This channel is not connected to YouTube." | Connect YouTube first. |
+| "YouTube refused the upload for your account." | Connect YouTube again and allow the bot to manage your account. |
+| "Twitch gave no download for this clip." | The bot needs your permission to manage clips on Twitch. |
+| "The YouTube upload limit for today is used up." | Try again tomorrow. |
+| "The upload did not finish." | Try again. |
 
 ## Related pages
 

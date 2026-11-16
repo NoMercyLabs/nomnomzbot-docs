@@ -1,0 +1,80 @@
+{
+  "fingerprint": "d963ffba0f8ea9656c6f29cfecc31bfdcbcd7ae43d73a1e9c92c52361284a288",
+  "verdict": "PASS",
+  "answers": [
+    {
+      "question": 1,
+      "answer": "Open Commands and New command (or Make the first command on an empty list). Put schedule in Name, keep What it does at Sends a reply, and put Tuesdays at 19:00 Amsterdam time. in Reply. Keep Send the reply to at Twitch chat, Prefix at Channel default, and Match at Starts with. Choose Create command; it is saved and already on. Type !schedule in the connected channel’s Twitch chat as the broadcaster or a platform moderator.",
+      "quote": [
+        "Open Commands and choose New command. On an empty list, Make the first command opens the same dialog.",
+        "Enter schedule in Name.",
+        "Keep What it does at Sends a reply, and write your times in Reply. For example: Tuesdays at 19:00 Amsterdam time.",
+        "Keep Send the reply to at Twitch chat, Prefix at Channel default, and Match at Starts with.",
+        "Choose Create command. Your saved command opens in the editor, already switched on.",
+        "Type !schedule in your channel’s Twitch chat as the broadcaster or a platform moderator."
+      ]
+    },
+    {
+      "question": 2,
+      "answer": "Have the bot running, sign in, select the connected channel, and have a working Twitch chat connection. Editing normally requires Moderator, Lead moderator, Editor or Broadcaster; the broadcaster may raise that requirement. VIP list access is read-only and cannot create the command. The instructed broadcaster/platform-moderator test also works offline; an ordinary viewer needs a live stream or the offline setting, command access and no active cooldown.",
+      "quote": [
+        "Have the bot running, sign in, and select your connected channel in the dashboard. The chat connection must work for the test below; use your connected Twitch chat for this first reply.",
+        "By default, a Moderator, Lead moderator, Editor or Broadcaster can open Commands and change commands. The broadcaster can raise the access requirement.",
+        "That access is read-only: New command says “You can view this, but your role cannot change it.” The System commands tab is hidden.",
+        "Those accounts can test while you’re offline. An ordinary viewer needs the stream to be live, or Keep commands and rewards on while offline switched on, as well as permission to use the command and no active cooldown."
+      ]
+    },
+    {
+      "question": 3,
+      "answer": "Choose Save changes after editing Reply. The unsaved-change count disappears and the save button turns off. Type !schedule again and observe the bot replying with the new saved times; that tests the actual result.",
+      "quote": "To update your stream times, open schedule in the list and change Reply. The footer counts your edits, for example “1 unsaved change”.\nChoose Save changes: the count disappears and the save button turns off. Type the command in chat again to see the new saved times."
+    },
+    {
+      "question": 4,
+      "answer": "The copy is welcome-copy (used as !welcome-copy with the usual prefix), starts off, and replies to Twitch chat. Read it aloud is copied, but reply destination is not. Switch it on before testing. You do not need to choose a destination unless you want something other than Twitch chat, such as restoring Chat overlay. Speech still needs successful chat delivery and a ready TTS setup.",
+      "quote": [
+        "Open a command and choose Duplicate in the footer. A copy of its saved settings opens with -copy after the name, for example !hello-copy.",
+        "The copy starts off, so switch it on before testing. Most settings are copied, including Read it aloud, but aliases, preset identity, reply destination and enabled state are not.\nAliases are additional names for the original command. The copy has no Reset to preset button and its reply goes to Twitch chat; you only need to choose a destination if you want a different one.\nSpeech still needs successful chat delivery and a ready TTS setup."
+      ]
+    },
+    {
+      "question": 5,
+      "answer": "No material obstacle for the requested creation, edit or duplicate tasks. Creation gives the fields, enabled state and test account; saving gives both confirmation and a chat check. The copy’s off state and default destination are stated before its test. I do not need to guess a prerequisite or take an external detour.",
+      "quote": []
+    },
+    {
+      "question": 6,
+      "answer": "No material read-aloud obstacle identified. The sequential creation instructions and the explicit copy destination are understandable aloud. The later reference is longer than the plain-reply task needs, but its length alone does not prevent completing these tasks.",
+      "quote": []
+    }
+  ],
+  "findings": [],
+  "warnings_released": true,
+  "warning_review": [
+    {
+      "id": "length",
+      "decision": "keep",
+      "reason": "The plain schedule path is complete near the start; the remaining sections answer editing, copying, triggers and troubleshooting without making the requested reply depend on reading them all."
+    },
+    {
+      "id": "first-numbered-step",
+      "decision": "keep",
+      "reason": "The preceding material establishes the running/connected channel and edit versus VIP read-only access before New command; moving it behind creation could produce an avoidable access or connection failure."
+    },
+    {
+      "id": "paragraph-6",
+      "decision": "keep",
+      "reason": "This paragraph supplies the exact chat test, prefix substitution, offline tester distinction and expected reply in a connected sequence, so the sentence count does not create a task ambiguity."
+    },
+    {
+      "id": "sentence-6-4",
+      "decision": "keep",
+      "reason": "All listed conditions apply to an ordinary viewer test; keeping live/offline, access and cooldown requirements together prevents a silent test being mistaken for a failed creation."
+    },
+    {
+      "id": "paragraph-31",
+      "decision": "keep",
+      "reason": "The copy paragraph directly resolves the application case: off state, copied speech, noncopied destination, Twitch chat default and when to choose a different destination. Its detail prevents an unnecessary destination detour."
+    }
+  ]
+}

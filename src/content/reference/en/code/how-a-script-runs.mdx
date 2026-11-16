@@ -1,22 +1,20 @@
 ---
-title: How a script runs (Draft)
+title: How a script runs
 description: Turn on Custom Code, run a script from a pipeline step, and know what a script gets, what it gives back and its time and memory limits.
 ---
 
-A code script runs when a pipeline reaches a **Run script** step.
-This page explains what happens in that run, what the script can read and change, and the limits it runs under.
-You write and save scripts on [Scripts](/reference/code/scripts).
+A script runs the saved version of your code with the inputs from its trigger.
+A command can call it directly, or a pipeline can reach a **Run script** step and continue with the values the script returns.
+You create and save that version on [Scripts](/reference/code/scripts).
 
-::Callout
-
-**Draft**: this part of the guide is not finished yet.
-
-::
+Each run starts with a fresh sandbox: ordinary JavaScript variables last for that run only.
+Use pipeline variables to pass values to later steps, or [script storage](/reference/code/sdk-data-and-storage#storage) when a value must survive the next run.
 
 ## Turn on Custom Code
 
 Custom Code is off for a new channel.
-While it is off, you cannot make or change scripts.
+While it is off, you cannot open, make, change or delete scripts.
+The bot says: "Custom code is not enabled for this channel. Enable it on the Features page."
 A script that makes a bot call is then denied.
 
 1. Open the **Features** settings page.
@@ -33,6 +31,9 @@ A script that makes a bot call is then denied.
 
 The step is the only way a pipeline runs a script.
 A chat command can also run a script directly, when its **What it does** is **Runs a code script**.
+When a command runs the script directly, nothing from `bot.send` reaches chat.
+Use `nnz.api.chat.send` or `nnz.api.chat.reply` to post.
+If the run does not end cleanly, the bot tells the viewer in chat: "Sorry, that command hit a snag and didn't finish."
 
 ## What happens in a run
 
@@ -41,7 +42,7 @@ Every run takes these steps, in this order:
 1. The bot finds the script.
    A deleted script is not found.
 2. The bot checks that the script is switched on.
-3. The bot checks that the channel has script time left for this period.
+3. The bot checks that the channel's plan includes code scripts, and that the channel has script time left for this period.
 4. The bot takes the script's published version.
    A version that failed its check on save never runs.
 5. The bot reads which bot calls that version makes, and grants only those.
@@ -53,7 +54,7 @@ A script that stops at one of the first five checks does not run at all.
 
 ## What a script gets
 
-The sandbox gives the script two names: `bot` and `nnz`.
+The sandbox gives the script three names: `bot`, `nnz` and `console`.
 The script has no access to files, the network or the server, except through bot calls.
 
 | Name | What it does |
@@ -63,7 +64,7 @@ The script has no access to files, the network or the server, except through bot
 | `bot.setVar(key, value)` | Writes a pipeline variable. The value is text. |
 | `bot.send(message)` | Adds text to the step's output. It does not post in chat. |
 | `bot.stopPipeline()` | Stops the pipeline after this step. |
-| `console.log(...)` | Writes a line to the run's log. |
+| `console.log(...)` | Writes a line to the run's log. `console.info` does the same. `console.warn` and `console.error` keep their lines with a `warn: ` or `error: ` prefix. |
 
 The script works on its own copy of the pipeline variables.
 Calls such as `nnz.api.chat.send` reach the bot, and the bot posts in chat in the channel's one bot voice.
@@ -85,6 +86,8 @@ When the script ends, the step hands these back to the pipeline:
 
 - Every variable the script wrote, with its new value.
 - The text the script passed to `bot.send`, as the step's output.
+  Later steps read it as the variable `last.output`, written as `\{last.output\}` in a template.
+  A failed run gives no output.
 - The stop, when the script called `bot.stopPipeline()`.
 
 A run that does not end cleanly fails the step.
@@ -96,7 +99,8 @@ Every run has the same limits.
 
 | Limit | Value |
 | --- | --- |
-| Time for the whole run, bot calls included | 8 seconds |
+| Script execution time, including pauses in your code | 8 seconds |
+| Waiting for one bot call | Up to 15 seconds |
 | Bot calls | 64 |
 | Statements | 200,000 |
 | Memory | 64 MB |
@@ -107,9 +111,15 @@ Every run has the same limits.
 | One `nnz.time.sleep` pause | 5 seconds |
 | Log lines kept | 200; the rest are counted |
 
-The time limit counts every bot call, because each call waits for its answer.
+The script's 8-second clock pauses while a bot call waits for its answer.
+Each call has its own 15-second deadline, so a run involving speech synthesis or a network request can take longer than eight seconds in elapsed time.
+With at most 64 calls, the outer elapsed-time bound is 968 seconds; it is a safety ceiling rather than a useful target for a chat interaction.
 A script cannot build code from text: `eval` and `new Function` do not work.
 The script runs in strict mode.
+A bot call that takes longer than 15 seconds does not fail the run.
+That call gives back `null`, `nnz.lastError` says the call took too long, and the script goes on.
+The log keeps 200 lines.
+After that, the log ends with a line such as "5 more console line(s) not shown."
 
 ## Errors
 
@@ -119,12 +129,14 @@ The script runs in strict mode.
 | Script not found. | The script was deleted. |
 | Script is disabled. | The script is switched off. |
 | Sandbox execution quota exhausted for this period. | The channel used up its script time for this period. |
+| Code scripts need the Base plan. | The channel's plan has no script time. |
+| Sandbox execution quota could not be verified, so the script was not run. | The bot could not check the script time, so it did not run the script. |
 | Script has no valid published version. | The script has no saved version that passed its check. |
 | Capability is not enabled: ... | Custom Code is off, and the script makes a bot call. |
 | Unknown capability: ... | The script names a bot call that does not exist. |
 | Capability denied: ... | The script made a bot call it was not granted. |
 | Host-call budget exceeded. | The script made more than 64 bot calls. |
-| Execution exceeded its time budget. | The run took longer than 8 seconds. |
+| Execution exceeded its time budget. | The script used its own execution-time allowance, or reached the outer elapsed-time bound. |
 | Execution exceeded a resource limit. | The script went over the statements, the memory or the depth of nested calls. |
 
 An error the script throws itself shows its own message.

@@ -1,0 +1,203 @@
+---
+title: Admin console
+description: Watch the health of your own installation, look after its channels and people, and set its platform-wide defaults from the admin console.
+---
+
+When you run NomNomzBot yourself, the admin console is where you look after the whole installation instead of one channel.
+You check that Twitch is reaching every channel, see which services are healthy, suspend a channel, set what new channels start with, and rotate the encryption key.
+
+::Callout
+
+Running it for yourself, your friends and your community is free. You may not earn money with it: no selling it, and no paid hosting or paid service built on it.
+
+::
+
+## Who can open it
+
+Only an administrator of the installation sees the console.
+On a self-hosted install, the first account that signs in and finishes onboarding becomes the administrator automatically, with no setting.
+To pick the account yourself, put its Twitch ID in `INITIAL_ADMIN_TWITCH_ID` in `.env`; the account with exactly that ID is promoted when it signs in.
+An account that is already an administrator is never promoted again.
+
+Each page also asks for its own platform permission, and the dashboard checks it before the page opens.
+Without it, you land on the dashboard home page instead.
+The sidebar and the page check use the same list, so a page you cannot open is a page you do not hold the permission for.
+As the person who runs the installation, you hold all of them.
+You only meet this limit when you give someone else a role on the [Access](#access) page.
+
+## Open the console
+
+Open the account menu at the bottom of the dashboard sidebar and choose **Platform admin**.
+The item hides while you view as another role; see the [dashboard tour](/reference/getting-started/dashboard-tour).
+The console has its own sidebar, with the way back to your channel at the top, then five groups: **Activity**, **People**, **Billing**, **Safety** and **Configuration**.
+
+Start on **Overview** for a quick look, and on **System** when something seems wrong.
+Leave the **Safety** and **Configuration** pages alone until you have a reason to change them, because several of them reach every channel at once.
+
+## Activity
+
+These pages show what the installation is doing.
+Most only read; two let you act (**Webhook deliveries** and **Scheduled jobs**), and **Event replay** rebuilds data.
+
+| Page | What it shows | What you can do |
+| --- | --- | --- |
+| **Overview** | **Channels**, **Active channels**, **Users**, **System**, **Bot uptime** and **Events today**. It refreshes every 30 seconds. | Read only. |
+| **EventSub health** | For each channel, whether its Twitch subscriptions work, shown as "Working" or "N of M need attention". A broken channel lists its topic, state, last confirmed time and last error. | Read only. A channel whose sign-in has expired says "Re-authorize the channel." |
+| **Webhook deliveries** | The delivery log of outgoing [webhooks](/reference/integrations/webhooks-and-event-feeds): endpoint, event, status, code, duration, attempt, time sent and error. | **Replay** sends a delivery again as a new attempt. |
+| **Scheduled jobs** | The job queue: channel, pipeline, state, when it is due, when it ran, and what started it. | **Retry** queues a job again as a new run. |
+| **Channel usage** | The latest metering period of each channel, with its usage, **TTS characters** and **Cost**. A usage without a price shows "No price yet". | Read only. |
+| **Error budget** | Webhook delivery per channel over the last 24 hours: attempts, errors, error rate and budget left. A channel shows "Budget spent" when it has used it all. | Read only. |
+| **Event replay** | The history of earlier replays. | Rebuild a channel's data from its events (below). |
+| **Audit log** | Every operator permission check, with its operator, permission, channel, reason and outcome (**Allowed** or **Denied**). New entries appear by themselves. | Filter by permission, outcome, operator, channel and day. |
+
+### Replay events
+
+A replay rebuilds one kind of stored data for one channel from its recorded events.
+Use it when that data looks wrong and you know why.
+Choose the **Channel**, the **Projection**, an optional **Event type** and a **From** and **To** time, then choose **Count events** to see how many events match.
+Choose **Replay** and confirm.
+The confirmation says it replays the count into that projection "for" the channel, and that "The projection rows in this scope are rebuilt."
+When it ends, the page says how many events went into the projection, and the run appears in **Replay history**.
+
+## People
+
+### Tenants and the channel console
+
+**Tenants** lists everyone who joined: streamers with their channel, and viewers who signed in.
+Search by name, and filter by **Kind** (**Streamer** or **Viewer**), **Status** (**Active**, **Suspended** or **Banned**) and **Live**.
+Each row shows the person, kind, platforms, channel status, live state, tier, last activity and creation date.
+
+Open a streamer to reach their **Channel console**.
+It has these tabs:
+
+| Tab | What it holds |
+| --- | --- |
+| **Summary** | The runs of the last 24 hours, how many failed, and the last failure. |
+| **Runs** | Every command, pipeline, script and timer run, newest first. Filter to failures or one pipeline, and open a run to read its steps. A failed run names its kind, such as **Timeout** or **Permission**. |
+| **TTS** | The last 50 clips the channel spoke, and how fast the voice service answered. |
+| **Billing** | The channel's plan, invoices and grants. See [Billing](#billing). |
+| **People** | The channel's members and their relation to it. |
+| **Limits** | Limit overrides. Add one with a key, a value, a reason and an optional expiry. Clearing it puts the channel back on its tier default. |
+| **Audit** | What operators and the system did to this channel. |
+| **Data** | The lifecycle actions below. |
+
+The lifecycle actions each ask for a justification, and the bot keeps it in the audit log.
+
+| Action | What happens |
+| --- | --- |
+| **Suspend** | The bot stops serving the channel until you reinstate it. You choose the new status, **Suspended** or **Banned**. |
+| **Reinstate** | The bot serves the channel again. |
+| **Begin access** | Opens a time-boxed support session on the channel, with an expiry. **Break glass (emergency access)** is the emergency form. Every step is audited. |
+| **Re-run migrations** | Applies the database migrations the channel is still missing. |
+| **Export data** | Exports the channel's data. |
+| **Erase channel** | Removes the channel and its data. It can be restored for a number of days, then it is permanent. |
+
+The **Tenants** page also holds the **Support contact**.
+It is the page the people of a suspended channel are sent to.
+Leave it empty for none.
+
+**Act as** is the one action that changes what you see.
+It opens a time-boxed session in which you see and do everything as one person of a channel.
+You give a reason and pick 30 minutes, 1 hour, 2 hours or 4 hours.
+It lasts until you press **Exit** or the time runs out, and the bot logs the reason and every change.
+
+### Support
+
+**Support** is the help desk view of one person.
+Give a reason first, because the bot keeps every lookup in the audit log, then search for the person.
+You read their username, platform, Twitch ID, last seen time, community, moderation and trust standing, their history, and the commands and pipelines their channel built.
+It shows information only.
+
+## Billing
+
+**Billing** manages the plans of the installation, and the **Billing** tab of a channel does the same for one channel.
+You can use it to give a friend's channel a bigger allowance.
+It is not a way to charge anyone.
+
+| Part | What you do |
+| --- | --- |
+| **Tiers** | Add or edit a tier: a key, a name, a price in cents, its limits (one `key=value` per line) and whether it shows on the public pricing page. The confirmation says how many channels are on the tier and get the change. |
+| **Invite codes** | Create an invite with a maximum number of redemptions, an optional tier for a number of months or forever, an optional founders badge and an optional expiry. Send the link to the streamer. **Revoke** stops the link at once; channels that already redeemed it keep what it gave them. See [Redeem an invite](/reference/getting-started/redeem-an-invite). |
+| **Priced units** | Set a price per batch for a unit, with a currency and a batch size. This feeds the **Cost** shown on **Channel usage**. |
+| **Channel billing** | Enter a channel id to see its invoices and grants. You can refund an invoice, gift a plan until a date or forever, **End now** on a gift (the channel goes back to its own tier at once), and grant the founders badge. |
+
+A channel reads the result on its own [Billing](/reference/settings/billing) page, and the limits behind a tier on [Resource limits](/reference/settings/resource-limits).
+
+## Safety
+
+| Page | What it is for |
+| --- | --- |
+| **Spam defaults** | The values every new channel starts with for [spam defense](/reference/moderation/spam-defense). A channel that never changed a setting keeps following them, so one edit here moves all of them. It has the same groups as the channel page, and a note on each setting about its cost. Watch-only mode is the safe start. Settings marked **Not yet active** are saved but do nothing yet. |
+| **Trust and safety** | A desk for accounts that need a human. State a **Reason for access** first, and nothing loads until you do. Then work the **Review queue** (**Confirm** keeps an automatic action, **Overturn** reverses it on the real account), read **Cross-channel signals** (accounts flagged in two or more channels), and manage **Network blocks**. A network block bans an account in every channel it touches. **Preview block** first shows how many channels it reaches, and **Lift** unbans the account in those channels. |
+| **Data requests** | The erasure, export and opt-out requests people made about their data. Filter by status and type. A subject shows as a hash, never by name. **Retry** on a failed erasure first counts what it erases and says "It cannot be undone." |
+
+Read [Your data and privacy](/reference/settings/your-data-and-privacy) for the channel side of these requests.
+
+## Configuration
+
+### System
+
+**System** answers "is my installation healthy?".
+It lists each service with a plain meaning: **Bot API**, **Database**, **Shared cache** or **Cache**, **Database upgrades**, **Twitch events**, **Twitch events after an update**, **Restart in progress** and **Twitch bot account**.
+Each one is **Healthy**, **Degraded** or **Unhealthy**.
+The page also shows the running version, uptime, memory, processor, events today, live channels and known users.
+The **Updates** card checks GitHub every few hours for a newer stable release; see [Updates](/reference/self-hosting/updates).
+
+**Rotate encryption key** re-wraps every stored data key from the previous encryption key to a new one.
+Set the new key on the server first.
+If the server runs a different key than the one you enter, bot tokens become invalid and the bot must re-authorize.
+A second run changes nothing, and the result says how many keys were re-wrapped, were already current or failed.
+Keep `ENCRYPTION_KEY` safe either way, as [Updates](/reference/self-hosting/updates) explains.
+
+### Feature flags
+
+A flag switches a feature on or off for every channel.
+Give it a key, a description, **On for every channel**, a **Rollout share (percent)** from 0 to 100, a **Lowest tier that gets it**, a **Consent the channel must give first** and an optional **Only in this deployment mode**.
+Choose **Review the change** and the page counts the active channels that follow the flag.
+Channels with an override keep their own state.
+A channel override forces the flag on or off for one channel, with a reason and an optional end time, and beats the flag for that channel.
+
+### Providers
+
+**Providers** holds the OAuth apps of the services you connect, such as Twitch, Spotify and Discord.
+Each shows where its client ID and secret come from: **Stored** here, **Environment**, or **Not set**.
+Secrets are write only.
+You type a new client secret, API key or bot token, the bot stores it sealed, and it never shows it again.
+An empty box leaves that value as it is.
+**Clear stored** removes every stored value for the provider, and the bot then uses the environment.
+
+### Content
+
+**Content** manages the definitions channels can install from the platform.
+Filter by **Kind**, open a definition to see its installs ("N installed copies, N behind the current version, N edited by the channel") and draft a new version with a JSON payload.
+**Retire** stops a definition being offered.
+Installed copies keep running, and nothing in any channel changes.
+
+### Access
+
+**Access** lists the principals with platform access, employees and service accounts, and the roles that grant it.
+You can **Assign role** (with an optional expiry), **Revoke** a role or **Deactivate** a principal, each with a reason.
+A revoke takes effect at once.
+A deactivated principal holds no active roles and cannot act until you **Reactivate** it.
+Changing your own account shows "You lose this access in your own session."
+That is the page to use if you let a friend help run the installation with fewer permissions than you.
+
+### Platform bot
+
+The shared bot account speaks for every channel that has no bot of its own.
+The page shows its state: **Never connected**, **Connected and working** or **Connected, token unusable**.
+To replace it, write a **Reason** and choose **Preview channels** to see how many channels speak through it.
+Then choose **Reconnect for N channels**, enter the code shown on Twitch as the new bot account, and wait for approval.
+If the channel count changed in between, preview again.
+A channel with its own [white-label bot](/reference/settings/white-label-bot) is not affected.
+
+### Platform defaults
+
+These are the values a channel follows until it sets its own: the role each action asks for, the wording of built-in command replies, the response to each event, and the text-to-speech voice.
+A change reaches every channel that has no setting of its own.
+Before you apply one, the page counts the channels it changes and how many keep their own setting.
+Lowering a protected default needs a tick on "I understand this lowers a protected default for every channel above."
+
+Each default shows how many channels use their own value, and a changed one is marked **Changed**.
+Roles run from **Everyone**, **Twitch subscribers**, **VIPs**, **Artists**, **Moderators**, **Lead moderators** and **Editors** up to **The broadcaster**.
+See [built-in commands](/reference/commands/built-in-commands), [event responses](/reference/automation/event-responses) and [text-to-speech](/reference/audio/text-to-speech) for the channel side.

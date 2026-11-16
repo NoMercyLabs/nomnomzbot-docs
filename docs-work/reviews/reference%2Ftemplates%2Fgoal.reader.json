@@ -1,0 +1,39 @@
+{
+  "fingerprint": "d700efcae7d1bf5eb76bc60c174ff615a3d8afede039bc24f1f06ce4f6e75e0c",
+  "verdict": "PASS",
+  "answers": [
+    {
+      "question": 1,
+      "answer": "Use a {goal.<kind>.<part>} helper. The kind is followers, subs or newSubs, and the part is current, target, remaining, percent, bar or description. The page says none of the helpers take arguments. For progress toward a follower goal, the page's example reply uses current, target, remaining and bar. {goal.list} shows every active goal with its percent.",
+      "quote": "Follower goal: {goal.followers.current} of {goal.followers.target}, {goal.followers.remaining} to go! {goal.followers.bar}"
+    },
+    {
+      "question": 2,
+      "answer": "A creator goal of the matching kind has to be running on the channel's Twitch, or the helper has nothing to read. This is stated first, under Before you use them, ahead of the helper details.",
+      "quote": "A goal has to be running on Twitch, or there is nothing to read."
+    },
+    {
+      "question": 3,
+      "answer": "Success is the reply showing real numbers, such as 1,234 of 1,500, 266 to go, and a 10-mark bar with 82%. The page tells the parts apart one by one: current and target are the goal's numbers, remaining is what is still needed and never goes below 0, percent is rounded and can pass 100%, bar is 10 marks plus the percent, and description is the follower goal's text. The kinds are told apart by the middle part of the name. newSubs has only current and percent.",
+      "quote": "remaining is what is still needed, and 0 once the goal is reached, never a negative number."
+    },
+    {
+      "question": 4,
+      "answer": "The reply shows progress with the follower helpers, for example current of target, remaining to go, and the bar. When no goal of that kind is active, or the bot cannot read the goals from Twitch, each helper shows exactly as written, braces included. That is why the page advises putting goal helpers in a reply used while a goal is running, such as a !goal command, rather than in a timer that posts all the time.",
+      "quote": "When the channel has no active goal of the kind a helper asks for, the reply shows that helper exactly as you wrote it, braces and all."
+    },
+    {
+      "question": 5,
+      "answer": "I did not need to guess or reread. The no-goal behavior and the advice to avoid timers come before the helper details. One small detour: the page names the channel's Language setting for the thousands separator but does not say where that setting is. That costs nothing for this task, because the task never needs it changed.",
+      "quote": "Numbers use the thousands separator of the channel’s Language, and English when it is not set."
+    },
+    {
+      "question": 6,
+      "answer": "Read aloud, the Use in column repeats the same list of places in all 14 table rows. The intro already says where the helpers work, so a listener hears the list 14 more times and gets nothing new.",
+      "quote": "Commands, event responses, timers, pipelines, Discord, webhooks"
+    }
+  ],
+  "findings": [],
+  "warnings_released": true,
+  "warning_review": []
+}

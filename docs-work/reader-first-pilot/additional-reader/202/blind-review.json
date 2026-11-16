@@ -1,0 +1,66 @@
+{
+  "fingerprint": "ff3778ea473bce98f3c5fa8364bd4b63277fbad98b862c89c8d2bbd07e1a1ea6",
+  "verdict": "PENDING",
+  "answers": [
+    {
+      "question": 1,
+      "answer": "Open schedule in Commands, choose Everyone in Who can use it, then open Trigger and cooldowns and set Chat cooldown (seconds) to 10 and Per-person cooldown (seconds) to 60. Choose Save changes.",
+      "quote": [
+        "Who can use it is the first field in the editor.",
+        "The default is Everyone.",
+        "Everyone",
+        "Anyone in chat.",
+        "Both cooldowns are in the editor’s Trigger and cooldowns group.",
+        "Type a number of seconds in Chat cooldown (seconds), Per-person cooldown (seconds), or both.",
+        "Use whole seconds; 0 turns off that cooldown.",
+        "Choose Save changes."
+      ]
+    },
+    {
+      "question": 2,
+      "answer": "No. A bot-assigned Editor who is an ordinary platform viewer does not bypass the waits. Use an ordinary platform viewer with sufficient command access and the stream live or offline commands enabled to reproduce normal waits; a platform broadcaster or moderator reproduces bypass.",
+      "quote": [
+        "An ordinary-viewer account is needed to test ordinary cooldowns.",
+        "Ordinary viewers need enough command access and a live stream or Keep commands and rewards on while offline switched on.",
+        "The broadcaster and platform moderators bypass both normal command cooldown checks on Twitch, Kick and YouTube; Twitch lead moderators are included.",
+        "This uses the role supplied with the incoming message, so a bot-assigned Moderator, Lead moderator or Editor role alone does not bypass the waits."
+      ]
+    },
+    {
+      "question": 3,
+      "answer": "A can use it at t=60: A’s personal 60 seconds have passed and B’s use at t=50 has completed the shared 10 seconds. A’s refused attempt at t=5 restarted neither wait.",
+      "quote": [
+        "When both are set, a viewer must be clear of both.",
+        "After a viewer uses the command, another viewer can use it once the 10 seconds pass, but the first viewer must wait the full 60 seconds.",
+        "Each accepted use starts a new 10-second chat cooldown, so the first viewer also needs that shared wait to be clear when their 60 seconds end.",
+        "An attempt refused for permissions or cooldown does not restart either wait."
+      ]
+    },
+    {
+      "question": 4,
+      "answer": "The Artist badge alone does not satisfy Artists, so the command does not run and the default chat permission refusal is sent. The refusal can still speak with Read it aloud off: denial requests TTS independently, subject to TTS availability/settings, approval, the minimum bits rule and the denial speech throttle.",
+      "quote": [
+        "The current command check does not grant Artist access from the Artist badge alone: the person needs Artist standing recorded in the bot, or a higher qualifying role.",
+        "The command does not run.",
+        "By default the bot answers in chat, in the channel’s one bot voice: “You don’t have permission to use that command.”",
+        "The bot also requests text to speech for that line in the channel’s bot voice, even when the command’s Read it aloud switch is off.",
+        "Speech still depends on the channel’s TTS settings and playback being available; Moderators approve first, for example, holds the line for approval.",
+        "Text to speech skips the line when your channel sets a minimum bits amount for text to speech, because the line carries 0 bits.",
+        "Denial speech is requested at most once every 30 seconds per viewer in this channel, shared across denied commands."
+      ]
+    },
+    {
+      "question": 5,
+      "answer": "No material obstacle. The settings, distinction between stored and platform roles, accepted-use timing and denied Artist case are stated explicitly.",
+      "quote": ""
+    },
+    {
+      "question": 6,
+      "answer": "No material read-aloud obstacle. The detailed role and speech qualifications are relevant to avoiding an incorrect access or audio expectation.",
+      "quote": ""
+    }
+  ],
+  "findings": [],
+  "warnings_released": false,
+  "warning_review": []
+}

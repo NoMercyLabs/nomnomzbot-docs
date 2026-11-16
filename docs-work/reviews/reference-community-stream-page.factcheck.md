@@ -1,5 +1,40 @@
-# Fact check: /reference/community/stream-page
+# Independent source verification: /reference/community/stream-page
 Verdict: PASS
+Reviewed: src/content/reference/en/community/stream-page.mdx
+Reviewed-SHA: 60042da4a1d9cd853c07f4ef733385b54521554f3400749fad630783f37ea6a4
+
+## Independent overhaul review, 2026-11-05
+
+StreamInfoPanel.vue:40-119; StreamController.cs:224-286; SegmentDialog.vue:32-110; RaidNowPanel.vue:35-133; StreamView/RaidRulesPanel: save/discard and combined title-write gate, local scheduling/defaults, explicit target/confirmation, stored preferences separate from raid action.
+
+Reviewed independently of the article author, in actual navigation order. Current product source 54da8b631 and relevant changes since b12f4f696 were read without starting the bot, executing platform actions or changing channel data. This verdict is source verification, not proof of live platform delivery. See [review-moderation-economy-community.md](../overhaul/review-moderation-economy-community.md) for the review scope and findings.
+
+## Prior review history
+
+The earlier text below is retained as history; it does not independently approve a later article hash.
+
+Author source audit: 2026-11-04. Independent review of the revised article is pending; the historical PASS below does not approve this text.
+Product source: C:/Projects/NoMercyLabs/nomnomzbot at b12f4f696, inspected without starting the bot or changing data.
+
+Turns a page-control list into preparation, scheduling and end-of-stream workflows, and clarifies that saved raid rules do not choose a target or schedule a raid.
+
+| Revised claim or retained core behavior | Current source opened |
+| --- | --- |
+| Tabs, state and metadata; no broadcast-start action | dashboard/src/views/dashboard/stream/StreamView.vue:42-139 |
+| Draft/save/discard and title limit | dashboard/src/views/dashboard/stream/StreamInfoPanel.vue:40-119; server/src/NomNomzBot.Api/Controllers/V1/StreamController.cs:224-286 |
+| Schedule fields, default duration and time handling | dashboard/src/views/dashboard/stream/SegmentDialog.vue:32-85; SchedulePanel.vue |
+| Raid explicit target lookup and confirmation | dashboard/src/views/dashboard/stream/RaidNowPanel.vue:35-133 |
+| Saved rule preferences, no suggestion UI | dashboard/src/views/dashboard/stream/RaidRulesPanel.vue; StreamView.vue:133-139 |
+| Exact controls and default role floors | dashboard/src/views/dashboard/stream/i18n/en.json; server/src/NomNomzBot.Infrastructure/Content/Identity/ActionDefinitionSeeder.cs:337-361 |
+
+The practical scenarios are recommended uses of these verified controls, not promises of a new feature. Unchanged reference details were compared with the current view, labels and relevant implementation. Runtime platform calls were not performed.
+
+## Historical evidence
+
+The prior review is retained for its detailed claim inventory. Its verdict and file hashes refer to the earlier article; where the new evidence differs, the new evidence takes precedence.
+
+# Fact check: /reference/community/stream-page
+Historical verdict: PASS
 Reviewed: C:\Projects\NoMercyLabs\nomnomzbot-docs\src\content\reference\en\community\stream-page.mdx
 Reviewed-SHA: 63de7a652873498f
 

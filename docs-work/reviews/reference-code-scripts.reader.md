@@ -1,5 +1,39 @@
-# Reader review: C:\Projects\NoMercyLabs\nomnomzbot-docs\src\content\reference\en\code\scripts.mdx
+# Current targeted editorial review — 2026-11-06
+
+Verdict: TARGETED AUTHOR SELF-REVIEW; no independent or exhaustive PASS.
+Reviewed: src/content/reference/en/code/scripts.mdx
+Reviewed-SHA256: b1b4db506522b1e81649f6f04097962d4d3c13e8d9f8629f689227504f499fcd
+Reviewer: editing agent (author self-review)
+
+Full editorial read; retained prerequisites, authoring/test/live distinction and expected outcomes. Removed the blanket Draft sentence/title. Focused source checks: ScriptRunner.cs:43-205 lifecycle; grant/storage/widget contracts checked on their owning SDK pages. UI labels and all authoring branches were not exhaustively reverified.
+
+Coverage details and final static-check results: [final-developer.md](../ecosystem-validation/final-developer.md). Full reading is distinct from focused source verification. No live application/provider test or whole-project build in this batch.
+
+## Historical records below — verdicts and hashes preserved
+
+# Independent reader review: /reference/code/scripts
 Verdict: PASS
+Reviewed: src/content/reference/en/code/scripts.mdx
+Reviewed-SHA: 2b31c799150f9bdc
+Reviewed-SHA256: 2b31c799150f9bdc703b1d9547e29f1597e2270ab88ec49f14b73f86b101b956
+Reviewed-Date: 2026-11-05
+Reviewer: independent reviewer, separate from article author
+Product-Revision: 54da8b6318de63b5205a0ff8db35e0b9045dd959
+
+The complete current article was read independently of its author, in the established settings, self-hosting and Code and SDK navigation order. The user's natural explainer/progressive-disclosure requirements take precedence over historical pilot mimicry, sentence caps and repeated page templates.
+
+## Learning and lookup result
+
+The code-only scope and Draft state are explicit. Creation stays disabled through testing, while publishing/version history, saved-version testing, read/fetch effects and live activation have enough explanation to avoid common traps. UI footer text is quoted, with actual limits linked separately.
+
+No outstanding substantive reader finding.
+
+Related routes were checked as contextual continuations rather than prerequisites for ordinary bot use. Draft labels remain appropriate for code material. This is a text/structure review, not a claim of rendered browser QA.
+
+## Historical review (superseded)
+
+# Reader review: C:\Projects\NoMercyLabs\nomnomzbot-docs\src\content\reference\en\code\scripts.mdx
+Historical verdict: PASS
 Reviewed: C:\Projects\NoMercyLabs\nomnomzbot-docs\src\content\reference\en\code\scripts.mdx
 Reviewed-SHA: 69cba5dd02898fc2
 

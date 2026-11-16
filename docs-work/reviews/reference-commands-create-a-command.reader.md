@@ -1,3 +1,40 @@
+# Current targeted reader review
+
+Verdict: PARTIAL
+Reviewed: src/content/reference/en/commands/create-a-command.mdx
+Reviewed-SHA: 7f5c817af09246e2bf2b5ecd5a7c995d6a08180b2de197d8b2f92a1194705c6c
+Reviewed-SHA256: 7f5c817af09246e2bf2b5ecd5a7c995d6a08180b2de197d8b2f92a1194705c6c
+Reviewed-Date: 2026-11-06
+Reviewer: final-learning editing author; self-review, not independent
+Product: 2dfefbb0c393f439954d79b32ac11511678d7f44
+
+The full article was read for editorial clarity. Source verification is limited to the claims below and the focused checks in docs-work/ecosystem-validation/final-learning.md. This is not an exhaustive factual PASS, independent approval, rendered-site review or live application test.
+
+Speech delivery: server/src/NomNomzBot.Infrastructure/Chat/EventHandlers/ChatMessageHandler.cs:664-705 gates speech on SentToChat; server/src/NomNomzBot.Application/Chat/Services/ReplyTemplateRenderer.cs:38-65 returns no chat text for overlay-only/Nowhere. The clarification sits with the delivery controls and links to TTS setup.
+
+## Preserved historical reviews
+
+The earlier hashes, verdicts and claims below are retained as historical evidence; they do not approve this revision.
+
+# Current independent reader review
+
+Verdict: PASS
+Reviewed: src/content/reference/en/commands/create-a-command.mdx
+Reviewed-SHA: 7ffdf9aa691ef6bdf46f8cb8f5ac9350f8867c40c65b7da48031a10476346f62
+Reviewed-SHA256: 7ffdf9aa691ef6bdf46f8cb8f5ac9350f8867c40c65b7da48031a10476346f62
+Reviewed-Date: 2026-11-05
+Reviewer: independent section reviewer
+
+The article teaches trigger to response through a useful schedule command, then exposes reply kinds, matching, aliases and maintenance. Reference fields retain limits/defaults without forcing readers to absorb them before their first command.
+
+The full page was read with the preceding/following navigation context and related links. This review applies the owner's explanatory, progressive-disclosure guidance; it does not impose Atlas sentence caps, pilot mimicry or fixed article headings. No substantive reader finding remains at this hash. Build/render/link checks are recorded separately by the lead reviewer.
+
+Report: docs-work/overhaul/review-learning-commands-helpers.md.
+
+## Historical evidence
+
+The material below is retained as historical evidence; its older verdict is not the current review.
+
 # Reader review: src/content/reference/en/commands/create-a-command.mdx
 Verdict: PASS
 Reviewed: src/content/reference/en/commands/create-a-command.mdx

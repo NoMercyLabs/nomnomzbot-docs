@@ -1,7 +1,39 @@
-# Fact check: src/content/reference/en/integrations/youtube.mdx
+# Current independent fact check
+
 Verdict: PASS
 Reviewed: src/content/reference/en/integrations/youtube.mdx
-Reviewed-SHA: fe8ebcf75a0a81cd
+Reviewed-SHA: 6aa02bb915ad453cf95daf6c6dca8d3c673fd23fe2f953e6504587c004cd31a5
+Reviewed-SHA256: 6aa02bb915ad453cf95daf6c6dca8d3c673fd23fe2f953e6504587c004cd31a5
+Reviewed-Date: 2026-11-05
+Reviewer: independent media-section reviewer
+Product: 54da8b6318de63b5205a0ff8db35e0b9045dd959 plus preserved current music UI edits
+
+The full article was read in sidebar order. Consequential defaults, permissions, prerequisites, state lifetime and effects were traced against current source; repaired findings were re-read before this verdict. This is source verification, not a live-channel or visible/audible output test.
+
+- dashboard/src/api/integrations.ts:37-44 requests youtube.manage; server/src/NomNomzBot.Infrastructure/Integrations/OAuthProviderRegistry.cs:216-240 defines account scopes.
+- server/src/NomNomzBot.Infrastructure/Music/Playback/YouTubePlaybackEngine.cs:20-75 dispatches music through the overlay provider independently of the channel-account OAuth flow; Integrations/IntegrationBlastRadiusService.cs:80-81 lists all music actions for YouTube disconnect, broader than that dependency.
+- server/src/NomNomzBot.Infrastructure/Content/Widgets/Assets/music_player.vue implements browser playback, separately from the account connection.
+
+Source paths without a repeated layer prefix in a bullet are relative to its preceding Infrastructure or dashboard scope. The section report records method, repaired findings, external sources and remaining product limitations: docs-work/overhaul/review-automation-media-integrations.md.
+
+## Historical evidence
+
+Older hashes, verdicts and values below are retained for history and are not the current review.
+
+# Fact check: src/content/reference/en/integrations/youtube.mdx
+Verdict: PENDING
+Reviewed: src/content/reference/en/integrations/youtube.mdx
+Reviewed-SHA: 6aa02bb915ad453cf95daf6c6dca8d3c673fd23fe2f953e6504587c004cd31a5
+
+## 2026-11-05 author source verification
+
+Author source audit complete; independent verdict pending. This hash binds the current text, not the historical PASS below. The article was read in full and revised toward the user's explainer style while preserving precise reference detail. IntegrationsView.vue; integrations.ts; OAuthProviderRegistry.cs; IntegrationBlastRadiusService.cs. Channel OAuth and public-video music playback are separate dependencies.
+
+The section inventory and known implementation gaps are in [automation-media-integrations.md](../overhaul/automation-media-integrations.md). This is source verification, not a live-channel execution claim. Independent review must account for product changes after the original author pass at b12f4f696.
+
+## Historical review (SHA fe8ebcf75a0a81cd)
+
+Historical verdict: PASS. The earlier evidence below is retained as history and is superseded where the current article or source changed.
 
 Round 2. Product repo master (includes b6204c36c). Paths relative to C:\Projects\NoMercyLabs\nomnomzbot.
 

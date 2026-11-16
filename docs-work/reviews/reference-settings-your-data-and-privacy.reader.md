@@ -1,5 +1,41 @@
-# Reader review: C:\Projects\NoMercyLabs\nomnomzbot-docs\src\content\reference\en\settings\your-data-and-privacy.mdx
+# Targeted final review — 2026-11-06
+
+Verdict: PENDING
+Reviewed: src/content/reference/en/settings/your-data-and-privacy.mdx
+Reviewed-SHA: 25c9a9d842afa77bfbcb6ff1e9e746e0fda467b102f1dc73200c0e304a209097
+Reviewed-SHA256: 25c9a9d842afa77bfbcb6ff1e9e746e0fda467b102f1dc73200c0e304a209097
+Reviewer: final-features correction author; self-review, not independent PASS
+Product-Revision: 2dfefbb0c393f439954d79b32ac11511678d7f44 plus working tree
+
+The full article was read editorially. The correction was independently traced from the staged lead to current source, then applied by this reviewer. This is targeted author verification, not a new exhaustive source audit, independent final-text approval or runtime test. See [final-features.md](../ecosystem-validation/final-features.md) for exact source anchors, coverage and remaining limits.
+
+## Historical reviews
+
+The original records below are preserved verbatim and apply only to their recorded hashes.
+
+# Independent reader review: /reference/settings/your-data-and-privacy
 Verdict: PASS
+Reviewed: src/content/reference/en/settings/your-data-and-privacy.mdx
+Reviewed-SHA: 6e5ded23cc40724f
+Reviewed-SHA256: 6e5ded23cc40724facacc5d3b11e634d93016b2930d7b70c2b2801745b7b86d2
+Reviewed-Date: 2026-11-05
+Reviewer: independent reviewer, separate from article author
+Product-Revision: 54da8b6318de63b5205a0ff8db35e0b9045dd959
+
+The complete current article was read independently of its author, in the established settings, self-hosting and Code and SDK navigation order. The user's natural explainer/progressive-disclosure requirements take precedence over historical pilot mimicry, sentence caps and repeated page templates.
+
+## Learning and lookup result
+
+Opt-out and irreversible erasure are distinguished before the four panels. A reader can follow each procedure and understand personal scope, the 10,000-chat export cap, private file handling and channel-scoped opt-out.
+
+No outstanding substantive reader finding.
+
+Related routes were checked as contextual continuations rather than prerequisites for ordinary bot use. Draft labels remain appropriate for code material. This is a text/structure review, not a claim of rendered browser QA.
+
+## Historical review (superseded)
+
+# Reader review: C:\Projects\NoMercyLabs\nomnomzbot-docs\src\content\reference\en\settings\your-data-and-privacy.mdx
+Historical verdict: PASS
 Reviewed: C:\Projects\NoMercyLabs\nomnomzbot-docs\src\content\reference\en\settings\your-data-and-privacy.mdx
 Reviewed-SHA: 373e2676c5fa9294
 

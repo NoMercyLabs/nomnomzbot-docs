@@ -1,3 +1,38 @@
+# Targeted final review — 2026-11-06
+
+Verdict: PENDING
+Reviewed: src/content/reference/en/automation/rewards.mdx
+Reviewed-SHA: a2c66d82a380f348f141483594bbcddf378d6b1c5d2b5630101b95e4108b4a4c
+Reviewed-SHA256: a2c66d82a380f348f141483594bbcddf378d6b1c5d2b5630101b95e4108b4a4c
+Reviewer: final-features correction author; self-review, not independent PASS
+Product-Revision: 2dfefbb0c393f439954d79b32ac11511678d7f44 plus working tree
+
+The full article was read editorially. The first-task prerequisite correction was checked against current source and applied by this reviewer. This is targeted author verification, not an exhaustive source audit, independent final-text approval or runtime test. See [final-features.md](../ecosystem-validation/final-features.md) for the exact claims and limits.
+
+## Historical reviews
+
+Original records below are preserved verbatim and apply only to their recorded hashes.
+
+# Current independent reader review
+
+Verdict: PASS
+Reviewed: src/content/reference/en/automation/rewards.mdx
+Reviewed-SHA: b2d2d5b856ef693cd270a414c7552d2a653357875b03810937ccb8013a2a0c96
+Reviewed-SHA256: b2d2d5b856ef693cd270a414c7552d2a653357875b03810937ccb8013a2a0c96
+Reviewed-Date: 2026-11-05
+Reviewer: independent media-section reviewer
+Product: 54da8b6318de63b5205a0ff8db35e0b9045dd959 plus preserved current music UI edits
+
+The article explains Twitch Channel Points separately from bot currency, starts with an editable reward, and teaches redemption through a visible chat result. It retains independent speech/countdown behavior, another-app restrictions, queue actions, copy-off state and empty-reply subtleties instead of simplifying them away.
+
+The full page was read with adjacent navigation and related links. The owner's natural explanatory style governs: no Atlas sentence caps, pilot imitation or rigid article template was imposed. No substantive reader finding remains at this hash. Combined build, rendered-output and link/frontmatter checks belong to the lead's separate validation.
+
+Report: docs-work/overhaul/review-automation-media-integrations.md.
+
+## Historical evidence
+
+Older hashes and verdicts below are retained for history and are not the current review.
+
 # Reader review: src/content/reference/en/automation/rewards.mdx
 Verdict: PASS
 Reviewed: src/content/reference/en/automation/rewards.mdx

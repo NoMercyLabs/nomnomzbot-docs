@@ -3,9 +3,9 @@ title: Billing
 description: Read the channel's plan, compare the NoMercy Labs plans, use an invite code and open your invoices on the Billing page.
 ---
 
-You read the channel's account details on the **Billing** page.
+The **Billing** page is the channel's account screen for plans, invite codes and invoices on a NoMercy Labs service.
 It sits in the **Account** group of the settings sidebar.
-The limits and usage of a plan are on [Resource limits](/reference/settings/resource-limits).
+If you are trying to understand a refused upload or a usage allowance, start with [Resource limits](/reference/settings/resource-limits); billing explains the account behind those limits.
 
 ::Callout
 
@@ -15,6 +15,9 @@ Running it for yourself, your friends and your community is free. You may not ea
 
 The plain rule about use is on the [overview](/reference/overview).
 The page shows the same rule at the bottom of **Your plan**.
+
+Self-hosting does not require buying a plan.
+Use the account controls below when they apply to the service you are using; the prices and available plans are the ones shown by that service.
 
 ## Who can use this page
 
@@ -58,7 +61,8 @@ Your own plan shows **Current plan**.
 | **Sound clip storage** | How much sound clip space the plan gives. |
 | **Channel asset storage** | How much space for channel files the plan gives. |
 | **Script run time per month** | How long code scripts may run each month. |
-| **Text-to-speech message length** | How many characters one text to speech message may have. |
+| **Length of one TTS line** | How many characters one text-to-speech message may have. |
+| **TTS characters this month** | The total text-to-speech character allowance for a month. |
 | **Custom bot name** | **Included** or **Not included**. |
 | **Priority support** | **Included** or **Not included**. |
 
@@ -68,15 +72,20 @@ A cell reads **No limit** when the plan has no cap, and **Not included** when th
 1. Without a paid plan, choose **Choose plan** under a paid plan.
    The payment page opens.
 2. With a paid plan, choose **Switch to this plan** under another plan.
-   The plan changes in place.
+   The plan changes at once.
+   You cannot switch back to the **Free** plan this way; the server refuses it with "This tier is not purchasable."
+   To go back to free, cancel your plan.
 
 With a paid plan, the panel also shows **Switch at the end of the period**.
-Default: on.
-Off: the new plan starts now.
+The plan changes at once in both cases; the switch only sets when you pay.
+Default: on. You pay the new price from the next renewal, with no extra charge now.
+Off: the price difference for the rest of the period is charged now.
 
 ## Manage payment or cancel
 
-These buttons sit at the bottom of **Your plan**, for a paid plan only.
+These buttons sit at the bottom of **Your plan**.
+They show for every plan that did not come from an invite code.
+On a channel with no paid plan, **Cancel plan** reports "No active subscription." and **Manage payment** reports an error.
 
 - **Manage payment** opens the payment page.
 - **Cancel plan** opens the "Cancel your plan?" dialog.
@@ -92,6 +101,9 @@ The cancel dialog lists what happens: "Limits drop to the free plan.", "Paid fea
 
 ## Use an invite code
 
+An invite code can grant account benefits without a payment checkout.
+Checking it lets you see what it unlocks before you redeem it; **Use code** is the step that consumes a use.
+
 1. Type the code in **Code**.
 2. Choose **Check code** to look at it without using it up.
    The panel shows "This code is valid." or "This code is not valid.", what it unlocks, the uses left and the last valid date.
@@ -103,7 +115,7 @@ Below the field, **Founders badge** shows whether the channel has the badge, sin
 ## Read your invoices
 
 **Invoices** lists each invoice with its number, amount and status.
-Each line shows when it was issued, due, paid or refunded.
+Each line shows its issue date, any due and payment dates, and any refunded amount.
 **Open invoice** opens the invoice page in a new tab, when the invoice has one.
 Use **Previous page** and **Next page** to move through older invoices.
 

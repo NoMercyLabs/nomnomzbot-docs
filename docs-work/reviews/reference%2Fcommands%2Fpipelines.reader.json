@@ -1,0 +1,80 @@
+{
+  "fingerprint": "c4cc0236d26143c603a4cc51ee7b011c6c57e0e038776398d646a6a67e5f906e",
+  "verdict": "PASS",
+  "answers": [
+    {
+      "question": 1,
+      "answer": "Open Pipelines and choose New pipeline, type a name in Name and choose Make pipeline. Choose Add a step at the end, pick Send message under Chat and write the line in Message. Add Grant currency under Economy the same way and set Amount, then choose Save above the steps and wait for 'Pipeline saved.' To check it, leave How to run at Dry run and choose Test run. Each step card shows Done, Failed or Did not run, and Clear test run takes the results off.",
+      "quote": "Choose Save above the steps."
+    },
+    {
+      "question": 2,
+      "answer": "You need the Moderator role or a higher one to make, change or try a pipeline. A step that uses OBS, the music player, VTube Studio or Discord needs that connection set up before a live run. Both are stated under Before you start.",
+      "quote": "A Moderator or a higher role can make and change pipelines, and only those roles can try one from the editor, in a dry run or a live run."
+    },
+    {
+      "question": 3,
+      "answer": "After Test run, each step card shows its result, and the header of the steps card shows a run count. After Run now, a notice lists the steps that ran for real. In Runs, the labels Test run and Live run tell editor runs apart from real starts. A dry run's Done on Send message only means the line would have gone out.",
+      "quote": "Each step card now shows its result: Done, Failed or Did not run."
+    },
+    {
+      "question": 4,
+      "answer": "Viewers cannot trigger the pipeline until a command, chat trigger, timer or event response points to it, so the moderator can test it first. A dry run sends no chat and changes no balance: Send message and Grant currency are only recorded as Done. To see the line in chat and the balance change, the moderator uses Run live. That run starts as the moderator, so the currency goes to the moderator's own balance. After that, the moderator connects the pipeline to a command on the Commands page.",
+      "quote": "It starts as you, so Grant currency adds to your own balance, and a ban or timeout step acts on a real viewer."
+    },
+    {
+      "question": 5,
+      "answer": "I reread once: the editor resets to Dry run on each open, which is stated only after the live-run steps. That costs one extra click when someone expects Run live to still be selected. Nothing blocked a step.",
+      "quote": "The editor goes back to Dry run each time you open it."
+    },
+    {
+      "question": 6,
+      "answer": "When read aloud, 'at the bottom' does not say which screen; the context implies the pipeline editor, so it costs a moment of looking. The text Test run is used for both the run button and the label in Runs, but the page says so, so it is not an obstacle.",
+      "quote": "Delete pipeline at the bottom asks first and names each command, trigger, timer or event response that would stop running anything."
+    }
+  ],
+  "findings": [],
+  "warnings_released": true,
+  "warning_review": [
+    {
+      "id": "length",
+      "decision": "keep",
+      "reason": "The length covers a multi-step feature with setup, two run modes, inputs and troubleshooting. The blind pass answered all six questions from the page with exact quotes, so the size is not blocking the reader."
+    },
+    {
+      "id": "first-numbered-step",
+      "decision": "keep",
+      "reason": "The 253 words before the first step are the role requirement, the Dry run and Run live distinction, and the connections that live runs need. The owner's voice puts access requirements before the steps, and the blind reader needed them to act."
+    },
+    {
+      "id": "sentence-4-3",
+      "decision": "keep",
+      "reason": "The long sentence explains the Not set up yet state a reader will see on a step card, names the missing field and says when the line clears. Splitting it would add words without changing what the reader learns."
+    },
+    {
+      "id": "sentence-8-1",
+      "decision": "keep",
+      "reason": "The list names the container blocks in one sentence so a reader scanning Steps to add can find them. It is reference wording placed after the main path, not a sequence the reader must follow."
+    },
+    {
+      "id": "paragraph-12",
+      "decision": "keep",
+      "reason": "This paragraph describes the Inputs card, which is an optional branch under Give the run some values. The sentence count is a number alone; the required-input and default rules are real facts the reader needs when they declare inputs."
+    },
+    {
+      "id": "paragraph-13",
+      "decision": "keep",
+      "reason": "This paragraph covers the input dialog fields, types and when Continue stays off. It sits in an optional subsection after the main example, and the reader who uses inputs needs each rule; the sentence count alone is not a defect."
+    },
+    {
+      "id": "sentence-17-2",
+      "decision": "keep",
+      "reason": "A reader who searches the command editor for Pipeline or the new-command dialog for Runs a pipeline would otherwise stop at a label that does not match. The sentence names both labels, so it prevents that stall."
+    },
+    {
+      "id": "paragraph-21",
+      "decision": "keep",
+      "reason": "The paragraph explains how a run's list and detail show the Test run and Live run labels, which tell editor runs from real starts. Five short sentences carry one topic and do not block the reader."
+    }
+  ]
+}

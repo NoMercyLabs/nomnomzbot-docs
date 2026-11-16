@@ -1,0 +1,145 @@
+---
+title: First-run setup
+description: Choose the Twitch app your self-hosted bot uses, finish setup and reach your first sign-in.
+---
+
+Your new bot needs a Twitch application before you can sign in. The application details identify the bot to Twitch; approving an account later gives it permission to act for that account.
+
+Have the [Docker installation](/reference/self-hosting/install-with-docker) running and open the bot's address in your browser. For the quickest first sign-in, choose the shared Twitch app and skip the optional services. You do not need an existing bot login, a separate bot account or text-to-speech setup.
+
+::Callout
+
+Finish setup promptly. Until you choose **Finish setup**, anyone who can reach the bot's address can change these application keys. Afterward, changing them requires a bot administrator; being a channel moderator is not enough.
+
+::
+
+## The steps
+
+The row at the top marks your current step. On a narrow screen it shows “Step 1 of 6” and the step's name instead.
+
+| Step | Card title | Required? |
+| --- | --- | --- |
+| **Twitch app** | **Connect your Twitch application** | Yes |
+| **Bot account** | **Authorize the bot account (optional)** | No |
+| **Spotify** | **Spotify (optional)** | No |
+| **Discord** | **Discord (optional)** | No |
+| **YouTube** | **YouTube (optional)** | No |
+| **Finish setup** | **Finish setup** | Yes |
+
+**Back** returns to the previous step. A required step must be complete before **Next** turns on. An incomplete optional step shows **Skip**.
+
+## 1. Choose the Twitch app
+
+Choose **Use the shared NomNomzBot app**, then **Next**. This records your choice and completes the required Twitch step without filling in a Client ID or Client Secret.
+
+Your own Twitch app is encouraged, and you can [register one instead](#use-your-own-twitch-app) if you have a verified Twitch email address and two-factor authentication. Registration creates a record in Twitch's Developer Console; it does not mean writing code. Only the Client ID is required. A Client Secret is optional and adds one-tap sign-in; without it, sign-in uses a code.
+
+An existing Client ID that the bot already knows does not complete this step. You must either save your own Client ID or explicitly choose the shared app.
+
+## 2. Add a bot account
+
+Choose **Skip** to have your broadcaster account type the bot's chat messages. A separate bot account is optional.
+
+If you want another Twitch account to speak for the bot now, [authorize that account](#authorize-a-separate-bot-account) before continuing. The [bot account guide](/reference/getting-started/bot-account) explains which account messages come from.
+
+## 3. Add Spotify, Discord or YouTube
+
+Choose **Skip** on each optional service you do not need yet. You can reach your first Twitch sign-in without creating any of these apps.
+
+YouTube song requests do not need the Google app or a YouTube account connection: music search and playback use a separate public/keyless path. Saving Spotify app details prepares its account connection and music features; it does not link your account or choose a playback device.
+
+To configure an optional service now, use the [application details below](#configure-an-optional-service). Each requires both its Client ID and Client Secret.
+
+## 4. Finish setup
+
+The last card lists the preceding steps as **Done** or **Not set**. It is fine for skipped services to remain **Not set**.
+
+Below the list, **Event feed** says “Sign in after you finish setup. Then this page can check that Twitch events reach the bot.” That is expected on a new bot: it has no broadcaster connection to check yet. A healthy event feed is not required for your first sign-in.
+
+Choose **Finish setup**. The bot saves completion, closes the open key-changing window and opens the dashboard/sign-in flow.
+
+[Sign in](/reference/getting-started/sign-in) as the broadcaster to connect your channel. Once connected, try [your first command](/reference/getting-started/first-command).
+
+## Use your own Twitch app
+
+Twitch requires a verified email address and two-factor authentication before you can register an app. If either is missing, follow [Twitch's registration requirements](https://dev.twitch.tv/docs/authentication/register-app/) first. You also need the exact callback address shown by this bot's setup card.
+
+1. On **Twitch app**, open the Twitch Developer Console using the card's link and register a new application.
+2. Copy the card's address with its copy button and use it as the application's **OAuth Redirect URL**. It must match exactly.
+3. Choose the **Chat Bot** category, create the app and copy its Client ID.
+4. Paste the ID into **Client ID** on the setup card. Leave **Client Secret (optional)** empty for code-based sign-in, or add it if you want one-tap sign-in too.
+5. Choose **Save**. The step completes and **Next** turns on.
+
+OAuth is the sign-in process that asks for permission on the service's own website. The redirect, also called a callback, tells that service where to return your browser. Copying the address from this instance prevents a mismatch. Keep a client secret private, like a password.
+
+## Authorize a separate bot account
+
+1. Sign in to Twitch as the bot's own account in this browser first.
+2. On **Bot account**, choose **Authorize the bot account**. Twitch opens in a new tab, while the card shows “Waiting for you to approve the account on Twitch…”.
+3. Approve the requested chat permissions. The card shows “Connected:” with the account name, and the step completes.
+
+While it waits, the card keeps a copyable link to the authorization page. Use that link if the bot account is signed in through another browser or profile.
+
+## Configure an optional service
+
+Each service card links to the place where you create its application. Before saving, register the exact callback address the card shows:
+
+| Service | What the application prepares | Where to register the address |
+| --- | --- | --- |
+| **Spotify** | A Spotify account connection and its music features; it is not needed for all song requests. | **Redirect URI** in the Spotify app. |
+| **Discord** | Notifications and server sync. | **OAuth2 Redirect** in the Discord application. |
+| **YouTube** | Google approval for the channel's YouTube account connection. | **Authorized redirect URI** in a Google OAuth credential. |
+
+1. Create the application at the service and add the callback address using the setup card's copy button.
+2. Copy its **Client ID** and **Client Secret** into the card's two fields.
+3. Choose **Save**. The step completes.
+
+These credentials identify an application; they do not finish linking an individual account. After signing in, follow [Spotify](/reference/integrations/spotify), [Discord](/reference/integrations/discord) or [YouTube](/reference/integrations/youtube) for the feature you want. Spotify still needs its account and playback device configured.
+
+The setup card currently describes the Google app as enabling a “YouTube music provider”. You can skip it for YouTube song requests: their search and playback do not depend on this Google sign-in.
+
+## Troubleshooting
+
+::Troubleshooting
+
+**“This bot does not answer. Check that it runs, then try again.”**
+
+The browser cannot reach the bot. In a terminal in the project folder, check the lite installation with:
+
+```bash
+docker compose -f docker-compose.lite.yml ps
+```
+
+For the full installation, use `docker compose ps`. The bot's row must show `Up` and `healthy`. If it does not, start the bot again using [Install with Docker](/reference/self-hosting/install-with-docker), then choose **Try again**.
+
+::
+
+::Troubleshooting
+
+**Next stays off on the Twitch app step.**
+
+The bot needs an explicit choice. Choose **Save** with your own Client ID or **Use the shared NomNomzBot app**. A Client ID already known to the bot is not enough.
+
+::
+
+::Troubleshooting
+
+**“The bot could not save this. Check the values and try again.”**
+
+Check the values you pasted. If setup has already finished, only a bot administrator can save replacement keys.
+
+::
+
+::Troubleshooting
+
+**“The bot could not finish setup. Try again.”**
+
+Choose **Finish setup** again. If another browser already finished, completing setup again requires a bot administrator.
+
+::
+
+## Related pages
+
+- [Install with Docker](/reference/self-hosting/install-with-docker)
+- [Bot account](/reference/getting-started/bot-account)
+- [Sign in](/reference/getting-started/sign-in)

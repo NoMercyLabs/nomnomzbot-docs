@@ -1,7 +1,32 @@
-# Reader review: C:\Projects\NoMercyLabs\nomnomzbot-docs\src\content\reference\en\economy\leaderboards-and-games.mdx
+# Targeted final review — 2026-11-06
+
+Verdict: PENDING
+Reviewed: src/content/reference/en/economy/leaderboards-and-games.mdx
+Reviewed-SHA: acd67cebb41fd23aa74d41a0340c36f7152ad56b60958bdf0ad4104bf05c4342
+Reviewed-SHA256: acd67cebb41fd23aa74d41a0340c36f7152ad56b60958bdf0ad4104bf05c4342
+Reviewer: final-features correction author; self-review, not independent PASS
+Product-Revision: 2dfefbb0c393f439954d79b32ac11511678d7f44 plus working tree
+
+The full article was read editorially. The correction was independently traced from the staged lead to current source, then applied by this reviewer. This is targeted author verification, not a new exhaustive source audit, independent final-text approval or runtime test. See [final-features.md](../ecosystem-validation/final-features.md) for exact source anchors, coverage and remaining limits.
+
+## Historical reviews
+
+The original records below are preserved verbatim and apply only to their recorded hashes.
+
+# Independent reader review: /reference/economy/leaderboards-and-games
 Verdict: PASS
-Reviewed: C:\Projects\NoMercyLabs\nomnomzbot-docs\src\content\reference\en\economy\leaderboards-and-games.mdx
-Reviewed-SHA: 245bef96db057ce9
+Reviewed: src/content/reference/en/economy/leaderboards-and-games.mdx
+Reviewed-SHA: 727590461211cf954641607d7dc3612d8ddc1bec4334b12ddd67be79a30e43d9
+
+## Independent overhaul review, 2026-11-05
+
+Balance versus activity periods and practical weekly/jar examples teach a choice. The private-board chat fallback is candid.
+
+Reviewed independently of the article author, in actual navigation order. Current product source 54da8b631 and relevant changes since b12f4f696 were read without starting the bot, executing platform actions or changing channel data. The reader judgment follows the user's natural teaching style; old pilot mimicry, sentence caps and unrelated Atlas style gates were not applied. See [review-moderation-economy-community.md](../overhaul/review-moderation-economy-community.md) for the review scope and findings.
+
+## Prior review history
+
+The earlier text below is retained as history; it does not independently approve a later article hash.
 
 Scope: I read the whole page. The Assumes page is /reference/economy/currency-and-balances. I did not read that page. I judged ownership from docs-work/ledger.md. Voice was checked against commands/create-a-command.mdx.
 

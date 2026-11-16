@@ -3,23 +3,26 @@ title: Pronouns in templates
 description: Learn where the bot gets a person's pronouns, and how to write a reply that reads right for he, she, they and other pronouns.
 ---
 
-One reply goes to many viewers.
-This page shows how to write a line that fits every person's pronouns.
+Pronoun helpers let a single reply adapt to the person it describes.
+For example, a welcome can use "he is", "she is", or "they are" without you maintaining a different command for each person.
 The helpers themselves are listed on [User helpers](/reference/templates/user) and [Target helpers](/reference/templates/target).
+
+For a first example, use `{Target.Subject} {target.presentTense} a great streamer.` in wording about a named person.
+With they/them saved for that person, the result is `They are a great streamer.`
+The pronoun and verb both come from that person's saved choice.
 
 ## Where pronouns come from
 
-The bot reads pronouns from the alejo.io pronoun API, the same source the Twitch pronoun chat plugins use.
-It loads the list of pronouns from `https://api.pronouns.alejo.io/v1/pronouns`.
-
-It looks up one viewer at `https://api.pronouns.alejo.io/v1/users/` followed by the viewer's Twitch login name.
-The lookup uses Twitch logins only, so it finds Twitch viewers.
+The bot can read a Twitch viewer's pronouns from the alejo.io pronoun service.
+That lookup uses their Twitch login, so linking another platform does not give the external service a different name to search.
 
 The bot saves a person's pronouns when that person chats in any channel the bot is in.
 The saved pronouns are the same in every channel.
 A reply reads the saved pronouns. It does not look them up again.
 
 A viewer can also pick pronouns in the bot, as described on [Viewer pages](/reference/community/viewer-pages).
+A choice made on the viewer page can still be replaced by a later external refresh unless that account already has a manual override.
+The current viewer form saves the pronoun fields without enabling that protection.
 
 The API lists the base pronouns, such as he, she and they.
 Pairs such as he/they come from the bot's own bundled set.
@@ -51,9 +54,8 @@ It is explained under [When the pronouns are "any" or "other"](#when-the-pronoun
 
 ## Write correct sentences
 
-If you type "he" or "his" in a reply, the line is wrong for every viewer who uses other pronouns.
-Use the pronoun helpers instead.
-The bot fills in the right word for the person in the line.
+Use a pronoun helper where your sentence needs a pronoun, then pair it with a matching verb helper.
+This keeps the reply useful for different viewers while leaving the rest of your wording as you wrote it.
 
 ### Pick the helper
 

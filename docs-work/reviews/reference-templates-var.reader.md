@@ -1,3 +1,22 @@
+# Current independent reader review
+
+Verdict: PASS
+Reviewed: src/content/reference/en/templates/var.mdx
+Reviewed-SHA: da74b5e3f4a3c4fb9162dc462238830a7fe7ed3c2c934f64e30a2350953f1fe8
+Reviewed-SHA256: da74b5e3f4a3c4fb9162dc462238830a7fe7ed3c2c934f64e30a2350953f1fe8
+Reviewed-Date: 2026-11-05
+Reviewer: independent section reviewer
+
+The added assignment example shows its invisible assignment and visible result. It distinguishes render-local memory from stored counters/viewer data and explains that including wording is not running a pipeline.
+
+The full page was read with the preceding/following navigation context and related links. This review applies the owner's explanatory, progressive-disclosure guidance; it does not impose Atlas sentence caps, pilot mimicry or fixed article headings. No substantive reader finding remains at this hash. Build/render/link checks are recorded separately by the lead reviewer.
+
+Report: docs-work/overhaul/review-learning-commands-helpers.md.
+
+## Historical evidence
+
+The material below is retained as historical evidence; its older verdict is not the current review.
+
 # Reader review: src/content/reference/en/templates/var.mdx
 Verdict: PASS
 Reviewed: C:/Projects/NoMercyLabs/nomnomzbot-docs/src/content/reference/en/templates/var.mdx

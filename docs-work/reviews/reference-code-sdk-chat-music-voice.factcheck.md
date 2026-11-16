@@ -1,7 +1,47 @@
-# Fact check: src/content/reference/en/code/sdk-chat-music-voice.mdx
+# Current targeted source review — 2026-11-06
+
+Verdict: TARGETED AUTHOR SELF-REVIEW; no independent or exhaustive PASS.
+Reviewed: src/content/reference/en/code/sdk-chat-music-voice.mdx
+Reviewed-SHA256: c7f3a358d4cbbabe25db186a3fd7cdc89b5b73f90ee70e442760e94c09b9d8c8
+Reviewer: editing agent (author self-review)
+
+Full editorial read; removed blanket Draft callout/title. Focused source check: Infrastructure/CustomCode/Jint/JintScriptExecutor.cs:188-245 synchronous wrappers, optional speech arguments, sequence serialization and results. Provider execution, all chat-variable producers and voice lifecycle paths were not exhaustively reverified.
+
+Coverage details and final static-check results: [final-developer.md](../ecosystem-validation/final-developer.md). Full reading is distinct from focused source verification. No live application/provider test or whole-project build in this batch.
+
+## Historical records below — verdicts and hashes preserved
+
+# Independent source review: /reference/code/sdk-chat-music-voice
 Verdict: PASS
 Reviewed: src/content/reference/en/code/sdk-chat-music-voice.mdx
-Reviewed-SHA: e3a379fc6ffbb4b3
+Reviewed-SHA: 9e2dcdda9b227339
+Reviewed-SHA256: 9e2dcdda9b227339613b7a4d9fa817205f8cea9d0f72671bbc70992bb287abe9
+Reviewed-Date: 2026-11-05
+Reviewer: independent reviewer, separate from article author
+Product-Revision: 54da8b6318de63b5205a0ff8db35e0b9045dd959
+
+The complete current article was read in navigation order and checked against current product source. Historical PASS entries below are leads, not approval of this revision. Atlas voice/template gates do not govern this review.
+
+## Current evidence and result
+
+No substantive finding. Reply fallback, Everyone-role music requests, speech segments, voice assignment and 100-voice results checked.
+
+Source files opened in this review: CustomCode/Jint/JintScriptExecutor.cs:229-297; CustomCode/ScriptHostBridge.cs:402-548,625-757,1000-1125.
+
+Unqualified paths beginning Identity, CustomCode, Billing, EventStore, Engagement, Rewards, Widgets or Platform are under server/src/NomNomzBot.Infrastructure; Api and Domain identify their corresponding server projects. Dashboard shorthand is under dashboard/src/views/dashboard.
+
+Verification is read-only source review. No bot/API startup, live account authorization, channel writes, C# host/Jint execution, Docker install or restore was performed. Documentation build/render QA belongs to the combined parent pass. The SDK reference and worked-example checks additionally ran the existing read-only nnz-code-doc-check.mjs with production JavaScript bootstrap and substituted host I/O.
+
+## Historical review (superseded)
+
+# Fact check: src/content/reference/en/code/sdk-chat-music-voice.mdx
+Historical verdict: PENDING
+
+2026-11-04 overhaul: the article changed, so the previous PASS and hash below are historical evidence, not approval of the current revision.
+Fresh writer source checks and article inventory are recorded under C3/C4 in `docs-work/overhaul/settings-hosting-code.md`.
+Independent review of the changed text is pending.
+Reviewed: src/content/reference/en/code/sdk-chat-music-voice.mdx
+Reviewed-SHA: 81d6961b93acb4c4
 
 Paths are under server/src/NomNomzBot.Infrastructure/ unless named otherwise. JSE = CustomCode/Jint/JintScriptExecutor.cs, SHB = CustomCode/ScriptHostBridge.cs, CAP = CustomCode/CaptureScriptHostBridge.cs.
 

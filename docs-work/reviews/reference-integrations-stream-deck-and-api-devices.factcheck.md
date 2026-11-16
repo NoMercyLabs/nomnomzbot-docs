@@ -1,7 +1,53 @@
-# Fact-check: /reference/integrations/stream-deck-and-api-devices
+# Targeted final review — 2026-11-06
+
+Verdict: PENDING
+Reviewed: src/content/reference/en/integrations/stream-deck-and-api-devices.mdx
+Reviewed-SHA: faaf9e1efea021291c6cf8d38a6c719b5ce30a46a1da147d636c1d5470b14be0
+Reviewed-SHA256: faaf9e1efea021291c6cf8d38a6c719b5ce30a46a1da147d636c1d5470b14be0
+Reviewer: final-features correction author; self-review, not independent PASS
+
+Full editorial reading completed. Added the parent's requested Automation API related link and confirmed its target exists. No fresh whole-article source audit or independent approval is claimed. See [final-features.md](../ecosystem-validation/final-features.md) for coverage and limits.
+
+## Historical reviews
+
+Original records below apply only to their recorded hashes and are preserved verbatim.
+
+# Current independent fact check
+
 Verdict: PASS
+Reviewed: src/content/reference/en/integrations/stream-deck-and-api-devices.mdx
+Reviewed-SHA: 579e4a30863c0af2d1e1c06d7b2e5075ea823899b2d32be0821ce508dc04d58b
+Reviewed-SHA256: 579e4a30863c0af2d1e1c06d7b2e5075ea823899b2d32be0821ce508dc04d58b
+Reviewed-Date: 2026-11-05
+Reviewer: independent media-section reviewer
+Product: 54da8b6318de63b5205a0ff8db35e0b9045dd959 plus preserved current music UI edits
+
+The full article was read in sidebar order. Consequential defaults, permissions, prerequisites, state lifetime and effects were traced against current source; repaired findings were re-read before this verdict. This is source verification, not a live-channel or visible/audible output test.
+
+- tools/streamdeck/music/bot.nomnomzbot.streamdeck.music.sdPlugin/manifest.json:10-14 and the corresponding OBS manifest declare Stream Deck6.5+, Windows/macOS. shared/src/authWindow.ts:37-94 implements browser authorization; release assets streamdeck-music-v1.0.1 and streamdeck-obs-v1.0.0 were independently confirmed with gh release view.
+- server/src/NomNomzBot.Infrastructure/AutomationApi/AutomationPairingService.cs:37-54,130-240 defines single-use 5/10-minute code flows, 30-day device keys and rate limits; AutomationApiTokenService.cs:31-34,129-206,281-291 hashes secrets, rotates/revokes and refreshes tokens.
+- server/src/NomNomzBot.Infrastructure/Content/Identity/ActionDefinitionSeeder.cs:367-368 separates Editor read from Broadcaster management.
+
+Source paths without a repeated layer prefix in a bullet are relative to its preceding Infrastructure or dashboard scope. The section report records method, repaired findings, external sources and remaining product limitations: docs-work/overhaul/review-automation-media-integrations.md.
+
+## Historical evidence
+
+Older hashes, verdicts and values below are retained for history and are not the current review.
+
+# Fact-check: /reference/integrations/stream-deck-and-api-devices
+Verdict: PENDING
 Reviewed: C:\Projects\NoMercyLabs\nomnomzbot-docs\src\content\reference\en\integrations\stream-deck-and-api-devices.mdx
-Reviewed-SHA: 6050de460307b60f
+Reviewed-SHA: 579e4a30863c0af2d1e1c06d7b2e5075ea823899b2d32be0821ce508dc04d58b
+
+## 2026-11-05 author source verification
+
+Author source audit complete; independent verdict pending. This hash binds the current text, not the historical PASS below. The article was read in full and revised toward the user's explainer style while preserving precise reference detail. authWindow.ts; pairing.ts; tokenStore.ts; AutomationPairingService.cs; AutomationApiTokenService.cs; CreateTokenDialog.vue. Pairing, requested scopes, expiration, renewal and release asset existence were checked.
+
+The section inventory and known implementation gaps are in [automation-media-integrations.md](../overhaul/automation-media-integrations.md). This is source verification, not a live-channel execution claim. Independent review must account for product changes after the original author pass at b12f4f696.
+
+## Historical review (SHA 6050de460307b60f)
+
+Historical verdict: PASS. The earlier evidence below is retained as history and is superseded where the current article or source changed.
 
 Product repo: nomnomzbot master, read only. This review judges the current text (sha above). It does not carry over the older verdict (a27db3bb2c03b55d).
 D = dashboard/src/views/dashboard/settings/api-devices. EN = D/i18n/en.json. PS = server/src/NomNomzBot.Infrastructure/AutomationApi/AutomationPairingService.cs. TS = server/src/NomNomzBot.Infrastructure/AutomationApi/AutomationApiTokenService.cs. PC = server/src/NomNomzBot.Api/Controllers/V1/AutomationPairingController.cs. DC = server/src/NomNomzBot.Api/Controllers/V1/AutomationDataController.cs. SEED = server/src/NomNomzBot.Infrastructure/Content/Identity/ActionDefinitionSeeder.cs.

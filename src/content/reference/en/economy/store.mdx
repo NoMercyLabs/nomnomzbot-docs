@@ -3,15 +3,20 @@ title: Store
 description: Add, edit, switch off and delete store items that viewers buy with the channel currency, and see what a purchase does.
 ---
 
-You add the items viewers buy with the [channel currency](/reference/economy/currency-and-balances) on the **Economy** page in the sidebar.
-The items live on the **Store** tab.
-Each item has a name, a cost and limits on buying it.
+The store connects [channel currency](/reference/economy/currency-and-balances) to things a viewer can trigger, such as a command or pipeline.
+An item sets the price, who can buy it, and limits such as stock or a cooldown.
+You configure items on the **Store** tab of **Economy**.
+
+The dashboard currently provides item management, but the viewer store still shows **Coming soon** and there is no built-in purchase command.
+A working purchase flow therefore needs an integration that submits purchases for signed-in viewers.
+If you are setting up everyday viewer rewards entirely through the dashboard, start with [channel-point rewards](/reference/automation/rewards) while that store interface is incomplete.
 
 ## Who can use this tab
 
 Anyone who may open the **Economy** page sees the **Store** tab.
 A **Moderator**, **Lead moderator**, **Editor** or **Broadcaster** may add, edit, switch and delete items.
-The **New item** button, the edit button, the delete button and the switch show only to them.
+The **New item** button, the edit button and the delete button show only to them.
+Everyone else sees each item's on or off state in place of the switch, but cannot change it.
 
 ## Add a store item
 
@@ -39,10 +44,10 @@ A negative cost is refused.
 | **Effect kind** | A word saved with the item. Required on a new item: "Enter the effect kind." It cannot change later. | Empty |
 | **Cost** | How much currency one purchase takes. | 0 |
 | **Who can buy** | The lowest role that may buy the item. | **Everyone** |
-| **Command or pipeline to run** | What to link to the item. A linked command or bot action runs on each purchase. A linked pipeline does not run. | None |
+| **Command or pipeline to run** | A command, pipeline or bot action to run for the buyer after a successful purchase. | None |
 | **Cooldown (seconds)** | The time after a purchase before the item can be bought again. 0 is no cooldown. | 0 |
 | **Stock** | How many can be bought in total. Empty is no limit. | Empty |
-| **Per viewer per stream** | How many one viewer can buy during the current stream. Empty is no limit. | Empty |
+| **Per viewer per stream** | How many one viewer can buy since the channel's latest stream started. Empty is no limit. | Empty |
 | **Sort order** | A number saved with the item for its place in the list. | 0 |
 | **Item icon URL** | A link to an image for the item. | Empty |
 | **Cooldown per viewer** | On: each viewer has their own cooldown. Off: one cooldown covers everyone. | Off |
@@ -58,19 +63,21 @@ A negative cost is refused.
 - **Editor**
 - **Broadcaster**
 
+There is a current mismatch between this list and the store's purchase check.
+The check recognizes **Everyone**, **Subscriber**, **Vip**, **Artist** and **Moderator**.
+Choosing **LeadModerator**, **Editor** or **Broadcaster** currently falls back to **Everyone** for the item's role requirement; do not use those three choices to restrict purchases.
+The integration still has to pass the bot's separate permission to submit a purchase.
+
 The **Command or pipeline to run** list holds commands, bot actions and [pipelines](/reference/commands/pipelines).
-Link a command or a bot action when you want something to happen on a purchase.
-When you link a pipeline, the bot records the purchase, and nothing runs.
+For example, an item can run a pipeline that plays a sound after the purchase succeeds.
+The binding is what makes that happen; the required **Effect kind** text does not choose the action.
+The linked action gets the purchase details as variables a pipeline can use: `\{catalog.item.name\}`, `\{catalog.item.cost\}`, `\{catalog.item.id\}` and `\{catalog.purchase.id\}`.
 
-## How a purchase is made today
+## Connect purchases to an integration
 
-Today a viewer has no way to buy an item from the dashboard or from chat.
-The viewer **Store** page shows **Coming soon**, because that page is not built yet.
-No chat command buys an item, and no dashboard button buys one.
-
-The bot can still take a purchase from a program that a developer writes for it.
-That program buys for the signed-in viewer only.
-The sections below say what the bot does when such a purchase comes in.
+An integration submits each purchase for the viewer who is signed in.
+The bot resolves that viewer's permissions itself, then applies the item's price and purchase limits.
+Configuring an item in **Store** prepares those rules; your integration still needs to give viewers a way to submit the purchase.
 
 ## What a purchase does
 
@@ -81,19 +88,30 @@ The first check that fails stops the purchase, and the viewer pays nothing.
 2. The buyer's role is at least **Who can buy**.
 3. The cooldown has run out.
 4. Stock is left, when **Stock** is set.
-5. The buyer is under **Per viewer per stream**, when it is set and a stream is live.
-6. The buyer's balance holds the cost.
+5. The buyer is under **Per viewer per stream**, when it is set.
+   The bot counts purchases since the channel's latest stream started.
+   It keeps counting after that stream ends, until the next stream starts.
+   A channel with no stream record has no per-stream limit.
+6. The buyer's wallet is not frozen and holds the cost.
+   A frozen wallet cannot spend.
+   See [Currency and balances](/reference/economy/currency-and-balances).
 
 When every check passes, the bot takes the cost from the buyer's balance.
 It takes one from the stock, when **Stock** is set.
 It saves the purchase with the item's name at that moment.
 The purchase sends no chat line of its own.
 
-When the item links a command or a bot action, the bot runs it with the buyer as the person who used it.
-Anything that command or bot action says in chat comes in the channel's one bot voice.
-When the command or bot action fails, the purchase still stands and the cost is not given back.
+When the item links a command, pipeline or bot action, the bot runs it with the buyer as the person who used it.
+Any chat output uses the channel's bot account.
+If the linked action fails, the purchase still stands and the cost is not automatically refunded, so test the linked behavior before offering the item to viewers.
 
 The dashboard has no button to refund a purchase.
+An authorized integration can submit a refund through the API, which credits the paid amount and restores one unit of limited stock.
+A refund does not undo a sound, command or other linked action that already ran.
+The current refund path leaves the original purchase marked completed and adds a separate refund record.
+The original purchase still counts toward its cooldown and per-stream limit.
+The endpoint does not prevent another refund of that original purchase: a repeat call can credit the amount and restore stock again.
+If a response is lost, check the balance and purchase history before retrying through an integration.
 
 ## Edit a store item
 
@@ -103,6 +121,11 @@ The dashboard has no button to refund a purchase.
    **Effect kind** is grayed out and cannot change.
 3. Choose **Save item**.
    The dialog closes and the list shows the change.
+
+Emptying **Stock**, **Per viewer per stream**, **About this item** or **Item icon URL** keeps the old value.
+Changing **Stock** changes the limit, but does not refill what is left.
+Do not add **Stock** to an item that had none, because every later purchase then fails as out of stock.
+Make a new item instead.
 
 ## Switch an item off or on
 

@@ -1,7 +1,28 @@
-# Reader review: C:\Projects\NoMercyLabs\nomnomzbot-docs\src\content\reference\en\settings\billing.mdx
+# Independent reader review: /reference/settings/billing
 Verdict: PASS
+Reviewed: src/content/reference/en/settings/billing.mdx
+Reviewed-SHA: 258f1a33757c26f1
+Reviewed-SHA256: 258f1a33757c26f146251188a0912e5311c740cae1a19dc766016a8e1ea655d1
+Reviewed-Date: 2026-11-05
+Reviewer: independent reviewer, separate from article author
+Product-Revision: 54da8b6318de63b5205a0ff8db35e0b9045dd959
+
+The complete current article was read independently of its author, in the established settings, self-hosting and Code and SDK navigation order. The user's natural explainer/progressive-disclosure requirements take precedence over historical pilot mimicry, sentence caps and repeated page templates.
+
+## Learning and lookup result
+
+The account context is separated from ordinary self-hosting and resource diagnosis, then panels follow a usable read/choose/manage/invite/invoice sequence. No fixed prices are invented. The repaired invoice description distinguishes dates from refunded amounts.
+
+No outstanding substantive reader finding.
+
+Related routes were checked as contextual continuations rather than prerequisites for ordinary bot use. Draft labels remain appropriate for code material. This is a text/structure review, not a claim of rendered browser QA.
+
+## Historical review (superseded)
+
+# Reader review: C:\Projects\NoMercyLabs\nomnomzbot-docs\src\content\reference\en\settings\billing.mdx
+Historical verdict: PASS
 Reviewed: C:\Projects\NoMercyLabs\nomnomzbot-docs\src\content\reference\en\settings\billing.mdx
-Reviewed-SHA: 316ebb3de9667ead
+Reviewed-SHA: 78194b4b23774d6f
 
 Read for this review: the page (as stored; it has no include or snippet directives, only the Callout directive, which is read as its wrapped text), the Assumes page `settings/resource-limits.mdx` (owns "resource limit"), the pilot `commands/create-a-command.mdx`, `docs-work/page-conventions.md` and `docs-work/ledger.md`. The product source was not read.
 

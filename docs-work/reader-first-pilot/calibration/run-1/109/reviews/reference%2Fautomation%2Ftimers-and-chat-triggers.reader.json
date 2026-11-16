@@ -1,0 +1,96 @@
+{
+  "fingerprint": "60569ea06942190ecfb7db704dc1e4275961ad2838a55f0b751089d0e00a74d1",
+  "verdict": "PASS",
+  "answers": [
+    {
+      "question": 1,
+      "answer": "Open Triggers and timers, then Timers, and choose New timer. Give it a name such as Break reminder. Keep Reaction at Simple reply; put Stretch and get water. and New here? Welcome! on two separate lines in Messages. Keep Minutes between posts at 30 and Send the reply to at Twitch chat, then choose Create timer. It starts switched on with Chat lines needed at 0. The first line is due at the next timer check, usually within about 30 seconds, rather than after 30 minutes. Later firings rotate the lines in order after each 30-minute wait and eligible check.",
+      "quote": [
+        "Open Triggers and timers, then Timers, and choose New timer.",
+        "Type Break reminder in Name.",
+        "Leave Reaction at Simple reply.",
+        "In Messages, enter these two lines:",
+        "Keep Minutes between posts at its default, 30, and Send the reply to at Twitch chat.",
+        "Leave the other options alone for now.",
+        "Choose Create timer.",
+        "The dialog closes and the timer appears in the list, switched on.",
+        "Messages, one message per line.",
+        "Several messages rotate in order, one per firing, then wrap back to the first.",
+        "A new timer starts switched on with Chat lines needed at 0.",
+        "Its first message is due at the next timer check, usually within about 30 seconds; it does not wait a full 30 minutes first."
+      ]
+    },
+    {
+      "question": 2,
+      "answer": "It needs neither a live stream nor an existing pipeline for a simple reply. Sign in and select the channel. Editing access defaults to Moderator, Lead moderator, Editor or Broadcaster, subject to a raised requirement. The bot must be running and connected to that channel. A VIP granted read access sees the list but cannot edit.",
+      "quote": [
+        "Sign in and select your channel.",
+        "By default, a Moderator, Lead moderator, Editor or Broadcaster can change its timers and chat triggers.",
+        "The broadcaster can raise the required role on Permissions.",
+        "The bot must be running and connected to the channel to check timers and receive chat.",
+        "Timers can post while the stream is offline, so switch off a reminder when you finish if you only want it during broadcasts.",
+        "A simple reply needs no existing command or pipeline.",
+        "A VIP sees that tab’s list, without an editor.",
+        "New timer and New trigger show “You can view this, but your role cannot change it.”"
+      ]
+    },
+    {
+      "question": 3,
+      "answer": "Confirm the timer appears switched on, then observe Stretch and get water. in channel chat at its first eligible check and New here? Welcome! after the following 30-minute interval and eligible check. Continued firings wrap to the first line. A counted Twitch chat firing means chat accepted the message. To keep it from posting offline, switch Enabled off when the broadcast ends; that saves immediately and an off timer posts nothing.",
+      "quote": [
+        "Choose Create timer.",
+        "The dialog closes and the timer appears in the list, switched on.",
+        "Watch your channel’s chat for “Take a moment to stretch and get some water.”",
+        "After the next 30-minute wait and an eligible timer check, the bot posts the second line.",
+        "Several messages rotate in order, one per firing, then wrap back to the first.",
+        "Chat accepts the message.",
+        "The stream being offline does not stop a timer in a connected channel.",
+        "Switch it off to stop a live-only reminder.",
+        "Saves immediately.",
+        "An off timer stays listed as Off and posts nothing."
+      ]
+    },
+    {
+      "question": 4,
+      "answer": "this is nice matches because Contains the words accepts hi inside a longer word; HI matches because capitalization matching is off. With ! as the channel’s command prefix, !hi is excluded even if it is not a valid command. Eligible matches still depend on access and the default 30-second channel wait. To answer only the greeting, change How chat must match to Is exactly the words, leave Words to watch for as hi, and Save changes. With capitalization off, that still accepts HI.",
+      "quote": [
+        "The text appears anywhere, including inside a longer word.",
+        "For example, hi with Contains the words also matches this.",
+        "Choose Is exactly the words to answer only the greeting, or use a suitable pattern for a more specific rule.",
+        "With Match capital letters off, Hello and hello match the same way.",
+        "A line starting with the channel’s command prefix is excluded, even when it does not run a valid command.",
+        "Seconds between replies is a wait for the whole channel, from 0 to 86400 seconds (one day), starting when an eligible match fires.",
+        "Choose Save changes to keep edits, or Discard to return to the saved trigger."
+      ]
+    },
+    {
+      "question": 5,
+      "answer": "No material obstacle. The creation steps, initial enabled and chat-line settings, first-check timing, offline behavior, substring match and command-prefix exclusion are all stated.",
+      "quote": ""
+    },
+    {
+      "question": 6,
+      "answer": "No material read-aloud obstacle found. The first-firing rule and reference tables take some listening time but provide the conditions needed for the task without requiring a guess.",
+      "quote": ""
+    }
+  ],
+  "findings": [],
+  "warnings_released": true,
+  "warning_review": [
+    {
+      "id": "length",
+      "decision": "keep",
+      "reason": "The article covers both timers and chat triggers with creation paths, timing and delivery rules, match choices, editing and troubleshooting. The reference tables provide settings needed to act and the assigned timer and substring-match cases are answerable; word count alone is not a material obstacle."
+    },
+    {
+      "id": "first-numbered-step",
+      "decision": "keep",
+      "reason": "The opening distinguishes timers from chat triggers and establishes editing permission, a connected running bot, offline posting and the lack of a pipeline prerequisite for simple replies. Those conditions are useful before creating a reminder."
+    },
+    {
+      "id": "paragraph-24",
+      "decision": "keep",
+      "reason": "The paragraph explains why failed simple delivery retries the same message while bound reactions can count an unsuccessful attempt. This makes the meaning of a firing and later Post once behavior explicit, so a reader does not mistake a recorded attempt for proof that an action succeeded."
+    }
+  ]
+}

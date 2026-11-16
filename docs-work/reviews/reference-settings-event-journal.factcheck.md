@@ -1,5 +1,32 @@
-# Fact-check: /reference/settings/event-journal
+# Independent source review: /reference/settings/event-journal
 Verdict: PASS
+Reviewed: src/content/reference/en/settings/event-journal.mdx
+Reviewed-SHA: 0a6f78e63a2dac91
+Reviewed-SHA256: 0a6f78e63a2dac91d43337b17e5dfd1e687dee9aef7d8456674290e093f5e1c4
+Reviewed-Date: 2026-11-05
+Reviewer: independent reviewer, separate from article author
+Product-Revision: 54da8b6318de63b5205a0ff8db35e0b9045dd959
+
+The complete current article was read in navigation order and checked against current product source. Historical PASS entries below are leads, not approval of this revision. Atlas voice/template gates do not govern this review.
+
+## Current evidence and result
+
+No substantive finding. No-op import replay, checkpoint count, full rebuild and immutable journal behavior checked in actual execution path.
+
+Source files opened in this review: Api/Controllers/V1/EventStoreController.cs:108-237; EventStore/ImportReplayProjection.cs:36-53; EventStore/ProjectionRunner.cs:175-206,376-378.
+
+Unqualified paths beginning Identity, CustomCode, Billing, EventStore, Engagement, Rewards, Widgets or Platform are under server/src/NomNomzBot.Infrastructure; Api and Domain identify their corresponding server projects. Dashboard shorthand is under dashboard/src/views/dashboard.
+
+Verification is read-only source review. No bot/API startup, live account authorization, channel writes, C# host/Jint execution, Docker install or restore was performed. Documentation build/render QA belongs to the combined parent pass. The SDK reference and worked-example checks additionally ran the existing read-only nnz-code-doc-check.mjs with production JavaScript bootstrap and substituted host I/O.
+
+## Historical review (superseded)
+
+# Fact-check: /reference/settings/event-journal
+Historical verdict: PENDING
+
+2026-11-04 overhaul: the article changed, so the previous PASS and hash below are historical evidence, not approval of the current revision.
+Fresh writer source checks and article inventory are recorded under S10 in `docs-work/overhaul/settings-hosting-code.md`.
+Independent review of the changed text is pending.
 Reviewed: C:\Projects\NoMercyLabs\nomnomzbot-docs\src\content\reference\en\settings\event-journal.mdx
 Reviewed-SHA: 094f8147fe3aece0
 

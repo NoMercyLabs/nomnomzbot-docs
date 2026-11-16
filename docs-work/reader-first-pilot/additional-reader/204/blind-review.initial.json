@@ -1,0 +1,39 @@
+{
+  "fingerprint": "e55482959ca9e0819284c10890e8a6f4948d8123a521fbf7ce69fc5afe539326",
+  "verdict": "PENDING",
+  "answers": [
+    {
+      "question": 1,
+      "answer": "!pause pauses music. Effective access is moderators or viewers granted the right to moderate the song queue, also subject to any raised command-role requirement. Default normal cooldowns are 30 seconds chat and 0 seconds per person; platform-identified moderators and broadcaster bypass normal cooldowns.",
+      "quote": "!pause\nPauses the music.\nModerators\n30 s\n0 s\nFor the music commands, “Moderators” means a moderator, or a viewer the broadcaster gave the right to moderate the song queue.\nThat covers !pause, !resume, setting !volume, !bansong, !closequeue, !openqueue and !clearsongs.\nRaising the command’s role adds a requirement; it does not remove the music-specific safeguard.\nBroadcasters and moderators identified on the incoming platform message bypass the normal command cooldowns; a role stored only in the bot does not grant that bypass."
+    },
+    {
+      "question": 2,
+      "answer": "No. Catalog presence does not configure music or Spotify. The bot must be connected and the command enabled and available with the underlying feature configured. Dashboard customization is available by default to Moderator, Lead moderator, Editor or Broadcaster, subject to a higher broadcaster-set requirement; read-only access does not show System commands.",
+      "quote": "Music and economy commands still depend on their underlying feature being configured; their presence in this list does not set that feature up for you.\nThe tab shows only to someone who may change commands: Moderator, Lead moderator, Editor or Broadcaster by default. The broadcaster can raise that requirement.\nRead-only access does not show the System commands tab.\nTo run a command, the bot must be connected, the command enabled and available, and the caller must meet its role and cooldown requirements."
+    },
+    {
+      "question": 3,
+      "answer": "Use Back to default under the particular changed cooldown. It saves immediately without Save changes and shows Using the default. Reset to default in the footer, confirmed in its dialog, restores all command fields, including reply wording, role and both cooldowns, turns Read it aloud off and switches the command on. Shared replies also reset on the partner command, while its own other settings remain.",
+      "quote": "A changed field has a Back to default button under it.\nIt saves at once, with no Save changes.\nThe field shows its default again, and the hint reads Using the default.\nChoose Reset to default in the footer.\nChoose Reset to default in the dialog.\nEvery field shows its default, and the command is switched on.\nRead it aloud turns off.\nFor a command that shares its replies, a reset also puts the shared replies back on the other command.\nThat other command keeps its own enabled state, role, cooldowns and Read it aloud setting."
+    },
+    {
+      "question": 4,
+      "answer": "No. Normal moderator bypass does not bypass the extra shared 30-second bare !skip safeguard, so the second moderator five seconds later cannot skip the next song. An ordinary viewer may use !skip 4 to remove their own fourth pending request, counting only their requests in queue order; it leaves the playing song alone, and needs that request to exist and normal access/cooldown conditions to pass.",
+      "quote": "The extra shared moderator !skip safeguard below still applies.\n!skip N removes the caller’s own Nth pending request, counting only their requests in queue order, and leaves the playing song alone. A moderator’s bare !skip waits 30 s for the whole channel, so two moderators cannot skip two songs at once.\nEveryone; moderators skip any song"
+    },
+    {
+      "question": 5,
+      "answer": "No material obstacle. The effective music permission and extra skip safeguard are stated alongside the catalog and clarified immediately afterward; the single-field and whole-command resets are explicit.",
+      "quote": ""
+    },
+    {
+      "question": 6,
+      "answer": "No material read-aloud obstacle. The catalog is long but useful reference, and the requested music and reset distinctions are explained in prose.",
+      "quote": ""
+    }
+  ],
+  "findings": [],
+  "warnings_released": false,
+  "warning_review": []
+}

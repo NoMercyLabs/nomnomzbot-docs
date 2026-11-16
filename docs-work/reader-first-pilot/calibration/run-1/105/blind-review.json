@@ -1,0 +1,79 @@
+{
+  "fingerprint": "a84ba07864ac4e4ce0d9990b7234344c7638ead6cf4c18b4beaeeae24f2d0f92",
+  "verdict": "PENDING",
+  "answers": [
+    {
+      "question": 1,
+      "answer": "Open Commands and choose New command (or Make the first command). Set Name to schedule, What it does to Sends a reply, Reply to Tuesdays at 19:00 Amsterdam time., Send the reply to to Twitch chat, Prefix to Channel default, and Match to Starts with. UNKNOWN: the article does not say how to submit the creation dialog, or whether a newly created command starts enabled. It does describe switching a listed command on with the row switch or Enabled in its editor. After creation and enabling, type !schedule in Twitch chat, replacing ! if the channel uses another prefix.",
+      "quote": [
+        "Open Commands and choose New command.",
+        "On an empty list, Make the first command opens the same dialog.",
+        "Enter schedule in Name.",
+        "Keep What it does at Sends a reply, and write your times in Reply.",
+        "For example: Tuesdays at 19:00 Amsterdam time.",
+        "Keep Send the reply to at Twitch chat, Prefix at Channel default, and Match at Starts with.",
+        "Type !schedule in your channel’s Twitch chat as the broadcaster or a platform moderator.",
+        "If your channel uses something other than ! before command names, type that instead.",
+        "Use the switch in its list row or Enabled at the top of its editor.",
+        "Both save immediately, without Save changes."
+      ]
+    },
+    {
+      "question": 2,
+      "answer": "Have the bot running, sign in and select the connected channel; its Twitch chat connection must work. Editing access defaults to Moderator, Lead moderator, Editor or Broadcaster, but the broadcaster can raise the requirement. A VIP given list access cannot create or edit commands. Test as the broadcaster or a platform moderator even offline; an ordinary viewer needs a live stream or the offline setting on, sufficient command access, and no active cooldown.",
+      "quote": [
+        "Have the bot running, sign in, and select your connected channel in the dashboard.",
+        "The chat connection must work for the test below; use your connected Twitch chat for this first reply.",
+        "By default, a Moderator, Lead moderator, Editor or Broadcaster can open Commands and change commands.",
+        "The broadcaster can raise the access requirement.",
+        "That access is read-only: New command says “You can view this, but your role cannot change it.”",
+        "Those accounts can test while you’re offline.",
+        "An ordinary viewer needs the stream to be live, or Keep commands and rewards on while offline switched on, as well as permission to use the command and no active cooldown."
+      ]
+    },
+    {
+      "question": 3,
+      "answer": "Choose Save changes. The unsaved count disappears and the save button turns off. Type the command in chat again and check that the bot replies with the new saved times.",
+      "quote": [
+        "To update your stream times, open schedule in the list and change Reply.",
+        "The footer counts your edits, for example “1 unsaved change”.",
+        "Choose Save changes: the count disappears and the save button turns off.",
+        "Type the command in chat again to see the new saved times."
+      ]
+    },
+    {
+      "question": 4,
+      "answer": "The copy is welcome-copy (invoked as !welcome-copy with the usual prefix). It starts off, so turn it on before testing. Its reply destination becomes Twitch chat; no destination choice is needed unless you want a different one. Read it aloud is copied, but speech still requires successful chat delivery and ready TTS.",
+      "quote": [
+        "Open a command and choose Duplicate in the footer.",
+        "A copy of its saved settings opens with -copy after the name, for example !hello-copy.",
+        "The copy starts off, so switch it on before testing.",
+        "Most settings are copied, including Read it aloud, but aliases, preset identity, reply destination and enabled state are not.",
+        "Aliases are additional names for the original command.",
+        "The copy has no Reset to preset button and its reply goes to Twitch chat; you only need to choose a destination if you want a different one.",
+        "Speech still needs successful chat delivery and a ready TTS setup."
+      ]
+    },
+    {
+      "question": 5,
+      "answer": "The creation procedure jumps from filling the dialog directly to testing in chat. UNKNOWN: which action creates the command. The reader must inspect the UI or another guide to discover the missing submission action, and cannot complete the requested enabled-command workflow from this procedure alone. The article also does not establish a new command’s initial enabled state, although its later switch instructions explain how to turn a listed command on.",
+      "quote": [
+        "Keep Send the reply to at Twitch chat, Prefix at Channel default, and Match at Starts with.",
+        "Type !schedule in your channel’s Twitch chat as the broadcaster or a platform moderator."
+      ]
+    },
+    {
+      "question": 6,
+      "answer": "When read aloud, the same missing submission action creates a material jump: the listener is told to move from an unfinished creation dialog to chat without knowing what commits the command. No separate material read-aloud obstacle was found.",
+      "quote": [
+        "Keep Send the reply to at Twitch chat, Prefix at Channel default, and Match at Starts with.",
+        "Type !schedule in your channel’s Twitch chat as the broadcaster or a platform moderator."
+      ]
+    }
+  ],
+  "findings": [
+    "The Make a useful reply procedure omits the action that submits the New command dialog and does not state the new command’s initial enabled state. It moves directly from dialog settings to typing !schedule. A reader must discover the creation action in the UI or detour to another guide before the requested enabled command can be tested."
+  ],
+  "warnings_released": false,
+  "warning_review": []
+}

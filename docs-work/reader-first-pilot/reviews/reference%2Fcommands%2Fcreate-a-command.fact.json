@@ -1,0 +1,34 @@
+{
+  "fingerprint": "d963ffba0f8ea9656c6f29cfecc31bfdcbcd7ae43d73a1e9c92c52361284a288",
+  "verdict": "PASS",
+  "findings": [],
+  "coverage": [
+    {
+      "id": "fixed-coverage",
+      "result": "supported",
+      "evidence": "Independently reviewed complete candidate at product source C:/Projects/NoMercyLabs/nomnomzbot HEAD f741789bf6b8d90ae2fd07f33a307a5a11623606: 19/19 required contract groups retained. Actual source paths/ranges and closed findings in C:/Projects/NoMercyLabs/nomnomzbot-docs/docs-work/reader-first-pilot/fact-review/create-a-command.md; factual requirements in contracts/create-a-command.md. New Run2 case103 answers1-4 independently re-read and judged; current page/card/render fingerprint recomputed after frozen final. Source/answer support only, not runtime or human usability."
+    }
+  ],
+  "reader_answers": [
+    {
+      "question": 1,
+      "result": "supported",
+      "evidence": "Run2 case103 NEW frozen answer Q1: Open Commands and New command (or Make the first command on an empty list). Put schedule in Name, keep What it does at Sends a reply, and put Tuesdays at 19:00 Amsterdam time. in Reply. Keep Send the reply to at Twitch chat, Prefix at Channel default, and Match at Starts with. Choose Create command; it is saved and already on. Type !schedule in the connected channel’s Twitch chat as the broadcaster or a platform moderator. Independent source check: Commands > New command; schedule; specified text; Twitch chat/Channel default/Starts with; Create command creates enabled command; !schedule yields saved reply. Source: dashboard/src/views/dashboard/commands/components/NewCommandDialog.vue:53-170,194-239; server/src/NomNomzBot.Application/Commands/Dtos/CommandDtos.cs:148; server/src/NomNomzBot.Infrastructure/Chat/EventHandlers/ChatMessageHandler.cs:664-708 under server/src/NomNomzBot.Infrastructure. Its final article excerpts were individually verified present; answer text unchanged from initial."
+    },
+    {
+      "question": 2,
+      "result": "supported",
+      "evidence": "Run2 case103 NEW frozen answer Q2: Have the bot running, sign in, select the connected channel, and have a working Twitch chat connection. Editing normally requires Moderator, Lead moderator, Editor or Broadcaster; the broadcaster may raise that requirement. VIP list access is read-only and cannot create the command. The instructed broadcaster/platform-moderator test also works offline; an ordinary viewer needs a live stream or the offline setting, command access and no active cooldown. Independent source check: Selected signed-in channel, running connected chat and commands write permission; default Moderator or higher, configurable upward; VIP list grant is read-only; platform operator can test offline. Source: dashboard/src/views/dashboard/commands/CommandsView.vue:54-68,139-198; server/src/NomNomzBot.Infrastructure/Content/Identity/ActionDefinitionSeeder.cs:151-180; server/src/NomNomzBot.Infrastructure/Chat/OfflineCommandGate.cs:18-28. Its final article excerpts were individually verified present; answer text unchanged from initial."
+    },
+    {
+      "question": 3,
+      "result": "supported",
+      "evidence": "Run2 case103 NEW frozen answer Q3: Choose Save changes after editing Reply. The unsaved-change count disappears and the save button turns off. Type !schedule again and observe the bot replying with the new saved times; that tests the actual result. Independent source check: Save changes commits edit, clears count/disables save; observed newly saved chat response proves requested result, rather than editor state alone. Source: dashboard/src/views/dashboard/commands/components/CommandEditor.vue:184-201; server/src/NomNomzBot.Infrastructure/Chat/EventHandlers/ChatMessageHandler.cs:664-708. Its final article excerpts were individually verified present; answer text unchanged from initial."
+    },
+    {
+      "question": 4,
+      "result": "supported",
+      "evidence": "Run2 case103 NEW frozen answer Q4: The copy is welcome-copy (used as !welcome-copy with the usual prefix), starts off, and replies to Twitch chat. Read it aloud is copied, but reply destination is not. Switch it on before testing. You do not need to choose a destination unless you want something other than Twitch chat, such as restoring Chat overlay. Speech still needs successful chat delivery and a ready TTS setup. Independent source check: Duplicate welcome-copy starts off; omitted reply destination defaults Twitch chat; Read it aloud copied; enable before test; another destination optional; speech requires chat success and TTS readiness. Source: dashboard/src/views/dashboard/commands/components/CommandEditor.vue:254-279; server/src/NomNomzBot.Application/Commands/Dtos/CommandDtos.cs:145-150; server/src/NomNomzBot.Infrastructure/Chat/EventHandlers/ChatMessageHandler.cs:664-708. Its final article excerpts were individually verified present; answer text unchanged from initial."
+    }
+  ]
+}

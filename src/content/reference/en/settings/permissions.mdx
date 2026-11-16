@@ -1,10 +1,13 @@
 ---
 title: Permissions
-description: Give people a role on your team, set the lowest role for each bot action, and give one person a dangerous capability.
+description: Give your team the access it needs, set who can use each bot action, and delegate specific capabilities to individual people.
 ---
 
-The broadcaster sets who may do what on the **Permissions** page, which is under **Settings** in the sidebar.
-The page has three tabs: **Team**, **Actions** and **Per person**.
+Permissions let you share the work of running a channel without giving every helper the same access.
+You might let moderators handle everyday commands while reserving settings changes for yourself, or give one trusted person a specific capability.
+The broadcaster manages these choices on **Settings**, then **Permissions**.
+
+Think of the three tabs as three different questions: who is on your team, which roles may do each task, and which extra abilities belong to a particular person.
 Each tab shows a count beside its name.
 
 | Tab | What it holds |
@@ -21,9 +24,9 @@ They see the same lists, with the controls switched off or hidden.
 
 ## The role ladder
 
-A role is a rung on one ladder.
-Each rung may do everything the rungs below it may do.
-The ladder, lowest first:
+For a role-based check, the bot compares a person's role with the lowest role allowed for that action.
+Someone above that requirement passes it too: an action allowed to **Moderator** is also available to a **Lead moderator**, **Editor** or **Broadcaster**.
+The ladder is listed below, from lowest to highest.
 
 | Role | Who has it |
 | --- | --- |
@@ -38,6 +41,14 @@ The ladder, lowest first:
 
 A command, a reward and other features use the same ladder in their own **Who can use it** field.
 That field is on [Cooldowns and permissions](/reference/commands/cooldowns-and-permissions).
+
+The ladder describes access inside the bot, not an identical set of native roles on Twitch, Kick and YouTube.
+For example, YouTube channel members use the subscriber level, while ordinary YouTube subscriptions do not qualify.
+The [platform comparison for command access](/reference/commands/cooldowns-and-permissions#set-who-can-use-a-command) explains which chat roles are recognized, including the Twitch Artist-badge limitation and the difference between platform roles and assigned team roles.
+
+These choices govern access inside NomNomzBot.
+A connected platform must also authorize the operation: changing a bot permission does not create a missing Twitch sign-in permission.
+If someone can open a control but the platform refuses the action, check the connected account as well as the role.
 
 ## Add a person to your team
 
@@ -54,7 +65,7 @@ The **Team** tab shows the **Your team** card: "Who helps run this channel, and 
    The person shows in the list with the role.
 
 To pick a different person before you add, choose **Pick someone else** (the **X** beside the name).
-If the bot refuses the change, red text under the card names the reason.
+If the bot refuses the change, red text at the bottom of the card names the reason.
 
 ### Change or remove a team member
 
@@ -72,6 +83,9 @@ The owner's row cannot be changed or removed.
 The **Actions** tab sets which role may use each bot action in this channel.
 The bot ships a default role for every action.
 
+Change the action's requirement when you want the same rule to apply to everyone with a role.
+Use **Per person** for an individual exception that the bot allows, rather than promoting someone just to give them one ability.
+
 1. Open the **Actions** tab.
    The **Areas** list shows each area with its number of actions, such as **Moderation** or **Music**.
 2. Choose an area.
@@ -88,9 +102,13 @@ On a phone, the area opens over the list, and **All areas** takes you back.
 
 ### Protected actions
 
-Some actions carry a **Protected** badge.
-A protected action has a lowest allowed role.
+Every action has a lowest allowed role.
 The roles under it are switched off in the picker.
+Most actions can only go up from their default.
+A few can go lower, often as far as **VIP**.
+
+Some actions carry a **Protected** badge.
+The badge marks the dangerous actions, not the only ones with a lowest role.
 
 ### Go back to the default
 
@@ -101,7 +119,7 @@ An action at its default has no reset button.
 ## Give one person a capability
 
 A capability is one bot action, given to one person.
-Some actions cover many kinds of work: **Bot manager** is one capability that lets the person create and edit many kinds of items (see the table below).
+Some capabilities cover a group of tasks: **Bot manager** lets the person create and edit many kinds of items (see the table below).
 The **Per person** tab shows the **Personal capabilities** card: "A dangerous capability goes to one person, never to a whole role."
 
 1. Open the **Per person** tab.
@@ -112,7 +130,8 @@ The **Per person** tab shows the **Personal capabilities** card: "A dangerous ca
 4. Choose **Give capability**.
    The person shows in the list, with the capability under the name.
 
-**OBS control** and **Bot manager** ask you to confirm first.
+When you pick **OBS control** or **Bot manager**, a short warning line shows under the form and again in the dialog.
+These two ask you to confirm first.
 The dialog names the person and the capability, and lists what the person can and cannot do.
 Choose **Give it** to give it.
 
@@ -123,6 +142,15 @@ Choose **Give it** to give it.
 
 When nobody holds a capability, the card shows "Nobody has a personal capability."
 To take a capability back, choose the trash button on the person's row.
+
+## Work out why access is missing
+
+First check that you have the right channel open; access is set for each channel.
+Then check the person's team role, the action's requirement, and any individual capability that applies.
+Every action keeps its lowest allowed role, with or without the **Protected** badge, even when you would prefer a lower requirement.
+
+When the bot asks for another platform sign-in, complete that connection step too.
+The bot's permission to offer an action and the platform account's permission to carry it out are separate checks.
 
 ## Related pages
 

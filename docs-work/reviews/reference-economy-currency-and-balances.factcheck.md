@@ -1,5 +1,41 @@
-# Fact-check: /reference/economy/currency-and-balances
+# Independent source verification: /reference/economy/currency-and-balances
 Verdict: PASS
+Reviewed: src/content/reference/en/economy/currency-and-balances.mdx
+Reviewed-SHA: 39e44ef63603ba038e6446c01352e822060fd44bf45d965139b87327bb84eecd
+
+## Independent overhaul review, 2026-11-05
+
+CurrencyEarningService.cs:39-165; CurrencyAccountService.cs:128-185; EngagementEarningHandler.cs:31-120; EarningRuleSeedOnOnboardingHandler.cs:42-54; SavingsJarService.cs:280-430; RuleDialog.vue:30-112: cap requires duration and cap, event payout units/defaults, wallet constraints and incomplete jar UI.
+
+Reviewed independently of the article author, in actual navigation order. Current product source 54da8b631 and relevant changes since b12f4f696 were read without starting the bot, executing platform actions or changing channel data. This verdict is source verification, not proof of live platform delivery. See [review-moderation-economy-community.md](../overhaul/review-moderation-economy-community.md) for the review scope and findings.
+
+## Prior review history
+
+The earlier text below is retained as history; it does not independently approve a later article hash.
+
+Author source audit: 2026-11-04. Independent review of the revised article is pending; the historical PASS below does not approve this text.
+Product source: C:/Projects/NoMercyLabs/nomnomzbot at b12f4f696, inspected without starting the bot or changing data.
+
+Adds the earn/spend loop, separates bot currency from Twitch points, explains signed adjustments, real Seconds per payout behavior and unfinished cross-channel jar acceptance.
+
+| Revised claim or retained core behavior | Current source opened |
+| --- | --- |
+| Six tabs and access keys | dashboard/src/views/dashboard/economy/EconomyView.vue:40-82 |
+| Labels/default UI and partial jar controls | dashboard/src/views/dashboard/economy/i18n/en.json:4-180; components/CurrencyPanel.vue; components/EarningRules.vue; components/RuleDialog.vue; components/SavingsJars.vue; components/InviteDialog.vue |
+| Config defaults, save validation and rule persistence | server/src/NomNomzBot.Infrastructure/Economy/CurrencyConfigService.cs:35-156; server/src/NomNomzBot.Domain/Economy/Entities/CurrencyConfig.cs |
+| Earning calculation, window cap requires both fields, disabled/frozen rejection | server/src/NomNomzBot.Infrastructure/Economy/CurrencyEarningService.cs:39-165; CurrencyAccountService.cs:128-165,390-426 |
+| Event payout units | server/src/NomNomzBot.Infrastructure/Economy/EventHandlers/EngagementEarningHandler.cs:31-120; EventHandlers/EarningRuleSeedOnOnboardingHandler.cs:42-54 |
+| Jar contribution checks and pipeline entry point | server/src/NomNomzBot.Infrastructure/Economy/SavingsJarService.cs:280-430; PipelineActions/JarContributeAction.cs:30-88 |
+| No automatic WatchTime batch/GiftSubscription handler | Search of Infrastructure callers for ApplyWatchTimeBatchAsync and GiftSubscription: only batch method/enum mapping, no registered payout event handler |
+
+The practical scenarios are recommended uses of these verified controls, not promises of a new feature. Unchanged reference details were compared with the current view, labels and relevant implementation. Runtime platform calls were not performed.
+
+## Historical evidence
+
+The prior review is retained for its detailed claim inventory. Its verdict and file hashes refer to the earlier article; where the new evidence differs, the new evidence takes precedence.
+
+# Fact-check: /reference/economy/currency-and-balances
+Historical verdict: PASS
 Reviewed: src/content/reference/en/economy/currency-and-balances.mdx
 Reviewed-SHA: 5dd9d83b4a872df4
 

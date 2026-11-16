@@ -1,0 +1,75 @@
+{
+  "fingerprint": "69e292936bb6290885948fa7a8cbcd9562e51f7054dd9a1c73500278779423c6",
+  "verdict": "FAIL",
+  "answers": [
+    {
+      "question": 1,
+      "answer": "With Docker running, open the bot address. On Twitch app choose Use the shared NomNomzBot app, then Next; no Client ID or Client Secret is needed for that choice. Skip the optional bot-account step so the broadcaster account sends chat messages, and Skip Spotify, Discord and YouTube. On the last card, skipped services may remain Not set. Choose Finish setup, then sign in as the broadcaster to connect the channel. Finish promptly because anyone who can reach the address can change application keys until completion.",
+      "quote": [
+        "Have the Docker installation running and open the bot’s address in your browser. For the quickest first sign-in, choose the shared Twitch app and skip the optional services. You do not need an existing bot login, a separate bot account or text-to-speech setup.",
+        "Choose Use the shared NomNomzBot app, then Next. This records your choice and completes the required Twitch step without filling in a Client ID or Client Secret.",
+        "Choose Skip to have your broadcaster account type the bot’s chat messages. A separate bot account is optional.",
+        "Choose Skip on each optional service you do not need yet. You can reach your first Twitch sign-in without creating any of these apps.",
+        "Choose Finish setup. The bot saves completion, closes the open key-changing window and opens the dashboard/sign-in flow.",
+        "Sign in as the broadcaster to connect your channel. Once connected, try your first command."
+      ]
+    },
+    {
+      "question": 2,
+      "answer": "A separate bot Twitch account, Twitch Client Secret and healthy Event feed are not required for first sign-in. The shared app needs neither credential; an own app requires only its Client ID, with the secret optional for one-tap rather than code sign-in. UNKNOWN whether an unverified Twitch email with two-factor authentication off can register an own app, what must change, or where that requirement is established: the article gives no email-verification or two-factor requirement. Its closest instruction simply says to open Twitch Developer Console and register.",
+      "quote": [
+        "Choose Skip to have your broadcaster account type the bot’s chat messages. A separate bot account is optional.",
+        "Your own Twitch app is encouraged, and you can register one instead. Registration creates a record in Twitch’s Developer Console; it does not mean writing code. Only the Client ID is required. A Client Secret is optional and adds one-tap sign-in; without it, sign-in uses a code.",
+        "Below the list, Event feed says “Sign in after you finish setup. Then this page can check that Twitch events reach the bot.” That is expected on a new bot: it has no broadcaster connection to check yet. A healthy event feed is not required for your first sign-in.",
+        "On Twitch app, open the Twitch Developer Console using the card’s link and register a new application."
+      ]
+    },
+    {
+      "question": 3,
+      "answer": "Successful Finish setup saves completion, closes the open key-changing window and opens the dashboard/sign-in flow. Afterward only a bot administrator can replace application credentials; channel-moderator status alone is insufficient.",
+      "quote": [
+        "Finish setup promptly. Until you choose Finish setup, anyone who can reach the bot’s address can change these application keys. Afterward, changing them requires a bot administrator; being a channel moderator is not enough.",
+        "Choose Finish setup. The bot saves completion, closes the open key-changing window and opens the dashboard/sign-in flow."
+      ]
+    },
+    {
+      "question": 4,
+      "answer": "Yes, skip YouTube setup for YouTube song requests. Their music search and playback use a separate public/keyless path and need neither a Google app nor a YouTube account connection. Saving Spotify app credentials only prepares the connection/features: it does not link the account or choose playback. The Spotify account and playback device still need configuration afterward.",
+      "quote": [
+        "YouTube song requests do not need the Google app or a YouTube account connection: music search and playback use a separate public/keyless path. Saving Spotify app details prepares its account connection and music features; it does not link your account or choose a playback device.",
+        "These credentials identify an application; they do not finish linking an individual account. After signing in, follow Spotify, Discord or YouTube for the feature you want. Spotify still needs its account and playback device configured."
+      ]
+    },
+    {
+      "question": 5,
+      "answer": "The shared-app primary path has no material obstacle: choices, optional skips, the key-window consequence and completion are given before their actions. The own-app scenario is incomplete: the article directs registration but never explains whether unverified email or disabled two-factor authentication prevents it, what the user must change, or where that prerequisite is established. The practical cost is leaving the article or attempting registration to discover account eligibility. I cannot supply that missing requirement from article evidence.",
+      "quote": [
+        "On Twitch app, open the Twitch Developer Console using the card’s link and register a new application.",
+        "Your own Twitch app is encouraged, and you can register one instead. Registration creates a record in Twitch’s Developer Console; it does not mean writing code. Only the Client ID is required. A Client Secret is optional and adds one-tap sign-in; without it, sign-in uses a code."
+      ]
+    },
+    {
+      "question": 6,
+      "answer": "No separate material read-aloud failure. The article acknowledges the potentially misleading YouTube music provider label and directly says song requests do not depend on Google sign-in. The missing own-app account prerequisite is already the material information gap described above.",
+      "quote": [
+        "The setup card currently describes the Google app as enabling a “YouTube music provider”. You can skip it for YouTube song requests: their search and playback do not depend on this Google sign-in."
+      ]
+    }
+  ],
+  "findings": [
+    "The own-Twitch-app path tells the reader to register an application but does not state whether email verification or two-factor authentication is required, what must change for the stated account condition, or where that requirement is established. The requested registration scenario therefore remains UNKNOWN and requires an external eligibility check or an attempted registration."
+  ],
+  "warnings_released": true,
+  "warning_review": [
+    {
+      "id": "length",
+      "decision": "keep",
+      "reason": "The shared-app route reaches Finish setup before the optional own-app/service reference. The material gap is the omitted account eligibility requirement in the requested own-Twitch-app scenario; reducing total length would not supply that missing answer."
+    },
+    {
+      "id": "first-numbered-step",
+      "decision": "keep",
+      "reason": "The first numbered list belongs to the later own-app reference. The fastest shared-app route already gives direct Choose, Next, Skip and Finish setup instructions under ordered step headings, with the key-changing consequence before completion. The numeric position does not show a delayed usable primary action."
+    }
+  ]
+}

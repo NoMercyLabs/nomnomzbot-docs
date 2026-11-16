@@ -1,0 +1,60 @@
+{
+  "fingerprint": "20d1af7de3afec43ecab4e1aa4109cff7d876e641345c3f0eebfdc1e878eac54",
+  "verdict": "PENDING",
+  "answers": [
+    {
+      "question": 1,
+      "answer": "With the Docker bot running, open its address. Choose Use the shared NomNomzBot app and Next. Skip Bot account, Spotify, Discord and YouTube. On the last card, accept that skipped services remain Not set and the Event feed cannot yet check a broadcaster connection. Choose Finish setup, then sign in as the broadcaster to connect the channel. Explicitly choosing the shared app is required even if the bot already knows a Client ID.",
+      "quote": [
+        "Choose Use the shared NomNomzBot app, then Next. This records your choice and completes the required Twitch step without filling in a Client ID or Client Secret.",
+        "Choose Skip to have your broadcaster account type the bot’s chat messages. A separate bot account is optional.",
+        "Choose Skip on each optional service you do not need yet. You can reach your first Twitch sign-in without creating any of these apps.",
+        "The last card lists the preceding steps as Done or Not set. It is fine for skipped services to remain Not set.",
+        "Choose Finish setup. The bot saves completion, closes the open key-changing window and opens the dashboard/sign-in flow.",
+        "Sign in as the broadcaster to connect your channel."
+      ]
+    },
+    {
+      "question": 2,
+      "answer": "No separate bot Twitch account, Client Secret or healthy Event feed is required for the first sign-in. The shared-app choice needs neither Client ID nor Client Secret, and even an own app only requires its Client ID. To register an own Twitch app, the unverified email and disabled two-factor authentication must first be corrected: verify the Twitch email and enable two-factor authentication. The article's Use your own Twitch app section explicitly states these Twitch prerequisites and points to Twitch's registration requirements.",
+      "quote": [
+        "You do not need an existing bot login, a separate bot account or text-to-speech setup.",
+        "Choose Use the shared NomNomzBot app, then Next. This records your choice and completes the required Twitch step without filling in a Client ID or Client Secret.",
+        "Only the Client ID is required. A Client Secret is optional and adds one-tap sign-in; without it, sign-in uses a code.",
+        "A healthy event feed is not required for your first sign-in.",
+        "Twitch requires a verified email address and two-factor authentication before you can register an app. If either is missing, follow Twitch’s registration requirements first."
+      ]
+    },
+    {
+      "question": 3,
+      "answer": "Successful Finish setup saves completion, closes the period in which anyone who can reach the bot can change application keys, and opens the dashboard/sign-in flow. Afterward only a bot administrator can replace application credentials; being a channel moderator is insufficient.",
+      "quote": [
+        "Until you choose Finish setup, anyone who can reach the bot’s address can change these application keys. Afterward, changing them requires a bot administrator; being a channel moderator is not enough.",
+        "Choose Finish setup. The bot saves completion, closes the open key-changing window and opens the dashboard/sign-in flow.",
+        "If setup has already finished, only a bot administrator can save replacement keys."
+      ]
+    },
+    {
+      "question": 4,
+      "answer": "Yes, skip YouTube setup for YouTube song requests: their search and playback use a separate public/keyless path without the Google app or a YouTube account connection. Saving Spotify credentials alone neither links the account nor chooses a playback device; those still need configuring afterward.",
+      "quote": [
+        "YouTube song requests do not need the Google app or a YouTube account connection: music search and playback use a separate public/keyless path. Saving Spotify app details prepares its account connection and music features; it does not link your account or choose a playback device.",
+        "Spotify still needs its account and playback device configured.",
+        "The setup card currently describes the Google app as enabling a “YouTube music provider”. You can skip it for YouTube song requests: their search and playback do not depend on this Google sign-in."
+      ]
+    },
+    {
+      "question": 5,
+      "answer": "No material obstacle. The fast path names every required choice, explains the expected incomplete Event feed and skipped services, and clearly distinguishes application credentials from account linking and playback configuration. The own-app prerequisites are explicit without requiring a guess.",
+      "quote": ""
+    },
+    {
+      "question": 6,
+      "answer": "No material read-aloud obstacle. Optional procedures and repeated troubleshooting headings add detail but do not obstruct the fast path or contradict it. The potentially misleading YouTube setup-card wording is explicitly resolved in the article.",
+      "quote": ""
+    }
+  ],
+  "findings": [],
+  "warnings_released": false,
+  "warning_review": []
+}

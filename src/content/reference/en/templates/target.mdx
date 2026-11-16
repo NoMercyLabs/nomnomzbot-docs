@@ -15,82 +15,97 @@ The `target.` pronoun helpers sit in the first table below.
 They read the saved pronouns of the person the command names.
 To learn where the bot gets pronouns and how to write a reply that fits he, she and they, read [Pronouns in templates](/reference/templates/pronouns).
 
-Each row is its own example, so the rows on this page do not all come from one moment.
+## Write a reply about someone else
+
+For a command used as `!hug @someone`, try `{user} sends a hug to {target.displayname}.` as its reply.
+The caller's name fills `{user}`, while the named person's display name fills `{target.displayname}`.
+The bot can look up a Twitch account it has not seen in chat before; when that lookup fails, the display-name helper falls back to the word supplied.
+
+Use a target-dependent reply for commands where viewers are expected to name someone.
+A timer has no such caller or named person, which is why target helpers are not listed for timers in **Use in**.
+
+The points helpers read the named person's balance in the bot's [channel currency](/reference/economy/currency-and-balances).
+That balance is separate from Twitch Channel Points used for rewards and predictions.
+
+The examples illustrate possible values; your results depend on the channel and trigger.
+**Use in** lists the template fields that accept each helper.
+A pipeline still needs a trigger that supplies the relevant person, message, or event; event-specific helpers need that event.
+For viewer-written text, the [Viewer Templates setting and permissions](/reference/settings/features) also apply.
 
 ## Pronouns and grammar
 
-| Helper | What it gives | Example |
-| --- | --- | --- |
-| `{target.genderedTerm}` | A gendered term for the @mention target | `person` |
-| `{target.object}` | The object-case pronoun for the @mention target | `them` |
-| `{target.possessive}` | The possessive pronoun for the @mention target | `their` |
-| `{target.presentTense}` | The present-tense to-be form for the @mention target | `are` |
-| `{target.subject}` | The subject-case pronoun for the @mention target | `they` |
-| `{target.tense}` | Is or are while your channel is live, was or were when it is offline. In a shoutout it follows the live state of the person shouted out instead | `are` |
-| `{target.verb:<sing\|plur>}` | A singular/plural verb agreeing with the @mention target (e.g. `{target.verb:plays\|play}`) | `{target.verb:has\|have}` gives `have` |
+| Helper | What it gives | Example | Use in |
+| --- | --- | --- | --- |
+| `{target.genderedTerm}` | A gendered term for the @mention target | `person` | Commands, event responses, pipelines, webhooks |
+| `{target.object}` | The object-case pronoun for the @mention target | `them` | Commands, event responses, pipelines, webhooks |
+| `{target.possessive}` | The possessive pronoun for the @mention target | `their` | Commands, event responses, pipelines, webhooks |
+| `{target.presentTense}` | The present-tense to-be form for the @mention target | `are` | Commands, event responses, pipelines, webhooks |
+| `{target.subject}` | The subject-case pronoun for the @mention target | `they` | Commands, event responses, pipelines, webhooks |
+| `{target.tense}` | Is or are while your channel is live, was or were when it is offline. In a shoutout it follows the live state of the person shouted out instead | `are` | Commands, event responses, pipelines, webhooks |
+| `{target.verb:<sing\|plur>}` | A singular/plural verb agreeing with the @mention target (e.g. `{target.verb:plays\|play}`) | `{target.verb:has\|have}` gives `have` | Commands, event responses, pipelines, webhooks |
 
 ## Names and links
 
-| Helper | What it gives | Example |
-| --- | --- | --- |
-| `{target}` | The @mention target login name | `example_viewer` |
-| `{target.avatar}` | The link to the profile picture of the @mentioned viewer | `https://static-cdn.jtvnw.net/jtv_user_pictures/viewertwo.png` |
-| `{target.bio}` | The profile description of the @mentioned viewer | `I build castles` |
-| `{target.color}` | The chat color of the @mentioned viewer | `#FF4500` |
-| `{target.displayname}` | The display name of the person the command names. If the bot does not know that person yet, it asks Twitch and shows the Twitch display name. It shows the word as typed only when no Twitch account has that name or the lookup fails | `Example_Viewer` |
-| `{target.id}` | The @mention target platform ID | `123456789` |
-| `{target.known}` | Whether the @mention target matches a user the bot knows (true or false) | `true` |
-| `{target.link}` | A profile link for the @mention target | `twitch.tv/example_viewer` |
-| `{target.mention}` | The @mentioned viewer, as an @mention | `@ViewerTwo` |
-| `{target.name}` | The @mention target login name | `example_viewer` |
-| `{target.shoutoutLink}` | The link to the channel of the @mentioned viewer | `https://twitch.tv/viewertwo` |
+| Helper | What it gives | Example | Use in |
+| --- | --- | --- | --- |
+| `{target}` | The @mention target login name | `example_viewer` | Commands, event responses, pipelines, webhooks |
+| `{target.avatar}` | The link to the profile picture of the @mentioned viewer | `https://static-cdn.jtvnw.net/jtv_user_pictures/viewertwo.png` | Commands, event responses, pipelines, webhooks |
+| `{target.bio}` | The profile description of the @mentioned viewer | `I build castles` | Commands, event responses, pipelines, webhooks |
+| `{target.color}` | The chat color of the @mentioned viewer | `#FF4500` | Commands, event responses, pipelines, webhooks |
+| `{target.displayname}` | The display name of the person the command names. If the bot does not know that person yet, it asks Twitch and shows the Twitch display name. It shows the word as typed only when no Twitch account has that name or the lookup fails | `Example_Viewer` | Commands, event responses, pipelines, webhooks |
+| `{target.id}` | The @mention target platform ID | `123456789` | Commands, event responses, pipelines, webhooks |
+| `{target.known}` | Whether the @mention target matches a user the bot knows (true or false) | `true` | Commands, event responses, pipelines, webhooks |
+| `{target.link}` | A profile link for the @mention target | `twitch.tv/example_viewer` | Commands, event responses, pipelines, webhooks |
+| `{target.mention}` | The @mentioned viewer, as an @mention | `@ViewerTwo` | Commands, event responses, pipelines, webhooks |
+| `{target.name}` | The @mention target login name | `example_viewer` | Commands, event responses, pipelines, webhooks |
+| `{target.shoutoutLink}` | The link to the channel of the @mentioned viewer | `https://twitch.tv/viewertwo` | Commands, event responses, pipelines, webhooks |
 
 ## Account, follow and subscription
 
-| Helper | What it gives | Example |
-| --- | --- | --- |
-| `{target.accountAge}` | How old the account of the @mentioned viewer is, in years and months | `7 years, 5 months` |
-| `{target.createdAt}` | The date the account of the @mentioned viewer was created | `2019-05-02` |
-| `{target.followAge}` | How long the @mention target has followed the channel | `1 year` |
-| `{target.isFollower}` | Whether the @mentioned viewer follows the channel: true or false | `true` |
-| `{target.isSub}` | Whether the @mentioned viewer is a subscriber: true or false | `false` |
+| Helper | What it gives | Example | Use in |
+| --- | --- | --- | --- |
+| `{target.accountAge}` | How old the account of the @mentioned viewer is, in years and months | `7 years, 5 months` | Commands, event responses, pipelines, webhooks |
+| `{target.createdAt}` | The date the account of the @mentioned viewer was created | `2019-05-02` | Commands, event responses, pipelines, webhooks |
+| `{target.followAge}` | How long the @mention target has followed the channel | `1 year` | Commands, event responses, pipelines, webhooks |
+| `{target.isFollower}` | Whether the @mentioned viewer follows the channel: true or false | `true` | Commands, event responses, pipelines, webhooks |
+| `{target.isSub}` | Whether the @mentioned viewer is a subscriber: true or false | `false` | Commands, event responses, pipelines, webhooks |
 
 ## The target's own channel
 
-| Helper | What it gives | Example |
-| --- | --- | --- |
-| `{target.game}` | The category the @mentioned channel set | `Minecraft` |
-| `{target.isLive}` | Whether the @mentioned viewer is live now: true or false | `false` |
-| `{target.title}` | The stream title the @mentioned channel set | `Building castles` |
-| `{target.viewers}` | How many viewers the @mentioned channel has now | `18` |
+| Helper | What it gives | Example | Use in |
+| --- | --- | --- | --- |
+| `{target.game}` | The category the @mentioned channel set | `Minecraft` | Commands, event responses, pipelines, webhooks |
+| `{target.isLive}` | Whether the @mentioned viewer is live now: true or false | `false` | Commands, event responses, pipelines, webhooks |
+| `{target.title}` | The stream title the @mentioned channel set | `Building castles` | Commands, event responses, pipelines, webhooks |
+| `{target.viewers}` | How many viewers the @mentioned channel has now | `18` | Commands, event responses, pipelines, webhooks |
 
 ## Points and saved data
 
-| Helper | What it gives | Example |
-| --- | --- | --- |
-| `{target.data.<key>}` | A per-viewer data field for the @mention target (e.g. `{target.data.key}`) | `{target.data.deaths}` gives `5` |
-| `{target.points}` | The channel points of the @mentioned viewer | `800` |
-| `{target.points.rank}` | The place of the @mentioned viewer on the channel points ranking | `17` |
+| Helper | What it gives | Example | Use in |
+| --- | --- | --- | --- |
+| `{target.data.<key>}` | A per-viewer data field for the @mention target (e.g. `{target.data.key}`) | `{target.data.deaths}` gives `5` | Commands, event responses, pipelines, webhooks |
+| `{target.points}` | The channel points of the @mentioned viewer | `800` | Commands, event responses, pipelines, webhooks |
+| `{target.points.rank}` | The place of the @mentioned viewer on the channel points ranking | `17` | Commands, event responses, pipelines, webhooks |
 
 ## Chat and watch stats
 
-| Helper | What it gives | Example |
-| --- | --- | --- |
-| `{target.activity.level}` | How active the @mentioned viewer is in this channel (new, casual, regular or veteran), from the viewer's message count and the channel's own steps | `veteran` |
-| `{target.avgperday}` | The @mention target average chat messages per day since first seen | `8` |
-| `{target.botpercent}` | The @mention target share of chat messages that were commands, as a whole percent | `5` |
-| `{target.commands}` | The @mention target total commands used | `40` |
-| `{target.days}` | The @mention target whole days since first seen (at least 1 once seen) | `30` |
-| `{target.firstseen}` | When the @mention target was first seen in chat | `2025-03-01` |
-| `{target.lastmessage}` | The @mention target most recent chat message | `see you tomorrow` |
-| `{target.lastmessage.full}` | The @mention target most recent chat message, never cut short | `see you tomorrow` |
-| `{target.messages}` | The @mention target total chat message count | `250` |
-| `{target.randommessage}` | A random older chat message of the @mention target, fit to quote | `nice play` |
-| `{target.redemptions}` | The @mention target total channel point redemption count | `8` |
-| `{target.songrequests}` | The @mention target total song request count | `3` |
-| `{target.stats.bits}` | The bits the @mentioned viewer cheered in this channel | `0` |
-| `{target.stats.lastSeen}` | The date the @mentioned viewer was last seen in the channel | `2026-10-25` |
-| `{target.stats.streak}` | The current attendance streak of the @mentioned viewer | `2` |
-| `{target.watchtime}` | The @mention target total watch time | `12h 0m` |
+| Helper | What it gives | Example | Use in |
+| --- | --- | --- | --- |
+| `{target.activity.level}` | How active the @mentioned viewer is in this channel (new, casual, regular or veteran), from the viewer's message count and the channel's own steps | `veteran` | Commands, event responses, pipelines, webhooks |
+| `{target.avgperday}` | The @mention target average chat messages per day since first seen | `8` | Commands, event responses, pipelines, webhooks |
+| `{target.botpercent}` | The @mention target share of chat messages that were commands, as a whole percent | `5` | Commands, event responses, pipelines, webhooks |
+| `{target.commands}` | The @mention target total commands used | `40` | Commands, event responses, pipelines, webhooks |
+| `{target.days}` | The @mention target whole days since first seen (at least 1 once seen) | `30` | Commands, event responses, pipelines, webhooks |
+| `{target.firstseen}` | When the @mention target was first seen in chat | `2025-03-01` | Commands, event responses, pipelines, webhooks |
+| `{target.lastmessage}` | The @mention target most recent chat message | `see you tomorrow` | Commands, event responses, pipelines, webhooks |
+| `{target.lastmessage.full}` | The @mention target most recent chat message, never cut short | `see you tomorrow` | Commands, event responses, pipelines, webhooks |
+| `{target.messages}` | The @mention target total chat message count | `250` | Commands, event responses, pipelines, webhooks |
+| `{target.randommessage}` | A random older chat message of the @mention target, fit to quote | `nice play` | Commands, event responses, pipelines, webhooks |
+| `{target.redemptions}` | The @mention target total channel point redemption count | `8` | Commands, event responses, pipelines, webhooks |
+| `{target.songrequests}` | The @mention target total song request count | `3` | Commands, event responses, pipelines, webhooks |
+| `{target.stats.bits}` | The bits the @mentioned viewer cheered in this channel | `0` | Commands, event responses, pipelines, webhooks |
+| `{target.stats.lastSeen}` | The date the @mentioned viewer was last seen in the channel | `2026-10-25` | Commands, event responses, pipelines, webhooks |
+| `{target.stats.streak}` | The current attendance streak of the @mentioned viewer | `2` | Commands, event responses, pipelines, webhooks |
+| `{target.watchtime}` | The @mention target total watch time | `12h 0m` | Commands, event responses, pipelines, webhooks |
 
 Back to [Template helpers](/reference/templates/overview). For the places helpers work, special characters and HTML, read [Variables and templates](/reference/commands/variables-and-templates).

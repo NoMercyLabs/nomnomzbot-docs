@@ -1,24 +1,92 @@
 ---
 title: Charity helpers
-description: Lists 8 template helpers, each with what it gives and an example.
+description: The charity helpers for the campaign running on your Twitch channel, its progress and its donations.
 ---
 
-Helpers on this page: `{charity.*}`.
+The `{charity.*}` helpers read the charity campaign that is running on your Twitch channel.
+They work in a command reply, an event response, a timer, a pipeline step, a Discord notification and a webhook body.
+They do not work in a viewer's own text, even with **Viewer Templates** on in [Features](/reference/settings/features).
+If you have not used braces in a reply yet, read [Variables and templates](/reference/commands/variables-and-templates) first.
 
-These helpers read a charity campaign: its name, target and the amount raised.
-Use them to show progress in chat, on an overlay or read aloud.
+The bot asks Twitch for the campaign each time a reply uses these helpers, so the reply shows the amount at that moment.
+None of these helpers takes an input, so type each one exactly as shown.
 
-Each row is its own example, so the rows on this page do not all come from one moment.
+## The Twitch permission they need
+
+To read your campaign, the bot needs your Twitch permission `channel:read:charity`.
+Your first Twitch sign-in does not ask for it, because the bot asks for extra Twitch permissions only when a feature needs them.
+Until the permission is granted, every charity helper prints as typed, and the rest of the reply still shows.
+
+When the bot finds that the permission is missing, the **Needs attention** list on your Home page shows **Twitch permission missing: channel:read:charity**.
+The bot finds it in two ways:
+
+- Twitch refuses the bot's charity event feeds for your channel.
+- A reply uses a charity helper without the permission. The bot records the gap the first time this happens.
+
+When that first reply came from chat, a timer or an event, the bot also says once in chat that it needs this permission.
+So test your reply once before a charity stream, and then look at **Needs attention**.
+
+The item has a **Dismiss** button.
+A dismissed item stays hidden until the permission is given, so an empty list does not prove that the bot has the permission.
+
+## When a helper prints its braces
+
+When a helper has nothing to show, it prints exactly as you typed it, braces and all.
+Check these causes in order.
+
+| Cause | How to tell |
+| --- | --- |
+| The bot does not have the permission | **Needs attention** shows **Twitch permission missing: channel:read:charity**. If you dismissed that item before, this cause is still possible |
+| No campaign is running | Twitch shows no running campaign on your channel |
+| Twitch did not answer | Your campaign is running on Twitch and the bot has the permission. The next reply asks Twitch again |
+
+## Campaign progress
 
 | Helper | What it gives | Example |
 | --- | --- | --- |
-| `{charity.bar}` | A bar of how far the campaign is: ████░░░░░░ 42% | `████░░░░░░ 42%` |
-| `{charity.donations.count}` | How many donations the campaign has: 17 | `17` |
-| `{charity.donations.latest}` | The newest donation, with the donor and the amount: ViewerOne (€10.00) | `ViewerOne (€10.00)` |
-| `{charity.link}` | The website of the charity: https://www.samplecharity.org | `https://www.samplecharity.org` |
-| `{charity.name}` | The name of the charity of the running campaign: Sample Charity | `Sample Charity` |
-| `{charity.percent}` | How far the campaign is towards its target: 42% | `42%` |
-| `{charity.raised}` | The money raised so far, with its currency: €420.00 | `€420.00` |
-| `{charity.target}` | The money target of the campaign, with its currency: €1,000.00 | `€1,000.00` |
+| `{charity.name}` | The name of the charity | `Sample Charity` |
+| `{charity.link}` | The website of the charity. It prints as typed when the charity has none | `https://www.samplecharity.org` |
+| `{charity.raised}` | The money raised so far, with its currency | `€420.00` |
+| `{charity.target}` | The money target of the campaign, with its currency | `€1,000.00` |
+| `{charity.percent}` | The money raised as a percent of the target, rounded to a whole number. It goes above 100% once you pass the target. It prints as typed when the target is 0 | `42%` |
+| `{charity.bar}` | A bar of 10 blocks that fills as you get closer to the target, followed by the percent. The bar stays full once you pass the target. It prints as typed when the target is 0 | `████░░░░░░ 42%` |
 
-Back to [Template helpers](/reference/templates/overview). For the places helpers work, special characters and HTML, read [Variables and templates](/reference/commands/variables-and-templates).
+In words, the example bar is four filled blocks, then six pale blocks, then 42%.
+Each filled block stands for one tenth of the target, rounded to the nearest block.
+
+Amounts show the currency symbol and the decimal places Twitch gives.
+The digit grouping follows your channel's language, so English gives `€1,000.00`.
+That language is the **Language** field in **Settings**, under **Bot basics**, described on [Bot basics and personality](/reference/settings/bot-basics-and-personality).
+With no language set, amounts use English grouping.
+When a currency has no known symbol, its code follows the amount, as in `420.00 XYZ`.
+
+## Donations
+
+| Helper | What it gives | Example |
+| --- | --- | --- |
+| `{charity.donations.count}` | How many donations the campaign has, up to 100. A campaign with more than 100 donations still shows `100` | `17` |
+| `{charity.donations.latest}` | The newest donation: the name of the donor, with the amount in brackets | `ViewerOne (€10.00)` |
+
+When the campaign has no donations yet, `{charity.donations.count}` gives `0` and `{charity.donations.latest}` prints as typed.
+
+## Progress and the newest donation in one reply
+
+A `!charity` command can show how far the campaign is and thank the latest donor:
+
+```
+{charity.name}: {charity.raised} of {charity.target} {charity.bar}. Thank you, {charity.donations.latest}!
+```
+
+This gives `Sample Charity: €420.00 of €1,000.00 ████░░░░░░ 42%. Thank you, ViewerOne (€10.00)!`.
+
+At the start of a campaign, before the first donation, the same reply gives `Sample Charity: €0.00 of €1,000.00 ░░░░░░░░░░ 0%. Thank you, {charity.donations.latest}!`.
+To avoid that, leave out the thank-you until the first donation comes in:
+
+```
+{charity.name}: {charity.raised} of {charity.target} {charity.bar}
+```
+
+With no campaign running, every helper in the reply prints as typed, so use the command only on your charity streams.
+Switch the command on from its row on the **Commands** page, or from the **Enabled** switch at the top of the editor, as described in [Switch a command on or off](/reference/commands/create-a-command#switch-a-command-on-or-off).
+
+Back to [Template helpers](/reference/templates/overview).

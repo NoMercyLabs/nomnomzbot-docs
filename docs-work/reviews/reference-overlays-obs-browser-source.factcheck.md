@@ -1,7 +1,39 @@
-# Fact check: src/content/reference/en/overlays/obs-browser-source.mdx
+# Current independent fact check
+
 Verdict: PASS
 Reviewed: src/content/reference/en/overlays/obs-browser-source.mdx
-Reviewed-SHA: 1747cdf5d034c9e2
+Reviewed-SHA: 192c7182405fb04e658230e17f0980425dfee0a952a8ded9d19babca1c6bdf26
+Reviewed-SHA256: 192c7182405fb04e658230e17f0980425dfee0a952a8ded9d19babca1c6bdf26
+Reviewed-Date: 2026-11-05
+Reviewer: independent media-section reviewer
+Product: 54da8b6318de63b5205a0ff8db35e0b9045dd959 plus preserved current music UI edits
+
+The full article was read in sidebar order. Consequential defaults, permissions, prerequisites, state lifetime and effects were traced against current source; repaired findings were re-read before this verdict. This is source verification, not a live-channel or visible/audible output test.
+
+- dashboard/src/views/dashboard/overlays/components/ObsSetupAction.vue:155-195 supplies Connect/Configure, copied addresses and OBS facts; dashboard/src/views/dashboard/obs/components/RequiredOverlaysPanel.vue:103-145 uses it for required sources.
+- server/src/NomNomzBot.Infrastructure/Content/Widgets/FirstPartyWidgetCatalogue.cs:87-107 defines full-canvas, sound-only and caption-with-audio setup; server/src/NomNomzBot.Api/Controllers/OverlayHostController.cs:50-110 validates token/widget availability.
+- External browser-source semantics were checked against https://obsproject.com/kb/browser-source on 2026-11-05. The review does not claim that an OBS source was opened or that any output was seen/heard.
+
+Source paths without a repeated layer prefix in a bullet are relative to its preceding Infrastructure or dashboard scope. The section report records method, repaired findings, external sources and remaining product limitations: docs-work/overhaul/review-automation-media-integrations.md.
+
+## Historical evidence
+
+Older hashes, verdicts and values below are retained for history and are not the current review.
+
+# Fact check: src/content/reference/en/overlays/obs-browser-source.mdx
+Verdict: PENDING
+Reviewed: src/content/reference/en/overlays/obs-browser-source.mdx
+Reviewed-SHA: 5ab5b7599685cc5e6130b65eb559aa66329d5e430de6b61de9e75115c031850c
+
+## 2026-11-05 author source verification
+
+Author source audit complete; independent verdict pending. This hash binds the current text, not the historical PASS below. The article was read in full and revised toward the user's explainer style while preserving precise reference detail. ObsSetupAction.vue; RequiredOverlaysPanel.vue; FirstPartyWidgetCatalogue.cs. Browser sources and remote control are separate; playback must be checked in OBS rather than inferred from a connection badge.
+
+The section inventory and known implementation gaps are in [automation-media-integrations.md](../overhaul/automation-media-integrations.md). This is source verification, not a live-channel execution claim. Independent review must account for product changes after the original author pass at b12f4f696.
+
+## Historical review (SHA 1747cdf5d034c9e2)
+
+Historical verdict: PASS. The earlier evidence below is retained as history and is superseded where the current article or source changed.
 
 ## Round 3
 

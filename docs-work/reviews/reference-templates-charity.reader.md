@@ -1,3 +1,22 @@
+# Current independent reader review
+
+Verdict: PASS
+Reviewed: src/content/reference/en/templates/charity.mdx
+Reviewed-SHA: 98aee96b964e010151356b1b0caeb98da47ee620bcd6c7f41721d11dd8a36826
+Reviewed-SHA256: 98aee96b964e010151356b1b0caeb98da47ee620bcd6c7f41721d11dd8a36826
+Reviewed-Date: 2026-11-05
+Reviewer: independent section reviewer
+
+The brief introduction gives the progress-display use case, followed by exact campaign, amount and bar values. Currency-bearing examples stay visible in the reference.
+
+The full page was read with the preceding/following navigation context and related links. This review applies the owner's explanatory, progressive-disclosure guidance; it does not impose Atlas sentence caps, pilot mimicry or fixed article headings. No substantive reader finding remains at this hash. Build/render/link checks are recorded separately by the lead reviewer.
+
+Report: docs-work/overhaul/review-learning-commands-helpers.md.
+
+## Historical evidence
+
+The material below is retained as historical evidence; its older verdict is not the current review.
+
 # Reader review: src/content/reference/en/templates/charity.mdx
 Verdict: PASS
 Reviewed: C:/Projects/NoMercyLabs/nomnomzbot-docs/src/content/reference/en/templates/charity.mdx

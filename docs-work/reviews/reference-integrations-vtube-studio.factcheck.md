@@ -1,7 +1,39 @@
-# Fact check: src/content/reference/en/integrations/vtube-studio.mdx
+# Current independent fact check
+
 Verdict: PASS
 Reviewed: src/content/reference/en/integrations/vtube-studio.mdx
-Reviewed-SHA: 9f1e295e02da8a43
+Reviewed-SHA: c9fb1f3097c16c7915c89ac096ee5d4ba7b57d65498c0d482be1fd9d05ac84c5
+Reviewed-SHA256: c9fb1f3097c16c7915c89ac096ee5d4ba7b57d65498c0d482be1fd9d05ac84c5
+Reviewed-Date: 2026-11-05
+Reviewer: independent media-section reviewer
+Product: 54da8b6318de63b5205a0ff8db35e0b9045dd959 plus preserved current music UI edits
+
+The full article was read in sidebar order. Consequential defaults, permissions, prerequisites, state lifetime and effects were traced against current source; repaired findings were re-read before this verdict. This is source verification, not a live-channel or visible/audible output test.
+
+- server/src/NomNomzBot.Infrastructure/Vts/Transport/VtsPluginAuthorizer.cs:32,56-115 permits authorization only for enabled direct mode and waits60 seconds; VtsConnectionService.cs:44-90 saves the endpoint/mask.
+- server/src/NomNomzBot.Infrastructure/Vts/Transport/BridgeVtsTransport.cs:25-80 sends via the OBS bridge and reports offline/timeout honestly; Content/Identity/ActionDefinitionSeeder.cs:384-386 separates control and connection roles.
+- External plugin/API setup was verified through the official wiki source https://raw.githubusercontent.com/wiki/DenchiSoft/VTubeStudio/Plugins.md on 2026-11-05; no VTube Studio instance was connected.
+
+Source paths without a repeated layer prefix in a bullet are relative to its preceding Infrastructure or dashboard scope. The section report records method, repaired findings, external sources and remaining product limitations: docs-work/overhaul/review-automation-media-integrations.md.
+
+## Historical evidence
+
+Older hashes, verdicts and values below are retained for history and are not the current review.
+
+# Fact check: src/content/reference/en/integrations/vtube-studio.mdx
+Verdict: PENDING
+Reviewed: src/content/reference/en/integrations/vtube-studio.mdx
+Reviewed-SHA: c9fb1f3097c16c7915c89ac096ee5d4ba7b57d65498c0d482be1fd9d05ac84c5
+
+## 2026-11-05 author source verification
+
+Author source audit complete; independent verdict pending. This hash binds the current text, not the historical PASS below. The article was read in full and revised toward the user's explainer style while preserving precise reference detail. VtsConnectionService.cs; VtsPluginAuthorizer.cs; BridgeVtsTransport.cs; VtsConnectionPanel.vue. Direct authorization and the local OBS bridge have different prerequisites.
+
+The section inventory and known implementation gaps are in [automation-media-integrations.md](../overhaul/automation-media-integrations.md). This is source verification, not a live-channel execution claim. Independent review must account for product changes after the original author pass at b12f4f696.
+
+## Historical review (SHA 9f1e295e02da8a43)
+
+Historical verdict: PASS. The earlier evidence below is retained as history and is superseded where the current article or source changed.
 
 Product repo: nomnomzbot master, read only. D = dashboard/src, VI = D/views/dashboard/vts, S = server/src. Every row below was re-read this run against the current page text; nothing is carried from the older verdict.
 

@@ -1,0 +1,235 @@
+---
+title: Automation API contract
+description: Authenticate external tools, invoke work, subscribe to events and handle the bot's REST and WebSocket responses.
+---
+
+The Automation API lets an external tool act in one channel without borrowing the dashboard's sign-in token.
+Use the [device setup guide](/reference/integrations/stream-deck-and-api-devices) to manage access, and this reference when implementing a client.
+All paths are relative to the address of your own bot.
+
+## Credentials and scopes
+
+REST uses `Authorization: Bearer <automation-token>`, with the exact `Bearer ` prefix.
+Automation secrets start with `nnzb_ak_`; a query-string token is not accepted.
+The token selects its channel, so data requests do not take a channel id.
+Keep it in the external application's credential store, not in public website code.
+
+| Scope | Allows |
+| --- | --- |
+| `read` | Channel, pipeline, command, music and OBS reads. |
+| `invoke` | Invocation, subject to the token's target allowlist. |
+| `chat` | Sending chat, replies and whispers. |
+| `events` | Subscribing to the automation event stream and reading past events. |
+
+A pairing request that names any other scope returns `VALIDATION_FAILED`.
+
+An absent or empty target allowlist permits all targets; it does not mean deny all.
+The service also rechecks the token creator's music-control permission for applicable invocations.
+Token administration uses dashboard authentication under `/api/v1/channels/{channelId}/automation/tokens`, not the automation credential.
+
+## REST requests and responses
+
+| Method and path | Input / result |
+| --- | --- |
+| `GET /automation/v1/info` | `channelId`, `channelName`, `provider`, `apiVersion`. |
+| `GET /automation/v1/pipelines` | Enabled, allowed pipelines as `id`, `name` and `inputs` (each with `name`, `type`, `required`, nullable `defaultValue` and `description`). |
+| `GET /automation/v1/commands` | Enabled custom commands as `name` and `aliases`; this is not an id lookup for command invocation. |
+| `POST /automation/v1/invoke` | Target, optional `args` string array, `variables` string map and `inputs` object. |
+| `POST /automation/v1/chat` | Required `text` (maximum 500 characters); optional `replyToMessageId` or `whisperToTwitchUserId`. Whisper takes precedence if both are supplied. |
+| `GET /automation/v1/events/history?from=...&to=...` | Past events of the channel, oldest first, in the same frame the live stream sends. Needs the `events` scope; see below. |
+| `GET /automation/v1/music/now-playing` | Playback snapshot; the same fields as `song.changed`. |
+| `GET /automation/v1/music/devices` | `id`, `name`, `type`, `isActive`, nullable `volumePercent`. |
+| `GET /automation/v1/music/playlists?limit=20&offset=0` | `id`, `name`, `uri`, `trackCount`, nullable `imageUrl`. Limit 1–50; other limits use 20, negative offsets use 0. |
+| `GET /automation/v1/obs/scenes` | `name`, `isCurrent`. |
+| `GET /automation/v1/obs/inputs` | `name`, `kind`, nullable `muted` and `volumeDb`. |
+| `GET /automation/v1/obs/scene-items?sceneName=...` | `sceneItemId`, `sourceName`, `enabled`. |
+| `GET /automation/v1/obs/scene-transitions` | `name`, `isCurrent`. |
+| `GET /automation/v1/obs/source-filters?sourceName=...` | `name`, `kind`, `enabled`, `index`. |
+| `GET /automation/v1/obs/state` | `streaming`, `recording`, `recordPaused`. |
+| `POST /automation/v1/refresh` | Rotates the presented token's secret and sets its expiry to 30 days from now, so a token with no expiry gets one; no extra scope. An expired or revoked token cannot refresh (`TOKEN_EXPIRED`, `TOKEN_REVOKED`) and must be paired again. Save the returned `secret` before the next request. |
+
+Successful controller responses use `status: "ok"` and put the result in `data`.
+Additional envelope fields include `message` and `args`.
+Service failures use `status: "error"`, a human-readable `message` and machine-readable `code`.
+Authentication failures may have no JSON body, and framework validation can use a different shape; check HTTP status before reading the envelope.
+
+For `invoke`, use `kind: "pipeline"` with its returned `id`, `kind: "command"` with a command id or built-in key, or `kind: "action"` with `actionType` and optional `params`.
+Copy owned ids in their returned wire form; the REST target parser accepts ULIDs and GUIDs.
+The older pipeline form accepts `pipelineId` or `pipelineName`; a supplied `kind` takes precedence.
+
+```json
+{
+  "pipelineName": "my-tested-pipeline",
+  "args": ["hello"],
+  "variables": { "source": "external-tool" }
+}
+```
+
+Replace the name with an enabled pipeline in your channel.
+`inputs` holds the pipeline's declared inputs by name, as JSON values: text is a string, number a number, boolean true or false, list an array and object an object.
+A missing required input, a wrong type or an undeclared name returns `VALIDATION_FAILED`, and nothing runs.
+An input value replaces a `variables` entry with the same name.
+Success returns `pipelineId` (nullable), `executionId`, `accepted`, `kind` and `targetId` inside `data`.
+`accepted: true` means scheduled on a background task, not completed.
+The API has no completion-status lookup here, and retrying an uncertain invocation can run it twice.
+This is not a durable job queue: a process shutdown can interrupt accepted work, and there is no restart replay in this path.
+
+Per token, reads share 120 calls/minute, invocations allow 60/minute and chat allows 20/minute.
+REST rate refusals return 429 and `Retry-After` seconds.
+Other service errors include `FORBIDDEN` (403), `NOT_FOUND` (404) and `VALIDATION_FAILED` (400).
+Connected providers can return additional codes; preserve the reason rather than treating every error as a token problem.
+
+### Read past events
+
+`GET /automation/v1/events/history` replays what the live stream would have sent, so a tool that was offline can catch up.
+It needs a token with the `events` scope; without it the call fails with `FORBIDDEN`.
+
+| Query field | Meaning |
+| --- | --- |
+| `from`, `to` | Required. UTC instants, such as `2026-11-12T00:00:00Z`, with `to` after `from` and no more than 24 hours apart. Events at `from` are included and events at `to` are not. |
+| `cursor` | The `nextCursor` of the previous page. It works only for the same channel, `from` and `to`. |
+| `pageSize` | Events per page. The default is 500 and the most is 1000; a larger number is cut to 1000, and a negative number is refused. |
+
+Events come oldest first.
+Each item has the same fields as a live event frame: `op` (`event`), `type`, `broadcasterId`, `occurredAt` and `data`.
+Only event types that the live automation stream publishes appear, and chat that moderation removed is left out.
+`data` holds a page with `items` and `nextCursor`; when `nextCursor` is `null`, you have read the whole range.
+A range or cursor that does not fit returns `VALIDATION_FAILED`.
+History reads have their own limit of 60 pages a minute per token; beyond it the call returns `RATE_LIMITED` with a `Retry-After` delay.
+
+### Find a command target
+
+`GET /automation/v1/commands` exposes custom-command names and aliases, not their ids.
+A custom command name supplied as a command target is treated as a built-in key; it is not resolved to a custom-command row by name.
+During configuration, a signed-in operator with `commands:read` can obtain the custom id from `GET /api/v1/channels/{channelId}/commands/{commandName}`.
+URL-encode `commandName`; the successful dashboard envelope contains the full command under `data`, including `id`, `name` and `isEnabled`.
+Alternatively, paginate `GET /api/v1/channels/{channelId}/commands?page=1&pageSize=25`: its `data` rows include ids, with `hasMore` and `nextPage` for continuation.
+These dashboard routes require the operator's sign-in credential, not the device's Automation token.
+Store the selected id in the device's configuration and keep the operator credential out of the device.
+
+For a built-in, the same operator can list `GET /api/v1/channels/{channelId}/builtins` and use a row's `builtinKey` as the target `id`.
+For a custom command, send the exact returned owned id:
+
+```json
+{
+  "kind": "command",
+  "id": "<custom-command-id-from-dashboard-response>",
+  "args": ["hello"]
+}
+```
+
+Replace the placeholder before sending it to `POST /automation/v1/invoke` with the device's `invoke`-scoped token.
+The token's allowlist must include that target, or be empty to allow all targets.
+Renaming a command preserves the selected row's id; deleting and recreating it requires selecting the new id.
+
+### Direct invocation and chat command rules
+
+An Automation invocation deliberately runs the selected binding without passing through the normal chat command permission and cooldown gates.
+Custom command lookup requires its saved enabled switch; direct built-in execution skips the channel's built-in enabled switch, permission floor and cooldown.
+Command and pipeline invocations carry the token's name and an effective broadcaster role; action targets use the system-invoker path.
+The Automation scope, target allowlist, rate limit and applicable music-permission recheck still apply, and individual actions can refuse their own work.
+The `chat` scope gates direct `/chat` and `sendChat` requests; an invoked command can still produce its configured chat reply through `invoke`.
+Choose a narrow allowlist for a device rather than expecting a chat cooldown or a viewer role to constrain its button presses.
+
+For incoming/outgoing webhook formats, custom feed senders and dashboard SignalR, see [Webhook and dashboard event contracts](/reference/code/webhooks-and-events).
+
+## WebSocket protocol
+
+Connect to `/automation/v1/stream` using `ws:` locally or `wss:` over HTTPS.
+This is raw WebSocket, not a SignalR hub.
+Native clients may send the same Authorization header during the handshake.
+The server sends `hello` with `data.instanceId`, `apiVersion`, `authRequired` and `authTimeoutSeconds` (10).
+With a valid handshake header, `authRequired` is false and you can subscribe immediately.
+A wrong or expired header fails the handshake with HTTP 401, so you get no socket and no `hello`. Leave the header out to use the in-band `authenticate` message.
+Without that header, send authentication within the ten-second window:
+
+```json
+{ "op": "authenticate", "id": "auth-1", "token": "<automation-token>" }
+```
+
+Wait for an `op: "response"` with the matching `id`, `status: "ok"` and `data.authenticated: true`.
+Then subscribe:
+
+```json
+{ "op": "subscribe", "id": "sub-1", "events": ["Stream.*", "song.changed"] }
+```
+
+Subscriptions accumulate for that connection.
+Matching is case-sensitive: an exact name, `*`, or a prefix ending in `.*`.
+There is no unsubscribe operation; reconnect to reset subscriptions.
+An acknowledged pattern need not name an implemented event.
+
+An event frame has `op: "event"`, `type`, `broadcasterId`, `occurredAt` and `data`.
+This stream has no replay cursor. To catch up on events you missed while disconnected, read [past events](#read-past-events) for that time range.
+The connection retains the principal accepted at authentication; the current socket loop does not revalidate expiry, revocation or rotation on each frame.
+Revoking a token blocks new authentication, but is not a guarantee that an already-open event stream closes.
+Clients should close the socket when disconnecting a device and reconnect with the current credential after rotation.
+On reconnect, authenticate and subscribe again, then read the current music or OBS state if your tool displays it.
+
+The other operations are `invoke` and `sendChat`.
+Their fields are at the frame's top level.
+WebSocket `invoke` currently reads only `pipelineId` (GUID text), `pipelineName`, `args` and `variables`; it does not parse REST's `kind`, target `id`, `actionType`, `params` or `inputs`.
+Use REST for that target form.
+The WebSocket `pipelineId` takes GUID text only, so the ULID ids from the REST lists do not work there; use `pipelineName` or REST.
+WebSocket replies and event frames write ids as GUIDs, not ULIDs.
+A pipeline with a required input cannot run over the WebSocket. Use REST for it.
+The legacy name resolver can also match registered Stream Deck action names; do not rely on it for parameterized action invocation.
+`sendChat` reads the same three message fields as REST and returns `data.sent: true` on success.
+
+Error responses use `status: "error"` and nested `error: { code, message }`.
+Codes include `unauthenticated`, `already_authenticated`, `scope_denied`, `rate_limited`, `not_found`, `invalid_request`, `unknown_op` and `internal_error`.
+These are distinct from REST's uppercase codes; WebSocket errors do not include the REST Retry-After header.
+Send text JSON frames only, at most 256 KiB; binary or oversized frames close the connection.
+
+## Automation event payloads
+
+These names belong to the automation stream, not the widget event table.
+The dashboard-authenticated catalog is `GET /api/v1/channels/{channelId}/automation/events/catalog`; it requires permission to read automation tokens and returns `publicName` and `description` rows.
+
+| Event | Fields in data |
+| --- | --- |
+| `Twitch.ChatMessage` | `messageId`, `userLogin`, `userDisplayName`, `message`, `isSubscriber`, `isVip`, `isModerator`, `isBroadcaster`, `bits`. |
+| `Stream.Online` | `broadcasterDisplayName`, `title`, `game`, `startedAt`. |
+| `Stream.Offline` | `broadcasterDisplayName`, `streamDurationSeconds`. |
+| `Twitch.RaidReceived` | `fromDisplayName`, `viewerCount`. |
+| `Voice.TranscriptHeard` | `text`: a sentence the voice listener page heard the streamer finish, trimmed, at most 1000 characters. It fires even when no voice trigger matched and when the stream is offline. |
+| `Supporter.Received` | `kind`, `supporterDisplayName`, `amountMinor`, `currency`, `tier`, `quantity`, `message`, `isRecurring`. |
+| `song.changed` | Nullable `title`, `artist`, `isSaved`, `albumArtUrl`; `durationMs`, `positionMs`, `isPlaying`, `shuffleEnabled`, `repeatMode`, `serverTime`, `volumePercent`, `canSetShuffle`, `canSetRepeat`, `canSkipNext`, `canSkipPrevious`, `canSeek`, `canPause`, `canResume`. |
+| `obs.streaming.changed` | `active`. |
+| `obs.recording.changed` | `active`, `paused`. |
+| `obs.mute.changed` | `inputName`, `muted`. |
+
+## Device pairing
+
+An unpaired device posts `{ "device": { "kind": "My tool", "name": "Desk" } }` to `/automation/v1/pair/device/init`.
+Optional `scopes` selects access; the default is `invoke`, `events`, `read`, without `chat`.
+The response's `data` contains `deviceCode`, `userCode`, `verificationUri`, `expiresAt` and `pollIntervalSeconds`.
+The initial device code expires after ten minutes, and the advertised polling interval is three seconds.
+Approval renews the pending result's ten-minute storage window.
+The `verificationUri` opens a page served by the bot itself, not a dashboard view.
+The operator opens it in a browser that is signed in to the dashboard and approves access.
+Approval needs the `automation:tokens:write` permission; a signed-in moderator without it cannot approve.
+
+Poll `POST /automation/v1/pair/device/poll` with `{ "deviceCode": "<returned-code>" }`.
+`data.status` is `pending` until approval, then `approved` with `backendUrl`, `token`, `scopes` and `tokenExpiresAt`.
+An approved poll consumes the device code; store the returned credential immediately rather than polling for it again.
+Poll sequentially: this is not a guarantee of atomic consumption under concurrent requests.
+An unknown, expired or already-consumed device code returns `NOT_FOUND` (404). Restart pairing if the approved response was lost.
+Paired tokens last 30 days and can use the refresh endpoint before expiry.
+Pairing examples require a running bot and deliberate operator approval; they are not offline tests.
+
+### Redeem a code created in the dashboard
+
+The API also supports the dashboard-created pairing code flow. The dashboard mints the code with `POST /api/v1/automation/pair-codes`, which needs dashboard sign-in and the `automation:tokens:write` permission. The operator's code lasts five minutes and carries the scopes selected when it was created. The device redeems it without an existing token:
+
+```json
+{
+  "code": "<dashboard-code>",
+  "device": { "kind": "My tool", "name": "Desk" }
+}
+```
+
+Send this body to `POST /automation/v1/pair`. `code` is required and allows at most 16 characters; `device.kind` is required and allows at most 50, and optional `device.name` allows at most 80. The service trims the code and normalizes it to uppercase. Success returns `backendUrl`, `token`, `scopes` and `tokenExpiresAt` inside `data`, with a 30-day token lifetime.
+
+Redemption allows five attempts per minute per caller IP and 30 globally; failed guesses count. Rate rejection returns `RATE_LIMITED` and a Retry-After delay. An invalid, expired or consumed code returns `UNAUTHENTICATED`. The service removes the code before minting the token, so a minting failure also requires a new code. Redeem once and store the result immediately. The separate cache read/remove operations do not guarantee atomic consumption if clients race concurrent requests.
+

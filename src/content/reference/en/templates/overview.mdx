@@ -1,73 +1,129 @@
 ---
 title: Template helpers
-description: Find any of the 908 template helpers, with one page for each type of helper.
+description: Find any of the 909 template helpers, with one page for each type of helper.
 ---
 
-A template helper is a name in braces.
-The bot puts the real value in its place wherever a viewer sees or hears the text: in chat, on an overlay or read aloud.
-For example, `{user}` becomes the name of the person who used the command.
+Helpers work wherever the bot takes a template, such as a command reply, a timer or a Discord notification.
+Each field accepts its own set, so check where a helper works before you copy it.
+If you have not used braces in a reply yet, read [Variables and templates](/reference/commands/variables-and-templates) first.
 
-Type the helper in a reply, an event response or a timer, with the braces.
-A helper can hold another helper.
+A viewer can use some helpers in their own text too: the words after a command, or a reward input.
+That needs the **Viewer Templates** switch on [Features](/reference/settings/features), which is on by default, and the viewer needs the template permission.
+Subscribers and higher hold that permission by default.
+To change who holds it, open the **Actions** tab on [Permissions](/reference/settings/permissions) and type `reward:input:template` in **Search actions**.
+To lower it as far as **Everyone**, choose **Everyone** in the role picker on the action's row.
+To give it to one viewer only, the broadcaster types `!permit @viewername reward:input:template` in chat, with the viewer's own name in place of `viewername`.
 
-A helper that the bot does not know stays in the line exactly as you wrote it.
-The **Reply** field warns you about an unknown helper before you save.
+## Find a helper in the field
 
-Each place has its own set of helpers.
-Read [Variables and templates](/reference/commands/variables-and-templates) for the places, special characters and HTML.
+The quickest way to find a helper is inside the field you are writing.
+Type `{` and the field suggests the helpers it accepts. Arrow keys move through the list, and Enter or Tab inserts the helper.
+In an event response, the suggestions hold only the values that event carries, so a raid response does not offer the tier of a sub.
 
-### Find a helper by its type
+Most fields also have a **Show all helpers** button next to the field label.
+Type in **Search helpers** to narrow the list, and select a helper to insert it where your cursor was.
+Each row shows a sample of what the helper gives, such as "Becomes HELLO" for the helper that writes text in capitals.
+**Your line** in an event response and the items of a list in a pipeline step have no **Show all helpers** button.
+In a Discord rule, only **Message** and the embed **Description** have it. The other embed fields, such as **Title**, **Footer** and **Button label**, do not.
+On **Your line** in an event response, select the info icon next to the label: "You can use:" names the values that event carries.
 
-The type of a helper is the first word of its name.
-All `{user.*}` helpers are on the user page, and all `{text.*}` helpers are on the text page.
-Pronoun and grammar helpers such as `{subject}` and `{verb:plays|play}` are on the user page too.
-A word with only a few helpers joins the type it belongs to.
-For example, the prediction helpers are on the poll page.
+When the field holds a helper it does not accept, a note appears under it: "Not a known helper here", with the name.
+The note does not stop you typing, but saving does.
+When you save, the bot checks each helper in the field and refuses to save one that does not belong there.
+Its message names the helper. For a helper that works in other fields, it also names those fields. For a typo, it suggests the closest name.
 
-### Give a helper input
+A helper can pass that check and still have nothing to give when the reply goes out, for example because its input is missing.
+The bot then leaves it in the reply exactly as you typed it, braces and all.
 
-Some helpers take input.
-Type the input after a colon, as in `{text.upper:hello}`.
-Separate more than one input with a pipe, as in `{text.repeat:3|ha}`.
-A few helpers name an input, as in `{text.cut:hello world|max=8}`.
-The Example column shows a typed example and what it gives.
+## Find a helper for the job
 
-### Write correct sentences
+| You want to include | Look up |
+| --- | --- |
+| The person who used the command | [User helpers](/reference/templates/user) |
+| Someone named after the command | [Target helpers](/reference/templates/target) |
+| Words a viewer typed after the command | [Command word helpers](/reference/templates/args) |
+| The current game, title, or uptime | [Stream helpers](/reference/templates/stream) |
+| Details of a follow, subscription, raid, or reward | [Event helpers](/reference/templates/event) |
+| Different wording depending on a value | [Condition helpers](/reference/templates/if) |
+| One choice from several possible answers | [Random helpers](/reference/templates/random) |
+| Pronouns and matching verbs | [User helpers](/reference/templates/user#pronouns-and-grammar) or [Target helpers](/reference/templates/target#pronouns-and-grammar) |
 
-The pronoun and grammar helpers let one reply fit every viewer.
-They give the right pronoun, verb and tense for he, she, they and other pronouns.
-Read [Pronouns in templates](/reference/templates/pronouns) to build a line that reads right for everyone.
+Most helpers belong to a page by the first part of their name.
+All `{user.*}` helpers are on the User helpers page, and all `{text.*}` helpers are on the Text helpers page.
+A few names share a page with a related type:
+
+- Prediction helpers are on the Poll and prediction helpers page.
+- The `{tts.*}` helpers and the `{link.*}` share link helpers are on the Chat helpers page.
+- The bare `{link}` helper, a profile link, is on the User helpers page.
+- The `meter` helpers are on the Math helpers page.
+- The `count.*` helpers are on the List and counter helpers page.
+- The `pick`, `roll` and `chance` helpers are on the Random helpers page.
+- The values an event carries, such as `{bits}`, `{tier}` and `{months}`, are on the Event helpers page.
+
+## Read a helper row
+
+A helper page lists its helpers in tables with the columns **Helper**, **What it gives** and **Example**.
+
+The **Helper** column shows the name in braces.
+A name with `<n>` in it stands for a numbered family, not text to paste.
+`{args.<n>}` means a word by its place after the command, so `{args.1}` is the first word and `{args.2}` the second.
+
+Some helpers take an input, which goes after a colon: `{text.upper:hello}` gives `HELLO`.
+A pipe separates two or more inputs: `{text.repeat:3|ha}` gives `hahaha`.
+A few helpers name an input, with the name, an equals sign and the value.
+In `{text.cut:hello world|max=8}`, `max=8` sets the longest result to 8 characters, so it gives `hello w…`.
+The **Example** column shows how to type each helper and what it gives, so copy it with its braces and change the input to your own.
+
+Most pages add a fourth column, **Use in**, that lists the fields that accept the helper:
+
+- **commands**: a command reply.
+- **event responses**: a reply to a follow, sub, raid or other event.
+- **timers**: a timer message.
+- **pipelines**: a step in a pipeline.
+- **Discord**: a Discord notification.
+- **webhooks**: the body of an outbound webhook.
+- **viewer text**: the text a viewer types after a command or in a reward input.
+
+The Chat activity, Ad break, Command word, Bot, Channel, Charity and Chat helper pages have no **Use in** column.
+On those pages, the text above the tables says where the helpers work.
+
+Say you find `{bits}` on the Event helpers page and want it in a command.
+Its **Use in** cell reads "event responses, pipelines, Discord", with no commands.
+A command has no cheer behind it, so the bot refuses to save that reply and says where `{bits}` works.
+To thank a viewer for a cheer, put `{bits}` in the **Cheer** event response on [Event responses](/reference/automation/event-responses) instead.
+In a command, use `{stream.bits.total}` for all bits cheered this stream, or `{user.stats.bits}` for the bits the viewer cheered in this channel.
 
 ## All helper pages
 
-- [User helpers](/reference/templates/user): 75 helpers
-- [Target helpers](/reference/templates/target): 46 helpers
-- [Channel helpers](/reference/templates/channel): 34 helpers
-- [Stream helpers](/reference/templates/stream): 62 helpers
-- [Chat message helpers](/reference/templates/chat): 29 helpers
-- [Command word helpers](/reference/templates/args): 64 helpers
-- [Chat activity helpers](/reference/templates/activity): 19 helpers
-- [Event helpers](/reference/templates/event): 33 helpers
-- [Poll and prediction helpers](/reference/templates/poll): 51 helpers
-- [Hype train helpers](/reference/templates/hypetrain): 17 helpers
-- [Goal helpers](/reference/templates/goal): 14 helpers
-- [Charity helpers](/reference/templates/charity): 8 helpers
-- [Schedule helpers](/reference/templates/schedule): 17 helpers
-- [Ad break helpers](/reference/templates/ad): 15 helpers
-- [Bot helpers](/reference/templates/bot): 22 helpers
-- [List and counter helpers](/reference/templates/list): 18 helpers
-- [Quote helpers](/reference/templates/quote): 7 helpers
-- [Variable helpers](/reference/templates/var): 7 helpers
-- [Music helpers](/reference/templates/music): 54 helpers
-- [Date and time helpers](/reference/templates/date): 17 helpers
-- [Condition helpers](/reference/templates/if): 26 helpers
-- [Random helpers](/reference/templates/random): 23 helpers
-- [Fun helpers](/reference/templates/fun): 26 helpers
-- [Text helpers](/reference/templates/text): 103 helpers
-- [Number format helpers](/reference/templates/num): 36 helpers
-- [Math helpers](/reference/templates/math): 20 helpers
-- [Platform helpers](/reference/templates/platform): 25 helpers
-- [Emote helpers](/reference/templates/emote): 30 helpers
-- [Lookup helpers](/reference/templates/lookup): 10 helpers
+- [Ad break helpers](/reference/templates/ad)
+- [Bot helpers](/reference/templates/bot)
+- [Channel helpers](/reference/templates/channel)
+- [Charity helpers](/reference/templates/charity)
+- [Chat activity helpers](/reference/templates/activity)
+- [Chat helpers](/reference/templates/chat)
+- [Command word helpers](/reference/templates/args)
+- [Condition helpers](/reference/templates/if)
+- [Date and time helpers](/reference/templates/date)
+- [Emote helpers](/reference/templates/emote)
+- [Event helpers](/reference/templates/event)
+- [Fun helpers](/reference/templates/fun)
+- [Goal helpers](/reference/templates/goal)
+- [Hype train helpers](/reference/templates/hypetrain)
+- [List and counter helpers](/reference/templates/list)
+- [Lookup helpers](/reference/templates/lookup)
+- [Math helpers](/reference/templates/math)
+- [Music helpers](/reference/templates/music)
+- [Number format helpers](/reference/templates/num)
+- [Platform helpers](/reference/templates/platform)
+- [Poll and prediction helpers](/reference/templates/poll)
+- [Quote helpers](/reference/templates/quote)
+- [Random helpers](/reference/templates/random)
+- [Schedule helpers](/reference/templates/schedule)
+- [Stream helpers](/reference/templates/stream)
+- [Target helpers](/reference/templates/target)
+- [Text helpers](/reference/templates/text)
+- [User helpers](/reference/templates/user)
+- [Variable helpers](/reference/templates/var)
 
-Back to [Template helpers](/reference/templates/overview). For the places helpers work, special characters and HTML, read [Variables and templates](/reference/commands/variables-and-templates).
+To write one reply that reads right for he, she, they and other pronouns, read [Pronouns in templates](/reference/templates/pronouns).
+For nested helpers, literal braces and HTML output, go back to [Variables and templates](/reference/commands/variables-and-templates).

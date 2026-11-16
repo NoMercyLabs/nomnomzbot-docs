@@ -1,7 +1,47 @@
-# Fact-check: /reference/code/how-a-script-runs
+# Current targeted source review — 2026-11-06
+
+Verdict: TARGETED AUTHOR SELF-REVIEW; no independent or exhaustive PASS.
+Reviewed: src/content/reference/en/code/how-a-script-runs.mdx
+Reviewed-SHA256: 92c914b80f738352d1fca5c73dce2fa8967b9f483c92f30e09b30f5d34d6219c
+Reviewer: editing agent (author self-review)
+
+Full editorial read; removed blanket Draft callout/title. Focused source check: Infrastructure/CustomCode/ScriptRunner.cs:43-205 confirms script enabled, quota, valid version, saved grants, execution and history ordering. Engine/resource limits are not an exhaustive new validation.
+
+Coverage details and final static-check results: [final-developer.md](../ecosystem-validation/final-developer.md). Full reading is distinct from focused source verification. No live application/provider test or whole-project build in this batch.
+
+## Historical records below — verdicts and hashes preserved
+
+# Independent source review: /reference/code/how-a-script-runs
 Verdict: PASS
 Reviewed: src/content/reference/en/code/how-a-script-runs.mdx
-Reviewed-SHA: b27340a414ca5f26
+Reviewed-SHA: 752d7406bd44d929
+Reviewed-SHA256: 752d7406bd44d9293ded88d4cba81bc144daf2a74703422947d715d1cc9299e6
+Reviewed-Date: 2026-11-05
+Reviewer: independent reviewer, separate from article author
+Product-Revision: 54da8b6318de63b5205a0ff8db35e0b9045dd959
+
+The complete current article was read in navigation order and checked against current product source. Historical PASS entries below are leads, not approval of this revision. Atlas voice/template gates do not govern this review.
+
+## Current evidence and result
+
+No substantive finding. Grant and quota order, fresh run state, returned variables/output/stop and live failure paths checked.
+
+Source files opened in this review: CustomCode/ScriptRunner.cs:45-180; Application/Contracts/CustomCode/ScriptContracts.cs:26-57; CustomCode/Jint/JintScriptExecutor.cs:425-618; ScriptRunClock.cs:28-68; JintEngineFactory.cs:31-59.
+
+Unqualified paths beginning Identity, CustomCode, Billing, EventStore, Engagement, Rewards, Widgets or Platform are under server/src/NomNomzBot.Infrastructure; Api and Domain identify their corresponding server projects. Dashboard shorthand is under dashboard/src/views/dashboard.
+
+Verification is read-only source review. No bot/API startup, live account authorization, channel writes, C# host/Jint execution, Docker install or restore was performed. Documentation build/render QA belongs to the combined parent pass. The SDK reference and worked-example checks additionally ran the existing read-only nnz-code-doc-check.mjs with production JavaScript bootstrap and substituted host I/O.
+
+## Historical review (superseded)
+
+# Fact-check: /reference/code/how-a-script-runs
+Historical verdict: PENDING
+
+2026-11-04 overhaul: the article changed, so the previous PASS and hash below are historical evidence, not approval of the current revision.
+Fresh writer source checks and article inventory are recorded under C2/C3 in `docs-work/overhaul/settings-hosting-code.md`.
+Independent review of the changed text is pending.
+Reviewed: src/content/reference/en/code/how-a-script-runs.mdx
+Reviewed-SHA: d3912427df1d0ec6
 
 Product repo: C:\Projects\NoMercyLabs\nomnomzbot (master, read only).
 CC = server/src/NomNomzBot.Infrastructure/CustomCode. SR = CC/ScriptRunner.cs. JE = CC/Jint/JintScriptExecutor.cs. JF = CC/Jint/JintEngineFactory.cs. RC = CC/PipelineActions/RunCodeAction.cs. BR = CC/ScriptCapabilityBroker.cs. SC = server/src/NomNomzBot.Application/Contracts/CustomCode/ScriptContracts.cs.

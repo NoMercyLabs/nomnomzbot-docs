@@ -1,0 +1,572 @@
+{
+  "schema_version": 1,
+  "run": "run-1",
+  "evaluation_basis": "INITIAL blind answers/findings only. Final diagnostic reviews used solely to verify unchanged answer text, final excerpt grounding and current fingerprints; never substituted for detection.",
+  "verdict": "FAIL",
+  "failure_attribution": "invalid-calibration-fixture",
+  "calibration_gate_satisfied": false,
+  "required_gate": "5/5 valid seeded defects detected for right reason;5/5 intact controls not falsely rejected with supported answers1-4.",
+  "decision": "Run1 cannot establish the required calibration pass because timer seed109 failed its manipulation check. Do not label109 a reader miss or lower the denominator to pass the original gate. Preserve this run and use a separately validated fresh trial.",
+  "summary": {
+    "key_labelled_seeded_cases": 5,
+    "valid_seeded_cases": 4,
+    "invalid_seeded_cases": 1,
+    "valid_seeded_detected_for_right_reason": 4,
+    "raw_key_labelled_detection": "4/5",
+    "valid_seed_detection": "4/4",
+    "intact_new_controls_not_falsely_rejected": "5/5",
+    "intact_new_answers_supported": "20/20",
+    "comparison_original_pages_supported": "5/5",
+    "comparison_original_answers_supported": "20/20",
+    "invented_material_control_defects": 0,
+    "legitimate_baseline_material_faults": 0,
+    "answer_text_changes_after_initial_across_15_cases": 0
+  },
+  "seeded_cases": [
+    {
+      "case": 102,
+      "route": "/reference/commands/built-in-commands",
+      "combined_fingerprint": "23ad6c9d5c5d35f476c1ef362a9865c8b63a69e0e8b7060f321b03769b67d957",
+      "initial_findings": [
+        "Reset to default is explicitly described as changing only one cooldown, then as discarding the command's saved edits, restoring other settings and enabling it. This contradicts the separate Back to default single-field instruction and risks unrelated setting loss or unintended reactivation when the reader wants to reset one cooldown."
+      ],
+      "final_diagnostic_verdict": "FAIL",
+      "answer_text_changed_after_initial": false,
+      "initial_answer_grades": [
+        {
+          "question": 1,
+          "result": "supported",
+          "evidence": "Pause is !pause; effective Moderator or music:queue:moderate grant; normal shared/personal defaults30/0, Everyone base floor does not remove runtime safeguard. Source: server/src/NomNomzBot.Infrastructure/Commands/Builtins/PlaybackControlBuiltins.cs:27-39,90-103; MusicModerationGate.cs:33-56 in same Builtins directory."
+        },
+        {
+          "question": 2,
+          "result": "supported",
+          "evidence": "Catalog does not configure music/Spotify; connected feature and command availability needed; System commands requires commands write, default Moderator and higher subject to raised floor; read-only users do not see tab. Source: dashboard/src/views/dashboard/commands/CommandsView.vue:54-68; server/src/NomNomzBot.Infrastructure/Content/Identity/ActionDefinitionSeeder.cs:179-180; server/src/NomNomzBot.Infrastructure/Commands/Builtins/PlaybackControlBuiltins.cs:90-103."
+        },
+        {
+          "question": 3,
+          "result": "appropriate-gap-or-contradiction-diagnosis",
+          "evidence": "Only HTML line502 inserts one-field promise for whole Reset to default, contradicting unchanged Back to default and whole-reset instructions. Initial Q3/finding identify the exact destructive-reset risk rather than generic density. Actual source ground truth: Back to default on field saves immediately; whole Reset confirms loss of all own overrides/replies/TTS and enables command; shared sibling replies reset without unrelated sibling settings. Source: dashboard/src/views/dashboard/commands/components/BuiltinEditor.vue:205-251; server/src/NomNomzBot.Infrastructure/Commands/BuiltinCommandService.cs:262-301."
+        },
+        {
+          "question": 4,
+          "result": "supported",
+          "evidence": "Successful moderated bare skip starts independent channel-wide30-second window, blocking second moderator at5 seconds; !skip4 removes caller fourth own pending request only, not playing song or global queue item4, subject to normal outer gates. Source: server/src/NomNomzBot.Infrastructure/Commands/Builtins/MusicBuiltins.cs:35-116,227-288; server/src/NomNomzBot.Infrastructure/Chat/EventHandlers/ChatMessageHandler.cs:321-376."
+        }
+      ],
+      "kind": "contradictory-outcome",
+      "mutation_valid": true,
+      "initial_detected_for_right_reason": true,
+      "mutation_and_detection_evidence": "Only HTML line502 inserts one-field promise for whole Reset to default, contradicting unchanged Back to default and whole-reset instructions. Initial Q3/finding identify the exact destructive-reset risk rather than generic density.",
+      "reviewer_failure_attributed": false
+    },
+    {
+      "case": 105,
+      "route": "/reference/commands/create-a-command",
+      "combined_fingerprint": "a84ba07864ac4e4ce0d9990b7234344c7638ead6cf4c18b4beaeeae24f2d0f92",
+      "initial_findings": [
+        "The Make a useful reply procedure omits the action that submits the New command dialog and does not state the new command’s initial enabled state. It moves directly from dialog settings to typing !schedule. A reader must discover the creation action in the UI or detour to another guide before the requested enabled command can be tested."
+      ],
+      "final_diagnostic_verdict": "FAIL",
+      "answer_text_changed_after_initial": false,
+      "initial_answer_grades": [
+        {
+          "question": 1,
+          "result": "appropriate-gap-or-contradiction-diagnosis",
+          "evidence": "Removing control110 HTML line25 removes the single Create command/initial-enabled result step. Initial Q1 marks missing submission and enabled state UNKNOWN; initial finding identifies the resulting jump from unfinished dialog to chat. Valid omitted-action seed; ancillary outcome is same atomic removed step. Actual source ground truth: Commands > New command; schedule; specified text; Twitch chat/Channel default/Starts with; Create command creates enabled command; !schedule yields saved reply. Source: dashboard/src/views/dashboard/commands/components/NewCommandDialog.vue:53-170,194-239; server/src/NomNomzBot.Application/Commands/Dtos/CommandDtos.cs:148; server/src/NomNomzBot.Infrastructure/Chat/EventHandlers/ChatMessageHandler.cs:664-708 under server/src/NomNomzBot.Infrastructure."
+        },
+        {
+          "question": 2,
+          "result": "supported",
+          "evidence": "Selected signed-in channel, running connected chat and commands write permission; default Moderator or higher, configurable upward; VIP list grant is read-only; platform operator can test offline. Source: dashboard/src/views/dashboard/commands/CommandsView.vue:54-68,139-198; server/src/NomNomzBot.Infrastructure/Content/Identity/ActionDefinitionSeeder.cs:151-180; server/src/NomNomzBot.Infrastructure/Chat/OfflineCommandGate.cs:18-28."
+        },
+        {
+          "question": 3,
+          "result": "supported",
+          "evidence": "Save changes commits edit, clears count/disables save; observed newly saved chat response proves requested result, rather than editor state alone. Source: dashboard/src/views/dashboard/commands/components/CommandEditor.vue:184-201; server/src/NomNomzBot.Infrastructure/Chat/EventHandlers/ChatMessageHandler.cs:664-708."
+        },
+        {
+          "question": 4,
+          "result": "supported",
+          "evidence": "Duplicate welcome-copy starts off; omitted reply destination defaults Twitch chat; Read it aloud copied; enable before test; another destination optional; speech requires chat success and TTS readiness. Source: dashboard/src/views/dashboard/commands/components/CommandEditor.vue:254-279; server/src/NomNomzBot.Application/Commands/Dtos/CommandDtos.cs:145-150; server/src/NomNomzBot.Infrastructure/Chat/EventHandlers/ChatMessageHandler.cs:664-708."
+        }
+      ],
+      "kind": "omitted-action",
+      "mutation_valid": true,
+      "initial_detected_for_right_reason": true,
+      "mutation_and_detection_evidence": "Removing control110 HTML line25 removes the single Create command/initial-enabled result step. Initial Q1 marks missing submission and enabled state UNKNOWN; initial finding identifies the resulting jump from unfinished dialog to chat. Valid omitted-action seed; ancillary outcome is same atomic removed step.",
+      "reviewer_failure_attributed": false
+    },
+    {
+      "case": 106,
+      "route": "/reference/commands/cooldowns-and-permissions",
+      "combined_fingerprint": "e2c3515810858dc6168e372afe2986251d7813c4027b1f1a6afe67d54d82f4a0",
+      "initial_findings": [
+        "The example says the refused attempt at 5 seconds restarts both waits, but later says a refusal starts neither wait and still places A's personal end at 60. These incompatible rules prevent a reliable answer about A's next allowed use and force the reader to choose a statement or consult another source."
+      ],
+      "final_diagnostic_verdict": "FAIL",
+      "answer_text_changed_after_initial": false,
+      "initial_answer_grades": [
+        {
+          "question": 1,
+          "result": "supported",
+          "evidence": "Everyone, chat 10 seconds, per-person 60 seconds, Save changes. Source: dashboard/src/views/dashboard/commands/components/CommandEditor.vue:307-320,370-433; server/src/NomNomzBot.Application/Commands/Dtos/CommandDtos.cs:135-140."
+        },
+        {
+          "question": 2,
+          "result": "supported",
+          "evidence": "Stored Editor can confer access but does not bypass incoming-platform cooldowns; ordinary eligible non-broadcaster/non-platform-moderator account reproduces waits. Source: server/src/NomNomzBot.Infrastructure/Chat/EventHandlers/EffectiveLevelLookup.cs:21-44; ChatMessageHandler.cs:1301-1354,1949-1950 in same EventHandlers directory."
+        },
+        {
+          "question": 3,
+          "result": "appropriate-gap-or-contradiction-diagnosis",
+          "evidence": "Only HTML line38 changes refused attempt to both waits restart; unchanged accepted-use explanation says refusal starts neither. Initial Q3 and finding quote both incompatible rules and identify retry-time uncertainty. Actual source ground truth: A personal expiry is 60; B50 shared expiry is 60; A may pass at60 absent intervening use. Refusal at5 restarts neither. Source: server/src/NomNomzBot.Infrastructure/Platform/RateLimiting/CooldownManager.cs:35-49,78-87; server/src/NomNomzBot.Infrastructure/Chat/EventHandlers/ChatMessageHandler.cs:421-484."
+        },
+        {
+          "question": 4,
+          "result": "supported",
+          "evidence": "Twitch Artist badge alone is insufficient; denied command emits permission notice and independently attempts Bot TTS even with reply speech off; TTS gates/approval/zero bits and 30-second attempt guard still apply. Source: server/src/NomNomzBot.Domain/Identity/ChatRole.cs:44-64; server/src/NomNomzBot.Infrastructure/Platform/Eventing/Translators/ChatTranslators.cs:278-286; server/src/NomNomzBot.Infrastructure/Chat/EventHandlers/ChatMessageHandler.cs:940-1028; server/src/NomNomzBot.Infrastructure/Tts/TtsDispatchService.cs:304-439."
+        }
+      ],
+      "kind": "contradictory-outcome",
+      "mutation_valid": true,
+      "initial_detected_for_right_reason": true,
+      "mutation_and_detection_evidence": "Only HTML line38 changes refused attempt to both waits restart; unchanged accepted-use explanation says refusal starts neither. Initial Q3 and finding quote both incompatible rules and identify retry-time uncertainty.",
+      "reviewer_failure_attributed": false
+    },
+    {
+      "case": 108,
+      "route": "/reference/self-hosting/first-run-setup",
+      "combined_fingerprint": "d0fa874a2aaea87f7d4dd06399c6dc6058a6ed22080ab8aaf2b3a3a970823e23",
+      "initial_findings": [
+        "The own-Twitch-app instructions do not state whether an unverified Twitch email and disabled two-factor authentication permit registration, what must change, or where that requirement is established. The reader must attempt the external registration flow or seek another source to resolve the requested account-prerequisite decision."
+      ],
+      "final_diagnostic_verdict": "FAIL",
+      "answer_text_changed_after_initial": false,
+      "initial_answer_grades": [
+        {
+          "question": 1,
+          "result": "supported",
+          "evidence": "Explicit Use shared app, Next, skip four optional steps, Finish setup and broadcaster sign-in. Resolved default Client ID alone not decision. Source: server/src/NomNomzBot.Api/Models/SetupWizardDtos.cs:83-157; server/src/NomNomzBot.Api/Controllers/V1/SystemController.cs:227-229,348-366; dashboard/src/views/site/setup/SetupView.vue:39-50,112-127."
+        },
+        {
+          "question": 2,
+          "result": "appropriate-gap-or-contradiction-diagnosis",
+          "evidence": "Own-app email/2FA requirements removed at HTML66 and96, including official registration attribution link; shared-app path unchanged. Initial Q2/finding correctly mark those account prerequisites and authority unknown. Actual source ground truth: No separate bot account, Client Secret or healthy feed needed; own-app registrant must verify email and enable2FA before registering. Article own-app instructions attribute this to Twitch; URL reproduction not required. Source: server/src/NomNomzBot.Api/Models/SetupWizardDtos.cs:98-149; dashboard/src/views/site/setup/components/EventFeedHealth.vue:31-59; https://dev.twitch.tv/docs/authentication/register-app/ official prerequisite checked in contract."
+        },
+        {
+          "question": 3,
+          "result": "supported",
+          "evidence": "Finish saves explicit completion flag and routes app/sign-in; closes anonymous credential-write window; subsequent replacement requires bot admin, not channel moderator. Source: server/src/NomNomzBot.Api/Controllers/V1/SystemController.cs:314-315,353-354,469-491; dashboard/src/views/site/setup/SetupView.vue:47-50."
+        },
+        {
+          "question": 4,
+          "result": "supported",
+          "evidence": "YouTube requests use public/keyless path, not Google OAuth/account connection; Spotify app credentials do not authorize individual account or choose player device. Source: server/src/NomNomzBot.Infrastructure/Music/YouTubeMusicProvider.cs:139-164,348-374; server/src/NomNomzBot.Infrastructure/Music/SpotifyMusicProvider.cs:36-39,205-225,299-325; server/src/NomNomzBot.Api/Models/SetupWizardDtos.cs:159-232."
+        }
+      ],
+      "kind": "missing-prerequisite",
+      "mutation_valid": true,
+      "initial_detected_for_right_reason": true,
+      "mutation_and_detection_evidence": "Own-app email/2FA requirements removed at HTML66 and96, including official registration attribution link; shared-app path unchanged. Initial Q2/finding correctly mark those account prerequisites and authority unknown.",
+      "reviewer_failure_attributed": false
+    },
+    {
+      "case": 109,
+      "route": "/reference/automation/timers-and-chat-triggers",
+      "combined_fingerprint": "60569ea06942190ecfb7db704dc1e4275961ad2838a55f0b751089d0e00a74d1",
+      "initial_findings": [],
+      "final_diagnostic_verdict": "PASS",
+      "answer_text_changed_after_initial": false,
+      "initial_answer_grades": [
+        {
+          "question": 1,
+          "result": "supported",
+          "evidence": "Timers > New timer, name, Simple reply, two requested lines,30 minutes, default Twitch chat, Create timer enabled with activity0; first due next eligible approximately30-second poll, then rotate. Source: dashboard/src/views/dashboard/timers/components/NewTimerDialog.vue:62-109; server/src/NomNomzBot.Application/Commands/Dtos/TimerDtos.cs:68-74; server/src/NomNomzBot.Infrastructure/Commands/Jobs/TimerService.cs:161-215."
+        },
+        {
+          "question": 2,
+          "result": "supported",
+          "evidence": "Simple timer needs no existing pipeline or live broadcast; selected signed-in channel, appropriate write permission and running connected bot; VIP tab access only reads. Source: server/src/NomNomzBot.Infrastructure/Commands/Jobs/TimerService.cs:108-150; server/src/NomNomzBot.Infrastructure/Content/Identity/ActionDefinitionSeeder.cs:188-195; dashboard/src/views/dashboard/timers write/read gates."
+        },
+        {
+          "question": 3,
+          "result": "supported",
+          "evidence": "Observe first saved line then second after interval/activity and eligible poll, wrapping; simple chat acceptance advances state. Disable to stop offline posts because connected-channel timer selection has no live gate. Source: server/src/NomNomzBot.Infrastructure/Commands/Jobs/TimerService.cs:108-150,191-215,248-334."
+        },
+        {
+          "question": 4,
+          "result": "supported",
+          "evidence": "Contains hi matches this and HI with case off; default-prefix !hi excluded even invalid command; eligible role/clear cooldown still needed. Is exactly the words plus Save narrows greeting. Source: server/src/NomNomzBot.Infrastructure/Chat/EventHandlers/ChatMessageHandler.cs:194-237,1388-1430,1589-1609."
+        }
+      ],
+      "kind": "buried-condition",
+      "mutation_valid": false,
+      "initial_detected_for_right_reason": null,
+      "mutation_and_detection_evidence": "Invalid/inconclusive burial seed: only control104 HTML19 moved to446. Early HTML115 still gives30-second polling and123 still says never-fired timer already due/new timer can post next check. Creation44 enabled and49 watch/second-after30min remain. Initial answers1-4 correct; no invented obstacle. Not a valid reader miss.",
+      "reviewer_failure_attributed": false
+    }
+  ],
+  "intact_new_controls": [
+    {
+      "case": 101,
+      "route": "/reference/commands/cooldowns-and-permissions",
+      "combined_fingerprint": "a2ba2092f13ec6857927a3bd67905c6796f0fd5c8447b67fab7eced730495cc0",
+      "initial_findings": [],
+      "final_diagnostic_verdict": "PASS",
+      "answer_text_changed_after_initial": false,
+      "initial_answer_grades": [
+        {
+          "question": 1,
+          "result": "supported",
+          "evidence": "Everyone, chat 10 seconds, per-person 60 seconds, Save changes. Source: dashboard/src/views/dashboard/commands/components/CommandEditor.vue:307-320,370-433; server/src/NomNomzBot.Application/Commands/Dtos/CommandDtos.cs:135-140."
+        },
+        {
+          "question": 2,
+          "result": "supported",
+          "evidence": "Stored Editor can confer access but does not bypass incoming-platform cooldowns; ordinary eligible non-broadcaster/non-platform-moderator account reproduces waits. Source: server/src/NomNomzBot.Infrastructure/Chat/EventHandlers/EffectiveLevelLookup.cs:21-44; ChatMessageHandler.cs:1301-1354,1949-1950 in same EventHandlers directory."
+        },
+        {
+          "question": 3,
+          "result": "supported",
+          "evidence": "A personal expiry is 60; B50 shared expiry is 60; A may pass at60 absent intervening use. Refusal at5 restarts neither. Source: server/src/NomNomzBot.Infrastructure/Platform/RateLimiting/CooldownManager.cs:35-49,78-87; server/src/NomNomzBot.Infrastructure/Chat/EventHandlers/ChatMessageHandler.cs:421-484."
+        },
+        {
+          "question": 4,
+          "result": "supported",
+          "evidence": "Twitch Artist badge alone is insufficient; denied command emits permission notice and independently attempts Bot TTS even with reply speech off; TTS gates/approval/zero bits and 30-second attempt guard still apply. Source: server/src/NomNomzBot.Domain/Identity/ChatRole.cs:44-64; server/src/NomNomzBot.Infrastructure/Platform/Eventing/Translators/ChatTranslators.cs:278-286; server/src/NomNomzBot.Infrastructure/Chat/EventHandlers/ChatMessageHandler.cs:940-1028; server/src/NomNomzBot.Infrastructure/Tts/TtsDispatchService.cs:304-439."
+        }
+      ],
+      "kind": "intact-new",
+      "invented_material_defect": false,
+      "legitimate_baseline_material_fault": false,
+      "answers_supported": 4
+    },
+    {
+      "case": 103,
+      "route": "/reference/commands/built-in-commands",
+      "combined_fingerprint": "032e43942e441a5bf77f8f2a60419519bd88ce11f6b021d39c85ee72ecffaf71",
+      "initial_findings": [],
+      "final_diagnostic_verdict": "PASS",
+      "answer_text_changed_after_initial": false,
+      "initial_answer_grades": [
+        {
+          "question": 1,
+          "result": "supported",
+          "evidence": "Pause is !pause; effective Moderator or music:queue:moderate grant; normal shared/personal defaults30/0, Everyone base floor does not remove runtime safeguard. Source: server/src/NomNomzBot.Infrastructure/Commands/Builtins/PlaybackControlBuiltins.cs:27-39,90-103; MusicModerationGate.cs:33-56 in same Builtins directory."
+        },
+        {
+          "question": 2,
+          "result": "supported",
+          "evidence": "Catalog does not configure music/Spotify; connected feature and command availability needed; System commands requires commands write, default Moderator and higher subject to raised floor; read-only users do not see tab. Source: dashboard/src/views/dashboard/commands/CommandsView.vue:54-68; server/src/NomNomzBot.Infrastructure/Content/Identity/ActionDefinitionSeeder.cs:179-180; server/src/NomNomzBot.Infrastructure/Commands/Builtins/PlaybackControlBuiltins.cs:90-103."
+        },
+        {
+          "question": 3,
+          "result": "supported",
+          "evidence": "Back to default on field saves immediately; whole Reset confirms loss of all own overrides/replies/TTS and enables command; shared sibling replies reset without unrelated sibling settings. Source: dashboard/src/views/dashboard/commands/components/BuiltinEditor.vue:205-251; server/src/NomNomzBot.Infrastructure/Commands/BuiltinCommandService.cs:262-301."
+        },
+        {
+          "question": 4,
+          "result": "supported",
+          "evidence": "Successful moderated bare skip starts independent channel-wide30-second window, blocking second moderator at5 seconds; !skip4 removes caller fourth own pending request only, not playing song or global queue item4, subject to normal outer gates. Source: server/src/NomNomzBot.Infrastructure/Commands/Builtins/MusicBuiltins.cs:35-116,227-288; server/src/NomNomzBot.Infrastructure/Chat/EventHandlers/ChatMessageHandler.cs:321-376."
+        }
+      ],
+      "kind": "intact-new",
+      "invented_material_defect": false,
+      "legitimate_baseline_material_fault": false,
+      "answers_supported": 4
+    },
+    {
+      "case": 104,
+      "route": "/reference/automation/timers-and-chat-triggers",
+      "combined_fingerprint": "6f495ebe9d74597968ba6c66213210148cfca3a1559b159ecd5e8cad28904aab",
+      "initial_findings": [],
+      "final_diagnostic_verdict": "PASS",
+      "answer_text_changed_after_initial": false,
+      "initial_answer_grades": [
+        {
+          "question": 1,
+          "result": "supported",
+          "evidence": "Timers > New timer, name, Simple reply, two requested lines,30 minutes, default Twitch chat, Create timer enabled with activity0; first due next eligible approximately30-second poll, then rotate. Source: dashboard/src/views/dashboard/timers/components/NewTimerDialog.vue:62-109; server/src/NomNomzBot.Application/Commands/Dtos/TimerDtos.cs:68-74; server/src/NomNomzBot.Infrastructure/Commands/Jobs/TimerService.cs:161-215."
+        },
+        {
+          "question": 2,
+          "result": "supported",
+          "evidence": "Simple timer needs no existing pipeline or live broadcast; selected signed-in channel, appropriate write permission and running connected bot; VIP tab access only reads. Source: server/src/NomNomzBot.Infrastructure/Commands/Jobs/TimerService.cs:108-150; server/src/NomNomzBot.Infrastructure/Content/Identity/ActionDefinitionSeeder.cs:188-195; dashboard/src/views/dashboard/timers write/read gates."
+        },
+        {
+          "question": 3,
+          "result": "supported",
+          "evidence": "Observe first saved line then second after interval/activity and eligible poll, wrapping; simple chat acceptance advances state. Disable to stop offline posts because connected-channel timer selection has no live gate. Source: server/src/NomNomzBot.Infrastructure/Commands/Jobs/TimerService.cs:108-150,191-215,248-334."
+        },
+        {
+          "question": 4,
+          "result": "supported",
+          "evidence": "Contains hi matches this and HI with case off; default-prefix !hi excluded even invalid command; eligible role/clear cooldown still needed. Is exactly the words plus Save narrows greeting. Source: server/src/NomNomzBot.Infrastructure/Chat/EventHandlers/ChatMessageHandler.cs:194-237,1388-1430,1589-1609."
+        }
+      ],
+      "kind": "intact-new",
+      "invented_material_defect": false,
+      "legitimate_baseline_material_fault": false,
+      "answers_supported": 4
+    },
+    {
+      "case": 107,
+      "route": "/reference/self-hosting/first-run-setup",
+      "combined_fingerprint": "20d1af7de3afec43ecab4e1aa4109cff7d876e641345c3f0eebfdc1e878eac54",
+      "initial_findings": [],
+      "final_diagnostic_verdict": "PASS",
+      "answer_text_changed_after_initial": false,
+      "initial_answer_grades": [
+        {
+          "question": 1,
+          "result": "supported",
+          "evidence": "Explicit Use shared app, Next, skip four optional steps, Finish setup and broadcaster sign-in. Resolved default Client ID alone not decision. Source: server/src/NomNomzBot.Api/Models/SetupWizardDtos.cs:83-157; server/src/NomNomzBot.Api/Controllers/V1/SystemController.cs:227-229,348-366; dashboard/src/views/site/setup/SetupView.vue:39-50,112-127."
+        },
+        {
+          "question": 2,
+          "result": "supported",
+          "evidence": "No separate bot account, Client Secret or healthy feed needed; own-app registrant must verify email and enable2FA before registering. Article own-app instructions attribute this to Twitch; URL reproduction not required. Source: server/src/NomNomzBot.Api/Models/SetupWizardDtos.cs:98-149; dashboard/src/views/site/setup/components/EventFeedHealth.vue:31-59; https://dev.twitch.tv/docs/authentication/register-app/ official prerequisite checked in contract."
+        },
+        {
+          "question": 3,
+          "result": "supported",
+          "evidence": "Finish saves explicit completion flag and routes app/sign-in; closes anonymous credential-write window; subsequent replacement requires bot admin, not channel moderator. Source: server/src/NomNomzBot.Api/Controllers/V1/SystemController.cs:314-315,353-354,469-491; dashboard/src/views/site/setup/SetupView.vue:47-50."
+        },
+        {
+          "question": 4,
+          "result": "supported",
+          "evidence": "YouTube requests use public/keyless path, not Google OAuth/account connection; Spotify app credentials do not authorize individual account or choose player device. Source: server/src/NomNomzBot.Infrastructure/Music/YouTubeMusicProvider.cs:139-164,348-374; server/src/NomNomzBot.Infrastructure/Music/SpotifyMusicProvider.cs:36-39,205-225,299-325; server/src/NomNomzBot.Api/Models/SetupWizardDtos.cs:159-232."
+        }
+      ],
+      "kind": "intact-new",
+      "invented_material_defect": false,
+      "legitimate_baseline_material_fault": false,
+      "answers_supported": 4
+    },
+    {
+      "case": 110,
+      "route": "/reference/commands/create-a-command",
+      "combined_fingerprint": "d963ffba0f8ea9656c6f29cfecc31bfdcbcd7ae43d73a1e9c92c52361284a288",
+      "initial_findings": [],
+      "final_diagnostic_verdict": "PASS",
+      "answer_text_changed_after_initial": false,
+      "initial_answer_grades": [
+        {
+          "question": 1,
+          "result": "supported",
+          "evidence": "Commands > New command; schedule; specified text; Twitch chat/Channel default/Starts with; Create command creates enabled command; !schedule yields saved reply. Source: dashboard/src/views/dashboard/commands/components/NewCommandDialog.vue:53-170,194-239; server/src/NomNomzBot.Application/Commands/Dtos/CommandDtos.cs:148; server/src/NomNomzBot.Infrastructure/Chat/EventHandlers/ChatMessageHandler.cs:664-708 under server/src/NomNomzBot.Infrastructure."
+        },
+        {
+          "question": 2,
+          "result": "supported",
+          "evidence": "Selected signed-in channel, running connected chat and commands write permission; default Moderator or higher, configurable upward; VIP list grant is read-only; platform operator can test offline. Source: dashboard/src/views/dashboard/commands/CommandsView.vue:54-68,139-198; server/src/NomNomzBot.Infrastructure/Content/Identity/ActionDefinitionSeeder.cs:151-180; server/src/NomNomzBot.Infrastructure/Chat/OfflineCommandGate.cs:18-28."
+        },
+        {
+          "question": 3,
+          "result": "supported",
+          "evidence": "Save changes commits edit, clears count/disables save; observed newly saved chat response proves requested result, rather than editor state alone. Source: dashboard/src/views/dashboard/commands/components/CommandEditor.vue:184-201; server/src/NomNomzBot.Infrastructure/Chat/EventHandlers/ChatMessageHandler.cs:664-708."
+        },
+        {
+          "question": 4,
+          "result": "supported",
+          "evidence": "Duplicate welcome-copy starts off; omitted reply destination defaults Twitch chat; Read it aloud copied; enable before test; another destination optional; speech requires chat success and TTS readiness. Source: dashboard/src/views/dashboard/commands/components/CommandEditor.vue:254-279; server/src/NomNomzBot.Application/Commands/Dtos/CommandDtos.cs:145-150; server/src/NomNomzBot.Infrastructure/Chat/EventHandlers/ChatMessageHandler.cs:664-708."
+        }
+      ],
+      "kind": "intact-new",
+      "invented_material_defect": false,
+      "legitimate_baseline_material_fault": false,
+      "answers_supported": 4
+    }
+  ],
+  "additional_comparison_original": [
+    {
+      "case": 201,
+      "route": "/reference/commands/create-a-command",
+      "combined_fingerprint": "e2a04b8dc29922e4794d651e5b8d8293d83ae50fa16647f187669a6f91d3d2e1",
+      "initial_findings": [],
+      "final_diagnostic_verdict": "PASS",
+      "answer_text_changed_after_initial": false,
+      "initial_answer_grades": [
+        {
+          "question": 1,
+          "result": "supported",
+          "evidence": "Commands > New command; schedule; specified text; Twitch chat/Channel default/Starts with; Create command creates enabled command; !schedule yields saved reply. Source: dashboard/src/views/dashboard/commands/components/NewCommandDialog.vue:53-170,194-239; server/src/NomNomzBot.Application/Commands/Dtos/CommandDtos.cs:148; server/src/NomNomzBot.Infrastructure/Chat/EventHandlers/ChatMessageHandler.cs:664-708 under server/src/NomNomzBot.Infrastructure."
+        },
+        {
+          "question": 2,
+          "result": "supported",
+          "evidence": "Selected signed-in channel, running connected chat and commands write permission; default Moderator or higher, configurable upward; VIP list grant is read-only; platform operator can test offline. Source: dashboard/src/views/dashboard/commands/CommandsView.vue:54-68,139-198; server/src/NomNomzBot.Infrastructure/Content/Identity/ActionDefinitionSeeder.cs:151-180; server/src/NomNomzBot.Infrastructure/Chat/OfflineCommandGate.cs:18-28."
+        },
+        {
+          "question": 3,
+          "result": "supported",
+          "evidence": "Save changes commits edit, clears count/disables save; observed newly saved chat response proves requested result, rather than editor state alone. Source: dashboard/src/views/dashboard/commands/components/CommandEditor.vue:184-201; server/src/NomNomzBot.Infrastructure/Chat/EventHandlers/ChatMessageHandler.cs:664-708."
+        },
+        {
+          "question": 4,
+          "result": "supported",
+          "evidence": "Duplicate welcome-copy starts off; omitted reply destination defaults Twitch chat; Read it aloud copied; enable before test; another destination optional; speech requires chat success and TTS readiness. Source: dashboard/src/views/dashboard/commands/components/CommandEditor.vue:254-279; server/src/NomNomzBot.Application/Commands/Dtos/CommandDtos.cs:145-150; server/src/NomNomzBot.Infrastructure/Chat/EventHandlers/ChatMessageHandler.cs:664-708."
+        }
+      ],
+      "kind": "comparison-original",
+      "invented_material_defect": false,
+      "legitimate_baseline_material_fault": false,
+      "answers_supported": 4
+    },
+    {
+      "case": 202,
+      "route": "/reference/commands/cooldowns-and-permissions",
+      "combined_fingerprint": "ff3778ea473bce98f3c5fa8364bd4b63277fbad98b862c89c8d2bbd07e1a1ea6",
+      "initial_findings": [],
+      "final_diagnostic_verdict": "PASS",
+      "answer_text_changed_after_initial": false,
+      "initial_answer_grades": [
+        {
+          "question": 1,
+          "result": "supported",
+          "evidence": "Everyone, chat 10 seconds, per-person 60 seconds, Save changes. Source: dashboard/src/views/dashboard/commands/components/CommandEditor.vue:307-320,370-433; server/src/NomNomzBot.Application/Commands/Dtos/CommandDtos.cs:135-140."
+        },
+        {
+          "question": 2,
+          "result": "supported",
+          "evidence": "Stored Editor can confer access but does not bypass incoming-platform cooldowns; ordinary eligible non-broadcaster/non-platform-moderator account reproduces waits. Source: server/src/NomNomzBot.Infrastructure/Chat/EventHandlers/EffectiveLevelLookup.cs:21-44; ChatMessageHandler.cs:1301-1354,1949-1950 in same EventHandlers directory."
+        },
+        {
+          "question": 3,
+          "result": "supported",
+          "evidence": "A personal expiry is 60; B50 shared expiry is 60; A may pass at60 absent intervening use. Refusal at5 restarts neither. Source: server/src/NomNomzBot.Infrastructure/Platform/RateLimiting/CooldownManager.cs:35-49,78-87; server/src/NomNomzBot.Infrastructure/Chat/EventHandlers/ChatMessageHandler.cs:421-484."
+        },
+        {
+          "question": 4,
+          "result": "supported",
+          "evidence": "Twitch Artist badge alone is insufficient; denied command emits permission notice and independently attempts Bot TTS even with reply speech off; TTS gates/approval/zero bits and 30-second attempt guard still apply. Source: server/src/NomNomzBot.Domain/Identity/ChatRole.cs:44-64; server/src/NomNomzBot.Infrastructure/Platform/Eventing/Translators/ChatTranslators.cs:278-286; server/src/NomNomzBot.Infrastructure/Chat/EventHandlers/ChatMessageHandler.cs:940-1028; server/src/NomNomzBot.Infrastructure/Tts/TtsDispatchService.cs:304-439."
+        }
+      ],
+      "kind": "comparison-original",
+      "invented_material_defect": false,
+      "legitimate_baseline_material_fault": false,
+      "answers_supported": 4
+    },
+    {
+      "case": 203,
+      "route": "/reference/automation/timers-and-chat-triggers",
+      "combined_fingerprint": "1f0658615e0c01fcbe3eb6d63acf8e7f7ca63fad26c98813424f29a2ea4aa46b",
+      "initial_findings": [],
+      "final_diagnostic_verdict": "PASS",
+      "answer_text_changed_after_initial": false,
+      "initial_answer_grades": [
+        {
+          "question": 1,
+          "result": "supported",
+          "evidence": "Timers > New timer, name, Simple reply, two requested lines,30 minutes, default Twitch chat, Create timer enabled with activity0; first due next eligible approximately30-second poll, then rotate. Source: dashboard/src/views/dashboard/timers/components/NewTimerDialog.vue:62-109; server/src/NomNomzBot.Application/Commands/Dtos/TimerDtos.cs:68-74; server/src/NomNomzBot.Infrastructure/Commands/Jobs/TimerService.cs:161-215."
+        },
+        {
+          "question": 2,
+          "result": "supported",
+          "evidence": "Simple timer needs no existing pipeline or live broadcast; selected signed-in channel, appropriate write permission and running connected bot; VIP tab access only reads. Source: server/src/NomNomzBot.Infrastructure/Commands/Jobs/TimerService.cs:108-150; server/src/NomNomzBot.Infrastructure/Content/Identity/ActionDefinitionSeeder.cs:188-195; dashboard/src/views/dashboard/timers write/read gates."
+        },
+        {
+          "question": 3,
+          "result": "supported",
+          "evidence": "Observe first saved line then second after interval/activity and eligible poll, wrapping; simple chat acceptance advances state. Disable to stop offline posts because connected-channel timer selection has no live gate. Source: server/src/NomNomzBot.Infrastructure/Commands/Jobs/TimerService.cs:108-150,191-215,248-334."
+        },
+        {
+          "question": 4,
+          "result": "supported",
+          "evidence": "Contains hi matches this and HI with case off; default-prefix !hi excluded even invalid command; eligible role/clear cooldown still needed. Is exactly the words plus Save narrows greeting. Source: server/src/NomNomzBot.Infrastructure/Chat/EventHandlers/ChatMessageHandler.cs:194-237,1388-1430,1589-1609."
+        }
+      ],
+      "kind": "comparison-original",
+      "invented_material_defect": false,
+      "legitimate_baseline_material_fault": false,
+      "answers_supported": 4
+    },
+    {
+      "case": 204,
+      "route": "/reference/commands/built-in-commands",
+      "combined_fingerprint": "e55482959ca9e0819284c10890e8a6f4948d8123a521fbf7ce69fc5afe539326",
+      "initial_findings": [],
+      "final_diagnostic_verdict": "PASS",
+      "answer_text_changed_after_initial": false,
+      "initial_answer_grades": [
+        {
+          "question": 1,
+          "result": "supported",
+          "evidence": "Pause is !pause; effective Moderator or music:queue:moderate grant; normal shared/personal defaults30/0, Everyone base floor does not remove runtime safeguard. Source: server/src/NomNomzBot.Infrastructure/Commands/Builtins/PlaybackControlBuiltins.cs:27-39,90-103; MusicModerationGate.cs:33-56 in same Builtins directory."
+        },
+        {
+          "question": 2,
+          "result": "supported",
+          "evidence": "Catalog does not configure music/Spotify; connected feature and command availability needed; System commands requires commands write, default Moderator and higher subject to raised floor; read-only users do not see tab. Source: dashboard/src/views/dashboard/commands/CommandsView.vue:54-68; server/src/NomNomzBot.Infrastructure/Content/Identity/ActionDefinitionSeeder.cs:179-180; server/src/NomNomzBot.Infrastructure/Commands/Builtins/PlaybackControlBuiltins.cs:90-103."
+        },
+        {
+          "question": 3,
+          "result": "supported",
+          "evidence": "Back to default on field saves immediately; whole Reset confirms loss of all own overrides/replies/TTS and enables command; shared sibling replies reset without unrelated sibling settings. Source: dashboard/src/views/dashboard/commands/components/BuiltinEditor.vue:205-251; server/src/NomNomzBot.Infrastructure/Commands/BuiltinCommandService.cs:262-301."
+        },
+        {
+          "question": 4,
+          "result": "supported",
+          "evidence": "Successful moderated bare skip starts independent channel-wide30-second window, blocking second moderator at5 seconds; !skip4 removes caller fourth own pending request only, not playing song or global queue item4, subject to normal outer gates. Source: server/src/NomNomzBot.Infrastructure/Commands/Builtins/MusicBuiltins.cs:35-116,227-288; server/src/NomNomzBot.Infrastructure/Chat/EventHandlers/ChatMessageHandler.cs:321-376."
+        }
+      ],
+      "kind": "comparison-original",
+      "invented_material_defect": false,
+      "legitimate_baseline_material_fault": false,
+      "answers_supported": 4
+    },
+    {
+      "case": 205,
+      "route": "/reference/self-hosting/first-run-setup",
+      "combined_fingerprint": "bec00e0f02360c6ea62fdbef6c3db19c3a83de72a2e6ecaee81e3fdb6d24f047",
+      "initial_findings": [],
+      "final_diagnostic_verdict": "PASS",
+      "answer_text_changed_after_initial": false,
+      "initial_answer_grades": [
+        {
+          "question": 1,
+          "result": "supported",
+          "evidence": "Explicit Use shared app, Next, skip four optional steps, Finish setup and broadcaster sign-in. Resolved default Client ID alone not decision. Source: server/src/NomNomzBot.Api/Models/SetupWizardDtos.cs:83-157; server/src/NomNomzBot.Api/Controllers/V1/SystemController.cs:227-229,348-366; dashboard/src/views/site/setup/SetupView.vue:39-50,112-127."
+        },
+        {
+          "question": 2,
+          "result": "supported",
+          "evidence": "No separate bot account, Client Secret or healthy feed needed; own-app registrant must verify email and enable2FA before registering. Article own-app instructions attribute this to Twitch; URL reproduction not required. Source: server/src/NomNomzBot.Api/Models/SetupWizardDtos.cs:98-149; dashboard/src/views/site/setup/components/EventFeedHealth.vue:31-59; https://dev.twitch.tv/docs/authentication/register-app/ official prerequisite checked in contract."
+        },
+        {
+          "question": 3,
+          "result": "supported",
+          "evidence": "Finish saves explicit completion flag and routes app/sign-in; closes anonymous credential-write window; subsequent replacement requires bot admin, not channel moderator. Source: server/src/NomNomzBot.Api/Controllers/V1/SystemController.cs:314-315,353-354,469-491; dashboard/src/views/site/setup/SetupView.vue:47-50."
+        },
+        {
+          "question": 4,
+          "result": "supported",
+          "evidence": "YouTube requests use public/keyless path, not Google OAuth/account connection; Spotify app credentials do not authorize individual account or choose player device. Source: server/src/NomNomzBot.Infrastructure/Music/YouTubeMusicProvider.cs:139-164,348-374; server/src/NomNomzBot.Infrastructure/Music/SpotifyMusicProvider.cs:36-39,205-225,299-325; server/src/NomNomzBot.Api/Models/SetupWizardDtos.cs:159-232."
+        }
+      ],
+      "kind": "comparison-original",
+      "invented_material_defect": false,
+      "legitimate_baseline_material_fault": false,
+      "answers_supported": 4
+    }
+  ],
+  "fact_record_paths": [
+    "calibration\\run-1\\110\\reviews\\reference%2Fcommands%2Fcreate-a-command.fact.json",
+    "calibration\\run-1\\101\\reviews\\reference%2Fcommands%2Fcooldowns-and-permissions.fact.json",
+    "calibration\\run-1\\104\\reviews\\reference%2Fautomation%2Ftimers-and-chat-triggers.fact.json",
+    "calibration\\run-1\\103\\reviews\\reference%2Fcommands%2Fbuilt-in-commands.fact.json",
+    "calibration\\run-1\\107\\reviews\\reference%2Fself-hosting%2Ffirst-run-setup.fact.json",
+    "additional-reader\\201\\reviews\\reference%2Fcommands%2Fcreate-a-command.fact.json",
+    "additional-reader\\202\\reviews\\reference%2Fcommands%2Fcooldowns-and-permissions.fact.json",
+    "additional-reader\\203\\reviews\\reference%2Fautomation%2Ftimers-and-chat-triggers.fact.json",
+    "additional-reader\\204\\reviews\\reference%2Fcommands%2Fbuilt-in-commands.fact.json",
+    "additional-reader\\205\\reviews\\reference%2Fself-hosting%2Ffirst-run-setup.fact.json"
+  ],
+  "limits": [
+    "Only the specified cases and these fresh reader-agent sessions were evaluated. Two calibration readers each saw five cases; one additional reader saw five baseline cases, so cases are not independent human subjects.",
+    "These findings do not establish human usability, natural voice, spoken/audio usability or reliability for other models. Read-aloud answers were text judgments; no human listening test occurred.",
+    "No product runtime, platform connection, audio, OAuth or live command tests were executed. Named build/final acceptance checks remain root-owned and are not run by this evaluation.",
+    "No writer pages, seed keys or reader answers/verdicts were edited. Fact PASS records establish individual source/answer support, not an overall calibration or pilot acceptance."
+  ]
+}

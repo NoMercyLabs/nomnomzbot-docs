@@ -119,7 +119,8 @@ function NavLinkItem({
     if (offScreen) {
       const top =
         container.scrollTop + (elRect.top - cRect.top) - container.clientHeight / 2 + el.clientHeight / 2;
-      container.scrollTo({ top, behavior: isAnchorLink ? 'smooth' : 'auto' });
+      const reduceMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+      container.scrollTo({ top, behavior: isAnchorLink && !reduceMotion ? 'smooth' : 'auto' });
     }
   }, [active, isAnchorLink]);
 
@@ -128,7 +129,7 @@ function NavLinkItem({
       as={Link}
       ref={ref}
       href={href}
-      aria-current={active ? 'page' : undefined}
+      aria-current={active ? (isAnchorLink ? 'location' : 'page') : undefined}
       className={clsx(
         'flex justify-between gap-2 rounded-md py-1 pr-3 text-sm transition',
         isAnchorLink ? 'pl-7' : 'pl-4',

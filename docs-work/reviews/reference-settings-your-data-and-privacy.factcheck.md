@@ -1,5 +1,47 @@
-# Fact-check: /reference/settings/your-data-and-privacy
+# Targeted final review — 2026-11-06
+
+Verdict: PENDING
+Reviewed: src/content/reference/en/settings/your-data-and-privacy.mdx
+Reviewed-SHA: 25c9a9d842afa77bfbcb6ff1e9e746e0fda467b102f1dc73200c0e304a209097
+Reviewed-SHA256: 25c9a9d842afa77bfbcb6ff1e9e746e0fda467b102f1dc73200c0e304a209097
+Reviewer: final-features correction author; self-review, not independent PASS
+Product-Revision: 2dfefbb0c393f439954d79b32ac11511678d7f44 plus working tree
+
+The full article was read editorially. The correction was independently traced from the staged lead to current source, then applied by this reviewer. This is targeted author verification, not a new exhaustive source audit, independent final-text approval or runtime test. See [final-features.md](../ecosystem-validation/final-features.md) for exact source anchors, coverage and remaining limits.
+
+## Historical reviews
+
+The original records below are preserved verbatim and apply only to their recorded hashes.
+
+# Independent source review: /reference/settings/your-data-and-privacy
 Verdict: PASS
+Reviewed: src/content/reference/en/settings/your-data-and-privacy.mdx
+Reviewed-SHA: 6e5ded23cc40724f
+Reviewed-SHA256: 6e5ded23cc40724facacc5d3b11e634d93016b2930d7b70c2b2801745b7b86d2
+Reviewed-Date: 2026-11-05
+Reviewer: independent reviewer, separate from article author
+Product-Revision: 54da8b6318de63b5205a0ff8db35e0b9045dd959
+
+The complete current article was read in navigation order and checked against current product source. Historical PASS entries below are leads, not approval of this revision. Atlas voice/template gates do not govern this review.
+
+## Current evidence and result
+
+No substantive finding. Caller identity, explicit export fields/no tokens, consent scope and irreversible erasure checked.
+
+Source files opened in this review: Api/Controllers/V1/GdprController.cs:55-70,96-129,178-231; Identity/ErasureService.cs:699-826,935-985; dashboard/settings/your-data/YourDataView.vue:24-34.
+
+Unqualified paths beginning Identity, CustomCode, Billing, EventStore, Engagement, Rewards, Widgets or Platform are under server/src/NomNomzBot.Infrastructure; Api and Domain identify their corresponding server projects. Dashboard shorthand is under dashboard/src/views/dashboard.
+
+Verification is read-only source review. No bot/API startup, live account authorization, channel writes, C# host/Jint execution, Docker install or restore was performed. Documentation build/render QA belongs to the combined parent pass. The SDK reference and worked-example checks additionally ran the existing read-only nnz-code-doc-check.mjs with production JavaScript bootstrap and substituted host I/O.
+
+## Historical review (superseded)
+
+# Fact-check: /reference/settings/your-data-and-privacy
+Historical verdict: PENDING
+
+2026-11-04 overhaul: the article changed, so the previous PASS and hash below are historical evidence, not approval of the current revision.
+Fresh writer source checks and article inventory are recorded under S8 in `docs-work/overhaul/settings-hosting-code.md`.
+Independent review of the changed text is pending.
 Reviewed: src/content/reference/en/settings/your-data-and-privacy.mdx
 Reviewed-SHA: 373e2676c5fa9294
 

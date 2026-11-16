@@ -1,3 +1,22 @@
+# Current independent reader review
+
+Verdict: PASS
+Reviewed: src/content/reference/en/templates/lookup.mdx
+Reviewed-SHA: 671a5aca14300b6d10c13d1fd9f5785c0a50fbece4de790549aeb068d81c3172
+Reviewed-SHA256: 671a5aca14300b6d10c13d1fd9f5785c0a50fbece4de790549aeb068d81c3172
+Reviewed-Date: 2026-11-05
+Reviewer: independent section reviewer
+
+External lookups are kept in a compact reference with accepted fields, syntax and deployment-mode limitations. Examples describe possible values, avoiding a promise of current exchange rates or weather.
+
+The full page was read with the preceding/following navigation context and related links. This review applies the owner's explanatory, progressive-disclosure guidance; it does not impose Atlas sentence caps, pilot mimicry or fixed article headings. No substantive reader finding remains at this hash. Build/render/link checks are recorded separately by the lead reviewer.
+
+Report: docs-work/overhaul/review-learning-commands-helpers.md.
+
+## Historical evidence
+
+The material below is retained as historical evidence; its older verdict is not the current review.
+
 # Reader review: src/content/reference/en/templates/lookup.mdx
 Verdict: PASS
 Reviewed: C:/Projects/NoMercyLabs/nomnomzbot-docs/src/content/reference/en/templates/lookup.mdx

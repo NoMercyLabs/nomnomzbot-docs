@@ -1,3 +1,22 @@
+# Current independent reader review
+
+Verdict: PASS
+Reviewed: src/content/reference/en/overview.mdx
+Reviewed-SHA: f1600825a3d5e0d3e3435f07a2f1b1e495ed4b610286c0983446ea9d50d30757
+Reviewed-SHA256: f1600825a3d5e0d3e3435f07a2f1b1e495ed4b610286c0983446ea9d50d30757
+Reviewed-Date: 2026-11-05
+Reviewer: independent section reviewer
+
+The introduction teaches the bot/dashboard relationship, gives a short first-use path, and makes deeper everyday, self-hosting and Code and SDK paths optional. It avoids turning the opening into a feature catalog.
+
+The full page was read with the preceding/following navigation context and related links. This review applies the owner's explanatory, progressive-disclosure guidance; it does not impose Atlas sentence caps, pilot mimicry or fixed article headings. No substantive reader finding remains at this hash. Build/render/link checks are recorded separately by the lead reviewer.
+
+Report: docs-work/overhaul/review-learning-commands-helpers.md.
+
+## Historical evidence
+
+The material below is retained as historical evidence; its older verdict is not the current review.
+
 # Reader review: C:\Projects\NoMercyLabs\nomnomzbot-docs\src\content\reference\en\overview.mdx
 Verdict: PASS
 Reviewed: C:\Projects\NoMercyLabs\nomnomzbot-docs\src\content\reference\en\overview.mdx

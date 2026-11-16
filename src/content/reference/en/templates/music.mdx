@@ -3,85 +3,143 @@ title: Music helpers
 description: Lists 54 template helpers, each with what it gives and an example.
 ---
 
-Helpers on this page: `{music.*}`, `{track*}`, `{playlist*}`.
+You type these helpers into a reply, such as a command reply, an event response or a timer message.
+The bot fills them in from your channel's music when it sends the line.
+Reading a value changes nothing.
 
-These helpers read the song that plays now, the queue and song requests.
-Use them in a "song" or "queue" command.
+`{music.now}` is the current track, and the queue helpers describe the song requests that wait after it.
+So `Now playing: {music.now}` gives `Now playing: Song A by Artist A`, and `Up next: {music.queue.next}` gives `Up next: Song B by Artist B`.
 
-Each row is its own example, so the rows on this page do not all come from one moment.
+The `music.now.*` helpers, `{music.volume}`, `{music.shuffle}` and `{music.repeat}` read the connected [music player](/reference/music/music-player).
+The `music.requests.*` helpers read your saved request settings, and the history helpers read the requests the bot has stored, so both answer without a player.
+No music helper works in text that viewers write. There it prints as written, even when the [Viewer Templates setting](/reference/settings/features) is on.
+
+## When there is nothing to show
+
+A helper that has nothing to read prints as written, braces and all.
+When the player has no track, `Now playing: {music.now}` goes out exactly like that.
+So test the reply once with the music stopped.
+`{music.now.isPlaying}` always answers, with `false` when no track plays.
+`{music.now.status}` always gives one of its five states.
+
+An empty queue is a real answer, not a missing one.
+`{music.queue.length}` and `{music.queue.requesters}` give `0`, and `{music.queue.isEmpty}` gives `true`.
+The helpers that name or time songs in the queue, such as `{music.queue.next}`, `{music.queue.list:3}` and `{music.queue.duration}`, print as written when the queue is empty.
+
+A track missing one detail behaves the same.
+A track with no album leaves `{music.now.album}` as written, and a track nobody requested leaves `{music.now.requester}` as written.
+When only the artist is missing, `{music.now}` gives the title alone.
+
+## How far back the history reads
+
+The history helpers read the newest 500 requests of your channel that have started playing.
+A request counts only once it starts playing, and its time is the moment it started.
+So a song that still waits in the queue is not in `{music.history.last}`, `{music.user.lastRequest}` or the stream counts.
+
+The helpers ending in `.stream` keep only the songs in that set that started since the stream went live.
+They print as written while you are offline.
+`{music.user.requests.total}` reads the viewer's all-time count from their viewer profile instead, so the 500 limit does not apply to it.
+
+## Values a pipeline step fills in
+
+A [pipeline](/reference/commands/pipelines) still needs a trigger that supplies the person, message or event a helper reads.
+Six helpers only work in a pipeline, and each group works in a different place.
+The four `music.favorite.*` values work in the steps that come after the favorite step.
+The two playlist values work only in the messages of the **Add to playlist** step itself.
+
+The **Song request favorite** step (`song_request_favorite`) queues a viewer's most-requested song and fills in the four `music.favorite.*` values.
+It tries up to 10 of the viewer's tracks, most-requested first, and `{music.favorite.outcome}` says how that went:
+
+- `queued`: a favorite went into the queue, and the other three values describe it.
+- `unavailable`: the music service could not take the track. The values still name the track it tried.
+- `none`: the viewer has no request history, or each favorite was refused, for example because it was blocked or already in the queue. With no history at all, the track and artist are empty and the count is `0`.
+
+The **Add to playlist** step fills in `{playlist_id}` and `{track_name}` for its own two messages.
+One message goes out after the track is added, and the other when the track is already in the playlist.
+A later step does not get these two values.
+When the step adds the current track, `{track_name}` is that track's name. When the step adds a fixed track, `{track_name}` is that track's address, not a name.
 
 ## Now playing
 
-| Helper | What it gives | Example |
-| --- | --- | --- |
-| `{music.now}` | The track that plays now, with its artist: Song A by Artist A | `Song A by Artist A` |
-| `{music.now.album}` | The album of the track that plays now | `Album A` |
-| `{music.now.artist}` | The artist of the track that plays now | `Artist A` |
-| `{music.now.bar}` | A progress bar of the track that plays now, with the clock. Add a width from 1 to 50 after a colon to get the bare bar of that many cells; the default width is 11 | `{music.now.bar:5}` gives `▬▬🔘▬▬` |
-| `{music.now.cover}` | The cover image address of the track that plays now | `https://i.scdn.co/image/sample` |
-| `{music.now.duration}` | The length of the track that plays now: 3:30 | `3:30` |
-| `{music.now.isPlaying}` | Whether music is playing, as true or false, for if and switch | `true` |
-| `{music.now.link}` | A link that opens the track that plays now | `https://open.spotify.com/track/sample` |
-| `{music.now.percent}` | How far the track that plays now has come, in percent: 40% | `40%` |
-| `{music.now.progress}` | How far the track that plays now has come: 1:23 | `1:23` |
-| `{music.now.remaining}` | How much of the track that plays now is left: 2:07 | `2:07` |
-| `{music.now.requester}` | The viewer who requested the track that plays now | `ViewerTwo` |
-| `{music.now.requester.mention}` | The viewer who requested the track that plays now, as a mention: @ViewerTwo | `@ViewerTwo` |
-| `{music.now.status}` | The state of the player: playing, paused, starting, blocked or idle | `playing` |
-| `{music.now.title}` | The title of the track that plays now | `Song A` |
-| `{music.provider}` | The music service the channel uses: Spotify | `Spotify` |
-| `{playlist_id}` | The id of the playlist the track was added to | `37i9dQZF1DX` |
-| `{track_name}` | The name of the track that was added | `Blinding Lights` |
+| Helper | What it gives | Example | Use in |
+| --- | --- | --- | --- |
+| `{music.now}` | The current track, with its artist | `Song A by Artist A` | Commands, event responses, timers, pipelines, Discord, webhooks |
+| `{music.now.album}` | The album of the current track | `Album A` | Commands, event responses, timers, pipelines, Discord, webhooks |
+| `{music.now.artist}` | The artist of the current track | `Artist A` | Commands, event responses, timers, pipelines, Discord, webhooks |
+| `{music.now.bar}` | A progress bar of the current track, with the clock | `{music.now.bar:5}` gives `▬▬🔘▬▬` | Commands, event responses, timers, pipelines, Discord, webhooks |
+| `{music.now.cover}` | The cover image address of the current track | `https://i.scdn.co/image/sample` | Commands, event responses, timers, pipelines, Discord, webhooks |
+| `{music.now.duration}` | The length of the current track | `3:30` | Commands, event responses, timers, pipelines, Discord, webhooks |
+| `{music.now.isPlaying}` | Whether music is playing, as true or false, for if and switch | `true` | Commands, event responses, timers, pipelines, Discord, webhooks |
+| `{music.now.link}` | A link that opens the current track | `https://open.spotify.com/track/sample` | Commands, event responses, timers, pipelines, Discord, webhooks |
+| `{music.now.percent}` | How far the current track has come, in percent | `40%` | Commands, event responses, timers, pipelines, Discord, webhooks |
+| `{music.now.progress}` | How far the current track has come | `1:23` | Commands, event responses, timers, pipelines, Discord, webhooks |
+| `{music.now.remaining}` | How much of the current track is left | `2:07` | Commands, event responses, timers, pipelines, Discord, webhooks |
+| `{music.now.requester}` | The viewer who requested the current track | `ViewerTwo` | Commands, event responses, timers, pipelines, Discord, webhooks |
+| `{music.now.requester.mention}` | The viewer who requested the current track, as a mention | `@ViewerTwo` | Commands, event responses, timers, pipelines, Discord, webhooks |
+| `{music.now.status}` | The state of the player: playing, paused, starting, blocked or idle | `playing` | Commands, event responses, timers, pipelines, Discord, webhooks |
+| `{music.now.title}` | The title of the current track | `Song A` | Commands, event responses, timers, pipelines, Discord, webhooks |
+| `{music.provider}` | The name of the music service the channel uses, such as Spotify or YouTube | `Spotify` | Commands, event responses, timers, pipelines, Discord, webhooks |
+| `{playlist_id}` | The id of the playlist the Add to playlist step added the track to, in that step's own messages | `37i9dQZF1DX` | pipelines |
+| `{track_name}` | The track the Add to playlist step added, in that step's own messages: its name, or its address when the step adds a fixed track | `Blinding Lights` | pipelines |
+
+For `{music.now.bar}`, add a width from 1 to 50 after a colon to get only the bar, that many marks long, with no clock. Without a width the bar is 11 marks.
 
 ## The queue
 
-| Helper | What it gives | Example |
-| --- | --- | --- |
-| `{music.queue.cost.total}` | The points spent on the songs that wait in the queue | `1,500` |
-| `{music.queue.duration}` | The total length of the request queue: 17m 20s | `17m 20s` |
-| `{music.queue.isEmpty}` | Whether the request queue is empty, as true or false, for if and switch | `false` |
-| `{music.queue.item}` | The song at a place in the queue, with its artist; the place is the argument | `{music.queue.item:2}` gives `Song C by Artist C` |
-| `{music.queue.length}` | How many songs wait in the request queue | `5` |
-| `{music.queue.list}` | The first songs of the queue as a numbered list; the number of songs is the argument | `{music.queue.list:3}` gives `1. Song B, 2. Song C, 3. Song D` |
-| `{music.queue.mine.code}` | The short code of the next song of the viewer, to name it in !wrongsong | `K7QM` |
-| `{music.queue.mine.count}` | How many songs of the viewer wait in the queue | `2` |
-| `{music.queue.mine.next}` | The title of the next song of the viewer in the queue | `Song C` |
-| `{music.queue.mine.titles}` | The titles of the songs of the viewer in the queue | `Song C, Song E` |
-| `{music.queue.next}` | The next song in the request queue, with its artist | `Song B by Artist B` |
-| `{music.queue.next.requester}` | The viewer who requested the next song | `ViewerThree` |
-| `{music.queue.position}` | The place of the next song of the viewer who typed the command | `3` |
-| `{music.queue.position.ordinal}` | The place of the next song of the viewer as an ordinal: 3rd | `3rd` |
-| `{music.queue.requesters}` | How many different viewers have a song in the queue | `4` |
-| `{music.queue.target.count}` | How many songs of the mentioned viewer wait in the queue. The mentioned viewer is the first word after the command, as in !queue @someviewer; read [Target helpers](/reference/templates/target) for how the bot reads that name | `1` |
-| `{music.queue.wait}` | How long until the next song of the viewer starts: 7m 40s | `7m 40s` |
-| `{music.queue.wait.at}` | At what time the next song of the viewer starts, in the channel time zone: about 15:38 | `about 15:38` |
+Some helpers look only at the first 10 songs in the queue: `{music.queue.position}`, `{music.queue.position.ordinal}`, `{music.queue.wait}`, `{music.queue.wait.at}`, the four `music.queue.mine.*` helpers and `{music.queue.target.count}`.
+For a viewer whose song is at place 11 or later, they print as written, and the counts give a number that is too low.
+`{music.queue.item}` and `{music.queue.list}` read the whole queue, so this limit does not apply to them.
+
+| Helper | What it gives | Example | Use in |
+| --- | --- | --- | --- |
+| `{music.queue.cost.total}` | The points spent on the songs that wait in the queue. A song request costs no points, so this gives 0 | `0` | Commands, event responses, timers, pipelines, Discord, webhooks |
+| `{music.queue.duration}` | The total length of the request queue | `17m 20s` | Commands, event responses, timers, pipelines, Discord, webhooks |
+| `{music.queue.isEmpty}` | Whether the request queue is empty, as true or false, for if and switch | `false` | Commands, event responses, timers, pipelines, Discord, webhooks |
+| `{music.queue.item}` | The song at a place in the queue, with its artist; the place is the input | `{music.queue.item:2}` gives `Song C by Artist C` | Commands, event responses, timers, pipelines, Discord, webhooks |
+| `{music.queue.length}` | How many songs wait in the request queue | `5` | Commands, event responses, timers, pipelines, Discord, webhooks |
+| `{music.queue.list}` | The titles of the first songs of the queue as a numbered list; the number of songs, up to 20, is the input | `{music.queue.list:3}` gives `1. Song B, 2. Song C, 3. Song D` | Commands, event responses, timers, pipelines, Discord, webhooks |
+| `{music.queue.mine.code}` | The short code of the next song of the viewer, which they can type after !wrongsong, as in !wrongsong K7QM | `K7QM` | Commands, event responses, pipelines, webhooks |
+| `{music.queue.mine.count}` | How many songs of the viewer wait in the queue | `2` | Commands, event responses, pipelines, webhooks |
+| `{music.queue.mine.next}` | The title of the next song of the viewer in the queue | `Song C` | Commands, event responses, pipelines, webhooks |
+| `{music.queue.mine.titles}` | The titles of the songs of the viewer in the queue | `Song C, Song E` | Commands, event responses, pipelines, webhooks |
+| `{music.queue.next}` | The next song in the request queue, with its artist | `Song B by Artist B` | Commands, event responses, timers, pipelines, Discord, webhooks |
+| `{music.queue.next.requester}` | The viewer who requested the next song | `ViewerThree` | Commands, event responses, timers, pipelines, Discord, webhooks |
+| `{music.queue.position}` | Where the viewer's next song sits in the queue | `3` | Commands, event responses, pipelines, webhooks |
+| `{music.queue.position.ordinal}` | Where the viewer's next song sits in the queue, as an ordinal | `3rd` | Commands, event responses, pipelines, webhooks |
+| `{music.queue.requesters}` | How many different viewers have a song in the queue | `4` | Commands, event responses, timers, pipelines, Discord, webhooks |
+| `{music.queue.target.count}` | How many songs of the mentioned viewer wait in the queue. The mentioned viewer is the first word after the command, as in !queue @someviewer; read [Target helpers](/reference/templates/target) for how the bot reads that name | `1` | Commands, event responses, pipelines, webhooks |
+| `{music.queue.wait}` | How long until the viewer's next song starts | `7m 40s` | Commands, event responses, pipelines, webhooks |
+| `{music.queue.wait.at}` | At what time the viewer's next song starts, in the channel time zone | `about 15:38` | Commands, event responses, pipelines, webhooks |
 
 ## History and favorites
 
-| Helper | What it gives | Example |
-| --- | --- | --- |
-| `{music.favorite.artist}` | The artist of the viewer’s most-requested track | `The Weeknd` |
-| `{music.favorite.count}` | How many times the viewer has requested that track | `12` |
-| `{music.favorite.outcome}` | What happened: queued, none, or unavailable | `queued` |
-| `{music.favorite.track}` | The name of the viewer’s most-requested track | `Blinding Lights` |
-| `{music.history.count.stream}` | How many songs were requested since the stream went live | `21` |
-| `{music.history.last}` | The last song that was requested, with its artist | `Song Z by Artist Z` |
-| `{music.history.list}` | The titles of the last requested songs; the number of songs is the argument | `{music.history.list:3}` gives `Song Z, Song Y, Song X` |
-| `{music.history.topArtist.stream}` | The artist requested most this stream | `Artist A` |
-| `{music.history.topRequester.stream}` | The viewer with the most requests this stream, with the count: ViewerTwo (4) | `ViewerTwo (4)` |
-| `{music.user.lastRequest}` | The title of the last song the viewer requested | `Song C` |
-| `{music.user.requests.stream}` | How many songs the viewer has requested this stream | `2` |
-| `{music.user.requests.total}` | How many songs the viewer has requested in this channel, all time | `9` |
+| Helper | What it gives | Example | Use in |
+| --- | --- | --- | --- |
+| `{music.favorite.artist}` | The artist of the viewer’s most-requested track | `The Weeknd` | pipelines |
+| `{music.favorite.count}` | How many times the viewer has requested that track | `12` | pipelines |
+| `{music.favorite.outcome}` | What happened: queued, none, or unavailable, as explained above | `queued` | pipelines |
+| `{music.favorite.track}` | The name of the viewer’s most-requested track | `Blinding Lights` | pipelines |
+| `{music.history.count.stream}` | How many requested songs have started playing since the stream went live | `21` | Commands, event responses, timers, pipelines, Discord, webhooks |
+| `{music.history.last}` | The last requested song that started playing, with its artist | `Song Z by Artist Z` | Commands, event responses, timers, pipelines, Discord, webhooks |
+| `{music.history.list}` | The titles of the last requested songs that started playing, newest first; the number of songs, up to 20, is the input | `{music.history.list:3}` gives `Song Z, Song Y, Song X` | Commands, event responses, timers, pipelines, Discord, webhooks |
+| `{music.history.topArtist.stream}` | The artist with the most requests played this stream | `Artist A` | Commands, event responses, timers, pipelines, Discord, webhooks |
+| `{music.history.topRequester.stream}` | The viewer with the most requests played this stream, with the count | `ViewerTwo (4)` | Commands, event responses, timers, pipelines, Discord, webhooks |
+| `{music.user.lastRequest}` | The title of the viewer's last request that started playing | `Song C` | Commands, event responses, pipelines, webhooks |
+| `{music.user.requests.stream}` | How many of the viewer's requests have played this stream | `2` | Commands, event responses, pipelines, webhooks |
+| `{music.user.requests.total}` | How many songs the viewer has requested in this channel, all time | `9` | Commands, event responses, pipelines, webhooks |
 
 ## Player and request settings
 
-| Helper | What it gives | Example |
-| --- | --- | --- |
-| `{music.repeat}` | The repeat mode: off, track or context | `off` |
-| `{music.requests.maxDuration}` | The longest song a viewer may request: 6:00 | `6:00` |
-| `{music.requests.maxPerUser}` | How many songs one viewer may have in the queue | `3` |
-| `{music.requests.open}` | Whether song requests are open, as true or false, for if and switch | `true` |
-| `{music.shuffle}` | Whether shuffle is on or off | `off` |
-| `{music.volume}` | The music volume in percent: 60% | `60%` |
+| Helper | What it gives | Example | Use in |
+| --- | --- | --- | --- |
+| `{music.repeat}` | The repeat mode: off, track (one track) or context (the whole playlist or album) | `off` | Commands, event responses, timers, pipelines, Discord, webhooks |
+| `{music.requests.maxDuration}` | The longest song a viewer may request | `6:00` | Commands, event responses, timers, pipelines, Discord, webhooks |
+| `{music.requests.maxPerUser}` | The general limit of songs one viewer may have in the queue. A role with its own cap is not shown here | `3` | Commands, event responses, timers, pipelines, Discord, webhooks |
+| `{music.requests.open}` | Whether song requests are open, as true or false, for if and switch | `true` | Commands, event responses, timers, pipelines, Discord, webhooks |
+| `{music.shuffle}` | Whether shuffle is on or off | `off` | Commands, event responses, timers, pipelines, Discord, webhooks |
+| `{music.volume}` | The music volume in percent | `60%` | Commands, event responses, timers, pipelines, Discord, webhooks |
+
+`{music.volume}`, `{music.shuffle}` and `{music.repeat}` print as written when the player has no track.
+The `music.requests.*` helpers still answer then, because they read your saved settings.
 
 Back to [Template helpers](/reference/templates/overview). For the places helpers work, special characters and HTML, read [Variables and templates](/reference/commands/variables-and-templates).

@@ -1,3 +1,27 @@
+# Current independent fact check
+
+Verdict: PASS
+Reviewed: src/content/reference/en/templates/pronouns.mdx
+Reviewed-SHA: 85b63f721d0d58dba8b0f3fa1c348d9c423e910c33f5e06a05a963bd25747072
+Reviewed-SHA256: 85b63f721d0d58dba8b0f3fa1c348d9c423e910c33f5e06a05a963bd25747072
+Reviewed-Date: 2026-11-05
+Reviewer: independent section reviewer
+Product: 54da8b6318de63b5205a0ff8db35e0b9045dd959 (initial source tracing b12f4f69638553c03ed64c1518c90d7bcccd6907)
+
+The full article was read in navigation order; consequential behavior and reference details were checked against current source. All reported documentation findings affecting this page were repaired and re-reviewed. This is a source review, not a live-channel test.
+
+- Twitch-only hydration and cached external refresh: server/src/NomNomzBot.Infrastructure/Chat/EventHandlers/PronounHydrationHandler.cs:44-62; server/src/NomNomzBot.Infrastructure/Identity/Services/PronounResolutionService.cs:30-98.
+- External catalog/user lookup and bundled catalog/grammar: server/src/NomNomzBot.Infrastructure/Identity/Providers/AlejoPronounClient.cs:26-145; server/src/NomNomzBot.Infrastructure/Content/Identity/PronounSeeder.cs:113-130,188-230,306-324.
+- Capitalization, verb choice, live-state, open-choice and unknown fallbacks: server/src/NomNomzBot.Infrastructure/Platform/Templating/Helpers/Legacy/LegacyTemplateHelpers.cs:135-164,195-237,617-642,1035-1079,1446-1521.
+- Viewer-page choice does not send override: dashboard/src/views/viewer/account/PronounsPanel.vue:38-44; dashboard/src/api/viewerAccount.ts:102-106; server/src/NomNomzBot.Application/Identity/Dtos/UserDtos.cs:81-90; server/src/NomNomzBot.Infrastructure/Identity/Services/PronounSelfService.cs:61-66. The corrected article documents this limitation, rather than trusting the optimistic cache flag at viewerAccount.ts:114.
+- Pipeline Set pronoun deliberately sets or clears the manual override: server/src/NomNomzBot.Infrastructure/Identity/PipelineActions/SetPronounAction.cs:126-158.
+
+Report: docs-work/overhaul/review-learning-commands-helpers.md.
+
+## Historical evidence
+
+The material below is retained as historical evidence. Its older hashes, verdicts and values do not constitute the current review.
+
 # Fact check: src/content/reference/en/templates/pronouns.mdx
 Verdict: PASS
 Reviewed: C:/Projects/NoMercyLabs/nomnomzbot-docs/src/content/reference/en/templates/pronouns.mdx

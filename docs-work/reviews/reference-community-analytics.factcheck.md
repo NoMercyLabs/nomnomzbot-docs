@@ -1,5 +1,40 @@
-# Fact-check: /reference/community/analytics
+# Independent source verification: /reference/community/analytics
 Verdict: PASS
+Reviewed: src/content/reference/en/community/analytics.mdx
+Reviewed-SHA: 345b0ae4c5bdcb08b1202f453a1aa49a299c913db09bb1d000b0b559325257dc
+
+## Independent overhaul review, 2026-11-05
+
+ChannelAnalyticsService.cs:441-525; AnalyticsView/API; RecapPreview/recapExport: local-zone grid, offline activity, ranges and still PNG. Repaired F4 correctly describes the grid as recorded feed activity, including stored notice/held/moderation rows because the query has no Kind filter.
+
+Reviewed independently of the article author, in actual navigation order. Current product source 54da8b631 and relevant changes since b12f4f696 were read without starting the bot, executing platform actions or changing channel data. This verdict is source verification, not proof of live platform delivery. See [review-moderation-economy-community.md](../overhaul/review-moderation-economy-community.md) for the review scope and findings.
+
+## Prior review history
+
+The earlier text below is retained as history; it does not independently approve a later article hash.
+
+Author source audit: 2026-11-04. Independent review of the revised article is pending; the historical PASS below does not approve this text.
+Product source: C:/Projects/NoMercyLabs/nomnomzbot at b12f4f696, inspected without starting the bot or changing data.
+
+Adds how to interpret totals and ranges, removes the false claim that chat only occurs live, retains PNG export details.
+
+| Revised claim or retained core behavior | Current source opened |
+| --- | --- |
+| Ranges remembered, four tabs and recaps independent of range | dashboard/src/views/dashboard/analytics/AnalyticsView.vue:35-82; dashboard/src/api/analytics.ts:27-31 |
+| No-data behavior and chat-lines/live-hour figure | dashboard/src/views/dashboard/analytics/AnalyticsOverview.vue:75-110 |
+| Chat grid includes all stored messages, grouped in channel zone | server/src/NomNomzBot.Infrastructure/Services/Analytics/ChannelAnalyticsService.cs:441-525 |
+| Recap real widget preview and size handling | dashboard/src/views/dashboard/analytics/RecapPreview.vue:30-110; recapExport.ts:19-38; AnalyticsRecaps.vue |
+| UI labels, period tables and error states | dashboard/src/views/dashboard/analytics/i18n/en.json; AnalyticsChat.vue:38-90 |
+| Default role | server/src/NomNomzBot.Infrastructure/Content/Identity/ActionDefinitionSeeder.cs:442 |
+
+The practical scenarios are recommended uses of these verified controls, not promises of a new feature. Unchanged reference details were compared with the current view, labels and relevant implementation. Runtime platform calls were not performed.
+
+## Historical evidence
+
+The prior review is retained for its detailed claim inventory. Its verdict and file hashes refer to the earlier article; where the new evidence differs, the new evidence takes precedence.
+
+# Fact-check: /reference/community/analytics
+Historical verdict: PASS
 Reviewed: C:\Projects\NoMercyLabs\nomnomzbot-docs\src\content\reference\en\community\analytics.mdx
 Reviewed-SHA: f6f057b1e042ff46
 

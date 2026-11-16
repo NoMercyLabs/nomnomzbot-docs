@@ -1,7 +1,17 @@
-# Reader review: src/content/reference/en/community/analytics.mdx
+# Independent reader review: /reference/community/analytics
 Verdict: PASS
-Reviewed: C:\Projects\NoMercyLabs\nomnomzbot-docs\src\content\reference\en\community\analytics.mdx
-Reviewed-SHA: f6f057b1e042ff46
+Reviewed: src/content/reference/en/community/analytics.mdx
+Reviewed-SHA: 345b0ae4c5bdcb08b1202f453a1aa49a299c913db09bb1d000b0b559325257dc
+
+## Independent overhaul review, 2026-11-05
+
+Range, missing-data and duration-versus-total context support interpretation. The repaired feed-activity measurement boundary avoids presenting notices as ordinary viewer conversation.
+
+Reviewed independently of the article author, in actual navigation order. Current product source 54da8b631 and relevant changes since b12f4f696 were read without starting the bot, executing platform actions or changing channel data. The reader judgment follows the user's natural teaching style; old pilot mimicry, sentence caps and unrelated Atlas style gates were not applied. See [review-moderation-economy-community.md](../overhaul/review-moderation-economy-community.md) for the review scope and findings.
+
+## Prior review history
+
+The earlier text below is retained as history; it does not independently approve a later article hash.
 
 Round 1. Assumes: /reference/community/stream-page (read in full; it owns raid). Pilot for voice: /reference/commands/create-a-command (read in full). Judged against docs-work/page-conventions.md first. Reader only: no product source read. Grimoira not used, because the reader role reads the page only.
 

@@ -14,7 +14,7 @@
 import { readdirSync, readFileSync, statSync } from 'node:fs';
 import { join } from 'node:path';
 
-const root = process.argv[2] ?? 'src/content/reference';
+const roots = process.argv[2] ? [process.argv[2]] : ['src/content/reference'];
 const bareBrace = /\{[A-Za-z_][\w.:-]*\}/;
 // A placeholder such as `<song name>` reads as an unknown JSX tag and fails the build the same way.
 const placeholderTag = /<([a-z][\w-]*)(\s[^<>]*)?>/g;
@@ -30,7 +30,7 @@ function mdxFiles(dir) {
 }
 
 const problems = [];
-for (const file of mdxFiles(root)) {
+for (const file of roots.flatMap((root) => mdxFiles(root))) {
 	let inFence = false;
 	const lines = readFileSync(file, 'utf8').split(/\r?\n/);
 	lines.forEach((line, index, all) => {

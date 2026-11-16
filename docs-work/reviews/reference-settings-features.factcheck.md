@@ -1,5 +1,32 @@
-# Fact check: src/content/reference/en/settings/features.mdx
+# Independent source review: /reference/settings/features
 Verdict: PASS
+Reviewed: src/content/reference/en/settings/features.mdx
+Reviewed-SHA: 9f13c36a15ea8795
+Reviewed-SHA256: 9f13c36a15ea8795b0799ea5f606e802f8915e7dac12ac832f080fba9d28f94a
+Reviewed-Date: 2026-11-05
+Reviewer: independent reviewer, separate from article author
+Product-Revision: 54da8b6318de63b5205a0ff8db35e0b9045dd959
+
+The complete current article was read in navigation order and checked against current product source. Historical PASS entries below are leads, not approval of this revision. Atlas voice/template gates do not govern this review.
+
+## Current evidence and result
+
+Repaired: page-management refusal is distinguished from a saved enabled zero-grant local script, whose existing binding can still execute.
+
+Source files opened in this review: Platform/FeatureService.cs:43-108,133-167,186-267; CustomCode/ScriptCapabilityBroker.cs:35-139; CustomCode/ScriptRunner.cs:45-125; dashboard/settings/features/FeaturesView.vue:55-80,103-136; Content/Identity/ActionDefinitionSeeder.cs:440-441.
+
+Unqualified paths beginning Identity, CustomCode, Billing, EventStore, Engagement, Rewards, Widgets or Platform are under server/src/NomNomzBot.Infrastructure; Api and Domain identify their corresponding server projects. Dashboard shorthand is under dashboard/src/views/dashboard.
+
+Verification is read-only source review. No bot/API startup, live account authorization, channel writes, C# host/Jint execution, Docker install or restore was performed. Documentation build/render QA belongs to the combined parent pass. The SDK reference and worked-example checks additionally ran the existing read-only nnz-code-doc-check.mjs with production JavaScript bootstrap and substituted host I/O.
+
+## Historical review (superseded)
+
+# Fact check: src/content/reference/en/settings/features.mdx
+Historical verdict: PENDING
+
+2026-11-04 overhaul: the article changed, so the previous PASS and hash below are historical evidence, not approval of the current revision.
+Fresh writer source checks and article inventory are recorded under S2 in `docs-work/overhaul/settings-hosting-code.md`.
+Independent review of the changed text is pending.
 Reviewed: C:/Projects/NoMercyLabs/nomnomzbot-docs/src/content/reference/en/settings/features.mdx
 Reviewed-SHA: eccdda86f9e9f32c
 

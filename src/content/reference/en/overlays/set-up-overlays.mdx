@@ -3,9 +3,31 @@ title: Set up overlays
 description: Create an overlay in the dashboard, choose its settings, switch it on or off and keep it up to date.
 ---
 
-You make and manage the channel's overlays on the **Overlays** page in the sidebar.
-An overlay is a small web page that shows on your stream, such as an alert box or a chat box.
-OBS shows it as a browser source, which [OBS browser source](/reference/overlays/obs-browser-source) explains.
+An overlay puts part of the bot on your stream: an alert, a chat display, a caption or a player.
+It is a web page that OBS keeps open as a **Browser** source, so viewers can see or hear its output.
+You configure the bot in the dashboard and display that output in OBS; keeping the dashboard open by itself does not put anything on stream.
+
+There are two places to look.
+The **OBS** page has **Required overlays** for the bot's supplied alerts and players.
+The **Overlays** page holds your other overlays and their settings, health and code.
+
+## Put the supplied overlays on stream
+
+Start here if you want alerts, speech, sounds, music or media share without writing code.
+Open **OBS**, choose **Overlays in OBS**, and find **Required overlays**.
+Each row's **Connect** button (**Configure** once the source is loaded in OBS) opens a setup dialog with the OBS settings for that source and a **Copy address** button.
+The dialog does not show the address itself.
+
+Choose the source for the feature you are setting up: **Alerts** for visual notifications, **Bot Audio** for sound clips, **TTS caption** for speech and captions, **Music Player** for music playback, **Media share** for shared videos.
+The stage source is a transparent full-screen layer for one-off effects that a command or pipeline triggers, such as text running across the screen, confetti, a shake or a flash.
+It draws nothing while idle.
+The raid recap is not in this list: it has its own address on the **Overlays** page.
+The **OBS control** row is the bridge page the bot needs when OBS runs on another computer.
+Choose **Copy address**, paste it into an OBS **Browser** source and follow the dimensions and audio settings in the dialog.
+[OBS browser source](/reference/overlays/obs-browser-source) walks through those steps and shows how to check the result.
+
+These supplied sources are separate from the custom list on **Overlays**.
+You do not need to make a new blank overlay or edit code to connect them.
 
 ## Who can use this page
 
@@ -15,9 +37,15 @@ The roles are explained on [Permissions](/reference/settings/permissions).
 The **Broadcaster** may also let a **VIP** open the page.
 This is set on the **Permissions** settings page, in the **Widgets** area of the **Actions** tab.
 A VIP then sees the overlays only.
+Only a role that can change overlays sees **Test**, **Edit code**, **Duplicate** and **Delete**.
+**Audio levels** follows the Sounds permission instead: you need to read sounds to see it, and to change sounds to move its sliders.
 For a VIP, **New overlay** shows "You can view this, but your role cannot change it."
 
 ## Create an overlay
+
+**New overlay** starts a custom overlay that you or someone helping you writes in code.
+For an existing overlay, changing its **Settings** is the simpler way to adjust its appearance.
+The code path is optional; [Widgets, actions and templates](/reference/code/sdk-widgets-actions-templates) covers the programming tools.
 
 1. Open **Overlays** in the sidebar and choose **New overlay**.
    The **New overlay** dialog opens.
@@ -36,8 +64,8 @@ The code language cannot change after you create the overlay.
 When **Name** is empty, the dialog shows "Give the overlay a name."
 Nothing is made.
 
-A new overlay has no code yet.
-You write its code with **Edit code** (see [Change the code](#change-the-code)).
+A new overlay starts from a starter for the language you chose, so **Edit code** opens at once.
+You change its code with **Edit code** (see [Change the code](#change-the-code)).
 What an overlay can react to is explained on [Widgets and alerts](/reference/overlays/widgets-and-alerts).
 
 ## Find an overlay
@@ -71,6 +99,10 @@ The dot adds whether the last run failed.
 | Red | The last run failed. The row also shows **Fails**. |
 | Orange | The last run did not fail, and no browser source has the overlay open. |
 | Green | The last run did not fail, and a browser source has the overlay open. |
+
+Each row also has a **Connect** button (**Configure** once a browser source has it open).
+It opens the OBS setup dialog for that overlay, with its size, the OBS boxes to set and **Copy address**.
+The button is disabled while the overlay has no address yet.
 
 ## What an open overlay shows
 
@@ -110,6 +142,7 @@ The second line says whether a browser source has the overlay open.
 Choose **Test** beside an event under **Reacts to**.
 The bot sends a sample of that event to this overlay only.
 The row then shows "Sent to this overlay", or "Sent, but no browser source has it open".
+When the overlay did not accept the sample, it shows "This overlay does not react to this event".
 
 ## Keep an overlay up to date
 
@@ -125,6 +158,7 @@ Every browser source that has the overlay open gets the new settings at once.
 When the save fails, the panel shows "Not saved. Your changes are still here; try again."
 A value that differs from its default has a reset button, named "Reset" with the setting name and "to default".
 An overlay without settings shows "This overlay has no settings."
+An overlay that has saved values but no settings form shows "This overlay has no settings form. These are its saved values." and lists those values read-only.
 
 ### Change the code
 
@@ -134,7 +168,7 @@ An overlay without settings shows "This overlay has no settings."
    The bot turns the code into the version the overlay runs.
    The editor shows "Saved and compiled. The overlay now runs this version."
 
-The code SDK is described on [Widgets and alerts](/reference/overlays/widgets-and-alerts).
+The code SDK is described in the separate [Code and SDK section](/reference/code/sdk-widgets-actions-templates).
 
 ### Switch an overlay on or off
 
@@ -145,7 +179,9 @@ A switched-off overlay does not run until you switch it on.
 ## Copy an overlay
 
 Choose **Duplicate** at the bottom of an open overlay.
-The copy opens at once, so you can change it.
+The copy is named "Copy of" followed by the original name, and it opens at once, so you can change it.
+An overlay with no compiled code yet cannot be copied.
+The error shows under the footer.
 
 ## Delete an overlay
 

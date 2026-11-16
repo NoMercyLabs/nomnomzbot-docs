@@ -10,5 +10,5 @@ for f in Alerts Chat Commands Community CustomEvents Dashboard Economy Engagemen
   SRC="$SRC $P/server/src/NomNomzBot.Application/$f"
 done
 SRC="$SRC $P/server/src/NomNomzBot.Infrastructure/DevPlatform $P/server/src/NomNomzBot.Infrastructure/CustomCode"
-SK=C:/Users/patri/.claude/plugins/synced/81b462c7-2811-4d22-8dc6-1ed1d81145e9_efc3797e-8441-42ad-9a49-eb4710aa02fe/nomercylabs~g2/skills/atlas/scripts/check_docs.py
-exec python -I "$SK" "$1" --map docs-work/map.md --src $SRC --docs src/content/reference/en
+SK=C:/Projects/NoMercyLabs/skills/skills/atlas/scripts/check_docs.py
+exec python -E -s "$SK" "$1" --map docs-work/map.md --src $SRC --docs src/content/reference/en

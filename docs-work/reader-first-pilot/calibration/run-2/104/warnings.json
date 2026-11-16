@@ -1,0 +1,22 @@
+{
+  "fingerprint": "72d44cc742f8abef1b793f17cb1d94dfdec729df0175e93c5f800939e843cdfe",
+  "metrics": {
+    "non_code_words": 2040,
+    "table_rows": 41,
+    "first_numbered_step_after_words": 282
+  },
+  "warnings": [
+    {
+      "id": "length",
+      "message": "2040 non-code words, including table text; diagnostic threshold 600"
+    },
+    {
+      "id": "first-numbered-step",
+      "message": "first numbered step follows 282 words; inspect prerequisites before changing order"
+    },
+    {
+      "id": "paragraph-23",
+      "message": "paragraph 23: approximately 5 sentences"
+    }
+  ]
+}

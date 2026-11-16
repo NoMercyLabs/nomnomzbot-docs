@@ -1,3 +1,23 @@
+# Current independent reader review
+
+Verdict: PASS
+Reviewed: src/content/reference/en/integrations/supporter-sources.mdx
+Reviewed-SHA: ba43d7246851fa8e8858d01c497170158f9d44750da9953948b0b49f823bd817
+Reviewed-SHA256: ba43d7246851fa8e8858d01c497170158f9d44750da9953948b0b49f823bd817
+Reviewed-Date: 2026-11-05
+Reviewer: independent media-section reviewer
+Product: 54da8b6318de63b5205a0ff8db35e0b9045dd959 plus preserved current music UI edits
+
+Readers begin with their existing supporter service, then follow the correct secret/account/webhook path. The DonorDrive address distinction prevents a wrong credential setup. Connected is explicitly separated from event delivery, and pause/removal/dedup behavior preserves operational detail.
+
+The full page was read with adjacent navigation and related links. The owner's natural explanatory style governs: no Atlas sentence caps, pilot imitation or rigid article template was imposed. No substantive reader finding remains at this hash. Combined build, rendered-output and link/frontmatter checks belong to the lead's separate validation.
+
+Report: docs-work/overhaul/review-automation-media-integrations.md.
+
+## Historical evidence
+
+Older hashes and verdicts below are retained for history and are not the current review.
+
 # Reader review: C:\Projects\NoMercyLabs\nomnomzbot-docs\src\content\reference\en\integrations\supporter-sources.mdx
 Verdict: PASS
 Reviewed: C:\Projects\NoMercyLabs\nomnomzbot-docs\src\content\reference\en\integrations\supporter-sources.mdx

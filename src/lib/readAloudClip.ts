@@ -20,7 +20,7 @@
 // is asked for as urgent and goes to the front of the queue.
 
 // `fresh` asks for the network and not the browser cache: a retry must not read back the bad answer it retries.
-export type ClipFetch = (url: string, options?: { fresh?: boolean }) => Promise<Pick<Response, 'ok' | 'status' | 'blob'>>;
+export type ClipFetch = (url: string, options?: { fresh?: boolean; signal?: AbortSignal }) => Promise<Pick<Response, 'ok' | 'status' | 'blob'>>;
 
 export interface ClipCache {
   clip: (text: string, lang: string, urgent?: boolean) => Promise<string | null>;
@@ -91,16 +91,20 @@ function worthTryingAgain(status: number): boolean {
   return status === 429 || status >= 500;
 }
 
-export function createClipCache(base: string, fetchClip: ClipFetch, retryDelayMs = 400): ClipCache {
+export function createClipCache(base: string, fetchClip: ClipFetch, retryDelayMs = 400, requestTimeoutMs = 30000): ClipCache {
   const clips = new Map<string, Promise<string | null>>();
+  const controllers = new Set<AbortController>();
   let down = false;
+  let generation = 0;
 
-  async function load(text: string, lang: string): Promise<string | null> {
+  async function request(text: string, lang: string, startedIn: number, signal: AbortSignal): Promise<string | null> {
     let refused = false;
     for (let attempt = 1; attempt <= TRIES; attempt += 1) {
       if (attempt > 1) await new Promise(resolve => setTimeout(resolve, retryDelayMs * (attempt - 1)));
+      if (startedIn !== generation || signal.aborted) return null;
       try {
-        const response = await fetchClip(clipUrl(base, text, lang), { fresh: attempt > 1 });
+        const response = await fetchClip(clipUrl(base, text, lang), { fresh: attempt > 1, signal });
+        if (startedIn !== generation || signal.aborted) return null;
         if (!response.ok) {
           refused = true;
           if (worthTryingAgain(response.status)) continue;
@@ -108,6 +112,7 @@ export function createClipCache(base: string, fetchClip: ClipFetch, retryDelayMs
         }
         refused = false;
         const blob = await response.blob();
+        if (startedIn !== generation || signal.aborted) return null;
         // An empty clip cannot be played (a browser's range request on it fails). It is tried again; if it stays
         // empty it is one sentence's problem, not the server's: the browser voice reads that sentence and the
         // next one asks the bot again.
@@ -119,8 +124,29 @@ export function createClipCache(base: string, fetchClip: ClipFetch, retryDelayMs
       }
     }
     // Only a bot that keeps refusing is skipped for the rest of the reading.
-    if (refused) down = true;
+    if (refused && startedIn === generation) down = true;
     return null;
+  }
+
+  async function load(text: string, lang: string, startedIn: number): Promise<string | null> {
+    const controller = new AbortController();
+    controllers.add(controller);
+    let cancel: () => void = () => {};
+    const interrupted = new Promise<null>(resolve => {
+      cancel = () => resolve(null);
+      controller.signal.addEventListener('abort', cancel, { once: true });
+    });
+    const timer = setTimeout(() => {
+      if (startedIn === generation) down = true;
+      controller.abort();
+    }, requestTimeoutMs);
+    try {
+      return await Promise.race([request(text, lang, startedIn, controller.signal), interrupted]);
+    } finally {
+      clearTimeout(timer);
+      controller.signal.removeEventListener('abort', cancel);
+      controllers.delete(controller);
+    }
   }
 
   // A fresh clip takes 3 to 13 s, so one at a time stacked the waits. A few together, still started in order.
@@ -140,7 +166,7 @@ export function createClipCache(base: string, fetchClip: ClipFetch, retryDelayMs
       const waiting: Waiting = {
         key,
         start: () => {
-          const loaded = down ? Promise.resolve(null) : load(text, lang);
+          const loaded = down ? Promise.resolve(null) : load(text, lang, generation);
           void loaded.then((url) => {
             active -= 1;
             resolve(url);
@@ -178,6 +204,8 @@ export function createClipCache(base: string, fetchClip: ClipFetch, retryDelayMs
     },
     serverDown: () => down,
     reset: () => {
+      generation += 1;
+      controllers.forEach(controller => controller.abort());
       queue.splice(0).forEach(waiting => waiting.cancel());
       for (const pending of clips.values()) {
         void pending.then(url => url && URL.revokeObjectURL(url));

@@ -1,0 +1,103 @@
+{
+  "fingerprint": "a2ba2092f13ec6857927a3bd67905c6796f0fd5c8447b67fab7eced730495cc0",
+  "verdict": "PASS",
+  "answers": [
+    {
+      "question": 1,
+      "answer": "Open the existing command in Commands for the selected channel. Keep Who can use it at Everyone, open Trigger and cooldowns, set Chat cooldown (seconds) to 10 and Per-person cooldown (seconds) to 60, then choose Save changes. The unsaved-change count disappears and the save button turns off; the closed group reads 10 s chat · 60 s per person.",
+      "quote": [
+        "Open the command and keep Who can use it at Everyone.",
+        "Open Trigger and cooldowns.",
+        "Enter 10 in Chat cooldown (seconds) and 60 in Per-person cooldown (seconds).",
+        "Choose Save changes. The unsaved-change count disappears and the save button turns off.",
+        "Close Trigger and cooldowns and its heading shows “10 s chat · 60 s per person”."
+      ]
+    },
+    {
+      "question": 2,
+      "answer": "No. A bot-assigned Editor who is an ordinary platform viewer experiences normal waits; the bot role alone does not grant platform-moderator bypass. To reproduce normal waits, use an eligible account that is neither platform broadcaster nor platform moderator, with enough command access. The bot must be connected and running, the command enabled, the trigger correct, and the stream live unless offline commands are enabled.",
+      "quote": [
+        "A Moderator, Lead moderator or Editor role assigned inside the bot can grant command access, but does not by itself grant that cooldown bypass.",
+        "An Editor who is an ordinary platform viewer experiences the normal waits. To test ordinary behavior, use an account that is neither the platform broadcaster nor a platform moderator and still meets the command’s access requirement.",
+        "Test with an ordinary viewer account to experience these waits. The bot must be running and connected, the command enabled, and the message must fit its trigger.",
+        "Ordinary viewers also need enough command access and a live stream, unless Keep commands and rewards on while offline is on."
+      ]
+    },
+    {
+      "question": 3,
+      "answer": "Yes, A can use at t=60 if nothing else intervenes: A's 60-second personal wait and B's shared wait from t=50 both end then. A's refused attempt at t=5 restarted neither wait.",
+      "quote": [
+        "At 5 seconds, A tries again. The attempt is refused and restarts neither wait.",
+        "If viewer B uses it at 50 seconds, B starts a new shared wait. A’s personal wait and that shared wait both end at 60 seconds, so A can use it then if nothing else intervenes."
+      ]
+    },
+    {
+      "question": 4,
+      "answer": "The Artist badge alone does not qualify, so this viewer's command does not run and by default chat receives the permission refusal. The bot also attempts to speak the refusal even with Read it aloud off. Actual audio depends on the channel's TTS setup/settings/playback, and denial attempts have a per-viewer 30-second throttle. A positive Minimum bits setting blocks the speech; moderator approval can hold it in a queue the current dashboard cannot review.",
+      "quote": [
+        "An Artist badge alone does not pass an Artists command requirement. The person needs Artist standing recorded in the bot or a higher qualifying role.",
+        "The command does not run. By default, the bot replies in chat in the channel’s one bot voice: “You don’t have permission to use that command.”",
+        "It also attempts to speak that line in the channel’s bot voice, even when the command’s Read it aloud switch is off.",
+        "You do not need text to speech to set access or cooldowns. To hear a refusal, the channel’s TTS setup, settings and playback must allow it.",
+        "The bot attempts denial speech at most once every 30 seconds for each viewer in a channel, shared across all denied commands."
+      ]
+    },
+    {
+      "question": 5,
+      "answer": "No material obstacle for the requested settings or scenarios. The required edit permission and existing-command prerequisite appear before the save procedure; the procedure supplies the three settings, save action and confirmation. The later reference answers the account, timing and Artist/refusal scenarios explicitly, without requiring me to supply product knowledge.",
+      "quote": [
+        "Open the command on Commands in the selected channel. You need permission to edit commands: the requirement starts at Moderator, including higher roles, and the broadcaster can raise it.",
+        "If the command does not exist yet, create it first.",
+        "Enter 10 in Chat cooldown (seconds) and 60 in Per-person cooldown (seconds)."
+      ]
+    },
+    {
+      "question": 6,
+      "answer": "No material read-aloud failure. The timing example states the actors and endpoints in full sentences, so the requested interaction between waits can be followed without relying on table layout. The repeated troubleshooting headings are only minor repetition.",
+      "quote": [
+        "If viewer B uses it at 50 seconds, B starts a new shared wait. A’s personal wait and that shared wait both end at 60 seconds, so A can use it then if nothing else intervenes.",
+        "Troubleshooting",
+        "When something is not right"
+      ]
+    }
+  ],
+  "findings": [],
+  "warnings_released": true,
+  "warning_review": [
+    {
+      "id": "length",
+      "decision": "keep",
+      "reason": "The short save procedure precedes the reference, while later sections supply the requested timing, platform-role and denial-speech cases. The review completed all required answers without an external detour; the word count alone establishes no reader cost."
+    },
+    {
+      "id": "paragraph-2",
+      "decision": "keep",
+      "reason": "This paragraph establishes edit access, the existing-command prerequisite and the chat-trigger scope before the settings procedure. Each condition prevents applying the procedure to an unavailable command or a timer/reward invocation with different rules."
+    },
+    {
+      "id": "paragraph-18",
+      "decision": "keep",
+      "reason": "The distinctions between platform badges and stored roles are necessary to answer the Artist-only scenario. The paragraph directly says the badge alone fails and identifies the required stored or higher role, so its sentence count does not leave the reader guessing."
+    },
+    {
+      "id": "paragraph-19",
+      "decision": "keep",
+      "reason": "The paragraph distinguishes bot access from platform moderation and identifies Permissions for management. That distinction supports the Editor cooldown-bypass question; multiple platform examples do not cause a material obstacle."
+    },
+    {
+      "id": "sentence-20-2",
+      "decision": "keep",
+      "reason": "The flagged span contains the quoted chat refusal and the separate statement that speech can be attempted with Read it aloud off. Both are needed for the application case, and the quotation boundary explains the diagnostic's combined count."
+    },
+    {
+      "id": "paragraph-21",
+      "decision": "keep",
+      "reason": "These are concrete reasons denial speech may not be heard: TTS readiness, positive Minimum bits and an approval queue the dashboard cannot review. They qualify the speech answer rather than block setting cooldowns; sentence count alone is not a failure."
+    },
+    {
+      "id": "paragraph-22",
+      "decision": "keep",
+      "reason": "The paragraph explains one shared denial-speech throttle, what starts it, its platform bypass and how it differs from other cooldowns. Keeping those limits together prevents interpreting missing audio as command cooldown behavior; the review found no unresolved task confusion."
+    }
+  ]
+}

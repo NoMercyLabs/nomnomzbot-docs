@@ -1,0 +1,18 @@
+{
+  "fingerprint": "d0fa874a2aaea87f7d4dd06399c6dc6058a6ed22080ab8aaf2b3a3a970823e23",
+  "metrics": {
+    "non_code_words": 1164,
+    "table_rows": 11,
+    "first_numbered_step_after_words": 569
+  },
+  "warnings": [
+    {
+      "id": "length",
+      "message": "1164 non-code words, including table text; diagnostic threshold 600"
+    },
+    {
+      "id": "first-numbered-step",
+      "message": "first numbered step follows 569 words; inspect prerequisites before changing order"
+    }
+  ]
+}

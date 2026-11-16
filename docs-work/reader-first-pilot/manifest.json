@@ -1,0 +1,32 @@
+[
+  {
+    "page": "new/commands/create-a-command.mdx",
+    "card": "cards/create-a-command.md",
+    "reviews": "reviews",
+    "result": "results/create-a-command.log"
+  },
+  {
+    "page": "new/commands/cooldowns-and-permissions.mdx",
+    "card": "cards/cooldowns-and-permissions.md",
+    "reviews": "reviews",
+    "result": "results/cooldowns-and-permissions.log"
+  },
+  {
+    "page": "new/automation/timers-and-chat-triggers.mdx",
+    "card": "cards/timers-and-chat-triggers.md",
+    "reviews": "reviews",
+    "result": "results/timers-and-chat-triggers.log"
+  },
+  {
+    "page": "new/commands/built-in-commands.mdx",
+    "card": "cards/built-in-commands.md",
+    "reviews": "reviews",
+    "result": "results/built-in-commands.log"
+  },
+  {
+    "page": "new/self-hosting/first-run-setup.mdx",
+    "card": "cards/first-run-setup.md",
+    "reviews": "reviews",
+    "result": "results/first-run-setup.log"
+  }
+]

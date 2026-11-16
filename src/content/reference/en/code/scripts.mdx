@@ -1,11 +1,13 @@
 ---
-title: Code scripts (Draft)
+title: Code scripts
 description: Create, edit, test, switch on and delete a code script on the Scripts page, and read why a save or a run failed.
 ---
 
-You write small scripts for the bot on the **Scripts** page in the sidebar.
-A code script is a piece of code that a [pipeline](/reference/commands/pipelines) step runs.
-This page is part of **Code and SDK (Draft)**: it describes only what the bot does today.
+Scripts let you write custom logic when a reply template or a visual [pipeline](/reference/commands/pipelines) does not cover what you want.
+You might read a saved value, make a decision, then send a reply or invoke a bot action.
+A script can run directly from a command or from a **Run script** pipeline step.
+
+This section is for readers who want to write code; everyday commands and automation do not require it.
 
 ## Turn on Custom Code
 
@@ -33,6 +35,7 @@ The broadcaster may raise this, or give it to one named person, on the **Permiss
 
 The new script starts with a small example.
 The example picks a number from 1 to a die size and sends nothing to chat yet.
+It starts switched off, so you can edit and test it before allowing live triggers to run it.
 
 | Rule | What happens |
 | --- | --- |
@@ -47,6 +50,8 @@ Nothing is made.
 
 The list shows each script with its name and when it last ran, or **Never run**.
 A script whose last run failed carries the **Failed** badge.
+A script whose last run worked carries the **Worked** badge.
+A script that never ran has no badge.
 **Search scripts** filters the list by name and description.
 
 | Tab | What it holds |
@@ -67,13 +72,15 @@ Its card opens beside the list.
 | --- | --- |
 | Run status | **Never run**, **Last run worked** with the time, or **Last run failed** with the error. |
 | Description | The script's description, or "This script has no description." |
-| **Runs from** | The commands, pipelines and other items that run this script. |
+| **Runs from** | The pipeline steps that run this script, with up to 5 pipeline names. |
 | **What it reads when it starts** | The values from the trigger that the code reads, such as "The words typed after the command". |
 | **What it can do** | What the script asks for, such as **Send chat messages** or **Save values**. |
 | **Version** | The number of the version that runs now. |
 | **Language** | The language of the code. |
 
-When nothing runs the script, **Runs from** shows "Nothing runs this script yet. Add it to a pipeline step."
+When no pipeline step runs the script, **Runs from** shows "Nothing runs this script yet. Add it to a pipeline step."
+A command that runs the script directly is not listed there, so the card can show this line while a command still uses the script.
+When you come from a **Run script** step, **Back to the pipeline** in the page header takes you back.
 The [script run page](/reference/code/how-a-script-runs) explains how a step runs the script.
 
 The footer reads "Each run stops after 8 s, 64 calls or 64 MB."
@@ -81,7 +88,7 @@ The footer reads "Each run stops after 8 s, 64 calls or 64 MB."
 ## Edit the code
 
 1. Pick the script and choose **Edit code**.
-   The code editor opens with the script's files and the types of the SDK.
+   The code editor opens with the script's files and SDK type information for completion and checking.
 2. Change the code.
 3. Choose **Save & Compile**.
    The bot checks and builds the code.
@@ -92,21 +99,40 @@ That version runs from now on, and **Version** on the card shows its number.
 When the build fails, the bot saves nothing.
 The editor shows the reason, and the script keeps running its last good version.
 
+Use **Explorer** to work with the project's files and **Problems** to find reported errors.
+The **SDK reference** lists calls you can insert into the code.
+The entry file is where execution begins; splitting supporting code into other files does not create extra triggers.
+
+If the editor says SDK types could not load, reopen it to try again before relying on type checking.
+Saving publishes the compiled version immediately; the script's on/off switch separately controls whether live runs are allowed.
+
+### Return to a saved version
+
+Open **History** inside the editor to see saved versions, newest first.
+Choose **Publish** on a valid earlier version to make that version the one the bot runs again.
+This changes the active version rather than undoing individual edits in your current buffer.
+
+You can delete an old saved version after confirming **Delete version**.
+The currently active version cannot be deleted; publish another version first.
+Keep a version you may want to restore, since deleting it cannot be undone.
+
 ## Test a script
 
-The **Test** card runs the script without real effects.
-"A test run is a dry run. Nothing it does reaches chat."
+The **Test** card lets you inspect a run before enabling it for chat.
+It captures outgoing chat and changes such as storage writes instead of applying them, then shows those intended effects in the timeline.
+Reads still use real data, and a web fetch still makes its request.
 
 1. Under **Trigger**, pick an event in **Event to test with (only events this script reads from)**, or leave **No event**.
    The list shows only when the code reads a value from a trigger.
 2. Choose **Run test**.
    The card shows **Worked** or **Failed** with the time in milliseconds.
 
-The test runs the version that runs now, not unsaved code in the editor.
+This card tests the saved active version, even when the script is switched off.
+It does not test unsaved edits in the code editor.
 After a run, **Timeline** lists each step: **Started**, **Chat**, **Effect**, **Console** and **Error**.
 The lines the script would send to chat are shown on the card.
 
-When you test too often, the button shows "Too many tests, wait a moment" and comes back after a short wait.
+When you test too often, **Run test** is disabled and the card shows "Too many tests, wait a moment" until the wait ends.
 
 ### Read a failed run
 
@@ -116,12 +142,27 @@ It shows the error, the file, line and column, the **Steps**, **What it did befo
 Each test run of this visit is listed under **This session**, newest first.
 On a narrow screen, **Runs** in the page header opens that list.
 The list is kept only while the page is open: a reload clears it.
+A line above the list counts the runs, for example "3 test runs so far".
+
+**Show runs** filters the list.
+The bot remembers your choice in this browser.
+
+| Choice | What it shows |
+| --- | --- |
+| **All** | Every run of this visit. |
+| **Failed** | Runs that failed. |
+| **Tests** | Runs started with an event. |
+
+Choose a failed run to open **The run failed** again.
+A run that worked is only listed; it does not open.
 
 ## Switch a script on or off
 
 Use the switch on the script's row in the list, or the switch next to **Edit code** on its card.
 
-A new script is switched on when it is made.
+A new or duplicated script starts switched off.
+After saving and testing it, switch it on and connect the command or pipeline that should run it.
+A successful test alone does not enable the script.
 
 ## Copy a script
 
@@ -131,15 +172,33 @@ A new script is switched on when it is made.
 The copy is named after the script with " copy" at the end.
 It holds the code that runs now.
 
+## If a live run does not start
+
+Check the script's switch, the **Runs from** list and the **Custom Code** feature first.
+When the channel's plan does not include code scripts, the **Scripts** page shows "Code scripts need the Base plan." at the top.
+You cannot create, edit, duplicate or switch on a script then, and the bot does not run any script.
+You can still switch a script off.
+Switching on **Custom Code** does not remove this restriction.
+The current allowance is shown on [Resource limits](/reference/settings/resource-limits).
+
+For a script that starts but fails, read **Last run failed** and test the saved version with the relevant trigger.
+[How a script runs](/reference/code/how-a-script-runs) explains the checks, execution limits and returned results.
+
 ## Delete a script
 
 1. Pick the script and choose **Delete**.
-   A dialog asks to delete the script by name and lists what uses it.
+   A dialog asks to delete the script by name and lists what goes with it: the pipeline steps that use it and its saved versions.
 2. Choose **Delete script**.
    The script is gone, and the card closes.
 
-When nothing uses the script, the dialog says "Nothing else uses this script."
+The dialog does not list commands.
+The script always has at least one saved version, so the list is rarely empty.
 A delete cannot be undone.
+
+A command that runs the script directly shows up only as a refusal after you choose **Delete script**.
+The bot refuses the delete and names the commands: "This script is used by the command(s): ... Point them at another script or delete them first."
+The script stays, and the card shows that reason.
+Move those commands to another script, or delete them, and then delete the script.
 
 ## Related pages
 

@@ -3,10 +3,13 @@ title: OBS
 description: Link OBS to the bot, switch scenes, start and stop the stream and recording, and read the health of the link.
 ---
 
-You link OBS to the bot on the **OBS** page in the sidebar.
-With the link on, the bot can switch scenes, start and stop the stream and the recording, and change sources and audio.
-The link is a remote control for OBS.
-An [overlay link](/reference/overlays/obs-browser-source) is a different thing: it only shows a page in OBS.
+The OBS connection lets you control your streaming software from NomNomzBot.
+You can switch a scene from the dashboard, mute an input while handling a problem, or let a command or reward run an OBS action through a pipeline.
+The **OBS** page brings those controls together with the connection status.
+
+An [overlay browser source](/reference/overlays/obs-browser-source) displays the bot's output inside OBS.
+This connection does a different job: it sends control requests to OBS itself.
+You can set up browser sources without granting the bot remote control of your stream.
 
 The page has three tabs.
 
@@ -26,7 +29,7 @@ The roles are explained on [Permissions](/reference/settings/permissions).
 | Open the page and see the scenes and sources | A **Moderator** and up |
 | Switch scenes, change sources, audio, studio mode and hotkeys | An **Editor** and up. The broadcaster may lower this to a moderator. |
 | Start and stop the stream and the recording | The **Broadcaster** |
-| See and change the link to OBS | The **Broadcaster** |
+| See the health line at the top, and change the link to OBS | The **Broadcaster**. Other roles do not see the line. |
 
 Without the right to control OBS, the page shows "Controlling OBS needs the Editor role or the OBS control permission."
 The controls then stay visible but are grayed out.
@@ -35,6 +38,10 @@ The controls then stay visible but are grayed out.
 
 OBS has its own remote-control server, the OBS WebSocket server.
 The bot connects to it.
+
+Use OBS Studio with its WebSocket server enabled; [OBS includes it in version 28 and later](https://obsproject.com/kb/remote-control-guide).
+The computer running the bot must be able to reach the OBS computer at the host and port you enter.
+If the bot runs in Docker, `127.0.0.1` refers to its container rather than automatically reaching the streaming PC.
 
 1. In OBS, open **Tools**, then **WebSocket Server Settings**.
    Turn the server on, and note the port and the password.
@@ -49,7 +56,12 @@ The bot connects to it.
 
 The bot keeps trying until OBS answers.
 It waits 2 seconds after a failed try, and doubles the wait each time, up to 60 seconds.
-After the first save, the button at the top reads **Edit connection**.
+While the link is on, the button at the top reads **Edit connection**.
+While the link is off, it reads **Link OBS**.
+
+Before relying on an automated action, check that the **Scenes** panel lists the same scenes as OBS.
+While you are preparing the stream, choose a scene and confirm that OBS changes to it.
+That checks control of the intended OBS instance; a green connection badge alone cannot tell you that you entered the right computer.
 
 | Field | What it does | Default |
 | --- | --- | --- |
@@ -81,7 +93,8 @@ Turn one on only when a widget needs it.
 
 ## Read the health of the link
 
-The line at the top of every tab shows two things, each with a colored dot.
+Only the broadcaster sees the line at the top of every tab.
+It shows two things, each with a colored dot.
 The first is the link to OBS.
 The second is the browser source bridge: a hidden page that runs inside OBS as a browser source.
 
@@ -99,6 +112,23 @@ The **OBS connection** dialog also shows **Last error** and **Last connected**, 
 
 The bridge is the **OBS control** row on the **Overlays in OBS** tab.
 When the bot reaches OBS through its WebSocket server, the bridge is not needed, and the line says "No bridge page is open in OBS. Only browser sources need it."
+
+### Control OBS through the bridge
+
+Use the bridge when OBS runs on another computer that the bot cannot reach.
+The bridge is a 1 x 1 browser source page that lets the bot control OBS scenes and sources.
+
+1. Open the **Overlays in OBS** tab.
+2. On the **OBS control** row, choose **Copy address**.
+3. In OBS, add the address as a browser source, and keep it open.
+
+Changing the OBS link needs the right to change it.
+Without it, the row says "Needs permission to change the OBS link."
+
+When the link uses the bridge, the top line shows:
+
+- An orange dot and "No bridge page is open in OBS" when no bridge page is open.
+- "\{count\} open, none is leading" or "\{count\} open, one is leading" when pages are open.
 
 The page title also carries one dot for the whole page.
 It shows the worst problem it finds: the link, the bridge, or an overlay that is not loaded or failed.
@@ -123,7 +153,8 @@ Choose **Stop stream** in the dialog to end it.
 Only the broadcaster may use the **Stream** and **Recording** buttons.
 Others see "Starting and stopping the stream or a recording needs the broadcast control permission."
 
-While the link is on, the **Live** tab also shows a status line from OBS: bitrate, dropped frames, CPU, FPS and memory.
+While the link is on, the **Live** tab also shows a status line from OBS.
+It shows the stream and recording state with their timers (the stream reads **Live**, **Reconnecting** or **Off**), then **Bitrate**, **Dropped frames**, **Skipped (render)**, **CPU**, **FPS**, **Memory** and **Congestion**.
 
 ## Switch scenes
 
@@ -142,7 +173,7 @@ Choose a scene to put it on air.
 
 | Panel | What you can do |
 | --- | --- |
-| **Studio mode** | Turn studio mode on, pick the **Preview scene** and the **Transition**, set **Duration (seconds)**, and choose **Transition** to put the preview on air. |
+| **Studio mode** | Turn on **Preview before air** to use studio mode. The **Transition** picker works at any time. With studio mode on, pick the **Preview scene**, set **Duration (seconds)**, and choose **Transition** to put the preview on air. The panel shows only while the link is on. |
 | **Hotkeys** | Press an OBS hotkey, as if you pressed it in OBS. **Search the hotkeys** finds one. |
 | **Source screenshot** | Pick a source and an **Image format**, then choose **Capture** to see a picture of it. |
 
@@ -153,8 +184,10 @@ The dashboard page is not the only way to control OBS.
 - A [pipeline](/reference/commands/pipelines) has 19 OBS steps, such as switching a scene, starting the recording or saving a replay. A command, a reward, an event response or a timer can run it.
 - A Stream Deck key can run the same OBS actions, as [Stream Deck and API devices](/reference/integrations/stream-deck-and-api-devices) explains.
 
-When an OBS step cannot run because OBS is not connected, the dashboard shows the notice "OBS is not connected".
-It counts the actions that could not run, and clears when OBS connects again.
+When an OBS action cannot run because OBS is not connected, the dashboard can show the notice "OBS is not connected".
+This covers OBS actions that a widget, a script, or a trigger bound directly to one OBS action ran.
+It does not cover a step inside a multi-step pipeline.
+It counts the actions that could not run, keeps them in the event journal, and clears when OBS connects again.
 Its **Open OBS** button opens this page.
 
 When the link is on, the bot also refreshes an open overlay browser source that has no connection to the bot.
@@ -175,7 +208,7 @@ Check that the OBS WebSocket server is on, and that **Host**, **Port** and **OBS
 
 **The panels say "Scenes show once the OBS link is switched on."**
 **Link to OBS** is off.
-Open **Edit connection**, turn it on and choose **Save connection**.
+Choose **Link OBS**, turn it on and choose **Save connection**.
 
 ::
 
@@ -184,6 +217,7 @@ Open **Edit connection**, turn it on and choose **Save connection**.
 **The bot runs on another computer and never connects.**
 `127.0.0.1` points at the computer the bot runs on, not at your streaming PC.
 Type the address of the computer that runs OBS in **Host**, and make sure that computer lets the bot reach the port.
+If the bot cannot reach that computer at all, use the OBS control bridge instead (see "Control OBS through the bridge" above).
 
 ::
 

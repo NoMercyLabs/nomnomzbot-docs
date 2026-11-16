@@ -1,0 +1,680 @@
+[
+  {
+    "page": "../src/content/reference/en/overview.mdx",
+    "card": "cards/overview.md",
+    "reviews": "reviews",
+    "result": "results/overview.log"
+  },
+  {
+    "page": "../src/content/reference/en/getting-started/sign-in.mdx",
+    "card": "cards/getting-started-sign-in.md",
+    "reviews": "reviews",
+    "result": "results/getting-started-sign-in.log"
+  },
+  {
+    "page": "../src/content/reference/en/getting-started/connect-platforms.mdx",
+    "card": "cards/getting-started-connect-platforms.md",
+    "reviews": "reviews",
+    "result": "results/getting-started-connect-platforms.log"
+  },
+  {
+    "page": "../src/content/reference/en/getting-started/bot-account.mdx",
+    "card": "cards/getting-started-bot-account.md",
+    "reviews": "reviews",
+    "result": "results/getting-started-bot-account.log"
+  },
+  {
+    "page": "../src/content/reference/en/getting-started/dashboard-tour.mdx",
+    "card": "cards/getting-started-dashboard-tour.md",
+    "reviews": "reviews",
+    "result": "results/getting-started-dashboard-tour.log"
+  },
+  {
+    "page": "../src/content/reference/en/getting-started/first-command.mdx",
+    "card": "cards/getting-started-first-command.md",
+    "reviews": "reviews",
+    "result": "results/getting-started-first-command.log"
+  },
+  {
+    "page": "../src/content/reference/en/self-hosting/install-with-docker.mdx",
+    "card": "cards/self-hosting-install-with-docker.md",
+    "reviews": "reviews",
+    "result": "results/self-hosting-install-with-docker.log"
+  },
+  {
+    "page": "../src/content/reference/en/self-hosting/install-without-docker.mdx",
+    "card": "cards/self-hosting-install-without-docker.md",
+    "reviews": "reviews",
+    "result": "results/self-hosting-install-without-docker.log"
+  },
+  {
+    "page": "../src/content/reference/en/self-hosting/first-run-setup.mdx",
+    "card": "cards/self-hosting-first-run-setup.md",
+    "reviews": "reviews",
+    "result": "results/self-hosting-first-run-setup.log"
+  },
+  {
+    "page": "../src/content/reference/en/self-hosting/updates.mdx",
+    "card": "cards/self-hosting-updates.md",
+    "reviews": "reviews",
+    "result": "results/self-hosting-updates.log"
+  },
+  {
+    "page": "../src/content/reference/en/commands/create-a-command.mdx",
+    "card": "cards/commands-create-a-command.md",
+    "reviews": "reviews",
+    "result": "results/commands-create-a-command.log"
+  },
+  {
+    "page": "../src/content/reference/en/commands/variables-and-templates.mdx",
+    "card": "cards/commands-variables-and-templates.md",
+    "reviews": "reviews",
+    "result": "results/commands-variables-and-templates.log"
+  },
+  {
+    "page": "../src/content/reference/en/commands/built-in-commands.mdx",
+    "card": "cards/commands-built-in-commands.md",
+    "reviews": "reviews",
+    "result": "results/commands-built-in-commands.log"
+  },
+  {
+    "page": "../src/content/reference/en/commands/cooldowns-and-permissions.mdx",
+    "card": "cards/commands-cooldowns-and-permissions.md",
+    "reviews": "reviews",
+    "result": "results/commands-cooldowns-and-permissions.log"
+  },
+  {
+    "page": "../src/content/reference/en/commands/pipelines.mdx",
+    "card": "cards/commands-pipelines.md",
+    "reviews": "reviews",
+    "result": "results/commands-pipelines.log"
+  },
+  {
+    "page": "../src/content/reference/en/commands/pick-lists.mdx",
+    "card": "cards/commands-pick-lists.md",
+    "reviews": "reviews",
+    "result": "results/commands-pick-lists.log"
+  },
+  {
+    "page": "../src/content/reference/en/commands/quotes.mdx",
+    "card": "cards/commands-quotes.md",
+    "reviews": "reviews",
+    "result": "results/commands-quotes.log"
+  },
+  {
+    "page": "../src/content/reference/en/templates/overview.mdx",
+    "card": "cards/templates-overview.md",
+    "reviews": "reviews",
+    "result": "results/templates-overview.log"
+  },
+  {
+    "page": "../src/content/reference/en/templates/activity.mdx",
+    "card": "cards/templates-activity.md",
+    "reviews": "reviews",
+    "result": "results/templates-activity.log"
+  },
+  {
+    "page": "../src/content/reference/en/templates/ad.mdx",
+    "card": "cards/templates-ad.md",
+    "reviews": "reviews",
+    "result": "results/templates-ad.log"
+  },
+  {
+    "page": "../src/content/reference/en/templates/args.mdx",
+    "card": "cards/templates-args.md",
+    "reviews": "reviews",
+    "result": "results/templates-args.log"
+  },
+  {
+    "page": "../src/content/reference/en/templates/bot.mdx",
+    "card": "cards/templates-bot.md",
+    "reviews": "reviews",
+    "result": "results/templates-bot.log"
+  },
+  {
+    "page": "../src/content/reference/en/templates/channel.mdx",
+    "card": "cards/templates-channel.md",
+    "reviews": "reviews",
+    "result": "results/templates-channel.log"
+  },
+  {
+    "page": "../src/content/reference/en/templates/charity.mdx",
+    "card": "cards/templates-charity.md",
+    "reviews": "reviews",
+    "result": "results/templates-charity.log"
+  },
+  {
+    "page": "../src/content/reference/en/templates/chat.mdx",
+    "card": "cards/templates-chat.md",
+    "reviews": "reviews",
+    "result": "results/templates-chat.log"
+  },
+  {
+    "page": "../src/content/reference/en/templates/date.mdx",
+    "card": "cards/templates-date.md",
+    "reviews": "reviews",
+    "result": "results/templates-date.log"
+  },
+  {
+    "page": "../src/content/reference/en/templates/emote.mdx",
+    "card": "cards/templates-emote.md",
+    "reviews": "reviews",
+    "result": "results/templates-emote.log"
+  },
+  {
+    "page": "../src/content/reference/en/templates/event.mdx",
+    "card": "cards/templates-event.md",
+    "reviews": "reviews",
+    "result": "results/templates-event.log"
+  },
+  {
+    "page": "../src/content/reference/en/templates/fun.mdx",
+    "card": "cards/templates-fun.md",
+    "reviews": "reviews",
+    "result": "results/templates-fun.log"
+  },
+  {
+    "page": "../src/content/reference/en/templates/goal.mdx",
+    "card": "cards/templates-goal.md",
+    "reviews": "reviews",
+    "result": "results/templates-goal.log"
+  },
+  {
+    "page": "../src/content/reference/en/templates/hypetrain.mdx",
+    "card": "cards/templates-hypetrain.md",
+    "reviews": "reviews",
+    "result": "results/templates-hypetrain.log"
+  },
+  {
+    "page": "../src/content/reference/en/templates/if.mdx",
+    "card": "cards/templates-if.md",
+    "reviews": "reviews",
+    "result": "results/templates-if.log"
+  },
+  {
+    "page": "../src/content/reference/en/templates/list.mdx",
+    "card": "cards/templates-list.md",
+    "reviews": "reviews",
+    "result": "results/templates-list.log"
+  },
+  {
+    "page": "../src/content/reference/en/templates/lookup.mdx",
+    "card": "cards/templates-lookup.md",
+    "reviews": "reviews",
+    "result": "results/templates-lookup.log"
+  },
+  {
+    "page": "../src/content/reference/en/templates/math.mdx",
+    "card": "cards/templates-math.md",
+    "reviews": "reviews",
+    "result": "results/templates-math.log"
+  },
+  {
+    "page": "../src/content/reference/en/templates/music.mdx",
+    "card": "cards/templates-music.md",
+    "reviews": "reviews",
+    "result": "results/templates-music.log"
+  },
+  {
+    "page": "../src/content/reference/en/templates/num.mdx",
+    "card": "cards/templates-num.md",
+    "reviews": "reviews",
+    "result": "results/templates-num.log"
+  },
+  {
+    "page": "../src/content/reference/en/templates/platform.mdx",
+    "card": "cards/templates-platform.md",
+    "reviews": "reviews",
+    "result": "results/templates-platform.log"
+  },
+  {
+    "page": "../src/content/reference/en/templates/poll.mdx",
+    "card": "cards/templates-poll.md",
+    "reviews": "reviews",
+    "result": "results/templates-poll.log"
+  },
+  {
+    "page": "../src/content/reference/en/templates/pronouns.mdx",
+    "card": "cards/templates-pronouns.md",
+    "reviews": "reviews",
+    "result": "results/templates-pronouns.log"
+  },
+  {
+    "page": "../src/content/reference/en/templates/quote.mdx",
+    "card": "cards/templates-quote.md",
+    "reviews": "reviews",
+    "result": "results/templates-quote.log"
+  },
+  {
+    "page": "../src/content/reference/en/templates/random.mdx",
+    "card": "cards/templates-random.md",
+    "reviews": "reviews",
+    "result": "results/templates-random.log"
+  },
+  {
+    "page": "../src/content/reference/en/templates/schedule.mdx",
+    "card": "cards/templates-schedule.md",
+    "reviews": "reviews",
+    "result": "results/templates-schedule.log"
+  },
+  {
+    "page": "../src/content/reference/en/templates/stream.mdx",
+    "card": "cards/templates-stream.md",
+    "reviews": "reviews",
+    "result": "results/templates-stream.log"
+  },
+  {
+    "page": "../src/content/reference/en/templates/target.mdx",
+    "card": "cards/templates-target.md",
+    "reviews": "reviews",
+    "result": "results/templates-target.log"
+  },
+  {
+    "page": "../src/content/reference/en/templates/text.mdx",
+    "card": "cards/templates-text.md",
+    "reviews": "reviews",
+    "result": "results/templates-text.log"
+  },
+  {
+    "page": "../src/content/reference/en/templates/user.mdx",
+    "card": "cards/templates-user.md",
+    "reviews": "reviews",
+    "result": "results/templates-user.log"
+  },
+  {
+    "page": "../src/content/reference/en/templates/var.mdx",
+    "card": "cards/templates-var.md",
+    "reviews": "reviews",
+    "result": "results/templates-var.log"
+  },
+  {
+    "page": "../src/content/reference/en/automation/timers-and-chat-triggers.mdx",
+    "card": "cards/automation-timers-and-chat-triggers.md",
+    "reviews": "reviews",
+    "result": "results/automation-timers-and-chat-triggers.log"
+  },
+  {
+    "page": "../src/content/reference/en/automation/event-responses.mdx",
+    "card": "cards/automation-event-responses.md",
+    "reviews": "reviews",
+    "result": "results/automation-event-responses.log"
+  },
+  {
+    "page": "../src/content/reference/en/automation/rewards.mdx",
+    "card": "cards/automation-rewards.md",
+    "reviews": "reviews",
+    "result": "results/automation-rewards.log"
+  },
+  {
+    "page": "../src/content/reference/en/overlays/set-up-overlays.mdx",
+    "card": "cards/overlays-set-up-overlays.md",
+    "reviews": "reviews",
+    "result": "results/overlays-set-up-overlays.log"
+  },
+  {
+    "page": "../src/content/reference/en/overlays/obs-browser-source.mdx",
+    "card": "cards/overlays-obs-browser-source.md",
+    "reviews": "reviews",
+    "result": "results/overlays-obs-browser-source.log"
+  },
+  {
+    "page": "../src/content/reference/en/overlays/widgets-and-alerts.mdx",
+    "card": "cards/overlays-widgets-and-alerts.md",
+    "reviews": "reviews",
+    "result": "results/overlays-widgets-and-alerts.log"
+  },
+  {
+    "page": "../src/content/reference/en/music/music-player.mdx",
+    "card": "cards/music-music-player.md",
+    "reviews": "reviews",
+    "result": "results/music-music-player.log"
+  },
+  {
+    "page": "../src/content/reference/en/music/song-requests.mdx",
+    "card": "cards/music-song-requests.md",
+    "reviews": "reviews",
+    "result": "results/music-song-requests.log"
+  },
+  {
+    "page": "../src/content/reference/en/audio/text-to-speech.mdx",
+    "card": "cards/audio-text-to-speech.md",
+    "reviews": "reviews",
+    "result": "results/audio-text-to-speech.log"
+  },
+  {
+    "page": "../src/content/reference/en/audio/voice-triggers.mdx",
+    "card": "cards/audio-voice-triggers.md",
+    "reviews": "reviews",
+    "result": "results/audio-voice-triggers.log"
+  },
+  {
+    "page": "../src/content/reference/en/audio/sounds.mdx",
+    "card": "cards/audio-sounds.md",
+    "reviews": "reviews",
+    "result": "results/audio-sounds.log"
+  },
+  {
+    "page": "../src/content/reference/en/audio/media-share.mdx",
+    "card": "cards/audio-media-share.md",
+    "reviews": "reviews",
+    "result": "results/audio-media-share.log"
+  },
+  {
+    "page": "../src/content/reference/en/moderation/overview.mdx",
+    "card": "cards/moderation-overview.md",
+    "reviews": "reviews",
+    "result": "results/moderation-overview.log"
+  },
+  {
+    "page": "../src/content/reference/en/moderation/automod-and-chat-filters.mdx",
+    "card": "cards/moderation-automod-and-chat-filters.md",
+    "reviews": "reviews",
+    "result": "results/moderation-automod-and-chat-filters.log"
+  },
+  {
+    "page": "../src/content/reference/en/moderation/bans-and-blocked-terms.mdx",
+    "card": "cards/moderation-bans-and-blocked-terms.md",
+    "reviews": "reviews",
+    "result": "results/moderation-bans-and-blocked-terms.log"
+  },
+  {
+    "page": "../src/content/reference/en/moderation/spam-defense.mdx",
+    "card": "cards/moderation-spam-defense.md",
+    "reviews": "reviews",
+    "result": "results/moderation-spam-defense.log"
+  },
+  {
+    "page": "../src/content/reference/en/moderation/trust-and-escalation.mdx",
+    "card": "cards/moderation-trust-and-escalation.md",
+    "reviews": "reviews",
+    "result": "results/moderation-trust-and-escalation.log"
+  },
+  {
+    "page": "../src/content/reference/en/moderation/reports.mdx",
+    "card": "cards/moderation-reports.md",
+    "reviews": "reviews",
+    "result": "results/moderation-reports.log"
+  },
+  {
+    "page": "../src/content/reference/en/moderation/shoutouts.mdx",
+    "card": "cards/moderation-shoutouts.md",
+    "reviews": "reviews",
+    "result": "results/moderation-shoutouts.log"
+  },
+  {
+    "page": "../src/content/reference/en/moderation/linked-channels.mdx",
+    "card": "cards/moderation-linked-channels.md",
+    "reviews": "reviews",
+    "result": "results/moderation-linked-channels.log"
+  },
+  {
+    "page": "../src/content/reference/en/economy/currency-and-balances.mdx",
+    "card": "cards/economy-currency-and-balances.md",
+    "reviews": "reviews",
+    "result": "results/economy-currency-and-balances.log"
+  },
+  {
+    "page": "../src/content/reference/en/economy/store.mdx",
+    "card": "cards/economy-store.md",
+    "reviews": "reviews",
+    "result": "results/economy-store.log"
+  },
+  {
+    "page": "../src/content/reference/en/economy/leaderboards-and-games.mdx",
+    "card": "cards/economy-leaderboards-and-games.md",
+    "reviews": "reviews",
+    "result": "results/economy-leaderboards-and-games.log"
+  },
+  {
+    "page": "../src/content/reference/en/community/events.mdx",
+    "card": "cards/community-events.md",
+    "reviews": "reviews",
+    "result": "results/community-events.log"
+  },
+  {
+    "page": "../src/content/reference/en/community/supporters.mdx",
+    "card": "cards/community-supporters.md",
+    "reviews": "reviews",
+    "result": "results/community-supporters.log"
+  },
+  {
+    "page": "../src/content/reference/en/getting-started/redeem-an-invite.mdx",
+    "card": "cards/getting-started-redeem-an-invite.md",
+    "reviews": "reviews",
+    "result": "results/getting-started-redeem-an-invite.log"
+  },
+  {
+    "page": "../src/content/reference/en/integrations/integrations-page.mdx",
+    "card": "cards/integrations-integrations-page.md",
+    "reviews": "reviews",
+    "result": "results/integrations-integrations-page.log"
+  },
+  {
+    "page": "../src/content/reference/en/self-hosting/admin-console.mdx",
+    "card": "cards/self-hosting-admin-console.md",
+    "reviews": "reviews",
+    "result": "results/self-hosting-admin-console.log"
+  },
+  {
+    "page": "../src/content/reference/en/economy/giveaways.mdx",
+    "card": "cards/economy-giveaways.md",
+    "reviews": "reviews",
+    "result": "results/economy-giveaways.log"
+  },
+  {
+    "page": "../src/content/reference/en/economy/polls-and-predictions.mdx",
+    "card": "cards/economy-polls-and-predictions.md",
+    "reviews": "reviews",
+    "result": "results/economy-polls-and-predictions.log"
+  },
+  {
+    "page": "../src/content/reference/en/integrations/spotify.mdx",
+    "card": "cards/integrations-spotify.md",
+    "reviews": "reviews",
+    "result": "results/integrations-spotify.log"
+  },
+  {
+    "page": "../src/content/reference/en/integrations/discord.mdx",
+    "card": "cards/integrations-discord.md",
+    "reviews": "reviews",
+    "result": "results/integrations-discord.log"
+  },
+  {
+    "page": "../src/content/reference/en/integrations/youtube.mdx",
+    "card": "cards/integrations-youtube.md",
+    "reviews": "reviews",
+    "result": "results/integrations-youtube.log"
+  },
+  {
+    "page": "../src/content/reference/en/integrations/obs.mdx",
+    "card": "cards/integrations-obs.md",
+    "reviews": "reviews",
+    "result": "results/integrations-obs.log"
+  },
+  {
+    "page": "../src/content/reference/en/integrations/stream-deck-and-api-devices.mdx",
+    "card": "cards/integrations-stream-deck-and-api-devices.md",
+    "reviews": "reviews",
+    "result": "results/integrations-stream-deck-and-api-devices.log"
+  },
+  {
+    "page": "../src/content/reference/en/integrations/vtube-studio.mdx",
+    "card": "cards/integrations-vtube-studio.md",
+    "reviews": "reviews",
+    "result": "results/integrations-vtube-studio.log"
+  },
+  {
+    "page": "../src/content/reference/en/integrations/webhooks-and-event-feeds.mdx",
+    "card": "cards/integrations-webhooks-and-event-feeds.md",
+    "reviews": "reviews",
+    "result": "results/integrations-webhooks-and-event-feeds.log"
+  },
+  {
+    "page": "../src/content/reference/en/integrations/supporter-sources.mdx",
+    "card": "cards/integrations-supporter-sources.md",
+    "reviews": "reviews",
+    "result": "results/integrations-supporter-sources.log"
+  },
+  {
+    "page": "../src/content/reference/en/community/people.mdx",
+    "card": "cards/community-people.md",
+    "reviews": "reviews",
+    "result": "results/community-people.log"
+  },
+  {
+    "page": "../src/content/reference/en/community/viewer-pages.mdx",
+    "card": "cards/community-viewer-pages.md",
+    "reviews": "reviews",
+    "result": "results/community-viewer-pages.log"
+  },
+  {
+    "page": "../src/content/reference/en/community/chat-page.mdx",
+    "card": "cards/community-chat-page.md",
+    "reviews": "reviews",
+    "result": "results/community-chat-page.log"
+  },
+  {
+    "page": "../src/content/reference/en/community/stream-page.mdx",
+    "card": "cards/community-stream-page.md",
+    "reviews": "reviews",
+    "result": "results/community-stream-page.log"
+  },
+  {
+    "page": "../src/content/reference/en/community/analytics.mdx",
+    "card": "cards/community-analytics.md",
+    "reviews": "reviews",
+    "result": "results/community-analytics.log"
+  },
+  {
+    "page": "../src/content/reference/en/settings/bot-basics-and-personality.mdx",
+    "card": "cards/settings-bot-basics-and-personality.md",
+    "reviews": "reviews",
+    "result": "results/settings-bot-basics-and-personality.log"
+  },
+  {
+    "page": "../src/content/reference/en/settings/features.mdx",
+    "card": "cards/settings-features.md",
+    "reviews": "reviews",
+    "result": "results/settings-features.log"
+  },
+  {
+    "page": "../src/content/reference/en/settings/permissions.mdx",
+    "card": "cards/settings-permissions.md",
+    "reviews": "reviews",
+    "result": "results/settings-permissions.log"
+  },
+  {
+    "page": "../src/content/reference/en/settings/readability.mdx",
+    "card": "cards/settings-readability.md",
+    "reviews": "reviews",
+    "result": "results/settings-readability.log"
+  },
+  {
+    "page": "../src/content/reference/en/settings/white-label-bot.mdx",
+    "card": "cards/settings-white-label-bot.md",
+    "reviews": "reviews",
+    "result": "results/settings-white-label-bot.log"
+  },
+  {
+    "page": "../src/content/reference/en/settings/your-data-and-privacy.mdx",
+    "card": "cards/settings-your-data-and-privacy.md",
+    "reviews": "reviews",
+    "result": "results/settings-your-data-and-privacy.log"
+  },
+  {
+    "page": "../src/content/reference/en/settings/resource-limits.mdx",
+    "card": "cards/settings-resource-limits.md",
+    "reviews": "reviews",
+    "result": "results/settings-resource-limits.log"
+  },
+  {
+    "page": "../src/content/reference/en/settings/channel-management.mdx",
+    "card": "cards/settings-channel-management.md",
+    "reviews": "reviews",
+    "result": "results/settings-channel-management.log"
+  },
+  {
+    "page": "../src/content/reference/en/settings/billing.mdx",
+    "card": "cards/settings-billing.md",
+    "reviews": "reviews",
+    "result": "results/settings-billing.log"
+  },
+  {
+    "page": "../src/content/reference/en/settings/event-journal.mdx",
+    "card": "cards/settings-event-journal.md",
+    "reviews": "reviews",
+    "result": "results/settings-event-journal.log"
+  },
+  {
+    "page": "../src/content/reference/en/code/overview.mdx",
+    "card": "cards/code-overview.md",
+    "reviews": "reviews",
+    "result": "results/code-overview.log"
+  },
+  {
+    "page": "../src/content/reference/en/code/scripts.mdx",
+    "card": "cards/code-scripts.md",
+    "reviews": "reviews",
+    "result": "results/code-scripts.log"
+  },
+  {
+    "page": "../src/content/reference/en/code/how-a-script-runs.mdx",
+    "card": "cards/code-how-a-script-runs.md",
+    "reviews": "reviews",
+    "result": "results/code-how-a-script-runs.log"
+  },
+  {
+    "page": "../src/content/reference/en/code/sdk-script-basics.mdx",
+    "card": "cards/code-sdk-script-basics.md",
+    "reviews": "reviews",
+    "result": "results/code-sdk-script-basics.log"
+  },
+  {
+    "page": "../src/content/reference/en/code/sdk-chat-music-voice.mdx",
+    "card": "cards/code-sdk-chat-music-voice.md",
+    "reviews": "reviews",
+    "result": "results/code-sdk-chat-music-voice.log"
+  },
+  {
+    "page": "../src/content/reference/en/code/sdk-data-and-storage.mdx",
+    "card": "cards/code-sdk-data-and-storage.md",
+    "reviews": "reviews",
+    "result": "results/code-sdk-data-and-storage.log"
+  },
+  {
+    "page": "../src/content/reference/en/code/sdk-widgets-actions-templates.mdx",
+    "card": "cards/code-sdk-widgets-actions-templates.md",
+    "reviews": "reviews",
+    "result": "results/code-sdk-widgets-actions-templates.log"
+  },
+  {
+    "page": "../src/content/reference/en/code/worked-example.mdx",
+    "card": "cards/code-worked-example.md",
+    "reviews": "reviews",
+    "result": "results/code-worked-example.log"
+  },
+  {
+    "page": "../src/content/reference/en/code/sdk-contracts.mdx",
+    "card": "cards/code-sdk-contracts.md",
+    "reviews": "reviews",
+    "result": "results/code-sdk-contracts.log"
+  },
+  {
+    "page": "../src/content/reference/en/code/automation-api.mdx",
+    "card": "cards/code-automation-api.md",
+    "reviews": "reviews",
+    "result": "results/code-automation-api.log"
+  },
+  {
+    "page": "../src/content/reference/en/code/webhooks-and-events.mdx",
+    "card": "cards/code-webhooks-and-events.md",
+    "reviews": "reviews",
+    "result": "results/code-webhooks-and-events.log"
+  },
+  {
+    "page": "../src/content/reference/en/audio/read-aloud-api.mdx",
+    "card": "cards/audio-read-aloud-api.md",
+    "reviews": "reviews",
+    "result": "results/audio-read-aloud-api.log"
+  }
+]

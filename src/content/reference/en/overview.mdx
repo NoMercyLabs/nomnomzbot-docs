@@ -1,97 +1,76 @@
 ---
 title: Overview
-description: Learn what NomNomzBot is, who this guide is for, the rule about use, and where each part of the guide lives.
+description: How NomNomzBot fits into your stream, which way to start, and the pages to read next.
 ---
 
-NomNomzBot is a chat bot for your stream.
-This guide shows you how to set it up and run it for your channel.
+You run NomNomzBot from a dashboard in your browser, at the web address of an installation.
+An installation is one running copy of NomNomzBot.
+You either sign in to an installation someone already runs, or you install your own.
 
-## What NomNomzBot is
+## The bot, the dashboard and your channel
 
-You set up the bot in the [dashboard](/reference/getting-started/sign-in).
-The dashboard is a website.
+The bot is the part that stays connected to your channel and answers in chat.
+The dashboard is where you set up what it does.
+It is the website of your installation, and you sign in to it with your Twitch account.
 
-The bot answers in chat in the channel's one [bot voice](/reference/getting-started/bot-account).
-It speaks aloud only through [text to speech](/reference/audio/text-to-speech).
+The dashboard sidebar shows each person only the pages their role may open.
+So a moderator sees fewer pages than the broadcaster.
 
-## Who this guide is for
+On the sign-in page, the broadcaster chooses **Continue as broadcaster**.
+That button sets up the bot on the channel of your Twitch stream, and the bot joins its chat.
+One channel can hold more than one platform connection.
+You add Kick and YouTube to it from the **Connections** panel on the dashboard's **Home** page, as [Connect platforms](/reference/getting-started/connect-platforms) shows.
 
-This guide is for streamers and their moderators.
-You do not need to write code to use it.
+To type in chat, the bot needs an account.
+It uses your channel's own bot account when you connected one, and otherwise the shared bot account when the installation has one connected.
+Without either, the bot sends its replies from your own Twitch account, so they show in chat under your name.
+So you can start without a separate bot account, and [choose one later](/reference/getting-started/bot-account).
 
-The last part of the guide, **Code and SDK (Draft)**, is for readers who write a little code.
+## Choose how to start
 
-The **Draft** label on that part means the part is not finished yet.
-The part describes only what the bot can do today.
+If someone already runs NomNomzBot for your community, ask them for its address and whether it runs the full or the lite setup.
+The setup decides whose channel you get.
+On full, each streamer who chooses **Continue as broadcaster** gets a channel of their own.
+On lite, the installation serves one channel, and everyone who signs in after the first streamer lands on that streamer's channel.
+If you cannot ask before you sign in, you find out from the channel the dashboard opens on.
 
-## The rule about use
+If nobody runs one for you, install your own with Docker.
+You need Docker and a Twitch app.
+You either register your own app, or use the shared NomNomzBot app, as [First-run setup](/reference/self-hosting/first-run-setup#1-twitch-app) shows.
+For your own channel, lite is enough.
+[Install with Docker](/reference/self-hosting/install-with-docker) helps you pick a setup and walks you through it.
 
-::Callout
+A moderator does not install a bot of their own.
+Ask the broadcaster, or whoever runs the channel's installation, for its address.
+The broadcaster signs in there first with **Continue as broadcaster**.
+That sign-in copies the channel's moderator list from Twitch into the installation.
+You are a moderator in the dashboard when you are on that list.
 
-NomNomzBot is free to use, change and share. You may not earn money with it.
+Then sign in with **Continue as moderator**.
+Pick the channel in the channel switcher at the top of the sidebar, under **Channels you moderate**.
 
-::
+## Your first task
 
-## Start here
+For a streamer, a chat command is the quickest thing to get working.
+Here you make a `schedule` command that replies with your stream times.
 
-Start with the sign-in page.
-The cards below are your first steps.
-Read the other parts of this guide when you need them.
+1. Get the address of an installation from whoever runs it, or install your own with [Install with Docker](/reference/self-hosting/install-with-docker).
+2. Open the address, choose **Continue as broadcaster**, and approve the sign-in on Twitch, as [Sign in](/reference/getting-started/sign-in) shows.
+   The dashboard opens on your channel, and the bot joins its chat.
+   On a lite installation that already serves another streamer, it opens on that streamer's channel instead, and you need another installation.
+3. Open **Commands** in the **Build** group of the dashboard sidebar, and make a command named `schedule` whose reply is your stream times, as [Your first command](/reference/getting-started/first-command) shows.
+4. In your Twitch chat, type `!schedule` and press Enter.
+   The bot answers with your stream times.
+   While you are offline, it answers only you and your moderators, unless you turn on **Keep commands and rewards on while offline**.
+   Without a bot account, the answer shows under your own Twitch name, and that is the bot answering.
 
-::IconCards
+## Next steps
 
-::IconCard {{ href: '/reference/getting-started/sign-in', name: 'Sign in', icon: 'app' }}
+- Find any dashboard page on the [Dashboard tour](/reference/getting-started/dashboard-tour).
+- Add Kick and YouTube on [Connect platforms](/reference/getting-started/connect-platforms).
+- See which account the bot types from, and set its line marker, on [Bot account](/reference/getting-started/bot-account).
+- Write [scripts](/reference/code/scripts) or connect your own tools.
 
-Sign in to the dashboard.
+## Using NomNomzBot
 
-::IconCard {{ href: '/reference/getting-started/connect-platforms', name: 'Connect your platforms', icon: 'app' }}
-
-Connect the platforms you stream on.
-
-::IconCard {{ href: '/reference/getting-started/bot-account', name: 'The bot account', icon: 'app' }}
-
-Learn which account the bot uses in chat.
-
-::IconCard {{ href: '/reference/getting-started/dashboard-tour', name: 'Dashboard tour', icon: 'app' }}
-
-Find your way around the dashboard sidebar and the Home page.
-
-::IconCard {{ href: '/reference/getting-started/first-command', name: 'Your first command', icon: 'app' }}
-
-Make one chat command and see the bot answer it.
-
-::
-
-These two cards are optional, for readers who run the bot themselves or write a little code.
-
-::IconCards
-
-::IconCard {{ href: '/reference/self-hosting/install-with-docker', name: 'Install with Docker', icon: 'server' }}
-
-Run the bot on your own machine.
-
-::IconCard {{ href: '/reference/code/scripts', name: 'Scripts (Draft)', icon: 'api' }}
-
-Write a small script for the bot.
-
-::
-
-## What each part of the guide covers
-
-The sidebar of this guide lists the parts in this order.
-
-| Part of the guide | What it covers |
-| --- | --- |
-| Start here | Sign in, connect your platforms, the bot account, the dashboard tour and your first command |
-| Commands | [Chat commands](/reference/commands/create-a-command), [templates](/reference/commands/variables-and-templates), [built-in commands](/reference/commands/built-in-commands), [cooldowns and permissions](/reference/commands/cooldowns-and-permissions), [pipelines](/reference/commands/pipelines), [pick lists](/reference/commands/pick-lists) and [quotes](/reference/commands/quotes) |
-| Timers, events and rewards | [Timers, chat triggers](/reference/automation/timers-and-chat-triggers), [event responses](/reference/automation/event-responses) and [channel-point rewards](/reference/automation/rewards) |
-| Widgets and overlays | [Overlays](/reference/overlays/set-up-overlays) for your stream and the [widgets](/reference/overlays/widgets-and-alerts) on them |
-| Music | The [music player](/reference/music/music-player) and [song requests](/reference/music/song-requests) |
-| Voice and sound | Text to speech, [voice triggers](/reference/audio/voice-triggers), [sounds](/reference/audio/sounds) and [media share](/reference/audio/media-share) |
-| Moderation | Filters, bans, [spam defense](/reference/moderation/spam-defense), [reports](/reference/moderation/reports), [shoutouts](/reference/moderation/shoutouts) and [linked channels](/reference/moderation/linked-channels) |
-| Currency and games | The [channel currency](/reference/economy/currency-and-balances), the [store](/reference/economy/store), [games](/reference/economy/leaderboards-and-games), [giveaways](/reference/economy/giveaways), [polls and predictions](/reference/economy/polls-and-predictions) |
-| Integrations | [Spotify](/reference/integrations/spotify), [Discord](/reference/integrations/discord), [YouTube](/reference/integrations/youtube), [OBS](/reference/integrations/obs), [Stream Deck](/reference/integrations/stream-deck-and-api-devices), [VTube Studio](/reference/integrations/vtube-studio), [webhooks](/reference/integrations/webhooks-and-event-feeds) and [supporter sources](/reference/integrations/supporter-sources) |
-| Community and stream | [People](/reference/community/people), [viewer pages](/reference/community/viewer-pages), the [chat page](/reference/community/chat-page), the [stream page](/reference/community/stream-page) and [analytics](/reference/community/analytics) |
-| Settings | [Bot basics](/reference/settings/bot-basics-and-personality), [features](/reference/settings/features), [permissions](/reference/settings/permissions), [your data](/reference/settings/your-data-and-privacy) and the other channel settings |
-| Self-hosting | [Install the bot with Docker](/reference/self-hosting/install-with-docker), the [first-run setup](/reference/self-hosting/first-run-setup) and [updates](/reference/self-hosting/updates) |
-| Code and SDK (Draft) | [Scripts](/reference/code/scripts) and the SDK that scripts use |
+You may use, change and share NomNomzBot for free, for yourself, your friends and your community, but you may not earn money with it, such as by selling it or by running paid hosting on it.

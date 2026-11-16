@@ -3,9 +3,13 @@ title: AutoMod and chat filters
 description: Set the four AutoMod filters and the Twitch AutoMod levels, and make, try, switch off and remove your own chat filters.
 ---
 
-You set the bot's built-in filters on the **AutoMod filters** settings page.
-You make your own filters on the **Chat filters** settings page.
-Both pages are in the **Moderation** group of the settings.
+Filters let you handle recurring chat problems without asking a moderator to respond to every message.
+NomNomzBot offers simple switches for common problems, custom rules for your channel, and access to Twitch's own AutoMod settings.
+These systems act differently, so choose the one that fits the result you want.
+
+Use **AutoMod filters** for the bot's link, capitals, phrase and emote checks.
+Use **Chat filters** when you need your own matching rule or a choice between deleting, timing out and asking for review.
+Both pages are in the **Access** group of **Settings**; their page heading also calls them **Moderation**.
 
 | Page | What it holds |
 | --- | --- |
@@ -14,18 +18,23 @@ Both pages are in the **Moderation** group of the settings.
 
 ## Who can use these pages
 
+These are the default channel roles; the broadcaster can adjust action access on [Permissions](/reference/settings/permissions).
+
 | Who | What they may do |
 | --- | --- |
 | A **Moderator** | Open both pages and see the settings. |
 | A **Lead moderator** | Change the four AutoMod filters, and make, change and remove chat filters. |
 | The **Broadcaster** | All of the above, and change the Twitch AutoMod levels. |
 
-Someone who may only look sees the settings but cannot change them.
-On **Chat filters**, that person sees **On** or **Off** next to each filter.
+On **AutoMod filters**, someone who may only look sees the settings but cannot change them.
+On **Chat filters**, that person sees only the list: each filter's name, what it checks, its action, its match count, and **On** or **Off**.
+They cannot open a filter to see its pattern, terms or other fields.
 
 ## Set the AutoMod filters
 
-The page says: "Four filters that read every chat message. A message a filter catches is deleted. Moderators and you are never filtered."
+The four switches start off.
+When enabled, they delete matching messages, while the broadcaster and moderators remain exempt.
+The initial capitals threshold is 70 percent, and the emote limit is 10 emotes per message.
 
 1. Open **AutoMod filters** in the settings.
    The page shows four panels: **Links**, **Capital letters**, **Banned phrases** and **Emote spam**.
@@ -44,15 +53,28 @@ The page says: "Four filters that read every chat message. A message a filter ca
 **Allowed domains** and **Banned phrases** take one entry per line.
 Blank lines and entries typed twice drop out when you save.
 
+### Matching details
+
+An allowed domain also allows its subdomains: allowing `example.com` permits `www.example.com`.
+One disallowed link still makes the message match, even if it also contains an allowed link.
+Banned phrases match anywhere in the message, so a short phrase can also match inside a longer word.
+
+The capitals check counts capital letters as a share of letters, ignoring punctuation and numbers in that percentage.
+It skips messages with fewer than five letters and, with the dashboard's normal configuration, messages shorter than ten characters.
+
 **Capital letters, percent** takes a number from 1 to 100.
 **Most emotes in a message** takes a number from 1 to 50.
 A number outside its range shows "Use a number from 1 to 100." or "Use a number from 1 to 50.", and **Save** stays off.
 
+The current capitals matcher interprets a saved threshold of 1 as 100 percent, although the dashboard labels the field as a percentage.
+Use 2 through 100 when setting a percentage; the default of 70 means 70 percent.
+
 ## Set the Twitch AutoMod levels
 
 The **Twitch AutoMod** panel sits under the four filters.
-Twitch's own filter holds back messages that look hateful or crude.
-Your moderators approve or deny them, and Twitch keeps these levels.
+Twitch's own AutoMod holds messages before they appear in chat, giving moderators a chance to approve or deny them in the [review queue](/reference/moderation/overview).
+The bot's four filters delete messages after they arrive, so approving a review cannot bring those messages back.
+The Twitch levels are saved separately from the bot's switches.
 
 1. In the **Twitch AutoMod** panel, pick a level for each category.
 2. Choose **Save Twitch levels**.
@@ -93,6 +115,10 @@ When a message matches, the bot takes the action you pick.
 
 **Also catch links without https** treats text like `example.com/x` as a link.
 
+For example, to review unwanted links without removing them immediately, choose **Links**, leave **Also catch links without https** on, and select **Flag for review**.
+Add domains that your community is allowed to share, such as your own website, one per line.
+Use **Try it** with both an allowed link and an unwanted link before saving, then check the [Home review queue](/reference/moderation/overview) when a Twitch message matches.
+
 | Field | Default |
 | --- | --- |
 | **What it checks** | **Blocked terms** |
@@ -128,15 +154,22 @@ The editor then shows "The chat filter could not be saved:" with the reason.
 | --- | --- |
 | **Delete the message** | The bot deletes the message. |
 | **Time the person out** | The bot times the sender out for **Timeout length, in seconds**. |
-| **Hold for review** | The message is held for a moderator to review. |
-| **Flag for review** | The message is flagged for a moderator to review. |
-| **Step up the escalation ladder** | The sender moves one step up the [escalation ladder](/reference/moderation/trust-and-escalation). |
+| **Hold for review** | The bot removes the message. On Twitch, it also puts the message in the review queue. Allowing that review does not restore the message. |
+| **Flag for review** | On Twitch, the message stays in chat and goes to the review queue. This action does not flag Kick or YouTube messages. |
+| **Step up the escalation ladder** | Removes the message and applies the [escalation ladder](/reference/moderation/trust-and-escalation) on Twitch. If the ladder is off or unavailable, it applies the filter's timeout instead. Kick and YouTube use that timeout directly. |
 
 **Timeout length, in seconds** shows only when you choose **Time the person out**.
+A filter made with **Step up the escalation ladder** has no length of its own, so its fallback timeout is 600 seconds.
+A filter you switch from **Time the person out** keeps the length it last saved.
+You cannot change that length while **Step up the escalation ladder** is chosen.
 
 **Never filter** picks the lowest role the filter skips.
 That role and every role above it are never filtered.
 The choices run from **Twitch subscribers and above** to **Only the broadcaster**.
+
+The broadcaster and moderators are always exempt from automatic chat filters, regardless of this choice.
+The setting lets you exempt additional viewers, such as subscribers or VIPs; choosing a higher level does not make the bot filter moderators.
+When several custom filters match, the bot handles only the first matching enabled filter, starting with the oldest one.
 
 | **Never filter** choice |
 | --- |
@@ -170,7 +203,9 @@ For a pattern that is not valid, the panel shows "The pattern is not valid:" wit
 
 **Cancel** closes the editor and keeps nothing you changed.
 
-Each row shows what the filter checks, its action and how many messages it matched, for example "Blocked terms · Delete the message · 3 matches".
+Each row shows what the filter checks, its action and how many times the filter acted, for example "Blocked terms · Delete the message · 3 matches".
+A match that the platform refused, for example because the bot is not a moderator, is not counted.
+A **Flag for review** match on a Kick or YouTube message is not counted either.
 
 ## Switch a chat filter on or off
 
@@ -209,8 +244,19 @@ Choose **Save Twitch levels** in the **Twitch AutoMod** panel.
 ::Troubleshooting
 
 **A filter never catches a moderator.**
-**Never filter** skips moderators and every role above them by default.
-Pick a higher role in **Never filter** if the filter must check them too.
+The bot always skips the broadcaster and moderators.
+Changing **Never filter** does not remove that protection.
+Use the manual chat tools when a moderator's message needs attention.
+
+::
+
+::Troubleshooting
+
+**A filter matched, but the message stayed in chat.**
+The bot could not delete the message or time the person out.
+This most often means the bot is not a moderator in your channel.
+The message stays in chat, and an item appears in your attention inbox: "AutoMod could not delete a message" or "The filter could not act on" the person.
+Make the bot a moderator in your channel, then act on that message by hand.
 
 ::
 

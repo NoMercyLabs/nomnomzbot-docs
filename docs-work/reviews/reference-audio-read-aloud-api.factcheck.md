@@ -1,7 +1,54 @@
-# Fact check: src/content/reference/en/audio/read-aloud-api.mdx
+# Current targeted source review
+
+Verdict: PARTIAL
+Reviewed: src/content/reference/en/audio/read-aloud-api.mdx
+Reviewed-Date: 2026-11-06
+Reviewer: final-pass author; not an independent reviewer
+
+The full article was read. The request example now includes the Origin required by `server/src/NomNomzBot.Api/Controllers/ReadAloudOriginGate.cs:25-38` and the controller's refusal path. `ReadAloudCors.cs:47-52` defines the named policy without exposed headers; `Program.cs:300-323` separately registers the default policy. `RateLimiting/RateLimitPolicyRegistration.cs:60-71` supplies Retry-After. The [Fetch Standard](https://fetch.spec.whatwg.org/#cors-safelisted-response-header-name) confirms that this header is not automatically exposed to cross-origin scripts. These checks verify the corrected claims, not every earlier claim or live behavior. Independent full-page review remains incomplete.
+
+## Additional current source checks
+
+Additional final-pass source verification: `ReadAloudController.cs:31-101`, all of `ReadAloudService.cs` and `ReadAloudRateLimitPolicy.cs`, `TtsService.cs:42-118`, and singleton registration at `Infrastructure/DependencyInjection.cs:1387`. Corrected UTF-16 length, public GET caching/privacy, per-process admission, cache lookup after slot acquisition, queue-wait versus total timeout, duplicate concurrent cache misses and provider fallback. This is implementation inspection, not synthesis or browser testing. The source snapshot comment saying cached clips bypass the semaphore is contradicted by the executable call order and was not repeated.
+
+## Historical independent fact check
+
+The following PASS applies only to the earlier recorded hash.
+
 Verdict: PASS
+Reviewed: src/content/reference/en/audio/read-aloud-api.mdx
+Reviewed-SHA: a925a99fbc7849d079bf696152559b673d6fb4bf15c69c2d0b0144d72bb19776
+Reviewed-SHA256: a925a99fbc7849d079bf696152559b673d6fb4bf15c69c2d0b0144d72bb19776
+Reviewed-Date: 2026-11-05
+Reviewer: independent media-section reviewer
+Product: 54da8b6318de63b5205a0ff8db35e0b9045dd959 plus preserved current music UI edits
+
+The full article was read in sidebar order. Consequential defaults, permissions, prerequisites, state lifetime and effects were traced against current source; repaired findings were re-read before this verdict. This is source verification, not a live-channel or visible/audible output test.
+
+- server/src/NomNomzBot.Api/Controllers/ReadAloudController.cs:31-101 implements anonymous POST/GET, MP3, locale validation, GET cache headers and no-store controller refusals; Controllers/ReadAloudOriginGate.cs:28-38 enforces exact allowed Origin.
+- server/src/NomNomzBot.Infrastructure/Tts/ReadAloudService.cs:30-104 implements trimmed1..500 text, two synthesis slots,30-second wait and locale/catalog/default voice selection; Tts/TtsService.cs:56-110,131-174 shares bounded200-entry memory caching.
+- server/src/NomNomzBot.Api/RateLimiting/ReadAloudRateLimitPolicy.cs:25-40 implements40/minute/IP. Existing compose/public-address origin configuration was checked with the self-hosting sources; the JavaScript example is source-reviewed only.
+
+Source paths without a repeated layer prefix in a bullet are relative to its preceding Infrastructure or dashboard scope. The section report records method, repaired findings, external sources and remaining product limitations: docs-work/overhaul/review-automation-media-integrations.md.
+
+## Historical evidence
+
+Older hashes, verdicts and values below are retained for history and are not the current review.
+
+# Fact check: src/content/reference/en/audio/read-aloud-api.mdx
+Verdict: PENDING
 Reviewed: C:/Projects/NoMercyLabs/nomnomzbot-docs/src/content/reference/en/audio/read-aloud-api.mdx
-Reviewed-SHA: 71edec4abbe00716
+Reviewed-SHA: a925a99fbc7849d079bf696152559b673d6fb4bf15c69c2d0b0144d72bb19776
+
+## 2026-11-05 author source verification
+
+Author source audit complete; independent verdict pending. This hash binds the current text, not the historical PASS below. The article was read in full and revised toward the user's explainer style while preserving precise reference detail. ReadAloudController.cs; ReadAloudService.cs; ReadAloudOriginGate.cs; ReadAloudRateLimitPolicy.cs. The optional developer example handles HTTP errors, audio playback failure and object URL cleanup; locale and voice selection were traced.
+
+The section inventory and known implementation gaps are in [automation-media-integrations.md](../overhaul/automation-media-integrations.md). This is source verification, not a live-channel execution claim. Independent review must account for product changes after the original author pass at b12f4f696.
+
+## Historical review (SHA 71edec4abbe00716)
+
+Historical verdict: PASS. The earlier evidence below is retained as history and is superseded where the current article or source changed.
 
 Product: NomNomzBot origin/master 779081d10d05dc6b4150732abd77bfae4dbef1d9 (fetched this run; every file opened with `git show origin/master:<path>`).
 Method: hand-written page, so every factual claim was traced to product code. Nothing was built or run. The framework 400 (lines 35, 101-103) is traced from the controller setup, not run.

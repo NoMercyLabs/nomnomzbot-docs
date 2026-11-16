@@ -1,17 +1,15 @@
 ---
-title: Widgets, actions and templates (Draft)
+title: Widgets, actions and templates
 description: Use the widget SDK and its events, run a pipeline action from a widget or a script, send a widget an event and render a template.
 ---
 
-This page lists the widget SDK, the events a widget can receive, the parameters of every pipeline action and the calls that render a template.
-A widget uses the `NomNomz` name, and a script uses `nnz`.
-[Script basics](/reference/code/sdk-script-basics) explains the grants, the error codes and the `nnz.lastError` value of a script.
+Widget code runs in a browser source and responds to events from the bot.
+Script code runs in the bot's sandbox when a command or pipeline calls it.
+They can use the same action types, but they use different SDK objects: `NomNomz` in a widget and `nnz` in a script.
 
-::Callout
-
-**Draft**: this part of the guide is not finished yet.
-
-::
+Start with the widget methods and event payloads below when you are building an on-screen response.
+For a script, jump to [Run a pipeline action](#run-a-pipeline-action), [Send a widget an event](#send-a-widget-an-event-from-a-script), or [Render a template](#render-a-template).
+[Script basics](/reference/code/sdk-script-basics) explains script grants and errors.
 
 ## Before you start
 
@@ -51,6 +49,10 @@ Each call that registers a handler gives back `NomNomz`, so calls chain.
 The widget gets only the events it registered with `on`.
 `onAny` registers every event.
 
+The action, data, template, Spotify-token and player-report methods return promises.
+Use `await` inside an asynchronous handler, and catch rejected promises so the widget can show a useful error.
+The event-registration methods and settings reads are synchronous.
+
 ### Live events and replays
 
 The `meta` value says where an event comes from.
@@ -70,9 +72,11 @@ Every other copy gets `false`.
 A claim holds for ten minutes.
 
 Claim an event, for example with its redemption id, before you act on it.
-Then two OBS sources never both act on one event.
+Copies of the same widget share the claim; different widgets have separate claims.
+Check the resolved boolean before acting, and use a stable event identifier as the key.
+After the ten-minute window, the same key can be claimed again, so this is not permanent deduplication.
 
-The claim fails with an error when the widget is not connected to the bot, or the key is empty or over 200 characters.
+The claim fails with an error when the widget is not connected to the bot or not signed in, when the widget is not one of this channel's widgets, or when the key is empty or over 200 characters.
 Catch that error.
 
 ### Read the channel's state
@@ -89,6 +93,7 @@ Ask again each time the Spotify player wants a token.
 
 These are the names a widget passes to `NomNomz.on`.
 A field name that ends in `?` can be absent.
+The [SDK type reference](/reference/code/sdk-contracts#widget-event-names) gives the exact types, including nested objects and game-frame unions.
 
 | Event | Payload fields |
 | --- | --- |
@@ -100,7 +105,7 @@ A field name that ends in `?` can be absent.
 | `raid` | `fromUserId`, `fromDisplayName`, `fromLogin`, `viewerCount`, `user`, `viewers` |
 | `raid_recap.show` | `stream`, `channel?`, `duration?`, `peakViewers?`, `followers?`, `newFollowers?`, `subs?`, `gifters?`, `selfSubs?`, `bits?`, `raidsIn?`, `hypeTrain?`, `redemptions?`, `songRequesters?`, `chat?`, `topChatters?`, `commandsRun?` |
 | `ban`, `timeout`, `unban` | `action`, `moderatorId`, `targetUserId`, `reason?`, `durationSeconds?`, `targetDisplayName?`, `targetAvatarUrl?`, `targetPronouns?`, `targetCommunityStanding?`, `moderatorDisplayName?`, `timestamp`, `broadcasterId` |
-| `ChatMessage` | `id`, `channelId`, `userId`, `displayName`, `username`, `message`, `fragments`, `userType`, `isSubscriber`, `isVip`, `isModerator`, `isBroadcaster`, `isCheer`, `isCommand`, `badges`, `bitsAmount`, `color?`, `messageType`, `replyToMessageId?`, `replyParentMessageBody?`, `replyParentUserName?`, `timestamp`, `avatarUrl?`, `pronouns?`, `provider`, `paint?`, `isArtist`, `overlayLine?` |
+| `ChatMessage` | `id`, `channelId`, `userId`, `displayName`, `username`, `message`, `fragments`, `userType`, `isSubscriber`, `isVip`, `isModerator`, `isBroadcaster`, `isCheer`, `isCommand`, `badges`, `bitsAmount`, `color?`, `messageType`, `replyToMessageId?`, `replyParentMessageBody?`, `replyParentUserName?`, `timestamp`, `replyThreadParentMessageId?`, `avatarUrl?`, `pronouns?`, `provider`, `paint?`, `isArtist`, `overlayLine?`, `hints?`, `kind`, `noticeType?`, `systemText?`, `announcementColor?`, `sourceChannelId?`, `sourceChannelName?`, `subTier?`, `cumulativeMonths?`, `giftCount?`, `raidViewerCount?`, `recipientUserId?`, `recipientDisplayName?`, `heldStatus?`, `removed?`, `sourceBadges?`, `sourceChannelAvatarUrl?` |
 | `ChatCleared` | `clearedByUserId` |
 | `MessageDeleted` | `messageId`, `deletedByUserId`, `targetUserId`, `deletedByDisplayName` |
 | `UserMessagesCleared` | `targetUserId`, `targetUserDisplayName`, `targetUserLogin` |
@@ -135,30 +140,47 @@ A field name that ends in `?` can be absent.
 | `count` | `metric`, `value` |
 | `supporter.tip`, `supporter.membership`, `supporter.merch`, `supporter.charity` | `kind`, `supporterDisplayName`, `amountMinor?`, `currency?`, `tier?`, `quantity?`, `messageText?`, `isRecurring`, `user`, `amount?` |
 | `voice_trigger` | `word`, `count`, `stickerImageUrl?` |
-| `game.lobby`, `game.running` | One of five game frames. Their fields: `kind`, `lobbySeconds`, `maxMultiplier?`, `target?`, `radius?`, `successChance?`, `player`, `stake`, `entry?`, `phase?`, `crewSize`, `crew?`, `pot?`, `entrants?`, `multiplier`, `payout`, `landed`, `distance`, `hit` |
+| `game.lobby`, `game.running` | One of five game frames. Their fields: `kind`, `lobbySeconds`, `maxMultiplier?`, `target?`, `radius?`, `successChance?`, `player`, `stake`, `entry?`, `phase?`, `crewSize`, `crew?`, `pot?`, `entrants?`, `multiplier`, `payout`, `landed`, `distance`, `hit`, `score`, `seed`, `spawnX`. The drop frame gives a `score` from 0 to 100: 100 on the target center, 0 at the edge of the win radius or beyond. |
 | `game.resolved` | The results frame or the canceled frame. Their fields: `kind`, `results`, `crashedAt?`, `capped?`, `target?`, `radius?`, `successChance?`, `crewSize?`, `pot?`, `winner?`, `payout?`, `cancelled`, `reason` |
 | `play_sound` | `playbackUrl`, `volume`, `handle?`, `synced` |
 | `stop_sound` | `handle?`, `all` |
 | `test` | Any fields |
 | `custom.` and a source name | `fields`: each value of the custom data source, as text |
 
-This widget shows each new follower with a line from a template:
+For a widget whose template contains an element with `id="line"`, this handler updates that element with a welcome message.
+Register it from your widget's code; it is a handler excerpt rather than a complete widget project.
 
 ```js
 NomNomz.on('follow', async (data, eventType, meta) => {
-  if (meta?.test) return;
-
-  const line = await NomNomz.template.render('Welcome {name}!', { name: data.displayName });
-
-  document.querySelector('#line').textContent = line;
+  try {
+    const line = await NomNomz.template.render('Welcome {name}!', { name: data.displayName });
+    document.querySelector('#line').textContent = line;
+  } catch (error) {
+    NomNomz.reportError(String(error));
+  }
 });
 ```
+
+This example can display a test event because it changes only the visible text.
+For a widget that also stores a running total, use `meta.test` to keep test events out of that stored total.
 
 ## Run a pipeline action
 
 A pipeline action is one step of a pipeline.
-A widget and a script can run any action type in the table below.
+A widget or script can request an action type from the table below.
 A pipeline runs the same action types as steps.
+
+`wait_for_event` runs only inside a pipeline.
+From a widget or a script it gives `success: false`.
+One action call stops after 45 seconds and fails with "took too long".
+
+An action can still refuse a request because its inputs, permissions or connected service do not meet its requirements.
+Check the returned result before treating it as a success.
+
+When an action from a widget or a script starts and then fails, the failure shows in your dashboard inbox for 24 hours.
+Failures because OBS is not connected show as one notice.
+That notice goes away when OBS connects again.
+A refusal (`errorCode` set) does not make an inbox item.
 
 ### From a widget
 
@@ -167,7 +189,8 @@ A pipeline runs the same action types as steps.
 You can leave out `params` when the action has no required parameter.
 
 The call gives back a result, also when the bot refuses the action or the action fails.
-It fails with an error only when the widget is not connected to the bot.
+The promise rejects if the widget is disconnected, loses its connection while waiting, or receives a hub-level error.
+Handle rejection separately from a resolved result whose `success` is `false`.
 
 | Field | Meaning |
 | --- | --- |
@@ -180,10 +203,10 @@ It fails with an error only when the widget is not connected to the bot.
 | Refusal code | Meaning |
 | --- | --- |
 | `AUTH_REQUIRED` | The widget connection is not signed in. |
-| `FORBIDDEN` | The widget belongs to another channel, or the widget is turned off. |
+| `FORBIDDEN` | The widget's link is for a different widget, the widget is turned off, or the channel owner may not change pipelines. |
 | `NOT_FOUND` | Nothing matches. |
 | `VALIDATION_FAILED` | A value is missing or wrong. |
-| `RATE_LIMITED` | Too many calls. |
+| `RATE_LIMITED` | More than 60 action calls in one minute. Each widget has its own limit. All scripts of the channel share one limit. |
 
 Treat a code that is not in this table as a refusal too.
 
@@ -210,6 +233,7 @@ The bot posts that line in chat in the channel's one bot voice.
 
 A parameter in bold is required.
 An action with "None" takes no parameters.
+Use the [typed parameter reference](/reference/code/sdk-contracts#action-parameters) for each field's type, optionality and enum values.
 
 | Action | Parameters |
 | --- | --- |
@@ -276,7 +300,7 @@ An action with "None" takes no parameters.
 | `play_game` | **`game_type`**, **`bet`** |
 | `play_sound` | **`clip`**, `volume`, `wait_for_finish`, `synced`, `handle` |
 | `play_track_once` | **`track_uri`** |
-| `play_tts` | `text`, `segments`, `voice`, `as`, `rate` |
+| `play_tts` | `text`, `segments`, `voice`, `as`, `rate`, `mode`, `scene_token` |
 | `playlist_add` | **`playlist_id`**, `provider`, `track_uri`, `message`, `already_message` |
 | `post_quote` | `number` |
 | `redemption_fulfill` | None |
@@ -285,11 +309,14 @@ An action with "None" takes no parameters.
 | `return_value` | `value` |
 | `run_code` | **`code_script_id`** |
 | `run_pipeline` | **`pipeline`**, `mode`, `args`, `named_args`, `wait` |
+| `scene_release` | **`scene_token`** |
+| `scene_reserve` | `max_hold_seconds` |
 | `schedule_pipeline` | `pipeline`, `command`, `action_type`, `action_params`, **`delay_seconds`**, `dedupe_key` |
 | `send_discord_notification` | **`trigger_type`**, `dedupe_key` |
 | `send_message` | **`message`**, `sender`, `reply_target`, `reply_html` |
 | `send_reply` | **`message`** |
 | `send_webhook` | **`endpoint`**, `event_type` |
+| `send_whisper` | **`recipient`**, **`message`** |
 | `set_counter` | **`key`**, **`value`** |
 | `set_pronoun` | **`username`**, **`pronoun`** |
 | `set_variable` | **`name`**, `value` |
@@ -297,10 +324,13 @@ An action with "None" takes no parameters.
 | `shoutout` | **`user_id`**, `cooldown_minutes`, `global_cooldown_minutes`, `tts`, `priority`, `template` |
 | `show_raid_recap` | None |
 | `song_ban` | `reason` |
+| `song_clear_requester` | **`requester`** |
 | `song_current` | None |
 | `song_pause` | None |
 | `song_previous` | None |
 | `song_queue` | `max` |
+| `song_queue_close` | None |
+| `song_queue_open` | None |
 | `song_request` | **`query`** |
 | `song_request_favorite` | `user_id` |
 | `song_resume` | None |
@@ -314,8 +344,11 @@ An action with "None" takes no parameters.
 | `stop_sound` | `handle`, `all` |
 | `submit_media` | **`url`** |
 | `timeout` | `user_id`, **`duration`**, `reason` |
+| `tts_clear_voice` | `target_variable` |
+| `tts_set_voice` | **`voice_id`**, `target_variable` |
 | `tts_synthesize` | **`text`**, `voice`, `rate`, `pitch`, `play_on_audio` |
 | `unpermit` | `target_variable`, `role_or_capability` |
+| `unwhitelist` | `target_variable` |
 | `vts_color_tint` | **`r`**, **`g`**, **`b`**, `a`, `art_mesh_tag` |
 | `vts_load_model` | **`model`** |
 | `vts_move_model` | `x`, `y`, `rotation`, `size`, `time_seconds`, `relative` |
@@ -325,7 +358,16 @@ An action with "None" takes no parameters.
 | `wait` | `milliseconds`, `seconds` |
 | `wait_for_event` | **`event_name`**, `timeout_seconds` |
 | `wait_until_raid_fires` | None |
+| `whitelist` | `target_variable`, **`standing`** |
 | `widget_event` | **`widget_id`**, **`event_type`**, `data` |
+
+`play_tts` speaks `text`, or several voices in one clip through `segments`.
+`segments` is a list of blocks in any order: a text block with `text` and optionally `voice`, `rate`, `pitch`, `volume`, `stress` and `breakAfterMs`, or a pause block with only `pause` in milliseconds.
+A pause block adds silence after the block before it.
+A pause at the start of the list does nothing.
+When `segments` is set, it replaces `text`.
+It may be a JSON list, or a variable that holds a whole list handed over by a program; words in a whole list from one variable are used as they are, with no template resolved a second time.
+The block fields are the same as for [`nnz.api.tts.speakSequence`](/reference/code/sdk-chat-music-voice).
 
 ## Send a widget an event from a script
 
@@ -364,6 +406,8 @@ The bot renders the template for this channel.
 
 `values` fills the plain names of the template.
 Each value must be text, a number, or `true` or `false`.
+`values` is an object with at most 64 names.
+More values, or a value of another type, is refused the same way as a template that is too long.
 
 A template can be at most 4096 characters.
 An empty template or a longer one is refused.

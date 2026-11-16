@@ -21,7 +21,7 @@ import { useMobileNavigationStore } from './MobileNavigation'
 import { t } from '@/lib/i18n'
 
 // Define Result type for our search
-export interface Result {
+export interface Result extends Record<string, unknown> {
   url: string
   title: string
   pageTitle?: string
@@ -42,7 +42,7 @@ interface SearchDocument {
   order: number
 }
 
-type EmptyObject = Record<string, never>
+
 
 type Autocomplete = AutocompleteApi<
   Result,
@@ -72,7 +72,10 @@ async function loadSearchIndex(): Promise<SearchDocument[]> {
   if (searchIndexPromise) return searchIndexPromise
 
   searchIndexPromise = fetch('/searchIndex.json')
-    .then(res => res.json())
+    .then(res => {
+      if (!res.ok) throw new Error(`Search index request failed: ${res.status}`)
+      return res.json()
+    })
     .then(data => {
       searchIndexCache = data
       return data
@@ -80,6 +83,9 @@ async function loadSearchIndex(): Promise<SearchDocument[]> {
     .catch(err => {
       console.error('Failed to load search index:', err)
       return []
+    })
+    .finally(() => {
+      searchIndexPromise = null
     })
 
   return searchIndexPromise
@@ -97,6 +103,7 @@ async function searchDocs(query: string, limit: number = 5): Promise<Result[]> {
     let score = 0
     const titleLower = doc.title.toLowerCase()
     const descLower = doc.description.toLowerCase()
+    const contentLower = doc.content.toLowerCase()
 
     for (const term of searchTerms) {
       // Title matches (highest weight)
@@ -108,7 +115,7 @@ async function searchDocs(query: string, limit: number = 5): Promise<Result[]> {
         score += 10
       }
       // Content matches
-      if (doc.content.includes(term)) {
+      if (contentLower.includes(term)) {
         score += 5
       }
       // Tag matches
@@ -141,7 +148,7 @@ async function searchDocs(query: string, limit: number = 5): Promise<Result[]> {
 function useAutocomplete({ onNavigate }: { onNavigate: () => void }) {
   let id = useId()
   let [autocompleteState, setAutocompleteState] = useState<
-    AutocompleteState<Result> | EmptyObject
+    Partial<AutocompleteState<Result>>
   >({})
   let [autocomplete, setAutocomplete] = useState<Autocomplete | null>(null)
 
@@ -392,7 +399,7 @@ const SearchInput = forwardRef<
   React.ElementRef<'input'>,
   {
     autocomplete: Autocomplete | null
-    autocompleteState: AutocompleteState<Result> | EmptyObject
+    autocompleteState: Partial<AutocompleteState<Result>>
     onClose: () => void
   }
 >(function SearchInput({ autocomplete, autocompleteState, onClose }, inputRef) {
@@ -406,15 +413,16 @@ const SearchInput = forwardRef<
         data-autofocus
         className={clsx(
           'flex-auto appearance-none bg-transparent pl-10 text-zinc-900 placeholder:text-zinc-500 focus:w-full focus:flex-none focus-visible:outline-2 focus-visible:outline-emerald-500 sm:text-sm dark:text-white [&::-webkit-search-cancel-button]:hidden [&::-webkit-search-decoration]:hidden [&::-webkit-search-results-button]:hidden [&::-webkit-search-results-decoration]:hidden',
-          (autocompleteState as any).status === 'stalled' ? 'pr-11' : 'pr-4',
+          autocompleteState.status === 'stalled' ? 'pr-11' : 'pr-4',
         )}
         placeholder={t('nav.search.placeholder')}
         {...inputProps}
+        aria-label={t('nav.search.label')}
         onKeyDown={(event) => {
           if (
             event.key === 'Escape' &&
-            !(autocompleteState as any).isOpen &&
-            (autocompleteState as any).query === ''
+            !autocompleteState.isOpen &&
+            autocompleteState.query === ''
           ) {
             if (document.activeElement instanceof HTMLElement) {
               document.activeElement.blur()
@@ -426,7 +434,7 @@ const SearchInput = forwardRef<
           }
         }}
       />
-      {(autocompleteState as any).status === 'stalled' && (
+      {autocompleteState.status === 'stalled' && (
         <div className="absolute inset-y-0 right-3 flex items-center">
           <LoadingIcon className="h-5 w-5 animate-spin stroke-zinc-200 text-zinc-900 dark:stroke-zinc-800 dark:text-emerald-400" />
         </div>
@@ -522,11 +530,11 @@ function SearchDialog({
                 className="border-t border-zinc-200 bg-white empty:hidden dark:border-zinc-100/5 dark:bg-white/2.5"
                 {...(autocomplete?.getPanelProps({}) ?? {})}
               >
-                {(autocompleteState as any).isOpen && autocomplete && (
+                {autocompleteState.isOpen && autocomplete && autocompleteState.collections?.[0] && (
                   <SearchResults
                     autocomplete={autocomplete}
-                    query={(autocompleteState as any).query}
-                    collection={(autocompleteState as any).collections[0]}
+                    query={autocompleteState.query ?? ''}
+                    collection={autocompleteState.collections[0]}
                   />
                 )}
               </div>

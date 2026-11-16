@@ -12,7 +12,7 @@ Every helper key matches exactly one row of the Types table, and exactly one row
 | 10 | `{user.*}` | User helpers | /reference/templates/user | `user`, `user.*`, `viewer`, `viewer.*`, `engagement.*`, `name`, `link`, `subject`, `object`, `possessive`, `tense`, `presentTense`, `genderedTerm`, `verb:*` | 75 |
 | 20 | `{target.*}` | Target helpers | /reference/templates/target | `target`, `target.*` | 46 |
 | 30 | `{args.*}` | Command word helpers | /reference/templates/args | `args`, `args.*` | 64 |
-| 22 | `{channel.*}` | Channel helpers | /reference/templates/channel | `channel`, `channel.*`, `streamer`, `status` | 34 |
+| 22 | `{channel.*}` | Channel helpers | /reference/templates/channel | `channel`, `channel.*`, `streamer`, `status` | 35 |
 | 24 | `{stream.*}` | Stream helpers | /reference/templates/stream | `stream.*` | 62 |
 | 26 | `{chat.*}` | Chat message helpers | /reference/templates/chat | `chat.*`, `tts.*`, `link.*`, `raw`, `raw.*` | 29 |
 | 70 | `{activity.*}` | Chat activity helpers | /reference/templates/activity | `activity.*` | 19 |
@@ -74,40 +74,40 @@ The first section whose patterns match a helper takes it.
 
 ## Overview
 
-A template helper is a name in braces.
-The bot puts the real value in its place wherever a viewer sees or hears the text: in chat, on an overlay or read aloud.
-For example, `{user}` becomes the name of the person who used the command.
+Use this reference when you know what you want to put in a reply and need the right helper.
+If you are adding changing information to a command for the first time, start with [Variables and templates](/reference/commands/variables-and-templates) for a worked introduction.
+You can return here for exact names, inputs, examples, and the places each helper is available.
 
-Type the helper in a reply, an event response or a timer, with the braces.
-A helper can hold another helper.
+## Find a helper for the job
 
-A helper that the bot does not know stays in the line exactly as you wrote it.
-The **Reply** field warns you about an unknown helper before you save.
+| You want to include | Look up |
+| --- | --- |
+| The person who used the command | [User helpers](/reference/templates/user) |
+| Someone named after the command | [Target helpers](/reference/templates/target) |
+| Words a viewer typed after the command | [Command word helpers](/reference/templates/args) |
+| The current game, title, or uptime | [Stream helpers](/reference/templates/stream) |
+| Details of a follow, subscription, raid, or reward | [Event helpers](/reference/templates/event) |
+| Different wording depending on a value | [Condition helpers](/reference/templates/if) |
+| One choice from several possible answers | [Random helpers](/reference/templates/random) or [pick lists](/reference/commands/pick-lists) |
+| Pronouns and matching verbs | [Pronouns in templates](/reference/templates/pronouns) |
 
-Each place has its own set of helpers.
-Read [Variables and templates](/reference/commands/variables-and-templates) for the places, special characters and HTML.
+Most helpers are grouped by the first part of their name: `{user.*}` belongs to User helpers, while `{text.*}` belongs to Text helpers.
+Related smaller families share a page, such as polls and predictions.
+The full alphabetical list below keeps the less common families available without making you learn them first.
 
-### Find a helper by its type
+## Read the reference examples
 
-The type of a helper is the first word of its name.
-All `{user.*}` helpers are on the user page, and all `{text.*}` helpers are on the text page.
-Pronoun and grammar helpers such as `{subject}` and `{verb:plays|play}` are on the user page too.
-A word with only a few helpers joins the type it belongs to.
-For example, the prediction helpers are on the poll page.
+Copy an example with its braces, replacing any input values with your own.
+For `{text.upper:hello}`, the helper is `text.upper` and its input is `hello`, giving `HELLO`.
+In `{text.repeat:3|ha}`, the pipe separates the repetition count from the text, giving `hahaha`.
 
-### Give a helper input
+Rows containing placeholders such as `<n>` describe a family, not text to paste unchanged.
+For example, `{args.<n>}` means a numbered word: use `{args.1}` for the first word after the command.
+The **Example** column gives concrete syntax where a helper needs input.
 
-Some helpers take input.
-Type the input after a colon, as in `{text.upper:hello}`.
-Separate more than one input with a pipe, as in `{text.repeat:3|ha}`.
-A few helpers name an input, as in `{text.cut:hello world|max=8}`.
-The Example column shows a typed example and what it gives.
-
-### Write correct sentences
-
-The pronoun and grammar helpers let one reply fit every viewer.
-They give the right pronoun, verb and tense for he, she, they and other pronouns.
-Read [Pronouns in templates](/reference/templates/pronouns) to build a line that reads right for everyone.
+The **Use in** column tells you which template fields accept a helper.
+A timer has no viewer who typed it, and an event response only carries the values of its matching event, so availability matters as much as spelling.
+Unknown helpers can remain as literal text at render time; command saves also validate the helper names and reject ones that do not belong there.
 
 ## Intros
 
@@ -247,8 +247,8 @@ Use them when a reply must change with the situation.
 ### /reference/templates/random
 
 These helpers pick a random value, number, item or roll.
-They give a different value each time, so the example shows one possible result.
-Use them for a random answer or a giveaway pick.
+Each evaluation makes a random draw, so the example shows one possible result and results can repeat.
+Use them for a playful random answer; use the giveaway feature for managed entries and recorded winners.
 
 ### /reference/templates/fun
 
@@ -285,6 +285,9 @@ These helpers look up facts outside the channel: a game, the weather, a time zon
 
 ## Sample corrections
 
+- `bot.commands.list` = `!hug !lurk !song !uptime !sr`: BotCommands.cs:58-62 combines custom and built-in triggers; MusicBuiltins.cs:624 registers song.
+- `bot.commands.list.builtin` = `!song !uptime !sr`: MusicBuiltins.cs:624, UptimeBuiltin.cs:40 and SongRequestBuiltin.cs:45 identify real built-in commands.
+
 A line here replaces the product sample with a value the helper can return. Each line cites the code that proves it. The product samples to fix are in server/src/NomNomzBot.Application/Abstractions/Templating/TemplateHelperSamples.cs.
 
 - `link` = `twitch.tv/example_viewer`: LegacyTemplateHelpers.cs:634 and :646-647 build the link without https (sample at TemplateHelperSamples.cs:172).
@@ -301,6 +304,19 @@ A line here replaces the product sample with a value the helper can return. Each
 - `music.favorite.outcome` = `queued`: SongRequestFavoriteAction.cs:146, :159 and :166 set queued, unavailable or none (sample at TemplateHelperSamples.cs:208).
 
 ## Description corrections
+
+- `bot.commands.list` = "Every command that is on in this channel, as typed in chat: !hug !lurk !song !uptime !sr": BotCommands.cs:29-62 combines the enabled custom and built-in lists.
+- `bot.commands.list.builtin` = "The built-in commands that are on in this channel: !song !uptime !sr": BotCommands.cs:42-56 reads enabled built-ins; song is registered in MusicBuiltins.cs:624.
+- `bot.commands.list.forUser` = "Enabled commands whose configured minimum role is no higher than the role supplied to this reply. Cooldowns and feature-specific checks still apply": BotCommandHelpers.cs:36-49 passes the user.role seed to BotCommands.ForRole; BotCommands.cs:65-69 filters only the role floor.
+
+- `if.<path>.matches` = "Tests that a helper matches a regular expression: {if.args.2.matches:pattern:then|else}. Not available in viewer-written text": IfTemplateHelpers.cs:35-43 excludes Viewer and :170-180 rejects regex in viewer text; LogicHelperProvider.cs:47-64 selects Standard contexts.
+
+- `pick` = "Picks one of the texts at random: {pick:a|b|c}. Authored replies avoid an immediate repeat; viewer-written text can repeat": PickTemplateHelpers.cs:64-75 separates the viewer draw from NoImmediateRepeatPicker.
+
+- `if.<path>` = "Shows the first text when the named helper is true, else the second. For example, {if.stream.isLive:then|else} checks the channel live state": IfTemplateHelpers.cs:136-151 resolves the path through the actual helper resolver.
+- `if.<path>.contains` = "Tests whether a helper contains text, for example {if.args.contains:hello:hi back|}": IfTemplateHelpers.cs:155-184 and ValuePredicate.cs:31.
+- `if.<path>.endswith` = "Tests whether a helper ends with text, for example {if.args.endswith:world:yes|no}": IfTemplateHelpers.cs:155-184 and ValuePredicate.cs:33.
+- `if.<path>.gte` = "Tests whether a numeric helper is at least a number, for example {if.user.stats.streak.gte:5:regular|new}": IfTemplateHelpers.cs:155-184 and ValuePredicate.cs:37; user.stats.streak is a registered helper.
 
 A line here replaces a product description that the code contradicts. Each line cites the code that proves it.
 
@@ -371,23 +387,23 @@ A result after an arrow comes from a product test row (the test fixture's viewer
 - `roll.<name>.complement` = `{roll.pct.60.98} and {roll.pct.complement}` -> `73 and 27`: LegacyTemplateHelpers.cs:837
 - `date:<source>` = `{date:2026-12-25|format:dd/MM/yyyy HH:mm}` -> `25/12/2026 00:00`: DateExpressionParser.cs:60
 - `date:<source>|<+/-amount><unit>` = `{date:now|+1d}` -> `2026-10-27 15:30`: DateExpressionParser.cs:99
-- `if.<path>` = `{if.stream.live:on|off}` -> `on`: IfTemplateHelpers.cs:35
+- `if.<path>` = `{if.stream.isLive:on|off}` -> `on`: IfTemplateHelpers.cs:149-151 (a live stream supplies true)
 - `if.<path>.equals` = `{if.user.login.equals:viewerone:hi me|hi}` -> `hi me`: ValuePredicate.cs:29
 - `if.<path>.iequals` = `{if.user.login.iequals:VIEWERONE:yes|no}` -> `yes`: ValuePredicate.cs:30
-- `if.<path>.contains` = `{if.args.all.contains:hello:hi back|}` -> `hi back`: ValuePredicate.cs:31
+- `if.<path>.contains` = `{if.args.contains:hello:hi back|}` -> `hi back`: ValuePredicate.cs:31 (args contains hello)
 - `if.<path>.startswith` = `{if.args.1.startswith:@:mention|word}` -> `mention`: ValuePredicate.cs:32
-- `if.<path>.endswith` = `{if.args.all.endswith:world:yes|no}` -> `yes`: ValuePredicate.cs:33
+- `if.<path>.endswith` = `{if.args.endswith:world:yes|no}` -> `yes`: ValuePredicate.cs:33 (args ends in world)
 - `if.<path>.matches` = `{if.args.2.matches:^h:h-word|other}` -> `h-word`: ValuePredicate.cs:34
 - `if.<path>.gt` = `{if.count.deaths.gt:10:rough day|ok}` -> `rough day`: ValuePredicate.cs:35
 - `if.<path>.lt` = `{if.stream.viewers.lt:10:cozy|busy}` -> `busy`: ValuePredicate.cs:36
-- `if.<path>.gte` = `{if.user.months.gte:6:veteran|new}` -> `veteran`: ValuePredicate.cs:37
+- `if.<path>.gte` = `{if.user.stats.streak.gte:5:regular|new}` -> `regular`: ValuePredicate.cs:37 (a streak of five meets the threshold)
 - `if.<path>.lte` = `{if.count.wins.lte:3:keep going|great}` -> `keep going`: ValuePredicate.cs:38
 - `list.join` = `{list.join:snacks|\s/\s}` -> `chips / cookies / fruit`: ListHelpersTableTests.cs:31
 - `list.inline.join` = `{list.inline.join:\s+\s|a;b}` -> `a + b`: ListHelpersTableTests.cs:41
 - `music.now.bar` = `{music.now.bar:5}` -> `▬▬🔘▬▬`: MusicHelpersTableTests.cs:36
 - `fun.dice` = `{fun.dice:20}` -> `5`: FunHelpersTableTests.cs:38 (a random total)
 - `fun.dice.emoji` = `{fun.dice.emoji:3}` -> `⚁ ⚀ ⚂`: FunHelpersTableTests.cs:42 (random faces)
-- `fun.love` = `{fun.love:{user.display}|{target.display}}` -> `22%`: FunHelpersTableTests.cs:53 (the score is fixed for the two names and the day)
+- `fun.love` = `{fun.love:{user.display}|{target.displayname}}` -> `22%`: FunRatingHelpers.cs:33-41 (illustrative daily score; the target display-name key is target.displayname)
 - `fun.ship` = `{fun.ship:Alexander|Bo}` -> `Alexander + Bo = Alexo`: FunHelpersBehaviorTests.cs:268
 - `text.lines.count` = `{text.lines.count:a\nb}` -> `2`: TextHelpersTableTests.cs:73
 - `text.lines.first` = `{text.lines.first:a\nb}` -> `a`: TextHelpersTableA2Tests.cs:39

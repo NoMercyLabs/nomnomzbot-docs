@@ -1,7 +1,17 @@
-# Reader review: C:\Projects\NoMercyLabs\nomnomzbot-docs\src\content\reference\en\moderation\linked-channels.mdx
+# Independent reader review: /reference/moderation/linked-channels
 Verdict: PASS
-Reviewed: C:\Projects\NoMercyLabs\nomnomzbot-docs\src\content\reference\en\moderation\linked-channels.mdx
-Reviewed-SHA: a34125137427bb7f
+Reviewed: src/content/reference/en/moderation/linked-channels.mdx
+Reviewed-SHA: 0e17f3b5d9669e0fcab3648214fa6638eb89c897c8a4921882ea85716b98aaab
+
+## Independent overhaul review, 2026-11-05
+
+Three sharing mechanisms are introduced before settings. Repaired broad-versus-individual acceptance and live mass-ban exceptions give readers the necessary consequences for informed configuration.
+
+Reviewed independently of the article author, in actual navigation order. Current product source 54da8b631 and relevant changes since b12f4f696 were read without starting the bot, executing platform actions or changing channel data. The reader judgment follows the user's natural teaching style; old pilot mimicry, sentence caps and unrelated Atlas style gates were not applied. See [review-moderation-economy-community.md](../overhaul/review-moderation-economy-community.md) for the review scope and findings.
+
+## Prior review history
+
+The earlier text below is retained as history; it does not independently approve a later article hash.
 
 Route: /reference/moderation/linked-channels. Map row: Owns "linked channel". Assumes /reference/moderation/bans-and-blocked-terms (read in full). Pilot read: /reference/commands/create-a-command. The page has no includes or snippets. The `::Troubleshooting` and `<details>` blocks are read as their rendered text.
 

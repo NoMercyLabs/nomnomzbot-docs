@@ -1,3 +1,22 @@
+# Current independent reader review
+
+Verdict: PASS
+Reviewed: src/content/reference/en/templates/music.mdx
+Reviewed-SHA: e8bbf5776a745792cecbf7fe2de8c334f2f285519646608826671b443dfd2d00
+Reviewed-SHA256: e8bbf5776a745792cecbf7fe2de8c334f2f285519646608826671b443dfd2d00
+Reviewed-Date: 2026-11-05
+Reviewer: independent section reviewer
+
+The player/queue relationship is explained before the grouped lookup. The article explicitly distinguishes read-only values from playback controls and pipeline-supplied favorite/playlist-add values from general lookups.
+
+The full page was read with the preceding/following navigation context and related links. This review applies the owner's explanatory, progressive-disclosure guidance; it does not impose Atlas sentence caps, pilot mimicry or fixed article headings. No substantive reader finding remains at this hash. Build/render/link checks are recorded separately by the lead reviewer.
+
+Report: docs-work/overhaul/review-learning-commands-helpers.md.
+
+## Historical evidence
+
+The material below is retained as historical evidence; its older verdict is not the current review.
+
 # Reader review: src/content/reference/en/templates/music.mdx
 Verdict: PASS
 Reviewed: C:/Projects/NoMercyLabs/nomnomzbot-docs/src/content/reference/en/templates/music.mdx

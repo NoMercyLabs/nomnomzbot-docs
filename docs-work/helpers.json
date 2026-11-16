@@ -1,10 +1,9 @@
 {
   "meta": {
-    "productCommit": "a8f180821",
-    "dllWrittenAt": "2026-10-28T15:08:08+01:00",
-    "count": 908,
+    "productCommit": "2a4c81b1c",
+    "dllWrittenAt": "2026-11-13T21:51:22+01:00",
+    "count": 909,
     "withoutDescription": 0,
-    "driftWaiver": "b6204c36c changed the render of user.accountAge only; no row, key, sample or string",
     "textConflicts": [
       {
         "name": "template_helper_list_pick",
@@ -1149,7 +1148,7 @@
       "prefix": "args.",
       "descriptionKey": "template.helper.args.user.followAge",
       "description": "How long the viewer typed as the n-th word has followed, in words",
-      "sample": "9 months and 24 days",
+      "sample": "9 months and 21 days",
       "contexts": [
         "Command",
         "Pipeline"
@@ -2470,7 +2469,8 @@
         "Timer",
         "Pipeline",
         "Discord",
-        "Webhook"
+        "Webhook",
+        "Viewer"
       ],
       "scope": "Global",
       "freshness": "Pure",
@@ -2774,6 +2774,28 @@
       "source": null,
       "provider": "static-registry",
       "providerNamespace": null
+    },
+    {
+      "key": "channel.members",
+      "prefix": null,
+      "descriptionKey": "template.helper.channel.members",
+      "description": "How many YouTube members the channel has",
+      "sample": "12",
+      "contexts": [
+        "Command",
+        "EventResponse",
+        "Timer",
+        "Pipeline",
+        "Discord",
+        "Webhook"
+      ],
+      "scope": "Channel",
+      "freshness": "Cached",
+      "eventScoped": false,
+      "lazyArguments": false,
+      "source": "channel.youtubeMembers",
+      "provider": "ChannelTemplateHelpers",
+      "providerNamespace": "channel"
     },
     {
       "key": "channel.mention",
@@ -3344,7 +3366,8 @@
         "Timer",
         "Pipeline",
         "Discord",
-        "Webhook"
+        "Webhook",
+        "Viewer"
       ],
       "scope": "Global",
       "freshness": "Pure",
@@ -3366,7 +3389,8 @@
         "Timer",
         "Pipeline",
         "Discord",
-        "Webhook"
+        "Webhook",
+        "Viewer"
       ],
       "scope": "Global",
       "freshness": "Pure",
@@ -3388,7 +3412,8 @@
         "Timer",
         "Pipeline",
         "Discord",
-        "Webhook"
+        "Webhook",
+        "Viewer"
       ],
       "scope": "Global",
       "freshness": "Pure",
@@ -3410,7 +3435,8 @@
         "Timer",
         "Pipeline",
         "Discord",
-        "Webhook"
+        "Webhook",
+        "Viewer"
       ],
       "scope": "Global",
       "freshness": "Pure",
@@ -3432,7 +3458,8 @@
         "Timer",
         "Pipeline",
         "Discord",
-        "Webhook"
+        "Webhook",
+        "Viewer"
       ],
       "scope": "Global",
       "freshness": "Pure",
@@ -3627,10 +3654,9 @@
       "contexts": [
         "Command",
         "EventResponse",
-        "Timer",
         "Pipeline",
-        "Discord",
-        "Webhook"
+        "Webhook",
+        "Discord"
       ],
       "scope": "Viewer",
       "freshness": "Seed",
@@ -3649,14 +3675,13 @@
       "contexts": [
         "Command",
         "EventResponse",
-        "Timer",
         "Pipeline",
-        "Discord",
-        "Webhook"
+        "Webhook",
+        "Discord"
       ],
       "scope": "Viewer",
       "freshness": "Seed",
-      "eventScoped": false,
+      "eventScoped": true,
       "lazyArguments": false,
       "source": null,
       "provider": "ChatTemplateHelpers",
@@ -3671,14 +3696,12 @@
       "contexts": [
         "Command",
         "EventResponse",
-        "Timer",
         "Pipeline",
-        "Discord",
         "Webhook"
       ],
       "scope": "Viewer",
       "freshness": "Seed",
-      "eventScoped": false,
+      "eventScoped": true,
       "lazyArguments": false,
       "source": null,
       "provider": "ChatTemplateHelpers",
@@ -3693,14 +3716,13 @@
       "contexts": [
         "Command",
         "EventResponse",
-        "Timer",
         "Pipeline",
-        "Discord",
-        "Webhook"
+        "Webhook",
+        "Discord"
       ],
       "scope": "Viewer",
       "freshness": "Seed",
-      "eventScoped": false,
+      "eventScoped": true,
       "lazyArguments": false,
       "source": null,
       "provider": "ChatTemplateHelpers",
@@ -3715,14 +3737,13 @@
       "contexts": [
         "Command",
         "EventResponse",
-        "Timer",
         "Pipeline",
-        "Discord",
-        "Webhook"
+        "Webhook",
+        "Discord"
       ],
       "scope": "Viewer",
       "freshness": "Seed",
-      "eventScoped": false,
+      "eventScoped": true,
       "lazyArguments": false,
       "source": null,
       "provider": "ChatTemplateHelpers",
@@ -3872,7 +3893,8 @@
         "Timer",
         "Pipeline",
         "Discord",
-        "Webhook"
+        "Webhook",
+        "Viewer"
       ],
       "scope": "Global",
       "freshness": "Pure",
@@ -4305,7 +4327,8 @@
         "Timer",
         "Pipeline",
         "Discord",
-        "Webhook"
+        "Webhook",
+        "Viewer"
       ],
       "scope": "Global",
       "freshness": "Pure",
@@ -4629,10 +4652,9 @@
       "contexts": [
         "Command",
         "EventResponse",
-        "Timer",
         "Pipeline",
-        "Discord",
-        "Webhook"
+        "Webhook",
+        "Discord"
       ],
       "scope": "Viewer",
       "freshness": "Cached",
@@ -4651,10 +4673,9 @@
       "contexts": [
         "Command",
         "EventResponse",
-        "Timer",
         "Pipeline",
-        "Discord",
-        "Webhook"
+        "Webhook",
+        "Discord"
       ],
       "scope": "Viewer",
       "freshness": "Cached",
@@ -4896,12 +4917,13 @@
         "Timer",
         "Pipeline",
         "Discord",
-        "Webhook"
+        "Webhook",
+        "Viewer"
       ],
       "scope": "Channel",
       "freshness": "Cached",
       "eventScoped": false,
-      "lazyArguments": false,
+      "lazyArguments": true,
       "source": "catalogue",
       "provider": "EmoteTemplateHelpers",
       "providerNamespace": "emote"
@@ -4937,10 +4959,9 @@
       "contexts": [
         "Command",
         "EventResponse",
-        "Timer",
         "Pipeline",
-        "Discord",
-        "Webhook"
+        "Webhook",
+        "Discord"
       ],
       "scope": "Viewer",
       "freshness": "Cached",
@@ -4959,10 +4980,9 @@
       "contexts": [
         "Command",
         "EventResponse",
-        "Timer",
         "Pipeline",
-        "Discord",
-        "Webhook"
+        "Webhook",
+        "Discord"
       ],
       "scope": "Viewer",
       "freshness": "Cached",
@@ -5118,7 +5138,8 @@
         "Timer",
         "Pipeline",
         "Discord",
-        "Webhook"
+        "Webhook",
+        "Viewer"
       ],
       "scope": "Global",
       "freshness": "Pure",
@@ -5140,7 +5161,8 @@
         "Timer",
         "Pipeline",
         "Discord",
-        "Webhook"
+        "Webhook",
+        "Viewer"
       ],
       "scope": "Global",
       "freshness": "Pure",
@@ -5162,7 +5184,8 @@
         "Timer",
         "Pipeline",
         "Discord",
-        "Webhook"
+        "Webhook",
+        "Viewer"
       ],
       "scope": "Global",
       "freshness": "Pure",
@@ -5184,7 +5207,8 @@
         "Timer",
         "Pipeline",
         "Discord",
-        "Webhook"
+        "Webhook",
+        "Viewer"
       ],
       "scope": "Global",
       "freshness": "Pure",
@@ -5206,7 +5230,8 @@
         "Timer",
         "Pipeline",
         "Discord",
-        "Webhook"
+        "Webhook",
+        "Viewer"
       ],
       "scope": "Global",
       "freshness": "Pure",
@@ -5228,7 +5253,8 @@
         "Timer",
         "Pipeline",
         "Discord",
-        "Webhook"
+        "Webhook",
+        "Viewer"
       ],
       "scope": "Global",
       "freshness": "Pure",
@@ -5250,7 +5276,8 @@
         "Timer",
         "Pipeline",
         "Discord",
-        "Webhook"
+        "Webhook",
+        "Viewer"
       ],
       "scope": "Global",
       "freshness": "Pure",
@@ -5272,7 +5299,8 @@
         "Timer",
         "Pipeline",
         "Discord",
-        "Webhook"
+        "Webhook",
+        "Viewer"
       ],
       "scope": "Global",
       "freshness": "Pure",
@@ -5294,7 +5322,8 @@
         "Timer",
         "Pipeline",
         "Discord",
-        "Webhook"
+        "Webhook",
+        "Viewer"
       ],
       "scope": "Global",
       "freshness": "Pure",
@@ -5316,7 +5345,8 @@
         "Timer",
         "Pipeline",
         "Discord",
-        "Webhook"
+        "Webhook",
+        "Viewer"
       ],
       "scope": "Global",
       "freshness": "Pure",
@@ -5338,7 +5368,8 @@
         "Timer",
         "Pipeline",
         "Discord",
-        "Webhook"
+        "Webhook",
+        "Viewer"
       ],
       "scope": "Global",
       "freshness": "Pure",
@@ -5357,10 +5388,9 @@
       "contexts": [
         "Command",
         "EventResponse",
-        "Timer",
         "Pipeline",
-        "Discord",
-        "Webhook"
+        "Webhook",
+        "Viewer"
       ],
       "scope": "Viewer",
       "freshness": "Pure",
@@ -5382,7 +5412,8 @@
         "Timer",
         "Pipeline",
         "Discord",
-        "Webhook"
+        "Webhook",
+        "Viewer"
       ],
       "scope": "Global",
       "freshness": "Pure",
@@ -5404,7 +5435,8 @@
         "Timer",
         "Pipeline",
         "Discord",
-        "Webhook"
+        "Webhook",
+        "Viewer"
       ],
       "scope": "Global",
       "freshness": "Pure",
@@ -5426,7 +5458,8 @@
         "Timer",
         "Pipeline",
         "Discord",
-        "Webhook"
+        "Webhook",
+        "Viewer"
       ],
       "scope": "Global",
       "freshness": "Pure",
@@ -5448,7 +5481,8 @@
         "Timer",
         "Pipeline",
         "Discord",
-        "Webhook"
+        "Webhook",
+        "Viewer"
       ],
       "scope": "Global",
       "freshness": "Pure",
@@ -5470,7 +5504,8 @@
         "Timer",
         "Pipeline",
         "Discord",
-        "Webhook"
+        "Webhook",
+        "Viewer"
       ],
       "scope": "Global",
       "freshness": "Pure",
@@ -5492,7 +5527,8 @@
         "Timer",
         "Pipeline",
         "Discord",
-        "Webhook"
+        "Webhook",
+        "Viewer"
       ],
       "scope": "Global",
       "freshness": "Pure",
@@ -5514,7 +5550,8 @@
         "Timer",
         "Pipeline",
         "Discord",
-        "Webhook"
+        "Webhook",
+        "Viewer"
       ],
       "scope": "Global",
       "freshness": "Pure",
@@ -5536,7 +5573,8 @@
         "Timer",
         "Pipeline",
         "Discord",
-        "Webhook"
+        "Webhook",
+        "Viewer"
       ],
       "scope": "Global",
       "freshness": "Pure",
@@ -5558,7 +5596,8 @@
         "Timer",
         "Pipeline",
         "Discord",
-        "Webhook"
+        "Webhook",
+        "Viewer"
       ],
       "scope": "Global",
       "freshness": "Pure",
@@ -5580,7 +5619,8 @@
         "Timer",
         "Pipeline",
         "Discord",
-        "Webhook"
+        "Webhook",
+        "Viewer"
       ],
       "scope": "Global",
       "freshness": "Pure",
@@ -5602,7 +5642,8 @@
         "Timer",
         "Pipeline",
         "Discord",
-        "Webhook"
+        "Webhook",
+        "Viewer"
       ],
       "scope": "Global",
       "freshness": "Pure",
@@ -5624,7 +5665,8 @@
         "Timer",
         "Pipeline",
         "Discord",
-        "Webhook"
+        "Webhook",
+        "Viewer"
       ],
       "scope": "Global",
       "freshness": "Pure",
@@ -5646,7 +5688,8 @@
         "Timer",
         "Pipeline",
         "Discord",
-        "Webhook"
+        "Webhook",
+        "Viewer"
       ],
       "scope": "Global",
       "freshness": "Pure",
@@ -6409,7 +6452,8 @@
         "Timer",
         "Pipeline",
         "Discord",
-        "Webhook"
+        "Webhook",
+        "Viewer"
       ],
       "scope": "Global",
       "freshness": "Pure",
@@ -6431,7 +6475,8 @@
         "Timer",
         "Pipeline",
         "Discord",
-        "Webhook"
+        "Webhook",
+        "Viewer"
       ],
       "scope": "Global",
       "freshness": "Pure",
@@ -6453,7 +6498,8 @@
         "Timer",
         "Pipeline",
         "Discord",
-        "Webhook"
+        "Webhook",
+        "Viewer"
       ],
       "scope": "Global",
       "freshness": "Pure",
@@ -6475,7 +6521,8 @@
         "Timer",
         "Pipeline",
         "Discord",
-        "Webhook"
+        "Webhook",
+        "Viewer"
       ],
       "scope": "Global",
       "freshness": "Pure",
@@ -6497,7 +6544,8 @@
         "Timer",
         "Pipeline",
         "Discord",
-        "Webhook"
+        "Webhook",
+        "Viewer"
       ],
       "scope": "Global",
       "freshness": "Pure",
@@ -6519,7 +6567,8 @@
         "Timer",
         "Pipeline",
         "Discord",
-        "Webhook"
+        "Webhook",
+        "Viewer"
       ],
       "scope": "Global",
       "freshness": "Pure",
@@ -6541,7 +6590,8 @@
         "Timer",
         "Pipeline",
         "Discord",
-        "Webhook"
+        "Webhook",
+        "Viewer"
       ],
       "scope": "Global",
       "freshness": "Pure",
@@ -6563,7 +6613,8 @@
         "Timer",
         "Pipeline",
         "Discord",
-        "Webhook"
+        "Webhook",
+        "Viewer"
       ],
       "scope": "Global",
       "freshness": "Pure",
@@ -6585,7 +6636,8 @@
         "Timer",
         "Pipeline",
         "Discord",
-        "Webhook"
+        "Webhook",
+        "Viewer"
       ],
       "scope": "Global",
       "freshness": "Pure",
@@ -6607,7 +6659,8 @@
         "Timer",
         "Pipeline",
         "Discord",
-        "Webhook"
+        "Webhook",
+        "Viewer"
       ],
       "scope": "Global",
       "freshness": "Pure",
@@ -6651,7 +6704,8 @@
         "Timer",
         "Pipeline",
         "Discord",
-        "Webhook"
+        "Webhook",
+        "Viewer"
       ],
       "scope": "Global",
       "freshness": "Pure",
@@ -6673,7 +6727,8 @@
         "Timer",
         "Pipeline",
         "Discord",
-        "Webhook"
+        "Webhook",
+        "Viewer"
       ],
       "scope": "Global",
       "freshness": "Pure",
@@ -6695,7 +6750,8 @@
         "Timer",
         "Pipeline",
         "Discord",
-        "Webhook"
+        "Webhook",
+        "Viewer"
       ],
       "scope": "Global",
       "freshness": "Pure",
@@ -6717,7 +6773,8 @@
         "Timer",
         "Pipeline",
         "Discord",
-        "Webhook"
+        "Webhook",
+        "Viewer"
       ],
       "scope": "Global",
       "freshness": "Pure",
@@ -6739,7 +6796,8 @@
         "Timer",
         "Pipeline",
         "Discord",
-        "Webhook"
+        "Webhook",
+        "Viewer"
       ],
       "scope": "Global",
       "freshness": "Pure",
@@ -7327,7 +7385,8 @@
         "Timer",
         "Pipeline",
         "Discord",
-        "Webhook"
+        "Webhook",
+        "Viewer"
       ],
       "scope": "Global",
       "freshness": "Pure",
@@ -7500,10 +7559,9 @@
       "contexts": [
         "Command",
         "EventResponse",
-        "Timer",
         "Pipeline",
-        "Discord",
-        "Webhook"
+        "Webhook",
+        "Discord"
       ],
       "scope": "Global",
       "freshness": "Cached",
@@ -7569,7 +7627,8 @@
         "Timer",
         "Pipeline",
         "Discord",
-        "Webhook"
+        "Webhook",
+        "Viewer"
       ],
       "scope": "Global",
       "freshness": "Pure",
@@ -7591,7 +7650,8 @@
         "Timer",
         "Pipeline",
         "Discord",
-        "Webhook"
+        "Webhook",
+        "Viewer"
       ],
       "scope": "Global",
       "freshness": "Pure",
@@ -7613,7 +7673,8 @@
         "Timer",
         "Pipeline",
         "Discord",
-        "Webhook"
+        "Webhook",
+        "Viewer"
       ],
       "scope": "Global",
       "freshness": "Pure",
@@ -7635,7 +7696,8 @@
         "Timer",
         "Pipeline",
         "Discord",
-        "Webhook"
+        "Webhook",
+        "Viewer"
       ],
       "scope": "Global",
       "freshness": "Pure",
@@ -7657,7 +7719,8 @@
         "Timer",
         "Pipeline",
         "Discord",
-        "Webhook"
+        "Webhook",
+        "Viewer"
       ],
       "scope": "Global",
       "freshness": "Pure",
@@ -7679,7 +7742,8 @@
         "Timer",
         "Pipeline",
         "Discord",
-        "Webhook"
+        "Webhook",
+        "Viewer"
       ],
       "scope": "Global",
       "freshness": "Pure",
@@ -7701,7 +7765,8 @@
         "Timer",
         "Pipeline",
         "Discord",
-        "Webhook"
+        "Webhook",
+        "Viewer"
       ],
       "scope": "Global",
       "freshness": "Pure",
@@ -7723,7 +7788,8 @@
         "Timer",
         "Pipeline",
         "Discord",
-        "Webhook"
+        "Webhook",
+        "Viewer"
       ],
       "scope": "Global",
       "freshness": "Pure",
@@ -7745,7 +7811,8 @@
         "Timer",
         "Pipeline",
         "Discord",
-        "Webhook"
+        "Webhook",
+        "Viewer"
       ],
       "scope": "Global",
       "freshness": "Pure",
@@ -7767,7 +7834,8 @@
         "Timer",
         "Pipeline",
         "Discord",
-        "Webhook"
+        "Webhook",
+        "Viewer"
       ],
       "scope": "Global",
       "freshness": "Pure",
@@ -7789,7 +7857,8 @@
         "Timer",
         "Pipeline",
         "Discord",
-        "Webhook"
+        "Webhook",
+        "Viewer"
       ],
       "scope": "Global",
       "freshness": "Pure",
@@ -7811,7 +7880,8 @@
         "Timer",
         "Pipeline",
         "Discord",
-        "Webhook"
+        "Webhook",
+        "Viewer"
       ],
       "scope": "Global",
       "freshness": "Pure",
@@ -7833,7 +7903,8 @@
         "Timer",
         "Pipeline",
         "Discord",
-        "Webhook"
+        "Webhook",
+        "Viewer"
       ],
       "scope": "Global",
       "freshness": "Pure",
@@ -7855,7 +7926,8 @@
         "Timer",
         "Pipeline",
         "Discord",
-        "Webhook"
+        "Webhook",
+        "Viewer"
       ],
       "scope": "Global",
       "freshness": "Pure",
@@ -7877,7 +7949,8 @@
         "Timer",
         "Pipeline",
         "Discord",
-        "Webhook"
+        "Webhook",
+        "Viewer"
       ],
       "scope": "Global",
       "freshness": "Pure",
@@ -7899,7 +7972,8 @@
         "Timer",
         "Pipeline",
         "Discord",
-        "Webhook"
+        "Webhook",
+        "Viewer"
       ],
       "scope": "Global",
       "freshness": "Pure",
@@ -7940,7 +8014,8 @@
         "Timer",
         "Pipeline",
         "Discord",
-        "Webhook"
+        "Webhook",
+        "Viewer"
       ],
       "scope": "Global",
       "freshness": "Pure",
@@ -7962,7 +8037,8 @@
         "Timer",
         "Pipeline",
         "Discord",
-        "Webhook"
+        "Webhook",
+        "Viewer"
       ],
       "scope": "Global",
       "freshness": "Pure",
@@ -7984,7 +8060,8 @@
         "Timer",
         "Pipeline",
         "Discord",
-        "Webhook"
+        "Webhook",
+        "Viewer"
       ],
       "scope": "Global",
       "freshness": "Pure",
@@ -8006,7 +8083,8 @@
         "Timer",
         "Pipeline",
         "Discord",
-        "Webhook"
+        "Webhook",
+        "Viewer"
       ],
       "scope": "Global",
       "freshness": "Pure",
@@ -8724,9 +8802,7 @@
       "contexts": [
         "Command",
         "EventResponse",
-        "Timer",
         "Pipeline",
-        "Discord",
         "Webhook"
       ],
       "scope": "Viewer",
@@ -8746,9 +8822,7 @@
       "contexts": [
         "Command",
         "EventResponse",
-        "Timer",
         "Pipeline",
-        "Discord",
         "Webhook"
       ],
       "scope": "Viewer",
@@ -8768,9 +8842,7 @@
       "contexts": [
         "Command",
         "EventResponse",
-        "Timer",
         "Pipeline",
-        "Discord",
         "Webhook"
       ],
       "scope": "Viewer",
@@ -8790,9 +8862,7 @@
       "contexts": [
         "Command",
         "EventResponse",
-        "Timer",
         "Pipeline",
-        "Discord",
         "Webhook"
       ],
       "scope": "Viewer",
@@ -8856,9 +8926,7 @@
       "contexts": [
         "Command",
         "EventResponse",
-        "Timer",
         "Pipeline",
-        "Discord",
         "Webhook"
       ],
       "scope": "Viewer",
@@ -8878,9 +8946,7 @@
       "contexts": [
         "Command",
         "EventResponse",
-        "Timer",
         "Pipeline",
-        "Discord",
         "Webhook"
       ],
       "scope": "Viewer",
@@ -8922,9 +8988,7 @@
       "contexts": [
         "Command",
         "EventResponse",
-        "Timer",
         "Pipeline",
-        "Discord",
         "Webhook"
       ],
       "scope": "Viewer",
@@ -8944,9 +9008,7 @@
       "contexts": [
         "Command",
         "EventResponse",
-        "Timer",
         "Pipeline",
-        "Discord",
         "Webhook"
       ],
       "scope": "Viewer",
@@ -8966,9 +9028,7 @@
       "contexts": [
         "Command",
         "EventResponse",
-        "Timer",
         "Pipeline",
-        "Discord",
         "Webhook"
       ],
       "scope": "Viewer",
@@ -9098,9 +9158,7 @@
       "contexts": [
         "Command",
         "EventResponse",
-        "Timer",
         "Pipeline",
-        "Discord",
         "Webhook"
       ],
       "scope": "Viewer",
@@ -9120,9 +9178,7 @@
       "contexts": [
         "Command",
         "EventResponse",
-        "Timer",
         "Pipeline",
-        "Discord",
         "Webhook"
       ],
       "scope": "Viewer",
@@ -9142,9 +9198,7 @@
       "contexts": [
         "Command",
         "EventResponse",
-        "Timer",
         "Pipeline",
-        "Discord",
         "Webhook"
       ],
       "scope": "Viewer",
@@ -9209,7 +9263,8 @@
         "Timer",
         "Pipeline",
         "Discord",
-        "Webhook"
+        "Webhook",
+        "Viewer"
       ],
       "scope": "Global",
       "freshness": "Pure",
@@ -9231,7 +9286,8 @@
         "Timer",
         "Pipeline",
         "Discord",
-        "Webhook"
+        "Webhook",
+        "Viewer"
       ],
       "scope": "Global",
       "freshness": "Pure",
@@ -9253,7 +9309,8 @@
         "Timer",
         "Pipeline",
         "Discord",
-        "Webhook"
+        "Webhook",
+        "Viewer"
       ],
       "scope": "Global",
       "freshness": "Pure",
@@ -9275,7 +9332,8 @@
         "Timer",
         "Pipeline",
         "Discord",
-        "Webhook"
+        "Webhook",
+        "Viewer"
       ],
       "scope": "Global",
       "freshness": "Pure",
@@ -9297,7 +9355,8 @@
         "Timer",
         "Pipeline",
         "Discord",
-        "Webhook"
+        "Webhook",
+        "Viewer"
       ],
       "scope": "Global",
       "freshness": "Pure",
@@ -9319,7 +9378,8 @@
         "Timer",
         "Pipeline",
         "Discord",
-        "Webhook"
+        "Webhook",
+        "Viewer"
       ],
       "scope": "Global",
       "freshness": "Pure",
@@ -9341,7 +9401,8 @@
         "Timer",
         "Pipeline",
         "Discord",
-        "Webhook"
+        "Webhook",
+        "Viewer"
       ],
       "scope": "Global",
       "freshness": "Pure",
@@ -9363,7 +9424,8 @@
         "Timer",
         "Pipeline",
         "Discord",
-        "Webhook"
+        "Webhook",
+        "Viewer"
       ],
       "scope": "Global",
       "freshness": "Pure",
@@ -9385,7 +9447,8 @@
         "Timer",
         "Pipeline",
         "Discord",
-        "Webhook"
+        "Webhook",
+        "Viewer"
       ],
       "scope": "Global",
       "freshness": "Pure",
@@ -9407,7 +9470,8 @@
         "Timer",
         "Pipeline",
         "Discord",
-        "Webhook"
+        "Webhook",
+        "Viewer"
       ],
       "scope": "Global",
       "freshness": "Pure",
@@ -9429,7 +9493,8 @@
         "Timer",
         "Pipeline",
         "Discord",
-        "Webhook"
+        "Webhook",
+        "Viewer"
       ],
       "scope": "Global",
       "freshness": "Pure",
@@ -9451,7 +9516,8 @@
         "Timer",
         "Pipeline",
         "Discord",
-        "Webhook"
+        "Webhook",
+        "Viewer"
       ],
       "scope": "Global",
       "freshness": "Pure",
@@ -9473,7 +9539,8 @@
         "Timer",
         "Pipeline",
         "Discord",
-        "Webhook"
+        "Webhook",
+        "Viewer"
       ],
       "scope": "Global",
       "freshness": "Pure",
@@ -9495,7 +9562,8 @@
         "Timer",
         "Pipeline",
         "Discord",
-        "Webhook"
+        "Webhook",
+        "Viewer"
       ],
       "scope": "Global",
       "freshness": "Pure",
@@ -9517,7 +9585,8 @@
         "Timer",
         "Pipeline",
         "Discord",
-        "Webhook"
+        "Webhook",
+        "Viewer"
       ],
       "scope": "Global",
       "freshness": "Pure",
@@ -9539,7 +9608,8 @@
         "Timer",
         "Pipeline",
         "Discord",
-        "Webhook"
+        "Webhook",
+        "Viewer"
       ],
       "scope": "Global",
       "freshness": "Pure",
@@ -9561,7 +9631,8 @@
         "Timer",
         "Pipeline",
         "Discord",
-        "Webhook"
+        "Webhook",
+        "Viewer"
       ],
       "scope": "Global",
       "freshness": "Pure",
@@ -9583,7 +9654,8 @@
         "Timer",
         "Pipeline",
         "Discord",
-        "Webhook"
+        "Webhook",
+        "Viewer"
       ],
       "scope": "Global",
       "freshness": "Pure",
@@ -9605,7 +9677,8 @@
         "Timer",
         "Pipeline",
         "Discord",
-        "Webhook"
+        "Webhook",
+        "Viewer"
       ],
       "scope": "Global",
       "freshness": "Pure",
@@ -9627,7 +9700,8 @@
         "Timer",
         "Pipeline",
         "Discord",
-        "Webhook"
+        "Webhook",
+        "Viewer"
       ],
       "scope": "Global",
       "freshness": "Pure",
@@ -9649,7 +9723,8 @@
         "Timer",
         "Pipeline",
         "Discord",
-        "Webhook"
+        "Webhook",
+        "Viewer"
       ],
       "scope": "Global",
       "freshness": "Pure",
@@ -9671,7 +9746,8 @@
         "Timer",
         "Pipeline",
         "Discord",
-        "Webhook"
+        "Webhook",
+        "Viewer"
       ],
       "scope": "Global",
       "freshness": "Pure",
@@ -9693,7 +9769,8 @@
         "Timer",
         "Pipeline",
         "Discord",
-        "Webhook"
+        "Webhook",
+        "Viewer"
       ],
       "scope": "Global",
       "freshness": "Pure",
@@ -9715,7 +9792,8 @@
         "Timer",
         "Pipeline",
         "Discord",
-        "Webhook"
+        "Webhook",
+        "Viewer"
       ],
       "scope": "Global",
       "freshness": "Pure",
@@ -9737,7 +9815,8 @@
         "Timer",
         "Pipeline",
         "Discord",
-        "Webhook"
+        "Webhook",
+        "Viewer"
       ],
       "scope": "Global",
       "freshness": "Pure",
@@ -9759,7 +9838,8 @@
         "Timer",
         "Pipeline",
         "Discord",
-        "Webhook"
+        "Webhook",
+        "Viewer"
       ],
       "scope": "Global",
       "freshness": "Pure",
@@ -9781,7 +9861,8 @@
         "Timer",
         "Pipeline",
         "Discord",
-        "Webhook"
+        "Webhook",
+        "Viewer"
       ],
       "scope": "Global",
       "freshness": "Pure",
@@ -9803,7 +9884,8 @@
         "Timer",
         "Pipeline",
         "Discord",
-        "Webhook"
+        "Webhook",
+        "Viewer"
       ],
       "scope": "Global",
       "freshness": "Pure",
@@ -9825,7 +9907,8 @@
         "Timer",
         "Pipeline",
         "Discord",
-        "Webhook"
+        "Webhook",
+        "Viewer"
       ],
       "scope": "Global",
       "freshness": "Pure",
@@ -9847,7 +9930,8 @@
         "Timer",
         "Pipeline",
         "Discord",
-        "Webhook"
+        "Webhook",
+        "Viewer"
       ],
       "scope": "Global",
       "freshness": "Pure",
@@ -9869,7 +9953,8 @@
         "Timer",
         "Pipeline",
         "Discord",
-        "Webhook"
+        "Webhook",
+        "Viewer"
       ],
       "scope": "Global",
       "freshness": "Pure",
@@ -9891,7 +9976,8 @@
         "Timer",
         "Pipeline",
         "Discord",
-        "Webhook"
+        "Webhook",
+        "Viewer"
       ],
       "scope": "Global",
       "freshness": "Pure",
@@ -9913,7 +9999,8 @@
         "Timer",
         "Pipeline",
         "Discord",
-        "Webhook"
+        "Webhook",
+        "Viewer"
       ],
       "scope": "Global",
       "freshness": "Pure",
@@ -9935,7 +10022,8 @@
         "Timer",
         "Pipeline",
         "Discord",
-        "Webhook"
+        "Webhook",
+        "Viewer"
       ],
       "scope": "Global",
       "freshness": "Pure",
@@ -9957,7 +10045,8 @@
         "Timer",
         "Pipeline",
         "Discord",
-        "Webhook"
+        "Webhook",
+        "Viewer"
       ],
       "scope": "Global",
       "freshness": "Pure",
@@ -9979,7 +10068,8 @@
         "Timer",
         "Pipeline",
         "Discord",
-        "Webhook"
+        "Webhook",
+        "Viewer"
       ],
       "scope": "Global",
       "freshness": "Pure",
@@ -10039,7 +10129,8 @@
         "Timer",
         "Pipeline",
         "Discord",
-        "Webhook"
+        "Webhook",
+        "Viewer"
       ],
       "scope": "Global",
       "freshness": "Pure",
@@ -10061,7 +10152,8 @@
         "Timer",
         "Pipeline",
         "Discord",
-        "Webhook"
+        "Webhook",
+        "Viewer"
       ],
       "scope": "Global",
       "freshness": "Pure",
@@ -10083,7 +10175,8 @@
         "Timer",
         "Pipeline",
         "Discord",
-        "Webhook"
+        "Webhook",
+        "Viewer"
       ],
       "scope": "Global",
       "freshness": "Pure",
@@ -10105,7 +10198,8 @@
         "Timer",
         "Pipeline",
         "Discord",
-        "Webhook"
+        "Webhook",
+        "Viewer"
       ],
       "scope": "Global",
       "freshness": "Pure",
@@ -10127,7 +10221,8 @@
         "Timer",
         "Pipeline",
         "Discord",
-        "Webhook"
+        "Webhook",
+        "Viewer"
       ],
       "scope": "Global",
       "freshness": "Pure",
@@ -10212,10 +10307,9 @@
       "contexts": [
         "Command",
         "EventResponse",
-        "Timer",
         "Pipeline",
-        "Discord",
-        "Webhook"
+        "Webhook",
+        "Discord"
       ],
       "scope": "Channel",
       "freshness": "Seed",
@@ -10498,14 +10592,12 @@
       "contexts": [
         "Command",
         "EventResponse",
-        "Timer",
         "Pipeline",
-        "Discord",
         "Webhook"
       ],
       "scope": "Channel",
       "freshness": "Seed",
-      "eventScoped": false,
+      "eventScoped": true,
       "lazyArguments": false,
       "source": null,
       "provider": "PlatformTemplateHelpers",
@@ -10520,14 +10612,12 @@
       "contexts": [
         "Command",
         "EventResponse",
-        "Timer",
         "Pipeline",
-        "Discord",
         "Webhook"
       ],
       "scope": "Channel",
       "freshness": "Seed",
-      "eventScoped": false,
+      "eventScoped": true,
       "lazyArguments": false,
       "source": null,
       "provider": "PlatformTemplateHelpers",
@@ -10542,14 +10632,12 @@
       "contexts": [
         "Command",
         "EventResponse",
-        "Timer",
         "Pipeline",
-        "Discord",
         "Webhook"
       ],
       "scope": "Channel",
       "freshness": "Seed",
-      "eventScoped": false,
+      "eventScoped": true,
       "lazyArguments": false,
       "source": null,
       "provider": "PlatformTemplateHelpers",
@@ -11985,7 +12073,8 @@
         "Timer",
         "Pipeline",
         "Discord",
-        "Webhook"
+        "Webhook",
+        "Viewer"
       ],
       "scope": "Global",
       "freshness": "Pure",
@@ -12073,7 +12162,8 @@
         "Timer",
         "Pipeline",
         "Discord",
-        "Webhook"
+        "Webhook",
+        "Viewer"
       ],
       "scope": "Global",
       "freshness": "Pure",
@@ -12095,7 +12185,8 @@
         "Timer",
         "Pipeline",
         "Discord",
-        "Webhook"
+        "Webhook",
+        "Viewer"
       ],
       "scope": "Global",
       "freshness": "Pure",
@@ -12117,7 +12208,8 @@
         "Timer",
         "Pipeline",
         "Discord",
-        "Webhook"
+        "Webhook",
+        "Viewer"
       ],
       "scope": "Global",
       "freshness": "Pure",
@@ -12139,7 +12231,8 @@
         "Timer",
         "Pipeline",
         "Discord",
-        "Webhook"
+        "Webhook",
+        "Viewer"
       ],
       "scope": "Global",
       "freshness": "Pure",
@@ -12205,7 +12298,8 @@
         "Timer",
         "Pipeline",
         "Discord",
-        "Webhook"
+        "Webhook",
+        "Viewer"
       ],
       "scope": "Global",
       "freshness": "Pure",
@@ -14412,7 +14506,8 @@
         "Timer",
         "Pipeline",
         "Discord",
-        "Webhook"
+        "Webhook",
+        "Viewer"
       ],
       "scope": "Global",
       "freshness": "Pure",
@@ -14434,7 +14529,8 @@
         "Timer",
         "Pipeline",
         "Discord",
-        "Webhook"
+        "Webhook",
+        "Viewer"
       ],
       "scope": "Global",
       "freshness": "Pure",
@@ -18735,7 +18831,7 @@
       ],
       "scope": "Channel",
       "freshness": "Live",
-      "eventScoped": false,
+      "eventScoped": true,
       "lazyArguments": false,
       "source": null,
       "provider": "static-registry",

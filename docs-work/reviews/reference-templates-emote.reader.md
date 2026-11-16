@@ -1,3 +1,22 @@
+# Current independent reader review
+
+Verdict: PASS
+Reviewed: src/content/reference/en/templates/emote.mdx
+Reviewed-SHA: 168f2d55b8016a058877f2b69bf3c27bdd7313cdedf075cf04c7732907c8f4a2
+Reviewed-SHA256: 168f2d55b8016a058877f2b69bf3c27bdd7313cdedf075cf04c7732907c8f4a2
+Reviewed-Date: 2026-11-05
+Reviewer: independent section reviewer
+
+The reference distinguishes channel/provider sets, message-derived counts, image links and selection. Trigger-dependent rows are marked and example values are presented as illustrative.
+
+The full page was read with the preceding/following navigation context and related links. This review applies the owner's explanatory, progressive-disclosure guidance; it does not impose Atlas sentence caps, pilot mimicry or fixed article headings. No substantive reader finding remains at this hash. Build/render/link checks are recorded separately by the lead reviewer.
+
+Report: docs-work/overhaul/review-learning-commands-helpers.md.
+
+## Historical evidence
+
+The material below is retained as historical evidence; its older verdict is not the current review.
+
 # Reader review: src/content/reference/en/templates/emote.mdx
 Verdict: PASS
 Reviewed: C:/Projects/NoMercyLabs/nomnomzbot-docs/src/content/reference/en/templates/emote.mdx

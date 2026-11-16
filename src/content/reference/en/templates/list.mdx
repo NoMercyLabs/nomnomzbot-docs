@@ -8,27 +8,40 @@ Helpers on this page: `{list.*}`, `{count.*}`.
 These helpers read the channel's lists and named counters.
 Use them to pick a list item or to show a count, such as a death count.
 
-Each row is its own example, so the rows on this page do not all come from one moment.
+## Read a saved choice or count
 
-| Helper | What it gives | Example |
-| --- | --- | --- |
-| `{count.<key>}` | A named counter current value (e.g. `{count.deaths}`) | `{count.deaths}` gives `12` |
-| `{list.contains}` | Whether a pick list holds an entry: true or false | `{list.contains:snacks\|chips}` gives `true` |
-| `{list.count}` | How many pick lists the channel has | `7` |
-| `{list.first}` | The first entry of a pick list | `{list.first:snacks}` gives `chips` |
-| `{list.indexOf}` | The position of an entry in a pick list, or 0 when it is not there | `{list.indexOf:snacks\|fruit}` gives `3` |
-| `{list.inline.item}` | The entry of an inline list a;b;c at a position | `{list.inline.item:2\|a;b;c}` gives `b` |
-| `{list.inline.join}` | An inline list a;b;c joined with your own separator. Type the separator first, then a pipe and the list; use a backslash and s for a space | `{list.inline.join:\s+\s\|a;b}` gives `a + b` |
-| `{list.inline.length}` | How many entries an inline list a;b;c has | `{list.inline.length:a;b;c}` gives `3` |
-| `{list.item}` | The entry of a pick list at a position, counting from 1 | `{list.item:snacks\|2}` gives `cookies` |
-| `{list.join}` | All entries of a pick list, joined with a comma. To use your own separator, type the list name first, then a pipe and the separator; use a backslash and s for a space | `{list.join:snacks\|\s/\s}` gives `chips / cookies / fruit` |
-| `{list.join.and}` | All entries of a pick list as a sentence: a, b and c | `{list.join.and:snacks}` gives `chips, cookies and fruit` |
-| `{list.last}` | The last entry of a pick list | `{list.last:snacks}` gives `fruit` |
-| `{list.length}` | How many entries a pick list has | `{list.length:snacks}` gives `3` |
-| `{list.pick}` | One random entry of a pick list | `{list.pick:snacks}` gives `cookies` |
-| `{list.pick.<name>}` | One random entry of a pick list | `{list.pick.snacks}` gives `cookies` |
-| `{list.random.index}` | A random position inside a pick list | `{list.random.index:snacks}` gives `2` |
-| `{list.shuffle}` | All entries of a pick list in a random order | `{list.shuffle:snacks}` gives `fruit, chips, cookies` |
-| `{list.sorted}` | All entries of a pick list in alphabetical order | `{list.sorted:snacks}` gives `chips, cookies, fruit` |
+Make a named list on [Pick lists](/reference/commands/pick-lists), then use `{list.pick.snacks}` to draw from a list called `snacks`.
+Use `{list.item:snacks|2}` when you want its second entry rather than a random one.
+These helpers read the list; they do not add, remove, or reorder its saved entries.
+
+Named counters work the same way from a reply's perspective.
+`{count.deaths}` shows the saved value, while **Adjust counter** or **Set counter** in a [pipeline](/reference/commands/pipelines) changes it.
+Showing the counter twice does not increment it twice.
+
+The examples illustrate possible values; your results depend on the channel and trigger.
+**Use in** lists the template fields that accept each helper.
+A pipeline still needs a trigger that supplies the relevant person, message, or event; event-specific helpers need that event.
+For viewer-written text, the [Viewer Templates setting and permissions](/reference/settings/features) also apply.
+
+| Helper | What it gives | Example | Use in |
+| --- | --- | --- | --- |
+| `{count.<key>}` | A named counter current value (e.g. `{count.deaths}`) | `{count.deaths}` gives `12` | Commands, event responses, timers, pipelines, Discord, webhooks |
+| `{list.contains}` | Whether a pick list holds an entry: true or false | `{list.contains:snacks\|chips}` gives `true` | Commands, event responses, timers, pipelines, Discord, webhooks |
+| `{list.count}` | How many pick lists the channel has | `7` | Commands, event responses, timers, pipelines, Discord, webhooks |
+| `{list.first}` | The first entry of a pick list | `{list.first:snacks}` gives `chips` | Commands, event responses, timers, pipelines, Discord, webhooks |
+| `{list.indexOf}` | The position of an entry in a pick list, or 0 when it is not there | `{list.indexOf:snacks\|fruit}` gives `3` | Commands, event responses, timers, pipelines, Discord, webhooks |
+| `{list.inline.item}` | The entry of an inline list a;b;c at a position | `{list.inline.item:2\|a;b;c}` gives `b` | Commands, event responses, timers, pipelines, Discord, webhooks |
+| `{list.inline.join}` | An inline list a;b;c joined with your own separator. Type the separator first, then a pipe and the list; use a backslash and s for a space | `{list.inline.join:\s+\s\|a;b}` gives `a + b` | Commands, event responses, timers, pipelines, Discord, webhooks |
+| `{list.inline.length}` | How many entries an inline list a;b;c has | `{list.inline.length:a;b;c}` gives `3` | Commands, event responses, timers, pipelines, Discord, webhooks |
+| `{list.item}` | The entry of a pick list at a position, counting from 1 | `{list.item:snacks\|2}` gives `cookies` | Commands, event responses, timers, pipelines, Discord, webhooks |
+| `{list.join}` | All entries of a pick list, joined with a comma. To use your own separator, type the list name first, then a pipe and the separator; use a backslash and s for a space | `{list.join:snacks\|\s/\s}` gives `chips / cookies / fruit` | Commands, event responses, timers, pipelines, Discord, webhooks |
+| `{list.join.and}` | All entries of a pick list as a sentence: a, b and c | `{list.join.and:snacks}` gives `chips, cookies and fruit` | Commands, event responses, timers, pipelines, Discord, webhooks |
+| `{list.last}` | The last entry of a pick list | `{list.last:snacks}` gives `fruit` | Commands, event responses, timers, pipelines, Discord, webhooks |
+| `{list.length}` | How many entries a pick list has | `{list.length:snacks}` gives `3` | Commands, event responses, timers, pipelines, Discord, webhooks |
+| `{list.pick}` | One random entry of a pick list | `{list.pick:snacks}` gives `cookies` | Commands, event responses, timers, pipelines, Discord, webhooks |
+| `{list.pick.<name>}` | One random entry of a pick list | `{list.pick.snacks}` gives `cookies` | Commands, event responses, timers, pipelines, Discord, webhooks |
+| `{list.random.index}` | A random position inside a pick list | `{list.random.index:snacks}` gives `2` | Commands, event responses, timers, pipelines, Discord, webhooks |
+| `{list.shuffle}` | All entries of a pick list in a random order | `{list.shuffle:snacks}` gives `fruit, chips, cookies` | Commands, event responses, timers, pipelines, Discord, webhooks |
+| `{list.sorted}` | All entries of a pick list in alphabetical order | `{list.sorted:snacks}` gives `chips, cookies, fruit` | Commands, event responses, timers, pipelines, Discord, webhooks |
 
 Back to [Template helpers](/reference/templates/overview). For the places helpers work, special characters and HTML, read [Variables and templates](/reference/commands/variables-and-templates).

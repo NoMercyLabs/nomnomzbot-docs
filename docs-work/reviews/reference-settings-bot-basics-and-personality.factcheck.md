@@ -1,5 +1,32 @@
-# Fact-check: /reference/settings/bot-basics-and-personality
+# Independent source review: /reference/settings/bot-basics-and-personality
 Verdict: PASS
+Reviewed: src/content/reference/en/settings/bot-basics-and-personality.mdx
+Reviewed-SHA: e33d89eb002295f6
+Reviewed-SHA256: e33d89eb002295f6fa878e554866e0cf56cb64b964d80342a7da57746fbdaf13
+Reviewed-Date: 2026-11-05
+Reviewer: independent reviewer, separate from article author
+Product-Revision: 54da8b6318de63b5205a0ff8db35e0b9045dd959
+
+The complete current article was read in navigation order and checked against current product source. Historical PASS entries below are leads, not approval of this revision. Atlas voice/template gates do not govern this review.
+
+## Current evidence and result
+
+Repaired and reread: first/returning greetings require live coverage; returning means the first message in a new stream with no elapsed absence threshold. Native Twitch viewer-submitted watch streaks use Event responses; saved switch/milestones are not consulted.
+
+Source files opened in this review: ChannelService.cs:478-515,548-629,637-692; Domain/Engagement/Entities/EngagementDefaults.cs:19-23; Engagement/EngagementService.cs:52-150,215-231; Engagement/EventHandlers/EngagementChatActivityHandler.cs:43-92; Rewards/EventHandlers/WatchStreakHandler.cs:25-31,40-42,110-114; dashboard settings BasicsView.vue:43-90 and EngagementView.vue:40-114.
+
+Unqualified paths beginning Identity, CustomCode, Billing, EventStore, Engagement, Rewards, Widgets or Platform are under server/src/NomNomzBot.Infrastructure; Api and Domain identify their corresponding server projects. Dashboard shorthand is under dashboard/src/views/dashboard.
+
+Verification is read-only source review. No bot/API startup, live account authorization, channel writes, C# host/Jint execution, Docker install or restore was performed. Documentation build/render QA belongs to the combined parent pass. The SDK reference and worked-example checks additionally ran the existing read-only nnz-code-doc-check.mjs with production JavaScript bootstrap and substituted host I/O.
+
+## Historical review (superseded)
+
+# Fact-check: /reference/settings/bot-basics-and-personality
+Historical verdict: PENDING
+
+2026-11-04 overhaul: the article changed, so the previous PASS and hash below are historical evidence, not approval of the current revision.
+Fresh writer source checks and article inventory are recorded under S1 in `docs-work/overhaul/settings-hosting-code.md`.
+Independent review of the changed text is pending.
 Reviewed: C:\Projects\NoMercyLabs\nomnomzbot-docs\src\content\reference\en\settings\bot-basics-and-personality.mdx
 Reviewed-SHA: 862e67535087c975
 

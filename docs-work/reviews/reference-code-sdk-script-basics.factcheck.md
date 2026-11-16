@@ -1,7 +1,47 @@
-# Fact check: /reference/code/sdk-script-basics
+# Current targeted source review — 2026-11-06
+
+Verdict: TARGETED AUTHOR SELF-REVIEW; no independent or exhaustive PASS.
+Reviewed: src/content/reference/en/code/sdk-script-basics.mdx
+Reviewed-SHA256: 733a4916bad7e4af79e031bf24d2aaa0fe70dafc3f4db9e84f1a2208bbb20e7a
+Reviewer: editing agent (author self-review)
+
+Full editorial read; corrected syntactic grant discovery and removed blanket Draft. Direct source: Infrastructure/CustomCode/Jint/JintScriptExecutor.cs:76-265,279-399. Aliased/computed calls do not infer grants; an already-declared capability remains usable. No whole-sandbox execution claim.
+
+Coverage details and final static-check results: [final-developer.md](../ecosystem-validation/final-developer.md). Full reading is distinct from focused source verification. No live application/provider test or whole-project build in this batch.
+
+## Historical records below — verdicts and hashes preserved
+
+# Independent source review: /reference/code/sdk-script-basics
 Verdict: PASS
 Reviewed: src/content/reference/en/code/sdk-script-basics.mdx
-Reviewed-SHA: 43a67d7b8cbf4393
+Reviewed-SHA: 0169a39a4aa6fbe1
+Reviewed-SHA256: 0169a39a4aa6fbe13d5b4aae5c96c195e77816ec3433fe04f2a1623e6eb864fa
+Reviewed-Date: 2026-11-05
+Reviewer: independent reviewer, separate from article author
+Product-Revision: 54da8b6318de63b5205a0ff8db35e0b9045dd959
+
+The complete current article was read in navigation order and checked against current product source. Historical PASS entries below are leads, not approval of this revision. Atlas voice/template gates do not govern this review.
+
+## Current evidence and result
+
+No substantive finding. Bootstrap helper signatures, missing/null behavior, inferred grants, zero-grant exception and lastError clearing checked.
+
+Source files opened in this review: CustomCode/Jint/JintScriptExecutor.cs:76-297,425-538; CustomCode/ScriptCapabilityBroker.cs:35-139; CustomCode/ScriptStorageService.cs:32-154; CustomCode/ScriptHostBridge.cs:88-104,309-382.
+
+Unqualified paths beginning Identity, CustomCode, Billing, EventStore, Engagement, Rewards, Widgets or Platform are under server/src/NomNomzBot.Infrastructure; Api and Domain identify their corresponding server projects. Dashboard shorthand is under dashboard/src/views/dashboard.
+
+Verification is read-only source review. No bot/API startup, live account authorization, channel writes, C# host/Jint execution, Docker install or restore was performed. Documentation build/render QA belongs to the combined parent pass. The SDK reference and worked-example checks additionally ran the existing read-only nnz-code-doc-check.mjs with production JavaScript bootstrap and substituted host I/O.
+
+## Historical review (superseded)
+
+# Fact check: /reference/code/sdk-script-basics
+Historical verdict: PENDING
+
+2026-11-04 overhaul: the article changed, so the previous PASS and hash below are historical evidence, not approval of the current revision.
+Fresh writer source checks and article inventory are recorded under C3/C4 in `docs-work/overhaul/settings-hosting-code.md`.
+Independent review of the changed text is pending.
+Reviewed: src/content/reference/en/code/sdk-script-basics.mdx
+Reviewed-SHA: 7b3fb393a30d3918
 
 This verdict judges the current text (sha256 43a67d7b8cbf4393...). It re-checks every claim against product master and does not carry the older verdict (8a0de18761f85cba) forward.
 
