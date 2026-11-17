@@ -6,7 +6,7 @@ Goal: Where do I update the stream and manage the actions around going live.
 Success: The reader can save stream details and recognize the state of the selected stream action.
 Application-case: A multistreaming broadcaster changes a title and needs to know which platform receives it before starting an ad or raid.
 Prerequisites: Access to the selected channel and the action being configured; required platform accounts and connections must be established before the relevant steps.
-Project-root: C:\Projects\NoMercyLabs\nomnomzbot-docs\.claude\worktrees\finish
+Project-root: .
 Built-root: dist
 Rendered: dist/reference/community/stream-page/index.html
 Voice: docs-work/voice.md

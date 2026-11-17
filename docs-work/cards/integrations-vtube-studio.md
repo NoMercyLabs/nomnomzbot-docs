@@ -6,7 +6,7 @@ Goal: How do I connect VTube Studio and trigger a model action.
 Success: The connection is authorized and an intended model action is visible in VTube Studio.
 Application-case: A streamer changes models and needs to select a valid hotkey for the new model.
 Prerequisites: Access to the selected channel and the action being configured; required platform accounts and connections must be established before the relevant steps.
-Project-root: C:\Projects\NoMercyLabs\nomnomzbot-docs\.claude\worktrees\finish
+Project-root: .
 Built-root: dist
 Rendered: dist/reference/integrations/vtube-studio/index.html
 Voice: docs-work/voice.md

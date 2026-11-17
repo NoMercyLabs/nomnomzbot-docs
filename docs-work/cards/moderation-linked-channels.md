@@ -6,7 +6,7 @@ Goal: How do I choose which moderation decisions this channel shares.
 Success: The reader can distinguish linked-channel sharing choices and predict whether an incoming decision is applied.
 Application-case: A streamer wants to receive shared information without automatically applying every shared action.
 Prerequisites: Access to the selected channel and permission for the described action; any platform connection or output required by that action must be established before the steps.
-Project-root: C:\Projects\NoMercyLabs\nomnomzbot-docs\.claude\worktrees\finish
+Project-root: .
 Built-root: dist
 Rendered: dist/reference/moderation/linked-channels/index.html
 Voice: docs-work/voice.md

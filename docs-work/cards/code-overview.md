@@ -6,7 +6,7 @@ Goal: Where should my customization run, and which reference do I need.
 Success: The developer can choose a script, widget or external integration and identify its credentials and next page.
 Application-case: A developer wants a browser overlay and a separate desktop control, and needs to choose a different authentication path for each.
 Prerequisites: Access to the intended bot and its documented SDK or API surface; authorization for the chosen script, widget or external action.
-Project-root: C:\Projects\NoMercyLabs\nomnomzbot-docs\.claude\worktrees\finish
+Project-root: .
 Built-root: dist
 Rendered: dist/reference/code/overview/index.html
 Voice: docs-work/voice.md

@@ -6,7 +6,7 @@ Goal: How do I create, test and publish a script in the dashboard.
 Success: The reader can save a script, inspect a test result and identify the version a trigger will run.
 Application-case: An author edits an existing script and wants to test the changes before changing the live command that uses it.
 Prerequisites: Access to the intended bot and its documented SDK or API surface; authorization for the chosen script, widget or external action.
-Project-root: C:\Projects\NoMercyLabs\nomnomzbot-docs\.claude\worktrees\finish
+Project-root: .
 Built-root: dist
 Rendered: dist/reference/code/scripts/index.html
 Voice: docs-work/voice.md

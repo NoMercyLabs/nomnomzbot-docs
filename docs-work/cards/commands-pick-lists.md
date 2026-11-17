@@ -6,7 +6,7 @@ Goal: How do I keep a set of replies that a command can choose from.
 Success: A command or pipeline uses an entry from the saved list.
 Application-case: A moderator adds new replies to an existing list and wants commands already using it to use the updated contents.
 Prerequisites: Access to the selected channel and permission for the described action; any platform connection or output required by that action must be established before the steps.
-Project-root: C:\Projects\NoMercyLabs\nomnomzbot-docs\.claude\worktrees\finish-b
+Project-root: .
 Built-root: dist
 Rendered: dist/reference/commands/pick-lists/index.html
 Voice: docs-work/voice.md

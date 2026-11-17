@@ -6,7 +6,7 @@ Goal: Start the bot with Docker, reach the setup page in the browser, and know w
 Success: The container is running and healthy, and the browser opens the setup page at the bot's address on port 5080.
 Application-case: A streamer who wants the bot on a small always-on home server, reached from their laptop, must change the port and the public address and keep the data folder visible for copying.
 Prerequisites: Docker with Compose v2, running; the NomNomzBot project files in one folder; a Twitch account for the channel.
-Project-root: C:\Projects\NoMercyLabs\nomnomzbot-docs\.claude\worktrees\finish
+Project-root: .
 Built-root: dist
 Rendered: dist/reference/self-hosting/install-with-docker/index.html
 Voice: docs-work/voice.md

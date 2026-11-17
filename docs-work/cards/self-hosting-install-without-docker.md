@@ -6,7 +6,7 @@ Goal: Download the release archive for the computer's system, start the bot, ope
 Success: The bot is running and the browser opens the dashboard setup at http://localhost:5080 on the same computer.
 Application-case: A streamer who wants the bot's data on a second drive must set the data folder before the first start, and must know that the bot keeps using the same port on later starts.
 Prerequisites: A Windows, Linux or macOS computer on a 64-bit processor that the bot may keep running on; a Twitch account for the channel. Nothing else is installed.
-Project-root: C:\Projects\NoMercyLabs\nomnomzbot-docs\.claude\worktrees\finish-b
+Project-root: .
 Built-root: dist
 Rendered: dist/reference/self-hosting/install-without-docker/index.html
 Voice: docs-work/voice.md

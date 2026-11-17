@@ -6,7 +6,7 @@ Goal: Open an invite link, read what it gives and claim it for the channel.
 Success: The invite is claimed for the channel, or the reader understands why it cannot be used.
 Application-case: A streamer opens an invite while signed out and must sign in with Twitch before the claim.
 Prerequisites: An invite link or code; a Twitch account for the claim step.
-Project-root: C:\Projects\NoMercyLabs\nomnomzbot-docs\.claude\worktrees\finish
+Project-root: .
 Built-root: dist
 Rendered: dist/reference/getting-started/redeem-an-invite/index.html
 Voice: docs-work/voice.md

@@ -1,0 +1,45 @@
+{
+  "fingerprint": "33f6a827cdde9231a90123bcd4b85e7b48f250f10ea1798c1227aa61f884c55d",
+  "verdict": "PASS",
+  "answers": [
+    {
+      "question": 1,
+      "answer": "To read one entry from a saved list, write the helper name, a colon and the list name, then a pipe and the extra value when one is needed: {list.item:snacks|2} gives the second entry and {list.pick:snacks} gives a random one. To read a named counter, write {count.<key>}, for example {count.deaths}. To change a counter, add an Adjust counter or Set counter step to the pipeline, before the reply step.",
+      "quote": "When the helper needs one more value, put a pipe after the list name and then the value: {list.item:snacks|2}."
+    },
+    {
+      "question": 2,
+      "answer": "You need a list saved on Pick lists, typed exactly as it is saved. To change a counter you need a pipeline step. The helpers work only in bot-side text, not in a viewer's own text. All of this is stated at the top of the page and in Before you use them.",
+      "quote": "A saved list is found by its name, so type the name exactly as it is saved on Pick lists."
+    },
+    {
+      "question": 3,
+      "answer": "A correct helper fills in a value. An empty gap means the list name is wrong or the list is empty. Visible braces mean the helper itself is written wrong. Reading and changing are separate: showing a value never changes it, and only a pipeline step changes a counter.",
+      "quote": "So an empty gap in the reply points at the list name, and visible braces point at the helper itself."
+    },
+    {
+      "question": 4,
+      "answer": "The command reads one list entry with {list.pick:snacks} or {list.item:snacks|2}, which leaves the list unchanged. It shows the counter with {count.deaths}, which also changes nothing. To raise the counter, an Adjust counter step on deaths runs before the reply step, so with deaths at 12 the reply shows 13. The reason is that reading never changes a list or counter, and only the counter steps do.",
+      "quote": "Showing it does not change it, so a reply that shows {count.deaths} twice shows the same number twice."
+    },
+    {
+      "question": 5,
+      "answer": "The contents of the example list snacks (chips, cookies, fruit) are given only at the start of the reference table, after the earlier sections have already used them in their outputs. The join example output could not be checked on first reading. The cost is small: one look ahead.",
+      "quote": "The examples use a saved list called snacks that holds chips, cookies and fruit, in that order."
+    },
+    {
+      "question": 6,
+      "answer": "The backslash-s separator notation is awkward to read aloud and has to be spelled out. The Use in column repeats the same six places in every row, which adds length when read aloud but no new information.",
+      "quote": "Commands, event responses, timers, pipelines, Discord, webhooks"
+    }
+  ],
+  "findings": [],
+  "warnings_released": true,
+  "warning_review": [
+    {
+      "id": "sentence-4-2",
+      "decision": "keep",
+      "reason": "The sentence gives the rule the reader needs at the moment of use: visible braces mean the helper is written wrong, while an empty gap means the list name is wrong. Its three conditions are the real cases, not a manufactured list, and splitting it would add words without adding meaning. The reader's answer 3 shows it was understood, so the 35-word length alone is not a defect."
+    }
+  ]
+}

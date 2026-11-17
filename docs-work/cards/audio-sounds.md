@@ -6,7 +6,7 @@ Goal: How do I add a sound and play it from a command or reward.
 Success: The saved sound can be selected by the action and heard through the configured output.
 Application-case: A moderator wants one quiet sound louder without changing the volume of every other sound.
 Prerequisites: Access to the selected channel and permission for the described action; any platform connection or output required by that action must be established before the steps.
-Project-root: C:\Projects\NoMercyLabs\nomnomzbot-docs\.claude\worktrees\finish
+Project-root: .
 Built-root: dist
 Rendered: dist/reference/audio/sounds/index.html
 Voice: docs-work/voice.md

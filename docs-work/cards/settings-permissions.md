@@ -6,7 +6,7 @@ Goal: How do I give a person access to the actions they should manage.
 Success: The reader can identify the person's effective role and the actions it permits.
 Application-case: A broadcaster wants a helper to manage commands without giving them broadcaster access.
 Prerequisites: Access to the selected channel and the action being configured; required platform accounts and connections must be established before the relevant steps.
-Project-root: C:\Projects\NoMercyLabs\nomnomzbot-docs\.claude\worktrees\finish
+Project-root: .
 Built-root: dist
 Rendered: dist/reference/settings/permissions/index.html
 Voice: docs-work/voice.md

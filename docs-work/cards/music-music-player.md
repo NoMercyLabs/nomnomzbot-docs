@@ -6,7 +6,7 @@ Goal: How do I connect a player and control what is playing.
 Success: The player reports a connection and the selected track is reflected in playback state.
 Application-case: A streamer has a player connected but needs to distinguish the current track from queued requests.
 Prerequisites: Access to the selected channel and permission for the described action; any platform connection or output required by that action must be established before the steps.
-Project-root: C:\Projects\NoMercyLabs\nomnomzbot-docs\.claude\worktrees\finish
+Project-root: .
 Built-root: dist
 Rendered: dist/reference/music/music-player/index.html
 Voice: docs-work/voice.md

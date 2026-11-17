@@ -1,36 +1,110 @@
 ---
 title: Schedule helpers
-description: Lists 17 template helpers, each with what it gives and an example.
+description: The schedule helpers that show your next Twitch stream, the streams after it and a planned break, in your time zone or a viewer's.
 ---
 
-Helpers on this page: `{schedule.*}`.
+The `{schedule.*}` helpers read the stream schedule you keep on Twitch.
+They work in a command reply, an event response, a timer, a pipeline step, a Discord notification and a webhook body.
+They do not work in a viewer's own text, even with **Viewer Templates** on.
+If you have not used braces in a reply yet, read [Variables and templates](/reference/commands/variables-and-templates) first.
 
-These helpers read the channel's stream schedule.
-Use them to tell viewers when the next stream starts.
+The bot reads your schedule from Twitch once for each reply, however many schedule helpers the reply holds.
+It needs no extra Twitch permission for this.
 
-The examples illustrate possible values; your results depend on the channel and trigger.
-**Use in** lists the template fields that accept each helper.
-A pipeline still needs a trigger that supplies the relevant person, message, or event; event-specific helpers need that event.
-For viewer-written text, the [Viewer Templates setting and permissions](/reference/settings/features) also apply.
+## Set your time zone first
 
-| Helper | What it gives | Example | Use in |
-| --- | --- | --- | --- |
-| `{schedule.ical}` | The link to the channel schedule as a calendar file (iCalendar) | `https://api.twitch.tv/helix/schedule/icalendar?broadcaster_id=123456` | Commands, event responses, timers, pipelines, Discord, webhooks |
-| `{schedule.link}` | The link to the channel schedule page | `https://twitch.tv/samplechannel/schedule` | Commands, event responses, timers, pipelines, Discord, webhooks |
-| `{schedule.list}` | The next scheduled streams with their start times, for example schedule.list:3: Fri 20:00 Bot night · Sun 14:00 Chill | `{schedule.list:3}` gives `Fri 20:00 Bot night · Sun 14:00 Chill · Tue 20:00 Bot night` | Commands, event responses, timers, pipelines, Discord, webhooks |
-| `{schedule.next.at}` | The day and start time of the next scheduled stream: Friday 20:00 | `Friday 20:00` | Commands, event responses, timers, pipelines, Discord, webhooks |
-| `{schedule.next.date}` | The day and date of the next scheduled stream: Friday 30 October | `Friday 30 October` | Commands, event responses, timers, pipelines, Discord, webhooks |
-| `{schedule.next.duration}` | How long the next scheduled stream lasts: 3h | `3h` | Commands, event responses, timers, pipelines, Discord, webhooks |
-| `{schedule.next.full}` | The next scheduled stream in one line: next stream in 4 days, Friday 20:00 | `next stream in 4 days, Friday 20:00` | Commands, event responses, timers, pipelines, Discord, webhooks |
-| `{schedule.next.game}` | The category of the next scheduled stream | `Software and Game Development` | Commands, event responses, timers, pipelines, Discord, webhooks |
-| `{schedule.next.in}` | How long until the next scheduled stream: 4 days | `4 days` | Commands, event responses, timers, pipelines, Discord, webhooks |
-| `{schedule.next.isRecurring}` | true when the next scheduled stream repeats every week, false when it is a one-off | `true` | Commands, event responses, timers, pipelines, Discord, webhooks |
-| `{schedule.next.relative}` | How long until the next scheduled stream, as a phrase: in 4 days | `in 4 days` | Commands, event responses, timers, pipelines, Discord, webhooks |
-| `{schedule.next.title}` | The title of the next scheduled stream | `Bot night` | Commands, event responses, timers, pipelines, Discord, webhooks |
-| `{schedule.next.viewerTime}` | The day and start time of the next scheduled stream in another time zone, for example schedule.next.viewerTime:America/New_York: Fri 15:00 | `{schedule.next.viewerTime:America/New_York}` gives `Fri 15:00` | Commands, event responses, timers, pipelines, Discord, webhooks |
-| `{schedule.today}` | The scheduled streams of today with their start times; empty when there is none: 21:00 Quick one | `20:00 Bot night` | Commands, event responses, timers, pipelines, Discord, webhooks |
-| `{schedule.vacation}` | The schedule break that is planned or running; empty when there is none: Fri 6 Nov - Sun 15 Nov | `Fri 6 Nov - Sun 15 Nov` | Commands, event responses, timers, pipelines, Discord, webhooks |
-| `{schedule.vacation.until}` | The day the schedule break ends; empty when there is no break: Sunday 15 November | `Sunday 15 November` | Commands, event responses, timers, pipelines, Discord, webhooks |
-| `{schedule.week}` | The days this week (Monday to Sunday) with a scheduled stream: Fri, Sun | `Fri, Sun` | Commands, event responses, timers, pipelines, Discord, webhooks |
+Every time these helpers show is in your channel's time zone, on a 24-hour clock.
+The one exception is `{schedule.next.viewerTime}`, which uses the zone you name in it.
+That zone is the **Timezone** field in **Settings**, under **Bot basics**.
+It starts as not set, and then times show in UTC, so set it before you use these helpers.
 
-Back to [Template helpers](/reference/templates/overview). For the places helpers work, special characters and HTML, read [Variables and templates](/reference/commands/variables-and-templates).
+Day and month names follow the **Language** field in the same place.
+With no language set, they are in English.
+
+## The next stream
+
+| Helper | What it gives | Example |
+| --- | --- | --- |
+| `{schedule.next.at}` | The day and start time | `Friday 20:00` |
+| `{schedule.next.date}` | The day and date | `Friday 30 October` |
+| `{schedule.next.in}` | How long until it starts | `4 days` |
+| `{schedule.next.relative}` | How long until it starts, as a phrase | `in 4 days` |
+| `{schedule.next.full}` | How long until it starts and when, in one line | `next stream in 4 days, Friday 20:00` |
+| `{schedule.next.title}` | The title you gave the stream on your schedule | `Bot night` |
+| `{schedule.next.game}` | The category of the stream | `Software and Game Development` |
+| `{schedule.next.duration}` | How long the stream is planned to last, in hours and minutes | `3h` |
+| `{schedule.next.isRecurring}` | `true` when the stream repeats every week, `false` when it is a one-off | `true` |
+| `{schedule.next.viewerTime:America/New_York}` | The short day and start time in the time zone you name | `Fri 15:00` |
+
+`{schedule.next.at}`, `{schedule.next.date}` and `{schedule.next.full}` show the day and time in your channel's time zone, the **Timezone** field in **Settings**.
+When that field is not set, they show it in UTC.
+`{schedule.next.in}` and `{schedule.next.relative}` count from now, so the time zone does not change them.
+
+The next stream is the first one on your schedule that is not canceled and has not ended yet.
+A stream that has already started still counts until its planned end, so during that stream these helpers describe the stream that is running.
+`{schedule.next.duration}` rounds the planned length to the nearest minute.
+A length of whole hours shows only the hours, such as `3h`.
+A length with minutes left over shows the hours and then the minutes, such as `2h 30m`.
+A stream planned for less than an hour shows only the minutes, such as `45m`.
+
+### Times for viewers in another zone
+
+`{schedule.next.viewerTime}` shows the same start as `{schedule.next.at}`, but in a time zone you name instead of your channel's zone (UTC when **Timezone** is not set).
+It needs one time zone name after the colon, written the way the time zone database names it: a region, a slash and a city, such as `America/New_York`, `Europe/London` or `Asia/Tokyo`.
+The example above is for a channel set to `Europe/Amsterdam` with a stream on Friday at 20:00, which is 15:00 in New York that day.
+A name the bot does not know, or no name at all, makes the helper print as typed, so check a new name once in your own chat.
+
+## The streams after it
+
+| Helper | What it gives | Example |
+| --- | --- | --- |
+| `{schedule.list:3}` | The next streams, each with its short day, start time and title. The number says how many, from 1 to 10, so `3` gives three streams | `Fri 20:00 Bot night · Sun 14:00 Chill · Tue 20:00 Bot night` |
+| `{schedule.week}` | The days of this week, Monday to Sunday, that still have a stream to come | `Fri, Sun` |
+| `{schedule.today}` | Today's streams that have not ended, each with its start time and title | `20:00 Bot night` |
+
+`{schedule.list}` needs its number. Without one, or with a number outside 1 to 10, it prints as typed.
+`{schedule.week}` and `{schedule.today}` leave out streams that have already ended, so a stream earlier this week does not show.
+
+## A planned break
+
+| Helper | What it gives | Example |
+| --- | --- | --- |
+| `{schedule.vacation}` | The first and last day of the break, while it is planned or running | `Fri 6 Nov - Sun 15 Nov` |
+| `{schedule.vacation.until}` | The day the break ends | `Sunday 15 November` |
+
+The break is the vacation you set on your Twitch schedule.
+Both helpers give nothing once the break has ended, or when you have not set one.
+
+The next-stream helpers do not skip streams inside the break.
+They show the first stream on your schedule that is not canceled and has not ended, even when that stream falls on a break day.
+So during a break, name the break in the reply as well.
+A `!nextstream` reply for the weeks of a break can be:
+
+```
+On a break until {schedule.vacation.until}. Next stream: {schedule.next.at}
+```
+
+This gives `On a break until Sunday 15 November. Next stream: Tuesday 20:00`.
+When the break is over, the first part reads `On a break until .`, so change the reply back to `{schedule.next.full}` at that point.
+
+## Links to your schedule
+
+| Helper | What it gives | Example |
+| --- | --- | --- |
+| `{schedule.link}` | The link to your schedule page on Twitch | `https://twitch.tv/samplechannel/schedule` |
+| `{schedule.ical}` | The link to your schedule as a calendar file (iCalendar) that viewers can add to their calendar app | `https://api.twitch.tv/helix/schedule/icalendar?broadcaster_id=123456` |
+
+These two are built from your channel name and Twitch channel ID, so they work even when your schedule is empty.
+
+## Empty, or printed as typed
+
+A schedule helper either gives an empty result or prints exactly as you typed it, braces and all.
+Which one tells you the cause.
+
+| What you see | Cause |
+| --- | --- |
+| `{schedule.week}`, `{schedule.today}`, `{schedule.list:3}`, `{schedule.vacation}` or `{schedule.vacation.until}` gives nothing | There is nothing to list: no stream to come in that period, or no break. A channel that never saved a schedule counts as an empty schedule |
+| A `{schedule.next.*}` helper prints as typed | No stream is left on your schedule that is not canceled and has not ended |
+| Every schedule helper except the two links prints as typed | Twitch did not answer. The next reply asks Twitch again |
+
+Back to [Template helpers](/reference/templates/overview).

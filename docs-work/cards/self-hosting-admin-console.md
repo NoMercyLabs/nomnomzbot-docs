@@ -6,7 +6,7 @@ Goal: Use the admin console to watch health, manage channels and people, and set
 Success: The reader reads the health views and changes a channel or a default from the right section.
 Application-case: Twitch events stop for one channel, and the operator checks EventSub health and the channel console.
 Prerequisites: A self-hosted installation and a platform admin account.
-Project-root: C:\Projects\NoMercyLabs\nomnomzbot-docs\.claude\worktrees\finish
+Project-root: .
 Built-root: dist
 Rendered: dist/reference/self-hosting/admin-console/index.html
 Voice: docs-work/voice.md

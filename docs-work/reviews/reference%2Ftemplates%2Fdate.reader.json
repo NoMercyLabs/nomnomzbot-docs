@@ -1,0 +1,70 @@
+{
+  "fingerprint": "a8fc9606667ddf1beb95830e17db8b3cf76e1025d8e528514213a4c4a5e236d5",
+  "verdict": "PASS",
+  "answers": [
+    {
+      "question": 1,
+      "answer": "Use {date:...} with a source such as now or a date. To show a time, end it with a format step, for example {date:now|format:HH:mm}, which uses the channel's time zone. To show another zone, add tz:<zone> before the format step, for example {date:now|tz:America/New_York|format:HH:mm}. To count down, end with until, for example {date:2026-12-25|until:days}. A unit after the colon sets the shape of the answer.",
+      "quote": "Use tz with a time zone name such as America/New_York or Asia/Tokyo."
+    },
+    {
+      "question": 2,
+      "answer": "The channel time zone must be set first. The second paragraph of the page says where: Settings, then Bot basics, then Timezone. Until it is set, every time is UTC. Month and day names follow Language on the same page.",
+      "quote": "In Settings, open Bot basics and choose a Timezone."
+    },
+    {
+      "question": 3,
+      "answer": "Success is a formatted date or count in the reply. Failure is the raw expression, braces included, appearing in the reply. The page lists what causes that: an unknown step, unit, zone or language, a source that is not a date, or a step after the output step.",
+      "quote": "The reply shows the expression exactly as you wrote it, braces and all."
+    },
+    {
+      "question": 4,
+      "answer": "The stream announcement uses an expression with no tz step, such as {date:now|format:HH:mm}, so it shows the channel's own time zone from Bot basics. The other command adds tz:<zone>, such as {date:now|tz:Asia/Tokyo|format:HH:mm}. That shows the same moment in the other zone without changing the channel setting, so the announcement is unaffected. If the command also moves the date (start, next and so on), the position of tz matters: steps after tz work in the new zone.",
+      "quote": "Steps after tz work in the new zone, so the place you put it changes the answer."
+    },
+    {
+      "question": 5,
+      "answer": "The condition on {stream.startedAt} comes right after its example, inside the same bullet. The cost is small: one reread, with no wasted action. I would otherwise guess only at what the single-letter layouts look like; see question 6.",
+      "quote": "While you are offline {stream.startedAt} is empty and there is no time to show, so use it in replies that run while you are live."
+    },
+    {
+      "question": 6,
+      "answer": "Read aloud, the run of single letters d, D, t, T, f, F, g, G gives no example output for any of them, so a listener cannot pick one without trying each. In the helper table, the Use in column repeats the same list of six surfaces on all 17 rows, which is long when heard.",
+      "quote": "laid out the way the channel language writes dates"
+    }
+  ],
+  "findings": [],
+  "warnings_released": true,
+  "warning_review": [
+    {
+      "id": "paragraph-2",
+      "decision": "keep",
+      "reason": "Five short sentences that each give one setup fact in the order the reader needs it; the sentence count alone is not a defect."
+    },
+    {
+      "id": "sentence-7-1",
+      "decision": "keep",
+      "reason": "The sentence is long because it carries one complete worked example with its time zone step; the Thu 19:00 result is correct for Amsterdam on that date, and splitting it would separate the example from its explanation."
+    },
+    {
+      "id": "sentence-14-1",
+      "decision": "keep",
+      "reason": "The sentence lists the letters a reader types to build a format, and each letter's meaning follows its name; the list is the content this sentence exists to give."
+    },
+    {
+      "id": "sentence-14-2",
+      "decision": "keep",
+      "reason": "Quoting and the [o] ordinal are needed to write a custom format, and the example output shows what the syntax produces."
+    },
+    {
+      "id": "sentence-15-1",
+      "decision": "keep",
+      "reason": "The single-letter layouts are an alternative the reader does not need for this request and sit off the main path; the sentence is long but states what each code does in one place."
+    },
+    {
+      "id": "sentence-16-2",
+      "decision": "keep",
+      "reason": "The sentence gives the failure causes the reader must recognize to fix a broken expression, and the list is short enough to scan."
+    }
+  ]
+}

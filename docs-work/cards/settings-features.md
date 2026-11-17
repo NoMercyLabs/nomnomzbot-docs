@@ -6,7 +6,7 @@ Goal: How do I enable or disable one feature for this channel.
 Success: The feature's saved state matches the reader's choice and they can predict its effect on use.
 Application-case: A streamer wants to disable a feature temporarily without deleting its existing configuration.
 Prerequisites: Access to the selected channel and the action being configured; required platform accounts and connections must be established before the relevant steps.
-Project-root: C:\Projects\NoMercyLabs\nomnomzbot-docs\.claude\worktrees\finish
+Project-root: .
 Built-root: dist
 Rendered: dist/reference/settings/features/index.html
 Voice: docs-work/voice.md

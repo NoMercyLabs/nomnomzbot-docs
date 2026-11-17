@@ -6,7 +6,7 @@ Goal: Choose a supported helper form and understand the value it produces in thi
 Success: The reader can select a documented form, supply its arguments and predict its result or fallback in the stated context.
 Application-case: A command needs a dice result while another should rate a word supplied by the viewer; select the appropriate helpers.
 Prerequisites: A reply field that supports templates, and the ability to edit it; the template basics taught in /reference/commands/variables-and-templates.
-Project-root: C:\Projects\NoMercyLabs\nomnomzbot-docs\.claude\worktrees\finish
+Project-root: .
 Built-root: dist
 Rendered: dist/reference/templates/fun/index.html
 Voice: docs-work/voice.md

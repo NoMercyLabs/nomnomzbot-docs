@@ -6,7 +6,7 @@ Goal: Which moderation screen should I open for the problem in chat.
 Success: The reader can find the review queue, a chatter's history and the settings for the relevant protection.
 Application-case: A moderator sees a held message and wants context before deciding whether to allow it.
 Prerequisites: Familiarity with the dashboard and the selected channel.
-Project-root: C:\Projects\NoMercyLabs\nomnomzbot-docs\.claude\worktrees\finish
+Project-root: .
 Built-root: dist
 Rendered: dist/reference/moderation/overview/index.html
 Voice: docs-work/voice.md

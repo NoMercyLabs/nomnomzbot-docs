@@ -6,7 +6,7 @@ Goal: How do I control who can use a command and how often.
 Success: The reader can predict whether a viewer is allowed to invoke the command and when the next invocation is allowed.
 Application-case: A command has both shared and per-person waits; another viewer invokes it between two attempts by the first viewer.
 Prerequisites: Access to the selected channel and permission for the described action; any platform connection or output required by that action must be established before the steps.
-Project-root: C:\Projects\NoMercyLabs\nomnomzbot-docs\.claude\worktrees\finish-b
+Project-root: .
 Built-root: dist
 Rendered: dist/reference/commands/cooldowns-and-permissions/index.html
 Voice: docs-work/voice.md

@@ -6,7 +6,7 @@ Goal: How do I use the dashboard chat and act on the right message.
 Success: The reader can send a message or perform the intended moderation action in the selected channel.
 Application-case: A moderator replies to one chatter while viewing a mixed feed and must avoid sending the reply to the wrong platform.
 Prerequisites: Access to the selected channel and the action being configured; required platform accounts and connections must be established before the relevant steps.
-Project-root: C:\Projects\NoMercyLabs\nomnomzbot-docs\.claude\worktrees\finish
+Project-root: .
 Built-root: dist
 Rendered: dist/reference/community/chat-page/index.html
 Voice: docs-work/voice.md

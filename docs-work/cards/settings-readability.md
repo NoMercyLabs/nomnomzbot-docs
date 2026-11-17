@@ -6,7 +6,7 @@ Goal: How do I make the dashboard easier to read on this device.
 Success: The current dashboard shows the selected text, spacing or contrast setting.
 Application-case: A moderator changes text size on a laptop and wants to know whether it also changes the streamer's dashboard.
 Prerequisites: Access to the selected channel and the action being configured; required platform accounts and connections must be established before the relevant steps.
-Project-root: C:\Projects\NoMercyLabs\nomnomzbot-docs\.claude\worktrees\finish
+Project-root: .
 Built-root: dist
 Rendered: dist/reference/settings/readability/index.html
 Voice: docs-work/voice.md

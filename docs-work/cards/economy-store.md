@@ -6,7 +6,7 @@ Goal: How do I add an item viewers can buy with channel currency.
 Success: A saved item has the intended price and purchase action, and the reader can recognize the resulting balance change.
 Application-case: A streamer changes an item's price and wants to know what happens to an already submitted purchase.
 Prerequisites: Catalog management permission, Moderator by default; enabled channel currency and a working integration that submits purchases as signed-in viewers; tested linked behavior.
-Project-root: C:\Projects\NoMercyLabs\nomnomzbot-docs\.claude\worktrees\finish
+Project-root: .
 Built-root: dist
 Rendered: dist/reference/economy/store/index.html
 Voice: docs-work/voice.md

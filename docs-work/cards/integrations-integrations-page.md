@@ -6,7 +6,7 @@ Goal: Read the Integrations page and connect, reconnect, add permissions to or d
 Success: The service row shows the intended state after the action.
 Application-case: Spotify stopped working and the streamer reconnects it from its row.
 Prerequisites: Access to the selected channel's settings; an account at the outside service.
-Project-root: C:\Projects\NoMercyLabs\nomnomzbot-docs\.claude\worktrees\finish
+Project-root: .
 Built-root: dist
 Rendered: dist/reference/integrations/integrations-page/index.html
 Voice: docs-work/voice.md

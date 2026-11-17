@@ -6,7 +6,7 @@ Goal: Which connection sends events out, and which brings outside events into th
 Success: The reader can choose the right direction and recognize whether the configured connection received or delivered an event.
 Application-case: A streamer wants an outside service to trigger an action and also wants a separate service to receive channel events.
 Prerequisites: Access to the selected channel and the action being configured; required platform accounts and connections must be established before the relevant steps.
-Project-root: C:\Projects\NoMercyLabs\nomnomzbot-docs\.claude\worktrees\finish
+Project-root: .
 Built-root: dist
 Rendered: dist/reference/integrations/webhooks-and-event-feeds/index.html
 Voice: docs-work/voice.md

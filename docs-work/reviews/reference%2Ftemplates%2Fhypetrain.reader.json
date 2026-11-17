@@ -1,0 +1,45 @@
+{
+  "fingerprint": "88c15d8baaf6cda5311c0fee58873fd87dc2cb71f10f2b49cd6a922fee639a77",
+  "verdict": "PASS",
+  "answers": [
+    {
+      "question": 1,
+      "answer": "No helper takes an argument. For a train that is running now, use the {hypetrain.*} helpers, such as level, progress, goal, remaining, percent, bar, total, timeLeft and topContributor. For the train that fired a Hype train starts or Hype train ends event response, use the {hype_train.*} helpers: level, total, goal and id. In a Hype train ends response, use only the {hype_train.*} helpers.",
+      "quote": "None of them take arguments."
+    },
+    {
+      "question": 2,
+      "answer": "Before you start, you need a Twitch channel. The live helpers only show something while a train runs. The {hype_train.*} helpers work only in an event response for Hype train starts or Hype train ends, or in a pipeline one of those events started. All of this is in the section Before you use them.",
+      "quote": "A hype train is a Twitch feature, so these helpers read your Twitch channel only."
+    },
+    {
+      "question": 3,
+      "answer": "The spelling tells the two kinds apart: hypetrain without an underscore reads the train running now, and hype_train with an underscore carries the numbers of the event. You know it worked when the reply shows numbers instead of the braces as written. The !train example shows a sample output to compare against.",
+      "quote": "There are two kinds of hype train helper, and the spelling tells them apart."
+    },
+    {
+      "question": 4,
+      "answer": "To name a participant, put {hypetrain.topContributor} in a Hype train starts event response, for example next to {hype_train.level}. It works there because the train is still running. It does not work in a Hype train ends response, because by then the train no longer runs. For the chat command, use the live helpers such as {hypetrain.level}, {hypetrain.bar}, {hypetrain.remaining} and {hypetrain.timeLeft}, inside an {if.hypetrain.isActive:...|...} wrapper so the command still has a sentence when no train runs.",
+      "quote": "To name a participant when the train starts, add {hypetrain.topContributor}, which reads the running train:"
+    },
+    {
+      "question": 5,
+      "answer": "I reread the !train wrapper once. The sentence says to wrap the reply in {hypetrain.isActive}, but the example starts with {if.hypetrain.isActive:...|...}, and the page never explains that if form. The example is complete enough to copy as written, so nothing blocks the task. The cost is one reread to see that the if. prefix and the | separator are part of the wrapper.",
+      "quote": "wrap a !train reply in {hypetrain.isActive} to give it a sentence for both cases:"
+    },
+    {
+      "question": 6,
+      "answer": "Read aloud, the first line names two spellings that sound the same, because the underscore is silent. A listener cannot hear the difference until the next paragraph explains it. The cost is small, since that next paragraph explains it right away.",
+      "quote": "Helpers on this page: {hypetrain*}, {hype_train*}."
+    }
+  ],
+  "findings": [],
+  "warnings_released": true,
+  "warning_review": [
+    {
+      "id": "sentence-2-1",
+      "decision": "keep",
+      "reason": "The 47-word sentence names the two helper kinds and what each reads, in one clause per kind, and a streamer who knows template braces can follow it on one hearing. Its length alone is not a defect under voice.md line 103."
+    }
+  ]
+}

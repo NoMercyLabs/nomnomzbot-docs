@@ -6,7 +6,7 @@ Goal: How do I open a giveaway, choose a winner and deliver the prize.
 Success: The giveaway has a recorded winner and the reader knows how any code prize is delivered.
 Application-case: A moderator needs to draw another winner after the first selected person cannot receive the prize.
 Prerequisites: Giveaway management access, Moderator by default; connected Twitch chat for the first announcement workflow; broadcaster access and whisper-capable Twitch connection for code pools; enabled currency for paid entries or currency prizes.
-Project-root: C:\Projects\NoMercyLabs\nomnomzbot-docs\.claude\worktrees\finish
+Project-root: .
 Built-root: dist
 Rendered: dist/reference/economy/giveaways/index.html
 Voice: docs-work/voice.md

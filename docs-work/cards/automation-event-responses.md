@@ -6,7 +6,7 @@ Goal: How do I change what the bot says or does when a stream event arrives.
 Success: The reader can save an event response and determine which reply or action will run for the selected event.
 Application-case: A streamer wants a different raid response and later wants to restore the provided response.
 Prerequisites: Access to the selected channel and permission for the described action; any platform connection or output required by that action must be established before the steps.
-Project-root: C:\Projects\NoMercyLabs\nomnomzbot-docs\.claude\worktrees\finish
+Project-root: .
 Built-root: dist
 Rendered: dist/reference/automation/event-responses/index.html
 Voice: docs-work/voice.md

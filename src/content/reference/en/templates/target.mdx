@@ -1,111 +1,131 @@
 ---
 title: Target helpers
-description: Lists 46 template helpers, each with what it gives and an example.
+description: Lists 46 template helpers about the person a command names, with what each gives, its fallback and an example.
 ---
 
 Helpers on this page: `{target}`, `{target.*}`.
 
-The target is the person a command names, such as `@someone` in `!hug @someone`.
-These helpers give the target's name, pronouns, account, stats and live status, such as `{target.name}` and `{target.subject}`.
-Use them in a reply that talks about another person, such as a hug or a shoutout.
+The target is the person a reply is about when that person is not the one who used it. These helpers work in commands, event responses, pipelines and webhooks. A timer has no target, so they are not offered there.
 
-## Pronouns
-
-The `target.` pronoun helpers sit in the first table below.
-They read the saved pronouns of the person the command names.
-To learn where the bot gets pronouns and how to write a reply that fits he, she and they, read [Pronouns in templates](/reference/templates/pronouns).
+In a command, the target is the first word typed after the command, with any `@` removed. In `!hug @someone`, the target is `someone`. The bot never fills in the caller when no name is given, so `!hug` on its own has no target at all. In an event response, the target is the person the event is about, such as the viewer who followed.
 
 ## Write a reply about someone else
 
-For a command used as `!hug @someone`, try `{user} sends a hug to {target.displayname}.` as its reply.
-The caller's name fills `{user}`, while the named person's display name fills `{target.displayname}`.
-The bot can look up a Twitch account it has not seen in chat before; when that lookup fails, the display-name helper falls back to the word supplied.
+For a command used as `!hug @someone`, try this reply:
 
-Use a target-dependent reply for commands where viewers are expected to name someone.
-A timer has no such caller or named person, which is why target helpers are not listed for timers in **Use in**.
+```
+{user} sends a hug to {target.displayname}.
+```
 
-The points helpers read the named person's balance in the bot's [channel currency](/reference/economy/currency-and-balances).
-That balance is separate from Twitch Channel Points used for rewards and predictions.
+The caller's name fills `{user}`, and the named person's display name fills `{target.displayname}`. If the bot has never seen that person, it asks Twitch for the display name. It shows the word as typed only when no Twitch account has that name or the lookup fails.
 
-The examples illustrate possible values; your results depend on the channel and trigger.
-**Use in** lists the template fields that accept each helper.
-A pipeline still needs a trigger that supplies the relevant person, message, or event; event-specific helpers need that event.
-For viewer-written text, the [Viewer Templates setting and permissions](/reference/settings/features) also apply.
+Now someone types `!hug` with no name. `{target.displayname}` is empty, so the reply reads "ViewerOne sends a hug to ." To cover both cases, check `{target}` first with [the if helper](/reference/templates/if):
+
+```
+{if:{target}|{user} sends a hug to {target.displayname}.|{user} sends a hug to the whole chat.}
+```
+
+## When nobody is named
+
+Without a target, each helper gives one of these results:
+
+- `{target}`, `{target.displayname}` and the three message helpers are empty.
+- `{target.known}` is `false`.
+- The pronoun helpers use the neutral words they, them, their, person and are, and `{target.verb:<sing|plur>}` takes the second form.
+- The chat and watch stats read as nothing recorded: counts are `0`, `{target.watchtime}` is `0m` and `{target.firstseen}` is `unknown`.
+- `{target.name}`, `{target.id}`, `{target.followAge}` and the helpers that read the person's Twitch account, channel, points or channel record stay in the reply as written, braces and all.
+
+## Who the bot can read
+
+The account, channel, points and stats helpers read what the bot has stored about the person. They work for someone the bot has a record of, which is when `{target.known}` is `true`. For a Twitch account the bot has not stored yet, the name helpers still work, but these helpers give their empty, `false` or `0` result.
+
+The points helpers read the named person's balance in the bot's [channel currency](/reference/economy/currency-and-balances). That balance is separate from Twitch Channel Points.
+
+The examples show possible values; your results depend on the channel and the person. **Use in** lists the template fields that accept each helper.
 
 ## Pronouns and grammar
 
+These read the pronouns saved for the target. When the target has none saved, they use the neutral words. To learn where the bot gets pronouns and how to write a reply that fits he, she and they, read [Pronouns in templates](/reference/templates/pronouns).
+
 | Helper | What it gives | Example | Use in |
 | --- | --- | --- | --- |
-| `{target.genderedTerm}` | A gendered term for the @mention target | `person` | Commands, event responses, pipelines, webhooks |
-| `{target.object}` | The object-case pronoun for the @mention target | `them` | Commands, event responses, pipelines, webhooks |
-| `{target.possessive}` | The possessive pronoun for the @mention target | `their` | Commands, event responses, pipelines, webhooks |
-| `{target.presentTense}` | The present-tense to-be form for the @mention target | `are` | Commands, event responses, pipelines, webhooks |
-| `{target.subject}` | The subject-case pronoun for the @mention target | `they` | Commands, event responses, pipelines, webhooks |
-| `{target.tense}` | Is or are while your channel is live, was or were when it is offline. In a shoutout it follows the live state of the person shouted out instead | `are` | Commands, event responses, pipelines, webhooks |
-| `{target.verb:<sing\|plur>}` | A singular/plural verb agreeing with the @mention target (e.g. `{target.verb:plays\|play}`) | `{target.verb:has\|have}` gives `have` | Commands, event responses, pipelines, webhooks |
+| `{target.subject}` | The subject pronoun | `they` | Commands, event responses, pipelines, webhooks |
+| `{target.object}` | The object pronoun | `them` | Commands, event responses, pipelines, webhooks |
+| `{target.possessive}` | The possessive pronoun | `their` | Commands, event responses, pipelines, webhooks |
+| `{target.presentTense}` | `is` or `are`, to agree with the pronoun | `are` | Commands, event responses, pipelines, webhooks |
+| `{target.tense}` | `is` or `are` while your channel is live, `was` or `were` while it is offline. In a shoutout it follows the live state of the person shouted out | `are` | Commands, event responses, pipelines, webhooks |
+| `{target.genderedTerm}` | A gendered word for the person | `person` | Commands, event responses, pipelines, webhooks |
+| `{target.verb:<sing\|plur>}` | The first form for a singular pronoun such as he or she, the second for they | `{target.verb:has\|have}` gives `have` | Commands, event responses, pipelines, webhooks |
 
 ## Names and links
 
 | Helper | What it gives | Example | Use in |
 | --- | --- | --- | --- |
-| `{target}` | The @mention target login name | `example_viewer` | Commands, event responses, pipelines, webhooks |
-| `{target.avatar}` | The link to the profile picture of the @mentioned viewer | `https://static-cdn.jtvnw.net/jtv_user_pictures/viewertwo.png` | Commands, event responses, pipelines, webhooks |
-| `{target.bio}` | The profile description of the @mentioned viewer | `I build castles` | Commands, event responses, pipelines, webhooks |
-| `{target.color}` | The chat color of the @mentioned viewer | `#FF4500` | Commands, event responses, pipelines, webhooks |
-| `{target.displayname}` | The display name of the person the command names. If the bot does not know that person yet, it asks Twitch and shows the Twitch display name. It shows the word as typed only when no Twitch account has that name or the lookup fails | `Example_Viewer` | Commands, event responses, pipelines, webhooks |
-| `{target.id}` | The @mention target platform ID | `123456789` | Commands, event responses, pipelines, webhooks |
-| `{target.known}` | Whether the @mention target matches a user the bot knows (true or false) | `true` | Commands, event responses, pipelines, webhooks |
-| `{target.link}` | A profile link for the @mention target | `twitch.tv/example_viewer` | Commands, event responses, pipelines, webhooks |
-| `{target.mention}` | The @mentioned viewer, as an @mention | `@ViewerTwo` | Commands, event responses, pipelines, webhooks |
-| `{target.name}` | The @mention target login name | `example_viewer` | Commands, event responses, pipelines, webhooks |
-| `{target.shoutoutLink}` | The link to the channel of the @mentioned viewer | `https://twitch.tv/viewertwo` | Commands, event responses, pipelines, webhooks |
+| `{target}` | The name as typed, without the `@`. In an event response, the login of the person the event is about | `example_viewer` | Commands, event responses, pipelines, webhooks |
+| `{target.name}` | The login name. For a person the bot has not seen, the Twitch login; the typed word when no Twitch account has that name | `example_viewer` | Commands, event responses, pipelines, webhooks |
+| `{target.displayname}` | The display name: the stored one, else the one on Twitch, else the word as typed | `Example_Viewer` | Commands, event responses, pipelines, webhooks |
+| `{target.mention}` | An `@` and the display name | `@ViewerTwo` | Commands, event responses, pipelines, webhooks |
+| `{target.id}` | The Twitch user ID. Empty when no Twitch account has that name | `123456789` | Commands, event responses, pipelines, webhooks |
+| `{target.known}` | `true` when the bot has a record of this person, else `false` | `true` | Commands, event responses, pipelines, webhooks |
+| `{target.link}` | A short profile link, in lower case | `twitch.tv/example_viewer` | Commands, event responses, pipelines, webhooks |
+| `{target.shoutoutLink}` | The full link to the person's Twitch channel | `https://twitch.tv/viewertwo` | Commands, event responses, pipelines, webhooks |
+| `{target.avatar}` | The link to the Twitch profile picture | `https://static-cdn.jtvnw.net/jtv_user_pictures/viewertwo.png` | Commands, event responses, pipelines, webhooks |
+| `{target.bio}` | The Twitch profile description | `I build castles` | Commands, event responses, pipelines, webhooks |
+| `{target.color}` | The chat color set on Twitch. Empty when none is set | `#FF4500` | Commands, event responses, pipelines, webhooks |
 
 ## Account, follow and subscription
 
 | Helper | What it gives | Example | Use in |
 | --- | --- | --- | --- |
-| `{target.accountAge}` | How old the account of the @mentioned viewer is, in years and months | `7 years, 5 months` | Commands, event responses, pipelines, webhooks |
-| `{target.createdAt}` | The date the account of the @mentioned viewer was created | `2019-05-02` | Commands, event responses, pipelines, webhooks |
-| `{target.followAge}` | How long the @mention target has followed the channel | `1 year` | Commands, event responses, pipelines, webhooks |
-| `{target.isFollower}` | Whether the @mentioned viewer follows the channel: true or false | `true` | Commands, event responses, pipelines, webhooks |
-| `{target.isSub}` | Whether the @mentioned viewer is a subscriber: true or false | `false` | Commands, event responses, pipelines, webhooks |
+| `{target.createdAt}` | The date the Twitch account was made, as year, month and day | `2019-05-02` | Commands, event responses, pipelines, webhooks |
+| `{target.accountAge}` | How old the Twitch account is, in years and months | `7 years, 5 months` | Commands, event responses, pipelines, webhooks |
+| `{target.followAge}` | How long the person has followed your channel. `not following` when they do not follow, `unknown` when Twitch cannot be asked | `1 year` | Commands, event responses, pipelines, webhooks |
+| `{target.isFollower}` | `true` when the person follows your channel, else `false` | `true` | Commands, event responses, pipelines, webhooks |
+| `{target.isSub}` | `true` when the person is subscribed to your channel, else `false` | `false` | Commands, event responses, pipelines, webhooks |
 
 ## The target's own channel
 
 | Helper | What it gives | Example | Use in |
 | --- | --- | --- | --- |
-| `{target.game}` | The category the @mentioned channel set | `Minecraft` | Commands, event responses, pipelines, webhooks |
-| `{target.isLive}` | Whether the @mentioned viewer is live now: true or false | `false` | Commands, event responses, pipelines, webhooks |
-| `{target.title}` | The stream title the @mentioned channel set | `Building castles` | Commands, event responses, pipelines, webhooks |
-| `{target.viewers}` | How many viewers the @mentioned channel has now | `18` | Commands, event responses, pipelines, webhooks |
+| `{target.isLive}` | `true` when the person is live now, else `false` | `false` | Commands, event responses, pipelines, webhooks |
+| `{target.viewers}` | How many viewers their stream has now. `0` when they are offline | `18` | Commands, event responses, pipelines, webhooks |
+| `{target.game}` | The category set on their channel | `Minecraft` | Commands, event responses, pipelines, webhooks |
+| `{target.title}` | The stream title set on their channel | `Building castles` | Commands, event responses, pipelines, webhooks |
 
 ## Points and saved data
 
 | Helper | What it gives | Example | Use in |
 | --- | --- | --- | --- |
-| `{target.data.<key>}` | A per-viewer data field for the @mention target (e.g. `{target.data.key}`) | `{target.data.deaths}` gives `5` | Commands, event responses, pipelines, webhooks |
-| `{target.points}` | The channel points of the @mentioned viewer | `800` | Commands, event responses, pipelines, webhooks |
-| `{target.points.rank}` | The place of the @mentioned viewer on the channel points ranking | `17` | Commands, event responses, pipelines, webhooks |
+| `{target.points}` | The person's balance, with thousands separators. `0` when they have no balance | `800` | Commands, event responses, pipelines, webhooks |
+| `{target.points.rank}` | Their place on your channel's points ranking. Empty when they are not on it | `17` | Commands, event responses, pipelines, webhooks |
+| `{target.data.<key>}` | The value saved under that key for this person. Empty when nothing is saved | `{target.data.deaths}` gives `5` | Commands, event responses, pipelines, webhooks |
 
 ## Chat and watch stats
 
+These count what the bot recorded in your channel only.
+
 | Helper | What it gives | Example | Use in |
 | --- | --- | --- | --- |
-| `{target.activity.level}` | How active the @mentioned viewer is in this channel (new, casual, regular or veteran), from the viewer's message count and the channel's own steps | `veteran` | Commands, event responses, pipelines, webhooks |
-| `{target.avgperday}` | The @mention target average chat messages per day since first seen | `8` | Commands, event responses, pipelines, webhooks |
-| `{target.botpercent}` | The @mention target share of chat messages that were commands, as a whole percent | `5` | Commands, event responses, pipelines, webhooks |
-| `{target.commands}` | The @mention target total commands used | `40` | Commands, event responses, pipelines, webhooks |
-| `{target.days}` | The @mention target whole days since first seen (at least 1 once seen) | `30` | Commands, event responses, pipelines, webhooks |
-| `{target.firstseen}` | When the @mention target was first seen in chat | `2025-03-01` | Commands, event responses, pipelines, webhooks |
-| `{target.lastmessage}` | The @mention target most recent chat message | `see you tomorrow` | Commands, event responses, pipelines, webhooks |
-| `{target.lastmessage.full}` | The @mention target most recent chat message, never cut short | `see you tomorrow` | Commands, event responses, pipelines, webhooks |
-| `{target.messages}` | The @mention target total chat message count | `250` | Commands, event responses, pipelines, webhooks |
-| `{target.randommessage}` | A random older chat message of the @mention target, fit to quote | `nice play` | Commands, event responses, pipelines, webhooks |
-| `{target.redemptions}` | The @mention target total channel point redemption count | `8` | Commands, event responses, pipelines, webhooks |
-| `{target.songrequests}` | The @mention target total song request count | `3` | Commands, event responses, pipelines, webhooks |
-| `{target.stats.bits}` | The bits the @mentioned viewer cheered in this channel | `0` | Commands, event responses, pipelines, webhooks |
-| `{target.stats.lastSeen}` | The date the @mentioned viewer was last seen in the channel | `2026-10-25` | Commands, event responses, pipelines, webhooks |
-| `{target.stats.streak}` | The current attendance streak of the @mentioned viewer | `2` | Commands, event responses, pipelines, webhooks |
-| `{target.watchtime}` | The @mention target total watch time | `12h 0m` | Commands, event responses, pipelines, webhooks |
+| `{target.messages}` | Chat messages sent | `250` | Commands, event responses, pipelines, webhooks |
+| `{target.commands}` | Commands used | `40` | Commands, event responses, pipelines, webhooks |
+| `{target.botpercent}` | The share of their messages that were commands, as a whole percent | `5` | Commands, event responses, pipelines, webhooks |
+| `{target.redemptions}` | Channel Point rewards redeemed | `8` | Commands, event responses, pipelines, webhooks |
+| `{target.songrequests}` | Songs requested | `3` | Commands, event responses, pipelines, webhooks |
+| `{target.stats.bits}` | Bits cheered, with thousands separators | `0` | Commands, event responses, pipelines, webhooks |
+| `{target.watchtime}` | Time spent watching, in hours and minutes | `12h 0m` | Commands, event responses, pipelines, webhooks |
+| `{target.firstseen}` | The date the bot first saw them. `unknown` when it never has | `2025-03-01` | Commands, event responses, pipelines, webhooks |
+| `{target.days}` | Whole days since first seen, at least 1 once seen | `30` | Commands, event responses, pipelines, webhooks |
+| `{target.avgperday}` | Messages per day since first seen, as a whole number | `8` | Commands, event responses, pipelines, webhooks |
+| `{target.stats.lastSeen}` | The date the bot last saw them. Empty when it never has | `2026-10-25` | Commands, event responses, pipelines, webhooks |
+| `{target.activity.level}` | `new`, `casual`, `regular` or `veteran`, from their message count. A channel starts with these steps at 10, 100 and 500 messages | `veteran` | Commands, event responses, pipelines, webhooks |
+| `{target.stats.streak}` | The watch streak Twitch reported the last time they shared one in your chat: how many of your streams in a row they watched. `0` when they never shared one | `2` | Commands, event responses, pipelines, webhooks |
 
-Back to [Template helpers](/reference/templates/overview). For the places helpers work, special characters and HTML, read [Variables and templates](/reference/commands/variables-and-templates).
+The three message helpers read the person's chat in your channel and skip commands and deleted messages.
+
+| Helper | What it gives | Example | Use in |
+| --- | --- | --- | --- |
+| `{target.lastmessage}` | Their most recent message. Over 80 characters, it is cut to 77 and ends in `...` | `see you tomorrow` | Commands, event responses, pipelines, webhooks |
+| `{target.lastmessage.full}` | Their most recent message that is not empty and does not start with a link, never cut | `see you tomorrow` | Commands, event responses, pipelines, webhooks |
+| `{target.randommessage}` | A random message longer than 5 characters that does not start with a link. Over 200 characters, it is cut to 197 and ends in `...` | `nice play` | Commands, event responses, pipelines, webhooks |
+
+Back to [Template helpers](/reference/templates/overview). For the places helpers work, special characters and HTML, read [Variables and templates](/reference/commands/variables-and-templates). The helpers about the person who used the command are in [User helpers](/reference/templates/user).

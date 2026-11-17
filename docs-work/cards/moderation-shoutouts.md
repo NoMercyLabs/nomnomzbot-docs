@@ -6,7 +6,7 @@ Goal: How do I configure shoutouts and act on suggestions.
 Success: The reader can choose a shoutout action and understand when a rate limit delays or refuses it.
 Application-case: A moderator wants to shout out the same streamer again soon after another shoutout.
 Prerequisites: Access to the selected channel and permission for the described action; any platform connection or output required by that action must be established before the steps.
-Project-root: C:\Projects\NoMercyLabs\nomnomzbot-docs\.claude\worktrees\finish
+Project-root: .
 Built-root: dist
 Rendered: dist/reference/moderation/shoutouts/index.html
 Voice: docs-work/voice.md

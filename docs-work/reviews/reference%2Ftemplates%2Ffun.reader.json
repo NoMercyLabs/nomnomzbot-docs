@@ -1,0 +1,70 @@
+{
+  "fingerprint": "f55c242688c754f809732365ee160070c5e1e85f29425f6f73fba974f9d75c54",
+  "verdict": "PASS",
+  "answers": [
+    {
+      "question": 1,
+      "answer": "For a dice result, type {fun.dice} into the reply, or {fun.dice:20} for a die with that many sides, or {fun.dice:2d6} for several dice. To rate a word, use {fun.rate:word}. The page has no numbered steps: you type the helper into the reply like any other helper.",
+      "quote": "{fun.dice} rolls one six-sided die and gives the number."
+    },
+    {
+      "question": 2,
+      "answer": "You need to know how to type a helper into a reply. For use in a viewer's own text, the Viewer Templates setting and permissions must allow it. {fun.8ball} also needs a pick list named 8ball in your channel. {fun.percent} needs a trigger that brings a viewer. All of this is in the intro and in each helper's paragraph.",
+      "quote": "You type these helpers into a reply the same way as any other helper."
+    },
+    {
+      "question": 3,
+      "answer": "It worked when the reply shows a result, such as a number, a card or a score, in place of the helper. It failed when the helper stays in the reply as typed, braces and all. Random helpers draw a new result each time. Ratings stay the same all day and change at midnight in the channel's time zone.",
+      "quote": "An input the helper cannot use, such as a word where it wants a number, leaves the helper in the reply exactly as you wrote it, braces and all."
+    },
+    {
+      "question": 4,
+      "answer": "The dice command uses {fun.dice}, or {fun.dice:N} or {fun.dice:2d6} for other dice. The rating command uses {fun.rate:{args}}, so the word the viewer types after the command is rated from 1 to 10. Every viewer gets the same rating for that word for the rest of the day.",
+      "quote": "To rate what the viewer types after the command, put that text in the helper, as in {fun.rate:{args}}."
+    },
+    {
+      "question": 5,
+      "answer": "I reread the {fun.love} example, which mixes {user.display} and {target.displayname}. This page does not say whether those two names are spelled correctly or where they are listed, so I would guess when I copy them. {args} is also used without saying what it holds, but the reader is expected to know template braces. Neither stops the task.",
+      "quote": "{fun.love:{user.display}|{target.displayname}} gives a score from 0 to 100 for two names with a pipe between them, as in 22%."
+    },
+    {
+      "question": 6,
+      "answer": "Read aloud, the table's Use in column repeats the same long list in almost every row. It only matters for {fun.8ball} and {fun.percent}, whose limits the prose already gives. The cost is listening time, not confusion.",
+      "quote": "Commands, event responses, timers, pipelines, Discord, webhooks, viewer text"
+    }
+  ],
+  "findings": [],
+  "warnings_released": true,
+  "warning_review": [
+    {
+      "id": "sentence-2-2",
+      "decision": "keep",
+      "reason": "It states where the helpers work and the one setting that limits viewer text; the reader needs that before the examples."
+    },
+    {
+      "id": "sentence-8-1",
+      "decision": "keep",
+      "reason": "Each helper is named with its output in one clause; the length comes from three related helpers, not from padding."
+    },
+    {
+      "id": "sentence-10-1",
+      "decision": "keep",
+      "reason": "The reels and the win check are explained together because the win helper depends on the spin; it is one idea and the example shows it."
+    },
+    {
+      "id": "sentence-17-1",
+      "decision": "keep",
+      "reason": "It separates the ready-made !8ball command from the helper, which a reader would otherwise confuse, and the distinction changes what they build."
+    },
+    {
+      "id": "sentence-18-1",
+      "decision": "keep",
+      "reason": "Two helpers, each with a worked example that states its input and output; the sentence is the minimum needed to show both."
+    },
+    {
+      "id": "sentence-19-1",
+      "decision": "keep",
+      "reason": "The face and random-pick helpers are listed with what each gives, and the fixed-set note tells the reader they take no input; the length is the content."
+    }
+  ]
+}

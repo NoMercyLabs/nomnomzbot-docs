@@ -6,7 +6,7 @@ Goal: Find an earlier stream event and replay it for chat, the voice and the ove
 Success: The reader finds the event in the right stream section and replays it.
 Application-case: A raid arrived while the streamer was away from the keyboard, and the streamer wants the alert to play again.
 Prerequisites: Access to the selected channel; events exist only for streams the bot has seen.
-Project-root: C:\Projects\NoMercyLabs\nomnomzbot-docs\.claude\worktrees\finish
+Project-root: .
 Built-root: dist
 Rendered: dist/reference/community/events/index.html
 Voice: docs-work/voice.md

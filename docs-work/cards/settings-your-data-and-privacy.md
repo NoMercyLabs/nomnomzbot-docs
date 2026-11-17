@@ -6,7 +6,7 @@ Goal: Where do I download my data, change consent or delete it.
 Success: The reader can recognize an export and understand the scope and effect of each privacy choice before confirming.
 Application-case: A viewer wants to stop optional processing without deleting their identity or unrelated channel data.
 Prerequisites: Access to the selected channel and the action being configured; required platform accounts and connections must be established before the relevant steps.
-Project-root: C:\Projects\NoMercyLabs\nomnomzbot-docs\.claude\worktrees\finish
+Project-root: .
 Built-root: dist
 Rendered: dist/reference/settings/your-data-and-privacy/index.html
 Voice: docs-work/voice.md

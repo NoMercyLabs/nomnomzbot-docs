@@ -6,7 +6,7 @@ Goal: Know which account the bot uses now, and choose to keep it, add a marker t
 Success: The streamer can say which of the three accounts types in their chat and, when it is their own account, sees the chosen marker in front of the next bot line.
 Application-case: A streamer who connected a separate bot account for the channel sets a Bot line marker and finds that the marker never shows in chat, then sees the bot lose the moderator role and a notice appear.
 Prerequisites: Signed in as the broadcaster with Twitch connected; changing the marker needs access to the Bot basics settings page.
-Project-root: C:\Projects\NoMercyLabs\nomnomzbot-docs\.claude\worktrees\finish
+Project-root: .
 Built-root: dist
 Rendered: dist/reference/getting-started/bot-account/index.html
 Voice: docs-work/voice.md

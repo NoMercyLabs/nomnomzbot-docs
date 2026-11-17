@@ -6,7 +6,7 @@ Goal: How do I save and retrieve a quote for this channel.
 Success: The saved quote can be found and read back through the documented command or dashboard action.
 Application-case: A moderator needs to correct a saved quote while retaining the information needed to find it again.
 Prerequisites: Access to the selected channel and permission for the described action; any platform connection or output required by that action must be established before the steps.
-Project-root: C:\Projects\NoMercyLabs\nomnomzbot-docs\.claude\worktrees\finish-b
+Project-root: .
 Built-root: dist
 Rendered: dist/reference/commands/quotes/index.html
 Voice: docs-work/voice.md

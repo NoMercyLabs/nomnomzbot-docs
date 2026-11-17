@@ -6,7 +6,7 @@ Goal: How do I enable speech for the intended people and hear it on stream.
 Success: The configured audio output plays a permitted speech request and the reader can identify why another request is skipped.
 Application-case: A streamer wants moderators to test speech while limiting ordinary viewers and correcting a name pronunciation.
 Prerequisites: Signed in with speech configuration permission (Moderator by default); permission to edit and run the command; OBS audio and TTS caption; speech enabled, an eligible role, no bits requirement for the command test and automatic playback.
-Project-root: C:\Projects\NoMercyLabs\nomnomzbot-docs\.claude\worktrees\finish
+Project-root: .
 Built-root: dist
 Rendered: dist/reference/audio/text-to-speech/index.html
 Voice: docs-work/voice.md

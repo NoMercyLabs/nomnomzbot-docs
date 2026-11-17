@@ -6,7 +6,7 @@ Goal: Which overlay link do I put into OBS, and how do I tell it is connected.
 Success: The browser source displays the intended overlay and the reader can recognize its connection state.
 Application-case: A streamer replaces a browser-source link and wants to keep the correct overlay dimensions and reconnect behavior.
 Prerequisites: Access to the selected channel and permission for the described action; any platform connection or output required by that action must be established before the steps.
-Project-root: C:\Projects\NoMercyLabs\nomnomzbot-docs\.claude\worktrees\finish
+Project-root: .
 Built-root: dist
 Rendered: dist/reference/overlays/obs-browser-source/index.html
 Voice: docs-work/voice.md

@@ -6,7 +6,7 @@ Goal: Which spam-defense settings can I change for my channel.
 Success: The reader can save a valid policy and explain which protection a chosen setting controls.
 Application-case: A streamer wants to change one threshold but save watch-only mode for the channel before changing a threshold.
 Prerequisites: Access to the selected channel and permission for the described action; any platform connection or output required by that action must be established before the steps.
-Project-root: C:\Projects\NoMercyLabs\nomnomzbot-docs\.claude\worktrees\finish
+Project-root: .
 Built-root: dist
 Rendered: dist/reference/moderation/spam-defense/index.html
 Voice: docs-work/voice.md

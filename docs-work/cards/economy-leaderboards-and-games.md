@@ -6,7 +6,7 @@ Goal: Configure a currency ranking and understand what the chat command publishe
 Success: The reader saves the intended balance, earned, spent or jar ranking and can check the chat output.
 Application-case: A streamer wants to rank currency gained this week rather than the balances viewers saved earlier.
 Prerequisites: Leaderboard configuration access, Moderator by default; channel currency with viewer balances and connected chat for the command check. Saved rankings may be published immediately.
-Project-root: C:\Projects\NoMercyLabs\nomnomzbot-docs\.claude\worktrees\finish
+Project-root: .
 Built-root: dist
 Rendered: dist/reference/economy/leaderboards-and-games/index.html
 Voice: docs-work/voice.md

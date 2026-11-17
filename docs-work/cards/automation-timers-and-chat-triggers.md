@@ -6,7 +6,7 @@ Goal: How do I post recurring messages or answer a chat phrase.
 Success: The reader can predict the first and subsequent timer posts, and distinguish them from phrase-triggered replies.
 Application-case: A streamer saves a reminder before going live and wants to know when it first posts and whether it stops after the stream.
 Prerequisites: Access to the selected channel and permission for the described action; any platform connection or output required by that action must be established before the steps.
-Project-root: C:\Projects\NoMercyLabs\nomnomzbot-docs\.claude\worktrees\finish
+Project-root: .
 Built-root: dist
 Rendered: dist/reference/automation/timers-and-chat-triggers/index.html
 Voice: docs-work/voice.md

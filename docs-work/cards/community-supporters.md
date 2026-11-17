@@ -6,7 +6,7 @@ Goal: Read the Supporters page and find recent and top supporters.
 Success: The reader finds a recent subscriber, gifter, cheerer or tipper and reads the top supporters list.
 Application-case: A streamer wants to thank everyone who gifted subs during the last stream.
 Prerequisites: Access to the selected channel; tips and memberships show only after a supporter source is connected.
-Project-root: C:\Projects\NoMercyLabs\nomnomzbot-docs\.claude\worktrees\finish
+Project-root: .
 Built-root: dist
 Rendered: dist/reference/community/supporters/index.html
 Voice: docs-work/voice.md

@@ -1,0 +1,44 @@
+{
+  "fingerprint": "07847ef66c7d931e30fc1346eb225a99bb5dfe4d222dc021e596bcacae0e08b8",
+  "verdict": "PASS",
+  "answers": [
+    {
+      "question": 1,
+      "answer": "Set the Timezone field first, then use {schedule.next.at} (or {schedule.next.date} or {schedule.next.full}) to show the next stream in your channel's zone. To show it in a viewer's zone, use {schedule.next.viewerTime:Region/City}, for example {schedule.next.viewerTime:America/New_York}, with one time zone database name after the colon.",
+      "quote": "It needs one time zone name after the colon, written the way the time zone database names it: a region, a slash and a city, such as America/New_York, Europe/London or Asia/Tokyo."
+    },
+    {
+      "question": 2,
+      "answer": "You need the Timezone field set in Settings under Bot basics, or every time shows in UTC. You should also know how to put braces in a reply, which the page sends you to Variables and templates for. The helpers do not work in a viewer's own text.",
+      "quote": "That zone is the Timezone field in Settings, under Bot basics."
+    },
+    {
+      "question": 3,
+      "answer": "Success is the start time shown in the zone you named; the page gives the worked example of 20:00 Amsterdam becoming 15:00 New York. A time zone name the bot does not know makes the helper print exactly as typed, so you test a new name once in your own chat.",
+      "quote": "A name the bot does not know, or no name at all, makes the helper print as typed, so check a new name once in your own chat."
+    },
+    {
+      "question": 4,
+      "answer": "During a vacation, the next-stream helpers still show the first stream that is not canceled and has not ended, even if it falls on a break day. So the reply should also name the break with {schedule.vacation.until}, and go back to {schedule.next.full} once the break is over.",
+      "quote": "They show the first stream on your schedule that is not canceled and has not ended, even when that stream falls on a break day."
+    },
+    {
+      "question": 5,
+      "answer": "I reread one point: the page does not say whether streams inside a Twitch vacation count as canceled. Its sample reply shows the next stream after the break ends, which suggests they are, but I had to guess. Nothing needed comes after the action it affects, because the time zone requirement is stated before the helpers.",
+      "quote": "This gives On a break until Sunday 15 November. Next stream: Tuesday 20:00."
+    },
+    {
+      "question": 6,
+      "answer": "Read aloud, this paragraph repeats the time zone and UTC fallback already given under Set your time zone first. It costs a few seconds and adds no new fact.",
+      "quote": "When that field is not set, they show it in UTC."
+    }
+  ],
+  "findings": [],
+  "warnings_released": true,
+  "warning_review": [
+    {"id": "paragraph-6", "decision": "keep", "reason": "Each of the six sentences carries one fact. The three short duration sentences each give a real example (3h, 2h 30m, 45m), so a listener can follow them without rereading. The count alone is not a cost to this reader."},
+    {"id": "sentence-6-2", "decision": "keep", "reason": "The flagged text is two sentences. The first ties a cause to its effect in one line: a running stream still counts until its planned end. The second is short. Neither needs a reread."},
+    {"id": "sentence-7-2", "decision": "keep", "reason": "This is the sentence I used to answer question 1. The colon introduces the exact form of the name (region, slash, city) and three real examples, which this reader needs to type the helper correctly. Splitting it would separate the rule from its examples."},
+    {"id": "sentence-8-2", "decision": "keep", "reason": "The flagged text is two short sentences: what happens without a valid number, and which streams are left out. Each one states something the reader could not assume, and both are easy to follow when read aloud."}
+  ]
+}

@@ -6,7 +6,7 @@ Goal: Find any page in the sidebar by its group, know why a page is missing, and
 Success: The reader opens Home, names the sidebar group a page lives in, and can find the page available to their role and use the channel switcher.
 Application-case: A moderator who helps two channels switches channels from a small laptop window, finds only an icon rail, and wonders why Shield asks a question before it changes.
 Prerequisites: Signed in to a dashboard; a role that may open at least one page of the selected channel.
-Project-root: C:\Projects\NoMercyLabs\nomnomzbot-docs\.claude\worktrees\finish
+Project-root: .
 Built-root: dist
 Rendered: dist/reference/getting-started/dashboard-tour/index.html
 Voice: docs-work/voice.md

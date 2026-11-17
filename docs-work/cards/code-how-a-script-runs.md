@@ -6,7 +6,7 @@ Goal: What context does a script receive, and what can end its run.
 Success: The author can predict the invocation context, permission check and completion or failure outcome.
 Application-case: A script is invoked by a scheduled action rather than a chat message and cannot assume a current chatter.
 Prerequisites: Access to the intended bot and its documented SDK or API surface; authorization for the chosen script, widget or external action.
-Project-root: C:\Projects\NoMercyLabs\nomnomzbot-docs\.claude\worktrees\finish
+Project-root: .
 Built-root: dist
 Rendered: dist/reference/code/how-a-script-runs/index.html
 Voice: docs-work/voice.md

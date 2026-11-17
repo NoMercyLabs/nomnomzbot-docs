@@ -6,7 +6,7 @@ Goal: How do I connect OBS and use the dashboard controls.
 Success: The dashboard reports an OBS connection and the selected control changes the intended OBS state.
 Application-case: A streamer wants to change a scene without accidentally starting the stream or recording.
 Prerequisites: Broadcaster configures the connection; reachable OBS WebSocket server with matching host, port and password. Prepare off air for the first scene change; editor-level control by default, with separate broadcast-button permission.
-Project-root: C:\Projects\NoMercyLabs\nomnomzbot-docs\.claude\worktrees\finish
+Project-root: .
 Built-root: dist
 Rendered: dist/reference/integrations/obs/index.html
 Voice: docs-work/voice.md

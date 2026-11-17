@@ -6,7 +6,7 @@ Goal: How does NomNomzBot fit into my stream, and where do I start.
 Success: The reader can choose the sign-in or self-hosting path and find the guide section for their first task.
 Application-case: A moderator is invited to help an existing channel and wants to know whether they need to install their own bot.
 Prerequisites: none
-Project-root: C:\Projects\NoMercyLabs\nomnomzbot-docs\.claude\worktrees\finish
+Project-root: .
 Built-root: dist
 Rendered: dist/reference/overview/index.html
 Voice: docs-work/voice.md

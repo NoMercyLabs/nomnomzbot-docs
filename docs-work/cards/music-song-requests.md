@@ -6,7 +6,7 @@ Goal: How do I let viewers request songs and set the rules.
 Success: A permitted request appears in the queue, and the reader can explain a refused request using the configured rules.
 Application-case: A viewer submits a song already queued by someone else and the moderator needs to decide which request rule applies.
 Prerequisites: Access to the selected channel and permission for the described action; any platform connection or output required by that action must be established before the steps.
-Project-root: C:\Projects\NoMercyLabs\nomnomzbot-docs\.claude\worktrees\finish
+Project-root: .
 Built-root: dist
 Rendered: dist/reference/music/song-requests/index.html
 Voice: docs-work/voice.md

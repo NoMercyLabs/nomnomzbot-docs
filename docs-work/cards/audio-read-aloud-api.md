@@ -6,7 +6,7 @@ Goal: How does my web page request and play a read-aloud clip.
 Success: The developer can construct a valid request, handle the response and distinguish a refused request from an empty clip.
 Application-case: A public web page on a different origin needs to request speech and handle a temporary rate limit.
 Prerequisites: A reachable bot endpoint and a web-page origin permitted by its read-aloud configuration.
-Project-root: C:\Projects\NoMercyLabs\nomnomzbot-docs\.claude\worktrees\finish
+Project-root: .
 Built-root: dist
 Rendered: dist/reference/audio/read-aloud-api/index.html
 Voice: docs-work/voice.md

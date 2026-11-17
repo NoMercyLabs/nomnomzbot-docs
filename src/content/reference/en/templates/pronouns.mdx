@@ -1,38 +1,25 @@
 ---
 title: Pronouns in templates
-description: Learn where the bot gets a person's pronouns, and how to write a reply that reads right for he, she, they and other pronouns.
+description: Learn where the bot gets a person's pronouns, what words each pronoun gives, and how to write a reply that fits he, she, they and other pronouns.
 ---
 
-Pronoun helpers let a single reply adapt to the person it describes.
-For example, a welcome can use "he is", "she is", or "they are" without you maintaining a different command for each person.
+Pronoun helpers go in the reply of a command, an event response, a pipeline step or a webhook.
+When the reply is sent, the bot fills in the words from the saved pronouns of the person it is about.
+So one reply reads right for every viewer, and you never keep a copy for each pronoun.
+
+For example, write `{Target.Subject} {target.presentTense} a great streamer.` in a command that names someone.
+For a person with they/them saved, the result is `They are a great streamer.`
 The helpers themselves are listed on [User helpers](/reference/templates/user) and [Target helpers](/reference/templates/target).
 
-For a first example, use `{Target.Subject} {target.presentTense} a great streamer.` in wording about a named person.
-With they/them saved for that person, the result is `They are a great streamer.`
-The pronoun and verb both come from that person's saved choice.
+## Where the helpers work
 
-## Where pronouns come from
+The pronoun helpers work in command replies, event responses, pipelines and webhooks.
+The `user.` forms, such as `{user.subject}`, also work in a viewer's own text when the channel has **Viewer Templates** on, as described on [Features](/reference/settings/features). There they are about the viewer who typed the text.
 
-The bot can read a Twitch viewer's pronouns from the alejo.io pronoun service.
-That lookup uses their Twitch login, so linking another platform does not give the external service a different name to search.
+Timers and Discord notifications are not about one person, so the bot refuses to save a reply there that uses a pronoun helper.
+Only `{tense}` works everywhere. Where there is no person, it gives are or were.
 
-The bot saves a person's pronouns when that person chats in any channel the bot is in.
-The saved pronouns are the same in every channel.
-A reply reads the saved pronouns. It does not look them up again.
-
-A viewer can also pick pronouns in the bot, as described on [Viewer pages](/reference/community/viewer-pages).
-A choice made on the viewer page can still be replaced by a later external refresh unless that account already has a manual override.
-The current viewer form saves the pronoun fields without enabling that protection.
-
-The API lists the base pronouns, such as he, she and they.
-Pairs such as he/they come from the bot's own bundled set.
-If the API is down, the bot uses that bundled set.
-
-Pronouns set by a command that runs the [Set pronoun action](/reference/commands/pipelines) stay set.
-The API does not overwrite them.
-
-The bot adds the words that go with each pronoun.
-The words below are the ones the three common pronouns give.
+## The words each pronoun gives
 
 | Helper | he | she | they | any or other |
 | --- | --- | --- | --- | --- |
@@ -43,19 +30,12 @@ The words below are the ones the three common pronouns give.
 | Past tense (from `{tense}` when offline) | was | was | were | was |
 | Gendered term | guy | gal | person | person |
 
-Neopronouns such as xe/xem and zie/hir give their own words.
+Neopronouns give their own words.
 For xe, the subject is xe, the object is xem and the possessive is xyr.
 For zie, the subject is zie, and the object and the possessive are hir.
-Both xe and zie give "person" as the gendered term.
-Both take the singular verb forms is and was.
-Only "they" takes the plural verb.
-The last column is for the two open-choice pronoun sets, any and other.
-It is explained under [When the pronouns are "any" or "other"](#when-the-pronouns-are-any-or-other).
+Both give "person" as the gendered term, and both take is and was, because only "they" takes the plural verb.
 
-## Write correct sentences
-
-Use a pronoun helper where your sentence needs a pronoun, then pair it with a matching verb helper.
-This keeps the reply useful for different viewers while leaving the rest of your wording as you wrote it.
+## Write a sentence that fits
 
 ### Pick the helper
 
@@ -64,10 +44,11 @@ This keeps the reply useful for different viewers while leaving the rest of your
 - `{possessive}` gives his, her or their. Use it before a noun, as in "their cat".
 - `{genderedTerm}` gives guy, gal or person.
 - `{presentTense}` gives is or are. It does not change with the stream.
-- `{tense}` gives is or are while the stream is live, and was or were when it is offline. In a shoutout the stream is the stream of the person you shout out. Everywhere else it is your channel's stream.
+- `{tense}` gives is or are while the stream is live, and was or were when it is offline.
 - `{verb:plays|play}` gives the first form for he and she, and the second form for they.
 
-Use `{tense}` when you need was or were.
+In a shoutout, "live" in `{tense}` means the person you shout out is live.
+Everywhere else it means your channel is live, also for `{target.tense}`.
 
 ### Pick the person
 
@@ -75,76 +56,77 @@ A bare helper such as `{subject}` follows the person the command names.
 If the command names nobody, it follows the person who used the command.
 In `!hug @someone`, `{subject}` is about the person named, and in `!lurk` it is about the person who typed it.
 
-Add `user.` or `target.` to choose a side yourself.
-`{user.subject}` is always about the person who used the command.
-`{target.subject}` is always about the person the command names.
-
+Add `user.` or `target.` to choose the person yourself.
+`{user.subject}` is always about the person who used the command, and `{target.subject}` is always about the person the command names.
 The same works for the other helpers, such as `{user.possessive}`, `{target.object}`, `{target.verb:plays|play}` and `{target.tense}`.
-The side changes the person, not the stream. `{target.tense}` still follows the stream of the person you shout out in a shoutout, and your channel's stream everywhere else.
 
 ### Start a sentence with a capital
 
 Write the first letter of the helper in upper case to get a capital first letter.
-`{Subject}` gives He, She or They.
-`{Target.Subject}`, `{User.Possessive}` and `{Tense}` work the same way.
-
-Only the very first letter counts. `{target.Subject}` has a lower case first letter, so it gives he, she or they.
-Use the capital form at the start of a sentence.
-A verb form from `{verb:plays|play}` does not get a capital.
+`{Subject}` gives He, She or They, and `{Target.Subject}`, `{User.Possessive}` and `{Tense}` work the same way.
+Only the very first letter counts, so `{target.Subject}` still gives he, she or they.
+A verb from `{verb:plays|play}` never gets a capital.
 
 ### Make the verb agree
 
-A verb must match the pronoun.
-"He plays" and "they play" use different forms.
-Do not type the verb after `{subject}`.
-Use `{verb:singular|plural}` and type the two forms with a pipe between them.
+"He plays" and "they play" use different forms, so do not type the verb after `{subject}`.
+Write `{verb:singular|plural}` instead, with the two forms and a pipe between them.
 The first form is for he and she, and the second form is for they.
-Without a pipe, the bot leaves the text as you typed it.
+Without a pipe, the bot leaves the text as you typed it, so you can see the mistake in chat.
 
 For the verb "to be", use `{presentTense}` or `{tense}`.
-`{presentTense}` gives is or are.
-`{tense}` gives is or are when the stream is live, and was or were when it is offline.
 
-### When a person has no pronouns
+## Where the pronouns come from
+
+For a Twitch viewer, the bot reads their pronouns from the alejo.io pronoun service, by their Twitch login.
+It checks when that viewer chats in a channel the bot is in, at most once a day per viewer, and saves the result.
+A reply reads the saved pronouns, which are the same in every channel.
+Chat on other platforms does not start a lookup.
+
+A viewer can also pick pronouns themselves on their [viewer pages](/reference/community/viewer-pages).
+You can set a viewer's pronouns with a command that runs the **Set pronoun** action, as described on [Pipelines](/reference/commands/pipelines).
+The action takes the pronoun set by its name, such as `he/him`, and later lookups do not change it.
+Give the action `clear` or `reset` instead, and the bot goes back to the pronoun service at the next lookup.
+
+### Two pronoun sets
+
+A person can have a main set and a second set, such as he/him with they/them.
+On the viewer page, these are **Your pronouns** and **Also uses**.
+The words in a reply always come from the main set.
+The second set only shows in `{user.pronouns}`, which gives a badge such as `he/they`.
+
+So for a viewer who uses he/they, put he/him as the main set and they/them as the second set.
+A reply then reads "he is", and `{user.pronouns}` still shows he/they.
+
+## When the bot has no pronouns
 
 If the bot has no pronouns for a person, it uses they, them, their, person, are and were.
-This holds for a person the bot has never seen chat, and who never picked pronouns in the bot.
-
-The pronoun helpers never show as raw text.
+That happens for a person with no pronouns at the pronoun service, or who never chatted on Twitch where the bot is, and who never picked pronouns in the bot.
 The verb takes the plural form, so the line reads "they play".
+A pronoun helper never shows as raw text.
 
-### When the pronouns are "any" or "other"
+## When the pronouns are "any" or "other"
 
 Two pronoun sets name a choice, not words for a sentence: any and other.
-Neopronouns such as xe and zie are not in this group. They give their own words, as described above.
-
-The pronoun list in the bot shows the name the bot stored.
-When the pronoun API is reachable, the list shows `any` and `other`.
-The bundled set the bot uses when the API is down names them `any/all` and `other/ask` instead.
-The bot treats both spellings the same.
-
-A guess such as "they" can be wrong for a person with one of these sets.
-So the bot uses the person's name where a pronoun would go.
+The pronoun list may name them any/all and other/ask, and both spellings work the same.
+A guess such as "they" can be wrong for these people, so the bot uses the person's name where a pronoun would go.
 
 - `{subject}` and `{object}` give the name.
 - `{possessive}` gives the name with 's, such as "Alex's".
-- `{presentTense}` gives is. `{tense}` gives is while the stream is live and was when it is offline.
+- `{presentTense}` gives is, and `{tense}` gives is or was.
 - `{verb:plays|play}` gives the first form.
 - `{genderedTerm}` gives person.
 
-The name keeps its own capital letters, also in `{Subject}`.
-"mAyA_tV" stays "mAyA_tV".
+The name is the person's display name, and it keeps its own capitals, also in `{Subject}`, so "mAyA_tV" stays "mAyA_tV".
+If the bot has no name for the person, it uses the they/them words instead.
 
-If you write a line with `{name}` once and `{subject}` after it, the name shows twice.
-Keep one name in the line to keep it readable.
+A line that already names the person shows the name twice.
+`{name} said {possessive} line` gives "Alex said Alex's line", so keep one name in the line.
 For example, `{Subject} {presentTense} great.` gives `Alex is great.` for these people, and `He is great.` for he.
 
 ## Examples
 
-Each line below is the same reply for four kinds of viewer: he, she, they, and any or other.
-The last example also splits live and offline.
-The first line of each example is what you type.
-For "any", the name stands where a pronoun would, so a line that already names the person shows the name more than once.
+Each example shows what you type, then the result for he, she, they and any.
 
 **A shoutout.**
 Typed: `Shoutout to {target.displayname}! {Target.Subject} {target.presentTense} a great streamer. Go follow {target.object}!`
@@ -153,8 +135,6 @@ Typed: `Shoutout to {target.displayname}! {Target.Subject} {target.presentTense}
 - she: `Shoutout to Alex! She is a great streamer. Go follow her!`
 - they: `Shoutout to Alex! They are a great streamer. Go follow them!`
 - any: `Shoutout to Alex! Alex is a great streamer. Go follow Alex!`
-
-Without helpers, the same line written for "he" reads wrong for she and they.
 
 **A verb that must agree.**
 Typed: `{target.displayname} is live. Say hi to {target.object} and see what {target.subject} {target.verb:plays|play}.`
@@ -179,10 +159,6 @@ Typed in a shoutout: `{Target.Subject} {target.tense} streaming Tetris.`
 - she, offline: `She was streaming Tetris.`
 - they, live: `They are streaming Tetris.`
 - they, offline: `They were streaming Tetris.`
-- any, live: `Alex is streaming Tetris.`
 - any, offline: `Alex was streaming Tetris.`
-
-In a shoutout, "live" means the person you shout out is live.
-Everywhere else "live" means your channel is live, even for `{target.tense}`.
 
 Back to [Template helpers](/reference/templates/overview). For the places helpers work, special characters and HTML, read [Variables and templates](/reference/commands/variables-and-templates).

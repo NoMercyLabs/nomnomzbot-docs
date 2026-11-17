@@ -6,7 +6,7 @@ Goal: How do I build and check a sequence of command actions.
 Success: The reader can save a pipeline, inspect its test results and attach it to a trigger with the expected effects.
 Application-case: A moderator wants to test a pipeline that sends chat and changes a balance before allowing viewers to trigger it.
 Prerequisites: Access to the selected channel and permission for the described action; any platform connection or output required by that action must be established before the steps.
-Project-root: C:\Projects\NoMercyLabs\nomnomzbot-docs\.claude\worktrees\finish-b
+Project-root: .
 Built-root: dist
 Rendered: dist/reference/commands/pipelines/index.html
 Voice: docs-work/voice.md

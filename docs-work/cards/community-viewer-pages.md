@@ -6,7 +6,7 @@ Goal: Where can I view my own channel information and change my account preferen
 Success: The viewer can find their own profile and understand which preferences affect their account or one channel.
 Application-case: A viewer visits two channels and wants to know which pronoun or privacy choices apply in both.
 Prerequisites: A signed-in viewer account and the intended channel selected.
-Project-root: C:\Projects\NoMercyLabs\nomnomzbot-docs\.claude\worktrees\finish
+Project-root: .
 Built-root: dist
 Rendered: dist/reference/community/viewer-pages/index.html
 Voice: docs-work/voice.md

@@ -6,7 +6,7 @@ Goal: Finish the setup with the one required Twitch step done, the optional step
 Success: Choosing Finish setup leaves the wizard for the dashboard path and asks an unauthenticated reader to sign in; the reader then signs in as broadcaster.
 Application-case: A streamer who runs the bot for a small friends-only channel does not want to register a Twitch application at all and wants the shortest route through the wizard.
 Prerequisites: A running self-hosted bot reachable in the browser; for their own Twitch app, a Twitch account with a verified email address and two-factor authentication.
-Project-root: C:\Projects\NoMercyLabs\nomnomzbot-docs\.claude\worktrees\finish
+Project-root: .
 Built-root: dist
 Rendered: dist/reference/self-hosting/first-run-setup/index.html
 Voice: docs-work/voice.md

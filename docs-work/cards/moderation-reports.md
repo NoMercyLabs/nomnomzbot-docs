@@ -6,7 +6,7 @@ Goal: Where do I review a viewer report and record a decision.
 Success: The report shows the reviewed state and the reader knows whether a separate moderation action is needed.
 Application-case: A moderator reviews an old report whose subject has already been moderated and wants to avoid a duplicate action.
 Prerequisites: Access to the selected channel and permission for the described action; any platform connection or output required by that action must be established before the steps.
-Project-root: C:\Projects\NoMercyLabs\nomnomzbot-docs\.claude\worktrees\finish
+Project-root: .
 Built-root: dist
 Rendered: dist/reference/moderation/reports/index.html
 Voice: docs-work/voice.md

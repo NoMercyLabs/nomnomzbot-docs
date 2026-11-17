@@ -6,7 +6,7 @@ Goal: How do I run and finish a poll or prediction from the dashboard.
 Success: The poll or prediction reaches the intended ended or resolved state with its result visible.
 Application-case: A streamer wants to stop a prediction and return points instead of selecting a winning outcome.
 Prerequisites: Selected channel; permission to read and manage the activity (Moderator by default); broadcaster Twitch connection authorized for polls and predictions, and availability on that Twitch channel.
-Project-root: C:\Projects\NoMercyLabs\nomnomzbot-docs\.claude\worktrees\finish
+Project-root: .
 Built-root: dist
 Rendered: dist/reference/economy/polls-and-predictions/index.html
 Voice: docs-work/voice.md

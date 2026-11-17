@@ -6,7 +6,7 @@ Goal: How do I authorize a device to perform only the actions I choose.
 Success: The device is paired or has a scoped key and can perform the permitted action.
 Application-case: A streamer replaces a Stream Deck tool and wants to remove the old tool's access without affecting the replacement.
 Prerequisites: Access to the selected channel and the action being configured; required platform accounts and connections must be established before the relevant steps.
-Project-root: C:\Projects\NoMercyLabs\nomnomzbot-docs\.claude\worktrees\finish
+Project-root: .
 Built-root: dist
 Rendered: dist/reference/integrations/stream-deck-and-api-devices/index.html
 Voice: docs-work/voice.md

@@ -6,7 +6,7 @@ Goal: How do I count a phrase spoken into my microphone.
 Success: A recognized phrase increases the intended count and the reader knows how to stop listening.
 Application-case: A streamer tests a phrase locally and needs to know which listener must stay open during the stream.
 Prerequisites: Access to the selected channel and permission for the described action; any platform connection or output required by that action must be established before the steps.
-Project-root: C:\Projects\NoMercyLabs\nomnomzbot-docs\.claude\worktrees\finish
+Project-root: .
 Built-root: dist
 Rendered: dist/reference/audio/voice-triggers/index.html
 Voice: docs-work/voice.md

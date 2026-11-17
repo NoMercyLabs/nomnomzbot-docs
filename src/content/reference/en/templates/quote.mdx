@@ -1,26 +1,49 @@
 ---
 title: Quote helpers
-description: Lists 7 template helpers, each with what it gives and an example.
+description: Seven template helpers that read the channel's saved quotes, by number or as a whole list, with the input each one takes and what it gives.
 ---
 
-Helpers on this page: `{quote}`, `{quote.*}`.
+Quote helpers read the lines saved on the channel's [Quotes](/reference/commands/quotes) page at the moment the bot builds a reply. You type them in any reply field that takes template braces, like the other [template helpers](/reference/templates/overview). Five of them need a quote number after a colon, as [Variables and templates](/reference/commands/variables-and-templates) explains. The other two read the whole list and take no input.
 
-These helpers read the quotes the channel saved.
-Use them to show a quote by its number, or its author, date and game.
+When a helper has nothing to give, it stays in the reply exactly as written, braces and all. `{quote:99}` shows up in chat as `{quote:99}` when the channel has no quote 99.
 
-The examples illustrate possible values; your results depend on the channel and trigger.
-**Use in** lists the template fields that accept each helper.
-A pipeline still needs a trigger that supplies the relevant person, message, or event; event-specific helpers need that event.
-For viewer-written text, the [Viewer Templates setting and permissions](/reference/settings/features) also apply.
+## Where they work
 
-| Helper | What it gives | Example | Use in |
-| --- | --- | --- | --- |
-| `{quote}` | One quote of the channel by its number, for example #12 "text": `{quote:12}` | `#12 "that was close"` | Commands, event responses, timers, pipelines, Discord, webhooks |
-| `{quote.author}` | Who said a quote, by its number: `{quote.author:12}` | `{quote.author:12}` gives `ViewerTwo` | Commands, event responses, timers, pipelines, Discord, webhooks |
-| `{quote.count}` | How many quotes the channel has: `{quote.count}` | `48` | Commands, event responses, timers, pipelines, Discord, webhooks |
-| `{quote.date}` | The day a quote was said, in the channel's time zone: `{quote.date:12}` | `{quote.date:12}` gives `2026-03-01` | Commands, event responses, timers, pipelines, Discord, webhooks |
-| `{quote.game}` | The game that was on when a quote was said, by its number: `{quote.game:12}` | `{quote.game:12}` gives `Just Chatting` | Commands, event responses, timers, pipelines, Discord, webhooks |
-| `{quote.latest}` | The newest quote of the channel with its number: `{quote.latest}` | `#48 "chat is wild"` | Commands, event responses, timers, pipelines, Discord, webhooks |
-| `{quote.text}` | The words of a quote by its number: `{quote.text:12}` | `{quote.text:12}` gives `that was close` | Commands, event responses, timers, pipelines, Discord, webhooks |
+Every helper on this page works in commands, event responses, timers, pipelines, Discord posts and webhook bodies. They do not work in a viewer's own text, such as a reward input: there they stay as written.
 
-Back to [Template helpers](/reference/templates/overview). For the places helpers work, special characters and HTML, read [Variables and templates](/reference/commands/variables-and-templates).
+## Read one quote by its number
+
+The number is the one the Quotes page shows for each line. Write it as digits only, such as `12`. A space around it is fine, but `#12`, `0` and `-3` are not quote numbers, so the helper stays in braces.
+
+| Helper | What it gives | Example |
+| --- | --- | --- |
+| `{quote:<n>}` | The number and the line in quote marks | `{quote:12}` gives `#12 "that was close"` |
+| `{quote.text:<n>}` | Only the line | `{quote.text:12}` gives `that was close` |
+| `{quote.author:<n>}` | The name in **Said by** | `{quote.author:12}` gives `ViewerTwo` |
+| `{quote.game:<n>}` | The game in **Game** | `{quote.game:12}` gives `Just Chatting` |
+| `{quote.date:<n>}` | The day in **Said at**, as year, month and day | `{quote.date:12}` gives `2026-03-01` |
+
+**Said by** and **Game** are optional on a quote. When a quote has no name or no game, `{quote.author:<n>}` or `{quote.game:<n>}` gives nothing, so the reply has a gap there. That is different from a quote that does not exist, which leaves the helper in braces.
+
+`{quote.date:<n>}` gives the day in the channel's time zone, so a quote saved late at night can show the next or the previous day compared with UTC. A channel with no time zone gets the day in UTC. A quote with no date gives nothing.
+
+## Read the whole list
+
+| Helper | What it gives | Example |
+| --- | --- | --- |
+| `{quote.count}` | How many quotes the channel has | `48` |
+| `{quote.latest}` | The newest quote, with its number and the line in quote marks | `#48 "chat is wild"` |
+
+A channel with no quotes gets `0` from `{quote.count}`, while `{quote.latest}` stays as written. These two give no number to the other helpers, so `{quote.author}` with no number after it does not pick up the author of the latest quote. It stays in braces.
+
+For a random saved quote with its name and date, use `{random.quote}` on [Random helpers](/reference/templates/random).
+
+## Show a quote and its author together
+
+A command reply can take the number from what the viewer typed. An input can be another helper, so `{args.1}` puts the first word after the command in place of the number. Use the same input in every helper of the reply, and each part comes from the same quote:
+
+```
+{quote:{args.1}}, said by {quote.author:{args.1}}
+```
+
+In a command called `q`, `!q 12` then gives `#12 "that was close", said by ViewerTwo`. When the viewer types a number the channel does not have, such as `!q 99`, the reply shows `{quote:99}, said by {quote.author:99}`, because each helper stays in braces with the typed number in it.

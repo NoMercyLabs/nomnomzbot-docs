@@ -1,77 +1,142 @@
 ---
 title: Poll and prediction helpers
-description: Lists 51 template helpers, each with what it gives and an example.
+description: Fifty-one template helpers that read the Twitch poll or prediction running now, the last one that ended, or the poll or prediction event that started a response.
 ---
 
-Helpers on this page: `{poll.*}`, `{prediction.*}`.
+Poll and prediction helpers put a Twitch poll or prediction into a reply. They come in two kinds, and the difference decides where you can use them.
 
-These helpers read the current or last poll and prediction.
-Use them to announce a result in chat, on an overlay or read aloud.
+The first kind asks Twitch at the moment the bot builds the reply. It reads the poll or prediction running now, or the last one that ended. You can use it in commands, event responses, timers, pipelines, Discord posts and webhook bodies, but not in a viewer's own text.
 
-The examples illustrate possible values; your results depend on the channel and trigger.
-**Use in** lists the template fields that accept each helper.
-A pipeline still needs a trigger that supplies the relevant person, message, or event; event-specific helpers need that event.
-For viewer-written text, the [Viewer Templates setting and permissions](/reference/settings/features) also apply.
+The second kind are event values. They come with a poll or prediction event, so they work only in an [event response](/reference/automation/event-responses) or a [pipeline](/reference/commands/pipelines) started by that event. A command or a timer has no event to read them from.
 
-## Polls
+So for an announcement when a poll ends, use the event values in that event response. For a command that viewers type mid-stream, use the helpers that read the prediction running now.
 
-| Helper | What it gives | Example | Use in |
+## Before you start
+
+The bot reads polls and predictions from your Twitch channel, so your Twitch connection needs permission to read them. Without it, every helper that reads the running poll or prediction gives nothing. These helpers read Twitch only, not other platforms.
+
+## The poll running now
+
+Each of these is empty while no Twitch poll is running, except `{poll.isActive}` and `{poll.isTie}`, which give `false`.
+
+| Helper | What it gives | Example |
+| --- | --- | --- |
+| `{poll.question}` | The question of the poll | `Best snack?` |
+| `{poll.isActive}` | `true` while a poll is running, else `false` | `true` |
+| `{poll.timeLeft}` | How long the poll has left | `1m 30s` |
+| `{poll.endsAt}` | The time the poll ends, in the channel time zone | `15:32` |
+| `{poll.options}` | All options, separated by commas | `chips, cookies` |
+| `{poll.options.numbered}` | All options with their numbers | `1. chips 2. cookies` |
+| `{poll.option}` | The text of the option with that number | `{poll.option:2}` gives `cookies` |
+| `{poll.option.votes}` | The votes of the option with that number | `{poll.option.votes:2}` gives `8` |
+| `{poll.option.percent}` | The share of the votes for the option with that number | `{poll.option.percent:2}` gives `40%` |
+| `{poll.leading}` | The option with the most votes | `chips` |
+| `{poll.leading.votes}` | The votes of the leading option | `12` |
+| `{poll.leading.percent}` | The share of the votes for the leading option | `60%` |
+| `{poll.votes.total}` | All votes in the poll | `20` |
+| `{poll.isTie}` | `true` when two or more options share the most votes | `false` |
+| `{poll.results.bars}` | Each option with a bar of 10 marks and its share | `chips ██████░░░░ 60% · cookies ████░░░░░░ 40%` |
+
+Options count from 1, in the order Twitch lists them. A number past the last option gives nothing. A missing number, or anything that is not a whole number from 1 up, leaves the helper in the reply as written, braces and all.
+
+A share is rounded to a whole percent, and a poll without votes gives `0%`. Before the first vote, the three leading helpers are empty. When options tie, the leading option is the first of them in the list.
+
+Vote counts are plain digits, with no thousands separators. `{poll.endsAt}` is rounded to the nearest minute and uses UTC when the channel has no time zone.
+
+## The last poll that ended
+
+| Helper | What it gives | Example |
+| --- | --- | --- |
+| `{poll.last.question}` | The question of the last poll that ended | `Best snack?` |
+| `{poll.last.winner}` | The winning option of that poll | `chips` |
+
+These read the Twitch polls the bot saved as they ended, newest first. A poll counts however it ended, whether it ran its full time, was ended early or was removed. The bot's own chat polls do not count.
+
+The winner is the option with the most votes, and the first of them on a tie. When nobody voted, `{poll.last.winner}` is empty. Both helpers are empty until the bot has saved a finished poll.
+
+## The prediction running now
+
+A prediction is running from the moment it opens until it is resolved or canceled. While it is locked, the bets are closed but the helpers still read it. Each of these is empty while no prediction is running, except `{prediction.isActive}`, which gives `false`.
+
+| Helper | What it gives | Example |
+| --- | --- | --- |
+| `{prediction.question}` | The question of the prediction | `Win?` |
+| `{prediction.isActive}` | `true` while bets are open, `false` once it is locked or when none is running | `true` |
+| `{prediction.status.now}` | `open` while bets are open, `locked` once they are closed | `open` |
+| `{prediction.timeLeft}` | How long bets stay open; empty once locked | `45s` |
+| `{prediction.outcomes.list}` | All outcomes, separated by commas | `Yes, No` |
+| `{prediction.outcome}` | The text of the outcome with that number | `{prediction.outcome:2}` gives `No` |
+| `{prediction.outcome.points}` | The channel points bet on the outcome with that number | `{prediction.outcome.points:2}` gives `1,000` |
+| `{prediction.outcome.percent}` | The share of all points on the outcome with that number | `{prediction.outcome.percent:2}` gives `25%` |
+| `{prediction.outcome.odds}` | What the outcome with that number pays per point | `{prediction.outcome.odds:2}` gives `1:4` |
+| `{prediction.leading}` | The outcome with the most points | `Yes` |
+| `{prediction.leading.points}` | The channel points on the leading outcome | `3,000` |
+| `{prediction.leading.percent}` | The share of all points on the leading outcome | `75%` |
+| `{prediction.points.total}` | All channel points bet | `4,000` |
+| `{prediction.users.total}` | How many people bet | `12` |
+| `{prediction.topPredictor}` | The person with the biggest bet, and its points | `ViewerOne (1,000)` |
+
+Outcome numbers work like poll option numbers. Points and people are counted with the thousands separator of the channel language.
+
+The odds are all points bet divided by the points on that outcome, to at most 2 decimals, like `1:1.33`. An outcome without points has no odds, so it gives nothing. Before the first bet, the three leading helpers are empty and a share gives `0%`.
+
+## The last prediction that ended
+
+| Helper | What it gives | Example |
+| --- | --- | --- |
+| `{prediction.last.winner}` | The winning outcome of the last prediction that ended | `Yes` |
+
+It reads the predictions the bot saved as they ended, newest first. A canceled prediction has no winning outcome, so it gives nothing.
+
+## Event values
+
+Each value below comes with the event named next to it. These are the poll and prediction events you can pick for an event response. All numbers here are plain digits, with no thousands separators.
+
+| Helper | What it gives | Comes with | Example |
 | --- | --- | --- | --- |
-| `{poll.choices}` | Every poll choice, separated by commas | `Pizza, Pasta` | event responses, pipelines |
-| `{poll.duration}` | How long the poll runs, as text (e.g. "5 minutes") | `5 minutes` | event responses, pipelines |
-| `{poll.endsAt}` | The time the running poll ends, in the channel time zone: 15:32 | `15:32` | Commands, event responses, timers, pipelines, Discord, webhooks |
-| `{poll.id}` | The poll ID | `ed961efd-8a3f-4cf5-a9d0-e616c590cd2a` | event responses, pipelines |
-| `{poll.isActive}` | true while a Twitch poll is running, false when none is | `true` | Commands, event responses, timers, pipelines, Discord, webhooks |
-| `{poll.isTie}` | true when two or more options share the most votes | `false` | Commands, event responses, timers, pipelines, Discord, webhooks |
-| `{poll.last.question}` | The question of the last poll that finished | `Best snack?` | Commands, event responses, timers, pipelines, Discord, webhooks |
-| `{poll.last.winner}` | The winning option of the last poll that finished | `chips` | Commands, event responses, timers, pipelines, Discord, webhooks |
-| `{poll.leading}` | The option with the most votes; empty before the first vote | `chips` | Commands, event responses, timers, pipelines, Discord, webhooks |
-| `{poll.leading.percent}` | The share of the votes of the leading option: 60% | `60%` | Commands, event responses, timers, pipelines, Discord, webhooks |
-| `{poll.leading.votes}` | The votes of the leading option | `12` | Commands, event responses, timers, pipelines, Discord, webhooks |
-| `{poll.option}` | The text of one option, by its number, for example 2 | `{poll.option:2}` gives `cookies` | Commands, event responses, timers, pipelines, Discord, webhooks |
-| `{poll.option.percent}` | The share of the votes of one option, by its number, for example 2 | `{poll.option.percent:2}` gives `40%` | Commands, event responses, timers, pipelines, Discord, webhooks |
-| `{poll.option.votes}` | The votes of one option, by its number, for example 2 | `{poll.option.votes:2}` gives `8` | Commands, event responses, timers, pipelines, Discord, webhooks |
-| `{poll.options}` | All options of the running poll: chips, cookies | `chips, cookies` | Commands, event responses, timers, pipelines, Discord, webhooks |
-| `{poll.options.numbered}` | All options of the running poll with their numbers: 1. chips 2. cookies | `1. chips 2. cookies` | Commands, event responses, timers, pipelines, Discord, webhooks |
-| `{poll.question}` | The question of the Twitch poll that is running now; empty when no poll is running | `Best snack?` | Commands, event responses, timers, pipelines, Discord, webhooks |
-| `{poll.results}` | Every choice with its votes and share, separated by \| | `Pizza: 28 (56%) \| Pasta: 22 (44%)` | event responses, pipelines, Discord |
-| `{poll.results.bars}` | Each option with a bar and its share of the votes | `chips ██████░░░░ 60% · cookies ████░░░░░░ 40%` | Commands, event responses, timers, pipelines, Discord, webhooks |
-| `{poll.status}` | How the poll ended (completed, terminated or archived) | `completed` | event responses, pipelines |
-| `{poll.timeLeft}` | How long the running poll has left: 1m 30s | `1m 30s` | Commands, event responses, timers, pipelines, Discord, webhooks |
-| `{poll.title}` | The poll question | `What next?` | event responses, pipelines, Discord |
-| `{poll.votes.total}` | The total number of votes in the running poll | `20` | Commands, event responses, timers, pipelines, Discord, webhooks |
-| `{poll.winner}` | The winning choice | `Pizza` | event responses, pipelines, Discord |
-| `{poll.winner.percentage}` | The winning share as text, like (68%), or nothing when no one voted | `{poll.winner}{poll.winner.percentage}` gives `Pizza (56%)` | event responses, pipelines |
-| `{poll.winner.votes}` | The number of votes the winning choice got | `28` | event responses, pipelines, Discord |
+| `{poll.id}` | The Twitch ID of the poll | Poll starts, Poll ends | `ed961efd-8a3f-4cf5-a9d0-e616c590cd2a` |
+| `{poll.title}` | The poll question | Poll starts, Poll ends | `What next?` |
+| `{poll.duration}` | How long the poll runs, in minutes, or in seconds when it is not whole minutes | Poll starts | `5 minutes` |
+| `{poll.choices}` | All choices, separated by commas | Poll starts | `Pizza, Pasta` |
+| `{poll.status}` | How the poll ended, in the word Twitch uses | Poll ends | `completed` |
+| `{poll.winner}` | The choice with the most votes | Poll ends | `Pizza` |
+| `{poll.winner.votes}` | The votes of the winning choice | Poll ends | `28` |
+| `{poll.winner.percentage}` | The winning share in brackets, with a space in front; empty when nobody voted | Poll ends | `{poll.winner}{poll.winner.percentage}` gives `Pizza (56%)` |
+| `{poll.results}` | Every choice with its votes and share, separated by a bar | Poll ends | `Pizza: 28 (56%) \| Pasta: 22 (44%)` |
+| `{prediction.id}` | The Twitch ID of the prediction | Prediction starts, Prediction locks, Prediction ends | `4de1a8b0-c3a0-4ed0-8b6f-7d1f0d1c2a11` |
+| `{prediction.title}` | The prediction question | Prediction starts, Prediction locks, Prediction ends | `Will we win?` |
+| `{prediction.window}` | How many seconds bets stay open | Prediction starts | `120` |
+| `{prediction.outcomes}` | All outcomes, separated by commas | Prediction starts | `Yes, No` |
+| `{prediction.total_points}` | All channel points bet when it locked | Prediction locks | `5000` |
+| `{prediction.status}` | How the prediction ended: `resolved` or `canceled` | Prediction ends | `resolved` |
+| `{prediction.winner}` | The winning outcome; empty when there is none | Prediction ends | `Yes` |
+| `{prediction.winner.points}` | The channel points bet on the winning outcome; `0` when there is none | Prediction ends | `3200` |
+| `{prediction.winner.users}` | How many people bet on the winning outcome; `0` when there is none | Prediction ends | `41` |
 
-## Predictions
+The **Poll ends** response runs only for a poll that ran its full time. A poll ended early or removed gets no response. The shares in `{poll.winner.percentage}` and `{poll.results}` are rounded down to a whole percent. Without votes, `{poll.results}` lists each choice with `0` and no share.
 
-| Helper | What it gives | Example | Use in |
-| --- | --- | --- | --- |
-| `{prediction.id}` | The prediction ID | `4de1a8b0-c3a0-4ed0-8b6f-7d1f0d1c2a11` | event responses, pipelines |
-| `{prediction.isActive}` | true while bets are open on a prediction, false otherwise | `true` | Commands, event responses, timers, pipelines, Discord, webhooks |
-| `{prediction.last.winner}` | The winning outcome of the last prediction that finished | `Yes` | Commands, event responses, timers, pipelines, Discord, webhooks |
-| `{prediction.leading}` | The outcome with the most points; empty before the first bet | `Yes` | Commands, event responses, timers, pipelines, Discord, webhooks |
-| `{prediction.leading.percent}` | The share of all points on the leading outcome: 75% | `75%` | Commands, event responses, timers, pipelines, Discord, webhooks |
-| `{prediction.leading.points}` | The channel points on the leading outcome: 3,000 | `3,000` | Commands, event responses, timers, pipelines, Discord, webhooks |
-| `{prediction.outcome}` | The text of one outcome, by its number, for example 2 | `{prediction.outcome:2}` gives `No` | Commands, event responses, timers, pipelines, Discord, webhooks |
-| `{prediction.outcome.odds}` | The payout ratio of one outcome, by its number: 1:4 | `{prediction.outcome.odds:2}` gives `1:4` | Commands, event responses, timers, pipelines, Discord, webhooks |
-| `{prediction.outcome.percent}` | The share of all points on one outcome, by its number | `{prediction.outcome.percent:2}` gives `25%` | Commands, event responses, timers, pipelines, Discord, webhooks |
-| `{prediction.outcome.points}` | The channel points on one outcome, by its number | `{prediction.outcome.points:2}` gives `1,000` | Commands, event responses, timers, pipelines, Discord, webhooks |
-| `{prediction.outcomes}` | Every outcome, separated by commas | `Yes, No` | event responses, pipelines |
-| `{prediction.outcomes.list}` | All outcomes of the prediction: Yes, No | `Yes, No` | Commands, event responses, timers, pipelines, Discord, webhooks |
-| `{prediction.points.total}` | All channel points bet on the prediction: 4,000 | `4,000` | Commands, event responses, timers, pipelines, Discord, webhooks |
-| `{prediction.question}` | The question of the Twitch prediction that is in progress; empty when none is | `Win?` | Commands, event responses, timers, pipelines, Discord, webhooks |
-| `{prediction.status}` | How the prediction ended (resolved or canceled) | `resolved` | event responses, pipelines |
-| `{prediction.status.now}` | The status of the prediction in progress: open or locked | `open` | Commands, event responses, timers, pipelines, Discord, webhooks |
-| `{prediction.timeLeft}` | How long bets stay open: 45s; empty once the prediction is locked | `45s` | Commands, event responses, timers, pipelines, Discord, webhooks |
-| `{prediction.title}` | The prediction question | `Will we win?` | event responses, pipelines, Discord |
-| `{prediction.topPredictor}` | The person who bet the most points, with that amount: ViewerOne (1,000) | `ViewerOne (1,000)` | Commands, event responses, timers, pipelines, Discord, webhooks |
-| `{prediction.total_points}` | All channel points predicted so far | `5000` | event responses, pipelines |
-| `{prediction.users.total}` | How many people bet on the prediction | `12` | Commands, event responses, timers, pipelines, Discord, webhooks |
-| `{prediction.window}` | How many seconds viewers can predict | `120` | event responses, pipelines |
-| `{prediction.winner}` | The winning outcome, or nothing when canceled | `Yes` | event responses, pipelines, Discord |
-| `{prediction.winner.points}` | The channel points predicted on the winning outcome | `3200` | event responses, pipelines, Discord |
-| `{prediction.winner.users}` | The number of viewers who predicted the winning outcome | `41` | event responses, pipelines, Discord |
+### In a Discord post
 
-Back to [Template helpers](/reference/templates/overview). For the places helpers work, special characters and HTML, read [Variables and templates](/reference/commands/variables-and-templates).
+The Discord notifications **Poll ends** and **Prediction resolved** fill some of these values themselves. **Poll ends** posts only for a poll that ran its full time, with `{poll.title}`, `{poll.winner}`, `{poll.winner.votes}` and `{poll.results}`. Here `{poll.winner}` gives `nobody` when nobody voted, and `{poll.results}` lists votes without shares, like `Pizza: 28 | Pasta: 22`.
+
+**Prediction resolved** posts only for a prediction that has a winning outcome. It fills `{prediction.title}`, `{prediction.winner}`, `{prediction.winner.points}` and `{prediction.winner.users}`.
+
+## Two replies side by side
+
+A **Poll ends** event response that announces the result:
+
+```
+Poll over! {poll.title} {poll.winner} wins{poll.winner.percentage}.
+```
+
+That posts `Poll over! What next? Pizza wins (56%).` in chat.
+
+A command that viewers type while a prediction is open:
+
+```
+{prediction.question} {prediction.leading} leads with {prediction.leading.percent} of the points. Bets close in {prediction.timeLeft}.
+```
+
+While bets are open, that posts `Win? Yes leads with 75% of the points. Bets close in 45s.` Once the prediction locks, `{prediction.timeLeft}` is empty, so the last sentence reads oddly. Check `{prediction.status.now}` first, or keep a second command for that moment.
+
+Back to [Template helpers](/reference/templates/overview). For how braces, inputs and nested helpers work, read [Variables and templates](/reference/commands/variables-and-templates).

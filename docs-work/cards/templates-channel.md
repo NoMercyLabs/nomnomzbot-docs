@@ -6,7 +6,7 @@ Goal: Choose a supported helper form and understand the value it produces in thi
 Success: The reader can select a documented form, supply its arguments and predict its result or fallback in the stated context.
 Application-case: A moderator uses a command that must link to the broadcaster's channel, not the moderator's own channel.
 Prerequisites: A reply field that supports templates, and the ability to edit it; the template basics taught in /reference/commands/variables-and-templates.
-Project-root: C:\Projects\NoMercyLabs\nomnomzbot-docs\.claude\worktrees\finish-c
+Project-root: .
 Built-root: dist
 Rendered: dist/reference/templates/channel/index.html
 Voice: docs-work/voice.md

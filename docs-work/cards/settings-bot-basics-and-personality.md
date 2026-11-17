@@ -6,7 +6,7 @@ Goal: Where do I set the bot's prefix, language and tone for this channel.
 Success: The saved settings affect the intended channel and the reader knows which future replies they influence.
 Application-case: A streamer wants a different command prefix while retaining the current language and greeting behavior.
 Prerequisites: Access to the selected channel and the action being configured; required platform accounts and connections must be established before the relevant steps.
-Project-root: C:\Projects\NoMercyLabs\nomnomzbot-docs\.claude\worktrees\finish
+Project-root: .
 Built-root: dist
 Rendered: dist/reference/settings/bot-basics-and-personality/index.html
 Voice: docs-work/voice.md

@@ -6,7 +6,7 @@ Goal: Create one command in the dashboard and see the bot answer it in the chann
 Success: Typing the trigger in the channel's chat as the broadcaster or a moderator makes the bot post the saved reply.
 Application-case: A moderator of a friend's channel creates a command named schedule with their friend's stream times, and tests it while the friend is offline.
 Prerequisites: Signed in; the channel connected; a role that may change commands (Moderator or above by default); the dashboard switched to the right channel.
-Project-root: C:\Projects\NoMercyLabs\nomnomzbot-docs\.claude\worktrees\finish
+Project-root: .
 Built-root: dist
 Rendered: dist/reference/getting-started/first-command/index.html
 Voice: docs-work/voice.md

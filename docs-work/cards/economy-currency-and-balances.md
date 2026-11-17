@@ -6,7 +6,7 @@ Goal: How do I enable channel currency and manage a viewer's balance.
 Success: The reader can save earning rules, inspect a balance and distinguish a manual adjustment from earned currency.
 Application-case: A moderator wants to correct one balance without changing the earning rules for everyone.
 Prerequisites: Selected-channel currency permissions, Moderator by default; connected channel chat before testing message earnings.
-Project-root: C:\Projects\NoMercyLabs\nomnomzbot-docs\.claude\worktrees\finish
+Project-root: .
 Built-root: dist
 Rendered: dist/reference/economy/currency-and-balances/index.html
 Voice: docs-work/voice.md

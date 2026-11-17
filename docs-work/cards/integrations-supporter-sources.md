@@ -6,7 +6,7 @@ Goal: How do I connect a supporter service and see the events it sends.
 Success: The configured source reports a connection and received supporter events are identifiable.
 Application-case: A streamer connects more than one supporter service and needs to identify which source produced a donation.
 Prerequisites: Access to the selected channel and the action being configured; required platform accounts and connections must be established before the relevant steps.
-Project-root: C:\Projects\NoMercyLabs\nomnomzbot-docs\.claude\worktrees\finish
+Project-root: .
 Built-root: dist
 Rendered: dist/reference/integrations/supporter-sources/index.html
 Voice: docs-work/voice.md

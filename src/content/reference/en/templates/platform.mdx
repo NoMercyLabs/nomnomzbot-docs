@@ -1,44 +1,106 @@
 ---
 title: Platform helpers
-description: Lists 25 template helpers, each with what it gives and an example.
+description: The 25 platform template helpers that give the link, live state, viewers and chat totals of each platform the channel streams to, with the platform names they take and what each one gives when a platform is offline.
 ---
 
-Helpers on this page: `{platform.*}`.
+Platform helpers read each platform the streamer [connected](/reference/getting-started/connect-platforms) separately, so one reply can name Twitch, Kick and YouTube side by side. You type them in a reply field that takes template braces, like the other [template helpers](/reference/templates/overview).
 
-These helpers read the platforms the channel streams to, such as Twitch, Kick and YouTube.
-Use them to show viewers and links for every platform.
+A platform that is not connected, or not live, gives an empty text. It never gives a 0 as if nobody were watching. Plan the words around the helper for that empty case, for example with `{default}`.
 
-The examples illustrate possible values; your results depend on the channel and trigger.
-**Use in** lists the template fields that accept each helper.
-A pipeline still needs a trigger that supplies the relevant person, message, or event; event-specific helpers need that event.
-For viewer-written text, the [Viewer Templates setting and permissions](/reference/settings/features) also apply.
+## Where they work
+
+The helpers about the channel's platforms work in commands, event responses, timers, pipelines, Discord posts and webhook bodies.
+
+The four helpers about the person's or the event's platform need a trigger that supplies one, so they work in fewer places. They are listed in [The platform of the person or the event](#the-platform-of-the-person-or-the-event).
+
+No platform helper works in a viewer's own text, such as a reward input. There it stays as written.
+
+## Name a platform
+
+Some helpers take the platform as their input, after a colon, as [Variables and templates](/reference/commands/variables-and-templates) explains. Write `twitch`, `kick` or `youtube`, or the names `Twitch`, `Kick` or `YouTube`, in any mix of capitals.
+
+`{platform.isLive:kick}` and `{platform.isLive:Kick}` give the same answer. A helper given a name it does not know, or no name, stays in the reply exactly as written, braces and all.
+
+Numbers come out as whole numbers with the thousands separator of the channel's language, such as `1,234` for an English channel. Lists of platforms are always in the order Twitch, Kick, YouTube.
+
+## Links and connections
+
+| Helper | What it gives | Example |
+| --- | --- | --- |
+| `{platform.connected}` | The names of the connected platforms, separated by commas | `Twitch, Kick, YouTube` |
+| `{platform.count}` | How many platforms are connected | `3` |
+| `{platform.link.twitch}` | The link to the Twitch channel | `https://twitch.tv/samplechannel` |
+| `{platform.link.kick}` | The link to the Kick channel | `https://kick.com/samplechannel` |
+| `{platform.link.youtube}` | The link to the YouTube channel | `https://youtube.com/channel/UCsample` |
+| `{platform.links}` | The links to every connected channel, without `https://`, separated by a dot | `twitch.tv/samplechannel · kick.com/samplechannel · youtube.com/channel/UCsample` |
+
+A link helper for a platform that is not connected gives an empty text. These helpers do not depend on being live, so they suit a timer or a `!socials` command that runs while you are offline.
+
+## Live state and viewers on one platform
+
+| Helper | What it gives | Example |
+| --- | --- | --- |
+| `{platform.isLive}` | `true` when that platform is live now, otherwise `false` | `{platform.isLive:youtube}` gives `true` |
+| `{platform.live.list}` | The names of the platforms that are live now | `Twitch, Kick, YouTube` |
+| `{platform.live.count}` | How many platforms are live now | `3` |
+| `{platform.viewers.twitch}` | The viewers on Twitch now | `42` |
+| `{platform.viewers.kick}` | The viewers on Kick now | `10` |
+| `{platform.viewers.youtube}` | The viewers on YouTube now | `8` |
+| `{platform.title}` | The stream title on that platform | `{platform.title:youtube}` gives `Building a bot` |
+| `{platform.link.youtube.live}` | The link to the YouTube stream that is live now | `https://youtube.com/watch?v=sample` |
+
+`{platform.isLive}` is the one helper here that never comes out empty: a platform that is not connected gives `false`. `{platform.live.count}` gives `0` when platforms are connected and none is live, and an empty text when none is connected.
+
+A viewer helper, `{platform.title}` and `{platform.link.youtube.live}` give an empty text while their platform is offline or not connected.
+
+Live does not always come with a viewer count. Sometimes the bot sees that a platform is live but cannot read its number of viewers. Then `{platform.isLive:kick}` gives `true` while `{platform.viewers.kick}` is empty, so a reply that shows a count still needs words for the empty case.
+
+A multistream channel can give its Kick viewers their own line, with a fallback for the missing count:
+
+```
+Watch on Kick: {platform.link.kick} · Viewers there: {default:{platform.viewers.kick}|not available right now}
+```
+
+## Viewers across platforms
+
+| Helper | What it gives | Example |
+| --- | --- | --- |
+| `{platform.viewers.total}` | The viewers on all live platforms together | `60` |
+| `{platform.viewers.breakdown}` | The viewers on each live platform | `Twitch 42 · Kick 10 · YouTube 8` |
+| `{platform.viewers.share}` | The share of all viewers on that platform, as a whole percentage | `{platform.viewers.share:kick}` gives `17%` |
+| `{platform.top}` | The name of the live platform with the most viewers | `Twitch` |
+
+These helpers add up only the live platforms that report a viewer count. A live platform without a count is left out of the total, the breakdown and the share, and it never counts as 0. When Twitch reports 42, Kick reports 10 and YouTube is live without a count, `{platform.viewers.total}` gives `52` and the breakdown shows only Twitch and Kick.
+
+When no live platform reports a count, all four give an empty text. `{platform.viewers.share}` is also empty for a platform that has no count of its own.
+
+## Followers and chat totals
+
+| Helper | What it gives | Example |
+| --- | --- | --- |
+| `{platform.followers.twitch}` | The Twitch follower count | `1,234` |
+| `{platform.messages.stream}` | The chat messages on that platform | `{platform.messages.stream:kick}` gives `120` |
+| `{platform.chatters.stream}` | The different people who chatted on that platform | `{platform.chatters.stream:youtube}` gives `6` |
+
+`{platform.followers.twitch}` gives an empty text when Twitch is not connected, or when the bot cannot read the count from Twitch at that moment.
+
+The two chat totals count from the start of the day the stream went live until now. They give an empty text while the channel is offline, and for a platform that is not connected. A connected platform where nobody chatted gives `0`, which is a real answer, unlike the empty text.
+
+## The platform of the person or the event
+
+These helpers read where the trigger came from, not the channel's connections. A command typed on Kick gives `kick`, even when Twitch is also live.
 
 | Helper | What it gives | Example | Use in |
 | --- | --- | --- | --- |
-| `{platform.chatters.stream}` | The different chatters on one platform since the stream started, for example youtube: 6 | `{platform.chatters.stream:youtube}` gives `6` | Commands, event responses, timers, pipelines, Discord, webhooks |
-| `{platform.connected}` | The platforms the streamer connected: Twitch, Kick, YouTube | `Twitch, Kick, YouTube` | Commands, event responses, timers, pipelines, Discord, webhooks |
-| `{platform.count}` | How many platforms the streamer connected: 3 | `3` | Commands, event responses, timers, pipelines, Discord, webhooks |
-| `{platform.event}` | The platform the event came from: twitch | `twitch` | Commands, event responses, pipelines, webhooks, Discord |
-| `{platform.followers.twitch}` | The Twitch follower count: 1,234 | `1,234` | Commands, event responses, timers, pipelines, Discord, webhooks |
-| `{platform.isLive}` | true when the platform is live now, for example youtube: true | `{platform.isLive:youtube}` gives `true` | Commands, event responses, timers, pipelines, Discord, webhooks |
-| `{platform.link.kick}` | The link to the Kick channel: https://kick.com/samplechannel | `https://kick.com/samplechannel` | Commands, event responses, timers, pipelines, Discord, webhooks |
-| `{platform.link.twitch}` | The link to the Twitch channel: https://twitch.tv/samplechannel | `https://twitch.tv/samplechannel` | Commands, event responses, timers, pipelines, Discord, webhooks |
-| `{platform.link.youtube}` | The link to the YouTube channel: https://youtube.com/channel/UCsample | `https://youtube.com/channel/UCsample` | Commands, event responses, timers, pipelines, Discord, webhooks |
-| `{platform.link.youtube.live}` | The link to the YouTube stream that is live now: https://youtube.com/watch?v=sample | `https://youtube.com/watch?v=sample` | Commands, event responses, timers, pipelines, Discord, webhooks |
-| `{platform.links}` | The links to every connected channel, without https: twitch.tv/samplechannel · kick.com/samplechannel | `twitch.tv/samplechannel · kick.com/samplechannel · youtube.com/channel/UCsample` | Commands, event responses, timers, pipelines, Discord, webhooks |
-| `{platform.live.count}` | How many platforms are live now: 3 | `3` | Commands, event responses, timers, pipelines, Discord, webhooks |
-| `{platform.live.list}` | The platforms that are live now: Twitch, Kick, YouTube | `Twitch, Kick, YouTube` | Commands, event responses, timers, pipelines, Discord, webhooks |
-| `{platform.messages.stream}` | The chat messages on one platform since the stream started, for example kick: 120 | `{platform.messages.stream:kick}` gives `120` | Commands, event responses, timers, pipelines, Discord, webhooks |
-| `{platform.title}` | The stream title on one platform, for example youtube: Building a bot | `{platform.title:youtube}` gives `Building a bot` | Commands, event responses, timers, pipelines, Discord, webhooks |
-| `{platform.top}` | The live platform with the most viewers: Twitch | `Twitch` | Commands, event responses, timers, pipelines, Discord, webhooks |
-| `{platform.user}` | The platform of the person who typed the command: twitch | `twitch` | Commands, event responses, pipelines, webhooks |
-| `{platform.user.icon}` | The icon of that platform: a purple, green or red dot | `🟣` | Commands, event responses, pipelines, webhooks |
-| `{platform.user.name}` | The display name of that platform: Twitch | `Twitch` | Commands, event responses, pipelines, webhooks |
-| `{platform.viewers.breakdown}` | The viewers per live platform: Twitch 42 · Kick 10 · YouTube 8 | `Twitch 42 · Kick 10 · YouTube 8` | Commands, event responses, timers, pipelines, Discord, webhooks |
-| `{platform.viewers.kick}` | The viewers on Kick now: 10. Empty when Kick is not connected or not live | `10` | Commands, event responses, timers, pipelines, Discord, webhooks |
-| `{platform.viewers.share}` | The share of all viewers on one platform, for example kick: 17% | `{platform.viewers.share:kick}` gives `17%` | Commands, event responses, timers, pipelines, Discord, webhooks |
-| `{platform.viewers.total}` | The viewers on every live platform together: 60 | `60` | Commands, event responses, timers, pipelines, Discord, webhooks |
-| `{platform.viewers.twitch}` | The viewers on Twitch now: 42. Empty when Twitch is not live | `42` | Commands, event responses, timers, pipelines, Discord, webhooks |
-| `{platform.viewers.youtube}` | The viewers on YouTube now: 8. Empty when YouTube is not connected or not live | `8` | Commands, event responses, timers, pipelines, Discord, webhooks |
+| `{platform.user}` | The platform of the person who used the command or caused the event | `twitch` | Commands, event responses, pipelines, webhooks |
+| `{platform.user.name}` | The name of that platform | `Twitch` | Commands, event responses, pipelines, webhooks |
+| `{platform.user.icon}` | A colored dot for that platform: 🟣 Twitch, 🟢 Kick, 🔴 YouTube | `🟣` | Commands, event responses, pipelines, webhooks |
+| `{platform.event}` | The platform the event came from | `twitch` | Commands, event responses, pipelines, webhooks, Discord |
 
-Back to [Template helpers](/reference/templates/overview). For the places helpers work, special characters and HTML, read [Variables and templates](/reference/commands/variables-and-templates).
+A timer has no person and no event, so none of these works there. In an event response, the three `platform.user` helpers work only for events that name a person, such as a follow, a sub or a cheer.
+
+When the trigger names no person, the three `platform.user` helpers stay in the reply exactly as written.
+
+To show the counts of the platform a viewer is on, rather than a combined value, pass the person's platform as the input: `{platform.viewers.share:{platform.user}}` gives the share of viewers watching where that person is.
+
+Back to [Template helpers](/reference/templates/overview). For how inputs, nesting and special characters work, read [Variables and templates](/reference/commands/variables-and-templates).

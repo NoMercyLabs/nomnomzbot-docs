@@ -1,31 +1,107 @@
 ---
 title: Fun helpers
-description: Lists 26 template helpers, each with what it gives and an example.
+description: Roll dice, flip a coin, spin the slots, rate a word and answer with the 8-ball, with 26 template helpers.
 ---
 
 Helpers on this page: `{fun.*}`.
 
-These helpers play small games, such as dice, a coin flip and the 8-ball.
-Most give a different result each time, so the example shows one possible result.
+You type these helpers into a reply the same way as any other helper.
+Nearly all of them work in commands, event responses, timers, pipeline steps, Discord notifications and webhook bodies, and in a viewer's own text when the [Viewer Templates setting and permissions](/reference/settings/features) allow it.
+The **Use in** column of the table at the end lists the fields for each helper.
 
-The examples illustrate possible values; your results depend on the channel and trigger.
-**Use in** lists the template fields that accept each helper.
-A pipeline still needs a trigger that supplies the relevant person, message, or event; event-specific helpers need that event.
-For viewer-written text, the [Viewer Templates setting and permissions](/reference/settings/features) also apply.
+Most fun helpers draw a new result every time the reply runs, so every example on this page shows one possible result.
+The ratings are the exception: they give the same answer all day.
+An input the helper cannot use, such as a word where it wants a number, leaves the helper in the reply exactly as you wrote it, braces and all.
+
+## Roll dice
+
+`{fun.dice}` rolls one six-sided die and gives the number.
+Put a number after a colon for a die with that many sides, so `{fun.dice:20}` gives a number from 1 to 20.
+Write the count, a `d` and the sides for more than one die: `{fun.dice:2d6}` rolls two six-sided dice and gives the total, such as `7`.
+
+A die has 2 to 1000 sides, and one roll has 1 to 100 dice.
+In a viewer's own text, a roll of more than 20 dice rolls 20.
+
+`{fun.dice.detail:2d6}` shows each roll and then the total, such as `2 + 1 = 3`.
+With one die it shows just the number.
+
+`{fun.dice.emoji}` shows a die face such as `⚄`, and `{fun.dice.emoji:3}` shows three faces in a row, up to 20.
+
+## Flip, draw and spin
+
+`{fun.coin}` gives `heads` or `tails`, and `{fun.coin.emoji}` puts a coin in front, as in `🪙 heads`.
+`{fun.card}` draws one card from a deck of 52, such as `Q♥` or `10♠`.
+`{fun.roulette}` gives `click`, or `bang` one time in six.
+
+`{fun.rps}` picks a hand, such as `🪨 rock`.
+`{fun.rps.vs:rock}` plays against the hand you give it, which is `rock`, `paper` or `scissors`.
+It gives the bot's hand and the result for your side: `paper — you lose`, `scissors — you win` or `rock — a draw`.
+
+`{fun.slots}` spins three reels from 🍒, 🍋, 🔔, 🍇, ⭐ and 7️⃣, such as `🍒 🍋 🍒`.
+`{fun.slots.win}` then gives `true` when all three reels of that spin match, and `false` when they do not.
+Put it after the spin in the same reply.
+With no spin before it, it gives `false`.
+Combined with the if helper, one reply can spin and answer:
+
+```
+{fun.slots} {if:{fun.slots.win}|JACKPOT!|Better luck next time}
+```
+
+## Ratings that stay the same all day
+
+These helpers give a score that does not change when someone asks again the same day.
+A new day starts at midnight in your channel's time zone, and then each score changes.
+Capitals do not matter, so `Pizza` and `pizza` get the same score.
+
+`{fun.rate:pizza}` rates the word from 1 to 10, as in `8/10`.
+Every viewer gets the same rating for the same word.
+To rate what the viewer types after the command, put that text in the helper, as in `{fun.rate:{args}}`.
+
+`{fun.percent:luck}` gives a score from 0 to 100, as in `8%`.
+It also depends on the viewer, so two viewers asking about `luck` get their own scores.
+It needs a trigger that brings a viewer, so it does not work in timers or Discord notifications.
+
+`{fun.love:{user.display}|{target.displayname}}` gives a score from 0 to 100 for two names with a pipe between them, as in `22%`.
+The order of the names does not change the score.
+
+`{fun.ship:Alexander|Bo}` blends two names into one: the first half of the first name and the last third of the second.
+It gives `Alexander + Bo = Alexo`.
+The ship name is not random, so the same two names always give the same blend.
+
+## Answer with the 8-ball
+
+`{fun.8ball}` needs a pick list named `8ball` in your channel.
+Make it on the [Pick lists](/reference/commands/pick-lists) page and add your answers to it.
+The helper then gives one answer from that list each time, such as `It is certain`.
+With no list of that name, or an empty list, the helper stays in the reply as you wrote it.
+
+The ready-made `!8ball` command keeps its answers in the command itself and does not make this list.
+`{fun.8ball}` reads your channel's lists, so it does not work in a viewer's own text.
+
+## Countdowns, bars and text art
+
+`{fun.countdown:3}` counts down to 1 as `3… 2… 1…`, from any number up to 20.
+`{fun.meter:60}` draws a bar of 10 blocks with the percent, as in `██████░░░░ 60%`, the same as `{meter}`.
+
+`{fun.flip:table}` flips a table and turns your text upside down: `(╯°□°)╯︵ ǝlqɐʇ`.
+`{fun.unflip}`, `{fun.shrug}` and `{fun.lenny}` always give the same face.
+`{fun.random.emoji}`, `{fun.random.animal}`, `{fun.random.food}` and `{fun.random.color.name}` each pick from a small fixed set of 12.
+
+## All fun helpers
 
 | Helper | What it gives | Example | Use in |
 | --- | --- | --- | --- |
-| `{fun.8ball}` | One answer from your own pick list named 8ball. Make that list on the [Pick lists](/reference/commands/pick-lists) page. With no list of that name, or an empty list, the helper stays as typed | `It is certain` | Commands, event responses, timers, pipelines, Discord, webhooks |
+| `{fun.8ball}` | One answer from your own pick list named 8ball. With no list of that name, or an empty list, the helper stays as typed | `It is certain` | Commands, event responses, timers, pipelines, Discord, webhooks |
 | `{fun.card}` | Draws a playing card from a deck of 52 | `Q♥` | Commands, event responses, timers, pipelines, Discord, webhooks, viewer text |
 | `{fun.coin}` | Flips a coin: heads or tails | `heads` | Commands, event responses, timers, pipelines, Discord, webhooks, viewer text |
 | `{fun.coin.emoji}` | Flips a coin and shows it with a coin emoji | `🪙 heads` | Commands, event responses, timers, pipelines, Discord, webhooks, viewer text |
 | `{fun.countdown}` | Counts down from your number to 1 (up to 20) | `{fun.countdown:3}` gives `3… 2… 1…` | Commands, event responses, timers, pipelines, Discord, webhooks, viewer text |
-| `{fun.dice}` | Rolls dice and gives the total. With no input it rolls one six-sided die. A number is one die with that many sides (2 to 1000), and 2d6 is two six-sided dice (up to 100 dice) | `{fun.dice:20}` gives `5` | Commands, event responses, timers, pipelines, Discord, webhooks, viewer text |
+| `{fun.dice}` | Rolls dice and gives the total: one six-sided die, one die with your number of sides (2 to 1000), or several dice like 2d6 (up to 100) | `{fun.dice:20}` gives `5` | Commands, event responses, timers, pipelines, Discord, webhooks, viewer text |
 | `{fun.dice.detail}` | Rolls dice like 2d6 and shows every roll, then the total | `{fun.dice.detail:2d6}` gives `2 + 1 = 3` | Commands, event responses, timers, pipelines, Discord, webhooks, viewer text |
 | `{fun.dice.emoji}` | Shows one die face, or as many as you ask for (up to 20) | `{fun.dice.emoji:3}` gives `⚁ ⚀ ⚂` | Commands, event responses, timers, pipelines, Discord, webhooks, viewer text |
 | `{fun.flip}` | Flips a table and turns your text upside down | `{fun.flip:table}` gives `(╯°□°)╯︵ ǝlqɐʇ` | Commands, event responses, timers, pipelines, Discord, webhooks, viewer text |
 | `{fun.lenny}` | A lenny face | `( ͡° ͜ʖ ͡°)` | Commands, event responses, timers, pipelines, Discord, webhooks, viewer text |
-| `{fun.love}` | A love score from 0 to 100 percent for two names typed with a pipe between them, the same all day whichever name comes first | `{fun.love:{user.display}\|{target.displayname}}` gives `22%` | Commands, event responses, timers, pipelines, Discord, webhooks, viewer text |
+| `{fun.love}` | A love score from 0 to 100 percent for two names with a pipe between them, the same all day whichever name comes first | `{fun.love:{user.display}\|{target.displayname}}` gives `22%` | Commands, event responses, timers, pipelines, Discord, webhooks, viewer text |
 | `{fun.meter}` | A progress bar with its percent, the same as meter | `{fun.meter:60}` gives `██████░░░░ 60%` | Commands, event responses, timers, pipelines, Discord, webhooks, viewer text |
 | `{fun.percent}` | A percentage for something, the same all day for the same viewer and thing | `{fun.percent:luck}` gives `8%` | Commands, event responses, pipelines, webhooks, viewer text |
 | `{fun.random.animal}` | A random animal with its emoji | `🦊 fox` | Commands, event responses, timers, pipelines, Discord, webhooks, viewer text |
@@ -36,10 +112,10 @@ For viewer-written text, the [Viewer Templates setting and permissions](/referen
 | `{fun.roulette}` | Pulls the trigger: click, or bang one time in six | `click` | Commands, event responses, timers, pipelines, Discord, webhooks, viewer text |
 | `{fun.rps}` | Picks rock, paper or scissors | `🪨 rock` | Commands, event responses, timers, pipelines, Discord, webhooks, viewer text |
 | `{fun.rps.vs}` | Plays rock, paper, scissors against your choice and says who won | `{fun.rps.vs:rock}` gives `rock — a draw` | Commands, event responses, timers, pipelines, Discord, webhooks, viewer text |
-| `{fun.ship}` | Blends two names, typed with a pipe between them, into a ship name | `{fun.ship:Alexander\|Bo}` gives `Alexander + Bo = Alexo` | Commands, event responses, timers, pipelines, Discord, webhooks, viewer text |
+| `{fun.ship}` | Blends two names, with a pipe between them, into a ship name | `{fun.ship:Alexander\|Bo}` gives `Alexander + Bo = Alexo` | Commands, event responses, timers, pipelines, Discord, webhooks, viewer text |
 | `{fun.shrug}` | A shrug | `¯\_(ツ)_/¯` | Commands, event responses, timers, pipelines, Discord, webhooks, viewer text |
 | `{fun.slots}` | Spins a slot machine with three reels | `🍒 🍋 🍒` | Commands, event responses, timers, pipelines, Discord, webhooks, viewer text |
-| `{fun.slots.win}` | True when the last slot machine spin in this message matched on all three reels, otherwise false | `false` | Commands, event responses, timers, pipelines, Discord, webhooks, viewer text |
+| `{fun.slots.win}` | True when the last slot machine spin before it in the same reply matched on all three reels, otherwise false | `false` | Commands, event responses, timers, pipelines, Discord, webhooks, viewer text |
 | `{fun.unflip}` | Puts the table back | `┬─┬ノ( º _ ºノ)` | Commands, event responses, timers, pipelines, Discord, webhooks, viewer text |
 
 Back to [Template helpers](/reference/templates/overview). For the places helpers work, special characters and HTML, read [Variables and templates](/reference/commands/variables-and-templates).

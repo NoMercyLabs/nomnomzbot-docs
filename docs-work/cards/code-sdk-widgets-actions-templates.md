@@ -6,7 +6,7 @@ Goal: Which SDK surface applies to my widget, pipeline action or template.
 Success: The developer can select the correct environment and construct a call or subscription with its documented shape.
 Application-case: A widget receives a stream event and the author must avoid assuming script globals also exist in the widget.
 Prerequisites: Access to the intended bot and its documented SDK or API surface; authorization for the chosen script, widget or external action.
-Project-root: C:\Projects\NoMercyLabs\nomnomzbot-docs\.claude\worktrees\finish
+Project-root: .
 Built-root: dist
 Rendered: dist/reference/code/sdk-widgets-actions-templates/index.html
 Voice: docs-work/voice.md

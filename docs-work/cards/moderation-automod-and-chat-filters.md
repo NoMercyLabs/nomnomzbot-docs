@@ -6,7 +6,7 @@ Goal: How do I configure the filters and test a rule before it affects chat.
 Success: The reader can distinguish Twitch AutoMod from bot filters and predict the chosen rule's response.
 Application-case: A moderator wants to test a phrase rule before applying it to ordinary viewer messages.
 Prerequisites: Access to the selected channel and permission for the described action; any platform connection or output required by that action must be established before the steps.
-Project-root: C:\Projects\NoMercyLabs\nomnomzbot-docs\.claude\worktrees\finish
+Project-root: .
 Built-root: dist
 Rendered: dist/reference/moderation/automod-and-chat-filters/index.html
 Voice: docs-work/voice.md

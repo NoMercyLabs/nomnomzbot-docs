@@ -6,7 +6,7 @@ Goal: How do I make the bot chat through my own bot account.
 Success: The channel's next bot message uses the intended account and the reader can restore the prior choice.
 Application-case: A streamer accidentally authorizes their broadcaster account while trying to connect a separate bot account.
 Prerequisites: Access to the selected channel and the action being configured; required platform accounts and connections must be established before the relevant steps.
-Project-root: C:\Projects\NoMercyLabs\nomnomzbot-docs\.claude\worktrees\finish
+Project-root: .
 Built-root: dist
 Rendered: dist/reference/settings/white-label-bot/index.html
 Voice: docs-work/voice.md

@@ -6,7 +6,7 @@ Goal: How do I link a Discord server and enable the features I want.
 Success: The intended Discord server is linked and the configured notification or role behavior is visible.
 Application-case: A streamer wants live notifications in one channel and a live role without changing members' other roles.
 Prerequisites: Broadcaster links an authorized Discord server; operator-provided Discord app and bot token; destination channel permissions. Lead Moderator can configure rules and roles. Live role requires broadcaster Twitch-to-Discord identity link and an assignable role.
-Project-root: C:\Projects\NoMercyLabs\nomnomzbot-docs\.claude\worktrees\finish
+Project-root: .
 Built-root: dist
 Rendered: dist/reference/integrations/discord/index.html
 Voice: docs-work/voice.md

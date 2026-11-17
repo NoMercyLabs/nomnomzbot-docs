@@ -1,0 +1,41 @@
+{
+  "fingerprint": "4e69cbdf166e9e0e9226b63a545bd39cd88f97f4c11dc052b7990f62ad9ed86b",
+  "verdict": "PASS",
+  "answers": [
+    {
+      "question": 1,
+      "answer": "For the current game, use {stream.game} from the Live now table, which reads the live channel. For a previous stream's totals, use the {stream.last.*} helpers in The last stream table while you are live. Right after you end the stream, the Counts and top lists helpers still describe that stream and carry more detail. Some helpers take a number after a colon, for example {stream.title.short:8}, {stream.games.history:3} and {stream.topChatters:3}.",
+      "quote": "For a recap you post while live, use these. For one you post right after you end the stream, the count helpers above already describe that stream and carry more detail."
+    },
+    {
+      "question": 2,
+      "answer": "You need a reply field that takes templates; the Use in column says which fields accept each helper. The recorded-stream helpers need at least one stream the bot has recorded. Text a viewer writes is also subject to the Viewer Templates setting and permissions. All of this is in the opening paragraphs, before the tables.",
+      "quote": "Type one in any reply field that takes templates, and the bot fills it in when it sends the message."
+    },
+    {
+      "question": 3,
+      "answer": "On success, the bot replaces the helper with a value like the one in the Example column. On failure, the helper stays in the message exactly as typed. Each table's lead sentence tells the three time scopes apart: live now, the newest recorded stream, and the newest ended stream.",
+      "quote": "A helper with no value stays in the message as you typed it."
+    },
+    {
+      "question": 4,
+      "answer": "The current-game command uses {stream.game}, which reads the channel at this moment, for example Just Chatting. A recap of a previous stream's totals uses the {stream.last.*} helpers when posted while live, because those read the newest ended stream, which is the one before the current stream. Posted after you end the stream, the count helpers still read the stream you just ended, so they work for the recap.",
+      "quote": "A command that asks about the current game reads the live channel. A recap reads what the bot recorded about a stream."
+    },
+    {
+      "question": 5,
+      "answer": "I paused at the {stream.topChatters} row: it accepts a number from 1 to 25 but returns five names at most, so I reread it to check whether asking for 10 does anything. The intro does state the five-name limit, so it is not a contradiction. The cost is one reread. I also could not tell from the Example column whether the words around a value are part of the output, for example 46h for {stream.hours.month} and stream #214 for {stream.number}. The cost is a test message to find out.",
+      "quote": "give how many, from 1 to 25, after a colon, and you get five names at most"
+    },
+    {
+      "question": 6,
+      "answer": "Read aloud, the long Use in cells repeat the same list of fields in almost every row. Most of the time cost comes from that repetition, not from new information.",
+      "quote": "Commands, event responses, timers, pipelines, Discord, webhooks"
+    }
+  ],
+  "findings": [],
+  "warnings_released": true,
+  "warning_review": [
+    {"id": "paragraph-1", "decision": "keep", "reason": "The five sentences are short. They go straight from where the helpers go, to the difference between live and recorded data, to the fact that the table decides which stream a helper reads. That is the choice this reader came to make. It starts from how the feature works here, with no generic teaching, and a listener can follow it in one pass."}
+  ]
+}

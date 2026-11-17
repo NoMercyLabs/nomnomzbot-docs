@@ -6,7 +6,7 @@ Goal: Be signed in to the dashboard of the right bot with the right role, by but
 Success: The browser returns from the platform and the dashboard opens, showing the signed-in account.
 Application-case: A moderator who helps run a friend's channel opens the friend's bot address on a home-network address that starts with http:// and finds no role buttons; they must still get in.
 Prerequisites: The address of a running NomNomzBot that has sign-in open and at least one platform switched on for sign-in; an account on that platform.
-Project-root: C:\Projects\NoMercyLabs\nomnomzbot-docs\.claude\worktrees\finish
+Project-root: .
 Built-root: dist
 Rendered: dist/reference/getting-started/sign-in/index.html
 Voice: docs-work/voice.md

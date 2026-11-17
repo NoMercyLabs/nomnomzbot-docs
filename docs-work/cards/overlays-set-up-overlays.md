@@ -6,7 +6,7 @@ Goal: How do I make an overlay and get the link for my stream.
 Success: The overlay is saved, contains the intended content and has a usable link for the streaming software.
 Application-case: A streamer wants a second overlay with different content without altering the first one.
 Prerequisites: Access to the selected channel and permission for the described action; any platform connection or output required by that action must be established before the steps.
-Project-root: C:\Projects\NoMercyLabs\nomnomzbot-docs\.claude\worktrees\finish
+Project-root: .
 Built-root: dist
 Rendered: dist/reference/overlays/set-up-overlays/index.html
 Voice: docs-work/voice.md

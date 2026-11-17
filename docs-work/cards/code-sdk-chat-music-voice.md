@@ -6,7 +6,7 @@ Goal: Which SDK call sends chat, controls music or requests speech.
 Success: The author can construct the intended call with its required grant and interpret its result.
 Application-case: A script needs to send chat and then request speech, and must handle one action failing independently.
 Prerequisites: Access to the intended bot and its documented SDK or API surface; authorization for the chosen script, widget or external action.
-Project-root: C:\Projects\NoMercyLabs\nomnomzbot-docs\.claude\worktrees\finish
+Project-root: .
 Built-root: dist
 Rendered: dist/reference/code/sdk-chat-music-voice/index.html
 Voice: docs-work/voice.md

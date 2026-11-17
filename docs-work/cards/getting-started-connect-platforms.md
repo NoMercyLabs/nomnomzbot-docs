@@ -6,7 +6,7 @@ Goal: Connect Kick or YouTube to the channel and read the connection status corr
 Success: Home shows the platform account name with Live or Offline once stream status loads; Stream shows the account name and Connected.
 Application-case: A streamer who streams only on YouTube beside Twitch opens Home, finds YouTube listed as Not connected, connects it, and later sees Spotify marked Not connected after its saved sign-in stopped working (Home cannot show Sign in again).
 Prerequisites: Signed in to the channel's dashboard; a role that may change the channel's connections (Editor or Broadcaster by default); an account on the platform to connect.
-Project-root: C:\Projects\NoMercyLabs\nomnomzbot-docs\.claude\worktrees\finish
+Project-root: .
 Built-root: dist
 Rendered: dist/reference/getting-started/connect-platforms/index.html
 Voice: docs-work/voice.md

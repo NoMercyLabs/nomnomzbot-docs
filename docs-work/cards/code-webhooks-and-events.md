@@ -6,7 +6,7 @@ Goal: How do I send data into the bot or verify events sent out of it.
 Success: The developer can choose the right event direction and construct or verify a request using the documented contract.
 Application-case: A receiver gets the same outbound event more than once while a separate producer submits a custom event into the bot.
 Prerequisites: Access to the intended bot and its documented SDK or API surface; authorization for the chosen script, widget or external action.
-Project-root: C:\Projects\NoMercyLabs\nomnomzbot-docs\.claude\worktrees\finish
+Project-root: .
 Built-root: dist
 Rendered: dist/reference/code/webhooks-and-events/index.html
 Voice: docs-work/voice.md

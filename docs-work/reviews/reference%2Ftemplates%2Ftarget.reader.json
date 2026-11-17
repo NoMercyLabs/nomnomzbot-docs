@@ -1,0 +1,41 @@
+{
+  "fingerprint": "79121b5c610d3be368655f36d7ba26e72450dcb157e6091ff68b48847b87a29c",
+  "verdict": "PASS",
+  "answers": [
+    {
+      "question": 1,
+      "answer": "In a command, {target} is the first word typed after the command, with any @ removed. To describe that person, use the {target.*} helpers, for example {user} sends a hug to {target.displayname}. To cover the case where no name is given, wrap the reply in {if:{target}|...|...}. The helpers that take arguments are {target.verb:<sing|plur>} and {target.data.<key>}.",
+      "quote": "In a command, the target is the first word typed after the command, with any @ removed."
+    },
+    {
+      "question": 2,
+      "answer": "You must already know how to edit a command reply and use template braces. The page says where the helpers work and that a timer cannot use them. That is stated in the opening paragraph, before the first example.",
+      "quote": "These helpers work in commands, event responses, pipelines and webhooks. A timer has no target, so they are not offered there."
+    },
+    {
+      "question": 3,
+      "answer": "Success is the named person's display name appearing in the reply. A reply with nothing after 'to' means no name was typed. {target.known} tells a person the bot has a record of apart from a Twitch account it has not stored yet. Only a known person gets real account, channel, points and stats values.",
+      "quote": "They work for someone the bot has a record of, which is when {target.known} is true."
+    },
+    {
+      "question": 4,
+      "answer": "If the viewer names someone, as in !hug @someone, then {target} is 'someone' and {target.displayname} is that person's display name. The display name is looked up on Twitch if the bot has never seen them. If the viewer types !hug with no name, there is no target, because the bot never falls back to the caller. {target} and {target.displayname} are then empty. {target.name}, {target.id} and {target.followAge} stay in the reply as written, braces and all. The caller is always {user}.",
+      "quote": "The bot never fills in the caller when no name is given, so !hug on its own has no target at all."
+    },
+    {
+      "question": 5,
+      "answer": "The 'When nobody is named' list mentions 'the three message helpers' before the page has said which three they are. They are defined only in the last table, so I had to scroll to the end to learn they are lastmessage, lastmessage.full and randommessage. The cost is one detour, not a blocked step.",
+      "quote": "the three message helpers are empty."
+    },
+    {
+      "question": 6,
+      "answer": "Every table row repeats the same Use in value, so read aloud it says the same four places about forty times. The intro already says the helpers work in all four places, so the column adds nothing. The cost is listening time, not understanding.",
+      "quote": "Commands, event responses, pipelines, webhooks"
+    }
+  ],
+  "findings": [],
+  "warnings_released": true,
+  "warning_review": [
+    {"id": "sentence-6-1", "decision": "keep", "reason": "The flagged text is three short sentences: the case, the broken reply the reader would see, and the fix that comes next. Quoting the broken reply shows the failure the reader would otherwise get wrong, right before the if example. That is the outcome-first wording voice.md asks for."}
+  ]
+}

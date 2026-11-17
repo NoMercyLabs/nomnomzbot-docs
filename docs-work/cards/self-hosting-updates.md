@@ -6,7 +6,7 @@ Goal: Pick a release channel, update the lite or full setup without losing data,
 Success: After the update the container is running and healthy on the chosen channel, the dashboard opens, and a test chat command still answers.
 Application-case: A streamer on the full setup who wants an automatic updater on their home server must learn why the bot containers must not be handed to one.
 Prerequisites: A bot installed with the lite or full Docker setup; a current backup of the data; for the full setup, PowerShell to run the switchover script.
-Project-root: C:\Projects\NoMercyLabs\nomnomzbot-docs\.claude\worktrees\finish-b
+Project-root: .
 Built-root: dist
 Rendered: dist/reference/self-hosting/updates/index.html
 Voice: docs-work/voice.md

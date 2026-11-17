@@ -6,7 +6,7 @@ Goal: Where do I remove a ban or change the phrases Twitch blocks.
 Success: The reader can find the affected entry and recognize the result of unbanning or changing a blocked term.
 Application-case: A moderator needs to unblock a phrase without lifting a viewer's unrelated ban.
 Prerequisites: Access to the selected channel and permission for the described action; any platform connection or output required by that action must be established before the steps.
-Project-root: C:\Projects\NoMercyLabs\nomnomzbot-docs\.claude\worktrees\finish
+Project-root: .
 Built-root: dist
 Rendered: dist/reference/moderation/bans-and-blocked-terms/index.html
 Voice: docs-work/voice.md

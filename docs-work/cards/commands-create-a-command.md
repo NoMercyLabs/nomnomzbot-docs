@@ -6,7 +6,7 @@ Goal: How do I create and change a command for this channel.
 Success: The saved command appears in the command list and produces the chosen reply when invoked under the stated conditions.
 Application-case: A moderator needs a command with more than one trigger and later wants to switch it off without deleting it.
 Prerequisites: Access to the selected channel and permission for the described action; any platform connection or output required by that action must be established before the steps.
-Project-root: C:\Projects\NoMercyLabs\nomnomzbot-docs\.claude\worktrees\finish-b
+Project-root: .
 Built-root: dist
 Rendered: dist/reference/commands/create-a-command/index.html
 Voice: docs-work/voice.md

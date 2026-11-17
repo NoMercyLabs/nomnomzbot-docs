@@ -6,7 +6,7 @@ Goal: What does the Billing screen describe for my account.
 Success: The reader can interpret the account screen without mistaking it for permission to sell the software or host it for payment.
 Application-case: A person runs a bot for friends and sees plan or invite information in Billing.
 Prerequisites: Access to the selected channel and the action being configured; required platform accounts and connections must be established before the relevant steps.
-Project-root: C:\Projects\NoMercyLabs\nomnomzbot-docs\.claude\worktrees\finish
+Project-root: .
 Built-root: dist
 Rendered: dist/reference/settings/billing/index.html
 Voice: docs-work/voice.md

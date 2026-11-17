@@ -6,7 +6,7 @@ Goal: How do I inspect a channel event and use the journal's backup controls.
 Success: The reader can locate an event and distinguish reading history from a backup or rebuild operation.
 Application-case: A moderator wants to investigate a missing action without starting a rebuild of channel data.
 Prerequisites: Access to the selected channel and the action being configured; required platform accounts and connections must be established before the relevant steps.
-Project-root: C:\Projects\NoMercyLabs\nomnomzbot-docs\.claude\worktrees\finish
+Project-root: .
 Built-root: dist
 Rendered: dist/reference/settings/event-journal/index.html
 Voice: docs-work/voice.md

@@ -6,7 +6,7 @@ Goal: How do joining, resetting and deleting change this channel.
 Success: The reader can choose the intended operation and predict which data and connections it affects before confirming.
 Application-case: A broadcaster wants the bot to leave chat temporarily and is considering resetting or deleting the channel instead.
 Prerequisites: Access to the selected channel and the action being configured; required platform accounts and connections must be established before the relevant steps.
-Project-root: C:\Projects\NoMercyLabs\nomnomzbot-docs\.claude\worktrees\finish
+Project-root: .
 Built-root: dist
 Rendered: dist/reference/settings/channel-management/index.html
 Voice: docs-work/voice.md

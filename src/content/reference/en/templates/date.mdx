@@ -1,46 +1,114 @@
 ---
 title: Date and time helpers
-description: Lists 17 template helpers, each with what it gives and an example.
+description: Show a date or time in your channel's time zone or another one, count down to a moment, and format the result, with 17 template helpers.
 ---
 
 Helpers on this page: `{date}`, `{date*}`, `{time}`, `{time.*}`.
 
-These helpers give the time and the date, in any format and time zone.
-Use them to count down to a moment or to show the channel time.
+These helpers work in commands, event responses, timers, pipeline steps, Discord notifications and webhook bodies.
+They read the clock in your channel's time zone, so set that first.
+In **Settings**, open **Bot basics** and choose a **Timezone**.
+Until you do, every time here is UTC.
+Month and day names follow **Language** on the same page, and English when it is not set.
 
-## Make a time clear to your audience
+## Write a date expression
 
-Use the channel's local time for a quick clock reply, or specify a time zone when you want to show the same moment elsewhere.
-For example, `{date:now|tz:America/New_York|format:HH:mm}` displays the current hour and minute in New York.
-The `tz` part changes the zone and `format` chooses how the result looks; neither changes your channel's time-zone setting.
+`{date:...}` takes a source, then any number of steps, each after a pipe.
+The steps run from left to right, and the output step, if you use one, comes last.
+Without an output step you get the date and time as `yyyy-MM-dd HH:mm`, such as `2026-10-26 15:30`.
 
-For a fixed date, `{date:2026-12-25|format:dd/MM/yyyy}` gives `25/12/2026`.
-The letters are formatting tokens: `dd` is the day, `MM` the month, and `yyyy` the year.
-Use `until` for a countdown to a date and `since` for elapsed time; their values depend on when the reply runs.
+`{date:now|+1d|format:dddd}` starts at the channel's current time, moves one day ahead, and prints the weekday name.
+An output step is one of `format`, `relative`, `ordinal`, `until`, `since` or `diff`.
 
-The examples illustrate possible values; your results depend on the channel and trigger.
-**Use in** lists the template fields that accept each helper.
-A pipeline still needs a trigger that supplies the relevant person, message, or event; event-specific helpers need that event.
-For viewer-written text, the [Viewer Templates setting and permissions](/reference/settings/features) also apply.
+## Pick the source
+
+The source is the first part, before any pipe.
+
+- `now` is the current time in your channel's time zone, and `utc` is the same moment in UTC.
+- A date such as `2026-12-25`, or a date with a time such as `2026-12-25T20:00` or `2026-12-25 20:00`, is read as a time in your channel's time zone. A date alone is midnight.
+- A timestamp that ends in `Z` or an offset such as `+02:00` is a fixed moment, and the bot shows it in your channel's time zone.
+- A helper that holds a timestamp works too. `{date:{stream.startedAt}|format:HH:mm}` shows when the stream went live, in your time. While you are offline `{stream.startedAt}` is empty and there is no time to show, so use it in replies that run while you are live.
+
+## Show another time zone
+
+Use `tz` with a time zone name such as `America/New_York` or `Asia/Tokyo`.
+It shows the same moment in that zone and leaves your channel's setting alone.
+`{date:now|tz:America/New_York|format:HH:mm}` gives the time in New York.
+
+Steps after `tz` work in the new zone, so the place you put it changes the answer.
+`{date:now|next:friday|start:day|tz:America/New_York|format:ddd HH:mm}` takes midnight on Friday in your zone and shows it as New York time: `Thu 19:00` for a channel in Amsterdam.
+With `tz` first, the same steps find midnight on Friday in New York instead.
+
+## Move the date
+
+Add or subtract time with a sign, a number and a unit: `y` years, `mo` months, `w` weeks, `d` days, `h` hours, `m` minutes, `s` seconds.
+You can chain parts in one step, such as `+1y-2mo`, or write each in its own step.
+
+Years, months, weeks and days move the calendar and keep the time of day.
+Hours, minutes and seconds count real time.
+The two only differ on the night the clocks change: in Amsterdam, `{date:2026-03-28T12:00|+1d}` lands on 12:00 the next day, and `+24h` lands on 13:00.
+A month from 31 January is the last day of February.
+
+`start` and `end` jump to the start or end of the `day`, `week`, `month` or `year`.
+A week starts on Monday, and an end is 23:59:59.
+`next` and `prev` jump to the next or previous weekday and keep the time of day.
+Write the weekday in English, in full or as its first three letters or more, such as `next:fri`.
+
+## Count down or count up
+
+`until` counts from now to the date, `since` counts from the date to now, and `diff:<date>` counts between two dates.
+Add a unit after a colon to choose the shape of the answer:
+
+| Unit | What you get | Example |
+| --- | --- | --- |
+| None, or `human` | The two largest parts | `{date:now\|+2h+15m\|until}` gives `2 hours, 15 minutes` |
+| `breakdown` | Every part, from years to seconds | `{date:2026-12-25\|until:breakdown}` gives `1 month, 28 days, 8 hours, 30 minutes` |
+| `years`, `months`, `weeks`, `days` | Whole calendar units, rounded down | `{date:2025-09-10\|diff:2026-10-26:days}` gives `411 days` |
+| `hours`, `minutes`, `seconds` | Whole units of real time, rounded down | `{date:now\|-90m\|since:minutes}` gives `90 minutes` |
+
+The singular works too, such as `day`.
+A count has no sign: `until` on a date that has passed gives the time since it.
+To show which side of now a date is on, use `relative`, which gives text such as `3 days ago` or `2 hours from now`.
+
+Hour counts follow real time, so the night the clocks go forward is `23 hours` and the night they go back is `25 hours`.
+Count in `days` when you mean calendar days.
+
+## Format the result
+
+`format` takes date letters: `yyyy` the year, `MM` the month number, `MMMM` the month name, `dd` the day, `dddd` the weekday name, `HH` the hour from 00 to 23, `mm` the minutes and `ss` the seconds.
+Put words in single quotes to print them as they are, and type `[o]`, with the brackets, for the day as an ordinal.
+`{date:now|format:dddd 'the' [o] 'of' MMMM}` gives `Monday the 26th of October`.
+
+A single letter picks a ready-made layout instead: `d`, `D`, `t`, `T`, `f`, `F`, `g` or `G`, laid out the way the channel language writes dates, or `s` for `2026-10-26T15:30:00`.
+`lang` uses another language for one expression, such as `{date:now|lang:en|format:MMMM}` for `October` on a channel set to Dutch.
+
+## When an expression is wrong
+
+The reply shows the expression exactly as you wrote it, braces and all.
+That happens when a step or unit is unknown (`+1x`), the source is not a date, the time zone or language is unknown, the weekday does not match one, or a step comes after the output step.
+
+## All date and time helpers
+
+The examples use a channel in Amsterdam on Monday 26 October 2026 at 15:30 local time.
 
 | Helper | What it gives | Example | Use in |
 | --- | --- | --- | --- |
-| `{date}` | Today date | `{date}` gives `2026-10-26` | Commands, event responses, timers, pipelines, Discord, webhooks |
-| `{date:<source>}` | A date you can calculate with and format. The source is now (channel time), utc, a date such as 2026-12-25 or 2026-12-25T20:00, or a variable that holds a date (e.g. `{date:{stream.startedAt}}`) | `{date:2026-12-25\|format:dd/MM/yyyy HH:mm}` gives `25/12/2026 00:00` | Commands, event responses, timers, pipelines, Discord, webhooks |
-| `{date:<source>\|<+/-amount><unit>}` | Adds or subtracts time: y years, mo months, w weeks, d days, h hours, m minutes, s seconds. Chain them, e.g. +1y-2mo\|+3d | `{date:now\|+1d}` gives `2026-10-27 15:30` | Commands, event responses, timers, pipelines, Discord, webhooks |
-| `{date:<source>\|diff:<date>[:<unit>]}` | The difference to another date, as a total (411 days) or a breakdown (1 year, 1 month, 16 days) | `{date:2026-03-29T00:00\|diff:2026-03-30T00:00:hours}` gives `23 hours` | Commands, event responses, timers, pipelines, Discord, webhooks |
-| `{date:<source>\|end:<unit>}` | Moves to the end of the day, week, month or year (23:59:59) | `{date:now\|end:day\|format:yyyy-MM-dd HH:mm:ss}` gives `2026-10-26 23:59:59` | Commands, event responses, timers, pipelines, Discord, webhooks |
-| `{date:<source>\|format:<pattern>}` | Formats the date with a .NET pattern (e.g. dddd d MMMM yyyy) or a standard letter (d, D, t, T, f, F, g, G, s). Write [o] for the ordinal day | `{date:now\|format:yyyy-MM-dd HH:mm}` gives `2026-10-26 15:30` | Commands, event responses, timers, pipelines, Discord, webhooks |
-| `{date:<source>\|lang:<language>}` | Uses another language for month and day names, e.g. lang:en | `{date:now\|lang:en\|format:MMMM}` gives `October` | Commands, event responses, timers, pipelines, Discord, webhooks |
-| `{date:<source>\|next:<weekday>}` | Moves to the next weekday after the date, e.g. next:friday | `{date:now\|next:friday\|format:yyyy-MM-dd HH:mm}` gives `2026-10-30 15:30` | Commands, event responses, timers, pipelines, Discord, webhooks |
-| `{date:<source>\|ordinal}` | The day of the month as an ordinal, e.g. 26th | `{date:now\|ordinal}` gives `26th` | Commands, event responses, timers, pipelines, Discord, webhooks |
-| `{date:<source>\|prev:<weekday>}` | Moves to the previous weekday before the date, e.g. prev:monday | `{date:now\|prev:monday\|format:yyyy-MM-dd}` gives `2026-10-19` | Commands, event responses, timers, pipelines, Discord, webhooks |
-| `{date:<source>\|relative}` | The date as relative text, e.g. 3 days ago or 2 hours from now | `{date:now\|-3d\|relative}` gives `3 days ago` | Commands, event responses, timers, pipelines, Discord, webhooks |
-| `{date:<source>\|since[:<unit>]}` | Time passed since the date until now. Unit: years, months, weeks, days, hours, minutes, seconds, breakdown or human (the default) | `{date:now\|-90m\|since:minutes}` gives `90 minutes` | Commands, event responses, timers, pipelines, Discord, webhooks |
-| `{date:<source>\|start:<unit>}` | Moves to the start of the day, week (Monday), month or year | `{date:now\|start:day\|format:yyyy-MM-dd HH:mm:ss}` gives `2026-10-26 00:00:00` | Commands, event responses, timers, pipelines, Discord, webhooks |
-| `{date:<source>\|tz:<zone>}` | Shows the same moment in another time zone, e.g. tz:America/New_York | `{date:now\|tz:America/New_York\|format:HH:mm}` gives `10:30` | Commands, event responses, timers, pipelines, Discord, webhooks |
-| `{date:<source>\|until[:<unit>]}` | Countdown from now until the date. Unit: years, months, weeks, days, hours, minutes, seconds, breakdown or human (the default) | `{date:2026-12-25\|until:days}` gives `59 days` | Commands, event responses, timers, pipelines, Discord, webhooks |
-| `{time}` | The current local time | `20:15:00` | Commands, event responses, timers, pipelines, Discord, webhooks |
-| `{time.utc}` | The current UTC time | `18:15:00 UTC` | Commands, event responses, timers, pipelines, Discord, webhooks |
+| `{date}` | Today's date in your channel's time zone | `{date}` gives `2026-10-26` | Commands, event responses, timers, pipelines, Discord, webhooks |
+| `{date:<source>}` | The date and time of the source: `now`, `utc`, a date, a date and time, a timestamp, or a helper that holds one | `{date:now}` gives `2026-10-26 15:30` | Commands, event responses, timers, pipelines, Discord, webhooks |
+| `{date:<source>\|<+/-amount><unit>}` | Moves the date by years, months, weeks, days, hours, minutes or seconds | `{date:now\|+1d}` gives `2026-10-27 15:30` | Commands, event responses, timers, pipelines, Discord, webhooks |
+| `{date:<source>\|diff:<date>[:<unit>]}` | The time between the two dates | `{date:2025-09-10\|diff:2026-10-26:breakdown}` gives `1 year, 1 month, 16 days` | Commands, event responses, timers, pipelines, Discord, webhooks |
+| `{date:<source>\|end:<unit>}` | The end of the day, week, month or year, at 23:59:59 | `{date:now\|end:day\|format:yyyy-MM-dd HH:mm:ss}` gives `2026-10-26 23:59:59` | Commands, event responses, timers, pipelines, Discord, webhooks |
+| `{date:<source>\|format:<pattern>}` | The date in the layout you write with date letters | `{date:now\|format:dd/MM/yyyy}` gives `26/10/2026` | Commands, event responses, timers, pipelines, Discord, webhooks |
+| `{date:<source>\|lang:<language>}` | Month and day names in another language | `{date:now\|lang:en\|format:MMMM}` gives `October` | Commands, event responses, timers, pipelines, Discord, webhooks |
+| `{date:<source>\|next:<weekday>}` | The next such weekday, at the same time of day | `{date:now\|next:friday}` gives `2026-10-30 15:30` | Commands, event responses, timers, pipelines, Discord, webhooks |
+| `{date:<source>\|ordinal}` | The day of the month as an ordinal | `{date:now\|ordinal}` gives `26th` | Commands, event responses, timers, pipelines, Discord, webhooks |
+| `{date:<source>\|prev:<weekday>}` | The previous such weekday, at the same time of day | `{date:now\|prev:monday\|format:yyyy-MM-dd}` gives `2026-10-19` | Commands, event responses, timers, pipelines, Discord, webhooks |
+| `{date:<source>\|relative}` | How far the date is from now, in words | `{date:now\|-3d\|relative}` gives `3 days ago` | Commands, event responses, timers, pipelines, Discord, webhooks |
+| `{date:<source>\|since[:<unit>]}` | The time from the date until now | `{date:now\|-90m\|since:minutes}` gives `90 minutes` | Commands, event responses, timers, pipelines, Discord, webhooks |
+| `{date:<source>\|start:<unit>}` | The start of the day, week, month or year, at 00:00 | `{date:now\|start:month\|format:yyyy-MM-dd HH:mm}` gives `2026-10-01 00:00` | Commands, event responses, timers, pipelines, Discord, webhooks |
+| `{date:<source>\|tz:<zone>}` | The same moment in another time zone | `{date:now\|tz:America/New_York\|format:HH:mm}` gives `10:30` | Commands, event responses, timers, pipelines, Discord, webhooks |
+| `{date:<source>\|until[:<unit>]}` | The time from now until the date | `{date:2026-12-25\|until:days}` gives `59 days` | Commands, event responses, timers, pipelines, Discord, webhooks |
+| `{time}` | The current time in your channel's time zone | `{time}` gives `15:30:00` | Commands, event responses, timers, pipelines, Discord, webhooks |
+| `{time.utc}` | The current time in UTC | `{time.utc}` gives `14:30:00 UTC` | Commands, event responses, timers, pipelines, Discord, webhooks |
 
 Back to [Template helpers](/reference/templates/overview). For the places helpers work, special characters and HTML, read [Variables and templates](/reference/commands/variables-and-templates).

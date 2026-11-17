@@ -6,7 +6,7 @@ Goal: Choose a supported helper form and understand the value it produces in thi
 Success: The reader can select a documented form, supply its arguments and predict its result or fallback in the stated context.
 Application-case: A reply should show progress toward an active goal, and the author needs to know what appears when no goal is active.
 Prerequisites: A reply field that supports templates, and the ability to edit it; the template basics taught in /reference/commands/variables-and-templates.
-Project-root: C:\Projects\NoMercyLabs\nomnomzbot-docs\.claude\worktrees\finish-b
+Project-root: .
 Built-root: dist
 Rendered: dist/reference/templates/goal/index.html
 Voice: docs-work/voice.md

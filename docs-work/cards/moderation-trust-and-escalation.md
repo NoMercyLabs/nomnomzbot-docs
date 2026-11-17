@@ -6,7 +6,7 @@ Goal: How do trust settings and repeated violations affect moderation actions.
 Success: The reader can distinguish trust-based treatment from an escalation step and predict the next action.
 Application-case: A moderator wants repeated violations to escalate while understanding how a new chatter is treated on the first message.
 Prerequisites: Access to the selected channel and permission for the described action; any platform connection or output required by that action must be established before the steps.
-Project-root: C:\Projects\NoMercyLabs\nomnomzbot-docs\.claude\worktrees\finish
+Project-root: .
 Built-root: dist
 Rendered: dist/reference/moderation/trust-and-escalation/index.html
 Voice: docs-work/voice.md

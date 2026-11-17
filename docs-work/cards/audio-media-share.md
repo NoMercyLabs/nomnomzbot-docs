@@ -6,7 +6,7 @@ Goal: How do I enable media sharing and control the queue.
 Success: An accepted media item appears in the queue and plays through the configured overlay when permitted.
 Application-case: A streamer wants submissions reviewed before appearing on stream and needs to remove an unwanted queued item.
 Prerequisites: Access to the selected channel and permission for the described action; any platform connection or output required by that action must be established before the steps.
-Project-root: C:\Projects\NoMercyLabs\nomnomzbot-docs\.claude\worktrees\finish
+Project-root: .
 Built-root: dist
 Rendered: dist/reference/audio/media-share/index.html
 Voice: docs-work/voice.md

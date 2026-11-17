@@ -1,36 +1,90 @@
 ---
 title: Hype train helpers
-description: Lists 17 template helpers, each with what it gives and an example.
+description: Show a Twitch hype train's level, progress, time left and top contributor in a reply, with 17 template helpers.
 ---
 
 Helpers on this page: `{hypetrain*}`, `{hype_train*}`.
 
-These helpers read a hype train: its level, progress, and the people who took part.
-Use them to show progress in chat, on an overlay or read aloud.
+There are two kinds of hype train helper, and the spelling tells them apart.
+`{hypetrain.*}` asks Twitch about the train that runs now, at the moment the reply goes out.
+`{hype_train.*}`, with the underscore, carries the numbers of the start or end event that fired the reply.
+None of them take arguments. A `{hypetrain.*}` helper given an argument shows exactly as you wrote it.
 
-The examples illustrate possible values; your results depend on the channel and trigger.
-**Use in** lists the template fields that accept each helper.
-A pipeline still needs a trigger that supplies the relevant person, message, or event; event-specific helpers need that event.
-For viewer-written text, the [Viewer Templates setting and permissions](/reference/settings/features) also apply.
+## Before you use them
+
+A hype train is a Twitch feature, so these helpers read your Twitch channel only.
+
+The `{hypetrain.*}` helpers work in commands, event responses, timers, pipeline steps, Discord notifications and webhook bodies.
+They only have something to show while a train runs.
+When no train runs, each of them shows exactly as you wrote it, braces and all, with these exceptions:
+
+- `{hypetrain.isActive}`, `{hypetrain.isGolden}` and `{hypetrain.isShared}` show `false`.
+- `{hypetrain.record.level}` still shows the highest level your channel ever reached. It shows as written only when your channel has never had a hype train.
+
+When the bot cannot read the hype train from Twitch, the three flags still show `false`, and every other helper, `{hypetrain.record.level}` included, shows as written.
+
+The `{hype_train.*}` helpers work only in an event response for **Hype train starts** or **Hype train ends**, or in a pipeline started by one of those events.
+
+## Show the running train in a command
+
+The live helpers in one reply share one read from Twitch, so their numbers always agree.
+
+- `level` is the level the train is on now.
+- `progress` is the points earned toward the next level, `goal` is the points that level needs, and `remaining` is the difference, never below `0`.
+- `percent` is `progress` out of `goal`, rounded to a whole number, such as `60%`.
+- `bar` draws 10 marks and adds the percent: `██████░░░░ 60%`.
+- `total` is all the points the train has collected so far.
+- `timeLeft` is the time before the train ends, such as `4m 10s`. From one hour on it reads like `1h 5m`, and under a minute like `45s`.
+- `topContributor` is the display name of the person with the biggest contribution to the running train.
+
+`progress`, `goal`, `remaining` and `total` use the thousands separator of the channel's **Language**, and English when it is not set.
+
+A live helper with no train shows as written, so wrap a `!train` reply in `{hypetrain.isActive}` to give it a sentence for both cases:
+
+`{if.hypetrain.isActive:Hype train level {hypetrain.level} is at {hypetrain.bar}, {hypetrain.remaining} points to go with {hypetrain.timeLeft} left!|No hype train right now. Our record is level {hypetrain.record.level}.}`
+
+During a train at level 3 with 1,800 of 3,000 points, this gives `Hype train level 3 is at ██████░░░░ 60%, 1,200 points to go with 4m 10s left!`.
+
+`{hypetrain.isGolden}` is `true` for a Golden Kappa train, and `{hypetrain.isShared}` is `true` for a train shared with other channels.
+
+## Reply when a train starts or ends
+
+An event response for **Hype train starts** or **Hype train ends** gets the event's own numbers:
+
+- `{hype_train.level}` is the level, and `{hype_train.total}` is the points collected.
+- `{hype_train.goal}` is the points needed for the next level. Only **Hype train starts** has it.
+- `{hype_train.id}` is the train's Twitch ID.
+
+These numbers have no thousands separator, so a total shows as `6400`.
+
+To name a participant when the train starts, add `{hypetrain.topContributor}`, which reads the running train:
+
+`A hype train started at level {hype_train.level}! {hypetrain.topContributor} got it rolling.`
+
+In a **Hype train ends** response the train no longer runs, so use the `{hype_train.*}` helpers there and leave the live ones out.
+
+## All hype train helpers
+
+The live examples show a running train at level 3 with 1,800 of 3,000 points toward the next level and 5,400 in total. It is not a Golden Kappa train and not a shared train. The event examples show a train at level 3 with 6,400 points and a goal of 8,000.
 
 | Helper | What it gives | Example | Use in |
 | --- | --- | --- | --- |
-| `{hype_train.goal}` | The points needed for the next level | `8000` | event responses, pipelines |
-| `{hype_train.id}` | The hype train ID | `1b0AsbInCHZW2SQFQkCzqN07Ib2` | event responses, pipelines |
-| `{hype_train.level}` | The hype train level | `3` | event responses, pipelines |
-| `{hype_train.total}` | The total points the hype train collected | `6400` | event responses, pipelines |
-| `{hypetrain.bar}` | A bar of how far the train is towards the next level: ██████░░░░ 60% | `██████░░░░ 60%` | Commands, event responses, timers, pipelines, Discord, webhooks |
-| `{hypetrain.goal}` | The points needed to finish the current level: 3,000 | `3,000` | Commands, event responses, timers, pipelines, Discord, webhooks |
-| `{hypetrain.isActive}` | Whether a Hype Train runs now, as true or false, for if and switch | `false` | Commands, event responses, timers, pipelines, Discord, webhooks |
-| `{hypetrain.isGolden}` | Whether the running train is a Golden Kappa train, as true or false, for if and switch | `false` | Commands, event responses, timers, pipelines, Discord, webhooks |
-| `{hypetrain.isShared}` | Whether the running train is shared with other channels, as true or false, for if and switch | `false` | Commands, event responses, timers, pipelines, Discord, webhooks |
-| `{hypetrain.level}` | The level of the running Hype Train: 3 | `3` | Commands, event responses, timers, pipelines, Discord, webhooks |
-| `{hypetrain.percent}` | How far the train is towards the next level: 60% | `60%` | Commands, event responses, timers, pipelines, Discord, webhooks |
-| `{hypetrain.progress}` | The points earned towards the next level: 1,800 | `1,800` | Commands, event responses, timers, pipelines, Discord, webhooks |
-| `{hypetrain.record.level}` | The highest level the channel ever reached: 5 | `5` | Commands, event responses, timers, pipelines, Discord, webhooks |
-| `{hypetrain.remaining}` | The points still needed for the next level: 1,200 | `1,200` | Commands, event responses, timers, pipelines, Discord, webhooks |
-| `{hypetrain.timeLeft}` | The time left before the train ends: 4m 10s | `4m 10s` | Commands, event responses, timers, pipelines, Discord, webhooks |
-| `{hypetrain.topContributor}` | The name of the biggest contributor to the train: ViewerOne | `ViewerOne` | Commands, event responses, timers, pipelines, Discord, webhooks |
-| `{hypetrain.total}` | The total points of the running train: 5,400 | `5,400` | Commands, event responses, timers, pipelines, Discord, webhooks |
+| `{hype_train.goal}` | The points needed for the next level, from the start event | `8000` | Event responses, pipelines |
+| `{hype_train.id}` | The Twitch ID of the train that started or ended | `1b0AsbInCHZW2SQFQkCzqN07Ib2` | Event responses, pipelines |
+| `{hype_train.level}` | The level of the train that started or ended | `3` | Event responses, pipelines |
+| `{hype_train.total}` | The points the train had collected when it started or ended | `6400` | Event responses, pipelines |
+| `{hypetrain.bar}` | A bar of 10 marks toward the next level, with the percent | `██████░░░░ 60%` | Commands, event responses, timers, pipelines, Discord, webhooks |
+| `{hypetrain.goal}` | The points the current level needs | `3,000` | Commands, event responses, timers, pipelines, Discord, webhooks |
+| `{hypetrain.isActive}` | `true` while a train runs, else `false` | `true` | Commands, event responses, timers, pipelines, Discord, webhooks |
+| `{hypetrain.isGolden}` | `true` while a Golden Kappa train runs, else `false` | `false` | Commands, event responses, timers, pipelines, Discord, webhooks |
+| `{hypetrain.isShared}` | `true` while a train shared with other channels runs, else `false` | `false` | Commands, event responses, timers, pipelines, Discord, webhooks |
+| `{hypetrain.level}` | The level of the running train | `3` | Commands, event responses, timers, pipelines, Discord, webhooks |
+| `{hypetrain.percent}` | How far the train is toward the next level, as a whole percent | `60%` | Commands, event responses, timers, pipelines, Discord, webhooks |
+| `{hypetrain.progress}` | The points earned toward the next level | `1,800` | Commands, event responses, timers, pipelines, Discord, webhooks |
+| `{hypetrain.record.level}` | The highest level your channel ever reached | `5` | Commands, event responses, timers, pipelines, Discord, webhooks |
+| `{hypetrain.remaining}` | The points still needed for the next level, never below 0 | `1,200` | Commands, event responses, timers, pipelines, Discord, webhooks |
+| `{hypetrain.timeLeft}` | The time left before the train ends | `4m 10s` | Commands, event responses, timers, pipelines, Discord, webhooks |
+| `{hypetrain.topContributor}` | The display name of the biggest contributor to the running train | `ViewerOne` | Commands, event responses, timers, pipelines, Discord, webhooks |
+| `{hypetrain.total}` | All the points the running train has collected | `5,400` | Commands, event responses, timers, pipelines, Discord, webhooks |
 
 Back to [Template helpers](/reference/templates/overview). For the places helpers work, special characters and HTML, read [Variables and templates](/reference/commands/variables-and-templates).

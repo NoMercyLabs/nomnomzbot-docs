@@ -6,7 +6,7 @@ Goal: How do I tell which resource limit prevents an action.
 Success: The reader can match current usage to the relevant limit and choose a supported remedy.
 Application-case: A moderator cannot create another command and needs to distinguish a usage limit from missing permission.
 Prerequisites: Access to the selected channel and the action being configured; required platform accounts and connections must be established before the relevant steps.
-Project-root: C:\Projects\NoMercyLabs\nomnomzbot-docs\.claude\worktrees\finish
+Project-root: .
 Built-root: dist
 Rendered: dist/reference/settings/resource-limits/index.html
 Voice: docs-work/voice.md

@@ -6,7 +6,7 @@ Goal: How do I make a chat-triggered script that keeps a count.
 Success: The documented command invokes the script and its reply reflects the saved count.
 Application-case: The author runs the command twice and then edits the script without intending to erase the counter.
 Prerequisites: Access to the intended bot and its documented SDK or API surface; authorization for the chosen script, widget or external action.
-Project-root: C:\Projects\NoMercyLabs\nomnomzbot-docs\.claude\worktrees\finish
+Project-root: .
 Built-root: dist
 Rendered: dist/reference/code/worked-example/index.html
 Voice: docs-work/voice.md

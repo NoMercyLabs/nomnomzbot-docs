@@ -6,7 +6,7 @@ Goal: Which YouTube connection do I need for streaming or music.
 Success: The reader can distinguish the channel platform connection from music playback and find the correct setup.
 Application-case: A streamer already uses YouTube music playback and wants to connect their YouTube stream chat too.
 Prerequisites: Integration write access (Editor by default), intended Google/YouTube channel, and operator-configured YouTube app for channel authorization. Music-only playback follows the Music player guide instead.
-Project-root: C:\Projects\NoMercyLabs\nomnomzbot-docs\.claude\worktrees\finish
+Project-root: .
 Built-root: dist
 Rendered: dist/reference/integrations/youtube/index.html
 Voice: docs-work/voice.md

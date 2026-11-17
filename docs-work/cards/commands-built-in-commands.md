@@ -6,7 +6,7 @@ Goal: Which built-in command handles my task, and how do I customize its reply.
 Success: The reader can find the command, determine who can use it and restore a customized reply when needed.
 Application-case: A moderator wants to change the reply of a built-in command without creating a conflicting channel command.
 Prerequisites: Access to the selected channel and permission for the described action; any platform connection or output required by that action must be established before the steps.
-Project-root: C:\Projects\NoMercyLabs\nomnomzbot-docs\.claude\worktrees\finish-b
+Project-root: .
 Built-root: dist
 Rendered: dist/reference/commands/built-in-commands/index.html
 Voice: docs-work/voice.md

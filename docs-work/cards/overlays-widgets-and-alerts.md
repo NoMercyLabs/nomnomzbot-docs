@@ -6,7 +6,7 @@ Goal: How do I add and test a widget or alert in an overlay.
 Success: The saved widget renders in its overlay and the reader can distinguish a test from a real event.
 Application-case: A streamer wants to preview an alert before putting it on stream and later replay a past alert.
 Prerequisites: Access to the selected channel and permission for the described action; any platform connection or output required by that action must be established before the steps.
-Project-root: C:\Projects\NoMercyLabs\nomnomzbot-docs\.claude\worktrees\finish
+Project-root: .
 Built-root: dist
 Rendered: dist/reference/overlays/widgets-and-alerts/index.html
 Voice: docs-work/voice.md
