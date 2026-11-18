@@ -1,41 +1,60 @@
 {
-  "fingerprint": "79121b5c610d3be368655f36d7ba26e72450dcb157e6091ff68b48847b87a29c",
+  "fingerprint": "4895e45be4d7047ce5a77b28e6ed2f2b5902e50b0125471ea89ab724b07b32b0",
   "verdict": "PASS",
   "answers": [
     {
       "question": 1,
-      "answer": "In a command, {target} is the first word typed after the command, with any @ removed. To describe that person, use the {target.*} helpers, for example {user} sends a hug to {target.displayname}. To cover the case where no name is given, wrap the reply in {if:{target}|...|...}. The helpers that take arguments are {target.verb:<sing|plur>} and {target.data.<key>}.",
-      "quote": "In a command, the target is the first word typed after the command, with any @ removed."
+      "answer": "Use {target} for the name as typed, or a {target.*} helper for a detail about that person. The worked example uses {target.displayname} for the named person and {user} for the caller. The only helper on the page that takes arguments is {target.verb:<sing|plur>}, for example {target.verb:has|have}. {target.data.<key>} takes a key name. To cover the case where nobody is named, wrap the reply in the if helper with {target} as the condition.",
+      "quote": "{if:{target}|{user} sends a hug to {target.displayname}.|{user} sends a hug to the whole chat.}"
     },
     {
       "question": 2,
-      "answer": "You must already know how to edit a command reply and use template braces. The page says where the helpers work and that a timer cannot use them. That is stated in the opening paragraph, before the first example.",
+      "answer": "You need a reply in a command, event response, pipeline or webhook; timers do not offer these helpers. The command must be used with a name after it, because the target is the first word typed after the command. The page states both in its opening paragraphs.",
       "quote": "These helpers work in commands, event responses, pipelines and webhooks. A timer has no target, so they are not offered there."
     },
     {
       "question": 3,
-      "answer": "Success is the named person's display name appearing in the reply. A reply with nothing after 'to' means no name was typed. {target.known} tells a person the bot has a record of apart from a Twitch account it has not stored yet. Only a known person gets real account, channel, points and stats values.",
-      "quote": "They work for someone the bot has a record of, which is when {target.known} is true."
+      "answer": "The target is the person the reply is about, and the user is the person who used the command. It worked when the reply shows the named person's display name where {target.displayname} was. {target.known} tells a stored person (true) from one the bot has no record of (false).",
+      "quote": "The target is the person a reply is about when that person is not the one who used it."
     },
     {
       "question": 4,
-      "answer": "If the viewer names someone, as in !hug @someone, then {target} is 'someone' and {target.displayname} is that person's display name. The display name is looked up on Twitch if the bot has never seen them. If the viewer types !hug with no name, there is no target, because the bot never falls back to the caller. {target} and {target.displayname} are then empty. {target.name}, {target.id} and {target.followAge} stay in the reply as written, braces and all. The caller is always {user}.",
+      "answer": "With !hug @someone, the target is someone, so {target.displayname} shows someone's display name. If the bot has never seen them, the name comes from Twitch, or the word as typed if no account has that name. With !hug alone there is no target: the bot does not use the caller in its place. {target} and {target.displayname} are empty, so the plain reply reads 'ViewerOne sends a hug to .' The if version takes its second branch instead.",
       "quote": "The bot never fills in the caller when no name is given, so !hug on its own has no target at all."
     },
     {
       "question": 5,
-      "answer": "The 'When nobody is named' list mentions 'the three message helpers' before the page has said which three they are. They are defined only in the last table, so I had to scroll to the end to learn they are lastmessage, lastmessage.full and randommessage. The cost is one detour, not a blocked step.",
-      "quote": "the three message helpers are empty."
+      "answer": "The 'When nobody is named' list talks about 'the three message helpers' and 'the helpers that read the person's Twitch account, channel, points or channel record' before any of those helpers are introduced. I had to scroll down to the tables to see which helpers each phrase meant, then come back to the list. That cost a reread, not a wrong action. I did not have to guess at any step.",
+      "quote": "and the three message helpers are empty"
     },
     {
       "question": 6,
-      "answer": "Every table row repeats the same Use in value, so read aloud it says the same four places about forty times. The intro already says the helpers work in all four places, so the column adds nothing. The cost is listening time, not understanding.",
-      "quote": "Commands, event responses, pipelines, webhooks"
+      "answer": "Read aloud, {target.verb:<sing|plur>} and the long 'When nobody is named' list of helper names are hard to follow. The list is a run of edge-case results that a listener cannot keep in their head. That costs attention, but it does not block the task.",
+      "quote": "takes the second form"
     }
   ],
   "findings": [],
   "warnings_released": true,
   "warning_review": [
-    {"id": "sentence-6-1", "decision": "keep", "reason": "The flagged text is three short sentences: the case, the broken reply the reader would see, and the fix that comes next. Quoting the broken reply shows the failure the reader would otherwise get wrong, right before the if example. That is the outcome-first wording voice.md asks for."}
+    {
+      "id": "sentence-6-1",
+      "decision": "keep",
+      "reason": "This sentence sets up the empty-name case and leads straight into the if helper the reader needs; its length comes from the example reply it introduces and does not hide the instruction."
+    },
+    {
+      "id": "paragraph-8",
+      "decision": "keep",
+      "reason": "The paragraph says what the bot can read for a person it has a record of and what stays empty otherwise, which the reader needs to predict results; the helper names are a lookup list that the tables repeat, with no unrelated detail."
+    },
+    {
+      "id": "sentence-8-3",
+      "decision": "keep",
+      "reason": "It states where the name, ID and display name come from for a Twitch viewer the bot has not stored, which answers the reader's question about the named person; the wording is plain and nothing needs cutting."
+    },
+    {
+      "id": "sentence-8-4",
+      "decision": "keep",
+      "reason": "It is long and list-like, but it states the empty, false and zero results a streamer will see for an unstored person, which they need to avoid a surprise; the cost is listening attention, not task failure, as blind answer 6 notes."
+    }
   ]
 }

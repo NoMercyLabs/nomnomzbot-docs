@@ -24,10 +24,41 @@ The bot finds it in two ways:
 - A reply uses a charity helper without the permission. The bot records the gap the first time this happens.
 
 When that first reply came from chat, a timer or an event, the bot also says once in chat that it needs this permission.
-So test your reply once before a charity stream, and then look at **Needs attention**.
+So type your charity command once in your channel's chat before a charity stream, and then look at **Needs attention**.
 
 The item has a **Dismiss** button.
 A dismissed item stays hidden until the permission is given, so an empty list does not prove that the bot has the permission.
+
+### Grant the permission
+
+When the bot found the gap through a reply, the **Needs attention** item says "Grant it on the Integrations page".
+When Twitch refused the event feeds, the item says "Grant the permission to get them back" after the list of refused feeds.
+A **Moderator** and up sees **Grant permissions** on the Integrations page and can start the request.
+The bot saves the permission on the Twitch account that approves the code.
+To grant it for the channel, approve the code while you are signed in to Twitch as the streamer's own account.
+
+1. Open **Settings**, then **Integrations**.
+   The page opens with a notice that reads "1 more Twitch permission to grant", or a higher count.
+   The notice lists `channel:read:charity` among the permissions.
+2. Choose **Grant permissions**.
+   The notice shows "Enter this code on Twitch:" and a code, with a link to Twitch.
+3. Open the link, enter the code, and approve the permissions on Twitch.
+
+While the code is open, the notice shows the code and the line "Waiting for you to approve on Twitch. This page updates by itself."
+The **Grant permissions** button is hidden during this wait.
+
+The grant adds the missing permissions and keeps everything you already allowed.
+If the request fails, the notice shows "The permission request failed. Try again."
+
+After you approve on Twitch, the notice stays and its title reads "Permissions granted. Twitch now lets the bot use them."
+It does not go away at once.
+From then on, the charity helpers show their values.
+
+If the grant does not finish, the notice says why and offers **Grant permissions** again for a new code:
+
+- The code ran out: "The code ran out before it was used. Grant the permissions again for a new code."
+- Twitch did not get your approval: "Twitch did not get your approval. Grant the permissions again to try once more."
+- The bot could not check the approval: "The approval could not be checked. Grant the permissions again to try once more."
 
 ## When a helper prints its braces
 

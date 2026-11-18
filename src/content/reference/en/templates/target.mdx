@@ -27,17 +27,20 @@ Now someone types `!hug` with no name. `{target.displayname}` is empty, so the r
 
 ## When nobody is named
 
-Without a target, each helper gives one of these results:
+Without a target, the helpers give these results:
 
 - `{target}`, `{target.displayname}` and the three message helpers are empty.
 - `{target.known}` is `false`.
 - The pronoun helpers use the neutral words they, them, their, person and are, and `{target.verb:<sing|plur>}` takes the second form.
-- The chat and watch stats read as nothing recorded: counts are `0`, `{target.watchtime}` is `0m` and `{target.firstseen}` is `unknown`.
-- `{target.name}`, `{target.id}`, `{target.followAge}` and the helpers that read the person's Twitch account, channel, points or channel record stay in the reply as written, braces and all.
+- `{target.mention}`, `{target.shoutoutLink}` and `{target.link}` stay in the reply as written, braces and all.
+- `{target.data.<key>}` is empty.
+- These stats read as nothing recorded: `{target.messages}`, `{target.commands}`, `{target.botpercent}`, `{target.redemptions}`, `{target.songrequests}`, `{target.days}` and `{target.avgperday}` are `0`, `{target.watchtime}` is `0m` and `{target.firstseen}` is `unknown`.
+- `{target.stats.bits}`, `{target.stats.streak}`, `{target.stats.lastSeen}` and `{target.activity.level}` stay in the reply as written, with no viewer data read at all.
+- `{target.name}`, `{target.id}`, `{target.followAge}` and the helpers that read the person's Twitch account, channel, points or channel record stay in the reply as written.
 
 ## Who the bot can read
 
-The account, channel, points and stats helpers read what the bot has stored about the person. They work for someone the bot has a record of, which is when `{target.known}` is `true`. For a Twitch account the bot has not stored yet, the name helpers still work, but these helpers give their empty, `false` or `0` result.
+The account, channel, points and stats helpers read what the bot has stored about the person. They work for someone the bot has a record of, which is when `{target.known}` is `true`. For a Twitch account the bot has not stored yet, `{target.id}`, `{target.name}` and `{target.displayname}` are filled in from Twitch. `{target.mention}`, `{target.link}` and `{target.shoutoutLink}` are built from the name. `{target.known}` is `false`. The Twitch profile and channel helpers read the Twitch ID in the stored record, which this person lacks, so `{target.avatar}`, `{target.bio}`, `{target.color}`, `{target.createdAt}`, `{target.accountAge}`, `{target.game}` and `{target.title}` are empty, `{target.isLive}` and `{target.isFollower}` are `false` and `{target.viewers}` is `0`. The stats that count activity give `0`, `0m` or `unknown`, and `{target.followAge}` stays in the reply as written.
 
 The points helpers read the named person's balance in the bot's [channel currency](/reference/economy/currency-and-balances). That balance is separate from Twitch Channel Points.
 
@@ -79,7 +82,7 @@ These read the pronouns saved for the target. When the target has none saved, th
 | --- | --- | --- | --- |
 | `{target.createdAt}` | The date the Twitch account was made, as year, month and day | `2019-05-02` | Commands, event responses, pipelines, webhooks |
 | `{target.accountAge}` | How old the Twitch account is, in years and months | `7 years, 5 months` | Commands, event responses, pipelines, webhooks |
-| `{target.followAge}` | How long the person has followed your channel. `not following` when they do not follow, `unknown` when Twitch cannot be asked | `1 year` | Commands, event responses, pipelines, webhooks |
+| `{target.followAge}` | How long the person has followed your channel. `not following` when they do not follow, `unknown` when Twitch cannot be asked. Stays as written for a person the bot has not stored | `1 year` | Commands, event responses, pipelines, webhooks |
 | `{target.isFollower}` | `true` when the person follows your channel, else `false` | `true` | Commands, event responses, pipelines, webhooks |
 | `{target.isSub}` | `true` when the person is subscribed to your channel, else `false` | `false` | Commands, event responses, pipelines, webhooks |
 

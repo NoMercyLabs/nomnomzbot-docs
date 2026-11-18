@@ -15,11 +15,14 @@ It needs no extra Twitch permission for this.
 
 Every time these helpers show is in your channel's time zone, on a 24-hour clock.
 The one exception is `{schedule.next.viewerTime}`, which uses the zone you name in it.
-That zone is the **Timezone** field in **Settings**, under **Bot basics**.
+Your channel's time zone is the **Timezone** field in **Settings**, under **Bot basics**.
 It starts as not set, and then times show in UTC, so set it before you use these helpers.
 
 Day and month names follow the **Language** field in the same place.
-With no language set, they are in English.
+The same field sets the words in `{schedule.next.in}`, `{schedule.next.relative}` and `{schedule.next.full}`.
+These are the unit word (`days`), the word `in` and the words `next stream`.
+In Dutch, for example, "in" becomes "over" and "next stream" becomes "volgende stream".
+With no language set, all of these are in English.
 
 ## The next stream
 
@@ -51,7 +54,7 @@ A stream planned for less than an hour shows only the minutes, such as `45m`.
 
 `{schedule.next.viewerTime}` shows the same start as `{schedule.next.at}`, but in a time zone you name instead of your channel's zone (UTC when **Timezone** is not set).
 It needs one time zone name after the colon, written the way the time zone database names it: a region, a slash and a city, such as `America/New_York`, `Europe/London` or `Asia/Tokyo`.
-The example above is for a channel set to `Europe/Amsterdam` with a stream on Friday at 20:00, which is 15:00 in New York that day.
+The example above is only a sample of the shape: a time of day in the zone you name, not a conversion for your own stream.
 A name the bot does not know, or no name at all, makes the helper print as typed, so check a new name once in your own chat.
 
 ## The streams after it
@@ -84,7 +87,8 @@ A `!nextstream` reply for the weeks of a break can be:
 On a break until {schedule.vacation.until}. Next stream: {schedule.next.at}
 ```
 
-This gives `On a break until Sunday 15 November. Next stream: Tuesday 20:00`.
+When no stream that is not canceled is left inside the break, this gives `On a break until Sunday 15 November. Next stream: Tuesday 20:00`, with the first stream after the break.
+When a stream is left inside the break, the reply names that stream's day instead.
 When the break is over, the first part reads `On a break until .`, so change the reply back to `{schedule.next.full}` at that point.
 
 ## Links to your schedule
@@ -104,7 +108,7 @@ Which one tells you the cause.
 | What you see | Cause |
 | --- | --- |
 | `{schedule.week}`, `{schedule.today}`, `{schedule.list:3}`, `{schedule.vacation}` or `{schedule.vacation.until}` gives nothing | There is nothing to list: no stream to come in that period, or no break. A channel that never saved a schedule counts as an empty schedule |
-| A `{schedule.next.*}` helper prints as typed | No stream is left on your schedule that is not canceled and has not ended |
+| A `{schedule.next.*}` helper prints as typed | No stream is left on your schedule that is not canceled and has not ended. For `{schedule.next.game}` alone, the next stream has no category set |
 | Every schedule helper except the two links prints as typed | Twitch did not answer. The next reply asks Twitch again |
 
 Back to [Template helpers](/reference/templates/overview).

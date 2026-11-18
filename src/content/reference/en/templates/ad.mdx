@@ -17,6 +17,36 @@ When the bot finds the permission missing, the **Needs attention** panel on **Ho
 Until the permission is granted, the schedule helpers print as typed and **Ad break coming** stays silent.
 A schedule reply inside the check under [Check for a planned break](#check-for-a-planned-break) then gives its second text, so chat sees no braces.
 
+### Grant the permission
+
+The **Needs attention** item says "Grant it on the Integrations page".
+A **Moderator** and up sees the grant button and can start the request.
+The bot saves the permission on the Twitch account that approves the code.
+To grant it for the channel, approve the code while you are signed in to Twitch as the streamer's own account.
+
+1. Open **Settings**, then **Integrations**.
+   The page opens with a notice that reads "1 more Twitch permission to grant", or a higher count.
+   The notice lists `channel:read:ads` among the permissions.
+2. Choose **Grant permissions**.
+   The notice shows "Enter this code on Twitch:" and a code, with a link to Twitch.
+3. Open the link, enter the code, and approve the permissions on Twitch.
+
+While the code is open, the notice shows the code and the line "Waiting for you to approve on Twitch. This page updates by itself."
+The **Grant permissions** button is hidden during this wait.
+
+The grant adds the missing permissions and keeps everything you already allowed.
+If the request fails, the notice shows "The permission request failed. Try again."
+
+After you approve on Twitch, the notice stays and its title reads "Permissions granted. Twitch now lets the bot use them."
+It does not go away at once.
+From then on, the schedule helpers show their values.
+
+If the grant does not finish, the notice says why and offers **Grant permissions** again for a new code:
+
+- The code ran out: "The code ran out before it was used. Grant the permissions again for a new code."
+- Twitch did not get your approval: "Twitch did not get your approval. Grant the permissions again to try once more."
+- The bot could not check the approval: "The approval could not be checked. Grant the permissions again to try once more."
+
 ## Choose a reminder
 
 For a warning just before each break, use the **Ad break coming** event.
@@ -61,10 +91,15 @@ Clock times use the **Timezone** on the **Bot basics** page (see [Bot basics and
 
 Without an answer from Twitch or the permission, every helper in this table prints as typed, `{ad.isScheduled}` too.
 
-With no break planned, `{ad.isScheduled}` gives `false` and the next-break helpers print as typed.
-The exception is `{ad.next.duration}`, which gives `0s`.
-A last-break helper prints as typed when Twitch has no last break, and `{ad.snoozes.refreshIn}` does the same when Twitch has no refill time.
-`{ad.snoozes.left}` gives `0` with no snoozes left, and `{ad.prerollFree}` gives `0s` with no pre-roll free time.
+With no break planned, `{ad.isScheduled}` gives `false` and the helpers that read the break time print as typed.
+`{ad.next.duration}` shows the length that Twitch reports, so use `{ad.isScheduled}` to tell whether a break is planned.
+Some helpers print as typed:
+- A last-break helper prints as typed when Twitch has no last break.
+- `{ad.snoozes.refreshIn}` prints as typed when Twitch has no refill time.
+
+Two helpers give a zero:
+- `{ad.snoozes.left}` gives `0` with no snoozes left.
+- `{ad.prerollFree}` gives `0s` with no pre-roll free time.
 
 ### Check for a planned break
 

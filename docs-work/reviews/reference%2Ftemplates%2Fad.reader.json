@@ -1,1 +1,60 @@
-{"fingerprint": "ff74e111e57ee6c96075536e6a63965e585b05c52692da2c57a754f3334d7f6a", "verdict": "PENDING", "answers": [{"question": 1, "answer": "For the next break, use the schedule helpers {ad.next.in}, {ad.next.in.long}, {ad.next.at}, {ad.next.seconds} and {ad.next.duration}. Inside a reply that can run at any time, wrap them in {if.ad.isScheduled:then|else}. Just before a break, use the Ad break coming event with {ad.when}. For the most recent break, use the Ad break ends event with {ad.duration}, or use {ad.last.ago} or {ad.last.at} in a command that can run at any time. None of these helpers takes an argument.", "quote": "None of the ad helpers take an input."}, {"question": 2, "answer": "You must already know how to edit a reply and use braces. The schedule helpers and the Ad break coming event need the Twitch permission channel:read:ads, which the first Twitch sign-in does not ask for. This is stated under Before you start. A missing permission shows in the Needs attention panel on Home. The page does not say how to grant it.", "quote": "The schedule helpers and the Ad break coming event read your ad schedule through your own Twitch sign-in, with the Twitch permission channel:read:ads."}, {"question": 3, "answer": "It works when the helper is replaced by a value like the Example column (12m, 15:42, 3 minutes). It has failed when chat shows the helper still in braces. Inside the check, failure shows as the second text. Schedule helpers ask Twitch at the moment the reply goes out and work in any field. Event helpers carry one ad break event and work only in a response to that event or a pipeline it starts.", "quote": "This prints the second text when no break is planned, and also when Twitch does not answer or the permission is missing."}, {"question": 4, "answer": "The reminder goes in an Ad break coming event response, for example 'Ad break {ad.when}. Grab a drink, we'll be right back.' It goes out once, about 3 minutes before each break, but not for a break in the first 10 minutes of the stream or without the permission. A reminder that runs on a timer uses the schedule helpers inside {if.ad.isScheduled:...|...}. The after-ad reply goes in an Ad break ends event response with {ad.duration}, which gives the length of the break that just ended. It goes out only if you are still live on the same stream.", "quote": "For a warning just before each break, use the Ad break coming event."}, {"question": 5, "answer": "Under Choose a reminder, I set up responses to the Ad break coming and Ad break ends events, but where to create them only appears later, under Ad break events. I had to scroll on to find it. Before you start says the permission must be granted, but no step says how, so I would guess the Needs attention panel has a fix button.", "quote": "The three events are on the Event responses page, which is in the Build group of the sidebar."}, {"question": 6, "answer": "Read aloud, the path-form syntax with its colon and pipe is hard to follow without seeing it. The long helper table is also tiring to hear, though it works as a reference. Neither stops the task.", "quote": "In a reply that can run at any time, test {ad.isScheduled} with the path form of {if}, {if.ad.isScheduled:then|else}:"}], "findings": ["The page says 'Until the permission is granted' and names the Needs attention message 'Twitch permission missing: channel:read:ads', but no step says what to press to grant channel:read:ads, so a reader whose helpers print as typed cannot finish the task."], "warnings_released": false, "warning_review": []}
+{
+  "fingerprint": "801646908804e223dfd8d065fd57c66048bbc0e480bc2a3e486fc17b53cf020c",
+  "verdict": "PASS",
+  "answers": [
+    {
+      "question": 1,
+      "answer": "No helper takes an argument. For the next break, use {ad.next.in}, {ad.next.in.long}, {ad.next.at}, {ad.next.seconds} or {ad.next.duration}, wrapped in {if.ad.isScheduled:then|else}. Use the Ad break coming event with {ad.when} for a warning about 3 minutes before. For the most recent break, use the Ad break ends event with {ad.duration}, or {ad.last.ago} and {ad.last.at} in a command that can run at any time.",
+      "quote": "None of the ad helpers take an input."
+    },
+    {
+      "question": 2,
+      "answer": "You need the Twitch permission channel:read:ads, granted from Settings, then Integrations, with Grant permissions. The code must be approved while signed in to Twitch as the streamer's own account. Until then the schedule helpers print as typed and Ad break coming stays silent. This is stated under Before you start and Grant the permission.",
+      "quote": "To grant it for the channel, approve the code while you are signed in to Twitch as the streamer’s own account."
+    },
+    {
+      "question": 3,
+      "answer": "Success: the Integrations notice title changes to the granted message, and the schedule helpers show values. Concepts: schedule helpers ask Twitch at reply time and work in any field; event helpers carry one ad break event and work only in that event's response or pipeline.",
+      "quote": "After you approve on Twitch, the notice stays and its title reads “Permissions granted. Twitch now lets the bot use them.”"
+    },
+    {
+      "question": 4,
+      "answer": "For the reminder, use the Ad break coming event with {ad.when}, which goes out once about 3 minutes before each planned break. A command or timer could instead use {ad.next.in} inside {if.ad.isScheduled:...|...}. For the after-ad reply, use the Ad break ends event with {ad.duration}, which gives the length of the break that just ended. It goes out only if you are still live on the same stream.",
+      "quote": "For a reply after the break, use the Ad break ends event:"
+    },
+    {
+      "question": 5,
+      "answer": "I learned that Ad break coming stays quiet in the first 10 minutes of a stream only after the sample reminder, so a test early in a stream looks broken. The page does not say when the granted notice goes away, so I would reread to check whether the grant worked. If a moderator starts the grant, the page does not say how the streamer gets the code, so the moderator has to work that out.",
+      "quote": "It stays quiet for a break that falls in the first 10 minutes of the stream."
+    },
+    {
+      "question": 6,
+      "answer": "Read aloud, the three failure messages for the grant are long, and they are a run of edge cases most readers will not hit. The prose calls the control 'the grant button' once before step 2 names it Grant permissions; this is a lowercase description, not a second label, and it costs a moment of matching. The {if} examples with braces and pipes are hard to follow aloud.",
+      "quote": "The code ran out: “The code ran out before it was used. Grant the permissions again for a new code.”"
+    }
+  ],
+  "findings": [],
+  "warnings_released": true,
+  "warning_review": [
+    {
+      "id": "paragraph-1",
+      "decision": "keep",
+      "reason": "Five short sentences that each give one fact the reader needs: where the helpers work, the two kinds, that none take an input, and where the brace rules are explained. Nothing here is padding."
+    },
+    {
+      "id": "sentence-1-2",
+      "decision": "keep",
+      "reason": "The long sentence lists the fields where the helpers work, which this reader needs before placing them. It is dense when read aloud, but each item is concrete and no fact can be cut without losing a place to use them."
+    },
+    {
+      "id": "paragraph-2",
+      "decision": "keep",
+      "reason": "The five sentences state the permission requirement and its consequences, which the voice file places before the steps. Each sentence gives a cause or result the reader would otherwise miss, so the length is earned."
+    },
+    {
+      "id": "sentence-15-1",
+      "decision": "keep",
+      "reason": "Dense, but it states the one test the reader needs: check {ad.isScheduled} before using a time helper, because the time helpers print as typed when no break is planned. The cost is a moment of reading, not a wrong action on chat."
+    }
+  ]
+}

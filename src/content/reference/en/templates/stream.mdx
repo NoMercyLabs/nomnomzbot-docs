@@ -5,7 +5,7 @@ description: The stream helpers for the stream right now, the last stream that e
 
 Helpers on this page start with `{stream.`. Type one in any reply field that takes templates, and the bot fills it in when it sends the message. A command that asks about the current game reads the live channel. A recap reads what the bot recorded about a stream. Which stream that is depends on the table the helper is in.
 
-**Live now** reads the channel as it is at this moment. While you're offline, `{stream.uptime}` gives `offline`, `{stream.viewers}` gives `0`, `{stream.isLive}` gives `false` and `{stream.status}` gives `offline`. The other uptime, start time and viewer forms, and `{stream.id}`, give no value while you're offline.
+**Live now** reads the channel as it is at this moment. While you're offline, `{stream.uptime}` gives `offline`, `{stream.viewers}` gives `0`, `{stream.isLive}` gives `false` and `{stream.status}` gives `offline`. `{stream.startedAt}` gives an empty text while you're offline. The other uptime, start time and viewer forms, and `{stream.id}`, give no value while you're offline, so they stay as typed.
 
 **Counts and top lists** read the newest stream the bot has recorded for your channel. While you're live, that is the stream you're running. After you end it, it is still that stream, so a recap command keeps working until you go live again.
 
@@ -13,7 +13,7 @@ Helpers on this page start with `{stream.`. Type one in any reply field that tak
 
 The monthly counts and the category history read the newest 100 streams the bot has recorded, with the month taken in your channel time zone.
 
-A helper with no value stays in the message as you typed it. That happens, for example, when the bot has recorded no stream yet, or when a helper that needs a number gets none. Counts use the thousands separator of your channel language, and viewers who are banned in your channel are left out of the chat, command, reward, song and event counts.
+A helper with no value stays in the message as you typed it. That happens, for example, when the bot has recorded no stream yet, or when a helper that needs a number gets none. Counts use the thousands separator of your channel language. In the counts and top lists, viewers who are banned in your channel are left out of the chat, command, reward, song and event counts. The helpers for the last stream count every viewer, banned ones too.
 
 The examples show possible values; yours depend on your channel. **Use in** lists the reply fields that accept each helper. For text a viewer writes, the [Viewer Templates setting and permissions](/reference/settings/features) also apply.
 
@@ -59,13 +59,15 @@ These read the newest recorded stream: the running one while you're live, the on
 | `{stream.count}` | How many streams the bot has recorded for your channel | `214` | Commands, event responses, timers, pipelines, Discord, webhooks |
 | `{stream.count.month}` | How many recorded streams started this month | `11` | Commands, event responses, timers, pipelines, Discord, webhooks |
 | `{stream.followers.new}` | How many follows came in | `6` | Commands, event responses, timers, pipelines, Discord, webhooks |
+| `{stream.followers.latest}` | The last name in the `{stream.followers.newList}` list, so the fifth follower at most | `ViewerTwo` | Commands, event responses, timers, pipelines, Discord, webhooks |
 | `{stream.followers.newList}` | The names of the first five people who followed, in the order they followed | `ViewerOne, ViewerTwo` | Commands, event responses, timers, pipelines, Discord, webhooks |
 | `{stream.games.history}` | Your latest categories, newest first, each named once; give how many, from 1 to 25, after a colon, and you get that many, or fewer when your newest 100 streams hold fewer categories. With no number it stays as typed | `{stream.games.history:3}` gives `Software and Game Development, Just Chatting, Minecraft` | Commands, event responses, timers, pipelines, Discord, webhooks |
-| `{stream.hours.month}` | How many hours your recorded streams this month lasted, with up to two decimals | `46h` | Commands, event responses, timers, pipelines, Discord, webhooks |
+| `{stream.hours.month}` | How many hours your recorded streams this month lasted, with up to two decimals, followed by `h` | `46h` | Commands, event responses, timers, pipelines, Discord, webhooks |
 | `{stream.hypetrains}` | How many hype trains ended; stays as typed when there was none | `1` | Commands, event responses, timers, pipelines, Discord, webhooks |
 | `{stream.hypetrains.topLevel}` | The highest level a hype train reached; stays as typed when there was none | `3` | Commands, event responses, timers, pipelines, Discord, webhooks |
 | `{stream.messages}` | How many chat messages were sent | `2,430` | Commands, event responses, timers, pipelines, Discord, webhooks |
-| `{stream.number}` | The number of this stream, from the same count as `{stream.count}` | `stream #214` | Commands, event responses, timers, pipelines, Discord, webhooks |
+| `{stream.number}` | The number of this stream, from the same count as `{stream.count}`, written with `stream #` in front | `stream #214` | Commands, event responses, timers, pipelines, Discord, webhooks |
+| `{stream.raids.in}` | How many raids came in, up to five | `1` | Commands, event responses, timers, pipelines, Discord, webhooks |
 | `{stream.raids.lastRaider}` | The channel that raided with the most viewers | `OtherStreamer` | Commands, event responses, timers, pipelines, Discord, webhooks |
 | `{stream.raids.lastRaiderViewers}` | The viewer count of that biggest raid | `25` | Commands, event responses, timers, pipelines, Discord, webhooks |
 | `{stream.redemptions}` | How many channel point rewards were redeemed | `14` | Commands, event responses, timers, pipelines, Discord, webhooks |
@@ -73,6 +75,7 @@ These read the newest recorded stream: the running one while you're live, the on
 | `{stream.subs.gifted}` | How many subscriptions were gifted | `5` | Commands, event responses, timers, pipelines, Discord, webhooks |
 | `{stream.subs.new}` | How many new subscriptions came in, gifts not included | `3` | Commands, event responses, timers, pipelines, Discord, webhooks |
 | `{stream.subs.resubs}` | How many resubscriptions were shared in chat | `2` | Commands, event responses, timers, pipelines, Discord, webhooks |
+| `{stream.subs.selfSubs}` | How many people subscribed or resubscribed for themselves, gifts not included, up to five | `1` | Commands, event responses, timers, pipelines, Discord, webhooks |
 | `{stream.subs.topGifter}` | The viewer who gifted the most subscriptions | `ViewerTwo` | Commands, event responses, timers, pipelines, Discord, webhooks |
 | `{stream.subs.total}` | New, resubscribed and gifted subscriptions added together | `10` | Commands, event responses, timers, pipelines, Discord, webhooks |
 | `{stream.topChatter}` | The viewer with the most chat messages, with their count | `ViewerOne (140)` | Commands, event responses, timers, pipelines, Discord, webhooks |
