@@ -73,7 +73,7 @@ Every rule starts off, so viewers earn nothing until you switch a rule on.
 | --- | --- | --- | --- |
 | **Chat messages** | A viewer sends a chat message. | **Amount earned** for each message. | 1 |
 | **Follows** | A viewer follows the channel. | **Amount earned** once. | 100 |
-| **Twitch subscriptions** | A viewer subscribes on Twitch. | **Amount earned** once. | 200 |
+| **Twitch subscriptions** | A viewer subscribes on Twitch. A viewer who receives a gifted subscription also earns. The gifter earns nothing from this row. A resubscription earns nothing. | **Amount earned** once for each new subscriber or gift recipient. | 200 |
 | **Cheers** | A viewer cheers bits on Twitch. | **Amount earned** for each bit. | 1 |
 | **Raids** | The streamer who raids you earns. | **Amount earned** for each raider. | 500 |
 | **Supporter events** | A supporter event the bot can match to a viewer reaches the bot. An unmatched supporter earns nothing. | **Amount earned** once. | 250 |
@@ -85,9 +85,8 @@ The bot pays each event once, even when Twitch sends it twice.
 When a payout would take a wallet above **Highest balance**, the viewer earns nothing for that event.
 The bot does not pay a part of the amount up to the limit.
 
-The dialog also has **Seconds per payout**, but setting it alone does not limit these payouts.
-The earning service applies a time-window limit only when a separate cap is also configured, and this dialog does not expose that cap.
-Keep the field empty for a basic event-based rule rather than relying on it to slow down chat earnings.
+The dialog also has **Seconds per payout**.
+Setting it alone does not slow down payouts, so leave it empty.
 
 ### Add a rule again after you delete it
 
@@ -113,19 +112,23 @@ When the list is empty, the card shows "No earning rules yet. Viewers earn nothi
 
 The **Balances** tab lists each viewer's wallet.
 A viewer gets a wallet when they first earn currency.
-Each row shows the balance and how much the viewer earned and spent in total.
+Each row shows the balance and a line such as "12 earned, 5 spent".
+The earned total also counts balances you add by hand, so it does not separate earned currency from an adjustment.
+The list shows the 100 wallets with the highest balance.
+A viewer outside those 100 is not listed, so you cannot adjust their balance on this page.
 
 Use an adjustment for a deliberate correction or a manually awarded bonus.
 It adds or subtracts an amount from the existing balance; it does not replace the balance with the number you type.
 For example, entering `25` adds 25 points, while `-25` removes 25, and the reason gives you a record of why.
 
-1. Type a name in **Search viewers** to find the viewer.
-2. Choose **Adjust the balance** on the viewer's row.
+1. Open **Economy** in the sidebar and choose the **Balances** tab.
+2. Find the viewer's row in the list.
+3. Choose **Adjust the balance** on that row.
    The dialog shows the balance now.
-3. Type an **Amount**.
+4. Type an **Amount**.
    A positive amount adds, and a negative amount takes away.
-4. Type a **Reason**.
-5. Choose **Adjust balance**.
+5. Type a **Reason**.
+6. Choose **Adjust balance**.
    The dialog closes and the row shows the new balance.
 
 The amount is a whole number that is not zero, and the reason is required.
@@ -154,7 +157,7 @@ A savings jar is a shared pot that viewers fill toward a goal.
 3. Fill in the other fields, or leave them empty.
 4. Choose **Create jar**.
    The jar shows in the list.
-   It starts open.
+   It starts open, and it starts empty: creating a jar moves no points into it.
    An open jar takes currency, and a closed jar does not.
 
 | Label | What it does |
@@ -171,6 +174,8 @@ With an empty name, the dialog shows "Give the jar a name."
 
 - Turn off the switch on the jar's row to close it.
   The row shows **Closed**.
+  Closing a jar keeps the balance already saved in it.
+  Use this to pause deposits without losing the pot.
 - Turn the switch on again to open it.
 - To delete a jar, choose **Delete jar** on the row.
   A dialog asks "Delete" followed by the jar's name.
@@ -180,14 +185,17 @@ Only the channel that made a jar may change, close or delete it.
 
 Under the jar list, the **Deposits, withdrawals and invites** card shows "Not available here yet."
 The card explains that deposits come from the **Contribute to jar** step in a [pipeline](/reference/commands/pipelines).
+That step moves the amount out of the balance of the viewer who set off the pipeline and into the jar.
 You cannot deposit, withdraw or accept an invite directly on this page.
 Creating a jar therefore sets up the goal, but does not by itself give viewers a deposit button.
 
 ### Invite a channel to a jar
 
 You can send a jar invitation to another channel on this bot.
-The other channel must accept before it can use the jar, and the dashboard currently has no acceptance control.
-An invitation therefore needs help from the person who runs the bot or an existing integration to complete it.
+Sending the invite is the step you do on this page.
+The other channel cannot put in or take out anything until it accepts, and only that channel can accept.
+Ask the person who runs the bot to accept for the invited channel through the bot's API.
+Once it accepts, the channel can use the jar.
 
 1. Get the other channel's **Channel ID** from the person who runs the bot.
    It is the channel's ID in NomNomzBot, a long code of letters, digits and dashes.

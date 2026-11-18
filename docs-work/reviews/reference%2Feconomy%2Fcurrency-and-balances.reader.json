@@ -1,0 +1,60 @@
+{
+  "fingerprint": "22012df2928a51ac03e1b8709501fdb1fda2dfd645e45d14ceb7a837cfdcd5cc",
+  "verdict": "PASS",
+  "answers": [
+    {
+      "question": 1,
+      "answer": "Open Economy in the sidebar. On the Currency tab, keep or type a Currency name, turn on Currency on and choose Save currency. On Earning rules, optionally choose Edit rule, type the Amount earned and choose Save rule, then turn on the row's switch. To manage a balance, open the Balances tab, find the viewer's row and choose Adjust the balance. Type an Amount (positive adds, negative takes away) and a Reason, then choose Adjust balance. Each step names its control, so I could do every one.",
+      "quote": "The simplest setup is to save an enabled currency, turn on one earning rule, and check that a viewer’s balance changes after a qualifying event."
+    },
+    {
+      "question": 2,
+      "answer": "You need a role that may see the tabs: by default Moderator, Lead moderator, Editor or Broadcaster. This is stated under Who can use this page. Currency on must be on before you can adjust a balance, as the defaults table says. The viewer must already have a wallet and be among the 100 highest balances, as the Change a viewer's balance section says.",
+      "quote": "By default, a Moderator, Lead moderator, Editor or Broadcaster may see and change the Currency, Balances and Earning rules tabs."
+    },
+    {
+      "question": 3,
+      "answer": "After Save currency, the currency is saved and the bot can pay it out. After you switch a rule on, its Off badge goes away. After Adjust balance, the dialog closes and the row shows the new balance. An adjustment differs from an earning rule: it changes one wallet by a relative amount, while a rule changes the payout for everyone.",
+      "quote": "The dialog closes and the row shows the new balance."
+    },
+    {
+      "question": 4,
+      "answer": "The moderator uses Adjust the balance on that viewer's row in the Balances tab, not Edit rule. The bot keeps one rule per source, so editing a rule changes the amount for everyone. An adjustment adds or subtracts from that one wallet only, and the Reason records why. It is refused if it would take the balance below 0 or above Highest balance, or if the wallet is frozen.",
+      "quote": "It adds or subtracts an amount from the existing balance; it does not replace the balance with the number you type."
+    },
+    {
+      "question": 5,
+      "answer": "Two limits come only after the adjustment steps: the amount must be a whole number that is not zero, and the reason is required. The table of refused changes (below 0, above Highest balance, frozen wallet) also comes after them. A reader who types a decimal, or who would push the balance past a limit, finds this out only after choosing Adjust balance, at the cost of one failed try. I also stopped once to check that Adjust the balance (the row button) and Adjust balance (the dialog button) are two different controls; the steps make that clear.",
+      "quote": "The amount is a whole number that is not zero, and the reason is required."
+    },
+    {
+      "question": 6,
+      "answer": "The Watch time and Twitch gift subscriptions rows say nothing pays out, yet they list start amounts of 10 and 200. Read aloud, the rows stand for sources that do nothing, and the reader stops to wonder whether to turn them on. The notes on Decimal places, Currency icon URL and Seconds per payout, which say a field changes nothing, add the same small cost.",
+      "quote": "Nothing pays out for this source."
+    }
+  ],
+  "findings": [],
+  "warnings_released": true,
+  "warning_review": [
+    {
+      "id": "length",
+      "decision": "keep",
+      "reason": "This is a reference page covering several jobs, and the setup and balance-adjust case the reader asked about is answered early (Q1, Q2, Q4 found every step and control). The savings jar and invite sections are labelled reference material and do not slow the balance task. A word count alone is not a defect."
+    },
+    {
+      "id": "first-numbered-step",
+      "decision": "keep",
+      "reason": "The access requirements (who may use the page) come before the first step, as the voice asks for requirements that affect the steps. Currency on is switched on in step 3, so the first steps need nothing explained earlier. The balance refusal limits sit after the balance steps; a failed try costs one click and the dialog states the message, so this is a small cost, not a material ordering defect."
+    },
+    {
+      "id": "paragraph-12",
+      "decision": "keep",
+      "reason": "The six sentences are the wallet facts the adjust case needs before its steps: who has a wallet, that the earned total includes manual adjustments, and that a viewer outside the top 100 cannot be adjusted here. Each sentence changes what the moderator does, so none is padding."
+    },
+    {
+      "id": "paragraph-20",
+      "decision": "keep",
+      "reason": "The five sentences say that deposits are not available on this page and that the Contribute to jar pipeline step does them. That stops a reader from looking for a deposit button that does not exist. The paragraph is dense but each sentence is a surprise the reader would otherwise hit, and it does not block the balance task."
+    }
+  ]
+}
