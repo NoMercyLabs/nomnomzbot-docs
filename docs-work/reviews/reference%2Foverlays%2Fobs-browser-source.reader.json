@@ -1,0 +1,60 @@
+{
+  "fingerprint": "a3b91ded3bc1274dbe98e73dbc1b74b00e4867352bbef58b6c58ed3883af5f03",
+  "verdict": "PASS",
+  "answers": [
+    {
+      "question": 1,
+      "answer": "The link to use is the one the dashboard copies for you. Open the OBS page, choose Overlays in OBS, and choose Connect (or Configure) on the overlay's row. In the dialog, choose Copy address, then paste it into the URL field of a new OBS Browser source. Enter the width and height and the two checkboxes as the dialog shows, then save. You can tell it is connected when the dialog shows Loaded in OBS and the row button reads Configure.",
+      "quote": "Choose Copy address."
+    },
+    {
+      "question": 2,
+      "answer": "You need the dashboard open for your channel, and the OBS page with Overlays in OBS. The address you opened the dashboard with (or the operator's overlay address) must be reachable from the computer that runs OBS. A localhost link copied on another computer will not load. You also need to keep the token secret. Copying the OBS control address needs permission to change the OBS link. All of these except the permission are stated under The overlay link, before the steps. The permission is stated after the steps.",
+      "quote": "This address must be reachable from the computer that runs OBS."
+    },
+    {
+      "question": 3,
+      "answer": "The dialog changes from Not loaded in OBS to Loaded in OBS, and the row button reads Configure. The overlay's Health shows A browser source is open instead of Nothing attached. Choosing Test under Reacts to shows Sent to this overlay. The page also says to check the OBS preview and audio mixer, because an open page alone does not prove viewers see or hear the result. Remote control of OBS is a separate connection from the browser source.",
+      "quote": "The dialog shows Loaded in OBS once a browser source has the overlay open."
+    },
+    {
+      "question": 4,
+      "answer": "To replace the link, choose Configure on the row, because a browser source already has the overlay open. Choose Copy address and paste the address into the existing source. Enter the width and height from the dialog, or 1920 x 1080 for an overlay you made yourself. Leave Shutdown source when not visible off, or the overlay misses events while hidden. When the OBS connection is on, the bot refreshes the source itself. Otherwise you refresh the browser source in OBS.",
+      "quote": "Choose Connect on the overlay you want, or Configure if a browser source already has it open."
+    },
+    {
+      "question": 5,
+      "answer": "Step 5 only says to add a new Browser source. For the replacement case I had to work out from the troubleshooting line ('paste it into the source') that I should edit the existing source instead. That costs a moment's guess, not a failure. The permission needed for the OBS control row comes only after the steps, so a reader without it learns this only once the row shows the message.",
+      "quote": "You need permission to change the OBS link to copy the OBS control address; without it that row reads Needs permission to change the OBS link."
+    },
+    {
+      "question": 6,
+      "answer": "Read aloud, the {name} placeholder in the dialog title is awkward, though the sentence then explains it. The table line about 1 x 1 says 'draws nothing' twice in a row. Both cost a second of listening and nothing more.",
+      "quote": "“1 x 1, it draws nothing” means the source draws nothing and needs no space."
+    }
+  ],
+  "findings": [],
+  "warnings_released": true,
+  "warning_review": [
+    {
+      "id": "length",
+      "decision": "keep",
+      "reason": "The page covers a multi-part setup (link, steps, two tables, the OBS control row, checks and troubleshooting). The reader answered all six questions from it, and the only slow spot (the replacement case in Q5) cost a moment, not a failure. The word count alone is not a defect."
+    },
+    {
+      "id": "first-numbered-step",
+      "decision": "keep",
+      "reason": "The 218 words before step 1 are the link's shape, the token secrecy rule and the reachability requirement. Each changes what the reader does in steps 1 to 5, so they come first. The link-shape block is the only part not needed to act, and it stays so the reader can recognize the address when they copy it."
+    },
+    {
+      "id": "sentence-9-2",
+      "decision": "keep",
+      "reason": "The 33-word sentence names the exact controls to use (Reacts to, Test) for a custom overlay, and the reader answered the check from it. Its length is one clause with a colon and one example title, which a listener can follow. Not a material defect."
+    },
+    {
+      "id": "sentence-9-4",
+      "decision": "keep",
+      "reason": "The 31 words give the three observable checks (OBS preview, audio mixer, Loaded in OBS badge) and the reason an open page is not enough. That reason is the outcome the reader needs, so it stays in one sentence."
+    }
+  ]
+}

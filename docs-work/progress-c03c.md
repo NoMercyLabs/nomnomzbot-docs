@@ -1,6 +1,6 @@
 # Documentation checkpoint
 
-Accepted: 3 of 113.
+Accepted: 4 of 113.
 
 Resume: /reference/overview
 
@@ -58,7 +58,7 @@ Resume: /reference/overview
 | /reference/automation/event-responses | accepted |
 | /reference/automation/rewards | accepted |
 | /reference/overlays/set-up-overlays | reader: review has not passed |
-| /reference/overlays/obs-browser-source | reference%2Foverlays%2Fobs-browser-source.reader.json: invalid or missing JSON: [Errno 2] No such file or directory: 'C:\\Projects\\NoMercyLabs\\nomnomzbot-docs\\.claude\\worktrees\\final-c03\\docs-work\\reviews\\reference%2Foverlays%2Fobs-browser-source.reader.json' |
+| /reference/overlays/obs-browser-source | accepted |
 | /reference/overlays/widgets-and-alerts | reference%2Foverlays%2Fwidgets-and-alerts.reader.json: invalid or missing JSON: [Errno 2] No such file or directory: 'C:\\Projects\\NoMercyLabs\\nomnomzbot-docs\\.claude\\worktrees\\final-c03\\docs-work\\reviews\\reference%2Foverlays%2Fwidgets-and-alerts.reader.json' |
 | /reference/music/music-player | reference%2Fmusic%2Fmusic-player.reader.json: invalid or missing JSON: [Errno 2] No such file or directory: 'C:\\Projects\\NoMercyLabs\\nomnomzbot-docs\\.claude\\worktrees\\final-c03\\docs-work\\reviews\\reference%2Fmusic%2Fmusic-player.reader.json' |
 | /reference/music/song-requests | reference%2Fmusic%2Fsong-requests.reader.json: invalid or missing JSON: [Errno 2] No such file or directory: 'C:\\Projects\\NoMercyLabs\\nomnomzbot-docs\\.claude\\worktrees\\final-c03\\docs-work\\reviews\\reference%2Fmusic%2Fsong-requests.reader.json' |
