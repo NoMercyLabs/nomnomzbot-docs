@@ -11,17 +11,6 @@ Playback happens in the **Media share** browser source in OBS.
 Add it from **Required overlays** on the **OBS** page, using the [browser-source setup](/reference/overlays/obs-browser-source), before opening submissions.
 The dashboard controls the player, but the source is what your viewers see and hear.
 
-## Try the whole flow with one video
-
-After turning media share on below, leave **Cost per item (points)** at 0 and keep approval enabled for this first check.
-Ask a viewer below moderator to send `!media` followed by a Twitch clip or YouTube video link in Twitch chat.
-Their submission appears under **Waiting for approval**. Your own `!media` submission is approved automatically, so it does not test that review step.
-
-Choose **Approve** to move it into the play order. If nothing is playing and the enabled Media share browser source is connected, playback starts automatically.
-Otherwise, open the source and use **Play** in **On stream** to start the first approved item.
-Check the OBS preview and audio mixer, then try **Pause** and **Stop playback** so you know where the controls are before viewers submit more items.
-Once that works, adjust the duration, queue and per-viewer limits for your stream.
-
 ## Who can use this page
 
 Four permissions control this page. All four default to Moderator.
@@ -40,6 +29,9 @@ Someone who may open the page but not change the settings sees the settings, but
 ## Turn media share on
 
 Media share is off until you turn it on.
+Read this before you set **Cost per item (points)**.
+A plain Twitch clip link in chat is charged the same **Cost per item** as `!media`.
+A refund pays the channel's **Cost per item** at the moment of the refund, not the amount the viewer paid.
 
 1. Open **Media share** in the sidebar and choose **Settings**.
    The settings panel opens at the side of the page.
@@ -65,15 +57,28 @@ Media share is off until you turn it on.
 The cost is paid in the channel currency, explained on [Currency and balances](/reference/economy/currency-and-balances).
 When a charged item is rejected, removed or skipped, the bot attempts to refund the viewer.
 
-The refund is the channel's **Cost per item** at the moment of the refund, not necessarily the amount the viewer paid.
-When **Cost per item** is 0 by then, the refund is 0.
-An unsuccessful refund does not stop the queue action, and the bot clears the item's refund marker even if the currency service refuses the credit.
-Later queue actions do not automatically retry it. Check the viewer's balance when a refund fails.
+When **Cost per item** is 0 at the moment of the refund, the refund is 0.
+The reject, remove or skip always goes through, even when the refund does not.
+The bot tries the refund once and does not try again later.
+The dashboard shows no message when a refund fails, so check the viewer's balance if you charge for items.
+
+## Try the whole flow with one video
+
+After turning media share on above, leave **Cost per item (points)** at 0 and keep approval enabled for this first check.
+Ask a viewer below moderator to send `!media` followed by a Twitch clip or YouTube video link in Twitch chat.
+Test while the channel is live, or turn on **Keep commands and rewards on while offline** in [Bot basics and personality](/reference/settings/bot-basics-and-personality).
+Offline, a viewer's command does nothing, so the test gives no item and no reply. Moderators and the broadcaster still get an answer offline.
+Their submission appears under **Waiting for approval**. Your own `!media` submission is approved automatically, so it does not test that review step.
+
+Choose **Approve** to move it into the play order. If nothing is playing and the enabled Media share browser source is connected, playback starts automatically.
+Otherwise, make sure OBS is running with the **Media share** browser source, then use **Play** in **On stream** to start the first approved item.
+Check the OBS preview and audio mixer, then try **Pause** and **Stop playback** so you know where the controls are before viewers submit more items.
+Once that works, adjust the duration, queue and per-viewer limits for your stream.
 
 ## How viewers share media
 
 A viewer can explicitly submit a link with the command below, or through a reward or pipeline you prepare.
-Use Twitch chat for the command workflows described here. The current `!media` and `!play` requester lookup still assumes a Twitch identity when a command arrives from Kick or YouTube, so requester attribution, subscriber eligibility and currency charging are not reliable on those chats.
+Use Twitch chat for the command workflows described here. `!media` and `!play` are reliable only in Twitch chat. On Kick or YouTube, the name shown as the viewer, the subscriber check and charging points are not reliable.
 
 | Way | How it works |
 | --- | --- |
@@ -85,8 +90,6 @@ The bot also notices the first Twitch clip link in an ordinary chat message and 
 That background submission is silent: a refused clip produces no chat reply.
 YouTube links need an explicit submission; they are not collected by this passive scan.
 The passive scan and **Submit media** pipeline step follow the approval setting even when the person submitting is a moderator; the command bypass described above is specific to `!media` and `!play`.
-
-Keep this behavior in mind when enabling paid submissions: a plain Twitch clip link can use the same **Cost per item** as `!media`.
 
 The `!media` command is a built-in command, open to everyone by default.
 You change its replies and who may use it on [Built-in commands](/reference/commands/built-in-commands).
@@ -102,7 +105,8 @@ The field takes [template variables](/reference/commands/variables-and-templates
 
 ### What the bot answers
 
-The bot replies in chat to every `!media` message.
+While the channel is live, or while commands are kept active offline, the bot replies in chat to every `!media` message.
+Offline, it answers only moderators and the broadcaster.
 
 | Result | What the bot says |
 | --- | --- |
