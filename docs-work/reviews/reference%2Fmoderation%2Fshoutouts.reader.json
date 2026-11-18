@@ -1,0 +1,50 @@
+{
+  "fingerprint": "1032e5f184d208806c1529a1e355312c2236c30677592d932fb3f17e2fb22693",
+  "verdict": "PASS",
+  "answers": [
+    {
+      "question": 1,
+      "answer": "Configure: open Settings in the sidebar, choose Shoutouts in the Bot group, switch on Shout out a known streamer automatically (it saves at once), then type a line in Message in the Shoutout message card and choose Save. Act on suggestions: when the channel is live, open Home, find the chatter under Suggested shoutouts in Quick actions, and choose Shoutout to send it or Not now to hide them for this stream. For chat, build a pipeline with a Shoutout step whose User ID is {args.1}, save it, then make a command named so that runs that pipeline.",
+      "quote": "Open Settings in the sidebar and choose Shoutouts in the Bot group."
+    },
+    {
+      "question": 2,
+      "answer": "You must grant the Twitch permission moderator:manage:shoutouts before the first shoutout. It is stated in the third intro paragraph, and the grant itself is on the linked Ad break helpers page. A spoken shoutout also needs text to speech set up. Who can use the page is stated under Who can use this page: by default Moderator, Lead moderator, Editor or Broadcaster.",
+      "quote": "Before the first shoutout, grant the Twitch permission moderator:manage:shoutouts."
+    },
+    {
+      "question": 3,
+      "answer": "Each action has a success sign: Pipeline saved. after saving the pipeline, Shoutout message saved. after saving the message, Shoutout sent. on a suggestion row, and the announcement in chat after !so. A failed suggestion shows The shoutout did not go out. Try again in a moment. A missing permission shows in the Needs attention panel on Home. The page tells the two waits apart: the 2-minute channel wait queues a shoutout, while the 60-minute per-streamer wait gives an announcement only.",
+      "quote": "The row shows “Shoutout sent.” once the request is accepted."
+    },
+    {
+      "question": 4,
+      "answer": "Another shoutout of the same streamer within 60 minutes falls inside the per-streamer wait. Sent from chat or the dashboard (the profile Shout out button), it does not queue and gives no new Twitch shoutout. The bot posts the announcement only, reads it aloud, adds no queued line, and posts it at most once every 2 minutes for that streamer. The streamer will not be in Suggested shoutouts, because that list leaves out chatters who already had a shoutout this stream.",
+      "quote": "A chat or dashboard shoutout for a streamer inside their per-streamer wait does not queue."
+    },
+    {
+      "question": 5,
+      "answer": "The permission grant sends me to a page named Ad break helpers, which I would not expect to hold a shoutout permission, so it costs a detour to another page. In the test run steps, the page does not say what a finished dry run shows, so I would guess whether it worked. The per-streamer wait and the always-spoken announcement-only rule come in Rate limits, after the command steps they affect, but the page links ahead to them, so the cost is a jump forward.",
+      "quote": "Ad break helpers walks through the grant."
+    },
+    {
+      "question": 6,
+      "answer": "Read aloud, the speech rules in What a shoutout does stack several edge cases (pipeline step, dashboard, per-streamer wait, raid response) that a moderator would not act on while setting up shoutouts. Placeholders such as {args.1} and {target.displayname} are awkward to say aloud. The cost is listening time and the effort of keeping exceptions apart.",
+      "quote": "The built-in raid response speaks its own welcome line, and its shoutout stays silent."
+    }
+  ],
+  "findings": [],
+  "warnings_released": true,
+  "warning_review": [
+    {
+      "id": "length",
+      "decision": "keep",
+      "reason": "The 1775 words cover the sub-tasks the request names (configure, act on suggestions, the chat command, rate limits), and the reader found each blind answer on the page with a quote. The costs Q5 and Q6 name (the Ad break helpers detour, the dense speech edge cases, the dry-run result not stated) sit in optional or reference sections after the main paths, so the count alone is not a material defect."
+    },
+    {
+      "id": "first-numbered-step",
+      "decision": "keep",
+      "reason": "The 222 words before the first numbered list are the Twitch moderator:manage:shoutouts requirement and the who-can-use-this-page rules. Voice.md says access requirements that affect the steps go before them, and the steps fail without them, so the position is correct."
+    }
+  ]
+}
