@@ -15,6 +15,8 @@ Must know:
 - behavior | How actions run and how to complete or cancel a pending redemption, including the effect on points. | ../../../../nomnomzbot/server/src/NomNomzBot.Api/Controllers/V1/RewardsController.cs
 - reaction | The reward reaction runs on redemption; speech and countdowns are separate, and an empty saved simple reply silences the event-response fallback. | ../../../../nomnomzbot/server/src/NomNomzBot.Infrastructure/Rewards/EventHandlers/RewardRedeemedHandler.cs
 - bulk | Queue actions affect selected or displayed requests and can partly succeed; completing does not rerun the reaction and rejecting does not undo it. | ../../../../nomnomzbot/dashboard/src/views/dashboard/channel-points/components/RedemptionsPanel.vue
+- import | Rewards made on Twitch reach the list when it is opened, at most once per six hours. | ../../../../nomnomzbot/server/src/NomNomzBot.Infrastructure/Rewards/RewardService.cs
+- duplicate | Duplicate creates a copy the bot owns, named with a copy tail, that starts disabled. | ../../../../nomnomzbot/dashboard/src/views/dashboard/channel-points/components/RewardEditDialog.vue
 Moves elsewhere:
 - none
 Checks:

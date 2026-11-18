@@ -3,8 +3,7 @@ title: Channel-point rewards
 description: Edit, copy, switch off and delete channel-point rewards, choose what the bot does when a viewer buys one, and work the queue of waiting requests.
 ---
 
-Channel-point rewards give Twitch viewers a way to ask for something during your stream, using the points they earn on Twitch.
-The reward might ask you to do something yourself, or it might run a bot action such as reading a viewer's message aloud or playing a sound.
+A channel-point reward can run a bot action when a viewer buys it, such as reading the viewer's message aloud or playing a sound.
 You manage the bot's reaction and the requests waiting for attention on **Channel points**, in the **Loyalty** group of the sidebar.
 
 The two panels serve different jobs.
@@ -16,12 +15,19 @@ Twitch channel points are separate from the bot's own [channel currency](/refere
 Before trying this, check [what the bot needs from Twitch](#what-the-bot-needs-from-twitch) and [who can use this page](#who-can-use-this-page).
 Changing a reward requires the **Editor** or **Broadcaster** role by default, and the reward must be available on Twitch before you can redeem it.
 
-Choose a reward in **Rewards** and open **Edit**.
-For a simple first reaction, select **Simple reply**, enter `Thanks for redeeming this reward!` in **Chat reply**, and leave **Send the reply to** on **Twitch chat**.
-Choose **Save**, then redeem it from Twitch chat to check that the bot posts the reply.
+Rewards get into the **Rewards** list when you make them on Twitch: the bot imports them from your channel.
+A reward made on Twitch is imported as one another app made, so the bot cannot change it, but it can copy it.
+The bot imports your Twitch rewards when you open the list, at most once every six hours, so a new reward can take up to about six hours to show up.
+The first reward you can change is therefore a copy:
 
-There is currently no **New reward** button on this dashboard page.
-To make another reward from an existing bot-managed one, use **Duplicate**, change the copy's name and settings, then enable it when it is ready.
+1. Make the reward on Twitch, and wait for it to appear in **Rewards**.
+2. Choose **Edit** on its row, then choose **Duplicate**.
+   The copy belongs to the bot, and it starts switched off.
+3. Choose **Edit** on the copy.
+   For a simple first reaction, select **Simple reply**, enter `Thanks for redeeming this reward!` in **Chat reply**, and leave **Send the reply to** on **Twitch chat**.
+4. Choose **Save**, switch the copy on, then redeem it from Twitch chat to check that the bot posts the reply.
+
+To make more rewards, use **Duplicate** on any reward, change the copy's name and settings, then switch it on when it is ready.
 A **Not on Twitch** badge means viewers cannot redeem that reward yet.
 
 For a reward that reads the viewer's own message, enable **Viewer must type a message**, then switch the reward on in **Rewards that speak** on [Text to speech](/reference/audio/text-to-speech).
@@ -52,6 +58,7 @@ The roles are explained on [Permissions](/reference/settings/permissions).
 
 The **Rewards** panel lists every reward of the channel, with the count at the top, for example "4 rewards".
 When there is none, it shows "This channel has no rewards yet."
+Rewards arrive from Twitch: make the reward there first.
 
 Each row shows the reward's name, its cost in points, an on and off switch and an **Edit** button.
 The line under the name shows the reward's pipeline or its reply.
@@ -87,7 +94,8 @@ A row can also carry a badge.
 
 If the name is empty, the dialog shows "Give the reward a name." and saves nothing.
 If Twitch or the bot refuses the change, the dialog stays open with the reason.
-The change goes to Twitch first, so the list never shows a value that Twitch did not take.
+The list shows the new value at once.
+If Twitch refuses it, the list goes back to the value it had before.
 
 | Field | What it sets |
 | --- | --- |
@@ -141,7 +149,7 @@ For such a reward, the dialog shows "Another app made this reward, so Twitch onl
 Its fields and its switch in the list are off.
 
 **Delete** and **Duplicate** still work for it.
-**Delete** removes it only from the bot. It stays on Twitch, and it can come back when the list imports your Twitch rewards again.
+**Delete** removes it only from the bot. It stays on Twitch, and it does not come back in the list when the bot imports your Twitch rewards again.
 **Duplicate** makes a copy that the bot owns and can change.
 
 </details>
@@ -189,11 +197,14 @@ When nothing waits, the panel shows "No requests are waiting."
 | Button | What happens |
 | --- | --- |
 | **Complete** (check mark on the row) | The request is marked done and leaves the list. |
-| **Reject** (cross on the row) | A dialog asks you to confirm: "Twitch cancels each request and gives the points back." Its **Reject 1** button, named for the count, confirms it, and the request leaves the list. |
+| **Reject** (cross on the row) | A dialog asks you to confirm: "Twitch cancels each request and gives the points back." Its **Reject 1** button, named for the count, confirms it, and the request leaves the list. Reject only changes the request's status: the reaction that already ran stays done, and so does any timer that already started. |
 
 To act on many requests at once, tick their boxes, or tick **Select all requests**.
 The buttons at the bottom, such as **Complete 3** and **Reject 3**, act on the ticked requests.
 With nothing ticked, they act on every request in the open list.
+
+A bulk **Complete** or **Reject** can partly succeed.
+If some fail, they stay in the list, and the list reloads so you can see which ones are left.
 
 ## Troubleshooting
 

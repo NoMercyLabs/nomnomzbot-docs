@@ -1,0 +1,55 @@
+{
+  "fingerprint": "290a98a98264f6beba21a36a518cf276351ec7a3eea8e30610345a1d4ba0d3e7",
+  "verdict": "PASS",
+  "answers": [
+    {
+      "question": 1,
+      "answer": "Open Event responses and pick the event from the Events list. Under Reaction, choose Simple reply for a chat line or Pipeline to run something. For Simple reply, choose the pencil (Edit this line) beside a default line, or type in the empty Your line box. Choose Save changes; the row then shows Your own text. You can then choose Test to try the saved response.",
+      "quote": "Open Event responses and select New follower from Events."
+    },
+    {
+      "question": 2,
+      "answer": "You need a role that can edit responses: Moderator, Lead moderator, Editor or Broadcaster. A VIP the Broadcaster lets in sees only the list. You also need to know that a test can be visible and audible on stream, and that a selected pipeline runs its actions for real. Save before you test. The first two facts are stated before the steps or inside the test step.",
+      "quote": "By default, a moderator or higher can edit responses."
+    },
+    {
+      "question": 3,
+      "answer": "After Save changes, the unsaved-changes count leaves the footer, Save changes turns off, and the row shows Your own text. A row that follows the bot's default shows Platform default. An event that is switched off shows an Off badge. Test opens a result dialog with Chat line, Speech, Overlay alerts and Pipeline steps.",
+      "quote": "The count leaves the footer and Save changes turns off.\nThe row in the list now shows Your own text."
+    },
+    {
+      "question": 4,
+      "answer": "Raid case: select Incoming raid, which starts on and has default lines. Leave Reaction on Simple reply. Choose the pencil beside a default line, rewrite it in Your line (raid helpers such as {user} and {viewers} are available) and choose Save changes. Your one line now replaces the default lines, and the row shows Your own text. To restore the provided response later, choose Reset to default in the footer, read what you lose, and confirm with Reset to default. The row shows Platform default again. Enabled, Read it aloud and Send the reply to go back to their defaults (Twitch chat for Send the reply to), and any pipeline is kept but no longer runs.",
+      "quote": "Choose Reset to default.\nThe row in the list shows Platform default again."
+    },
+    {
+      "question": 5,
+      "answer": "Step 6 of the first task asks me to check Enabled, but where it sits (the top of the editor) and that it saves at once come only in a later section. I would hunt for it, which costs a reread. Step 4 says 'enter' a line in Your line after the pencil has already moved a default line into the box. I had to guess that I should replace that text rather than add to it. The Reply voice is said to be on the Bot personality page, but the link is titled Bot basics and personality. I paused to check that both names mean the same page.",
+      "quote": "Choose Save changes, then check that Enabled is on."
+    },
+    {
+      "question": 6,
+      "answer": "When read aloud, the long events table and the events-that-start-on table are lists I would not act on, though they sit in a collapsed block. 'Under Reaction, choose Pipeline' appears in both the general edit steps and the Pipeline steps, so a listener hears the same step twice. The note about the first Informative default line is an edge case that most readers will never meet.",
+      "quote": "The first default line in the Informative tone is the line the bot shipped with first."
+    }
+  ],
+  "findings": [],
+  "warnings_released": true,
+  "warning_review": [
+    {
+      "id": "length",
+      "decision": "keep",
+      "reason": "About 2,172 words, but the main path starts at about word 136, the 50-event inventory sits in a collapsed block, and the reader found each step in order without it. The length is lookup material a streamer scans, not a cost on the first success. A number alone is keep."
+    },
+    {
+      "id": "paragraph-19",
+      "decision": "keep",
+      "reason": "The release gives only the index and sentence count. By my approximate count of the rendered article, index 19 is the paragraph beginning 'The lines are written in the channel's tone'. Its five sentences each state one separate fact (the tone, what it changes, the two voices), and none blocked a step for the reader. A sentence count alone is keep."
+    },
+    {
+      "id": "paragraph-37",
+      "decision": "keep",
+      "reason": "The release names index 37 with only its sentence count, and I could not tie it to one passage with certainty. The likeliest candidate is the Read it aloud paragraph, whose five sentences each state a rule the reader could act on (speech only after a chat post, bot voice versus viewer voice, off by default). Nothing in it blocked a step, so a count alone is keep."
+    }
+  ]
+}

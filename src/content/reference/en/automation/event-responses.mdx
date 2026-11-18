@@ -23,6 +23,8 @@ Start with one event so you can see how the response behaves before customizing 
 5. Leave **Send the reply to** on **Twitch chat** for this first example.
 6. Choose **Save changes**, then check that **Enabled** is on.
 7. Choose **Test** to try the saved response.
+   The test can be visible and audible on your stream, so run it only when that is fine.
+   [Test the saved response](#test-the-saved-response) explains what it does.
 
 The bot replaces `{user}` with the person associated with the event.
 The help beside **Your line** lists the helpers that this particular event supplies; a raid has different information available from a follow.
@@ -117,7 +119,8 @@ It never picks the same line twice in a row.
 The lines are written in the channel's tone.
 The tone is the **Reply voice** on the **Bot personality** page (see [Bot basics and personality](/reference/settings/bot-basics-and-personality)).
 The tone changes only the wording.
-The lines still come in the channel's one bot voice.
+The bot's own words in a line are read aloud in the channel's bot voice.
+Words a viewer wrote, such as a resub or cheer message, are read aloud in that viewer's own saved voice.
 
 Default lines exist for the 18 events that start on.
 On a new install, the other events have no default line, so you write their line yourself.
@@ -180,6 +183,7 @@ It keeps picking from the default lines in the channel's tone.
 **Read it aloud** shows only with **Simple reply**.
 Its info icon reads "The reply also plays as speech on your stream."
 The bot speaks the line only after it successfully posts it in chat.
+The bot's own words are read in the channel's bot voice, and any words a viewer wrote are read in that viewer's saved voice.
 It starts off for every event except **Twitch gift sub received**.
 
 **Send the reply to** offers **Twitch chat**, **Chat overlay**, **Both** and **Nowhere**.
@@ -198,11 +202,11 @@ With **Pipeline**, the event runs something instead of posting a line.
    The search box reads "Search commands, pipelines and actions".
 3. Choose one, or choose **Create a new pipeline**.
    A new pipeline is named after the event.
-4. Choose **Save changes**.
+4. If you picked an action, fill in the settings that open below the picker.
+   Skip this step for a command or a pipeline.
+5. Choose **Save changes**.
    The event now runs your choice each time it happens.
 
-When you pick an action, its settings open below the picker.
-Fill them in before you save.
 When you pick a pipeline, **Open in the pipeline editor** appears beside the picker.
 
 The picker's **Nothing** clears the choice.
@@ -237,6 +241,7 @@ The row then shows **Your own text**.
 
 After a reset, the event is on or off as the platform default says.
 **Read it aloud** goes back to the default too.
+**Send the reply to** goes back to **Twitch chat**.
 The pipeline or command it ran is not deleted.
 The event no longer runs it.
 

@@ -1,0 +1,55 @@
+{
+  "fingerprint": "56d82268523a73f6a2b1adbee310de19915d5db24b197f671efee6238c785495",
+  "verdict": "PASS",
+  "answers": [
+    {
+      "question": 1,
+      "answer": "Create the reward on Twitch and wait until it appears in Rewards. On its row choose Edit, then Duplicate, because only the bot's own copy can be changed. Choose Edit on the copy and pick a reaction: Simple reply with a Chat reply, or Pipeline with a saved pipeline, a command or an action. Choose Save and switch the copy on. To handle redemptions, open Pending rewards during the stream and choose Complete or Reject on each request, or tick several and use the bulk buttons.",
+      "quote": "Make the reward on Twitch, and wait for it to appear in Rewards."
+    },
+    {
+      "question": 2,
+      "answer": "You need the Editor or Broadcaster role to change rewards; Moderators can only complete or reject requests. The channel must be connected to Twitch and must be Affiliate or Partner. The reward must exist on Twitch, and a new one can take up to about six hours to be imported. All of this is in the opening section and in 'What the bot needs from Twitch' and 'Who can use this page'.",
+      "quote": "Changing a reward requires the Editor or Broadcaster role by default, and the reward must be available on Twitch before you can redeem it."
+    },
+    {
+      "question": 3,
+      "answer": "Success means you redeem the copy and the bot posts the reply in Twitch chat. In the list, the line under a reward's name tells you what it does: a pipeline name runs that pipeline, a line of text sends that reply, and 'Only lands in the queue' means no saved pipeline and no reply text. A Not on Twitch badge means the reward is saved only in the bot. Paused means Twitch shows the reward but no viewer can buy it.",
+      "quote": "Choose Save, switch the copy on, then redeem it from Twitch chat to check that the bot posts the reply."
+    },
+    {
+      "question": 4,
+      "answer": "The bot already ran the reaction when the viewer bought the reward. The moderator only needs to choose Complete, which marks the request done and removes it from the list, or Reject, which refunds the points. Neither one runs the action again, so the moderator should not trigger the action by hand.",
+      "quote": "Reject only changes the request’s status: the reaction that already ran stays done, and so does any timer that already started."
+    },
+    {
+      "question": 5,
+      "answer": "Three things turn up only after the steps they affect. The six-hour import delay comes before step 1, but no refresh is offered, so I would wait or reopen the list and guess. The page says the unused reaction is cleared on save only after the steps where you save, so switching between Simple reply and Pipeline loses work without warning. The Not on Twitch save limits appear only after the field table, so a reader might set them and lose them.",
+      "quote": "When you save, the unused reaction is cleared."
+    },
+    {
+      "question": 6,
+      "answer": "One table row points away instead of answering, which is awkward when read aloud and makes the listener wait for the next paragraph. A sentence explains a term the dashboard uses, which a reader who knows stream bots already knows; it costs a little time. A clause explains who grants Affiliate status, which this reader also knows.",
+      "quote": "See the text under this table."
+    }
+  ],
+  "findings": [],
+  "warnings_released": true,
+  "warning_review": [
+    {
+      "id": "length",
+      "decision": "keep",
+      "reason": "The page is long (about 2,000 words) because it covers separate jobs (list, edit, copy, delete, queue, troubleshooting) that a reader enters by heading, and the main path comes first. The blind answers found the right fact for each question, so the cost is scanning, not missing or wrong content. A word count alone is not a defect under voice.md."
+    },
+    {
+      "id": "first-numbered-step",
+      "decision": "keep",
+      "reason": "The text before step 1 holds what affects the steps: the role needed to change rewards, the Twitch import timing, and the Twitch and permission requirements, which are linked rather than repeated. voice.md item 4 says access requirements and consequences go before the steps, so this order is correct."
+    },
+    {
+      "id": "sentence-4-3",
+      "decision": "keep",
+      "reason": "The 31-word sentence states one consequence (a new reward can take up to about six hours to show up) with its condition (when you open the list), in the place the steps need it. Every term is plain and the sentence reads clearly aloud. The blind reader's wish for a refresh control is a content question outside this warning and is not checked here."
+    }
+  ]
+}
