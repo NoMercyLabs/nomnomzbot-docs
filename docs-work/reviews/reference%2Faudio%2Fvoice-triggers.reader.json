@@ -1,0 +1,65 @@
+{
+  "fingerprint": "2e095c4ee553736b1fc6d15a1fc5bf111d4e43feba08feec75503dd887918fb6",
+  "verdict": "PASS",
+  "answers": [
+    {
+      "question": 1,
+      "answer": "Open the Voice triggers page (Build group) in Chrome, choose Popout listener in the page header, allow the microphone so the listener shows Listening, and leave that window open. Then choose New voice trigger, type the word in Word to listen for, and leave Start counting at 0, Seconds between counts 5 and No sticker. Choose Create voice trigger, choose the new word in the list, say the phrase, and watch Heard so far go up.",
+      "quote": "Allow the microphone when Chrome asks."
+    },
+    {
+      "question": 2,
+      "answer": "You need Chrome, a microphone you allow, and the role of Moderator, Lead moderator, Editor or Broadcaster (or Bot manager). A VIP the Broadcaster allows can only see the page. The listener must be a Chrome window, not an OBS browser source. This is stated under 'Who can use this page' and 'How the bot hears you'.",
+      "quote": "The voice listener is a web page that you keep open in Chrome while you stream."
+    },
+    {
+      "question": 3,
+      "answer": "The listener shows Listening and the line Matched “word” (count N). The editor's Heard so far goes up, and the list shows 'Heard N times'. The header's Last match shows only a past count; it does not show that the listener is open now. A chat trigger watches typed messages, a voice trigger watches the microphone, and Text to speech is the reverse feature.",
+      "quote": "Say the phrase with the listener open, and watch the number increase."
+    },
+    {
+      "question": 4,
+      "answer": "The window that must stay open is the Voice Listener popout in Chrome, opened with Popout listener or by pasting Copy listener link into Chrome. It must not be added to OBS, because speech recognition does not run inside OBS. If it is closed, nothing counts until it is opened again.",
+      "quote": "Do not add the listener to OBS as a browser source."
+    },
+    {
+      "question": 5,
+      "answer": "Two small pauses, neither blocking. First, the intro suggests the phrase 'hello everyone', but step 2 types only 'hello'. I paused over which to type, and the matching section shows both work. Second, the rule that only the first matching trigger is checked shows up only in troubleshooting, and the page never says what 'first' means. It costs a guess when two triggers share a word.",
+      "quote": "Only the first matching trigger is checked, so while it waits, no other matching trigger counts for that phrase."
+    },
+    {
+      "question": 6,
+      "answer": "The transcript and event-history paragraph uses the internal event name. That is a detail a streamer counting a phrase would not act on, and it is awkward to read aloud. It costs a little attention but does not block the task.",
+      "quote": "Live or not, every phrase is also sent as a Voice.TranscriptHeard event, and the bot keeps it in its event history."
+    }
+  ],
+  "findings": [],
+  "warnings_released": true,
+  "warning_review": [
+    {
+      "id": "length",
+      "decision": "keep",
+      "reason": "1479 words include three reference tables and the troubleshooting sections; that is the scope of a reference page. The reader answered all six questions from it without being blocked, and the main path is not buried."
+    },
+    {
+      "id": "first-numbered-step",
+      "decision": "keep",
+      "reason": "The 233 words before the first step are the access requirements (roles, VIP and Bot manager limits, Chrome-only listener). voice.md item 4 says access requirements that affect the steps go before them, and these do."
+    },
+    {
+      "id": "paragraph-4",
+      "decision": "keep",
+      "reason": "Five short sentences each state one access fact the reader needs before the steps, including the warning that the listener link holds the overlay key. The sentence count alone does not cost the reader anything."
+    },
+    {
+      "id": "paragraph-17",
+      "decision": "keep",
+      "reason": "A sentence count alone is not a defect. The sentences each state one fact the reader acts on at that point, and the blind answers that depend on this part were correct."
+    },
+    {
+      "id": "paragraph-26",
+      "decision": "keep",
+      "reason": "Six short sentences of checks for a count that does not rise. Each sentence is a separate action the streamer can take, so the sentence count alone does not cost the reader anything. The unexplained word 'first' in the trigger-order rule is a small gap, but the reader's blind answer rated it a guess in a rare case, not a blocker."
+    }
+  ]
+}

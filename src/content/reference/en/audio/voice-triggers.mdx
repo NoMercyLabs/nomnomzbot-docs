@@ -19,7 +19,8 @@ The roles are explained on [Permissions](/reference/settings/permissions).
 The **Broadcaster** may also let a **VIP** open the page.
 A VIP then sees the list, the counts, **Popout listener** and **Copy listener link**.
 **New voice trigger** and the editor do not show for a VIP.
-The listener link holds the channel's overlay key, so allow a VIP only when you trust them with it.
+A person given the **Bot manager** capability may also open the page and change voice triggers.
+The listener link holds the channel's overlay key, so allow a VIP or a Bot manager only when you trust them with it.
 
 ## How the bot hears you
 
@@ -57,10 +58,8 @@ When Chrome blocks the microphone, the listener shows **Stopped**.
 A line under it says what to allow.
 
 While your stream is live, the bot also keeps every phrase the listener sends as the spoken transcript of that stream.
-When you are not live, the bot only looks for a trigger word in each phrase, and does not store the phrase.
-
-A paired program also hears each sentence the listener sends, live or not, when it has the events permission and subscribes to the `Voice.TranscriptHeard` event.
-The event carries the sentence text.
+When you are not live, the phrase is not kept as a transcript.
+Live or not, every phrase is also sent as a `Voice.TranscriptHeard` event, and the bot keeps it in its event history.
 
 ## Create a voice trigger
 
@@ -73,10 +72,14 @@ Do this before adding a sticker so you can check recognition and counting indepe
 2. Type the word in **Word to listen for**, for example `hello`.
 3. Set **Start counting at**, or leave it at 0.
    Use it to carry over a count from another bot.
+   You can set it only now: to change it later, delete the trigger, and its count is lost.
 4. Set **Seconds between counts**, or leave it at 5.
 5. Pick a **Sticker**, or leave **No sticker**.
 6. Choose **Create voice trigger**.
    The dialog closes, and the new word shows in the list, switched on.
+7. Choose the new word in the **Voice triggers** list.
+   The editor opens on the right and shows **Heard so far**.
+   Say the phrase with the listener open, and watch the number increase.
 
 When the list is empty, the page shows "No voice triggers yet."
 Its **Make the first voice trigger** button opens the same dialog.
@@ -88,7 +91,7 @@ When **Word to listen for** is empty, the dialog shows "Give the trigger a word 
 | **Word to listen for** | The word or words the bot listens for, up to 200 characters. |
 | **Start counting at** | The count the trigger starts from. You set it only when you create the trigger. |
 | **Seconds between counts** | After a count, the trigger waits this long before it counts again. From 0 to 3600. |
-| **Sticker** | An image from your uploaded images. It pops up on your stream each time the word is heard. |
+| **Sticker** | An image from your uploaded images. It shows on your stream only when the word counts and an alert widget that listens for voice-trigger events is loaded. See "Show the sticker on your stream". |
 
 ## How a word is matched
 
@@ -104,17 +107,11 @@ This keeps a phrase repeated in quick succession from increasing the count every
 
 ## Show the sticker on your stream
 
-The sticker is presented by an alert widget that listens for voice-trigger events, as [Widgets and alerts](/reference/overlays/widgets-and-alerts) explains.
-The bot sends the voice-trigger event only to a widget that subscribes to it.
-The supplied **Alerts** overlay does not subscribe to it today, so it does not receive voice-trigger events.
-A custom widget that listens for `voice_trigger` receives them.
-Such an alert widget must also have **Voice trigger** ticked in **Alert types**, which is not ticked by default.
+The sticker shows when an alert widget that listens for `voice_trigger` is loaded, as [Widgets and alerts](/reference/overlays/widgets-and-alerts) explains.
+That widget must also have **Voice trigger** ticked in **Alert types**, which is not ticked by default.
 **Sticker on-screen time (ms)** sets its display time.
 Ticking **Alert types** alone does not make a sticker show.
-
-There is a current dashboard limitation: the supplied **Alerts** source is under **Required overlays** on the **OBS** page, but its connection dialog does not expose these alert settings.
-It is also excluded from the custom **Overlays** list.
-Counting works without the sticker; setting up a new sticker display requires an already configured or custom alert widget until that settings path is available.
+Counting works without a sticker.
 
 Each time the word counts, the alert shows the word with the new count, such as "hello (3)", and the sticker image.
 
@@ -163,7 +160,7 @@ The page header shows when the bot last counted any word.
 | --- | --- |
 | No match heard yet | No voice trigger has counted yet. |
 | Last match: just now | A word counted in the last minute. |
-| Last match: and how long ago | When the last count was. |
+| Last match, followed by a time such as "5 minutes ago" | How long ago the last count was. |
 
 This shows a past count only.
 It does not prove that the listener is open now.
@@ -184,8 +181,6 @@ Only the first matching trigger is checked, so while it waits, no other matching
 **The count goes up, but no sticker shows.**
 Check that the trigger has a **Sticker**.
 Check that the alert widget subscribes to the `voice_trigger` event, has **Voice trigger** ticked in **Alert types**, and is loaded in OBS.
-The supplied **Alerts** overlay does not subscribe to the event today.
-If you only have the supplied source, see the settings limitation above before looking for an editor on **Overlays**.
 
 ::
 
