@@ -11,35 +11,13 @@ There are two places to look.
 The **OBS** page has **Required overlays** for the bot's supplied alerts and players.
 The **Overlays** page holds your other overlays and their settings, health and code.
 
-## Put the supplied overlays on stream
-
-Start here if you want alerts, speech, sounds, music or media share without writing code.
-Open **OBS**, choose **Overlays in OBS**, and find **Required overlays**.
-Each row's **Connect** button (**Configure** once the source is loaded in OBS) opens a setup dialog with the OBS settings for that source and a **Copy address** button.
-The dialog does not show the address itself.
-
-Choose the source for the feature you are setting up: **Alerts** for visual notifications, **Bot Audio** for sound clips, **TTS caption** for speech and captions, **Music Player** for music playback, **Media share** for shared videos.
-The stage source is a transparent full-screen layer for one-off effects that a command or pipeline triggers, such as text running across the screen, confetti, a shake or a flash.
-It draws nothing while idle.
-The raid recap is not in this list: it has its own address on the **Overlays** page.
-The **OBS control** row is the bridge page the bot needs when OBS runs on another computer.
-Choose **Copy address**, paste it into an OBS **Browser** source and follow the dimensions and audio settings in the dialog.
-[OBS browser source](/reference/overlays/obs-browser-source) walks through those steps and shows how to check the result.
-
-These supplied sources are separate from the custom list on **Overlays**.
-You do not need to make a new blank overlay or edit code to connect them.
-
 ## Who can use this page
 
 A **Moderator**, **Lead moderator**, **Editor** or **Broadcaster** may open the page and change overlays.
 The roles are explained on [Permissions](/reference/settings/permissions).
 
 The **Broadcaster** may also let a **VIP** open the page.
-This is set on the **Permissions** settings page, in the **Widgets** area of the **Actions** tab.
-A VIP then sees the overlays only.
-Only a role that can change overlays sees **Test**, **Edit code**, **Duplicate** and **Delete**.
-**Audio levels** follows the Sounds permission instead: you need to read sounds to see it, and to change sounds to move its sliders.
-For a VIP, **New overlay** shows "You can view this, but your role cannot change it."
+A VIP can then copy an overlay's address, which carries its secret token, as [Let a VIP see the overlays](#let-a-vip-see-the-overlays) explains.
 
 ## Create an overlay
 
@@ -51,10 +29,12 @@ The code path is optional; [Widgets, actions and templates](/reference/code/sdk-
    The **New overlay** dialog opens.
 2. Type a name in **Name**, for example `My alerts`.
 3. Choose a **Code language** (see the table below), or keep the default, **Vue**.
+   You cannot change the code language after you create the overlay.
 4. Choose **Create overlay**.
    The dialog closes and the new overlay opens beside the list, switched on.
 
-The code language cannot change after you create the overlay.
+The new overlay has its browser source address at once.
+**Copy browser source address** and **Connect** work right after **Create overlay**, before any **Save & Compile**.
 
 | **Code language** | Pick it when |
 | --- | --- |
@@ -83,26 +63,16 @@ The tabs above it filter the list, and each tab shows its count.
 **Search overlays** filters the list by name.
 Choose an overlay in the list to open it beside the list.
 
-Each row shows a short state text and a colored dot.
-The text says whether a browser source has the overlay open.
-The dot adds whether the last run failed.
-
-| Row text | Meaning |
-| --- | --- |
-| **Off** | The overlay is switched off. |
-| **A browser source is open** | The overlay is on and a browser source shows it. |
-| **Nothing attached** | The overlay is on, but no browser source has it open. |
-
-| Dot | Meaning |
-| --- | --- |
-| Gray | The overlay is switched off. |
-| Red | The last run failed. The row also shows **Fails**. |
-| Orange | The last run did not fail, and no browser source has the overlay open. |
-| Green | The last run did not fail, and a browser source has the overlay open. |
+Each row shows a state text and a colored dot.
+The text is **Off**, **A browser source is open** or **Nothing attached**.
+Gray means off, green means a browser source has the overlay open, and orange means it is on but nothing has it open.
+Red means the last run failed, and the row also shows **Fails**.
 
 Each row also has a **Connect** button (**Configure** once a browser source has it open).
-It opens the OBS setup dialog for that overlay, with its size, the OBS boxes to set and **Copy address**.
-The button is disabled while the overlay has no address yet.
+It opens the OBS setup dialog for that overlay, with **Copy address**.
+An overlay you made yourself shows no size and no OBS boxes in that dialog.
+Give its browser source 1920 x 1080, tick **Control audio via OBS** only when it plays sound, and leave **Shutdown source when not visible** off, as [OBS browser source](/reference/overlays/obs-browser-source) explains.
+The button is disabled when the overlay has no address.
 
 ## What an open overlay shows
 
@@ -143,6 +113,7 @@ Choose **Test** beside an event under **Reacts to**.
 The bot sends a sample of that event to this overlay only.
 The row then shows "Sent to this overlay", or "Sent, but no browser source has it open".
 When the overlay did not accept the sample, it shows "This overlay does not react to this event".
+A switched-off overlay always gives that answer, because **Test** reaches only overlays that are switched on.
 
 ## Keep an overlay up to date
 
@@ -155,10 +126,8 @@ When the overlay did not accept the sample, it shows "This overlay does not reac
 
 Every browser source that has the overlay open gets the new settings at once.
 
-When the save fails, the panel shows "Not saved. Your changes are still here; try again."
-A value that differs from its default has a reset button, named "Reset" with the setting name and "to default".
-An overlay without settings shows "This overlay has no settings."
-An overlay that has saved values but no settings form shows "This overlay has no settings form. These are its saved values." and lists those values read-only.
+When the save fails, your changes stay in the panel, so you can try again.
+A value that differs from its default has a reset button.
 
 ### Change the code
 
@@ -180,8 +149,36 @@ A switched-off overlay does not run until you switch it on.
 
 Choose **Duplicate** at the bottom of an open overlay.
 The copy is named "Copy of" followed by the original name, and it opens at once, so you can change it.
+The copy starts switched on.
+It has its own browser source address, different from the original's, so paste the copy's address into OBS.
 An overlay with no compiled code yet cannot be copied.
 The error shows under the footer.
+
+## Put the supplied overlays on stream
+
+Start here if you want alerts, speech, sounds, music or media share without writing code.
+Open **OBS**, choose **Overlays in OBS**, and find **Required overlays**.
+Each row's **Connect** button (**Configure** once the source is loaded in OBS) opens a setup dialog with the OBS settings for that source and a **Copy address** button.
+The dialog does not show the address itself.
+
+Choose the source for the feature you are setting up:
+
+- **Alerts** for visual notifications.
+- **Bot Audio** for sound clips.
+- **TTS caption** for speech and captions.
+- **Music Player** for music playback.
+- **Media share** for shared videos.
+
+Choose **Copy address**, paste it into an OBS **Browser** source and follow the dimensions and audio settings in the dialog.
+[OBS browser source](/reference/overlays/obs-browser-source) walks through those steps and shows how to check the result.
+
+The stage source is a transparent full-screen layer for one-off effects that a command or pipeline triggers, such as text running across the screen, confetti, a shake or a flash.
+It draws nothing while idle.
+The raid recap is not in this list: once your channel installs it, it has its own address on the **Overlays** page.
+The **OBS control** row is the bridge page the bot needs when OBS runs on another computer.
+
+These supplied sources are separate from the custom list on **Overlays**.
+You do not need to make a new blank overlay or edit code to connect them.
 
 ## Delete an overlay
 
@@ -198,12 +195,26 @@ This cannot be undone.
 **Audio levels** at the top of the page opens **Music vs Bot audio levels**.
 It sets how loud the music plays against the bot voice and sounds on your overlays.
 The levels are the same for every overlay and on every streaming PC.
+**Audio levels** follows the Sounds permission instead of the widget one: you need to read sounds to see it, and to change sounds to move its sliders.
 
 | Setting | What it sets |
 | --- | --- |
-| **Master volume** | The loudness of everything your overlays play. |
+| **Master volume** | The loudness of your sound clips and text-to-speech. It does not change the music. |
 | **Voice volume** | The loudness of the text-to-speech voice. |
 | **Music duck percent** | How loud the music stays while the voice speaks. 100 means no ducking. |
+
+Each level has a slider and a number box.
+A level saves by itself when you release the slider, when the number box loses focus or when you press Enter.
+There is no Save button.
+
+## Let a VIP see the overlays
+
+The **Broadcaster** lets a **VIP** open the page on the **Permissions** settings page, in the **Widgets** area of the **Actions** tab.
+A VIP then sees the overlays and can open them.
+Only a role that can change overlays sees **Test**, **Edit code**, **Duplicate** and **Delete**.
+**Copy browser source address** and the **Connect** dialog with **Copy address** need only the read permission, so a VIP sees them too.
+That address carries the overlay's secret token, so a Broadcaster who opens the page to VIPs also lets them copy it.
+For a VIP, **New overlay** shows "You can view this, but your role cannot change it."
 
 ## Related pages
 
