@@ -8,7 +8,8 @@ It also takes a viewer's history into account so an established community member
 This complements a [chat filter](/reference/moderation/automod-and-chat-filters), which checks an individual message against a rule you chose.
 
 Open **Settings**, then **Spam defense** in the **Access** group to set your channel's policy.
-Start with its watch-only behavior, understand the protection thresholds, and then decide whether automatic enforcement suits your channel.
+A new policy only records what it finds for ordinary decisions and does not act on it.
+You can let it act later.
 The settings below explain both the working controls and the controls marked **Not yet active**, so a saved value does not give a false impression of protection.
 
 ## Who can use this page
@@ -16,7 +17,7 @@ The settings below explain both the working controls and the controls marked **N
 | Who | What they may do |
 | --- | --- |
 | A **Moderator**, **Lead moderator**, **Editor** or **Broadcaster** | Open the page and read every value. |
-| The **Broadcaster** | Change the values and save them. |
+| The **Broadcaster**, or a person the Broadcaster has given the permit to manage the spam policy | Change the values and save them. |
 
 The roles are explained on [Permissions](/reference/settings/permissions).
 
@@ -24,6 +25,8 @@ The **Save** button shows only to someone who may change the page.
 Anyone else sees the number boxes locked, and an on or off badge in place of each switch.
 
 ## Change the policy
+
+**Save** stays inactive until a value changes, so to save the watch-only switch as it is, change one other value first.
 
 1. Open **Settings** in the sidebar, then **Spam defense** in the **Access** group.
    The page shows one card for each group of settings.
@@ -33,7 +36,9 @@ Anyone else sees the number boxes locked, and an on or off badge in place of eac
    The bot stores every setting at once and shows "Spam defense saved."
 
 **Save** stays inactive while a value is out of range.
-The reason shows in red under the setting, for example "Enter a value from 0 to 365."
+For most settings, the reason shows in red under the setting, for example "Enter a value from 0 to 365."
+The four "established" settings in **Trust** show no reason.
+There, a blank or negative value only keeps **Save** inactive.
 
 ## Where the values come from
 
@@ -44,13 +49,14 @@ The tables below show the default values the bot starts with.
 The person who runs your bot can change these default values.
 Then a channel that never saved uses the changed values, not the ones in the tables.
 
-> Running it for yourself, your friends and your community is free. You may not earn money with it: no selling it, and no paid hosting or paid service built on it.
-
 ## Start in watch-only mode
 
 **Watch only, do not act** is on by default.
-Save the page with this switch on when you want the channel to record detections without acting on them.
+To keep the channel recording detections without acting on them, save the page with this switch on.
 The dashboard has no screen that shows these records yet.
+**Save** is inactive until a value changes, and the switch already shows on.
+So change any other value first, for example one threshold, and then choose **Save**.
+The save stores every setting, including the watch-only switch as on.
 
 Each channel also has a first watch period of seven days.
 Ordinary spam decisions only watch during this period, even with **Watch only, do not act** off.
@@ -59,10 +65,16 @@ The initial clock uses the channel's creation date in the bot, rather than the d
 If spam defense was off when you first saved it on, the seven days start at that save.
 For ordinary decisions, the bot acts only after the seven days and with watch-only mode off.
 
-There is an important exception for messages detected as selling viewers or followers alongside a storefront link.
-Unless this channel has explicitly saved **Watch only, do not act** on, those high-confidence detections can act immediately, including during the first week and while the channel still inherits the default watch-only value.
-On Twitch, an eligible unprotected sender can be banned directly, without using the escalation ladder.
-Saving watch-only mode on prevents this exception; the established and protected-viewer safeguards below still apply.
+One kind of message is an exception: a message that sells viewers or followers and links to a store.
+The bot can act on it at once:
+
+- during the first watch period,
+- and while the channel still uses the default watch-only value.
+
+On Twitch, the bot can then ban the sender directly, without the escalation ladder.
+It never does this to an established or protected viewer.
+
+To stop this exception, save **Watch only, do not act** on for your channel.
 
 ## Settings and defaults
 
@@ -81,7 +93,8 @@ This group turns spam defense on or off and sets watch-only mode.
 
 **Spam defense enabled** off means no detection and no records at all.
 With **Watch only, do not act** saved on for this channel, the bot records and does not act.
-With it off, ordinary enforcement starts after the observation period; the viewer-selling exception above can act earlier.
+With it off, ordinary enforcement starts after the first watch period.
+The viewer-selling exception above can act earlier.
 
 ### Trust
 
@@ -95,14 +108,16 @@ With it off, ordinary enforcement starts after the observation period; the viewe
 | **Watch hours across all channels that earn protection** | 25 hours | 1 to 500 |
 
 A viewer earns the established tier by reaching the days-around, message-count and separate-active-day thresholds.
+"Days around" counts the days since the viewer's first message in your channel.
 **Strike-free days before a viewer counts as established** is saved, but the current spam-defense calculation assumes the viewer has no recent upheld strike instead of checking their moderation history.
 Changing that fourth threshold therefore does not currently delay the established tier.
+
 A moderator is exempt from spam checks.
 A VIP normally counts as established.
-A message matching a recent broadcaster or moderator message is also skipped: the bot compares normalized text against the last 200 staff messages from the preceding ten minutes.
 On Twitch, a streamer whose channel this channel's owner moderates receives the **Trusted** tier when that relationship can be verified.
-A Twitch suspicious-user flag can lower the resolved trust tier of a VIP or a viewer who meets the participation thresholds, and can also override watch-hour protection.
-"Days around" counts the days since the viewer's first message in your channel.
+
+A Twitch suspicious-user flag can lower the resolved trust tier of a VIP or a viewer who meets the participation thresholds.
+It can also override watch-hour protection.
 
 This participation-based spam-defense tier is separate from the numerical moderation score on [Trust and escalation](/reference/moderation/trust-and-escalation).
 On the page, the four "established" values sit together under the label **Trust ladder thresholds**.
@@ -120,11 +135,12 @@ A moderator then decides the rest.
 Detection runs for incoming Twitch, Kick and YouTube chat, but enforcement follows the platform the message came from.
 On Twitch, a high-confidence decision removes the message and then times out the account.
 The timeout lasts as long as the channel's automatic timeout length, or 10 minutes when none is set.
-The one exception is a channel whose **Escalation** page has both **Escalation ladder** and **Count AutoMod holds** on.
-There the ladder picks the action instead.
-The viewer-selling exception above bans directly.
-Kick and YouTube enforcement attempts message deletion and, for an account-action decision, a timeout; it does not use the Twitch escalation ladder or that direct-ban branch.
-The connected account must have permission to carry out the action, and an unavailable or refused platform action can leave a detection recorded without the intended punishment.
+A channel whose **Escalation** page has both **Escalation ladder** and **Count AutoMod holds** on lets the ladder pick the action instead.
+
+On Kick and YouTube, the bot deletes the message and, for an account-action decision, times out the account.
+It does not use the escalation ladder or the direct ban there.
+The connected account must have permission to carry out the action.
+A refused platform action can leave a detection recorded without the intended punishment.
 
 ### New accounts and new followers
 
@@ -157,11 +173,10 @@ Some viewers are never held by these limits:
 "Other alphabets" means writing that does not use Latin letters, for example Japanese, Korean, Cyrillic or Arabic.
 With **Restrict other alphabets to established viewers** off, anyone may write in another alphabet.
 With it on, a message in another alphabet from a viewer below the **Regular** tier looks more suspicious to the bot.
-
 The bot then rates that message as medium risk at most, never higher because of the alphabet alone.
-An established viewer is never affected.
 
 The setting's label says **established viewers**, but its actual alphabet threshold is the **Regular** tier.
+**Regular** ranks below the **Established** tier, so an established viewer is never affected.
 Leaving it off keeps viewers free to use the alphabet they normally write in.
 
 ### Coordinated campaigns
@@ -171,7 +186,9 @@ The bot looks at how many of them are strangers to the channel before deciding w
 That distinction matters during a stream: a wave of unfamiliar accounts repeating spam and your regulars joining in with a joke can look similar if you consider message text alone.
 
 A group is exonerated when the share of strangers falls below the configured threshold.
-With automatic undo enabled, that change can reverse the bot's campaign actions.
+With **Undo automatically when a group is exonerated** on, the bot undoes its campaign actions once, when the group is exonerated.
+It lifts only the timeouts and bans that the platform confirmed.
+It does not bring back deleted messages.
 Keep the two share thresholds apart so the group can move from suspected campaign to exonerated without the decisions overlapping.
 
 | Setting | Default | Allowed values |
@@ -199,10 +216,12 @@ The page names a broken pair under the setting, and **Save** stays inactive.
 | **Join rate that counts as unusual** | 4 times | 1.5 to 50 |
 
 Each value is a number of times your channel's normal rate.
+The dashboard marks **Join rate that counts as unusual** **Not yet active**.
+The bot stores it and does not read it yet.
 
 On Twitch, a follow spike makes the bot examine the new followers.
 It blocks the accounts that look like follow bots on Twitch.
-In watch-only mode or during the first week, it only records them.
+In watch-only mode or during the first watch period, it only records them.
 The dashboard has no screen yet to see or undo these blocks.
 The bot measures the follow spike for Twitch only.
 
