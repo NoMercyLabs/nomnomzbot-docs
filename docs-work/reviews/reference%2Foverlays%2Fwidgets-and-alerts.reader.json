@@ -1,0 +1,75 @@
+{
+  "fingerprint": "9710d597c9dcb810b76db647f9ed04cb021a9d2a06551cbe068760d09f721e9f",
+  "verdict": "PASS",
+  "answers": [
+    {
+      "question": 1,
+      "answer": "To add the supplied alerts: open the OBS page in the dashboard, choose Overlays in OBS, and find Alerts under Required overlays. Choose Connect, copy the address, and add it in OBS as a Browser source. To test it, replay a past event, because this source has no Test button. Open Home, find the event in the Happening now panel (called Last stream when you are offline), and choose Replay at the end of its row. For an overlay listed on Overlays, open the overlay and use Test beside an event under Reacts to. To change one: use Settings, or choose Duplicate, then Edit code, then add the copy's address in OBS.",
+      "quote": "Choose Connect, copy the address, and add it as an OBS Browser source using the dimensions and settings in the dialog."
+    },
+    {
+      "question": 2,
+      "answer": "You need to be a Moderator or higher, and the overlay's browser source must be loaded in OBS. A test is sent only when the overlay is on and listens to that event. The page states these in the Test an alert section, and the same rank rule appears in Preview a change and Replay an alert.",
+      "quote": "A Moderator or higher may send a test."
+    },
+    {
+      "question": 3,
+      "answer": "After a replay, a message counts what was sent again: chat messages, voice, overlays and widgets. A table lists the error messages and what each means. After saving code, the editor shows 'Saved and compiled. The overlay now runs this version.' Test sends a sample to the live overlay's browser source. The fire bar sends the same samples only to the preview in the editor.",
+      "quote": "A message counts what was sent again."
+    },
+    {
+      "question": 4,
+      "answer": "To preview before going on stream, open the overlay's code with Edit code. In the Run & test view, use the Fire event: bar. It sends a sample only to the editor preview, not to the stream, and runs no bot actions except a real speech clip. The supplied Alerts source has no Test button, so it can only be checked on stream by a replay. To replay a past alert later, open Home and choose Replay on the event's row, or use the Events page through All events. Only events from this stream and the one before it are listed. A replay can run the response again, with real effects.",
+      "quote": "The fire bar sends the same sample events as Test, but only to the preview in the editor."
+    },
+    {
+      "question": 5,
+      "answer": "Two conditions for Test (the overlay must be on and must listen to that event) come only after the instruction to press Test. A reader who pressed Test with the overlay off would see nothing and would have to reread to find out why. Separately, the Test an alert section opens with the Test button, but the supplied Alerts source was already said to have none. I had to reread the first section to know which overlays this applies to.",
+      "quote": "It is sent only when the overlay is on and listens to that event."
+    },
+    {
+      "question": 6,
+      "answer": "Read aloud, the 12-row kind table and the sentence counting its rows are long for someone who only wants to add and test an alert. The same goes for the per-widget detail about tickers, sub trains, goal bars and labels. Both slow the listener before they reach the testing and replay steps.",
+      "quote": "These are all 12 kinds."
+    }
+  ],
+  "findings": [],
+  "warnings_released": true,
+  "warning_review": [
+    {
+      "id": "length",
+      "decision": "keep",
+      "reason": "The page is long because it covers several tasks and includes a reference table. The reader found all six answers from quoted text without rereading. The cost is reading time for a streamer who only wants to add and test; the 12-row table is a lookup that can be skipped, and the test and replay steps sit under their own headings. A word count alone is not a defect."
+    },
+    {
+      "id": "first-numbered-step",
+      "decision": "keep",
+      "reason": "The first numbered list is the duplicate-and-edit path for a copy of an overlay. It follows the connection steps for the supplied Alerts source, which the main case needs first. The prerequisite (connecting the OBS source) comes before any numbered step that changes anything, so the order is right for this reader."
+    },
+    {
+      "id": "paragraph-12",
+      "decision": "keep",
+      "reason": "About five short sentences, each stating one fact the reader acts on or avoids (for example, that changing one part does not change the other). No new step is hidden inside it, and the reader found the answers in the surrounding text. The count alone is not a defect."
+    },
+    {
+      "id": "paragraph-13",
+      "decision": "keep",
+      "reason": "About five sentences giving who may send a test, where it goes, and when it is sent. The reader needs these before pressing Test, and each sentence adds a condition the reader acts on. The count alone is not a defect."
+    },
+    {
+      "id": "paragraph-14",
+      "decision": "keep",
+      "reason": "The densest paragraph, about ten sentences. It covers test behavior for event tickers, sub trains, goal bars and labels, which a streamer testing those widgets needs to know. It comes after the Test instruction, so it does not block the steps. The cost is reading time for readers who only test a plain alert; the reader flagged this in answer 6 and it does not change any step."
+    },
+    {
+      "id": "paragraph-16",
+      "decision": "keep",
+      "reason": "About five sentences of single facts about the preview. The one real side effect it names (a speech clip that only a Moderator can make) is needed before previewing a speaking widget. The reader found the preview answer in this text. The count alone is not a defect."
+    },
+    {
+      "id": "paragraph-19",
+      "decision": "keep",
+      "reason": "About five plain sentences in the test or replay section. They state limits the reader must know before acting, such as that a replay does not create a real follow or redemption but can rerun attached actions. The count alone is not a defect."
+    }
+  ]
+}

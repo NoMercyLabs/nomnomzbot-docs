@@ -13,7 +13,10 @@ An [event response](/reference/automation/event-responses) can add a chat reply,
 
 ## Set up the supplied alerts
 
-Open **OBS**, choose **Overlays in OBS**, and find **Alerts** under **Required overlays**.
+The **Alerts** source is not in the **Overlays** list, so it has no **Test** button.
+To check it on stream, replay a past follow or sub, as [Replay an alert](#replay-an-alert) shows.
+
+In the dashboard, open the **OBS** page, choose **Overlays in OBS**, and find **Alerts** under **Required overlays**.
 Choose **Connect**, copy the address, and add it as an OBS **Browser** source using the dimensions and settings in the dialog.
 [OBS browser source](/reference/overlays/obs-browser-source) gives the full walkthrough.
 
@@ -25,30 +28,6 @@ The required alert source has a connection dialog on the **OBS** page, but the c
 The **Configure** button on its row opens the same **Set up Alerts in OBS** dialog as **Connect**: the address, the size and the OBS boxes.
 It does not change the colors, the events or the alert text.
 
-## Pick a theme
-
-Every supplied widget that draws something has a **Theme** setting.
-Find it under **Settings** of an overlay you open on **Overlays**.
-The required overlays on the **OBS** page are not listed on **Overlays**.
-They are Alerts, TTS caption, Media share, Stage, Bot Audio and Music Player.
-For now you cannot change their theme in the dashboard.
-The four that draw (Alerts, TTS caption, Media share and Stage) keep the default, **Sticker**.
-Bot Audio and Music Player play sound only, so they have no theme.
-
-The help text says: "The look of this widget. Pick the same theme on every widget for one matching set."
-The **Chat box** has a second **Theme** setting with **Dark**, **Light** and **Transparent**.
-That one sets the chat colors.
-The overlay theme is the one with **Sticker**, **Ink**, **Print** and **Classic**.
-
-| Theme | Look |
-| --- | --- |
-| **Sticker** | White card, bold outline. This is the default. |
-| **Ink** | Black pills, quiet. |
-| **Print** | Lime poster, halftone dots. |
-| **Classic** | Dark see-through panel. |
-
-A widget whose code you changed keeps its own look, because it keeps its own source.
-
 ## Customize an overlay you already have
 
 For an overlay listed on **Overlays**, start with **Settings** to change the options it exposes.
@@ -57,12 +36,11 @@ When the available options are not enough, duplicating it gives you a copy whose
 
 1. Open that overlay and choose **Duplicate**, as [Copy an overlay](/reference/overlays/set-up-overlays#copy-an-overlay) explains.
    The copy opens with the same code.
+   Its **Settings** show only the settings its own code declares in a `settings.json` file.
 2. Choose **Edit code** on the copy and change its code, as [Change the code](/reference/overlays/set-up-overlays#change-the-code) explains.
    After you save, the editor shows "Saved and compiled. The overlay now runs this version."
    What the code can use is on [Widgets, actions and templates](/reference/code/sdk-widgets-actions-templates).
 3. Add the overlay's address in OBS, as [OBS browser source](/reference/overlays/obs-browser-source) explains.
-
-The **Gallery** entry in the sidebar shows a **Coming soon** page.
 
 ## What a widget reacts to
 
@@ -101,6 +79,15 @@ Set up both parts when you want both, using [Event responses](/reference/automat
 
 Use **Test** beside an event under **Reacts to**, as [Test an event](/reference/overlays/set-up-overlays#test-an-event) explains.
 A **Moderator** or higher may send a test.
+A test goes live to this one overlay's open browser source only.
+It shows on stream if that source is loaded, and on no other overlay.
+It is sent only when the overlay is on and listens to that event.
+
+Some widgets keep a running record.
+An event ticker lists recent events.
+A sub train counts subs that come in a row.
+A goal bar shows progress toward a goal.
+A label shows a latest name or a count.
 On the event ticker and the sub train, a test shows for 10 seconds and never joins the real ticker or train.
 A test never adds to a goal bar total or a label count.
 A label shows the test name only for a short time.
@@ -108,8 +95,14 @@ A label shows the test name only for a short time.
 ## Preview a change
 
 The code editor that **Edit code** opens has a fire bar.
+Open the **Run & test** view of the editor to find it, under the label **Fire event:**.
+The preview runs no bot actions, with one exception.
+When the widget's code asks for a speech clip, the editor makes a real text-to-speech clip, so the preview can speak aloud.
+Only a **Moderator** or higher can make that clip.
+Choose an event's name button to fire a sample of that event.
+The **Edit** button beside it changes the data of that sample.
 The fire bar sends the same sample events as **Test**, but only to the preview in the editor.
-When the samples do not load, the editor shows "The sample events could not be loaded, so the fire bar sends nothing."
+When the samples do not load, the editor shows "The test events could not be loaded, so nothing can be fired. Close the editor and open it again."
 
 What a widget's code can use is listed on [Widgets, actions and templates](/reference/code/sdk-widgets-actions-templates).
 
@@ -117,8 +110,13 @@ What a widget's code can use is listed on [Widgets, actions and templates](/refe
 
 You replay a past event from the **Home** page.
 The **Events** page has the same **Replay** button on each row.
-Choose **All events** on **Home** to open it.
+To open the **Events** page, choose **All events** on **Home**.
 It lists every event of this stream and of the stream before it.
+A **Moderator** or higher sees the **Replay** button.
+
+A replay does not create a second real follow, subscription or redemption.
+A replay can run the response again, including a command, action or pipeline attached to it.
+Those actions can have real effects, so check a response that changes balances or other channel state first.
 
 1. Open **Home** and find the event in the **Happening now** panel.
    When you are offline, the panel is called **Last stream**.
@@ -132,11 +130,7 @@ It lists every event of this stream and of the stream before it.
 | overlays | Alerts the event response showed on your overlays. |
 | widgets | Saved alerts sent again to your widgets. |
 
-A replay does not create a second real follow, subscription or redemption.
-It can run the response again, including a command, action or pipeline attached to that response.
-Those actions can have real effects, so check a response that changes balances or other channel state before replaying it.
-A gift bomb is one viewer gifting several subs at once.
-Its replay shows the gifter first, then each recipient, in the original order.
+A replayed gift bomb shows the gifter first, then each recipient, in the original order.
 
 | Message | Meaning |
 | --- | --- |
@@ -144,7 +138,25 @@ Its replay shows the gifter first, then each recipient, in the original order.
 | "Found the event, but there was nothing to show again: no response is set up for it and no alert was saved." | The event has no response and no saved alert. |
 | "Could not replay this event." | The replay failed. |
 
-A **Moderator** or higher sees the **Replay** button.
+## Pick a theme
+
+A supplied widget that draws something and is listed on **Overlays** has a **Theme** setting.
+Find it under **Settings** of that overlay.
+A copy made with **Duplicate**, or a new overlay, shows only the settings its own code declares.
+The required overlays on the **OBS** page are not listed on **Overlays**, so you do not set their theme in the dashboard.
+The ones that draw keep the default, **Sticker**.
+
+The help text says: "The look of this widget. Pick the same theme on every widget for one matching set."
+The **Chat box** has a second **Theme** setting with **Dark**, **Light** and **Transparent**.
+That one sets the chat colors.
+The overlay theme is the one with **Sticker**, **Ink**, **Print** and **Classic**.
+
+| Theme | Look |
+| --- | --- |
+| **Sticker** | White card, bold outline. This is the default. |
+| **Ink** | Black pills, quiet. |
+| **Print** | Lime poster, halftone dots. |
+| **Classic** | Dark see-through panel. |
 
 ## Related pages
 
