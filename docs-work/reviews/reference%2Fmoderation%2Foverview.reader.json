@@ -1,0 +1,50 @@
+{
+    "fingerprint": "6816459edf5cec0284fb246167bc234dc276e9bb46ccd67d3100b5a0e94997dd",
+    "verdict": "PASS",
+    "answers": [
+      {
+        "question": 1,
+        "answer": "Open the screen that fits the problem. For a message waiting for a decision, use the Review queue panel on Home and choose Allow or Deny. To see what moderation did to one person, use the Moderation tab of their profile. For a problem that keeps coming back, use the Access group of the settings. To time out or ban someone, point at their line in chat and use the Timeout menu or the Ban button.",
+        "quote": "Allow or deny the chat messages and flags that wait for a moderator."
+      },
+      {
+        "question": 2,
+        "answer": "You need a role that may see the queue, allow and deny its items, and read the history. By default that is Moderator, Lead moderator, Editor or Broadcaster. This is stated in 'Who can use these tools', before any steps.",
+        "quote": "By default, a Moderator, Lead moderator, Editor or Broadcaster may see the review queue, allow and deny its items, and read the moderation history."
+      },
+      {
+        "question": 3,
+        "answer": "Allow works when the item leaves the queue. Deny shows Denied with an Undo button, and the item leaves after 6 seconds. The sources differ in what Allow does: on an AutoMod-held message, Allow puts the message in chat; on a message a bot filter removed, Allow only closes the review.",
+        "quote": "For example, Allow on a message held by Twitch AutoMod lets it appear in chat."
+      },
+      {
+        "question": 4,
+        "answer": "The sender name in the queue row is plain text, and the held message is not in chat. So the moderator opens the People page, searches the name, opens the profile and chooses the Moderation tab to read the history, then returns to Home and chooses Allow or Deny. If AutoMod held the message, Allow puts it in chat. If a bot filter held it, Allow only closes the review.",
+        "quote": "For a sender in the Review queue, open the People page and type the name in Search people."
+      },
+      {
+        "question": 5,
+        "answer": "The page says the source decides what Allow does. Several paragraphs later it says a row does not show its source, so you have to work out the source from which protections you turned on before you choose Allow. Also, after the Deny steps you learn that leaving the page sends the denial at once, which cuts the 6-second Undo window short. Both cost a reread but block no step.",
+        "quote": "A row does not show its source."
+      },
+      {
+        "question": 6,
+        "answer": "The list of which platforms each source queues is an edge-case list that most moderators will not act on. Read aloud, the Federation row of the table is long and packed with items, so it is hard to follow.",
+        "quote": "The heat limit queues a viewer from any platform the viewer chats on."
+      }
+    ],
+    "findings": [],
+    "warnings_released": true,
+    "warning_review": [
+      {
+        "id": "length",
+        "decision": "keep",
+        "reason": "This is a lookup reference of about 1500 words. The answer to the request sits in the opening paragraphs and the first table, and the Allow and Deny steps follow the two sections a moderator needs to decide them: who can act, and which source applies. The long material is the settings table and the Federation row, which a moderator reads only when a specific setting is in question, so the length does not block the main path."
+      },
+      {
+        "id": "paragraph-25",
+        "decision": "keep",
+        "reason": "The paragraph about queue rows is short sentences, each giving one fact a moderator needs before choosing Allow: the sender name, the unnamed-row label, that the row does not show its source, and which protections decide the source. Each sentence is a separate fact, not padding, so the count alone is not a defect. The missing source label is a content gap, but the reader's own answer says it costs a reread and blocks no step."
+      }
+    ]
+}

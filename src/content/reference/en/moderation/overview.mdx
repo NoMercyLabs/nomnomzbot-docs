@@ -9,7 +9,7 @@ Filters and other automatic protections help with repeated problems, while the r
 
 For day-to-day moderation, start with chat and the queue rather than changing every policy at once.
 If the same problem keeps returning, use the settings in the **Access** group to adjust how the bot handles it.
-Choosing a person's name opens their profile dialog, where the **Moderation** tab provides the context for that person.
+Where a person's name is a link, such as in chat, choosing it opens their profile dialog, where the **Moderation** tab provides the context for that person.
 
 | Where | What you do there |
 | --- | --- |
@@ -21,9 +21,7 @@ The dashboard is explained on [Dashboard tour](/reference/getting-started/dashbo
 
 ## Who can use these tools
 
-By default, a **Moderator**, **Lead moderator**, **Editor** or **Broadcaster** may see the review queue.
-The same roles may allow and deny items in the queue.
-The same roles may read the moderation history.
+By default, a **Moderator**, **Lead moderator**, **Editor** or **Broadcaster** may see the review queue, allow and deny its items, and read the moderation history.
 The channel can change these roles on the **Permissions** page in the **Access** group.
 See [Permissions](/reference/settings/permissions).
 
@@ -37,8 +35,8 @@ The **Review queue** panel on **Home** brings together messages and flags from s
 The count, such as "3 waiting", tells you how many decisions remain.
 The source matters: Twitch can release a message that its AutoMod is still holding, but a message the bot already deleted cannot be restored by choosing **Allow**.
 
-For example, when a viewer's harmless message is held by Twitch AutoMod, choose **Allow** to let it appear in chat.
-When a bot filter already removed a message, **Allow** closes the review in the bot; it does not repost the viewer's words.
+For example, **Allow** on a message held by Twitch AutoMod lets it appear in chat.
+**Allow** on a message a bot filter already removed closes the review in the bot; it does not repost the viewer's words.
 
 An item comes into the queue in these cases:
 
@@ -59,6 +57,8 @@ The platform of an item depends on its source:
 
 Each row shows the sender's name and the message.
 A row without a name shows "Unknown sender".
+A row does not show its source.
+Which source applies depends on which protections you turned on, and which of them you set to hold or flag.
 
 The panel hint says: "Twitch drops a held message after a while. Allowing one teaches the spam filter."
 
@@ -93,38 +93,34 @@ If you leave the page before the 6 seconds end, the bot sends the denial at once
 | "Nothing waits for you right now." | The stream is live and nothing waits. |
 | "Nothing waits for you. Held messages and spam checks show up here during a stream." | The stream is offline and nothing waits. |
 | **Shield mode on** | Twitch shield mode is on for the channel, and your role may see shield mode. The list works as usual. |
-| "The review queue could not load." | The queue failed to load. Choose retry to try again. |
+| "The review queue could not load." | The queue failed to load. Choose **Try again**. |
 
 ## Moderation history
 
 The moderation history lists everything moderation did to one person in this channel, newest first.
 
-1. Choose a viewer's name anywhere in the dashboard, for example in chat.
-   The profile dialog opens.
+1. Open the profile.
+   For a sender in the **Review queue**, open the [People](/reference/community/people) page and type the name in **Search people**.
+   Choose the match to open the profile.
+   On the **People** page, the profile opens in a pane beside the list.
 2. Choose the **Moderation** tab.
    The **Moderation history** section lists the actions.
 
-The **People** page shows the same profile beside its list.
+For other senders, choose the name where it is a link, for example in chat.
+The profile dialog opens.
+
+The sender name in a queue row is plain text and does not open the profile.
+A message that AutoMod holds is not in chat yet, and a message that a filter held was removed from chat.
+So chat is not a reliable place to find that sender.
 
 Each entry has three lines:
 
-- What happened, for example **Banned**, or "Timed out for" and the length.
+- What happened, for example **Banned**, **Unbanned**, **Warned**, or "Timed out for" and the length.
 - The reason, when one was given.
 - Who did it and the date. A moderator's name, or **Automatic** when the bot did it by itself, such as a filter or AutoMod.
 
-| Entry | Meaning |
-| --- | --- |
-| **Banned** | The person was banned. |
-| **Unbanned** | The ban was lifted. |
-| **Timed out** | The person was timed out. With a length, it shows "Timed out for" and the length. |
-| **Warned** | The person got a warning. |
-| **Accepted the warning** | The person accepted a warning. |
-| **Message deleted** | A message of the person was deleted. |
-| **Message held by AutoMod, then denied** | AutoMod held a message, and the message was denied. |
-| **Caught by a chat filter** | A chat filter caught a message. |
-| **Report confirmed** | A report about the person was confirmed. |
-| **Note** | A note was added. |
-| **Moderation action** | Any other action. |
+Other entries read **Accepted the warning**, **Message deleted**, **Message held by AutoMod, then denied**, **Caught by a chat filter**, **Report confirmed** and **Note**.
+Any other action reads **Moderation action**.
 
 **Show older** at the bottom loads older entries.
 A person with no entries shows "Moderation has done nothing to this person here yet."
@@ -136,7 +132,7 @@ The **Moderation** tab also holds:
 - The **Twitch suspicious-user flag**.
 - The person's ban records, with the reason, who banned them and when.
 
-The profile also has **Warn** and **Ban** actions.
+The profile also has **Warn** and **Ban** buttons and a **Timeout** menu.
 
 ## Where the other tools live
 
@@ -147,8 +143,8 @@ The **Access** group also holds **Permissions** and **Event journal**; see [Perm
 | --- | --- | --- |
 | **AutoMod filters** and **Chat filters** | The bot's filters, the Twitch AutoMod levels and your own filters. | [AutoMod and chat filters](/reference/moderation/automod-and-chat-filters) |
 | **Blocked terms** and **Banned people** | The words Twitch blocks, and the people who are banned. | [Bans and blocked terms](/reference/moderation/bans-and-blocked-terms) |
-| **Spam defense** | The spam policy and what it found. | [Spam defense](/reference/moderation/spam-defense) |
-| **Trust policy** and **Escalation** | The rules for new chatters, and the warn, timeout and ban steps. | [Trust and escalation](/reference/moderation/trust-and-escalation) |
+| **Spam defense** | The spam policy, including the newcomer limit. | [Spam defense](/reference/moderation/spam-defense) |
+| **Trust policy** and **Escalation** | The trust score settings, and the warn, timeout and ban steps. | [Trust and escalation](/reference/moderation/trust-and-escalation) |
 | **Viewer reports** | Reports about a person that need a moderator's decision. | [Reports](/reference/moderation/reports) |
 | **Shoutouts**, in the **Bot** group | Automatic shoutouts and the announcement text. | [Shoutouts](/reference/moderation/shoutouts) |
 | **Federation**, in the **Connections** group | What this channel shares with or accepts from other trusted bots (bans, ban list, trust list), and whether moderator mass bans and admin network blocks reach your channel. Everything is off until you turn it on. | [Linked channels](/reference/moderation/linked-channels) |
@@ -157,8 +153,10 @@ Slow mode, followers-only, emote-only, Twitch subscriber-only, Unique chat, Non-
 The same panel has a **Raid accounts** section with a **Mass ban...** button.
 Shield mode is the shield switch in the header of every dashboard page.
 
-If a message needs a timeout or ban, use its chat controls or the person's profile.
-The **Allow** and **Deny** buttons in the Home queue resolve the review; they do not themselves apply a timeout or ban.
+If a message needs a timeout or ban, point at its line in chat.
+The line shows a **Timeout** menu (1 min, 10 min, 1 hour or 1 day) and a **Ban** button.
+The person's profile has the same two, shown only to a role that may ban.
+The **Allow** and **Deny** buttons in the **Review queue** panel on **Home** resolve the review; they do not themselves apply a timeout or ban.
 For a wider pattern, [spam defense](/reference/moderation/spam-defense) looks for coordinated activity, while [trust and escalation](/reference/moderation/trust-and-escalation) explains how recent trouble and repeated offenses are handled.
 
 ## Related pages
