@@ -1,16 +1,26 @@
 ---
 title: Leaderboards and games
-description: Add, change and delete leaderboards that rank viewers by the channel currency, and see which game pages are not built yet.
+description: Add, change and delete leaderboards that rank viewers by the channel currency, and show the top viewers in chat.
 ---
 
-Leaderboards make different kinds of participation visible through the [channel currency](/reference/economy/currency-and-balances).
-A balance leaderboard shows who holds the most now, while an earned or spent leaderboard can highlight activity during a particular period.
+A balance leaderboard shows who holds the most [channel currency](/reference/economy/currency-and-balances) now, while an earned or spent leaderboard ranks activity during a period.
 Configure them on the **Leaderboards** tab of **Economy**, then use the chat command to show a ranking to viewers.
 
 ## Who can use this
 
 By default, a **Moderator**, **Lead moderator**, **Editor** or **Broadcaster** may see, add, change and delete leaderboards.
 Someone who may not see leaderboards does not see the **Leaderboards** tab.
+
+## Before you add one
+
+Chat shows only one leaderboard, so the order of your list matters.
+The list is sorted by **Ranks by** (**Balance**, **Earned**, **Spent**), not by the order you created the boards.
+`!leaderboard` picks the first leaderboard in that list with **Visible to viewers** on.
+A visible **Balance** board therefore wins over an **Earned** board.
+When no leaderboard has **Visible to viewers** on, the command picks the first leaderboard in the list, so turning it off does not by itself keep every ranking out of chat.
+
+With **Over** set to **One jar**, your channel must own the jar or have an accepted membership in it.
+Otherwise the ranking is empty.
 
 ## Add a leaderboard
 
@@ -51,37 +61,25 @@ A value of 0 or less in **Places shown** is refused.
 **Monthly** starts on the first day of the month at midnight UTC.
 **All time** counts everything.
 
-A viewer with the economy's leaderboard exclusion recorded is not ranked.
-This exclusion is separate from the **Appear on leaderboards** consent and **Opt out** button on [Your data](/reference/settings/your-data-and-privacy): those controls currently do not update the exclusion used here.
-The viewer leaderboard page is still **Coming soon**, so it does not provide an exclusion control either; setting the economy exclusion currently requires an integration.
-A moderator can see whether a viewer is excluded in the viewer's profile, on the **Leaderboard** row of the points section: **Shown**, or **Hidden by their choice**.
+A viewer whose leaderboard exclusion is recorded is not ranked.
+A moderator can see the exclusion in the viewer's profile, on the **Leaderboard** row of the points section: **Shown**, or **Hidden by their choice**.
 See [People](/reference/community/people).
 
-With **Over** set to **One jar**, the ranking instead totals each viewer's contributions to that jar during the period.
-This uses contributions rather than the viewer's current wallet balance, regardless of **Ranks by**.
-Your channel must own the jar or have an accepted membership in it; otherwise the ranking is empty.
+With **Over** set to **One jar**, the ranking totals each viewer's contributions to that jar during the period, whatever **Ranks by** says.
 
-For example, a **Whole channel**, **Earned**, **Weekly** board recognizes points earned since Sunday rather than rewarding only the largest long-term balance.
-A jar board with **Monthly** recognizes contributions made to that shared goal since the first of the month.
+For example, a **Whole channel**, **Earned**, **Weekly** board ranks currency earned since Sunday, not the largest long-term balance.
 
 ## Show a leaderboard in chat
 
 A viewer types `!leaderboard` in chat.
-The bot answers in the channel's one bot voice with the top 5 viewers of one leaderboard.
-It always shows 5 places, whatever **Places shown** says.
-It picks the first leaderboard in the list with **Visible to viewers** on.
-When none is on, it picks the first leaderboard in the list.
-The list is sorted by **Ranks by** (**Balance**, **Earned**, **Spent**), not by the order you created the boards.
-
+The bot answers with the top 5 viewers of the leaderboard chosen as described in **Before you add one**, whatever **Places shown** says.
 The reply lists each rank, the viewer's Twitch ID and the amount.
-Names do not show yet.
 
 Everyone can use the command.
 By default it has a 90-second cooldown.
 You can change it or turn it off with the other [built-in commands](/reference/commands/built-in-commands).
 
 Use your channel's command prefix if it differs from `!`.
-Because the command falls back to a private leaderboard when no public one exists, **Visible to viewers** off does not by itself keep every ranking out of chat.
 
 | Result | What the bot answers by default |
 | --- | --- |
@@ -92,22 +90,10 @@ Because the command falls back to a private leaderboard when no public one exist
 
 1. To change a leaderboard, choose **Edit leaderboard** on its row.
    The **Edit leaderboard** dialog opens with the saved values.
-   Choose **Save leaderboard**.
+   Change any of the fields from the table above, then choose **Save leaderboard**.
 2. To delete a leaderboard, choose **Delete leaderboard** on its row.
    The dialog **Delete this leaderboard?** shows "The ranking stops. Balances stay."
    Choose **Delete leaderboard** to confirm.
-
-## Games and the viewer pages
-
-These pages show **Coming soon** today.
-They are not built yet.
-
-| Page | Where it is |
-| --- | --- |
-| **Games** | The dashboard sidebar |
-| **Leaderboards** | The [viewer pages](/reference/community/viewer-pages) of a channel |
-| **Points and store** | The viewer pages of a channel |
-| **Games** | The viewer pages of a channel |
 
 ## Related pages
 

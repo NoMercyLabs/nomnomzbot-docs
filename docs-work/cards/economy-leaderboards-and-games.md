@@ -14,7 +14,6 @@ Must know:
 - setup | Save a Whole channel Balance board under Economy, with configuration permission and chat access established first. | ../../../../nomnomzbot/dashboard/src/views/dashboard/economy/components/LeaderboardDialog.vue
 - ranking | Balance ignores the period; Earned and Spent count credits and debits, while jar boards count contributions and periods start at UTC boundaries. | ../../../../nomnomzbot/server/src/NomNomzBot.Infrastructure/Economy/EconomyLeaderboardService.cs
 - publication | The command shows at most five entries, prefers a visible board and otherwise falls back to a saved one; removing a board leaves balances unchanged. | ../../../../nomnomzbot/server/src/NomNomzBot.Infrastructure/Commands/Builtins/LeaderboardBuiltin.cs
-- games | Enable currency games and start or cancel shared rounds; this page owns games, because no separate Games page exists. | ../../../../nomnomzbot/dashboard/src/views/dashboard/games/GamesView.vue
 Moves elsewhere:
 - none
 Checks:
