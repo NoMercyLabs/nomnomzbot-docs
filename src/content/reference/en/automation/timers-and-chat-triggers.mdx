@@ -25,11 +25,8 @@ A command starts with the prefix, such as `!hello`, and is made on [Create a com
 A **Moderator**, **Lead moderator**, **Editor** or **Broadcaster** may open the page and change timers and chat triggers.
 The roles are explained on [Permissions](/reference/settings/permissions).
 
-The **Broadcaster** may also let a **VIP** open each tab.
-A VIP opens the page only when the timers view is opened to VIPs.
-To show the **Chat triggers** tab to a VIP, open both the timers view and the chat triggers view to VIPs.
-A VIP then sees the list only, and the editor does not open.
-For a VIP, the **New timer** and **New trigger** buttons show "You can view this, but your role cannot change it."
+A **VIP** can only view these tabs, and only when the **Broadcaster** allows it.
+See [What a VIP sees](#what-a-vip-sees).
 
 ## Make a timer
 
@@ -44,15 +41,19 @@ New here? You are welcome to join the conversation or just watch.
 The bot posts one line each time the timer fires, then moves to the next.
 This lets one timer vary its reminder without posting several messages at once.
 
+A timer posts only while your channel is live.
+Its first post comes one **Minutes between posts** after you go live.
+
 1. Open **Triggers and timers** in the sidebar, then the **Timers** tab.
 2. Choose **New timer**.
    The **New timer** dialog opens.
-3. Type a **Name**, for example `Follow reminder`.
+3. Type a **Name**, for example `Break reminder`.
 4. Under **Reaction**, choose **Simple reply** or **Pipeline** (see the table below).
-5. For a simple reply, under **Send the reply to**, keep **Twitch chat** or choose another place.
-6. Set **Minutes between posts**.
+5. For a simple reply, type your lines in **Messages**, one on each line.
+6. Under **Send the reply to**, keep **Twitch chat** or choose another place.
+7. Set **Minutes between posts**.
    The default is 30 minutes.
-7. Choose **Create timer**.
+8. Choose **Create timer**.
    The dialog closes and the new timer shows in the list, switched on.
 
 | **Reaction** | The field to fill in |
@@ -92,8 +93,11 @@ Chat lines sent since the timer's last post still count, including lines sent wh
 A new timer starts with **Chat lines needed** at 0, so once the stream has been live that long, it posts at the next check, within about 30 seconds.
 
 A copy made with **Duplicate** keeps the **Chat lines needed** of the timer it copies.
-Once you switch the copy on, it posts at the first check while you are live when both are true:
-one **Minutes between posts** has passed since the stream went live, and chat has had **Chat lines needed** lines since the bot began watching your channel.
+Switch the copy on.
+
+The copy posts at the first check while you are live, once two things are true.
+First, one **Minutes between posts** has passed since the stream went live.
+Second, chat has had as many lines as **Chat lines needed** says, counted since the bot began watching your channel.
 After the first post, it waits **Minutes between posts** between posts.
 
 When **Chat lines needed** is 0, a timer posts on time alone.
@@ -102,7 +106,7 @@ The bot posts only in a channel it is connected to.
 A timer with several messages posts them in turn, one per post.
 After the last message, it starts again at the first.
 A timer set to **Pipeline** runs its command, pipeline or action each time instead of posting a line.
-The run gets `\{timer.name\}`, and `\{timer.message\}` when the timer has lines.
+The run gets `{timer.name}`, and `{timer.message}` when the timer has lines.
 A run that is skipped or fails still counts as a post, so the timer waits a full **Minutes between posts** before it tries again.
 
 A simple reply goes to Twitch chat by default.
@@ -133,8 +137,10 @@ The footer counts your unsaved changes.
 Choose **Save changes** to keep them, or **Discard** to go back to the saved timer.
 After a save, the count goes away and the list shows the new values.
 
-**Duplicate** makes a copy named after the timer with "copy" added, such as `Follow reminder copy`.
+**Duplicate** makes a copy named after the timer with "copy" added, such as `Break reminder copy`.
 The copy is switched off, and it opens in the editor.
+It copies the saved timer, so changes you have not saved are not in the copy.
+Save first if you want them in the copy.
 
 ## Delete a timer
 
@@ -242,6 +248,17 @@ After a save, the unsaved count goes away and the list shows the new words.
 
 The trigger is removed for good and stops answering.
 The editor closes and shows "Pick a trigger to edit it."
+
+## What a VIP sees
+
+The **Broadcaster** may let a **VIP** open each tab.
+A VIP opens the page only when the timers view is opened to VIPs.
+To show the **Chat triggers** tab to a VIP, open both the timers view and the chat triggers view to VIPs.
+To open a view to VIPs, go to the **Permissions** settings page, open the **Actions** tab and use **Search actions** to find **See timers** or **See chat triggers**.
+Choose **VIP** in the action's picker; both actions start at **Moderator**.
+The steps are on [Permissions](/reference/settings/permissions#set-the-lowest-role-for-an-action).
+A VIP then sees the list only, and the editor does not open.
+For a VIP, the **New timer** and **New trigger** buttons show "You can view this, but your role cannot change it."
 
 ## Troubleshooting
 

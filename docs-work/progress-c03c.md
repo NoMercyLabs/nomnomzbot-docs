@@ -1,6 +1,6 @@
 # Documentation checkpoint
 
-Accepted: 2 of 113.
+Accepted: 3 of 113.
 
 Resume: /reference/overview
 
@@ -54,7 +54,7 @@ Resume: /reference/overview
 | /reference/templates/text | reference%2Ftemplates%2Ftext.reader.json: invalid or missing JSON: [Errno 2] No such file or directory: 'C:\\Projects\\NoMercyLabs\\nomnomzbot-docs\\.claude\\worktrees\\final-c03\\docs-work\\reviews\\reference%2Ftemplates%2Ftext.reader.json' |
 | /reference/templates/user | reference%2Ftemplates%2Fuser.reader.json: invalid or missing JSON: [Errno 2] No such file or directory: 'C:\\Projects\\NoMercyLabs\\nomnomzbot-docs\\.claude\\worktrees\\final-c03\\docs-work\\reviews\\reference%2Ftemplates%2Fuser.reader.json' |
 | /reference/templates/var | reference%2Ftemplates%2Fvar.reader.json: invalid or missing JSON: [Errno 2] No such file or directory: 'C:\\Projects\\NoMercyLabs\\nomnomzbot-docs\\.claude\\worktrees\\final-c03\\docs-work\\reviews\\reference%2Ftemplates%2Fvar.reader.json' |
-| /reference/automation/timers-and-chat-triggers | reference%2Fautomation%2Ftimers-and-chat-triggers.reader.json: stale fingerprint; page, card or rendered article changed |
+| /reference/automation/timers-and-chat-triggers | accepted |
 | /reference/automation/event-responses | accepted |
 | /reference/automation/rewards | accepted |
 | /reference/overlays/set-up-overlays | reader: review has not passed |
