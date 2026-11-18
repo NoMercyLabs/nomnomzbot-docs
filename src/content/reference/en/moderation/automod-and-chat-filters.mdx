@@ -41,7 +41,7 @@ The initial capitals threshold is 70 percent, and the emote limit is 10 emotes p
 2. Switch a filter on or off, and fill in its fields (see the table below).
    **Save** at the top of the page becomes active.
 3. Choose **Save**.
-   The page shows "AutoMod saved."
+   The page shows "AutoMod saved." The change applies to chat at once.
 
 | Panel | Switch | Field | What it does |
 | --- | --- | --- | --- |
@@ -58,6 +58,7 @@ Blank lines and entries typed twice drop out when you save.
 An allowed domain also allows its subdomains: allowing `example.com` permits `www.example.com`.
 One disallowed link still makes the message match, even if it also contains an allowed link.
 Banned phrases match anywhere in the message, so a short phrase can also match inside a longer word.
+Blocked terms in a chat filter match the same way.
 
 The capitals check counts capital letters as a share of letters, ignoring punctuation and numbers in that percentage.
 It skips messages with fewer than five letters and, with the dashboard's normal configuration, messages shorter than ten characters.
@@ -65,9 +66,6 @@ It skips messages with fewer than five letters and, with the dashboard's normal 
 **Capital letters, percent** takes a number from 1 to 100.
 **Most emotes in a message** takes a number from 1 to 50.
 A number outside its range shows "Use a number from 1 to 100." or "Use a number from 1 to 50.", and **Save** stays off.
-
-The current capitals matcher interprets a saved threshold of 1 as 100 percent, although the dashboard labels the field as a percentage.
-Use 2 through 100 when setting a percentage; the default of 70 means 70 percent.
 
 ## Set the Twitch AutoMod levels
 
@@ -104,8 +102,10 @@ When a message matches, the bot takes the action you pick.
 3. Choose **What it checks**, and fill in the fields it shows (see the table below).
 4. Choose **When a message matches** (see [What a filter does](#what-a-filter-does)).
 5. Choose **Never filter**: the lowest role the filter skips.
-6. Choose **Save filter**.
+6. Check the filter with **Try it** (see [Try a filter before you save it](#try-a-filter-before-you-save-it)).
+7. Choose **Save filter**.
    The page shows "Chat filter saved." and the list comes back with the new filter.
+   With **Filter is on** left on, the filter acts on chat at once, live or offline.
 
 | **What it checks** | The fields it shows |
 | --- | --- |
@@ -170,6 +170,12 @@ The choices run from **Twitch subscribers and above** to **Only the broadcaster*
 The broadcaster and moderators are always exempt from automatic chat filters, regardless of this choice.
 The setting lets you exempt additional viewers, such as subscribers or VIPs; choosing a higher level does not make the bot filter moderators.
 When several custom filters match, the bot handles only the first matching enabled filter, starting with the oldest one.
+The list shows the newest filter first, so the filter at the bottom of the list acts first.
+A filter whose **Never filter** choice skips the sender does not count as a match.
+The next matching filter still acts on that message.
+
+Chat filters run only in a channel whose broadcaster has finished onboarding.
+Before that, the bot does not check chat against the custom filters.
 
 | **Never filter** choice |
 | --- |
@@ -193,18 +199,22 @@ Nothing is saved or sent.
 
 For a pattern that is not valid, the panel shows "The pattern is not valid:" with the reason.
 
+The test ignores **Never filter**, the broadcaster and moderator exemption, and whether the bot can act.
+A match here does not promise an action in chat.
+
 ## Change a chat filter
 
 1. Choose **Edit** on the filter's row.
    The editor opens with the filter's name in its title.
 2. Change the fields.
+   The **What it checks** choice of a saved filter does not change; for a different type, make a new filter.
 3. Choose **Save filter**.
    The page shows "Chat filter saved."
 
 **Cancel** closes the editor and keeps nothing you changed.
 
 Each row shows what the filter checks, its action and how many times the filter acted, for example "Blocked terms · Delete the message · 3 matches".
-A match that the platform refused, for example because the bot is not a moderator, is not counted.
+A match that the platform refused is not counted.
 A **Flag for review** match on a Kick or YouTube message is not counted either.
 
 ## Switch a chat filter on or off
@@ -253,10 +263,9 @@ Use the manual chat tools when a moderator's message needs attention.
 ::Troubleshooting
 
 **A filter matched, but the message stayed in chat.**
-The bot could not delete the message or time the person out.
-This most often means the bot is not a moderator in your channel.
-The message stays in chat, and an item appears in your attention inbox: "AutoMod could not delete a message" or "The filter could not act on" the person.
-Make the bot a moderator in your channel, then act on that message by hand.
+The platform refused to delete the message or to time the person out.
+The message stays in chat, and an item appears in your attention inbox: "AutoMod could not delete a message" or "The `{filter}` filter could not act on `{username}`", with the filter's name and the person's name filled in.
+Read the item, then act on that message by hand.
 
 ::
 

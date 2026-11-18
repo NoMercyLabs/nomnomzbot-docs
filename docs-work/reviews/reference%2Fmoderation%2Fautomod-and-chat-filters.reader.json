@@ -1,0 +1,60 @@
+{
+  "fingerprint": "adf5f533b97ac220beecc63f8187131692a454ccfb53b76ec2a43977c0407e96",
+  "verdict": "PASS",
+  "answers": [
+    {
+      "question": 1,
+      "answer": "To set the bot's own filters: open AutoMod filters in the settings, switch a filter on, fill in its fields, then choose Save. Saving shows 'AutoMod saved.' and the change applies at once. To set Twitch's levels: pick a level for each category in the Twitch AutoMod panel, then choose Save Twitch levels. To make and test a custom rule: open Chat filters and choose New filter. Type a Name, choose What it checks and fill in the fields it shows, then choose When a message matches and Never filter. Test it in the Try it panel: type A sample chat message and choose Try message. Only then choose Save filter. The filter acts on chat at once if Filter is on is left on.",
+      "quote": "Check the filter with Try it (see Try a filter before you save it)."
+    },
+    {
+      "question": 2,
+      "answer": "You must be signed in to the channel and hold the right role, as the 'Who can use these pages' table says. A Moderator can only look at the pages. A Lead moderator can change the four filters and make chat filters. Only the Broadcaster can change the Twitch levels. The 'What a filter does' section also says chat filters run only once the broadcaster has finished onboarding.",
+      "quote": "Change the four AutoMod filters, and make, change and remove chat filters."
+    },
+    {
+      "question": 3,
+      "answer": "Try it shows 'This message would match.' or 'This message would not match.', and an invalid pattern shows 'The pattern is not valid:' with the reason. Saving shows 'AutoMod saved.', 'Twitch AutoMod saved.' or 'Chat filter saved.', and the new filter appears in the list. The two pages differ like this: AutoMod filters holds four fixed delete-only filters and the Twitch levels. Chat filters holds your own rules, each with a choice of action.",
+      "quote": "The panel shows “This message would match.” or “This message would not match.”"
+    },
+    {
+      "question": 4,
+      "answer": "A plain Moderator cannot run the test. Moderators only see the Chat filters list and cannot open the editor, and the Try it panel sits under that editor. A Lead moderator or the Broadcaster would choose New filter, choose Blocked terms and type the phrase. Then they type a sample message in Try it and choose Try message. Nothing is saved or sent. The result ignores Never filter and the moderator exemption, so a match does not promise an action in chat. A short phrase can also match inside a longer word. To keep it off viewer chat, they must not choose Save filter with Filter is on left on.",
+      "quote": "The test ignores Never filter, the broadcaster and moderator exemption, and whether the bot can act."
+    },
+    {
+      "question": 5,
+      "answer": "Step 7 says a saved filter acts on chat at once. Only later, in 'What a filter does', does the page add that this needs finished onboarding. Step 4 links to that section, so the cost is small. In the capitals rule I would guess what the dashboard's 'normal configuration' is, because the page never says where it is set. 'Match upper and lower case apart' appears only in the defaults table. The fields table in step 3 leaves it out, so I would guess which filter type shows it. 'Filter is on' first appears in step 7, after the step where I would have looked for it.",
+      "quote": "Chat filters run only in a channel whose broadcaster has finished onboarding."
+    },
+    {
+      "question": 6,
+      "answer": "The dialog description is hard to follow when read aloud. The listener cannot tell that the dialog text is 'Remove <name>?'. The capitals-check details are edge cases most readers would not act on. 'Home review queue' and 'review queue' name the same place. Both link to the same page, so the cost is small.",
+      "quote": "A dialog asks “Remove” and the filter’s name, with a question mark."
+    }
+  ],
+  "findings": [],
+  "warnings_released": true,
+  "warning_review": [
+    {
+      "id": "length",
+      "decision": "keep",
+      "reason": "The page is long because it covers four filter types and their rules, but it is a reference page that the reader scans by its section headings, and the steps are not buried. The reader answered all six questions from it without difficulty."
+    },
+    {
+      "id": "first-numbered-step",
+      "decision": "keep",
+      "reason": "The 282 words before step one are the page scope and the role table. The reader needs them to know whether they can act at all, and the role rules change what the steps let them do, so they belong first."
+    },
+    {
+      "id": "paragraph-22",
+      "decision": "keep",
+      "reason": "The paragraph has six short sentences, each stating one rule about exemptions or match order. The reader needs them when filters overlap, and the match-order sentence is the surprise they would otherwise miss. Splitting it would not add content."
+    },
+    {
+      "id": "sentence-34-3",
+      "decision": "keep",
+      "reason": "The long sentence describes one troubleshooting outcome and quotes the exact item titles the reader will look for in the attention inbox. Its length is the cost of matching the real text, and the placeholders are explained in the same sentence."
+    }
+  ]
+}
