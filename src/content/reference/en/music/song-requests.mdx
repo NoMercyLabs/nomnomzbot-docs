@@ -36,7 +36,7 @@ A viewer types `!sr` and a song name or a song link:
 2. The bot checks the request rules (see [Why the bot refuses a request](#why-the-bot-refuses-a-request)).
 3. The song joins the queue.
    The bot confirms the song in chat with the song, the artist and a link.
-   When a channel-point reward or a pipeline adds the song, the reply also shows a short request code, for example `K7QM`.
+   When a channel-point reward or a pipeline adds the song, the reply shows the song, the artist and a short request code, for example `K7QM`, with no link.
 
 With no song after `!sr`, the bot answers `Usage: !sr <song name or URL>`.
 One viewer waits 12 seconds between two `!sr` messages by default.
@@ -74,8 +74,8 @@ A music moderator is a moderator, or a viewer the broadcaster gave the right to 
 | --- | --- | --- |
 | `!sr` | Everyone | Requests a song. |
 | `!wrongsong` | Everyone | Takes back the viewer's own request. |
-| `!queue` | Everyone | Shows the next waiting songs with their queue numbers. |
-| `!skip` | Everyone | On its own, skips the song that plays now. A viewer can skip only their own song, and a music moderator can skip any song. With a number, for example `!skip 2`, removes the viewer's own waiting request with that number. |
+| `!queue` | Everyone | Shows the caller's own waiting requests with their queue numbers and a rough wait. A caller with no waiting request sees the first five songs. |
+| `!skip` | Everyone | On its own, skips the song that plays now. A viewer can skip only their own song, and a music moderator can skip any song. With a number, for example `!skip 2`, removes the viewer's own waiting request at that place in their own list, so `!skip 2` removes their second request, not the queue's second song. |
 | `!closequeue` | A music moderator | Closes the queue to new requests. The music keeps playing and the queued songs stay. |
 | `!openqueue` | A music moderator | Opens the queue to new requests again. |
 | `!clearsongs` | A music moderator | Removes a viewer's queued requests, for example `!clearsongs viewername`. A provider-queued or just-started request can also be skipped. |
@@ -107,9 +107,8 @@ This gives more people a chance to contribute; the queue displayed now is the or
 | **Play next** | Moves the song to the top of the queue. |
 | The trash button | Asks "Remove this song?". **Remove** takes it out of the queue. |
 | The ban button | Asks "Ban this song?". **Ban song** takes it out of the queue and blocks it: "nobody can request it again." |
-| **Pick a requester** and **Remove all**, at the top of the panel | The picker shows only when a viewer has two or more songs waiting, and only to people who may moderate the queue. For one song, use that row's trash button. Pick a viewer, then **Remove all**. The dialog asks "Remove 3 songs from viewername?". |
+| **Pick a requester** and **Remove all**, at the top of the panel | The picker shows only when a viewer has two or more songs waiting, and only to people who may moderate the queue. For one song, use that row's trash button. Pick a viewer, then **Remove all**. The dialog asks "Remove 3 songs from viewername?"; choose **Remove all** in it to confirm. |
 
-The remove-all dialog currently says the playing song keeps playing, but that is not an unconditional guarantee.
 A request still listed in the bot's queue can already be starting or held in Spotify's own queue.
 Removing that request can skip it immediately if it has started, or arrange to skip it when Spotify reaches it.
 The same behavior applies to `!clearsongs` and the **Song clear requester** pipeline step.
@@ -216,7 +215,7 @@ The dialog lists the rules that go back to the default.
 **Requests are open** and the banger playlist stay as they are.
 
 Choose **Reset to default** in the dialog to confirm.
-Your edits to those rules are lost.
+The reset also discards every other unsaved edit in the panel.
 
 ## Why the bot refuses a request
 
@@ -241,7 +240,7 @@ The bot answers each refused request in chat with the reason.
 
 ### Let a refused song through
 
-Three limits can be lifted for one song: the queue size, **Songs per person** and **Longest song**.
+Four refusals can be lifted for one song: the queue size, **Songs per person**, **Longest song** and a YouTube video refused under **Music videos only**.
 
 1. In chat, use your chat app's reply to answer the bot's refusal message.
 2. Type `!permit` and nothing else.
@@ -269,12 +268,6 @@ The rule is about that person, not about the viewer who asked for the song.
 
 </details>
 
-## The public request page
-
-Use chat requests for the dashboard workflow described here.
-The dashboard currently provides no public request-page link to give viewers.
-A separately built page can submit requests through the API; those requests have no viewer role and count as **Everyone** for source access.
-
 ## Troubleshooting
 
 ::Troubleshooting
@@ -285,7 +278,7 @@ Check these, in order:
 1. **Requests are open** in **Request rules**. The **Request queue** badge must read **Open**.
 2. **Playback** on the **Now playing** panel. With it off, the bot refuses every request (see [Music player](/reference/music/music-player)).
 3. **Allow Spotify songs** and **Allow YouTube songs** on the **Sources** tab. A service that is off takes no requests.
-4. **YouTube requests** on the **Sources** tab. By default, only the broadcaster may request from YouTube. Pick **Everyone**, or the lowest role you want, to let viewers request.
+4. **YouTube requests** on the **Sources** tab. By default, only the broadcaster may request from YouTube, and only the **Broadcaster** can change this field. Pick **Everyone**, or the lowest role you want, to let viewers request.
 
 ::
 

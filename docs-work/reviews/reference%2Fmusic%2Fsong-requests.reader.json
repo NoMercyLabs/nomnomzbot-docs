@@ -1,0 +1,55 @@
+{
+  "fingerprint": "4a0f25a2021355961db3d571b47aa8918f30de3a1ecb6d57d50970a77480d0cb",
+  "verdict": "PASS",
+  "answers": [
+    {
+      "question": 1,
+      "answer": "Viewers request a song by typing !sr with a song name or link. The bot looks it up, checks the request rules and adds it to the Request queue on the Music page. To set the rules, open the Music page, choose Request rules in the page header, change the fields on the Requests and Sources tabs, then choose Save.",
+      "quote": "On the Music page, choose Request rules in the page header."
+    },
+    {
+      "question": 2,
+      "answer": "You need your music service set up first. Spotify needs a connected account and an active playback device. YouTube needs the Music Player browser source loaded in OBS. Both are covered on the music player setup page. To change rules you need the Moderator, Lead moderator, Editor or Broadcaster role. Only the Broadcaster can change Spotify requests and YouTube requests. The second paragraph and the Who can use this table say this.",
+      "quote": "Spotify needs a connected account and an active playback device; YouTube needs the Music Player browser source loaded in OBS."
+    },
+    {
+      "question": 3,
+      "answer": "An accepted chat request gets a bot reply with the song, the artist and a link, and the song shows as a row in the Request queue panel. A saved rule change shows as Save and Discard going gray. A refused request gets a chat reply with the reason, listed in the Why the bot refuses a request table.",
+      "quote": "The bot confirms the song in chat with the song, the artist and a link."
+    },
+    {
+      "question": 4,
+      "answer": "The duplicate rule applies. The bot refuses the request and names who already queued the song. A moderator cannot lift this with !permit, because the duplicate check still applies to a permitted song. The viewer has to wait or pick another song.",
+      "quote": "The blocked list and the duplicate check still apply to a permitted song."
+    },
+    {
+      "question": 5,
+      "answer": "In step 2 of Set the request rules I change the rules on the Sources tab and expect step 3 Save to apply them. Only after the steps do I learn that Spotify requests and YouTube requests save at once and that only the Broadcaster can change them. A moderator learns this after trying, and that is a reread, not a blocker, since the following paragraph states it.",
+      "quote": "Only the Broadcaster can change them."
+    },
+    {
+      "question": 6,
+      "answer": "The fair-order paragraph is hard to follow when read aloud. The second half of its last sentence, about which order to consult, does not say clearly what the listener should do. Some refusal replies also read oddly aloud because of the quote marks around the ellipsis.",
+      "quote": "This gives more people a chance to contribute; the queue displayed now is the order to consult when requests arrive or a moderator moves them."
+    }
+  ],
+  "findings": [],
+  "warnings_released": true,
+  "warning_review": [
+    {
+      "id": "length",
+      "decision": "keep",
+      "reason": "At 2553 words the page is long to hear read aloud, but each part answers a question this streamer or moderator asks (setup, roles, rules, refusals, troubleshooting), and the longer detail blocks are collapsed. All four quoted answers were found quickly in the article. The cost is scanning, not confusion, so the number alone is keep."
+    },
+    {
+      "id": "first-numbered-step",
+      "decision": "keep",
+      "reason": "The 182 words before the first list are the service requirements, the role table and the intro. Voice item 4 says requirements that affect the steps go before them, so this order is right. The list is the bot's request flow, which this reader needs before setting rules. Flag for the manager: blind answer 5 reports that the Spotify and YouTube fields on the Sources tab save at once and only the Broadcaster can change them, which step 3 Save does not say. The reader judged this a reread, not a blocker, so it is kept here."
+    },
+    {
+      "id": "paragraph-8",
+      "decision": "keep",
+      "reason": "Paragraph 8 is the !wrongsong paragraph, with six sentences that each state one separate fact the reader can use. The repeated A viewer openers are a rhythm issue, but they do not hide any step or rule, and no blind answer depends on this paragraph. A number alone is keep."
+    }
+  ]
+}
