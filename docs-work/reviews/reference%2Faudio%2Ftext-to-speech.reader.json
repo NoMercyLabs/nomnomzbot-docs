@@ -1,0 +1,105 @@
+{
+  "fingerprint": "6b3ce815984b06394ec591fa4d93f1d3a40539f69a9df40a85aefb139f0216d7",
+  "verdict": "PASS",
+  "answers": [
+    {
+      "question": 1,
+      "answer": "Follow the five steps under Hear your first spoken reply. 1: on the OBS page, choose Overlays in OBS and find TTS caption in Required overlays. 2: choose Connect, add it in the OBS app as a Browser source using the dialog's settings, and keep Control audio via OBS on. 3: open Text to speech, then Rules. Check that Read messages aloud is on, Moderators approve first is off, Who may be heard is Everyone and Minimum bits is 0. 4: choose a voice on Voices and play its sample. 5: on a chat command, enable Read it aloud, save it and run the command in chat. To choose who is heard, set Who may be heard in the Speaking panel on the Rules tab. Every step can be done as written and no action is missing.",
+      "quote": "Choose Connect. In the OBS app, add it as a Browser source using the dialog’s settings. Keep Control audio via OBS on."
+    },
+    {
+      "question": 2,
+      "answer": "You need one of the roles that may change the settings. An Editor role is needed to switch a reward on in Rewards that speak. You also need the TTS caption browser source in OBS and something that requests speech, such as a command, reward, event response or pipeline. Both are stated near the top of the page and under Who can use this page.",
+      "quote": "A Moderator, Lead moderator, Editor or Broadcaster may open the page and change the settings."
+    },
+    {
+      "question": 3,
+      "answer": "Success is hearing the reply through OBS and seeing the caption. The voice sample in the dashboard only checks the voice. Running the command checks the whole path to the stream. The Spoken history row does not prove that a line played, because the row is saved before the line reaches OBS.",
+      "quote": "You should hear the reply through OBS and see the caption when the source displays it."
+    },
+    {
+      "question": 4,
+      "answer": "To limit ordinary viewers, set Who may be heard to Moderators in Speaking on the Rules tab. This setting checks the role of the person whose own words are read. Command replies count as Everyone with 0 bits, so they stop being read and cannot be used for the moderators' test. The built-in Rewards that speak path bypasses Who may be heard, so any reward that is switched on still reads ordinary viewers. To keep viewers out, leave rewards off (switching one on needs Editor). To fix a pronunciation, use Pronunciation, then Add rule, and fill in Phrase and Say instead (and Exact sound (IPA) for Azure). Use the row's play button to hear it. For the channel name, use How to say the channel name on Keys, then Preview and Save spelling.",
+      "quote": "So for a command reply, any Who may be heard above Everyone, or any Minimum bits above 0, stops that reply from being read."
+    },
+    {
+      "question": 5,
+      "answer": "I reread to learn that the reward path ignores Who may be heard. This only appears after the role setting is explained, so a streamer who raised the role to keep viewers out would still hear viewer rewards. The cost is one reread. The page does state it before the Rewards that speak setup, so it is not a blocking gap.",
+      "quote": "Who may be heard, Minimum bits and Cooldown are bypassed when the reward’s built-in Rewards that speak path reads its submitted text."
+    },
+    {
+      "question": 6,
+      "answer": "The section on how each provider handles Segments is a dense run of details for pipeline authors. A streamer setting up speech for the first time would not act on it, and it is tiring to hear aloud. Because it sits under Other places that speak, after the main path, it costs only some skimming.",
+      "quote": "Edge cannot stress a word, so it joins neighboring blocks that sound the same and cuts at a pause."
+    }
+  ],
+  "findings": [],
+  "warnings_released": true,
+  "warning_review": [
+    {
+      "id": "length",
+      "decision": "keep",
+      "reason": "The page is a settings reference, so its length is the settings it must describe. The main path starts at about word 106, and the access and step sections come first. Blind answers were found by quote on the page, and the one reread cost (Q5) is already recorded. Keep."
+    },
+    {
+      "id": "paragraph-7",
+      "decision": "keep",
+      "reason": "Six sentences that explain why a command reply obeys Who may be heard and Minimum bits. The moderator test in the application case depends on this reasoning, and each sentence states one fact the reader needs. Keep."
+    },
+    {
+      "id": "sentence-7-3",
+      "decision": "keep",
+      "reason": "A 31-word list naming the seven settings that also govern a pipeline Read aloud step. It answers which settings apply, the answer to Q4 rests on it, and each name is defined in the tables below. Keep."
+    },
+    {
+      "id": "sentence-8-2",
+      "decision": "keep",
+      "reason": "A 37-word mapping of the As field values, inside a subsection for pipeline authors. The reader is not writing pipeline steps for this task, so the density costs only skimming, and the sentence sits after the main path. Keep."
+    },
+    {
+      "id": "paragraph-9",
+      "decision": "keep",
+      "reason": "Six sentences on how viewer voices are chosen. The reader's path does not depend on this detail, and the cost to a streamer is skimming only. Keep."
+    },
+    {
+      "id": "paragraph-16",
+      "decision": "keep",
+      "reason": "Six sentences on length limits. The first sentence states the consequence a moderator sees when a long reply is not read, and the plan-limit sentences are detail the reader can skip. Keep."
+    },
+    {
+      "id": "paragraph-39",
+      "decision": "keep",
+      "reason": "Seven sentences on async and sync pipeline timing. This belongs to pipeline authors under Other places that speak, after the main path, and each sentence states a behavior with its limit. Keep."
+    },
+    {
+      "id": "paragraph-40",
+      "decision": "keep",
+      "reason": "Five sentences on Scene reserve, a pipeline-author feature placed after the main path. Each sentence states a limit or expiry rule that a pipeline author must know. Keep."
+    },
+    {
+      "id": "sentence-44-2",
+      "decision": "keep",
+      "reason": "A 35-word sentence giving the exact limits for segment block fields. It is reference for JSON authors, not the reader's path, and the values are needed when a block is written. Keep."
+    },
+    {
+      "id": "paragraph-45",
+      "decision": "keep",
+      "reason": "Eleven sentences on how each provider handles Segments and the failure conditions. It is dense, but it sits in an optional pipeline subsection, and the reader's Q6 records the cost as skimming only. Keep."
+    },
+    {
+      "id": "paragraph-47",
+      "decision": "keep",
+      "reason": "Seven sentences on the Target variable path for pipeline authors. They state the fallback and the permission gap, which change what a pipeline does, so they stay. Keep."
+    },
+    {
+      "id": "paragraph-50",
+      "decision": "keep",
+      "reason": "Six sentences forming one troubleshooting entry for a symptom the reader may hit after the first success. Each sentence is one check, in the order to run it. Keep."
+    },
+    {
+      "id": "paragraph-51",
+      "decision": "keep",
+      "reason": "Six sentences in a troubleshooting entry for long viewer messages. Each sentence is a cause or a fix, and the reader's main path is not affected. Keep."
+    }
+  ]
+}

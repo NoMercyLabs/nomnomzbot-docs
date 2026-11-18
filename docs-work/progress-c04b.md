@@ -1,6 +1,6 @@
 # Documentation checkpoint
 
-Accepted: 1 of 113.
+Accepted: 2 of 113.
 
 Resume: /reference/overview
 
@@ -62,7 +62,7 @@ Resume: /reference/overview
 | /reference/overlays/widgets-and-alerts | reference%2Foverlays%2Fwidgets-and-alerts.reader.json: invalid or missing JSON: [Errno 2] No such file or directory: 'C:\\Projects\\NoMercyLabs\\nomnomzbot-docs\\.claude\\worktrees\\final-c04\\docs-work\\reviews\\reference%2Foverlays%2Fwidgets-and-alerts.reader.json' |
 | /reference/music/music-player | reference%2Fmusic%2Fmusic-player.reader.json: stale fingerprint; page, card or rendered article changed |
 | /reference/music/song-requests | accepted |
-| /reference/audio/text-to-speech | reference%2Faudio%2Ftext-to-speech.reader.json: stale fingerprint; page, card or rendered article changed |
+| /reference/audio/text-to-speech | accepted |
 | /reference/audio/voice-triggers | reference%2Faudio%2Fvoice-triggers.reader.json: invalid or missing JSON: [Errno 2] No such file or directory: 'C:\\Projects\\NoMercyLabs\\nomnomzbot-docs\\.claude\\worktrees\\final-c04\\docs-work\\reviews\\reference%2Faudio%2Fvoice-triggers.reader.json' |
 | /reference/audio/sounds | reference%2Faudio%2Fsounds.reader.json: invalid or missing JSON: [Errno 2] No such file or directory: 'C:\\Projects\\NoMercyLabs\\nomnomzbot-docs\\.claude\\worktrees\\final-c04\\docs-work\\reviews\\reference%2Faudio%2Fsounds.reader.json' |
 | /reference/audio/media-share | reference%2Faudio%2Fmedia-share.reader.json: invalid or missing JSON: [Errno 2] No such file or directory: 'C:\\Projects\\NoMercyLabs\\nomnomzbot-docs\\.claude\\worktrees\\final-c04\\docs-work\\reviews\\reference%2Faudio%2Fmedia-share.reader.json' |

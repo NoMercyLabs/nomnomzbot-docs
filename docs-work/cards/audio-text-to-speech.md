@@ -19,6 +19,6 @@ Must know:
 - pronunciation | Word matching ignores case, exact matching preserves it, and saved rules affect future speech. | ../../../../nomnomzbot/server/src/NomNomzBot.Infrastructure/Tts/TtsLexiconService.cs
 - history | History records generated speech before output delivery and does not prove audible OBS playback. | ../../../../nomnomzbot/server/src/NomNomzBot.Infrastructure/Tts/TtsDispatchService.cs
 Moves elsewhere:
-- speech-actions | Speech timing, reservations and pipeline voice assignment. | ../../../../nomnomzbot/server/src/NomNomzBot.Infrastructure/Tts/PipelineActions/PlayTtsAction.cs | /reference/code/sdk-widgets-actions-templates#coordinate-speech-with-other-steps
+- none
 Checks:
 - build: ["cmd", "/c", "yarn", "build"]
