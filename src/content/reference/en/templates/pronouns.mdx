@@ -14,10 +14,11 @@ The helpers themselves are listed on [User helpers](/reference/templates/user) a
 ## Where the helpers work
 
 The pronoun helpers work in command replies, event responses, pipelines and webhooks.
-The `user.` forms, such as `{user.subject}`, also work in a viewer's own text when the channel has **Viewer Templates** on, as described on [Features](/reference/settings/features). There they are about the viewer who typed the text.
+Every `user.` form except `{user.verb:...}` also works in a viewer's own text when the channel has **Viewer Templates** on, as described on [Features](/reference/settings/features). There they are about the viewer who typed the text.
 
 Timers and Discord notifications are not about one person, so the bot refuses to save a reply there that uses a pronoun helper.
-Only `{tense}` works everywhere. Where there is no person, it gives are or were.
+The bare `{tense}` works in all of those places, also in timers and Discord notifications. Where there is no person, it gives are or were.
+It does not work in a viewer's own text. There, write `{user.tense}`.
 
 ## The words each pronoun gives
 
@@ -34,6 +35,13 @@ Neopronouns give their own words.
 For xe, the subject is xe, the object is xem and the possessive is xyr.
 For zie, the subject is zie, and the object and the possessive are hir.
 Both give "person" as the gendered term, and both take is and was, because only "they" takes the plural verb.
+
+The pronoun list also offers three mixed sets.
+They are he/they, she/they and he/she.
+he/they gives he, them and their.
+she/they gives she, them and their.
+he/she gives he, she and her.
+All three give "person" as the gendered term, and all three take is and was, because their subject is not "they".
 
 ## Write a sentence that fits
 
@@ -52,9 +60,12 @@ Everywhere else it means your channel is live, also for `{target.tense}`.
 
 ### Pick the person
 
-A bare helper such as `{subject}` follows the person the command names.
-If the command names nobody, it follows the person who used the command.
-In `!hug @someone`, `{subject}` is about the person named, and in `!lurk` it is about the person who typed it.
+A bare helper such as `{subject}` follows the first word typed after the command.
+The bot treats that word as the person named, with a leading `@` removed.
+If nothing is typed after the command, it follows the person who used the command.
+In `!hug @someone`, `{subject}` is about `someone`.
+In `!lurk getting food`, `{subject}` is about "getting", so it gives they.
+For a command whose words are not a person, use the `user.` forms, such as `{user.subject}`.
 
 Add `user.` or `target.` to choose the person yourself.
 `{user.subject}` is always about the person who used the command, and `{target.subject}` is always about the person the command names.
@@ -63,7 +74,8 @@ The same works for the other helpers, such as `{user.possessive}`, `{target.obje
 ### Start a sentence with a capital
 
 Write the first letter of the helper in upper case to get a capital first letter.
-`{Subject}` gives He, She or They, and `{Target.Subject}`, `{User.Possessive}` and `{Tense}` work the same way.
+`{Subject}` gives He, She or They.
+`{Target.Subject}`, `{User.Possessive}` and `{Tense}` work the same way.
 Only the very first letter counts, so `{target.Subject}` still gives he, she or they.
 A verb from `{verb:plays|play}` never gets a capital.
 
@@ -103,7 +115,7 @@ A reply then reads "he is", and `{user.pronouns}` still shows he/they.
 If the bot has no pronouns for a person, it uses they, them, their, person, are and were.
 That happens for a person with no pronouns at the pronoun service, or who never chatted on Twitch where the bot is, and who never picked pronouns in the bot.
 The verb takes the plural form, so the line reads "they play".
-A pronoun helper never shows as raw text.
+Each helper still gives words, so a missing pronoun never leaves braces in the reply.
 
 ## When the pronouns are "any" or "other"
 

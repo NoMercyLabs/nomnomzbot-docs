@@ -7,13 +7,15 @@ Poll and prediction helpers put a Twitch poll or prediction into a reply. They c
 
 The first kind asks Twitch at the moment the bot builds the reply. It reads the poll or prediction running now, or the last one that ended. You can use it in commands, event responses, timers, pipelines, Discord posts and webhook bodies, but not in a viewer's own text.
 
-The second kind are event values. They come with a poll or prediction event, so they work only in an [event response](/reference/automation/event-responses) or a [pipeline](/reference/commands/pipelines) started by that event. A command or a timer has no event to read them from.
+The second kind are event values. They come with a poll or prediction event, so they work in an [event response](/reference/automation/event-responses), in a [pipeline](/reference/commands/pipelines) started by that event, and in the Discord notifications **Poll ends** and **Prediction resolved**. Those two fill the listed values themselves (see [In a Discord post](#in-a-discord-post)). A command or a timer has no event to read them from.
 
 So for an announcement when a poll ends, use the event values in that event response. For a command that viewers type mid-stream, use the helpers that read the prediction running now.
 
 ## Before you start
 
-The bot reads polls and predictions from your Twitch channel, so your Twitch connection needs permission to read them. Without it, every helper that reads the running poll or prediction gives nothing. These helpers read Twitch only, not other platforms.
+The bot reads polls and predictions from your Twitch channel. For that, your Twitch connection needs two Twitch permissions: `channel:read:polls` for polls and `channel:read:predictions` for predictions. Your first Twitch sign-in does not ask for them. Without them, the helpers that read the running poll or prediction give nothing. The exceptions are `{poll.isActive}`, `{poll.isTie}` and `{prediction.isActive}`, which give `false`. These helpers read Twitch only, not other platforms.
+
+To check and grant them, open **Settings**, then **Integrations**. The page opens with a notice such as "1 more Twitch permission to grant" that lists every permission still missing. If `channel:read:polls` or `channel:read:predictions` is on that list, choose **Grant permissions**, open the link, enter the code on Twitch and approve. Sign in to Twitch as the streamer's own account when you approve, because the bot saves the permission on the account that approves the code.
 
 ## The poll running now
 
@@ -50,7 +52,7 @@ Vote counts are plain digits, with no thousands separators. `{poll.endsAt}` is r
 | `{poll.last.question}` | The question of the last poll that ended | `Best snack?` |
 | `{poll.last.winner}` | The winning option of that poll | `chips` |
 
-These read the Twitch polls the bot saved as they ended, newest first. A poll counts however it ended, whether it ran its full time, was ended early or was removed. The bot's own chat polls do not count.
+These read the bot's saved record of Twitch poll events, newest first. They do not ask Twitch. A poll that ended while the bot was offline is not in the record. A poll counts however it ended, whether it ran its full time, was ended early or was removed. The bot's own chat polls do not count.
 
 The winner is the option with the most votes, and the first of them on a tie. When nobody voted, `{poll.last.winner}` is empty. Both helpers are empty until the bot has saved a finished poll.
 
@@ -86,7 +88,7 @@ The odds are all points bet divided by the points on that outcome, to at most 2 
 | --- | --- | --- |
 | `{prediction.last.winner}` | The winning outcome of the last prediction that ended | `Yes` |
 
-It reads the predictions the bot saved as they ended, newest first. A canceled prediction has no winning outcome, so it gives nothing.
+It reads the bot's saved record of Twitch prediction events, newest first. It does not ask Twitch, and a prediction that ended while the bot was offline is not in the record. A canceled prediction has no winning outcome, so it gives nothing.
 
 ## Event values
 
@@ -114,6 +116,7 @@ Each value below comes with the event named next to it. These are the poll and p
 | `{prediction.winner.users}` | How many people bet on the winning outcome; `0` when there is none | Prediction ends | `41` |
 
 The **Poll ends** response runs only for a poll that ran its full time. A poll ended early or removed gets no response. The shares in `{poll.winner.percentage}` and `{poll.results}` are rounded down to a whole percent. Without votes, `{poll.results}` lists each choice with `0` and no share.
+When nobody voted, `{poll.winner}` still gives the first choice, so the first example under [Two replies side by side](#two-replies-side-by-side) would announce a winner that did not win. Use the Discord notification if you want it to say `nobody`.
 
 ### In a Discord post
 
@@ -137,6 +140,12 @@ A command that viewers type while a prediction is open:
 {prediction.question} {prediction.leading} leads with {prediction.leading.percent} of the points. Bets close in {prediction.timeLeft}.
 ```
 
-While bets are open, that posts `Win? Yes leads with 75% of the points. Bets close in 45s.` Once the prediction locks, `{prediction.timeLeft}` is empty, so the last sentence reads oddly. Check `{prediction.status.now}` first, or keep a second command for that moment.
+While bets are open, that posts `Win? Yes leads with 75% of the points. Bets close in 45s.` Once the prediction locks, `{prediction.timeLeft}` is empty, so the last sentence reads oddly. Let the reply choose its last sentence with the `{if.<path>.equals}` test from [Condition helpers](/reference/templates/if#compare-a-value):
+
+```
+{prediction.question} {prediction.leading} leads with {prediction.leading.percent} of the points. {if.prediction.status.now.equals:open:Bets close in {prediction.timeLeft}.|Bets are closed.}
+```
+
+While bets are open, that posts the same reply as before. Once the prediction locks, `{prediction.status.now}` gives `locked`, so the reply ends with `Bets are closed.`
 
 Back to [Template helpers](/reference/templates/overview). For how braces, inputs and nested helpers work, read [Variables and templates](/reference/commands/variables-and-templates).

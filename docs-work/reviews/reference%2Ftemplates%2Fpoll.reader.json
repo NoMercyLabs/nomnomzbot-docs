@@ -1,0 +1,65 @@
+{
+  "fingerprint": "c6558a792fa95bdb22d8a0d39169c5d2295ff2f5d1fc95decf42cda9136c0419",
+  "verdict": "PASS",
+  "answers": [
+    {
+      "question": 1,
+      "answer": "To announce a completed poll, use the event values in a Poll ends event response: {poll.title}, {poll.winner}, {poll.winner.votes}, {poll.winner.percentage} and {poll.results}. To ask about an active prediction from a command, use the helpers that read the prediction running now, such as {prediction.question}, {prediction.leading}, {prediction.leading.percent}, {prediction.timeLeft} and {prediction.status.now}. Numbered helpers take the number after a colon, like {poll.option:2} or {prediction.outcome.points:2}. The last poll or prediction that ended is read with {poll.last.question}, {poll.last.winner} and {prediction.last.winner}.",
+      "quote": "So for an announcement when a poll ends, use the event values in that event response. For a command that viewers type mid-stream, use the helpers that read the prediction running now."
+    },
+    {
+      "question": 2,
+      "answer": "You need the Twitch permissions channel:read:polls and channel:read:predictions on the streamer's own account. The first Twitch sign-in does not ask for them. You grant them from Settings, then Integrations, with Grant permissions. This is stated under Before you start.",
+      "quote": "For that, your Twitch connection needs two Twitch permissions: channel:read:polls for polls and channel:read:predictions for predictions."
+    },
+    {
+      "question": 3,
+      "answer": "The page tells the two kinds apart: live helpers ask Twitch when the reply is built and work in commands and timers, while event values only work where a poll or prediction event exists. Success looks like the worked example output. A running prediction gives open from {prediction.status.now}, and a locked one gives locked.",
+      "quote": "A command or a timer has no event to read them from."
+    },
+    {
+      "question": 4,
+      "answer": "The announcement goes in a Poll ends event response and uses {poll.winner}{poll.winner.percentage}. It fires only for a poll that ran its full time, so an early-ended or removed poll gets no announcement. When nobody voted, {poll.winner} still names the first choice. The active-prediction command uses the running-now helpers. Once the prediction locks, {prediction.timeLeft} is empty, so the reply should switch its last sentence on {prediction.status.now}.",
+      "quote": "The Poll ends response runs only for a poll that ran its full time."
+    },
+    {
+      "question": 5,
+      "answer": "Two conditions come only after the Event values table, past where a reader would already have picked {poll.winner} for the announcement: a no-vote poll still names the first choice, and an early-ended poll gets no response. Both are stated before the worked example, so the cost is one reread. In Before you start, the page does not say where the code you enter on Twitch appears after choosing Grant permissions. I guessed that it shows next to the link.",
+      "quote": "When nobody voted, {poll.winner} still gives the first choice, so the first example under Two replies side by side would announce a winner that did not win."
+    },
+    {
+      "question": 6,
+      "answer": "The exception for {poll.isActive} and {poll.isTie} giving false is said in Before you start and again in The poll running now. Read aloud, the second time adds nothing. The cost is small.",
+      "quote": "Each of these is empty while no Twitch poll is running, except {poll.isActive} and {poll.isTie}, which give false."
+    }
+  ],
+  "findings": [],
+  "warnings_released": true,
+  "warning_review": [
+    {
+      "id": "sentence-3-2",
+      "decision": "keep",
+      "reason": "The 32-word sentence is long but reads cleanly and names the three places event values work, which is the constraint a reader must know before choosing a helper. Splitting it would add nothing."
+    },
+    {
+      "id": "paragraph-5",
+      "decision": "keep",
+      "reason": "Each of the six sentences is a prerequisite a streamer acts on: the helpers read Twitch only, the first sign-in does not grant the two permissions, and the two exceptions give false. Cutting any of them would leave a reader with empty helpers and no explanation."
+    },
+    {
+      "id": "paragraph-11",
+      "decision": "keep",
+      "reason": "The five sentences carry the record caveats a reader would otherwise get wrong: a poll that ended while the bot was offline is absent, a poll counts however it ended, and the bot's own chat polls are excluded. The count alone is not a defect."
+    },
+    {
+      "id": "paragraph-18",
+      "decision": "keep",
+      "reason": "The dense paragraph states the no-vote and early-ended conditions that stop a Poll ends announcement from naming a winner who did not win. It sits after the table, which costs one reread, but the content is needed and correct, so it stays."
+    },
+    {
+      "id": "paragraph-24",
+      "decision": "keep",
+      "reason": "The three sentences show the posted reply while bets are open, explain why the last sentence reads oddly once the prediction locks, and give the conditional that fixes it. Each one is needed to write the reply, so the length is acceptable."
+    }
+  ]
+}

@@ -1,0 +1,50 @@
+{
+  "fingerprint": "db16ca805278d0a40e8adda469bd92d3b00703a603f9a33ee6d225f2cffc45d8",
+  "verdict": "PASS",
+  "answers": [
+    {
+      "question": 1,
+      "answer": "To get one saved quote, use a helper with the quote number after a colon. {quote:<n>} gives the number and the line. {quote.text:<n>} gives only the line. {quote.author:<n>} gives the Said by name. {quote.game:<n>} gives the Game. {quote.date:<n>} gives the Said at day. The number is the one the Quotes page shows, written as digits. {quote.count} and {quote.latest} take no input and read the whole list.",
+      "quote": "Five of them need a quote number after a colon, as Variables and templates explains."
+    },
+    {
+      "question": 2,
+      "answer": "You need quotes saved on the channel's Quotes page, and a reply field that takes template braces, such as a command reply. The helpers work in commands, event responses, timers, pipelines, Discord posts and webhook bodies. They do not work in a viewer's own text.",
+      "quote": "You type them in any reply field that takes template braces, like the other template helpers."
+    },
+    {
+      "question": 3,
+      "answer": "It worked when chat shows the quote's values, for example #12 \"that was close\". It failed when the helper appears in chat unchanged, braces and all, which happens when the quote does not exist. A missing optional Said by or Game gives an empty gap instead, so a gap and leftover braces are two different results.",
+      "quote": "When a helper has nothing to give, it stays in the reply exactly as written, braces and all."
+    },
+    {
+      "question": 4,
+      "answer": "Give every helper in the reply the same input, {args.1}: {quote:{args.1}}, said by {quote.author:{args.1}}. Both helpers then read the number the viewer typed, so the line and the author come from the same quote. !q 12 gives #12 \"that was close\", said by ViewerTwo. An unknown number such as 99 leaves both helpers in braces with 99 in them. {quote.author} with no number does not follow {quote.latest}; it stays in braces.",
+      "quote": "Use the same input in every helper of the reply, and each part comes from the same quote:"
+    },
+    {
+      "question": 5,
+      "answer": "The first section says to write the number as digits only. Only in the last section did I learn that the input can be another helper, such as {args.1}. Until then I would have guessed that a nested helper is not allowed. I also had to guess what happens when the viewer types !q with no number. The page does not say, so a moderator cannot predict that reply.",
+      "quote": "Write it as digits only, such as 12."
+    },
+    {
+      "question": 6,
+      "answer": "Read aloud, the nested braces in {quote:{args.1}} and {quote.author:99} are hard to follow, and a listener needs the code block. The time-zone sentences are edge cases that most readers will not act on, so they slow the path a little.",
+      "quote": "A channel with no time zone gets the day in UTC."
+    }
+  ],
+  "findings": [],
+  "warnings_released": true,
+  "warning_review": [
+    {
+      "id": "sentence-2-1",
+      "decision": "keep",
+      "reason": "The sentence is long, but it states the one behavior a moderator must predict (an unknown number stays in braces) and gives a concrete example. Splitting it would add nothing for the reader."
+    },
+    {
+      "id": "sentence-10-2",
+      "decision": "keep",
+      "reason": "The sentence is long, but it is one concrete case a moderator will hit, with the full result shown. The because clause states the cause, so the reader does not have to guess it."
+    }
+  ]
+}

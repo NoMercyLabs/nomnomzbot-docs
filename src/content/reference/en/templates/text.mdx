@@ -6,8 +6,13 @@ description: Lists 103 template helpers, each with what it gives and an example.
 Helpers on this page: `{text.*}`.
 
 These helpers change a text: letter case, style, words, length, replacing, encoding and plurals.
-Put the text after a colon, as in `{text.upper:hello}`.
+Put the input after a colon, as in `{text.upper:hello}`.
 Separate more than one input with a pipe.
+Most helpers take the text first.
+Some take a number first, as in `{text.first:3|hello}`, so follow the order in each example.
+A text input keeps its spaces exactly as you type them.
+An input that is a number or a setting ignores the spaces around it.
+To write a space on purpose, you can also type a backslash and s.
 
 ## Start with a small transformation
 
@@ -23,6 +28,20 @@ The examples illustrate possible values; your results depend on the channel and 
 **Use in** lists the template fields that accept each helper.
 A pipeline still needs a trigger that supplies the relevant person, message, or event; event-specific helpers need that event.
 For viewer-written text, the [Viewer Templates setting and permissions](/reference/settings/features) also apply.
+
+## When a helper cannot use its input
+
+A helper that cannot use its input stays in the reply as written.
+These inputs cause it:
+
+- The wrong number of inputs.
+- A count, width or length that is not a whole number from 0 to 1000, in every helper that takes one. The plural helpers are the exception: `{text.plural}`, `{text.plural.count}` and `{text.plural.auto}` take any whole number, negative ones too.
+- A position below 1. Positions count from 1, and a position past the end gives empty text.
+- An empty text to find, in `{text.count}`, `{text.remove}`, `{text.replace}` and `{text.censor}`.
+
+`{text.count}`, `{text.remove}` and `{text.replace}` match letter case exactly.
+`{text.censor}` and `{text.replace.icase}` ignore letter case.
+In a viewer's own text, a repeat count and a pad or center width above 20 are cut to 20, so `{text.repeat:30|ha}` gives 20 copies.
 
 ## Letter case and styles
 
@@ -73,7 +92,7 @@ For viewer-written text, the [Viewer Templates setting and permissions](/referen
 | `{text.chars.count}` | Counts the characters in the text | `{text.chars.count:hello}` gives `5` | Commands, event responses, timers, pipelines, Discord, webhooks, viewer text |
 | `{text.chars.shuffle}` | The characters in a random order | `{text.chars.shuffle:abc}` gives `bca` | Commands, event responses, timers, pipelines, Discord, webhooks, viewer text |
 | `{text.count}` | Counts how many times a text appears in the text | `{text.count:banana\|a}` gives `3` | Commands, event responses, timers, pipelines, Discord, webhooks, viewer text |
-| `{text.cut}` | Cuts the text to a maximum length, the ending included: text, max=number, end=text | `{text.cut:hello world\| max = 8 \|end=...}` gives `hello...` | Commands, event responses, timers, pipelines, Discord, webhooks, viewer text |
+| `{text.cut}` | Cuts the text to a maximum length, the ending included: text, max=number, end=text. The max is required. The end is optional and is an ellipsis when you leave it out | `{text.cut:hello world\| max = 8 \|end=...}` gives `hello...` | Commands, event responses, timers, pipelines, Discord, webhooks, viewer text |
 | `{text.cut.words}` | Keeps the first number of words and adds an ellipsis when it cut | `{text.cut.words:hello big world\|2}` gives `hello big…` | Commands, event responses, timers, pipelines, Discord, webhooks, viewer text |
 | `{text.first}` | The first characters of the text | `{text.first:3\|hello}` gives `hel` | Commands, event responses, timers, pipelines, Discord, webhooks, viewer text |
 | `{text.initials}` | The first letter of every word, in capitals | `{text.initials:big world}` gives `BW` | Commands, event responses, timers, pipelines, Discord, webhooks, viewer text |
@@ -85,20 +104,20 @@ For viewer-written text, the [Viewer Templates setting and permissions](/referen
 | `{text.lines.first}` | The first line of the text. Type a backslash and n where a line ends | `{text.lines.first:a\nb}` gives `a` | Commands, event responses, timers, pipelines, Discord, webhooks, viewer text |
 | `{text.lines.join}` | The lines of the text joined with a separator, one space when you give none. Type a backslash and n where a line ends, then a pipe and the separator | `{text.lines.join:a\nb\|\s/\s}` gives `a / b` | Commands, event responses, timers, pipelines, Discord, webhooks, viewer text |
 | `{text.lines.wrap}` | Wraps the text at a width and joins the lines with a slash | `{text.lines.wrap:aaa bbb ccc\|7}` gives `aaa bbb / ccc` | Commands, event responses, timers, pipelines, Discord, webhooks, viewer text |
-| `{text.pad.left}` | Pads the start of the text to a width with a character (a space by default) | `{text.pad.left:7\|3\| }` gives `7` | Commands, event responses, timers, pipelines, Discord, webhooks, viewer text |
+| `{text.pad.left}` | Pads the start of the text to a width with a character (a space by default) | `{text.pad.left:7\|3\|0}` gives `007` | Commands, event responses, timers, pipelines, Discord, webhooks, viewer text |
 | `{text.pad.right}` | Pads the end of the text to a width with a character (a space by default) | `{text.pad.right:ab\|4\|.}` gives `ab..` | Commands, event responses, timers, pipelines, Discord, webhooks, viewer text |
-| `{text.repeat}` | Repeats the text a number of times, with an optional separator | `{text.repeat:3\|ha }` gives `ha ha ha` | Commands, event responses, timers, pipelines, Discord, webhooks, viewer text |
+| `{text.repeat}` | Repeats the text a number of times, with an optional separator as the third input | `{text.repeat:3\|ha\|-}` gives `ha-ha-ha` | Commands, event responses, timers, pipelines, Discord, webhooks, viewer text |
 | `{text.reverse}` | Reverses the text character by character | `{text.reverse:abc}` gives `cba` | Commands, event responses, timers, pipelines, Discord, webhooks, viewer text |
 | `{text.reverse.words}` | Reverses the order of the words | `{text.reverse.words:hello big world}` gives `world big hello` | Commands, event responses, timers, pipelines, Discord, webhooks, viewer text |
 | `{text.squish}` | Trims the text and turns every run of spaces into one space | `{text.squish:a    b  c}` gives `a b c` | Commands, event responses, timers, pipelines, Discord, webhooks, viewer text |
-| `{text.substring}` | A part of the text from a position, with a length | `{text.substring:2\|3\|hello}` gives `ell` | Commands, event responses, timers, pipelines, Discord, webhooks, viewer text |
+| `{text.substring}` | A part of the text from a position, counting from 1, with a length | `{text.substring:2\|3\|hello}` gives `ell` | Commands, event responses, timers, pipelines, Discord, webhooks, viewer text |
 | `{text.trim}` | Removes spaces from the start and the end | `{text.trim:  hi  }` gives `hi` | Commands, event responses, timers, pipelines, Discord, webhooks, viewer text |
 | `{text.truncate}` | Cuts the text to a number of characters and adds an ellipsis when it cut | `{text.truncate:5\|hello world}` gives `hello…` | Commands, event responses, timers, pipelines, Discord, webhooks, viewer text |
 | `{text.word}` | The word at a position, counting from 1 | `{text.word: 2 \|big world}` gives `world` | Commands, event responses, timers, pipelines, Discord, webhooks, viewer text |
 | `{text.word.first}` | The first word of the text | `{text.word.first:hello big world}` gives `hello` | Commands, event responses, timers, pipelines, Discord, webhooks, viewer text |
 | `{text.word.last}` | The last word of the text | `{text.word.last:hello big world}` gives `world` | Commands, event responses, timers, pipelines, Discord, webhooks, viewer text |
 | `{text.word.longest}` | The longest word of the text | `{text.word.longest:hi hello yo}` gives `hello` | Commands, event responses, timers, pipelines, Discord, webhooks, viewer text |
-| `{text.word.random}` | One random word of the text | `b` | Commands, event responses, timers, pipelines, Discord, webhooks, viewer text |
+| `{text.word.random}` | One random word of the text | `{text.word.random:a b c}` gives one of `a`, `b` or `c` | Commands, event responses, timers, pipelines, Discord, webhooks, viewer text |
 | `{text.words.count}` | Counts the words in the text | `{text.words.count:hello big world}` gives `3` | Commands, event responses, timers, pipelines, Discord, webhooks, viewer text |
 | `{text.words.first}` | The first number of words | `{text.words.first:2\|hello big world}` gives `hello big` | Commands, event responses, timers, pipelines, Discord, webhooks, viewer text |
 | `{text.words.from}` | All words from a position to the end, counting from 1 | `{text.words.from:2\|hello big world}` gives `big world` | Commands, event responses, timers, pipelines, Discord, webhooks, viewer text |
@@ -112,26 +131,26 @@ For viewer-written text, the [Viewer Templates setting and permissions](/referen
 
 | Helper | What it gives | Example | Use in |
 | --- | --- | --- | --- |
-| `{text.article}` | A word with a or an in front (English only) | `{text.article:apple}` gives `an apple` | Commands, event responses, timers, pipelines, Discord, webhooks, viewer text |
+| `{text.article}` | A word with a or an in front. On a channel in another language it gives the word back unchanged | `{text.article:apple}` gives `an apple` | Commands, event responses, timers, pipelines, Discord, webhooks, viewer text |
 | `{text.base64.decode}` | A base64 text turned back to plain text | `{text.base64.decode:aGk=}` gives `hi` | Commands, event responses, timers, pipelines, Discord, webhooks, viewer text |
 | `{text.base64.encode}` | The text encoded as base64 | `{text.base64.encode:hi}` gives `aGk=` | Commands, event responses, timers, pipelines, Discord, webhooks, viewer text |
-| `{text.censor}` | The text with a word replaced by stars | `{text.censor:you noob\|noob}` gives `you ****` | Commands, event responses, timers, pipelines, Discord, webhooks, viewer text |
+| `{text.censor}` | The text with a word replaced by stars, ignoring letter case | `{text.censor:you noob\|noob}` gives `you ****` | Commands, event responses, timers, pipelines, Discord, webhooks, viewer text |
 | `{text.digits}` | Only the digits of the text | `{text.digits:a1b22}` gives `122` | Commands, event responses, timers, pipelines, Discord, webhooks, viewer text |
 | `{text.escape.chat}` | The text made safe so chat does not run it as a command | `{text.escape.chat:/ban x}` gives `⁄ban x` | Commands, event responses, timers, pipelines, Discord, webhooks, viewer text |
 | `{text.html.strip}` | The text without HTML tags | `{text.html.strip:<b>hi</b>}` gives `hi` | Commands, event responses, timers, pipelines, Discord, webhooks, viewer text |
-| `{text.join.and}` | A list of items joined with commas and the word and | `{text.join.and:a\|b\|c}` gives `a, b and c` | Commands, event responses, timers, pipelines, Discord, webhooks, viewer text |
-| `{text.join.or}` | A list of items joined with commas and the word or | `{text.join.or:a\|b\|c}` gives `a, b or c` | Commands, event responses, timers, pipelines, Discord, webhooks, viewer text |
+| `{text.join.and}` | A list of items joined with commas and the word and (en on a Dutch channel) | `{text.join.and:a\|b\|c}` gives `a, b and c` | Commands, event responses, timers, pipelines, Discord, webhooks, viewer text |
+| `{text.join.or}` | A list of items joined with commas and the word or (of on a Dutch channel) | `{text.join.or:a\|b\|c}` gives `a, b or c` | Commands, event responses, timers, pipelines, Discord, webhooks, viewer text |
 | `{text.links.strip}` | The text without links | `{text.links.strip:see https://a.b now}` gives `see now` | Commands, event responses, timers, pipelines, Discord, webhooks, viewer text |
 | `{text.mask}` | The text with all but the last characters replaced by stars | `{text.mask:secret\|2}` gives `****et` | Commands, event responses, timers, pipelines, Discord, webhooks, viewer text |
 | `{text.mentions.strip}` | The text without @mentions | `{text.mentions.strip:@ViewerTwo hi}` gives `hi` | Commands, event responses, timers, pipelines, Discord, webhooks, viewer text |
 | `{text.paren}` | Puts the text between parentheses | `{text.paren:hi}` gives `(hi)` | Commands, event responses, timers, pipelines, Discord, webhooks, viewer text |
 | `{text.path.encode}` | The text escaped for one part of a link path | `{text.path.encode:a/b c}` gives `a%2Fb%20c` | Commands, event responses, timers, pipelines, Discord, webhooks, viewer text |
-| `{text.plural}` | The singular word for one, the plural word for any other number | `{text.plural:3\|sub\|subs}` gives `subs` | Commands, event responses, timers, pipelines, Discord, webhooks, viewer text |
-| `{text.plural.auto}` | A word in its plural form, unless the number is one | `{text.plural.auto:2\|box}` gives `boxes` | Commands, event responses, timers, pipelines, Discord, webhooks, viewer text |
+| `{text.plural}` | The singular word for 1 or -1, the plural word for any other whole number | `{text.plural:3\|sub\|subs}` gives `subs` | Commands, event responses, timers, pipelines, Discord, webhooks, viewer text |
+| `{text.plural.auto}` | A word in its plural form, unless the number is 1 or -1 | `{text.plural.auto:2\|box}` gives `boxes` | Commands, event responses, timers, pipelines, Discord, webhooks, viewer text |
 | `{text.plural.count}` | The number with its singular or plural word | `{text.plural.count:3\|sub\|subs}` gives `3 subs` | Commands, event responses, timers, pipelines, Discord, webhooks, viewer text |
 | `{text.possessive}` | A name in its possessive form, like James' or Anna's | `{text.possessive:James}` gives `James'` | Commands, event responses, timers, pipelines, Discord, webhooks, viewer text |
 | `{text.query.encode}` | The text escaped for a link query, with + for spaces | `{text.query.encode:a b}` gives `a+b` | Commands, event responses, timers, pipelines, Discord, webhooks, viewer text |
-| `{text.quote}` | Puts the text between double quotes | `"hi"` | Commands, event responses, timers, pipelines, Discord, webhooks, viewer text |
+| `{text.quote}` | Puts the text between double quotes | `{text.quote:hi}` gives `"hi"` | Commands, event responses, timers, pipelines, Discord, webhooks, viewer text |
 | `{text.remove}` | Removes every match of a text | `{text.remove:hello world\|o}` gives `hell wrld` | Commands, event responses, timers, pipelines, Discord, webhooks, viewer text |
 | `{text.replace}` | Replaces every match of a text with another text | `{text.replace:a-b\|-\| + }` gives `a + b` | Commands, event responses, timers, pipelines, Discord, webhooks, viewer text |
 | `{text.replace.first}` | Replaces only the first match of a text with another text | `{text.replace.first:a a a\|a\|b}` gives `b a a` | Commands, event responses, timers, pipelines, Discord, webhooks, viewer text |

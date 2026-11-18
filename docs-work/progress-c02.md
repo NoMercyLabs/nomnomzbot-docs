@@ -1,8 +1,8 @@
 # Documentation checkpoint
 
-Accepted: 42 of 113.
+Accepted: 48 of 113.
 
-Resume: /reference/templates/poll
+Resume: /reference/automation/timers-and-chat-triggers
 
 | Route | Current evidence |
 | --- | --- |
@@ -44,16 +44,16 @@ Resume: /reference/templates/poll
 | /reference/templates/music | accepted |
 | /reference/templates/num | accepted |
 | /reference/templates/platform | accepted |
-| /reference/templates/poll | reference%2Ftemplates%2Fpoll.fact.json: invalid or missing JSON: [Errno 2] No such file or directory: 'C:\\Projects\\NoMercyLabs\\nomnomzbot-docs\\.claude\\worktrees\\final\\docs-work\\reviews\\reference%2Ftemplates%2Fpoll.fact.json' |
-| /reference/templates/pronouns | reader: review has not passed |
-| /reference/templates/quote | reference%2Ftemplates%2Fquote.reader.json: invalid or missing JSON: [Errno 2] No such file or directory: 'C:\\Projects\\NoMercyLabs\\nomnomzbot-docs\\.claude\\worktrees\\final\\docs-work\\reviews\\reference%2Ftemplates%2Fquote.reader.json' |
+| /reference/templates/poll | accepted |
+| /reference/templates/pronouns | accepted |
+| /reference/templates/quote | accepted |
 | /reference/templates/random | accepted |
 | /reference/templates/schedule | accepted |
 | /reference/templates/stream | accepted |
 | /reference/templates/target | accepted |
-| /reference/templates/text | reference%2Ftemplates%2Ftext.reader.json: invalid or missing JSON: [Errno 2] No such file or directory: 'C:\\Projects\\NoMercyLabs\\nomnomzbot-docs\\.claude\\worktrees\\final\\docs-work\\reviews\\reference%2Ftemplates%2Ftext.reader.json' |
-| /reference/templates/user | reference%2Ftemplates%2Fuser.reader.json: invalid or missing JSON: [Errno 2] No such file or directory: 'C:\\Projects\\NoMercyLabs\\nomnomzbot-docs\\.claude\\worktrees\\final\\docs-work\\reviews\\reference%2Ftemplates%2Fuser.reader.json' |
-| /reference/templates/var | reference%2Ftemplates%2Fvar.reader.json: invalid or missing JSON: [Errno 2] No such file or directory: 'C:\\Projects\\NoMercyLabs\\nomnomzbot-docs\\.claude\\worktrees\\final\\docs-work\\reviews\\reference%2Ftemplates%2Fvar.reader.json' |
+| /reference/templates/text | accepted |
+| /reference/templates/user | accepted |
+| /reference/templates/var | accepted |
 | /reference/automation/timers-and-chat-triggers | reference%2Fautomation%2Ftimers-and-chat-triggers.reader.json: invalid or missing JSON: [Errno 2] No such file or directory: 'C:\\Projects\\NoMercyLabs\\nomnomzbot-docs\\.claude\\worktrees\\final\\docs-work\\reviews\\reference%2Fautomation%2Ftimers-and-chat-triggers.reader.json' |
 | /reference/automation/event-responses | reference%2Fautomation%2Fevent-responses.reader.json: invalid or missing JSON: [Errno 2] No such file or directory: 'C:\\Projects\\NoMercyLabs\\nomnomzbot-docs\\.claude\\worktrees\\final\\docs-work\\reviews\\reference%2Fautomation%2Fevent-responses.reader.json' |
 | /reference/automation/rewards | reference%2Fautomation%2Frewards.reader.json: invalid or missing JSON: [Errno 2] No such file or directory: 'C:\\Projects\\NoMercyLabs\\nomnomzbot-docs\\.claude\\worktrees\\final\\docs-work\\reviews\\reference%2Fautomation%2Frewards.reader.json' |

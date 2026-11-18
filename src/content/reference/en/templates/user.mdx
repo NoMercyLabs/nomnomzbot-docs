@@ -9,7 +9,8 @@ These helpers are about the person who used the command, such as `{user}`, `{use
 They also hold that person's pronouns and the words that go with them, such as `{user.subject}` and `{user.possessive}`.
 The bare helpers `{name}`, `{link}`, `{subject}`, `{object}`, `{possessive}`, `{tense}`, `{presentTense}`, `{genderedTerm}` and `{verb:plays|play}` are here too, and they follow a different rule.
 They are about the person the command names, which is the first word after the command, as in `!hug @someone`.
-When the command names nobody, they are about the person who used the command.
+The bot takes any word typed after the command as the person named, so `!lurk getting food` names "getting".
+If nothing is typed after the command, they are about the person who used the command.
 Type the `user.` form, such as `{user.subject}`, to always get the person who used the command.
 Use these helpers to greet a viewer, to show their stats, or to write a reply that fits their pronouns.
 
@@ -37,6 +38,28 @@ The examples illustrate possible values; your results depend on the channel and 
 A pipeline still needs a trigger that supplies the relevant person, message, or event; event-specific helpers need that event.
 For viewer-written text, the [Viewer Templates setting and permissions](/reference/settings/features) also apply.
 
+## When a value is not available
+
+A `{user.*}` helper needs a person. If the reply has no trigger person, the helper stays in the reply as written.
+The pronoun helpers are the exception. They print `they`, `them`, `their`, `are` and `person`, and `{user.verb:a|b}` prints the plural form. `{user.tense}` prints `are` or `were`.
+`{user.pronouns}` has no fallback. When no pronoun is on record for the viewer, it stays in the reply as written.
+`{user.lastmessage}` is the other exception and prints empty.
+A viewer with no record in your channel reads as not a follower, not a subscriber, 0 for every count and empty for every date. `{viewer.firstseen}` prints `unknown` instead.
+A detail that Twitch cannot give prints empty. This holds for the color, picture, bio and account date.
+`{user.followAge}` prints `not following` when the channel has no follow record for the viewer. It prints `unknown` when the bot could not ask Twitch.
+A viewer with no streak reads as 0.
+
+The points helpers show 0 for a viewer with no balance.
+The rank helpers print empty when the viewer is not on the currency ranking. The ranking exists only when the channel has a leaderboard on the balance metric. Without one, every rank helper prints empty for every viewer.
+`{user.points.nextRank.name}` and `{user.points.nextRank.gap}` also print empty for the viewer in first place.
+`{user.points.nextRank.gap}` is the balance difference to the viewer one place above. That balance only ties that place, so it is not enough to pass.
+
+The `{user.stats.*}` and `{viewer.*}` helpers read the totals that the bot recorded for your channel.
+`{user.stats.streak}` and `{user.stats.streak.best}` come from the watch-streak notifications of Twitch.
+The `{engagement.*}` helpers carry a value in one event only.
+`{engagement.streak}` comes with a watch-streak notification. `{engagement.daysSinceLastSeen}` comes with a returning chatter. `{engagement.months}` and `{engagement.years}` come with a moderator anniversary.
+In any other reply, they carry no value.
+
 ## Pronouns and grammar
 
 | Helper | What it gives | Example | Use in |
@@ -46,7 +69,7 @@ For viewer-written text, the [Viewer Templates setting and permissions](/referen
 | `{possessive}` | The possessive pronoun (e.g. their) | `their` | Commands, event responses, pipelines, webhooks |
 | `{presentTense}` | The present-tense to-be form (e.g. is/are) | `are` | Commands, event responses, pipelines, webhooks |
 | `{subject}` | The subject-case pronoun (e.g. they) | `they` | Commands, event responses, pipelines, webhooks |
-| `{tense}` | Is or are while your channel is live, was or were when it is offline. The verb agrees with the person the command names, or with the person who used the command when it names nobody. In a shoutout it follows the live state of the person shouted out instead | `is` | Commands, event responses, timers, pipelines, Discord, webhooks |
+| `{tense}` | Is or are while your channel is live, was or were when it is offline. The verb agrees with the person the command names, or with the person who used the command when nothing is typed after the command. In a shoutout it follows the live state of the person shouted out instead | `is` | Commands, event responses, timers, pipelines, Discord, webhooks |
 | `{user.genderedTerm}` | A gendered term for the triggering user | `person` | Commands, event responses, pipelines, webhooks, viewer text |
 | `{user.object}` | The object-case pronoun for the triggering user | `them` | Commands, event responses, pipelines, webhooks, viewer text |
 | `{user.possessive}` | The possessive pronoun for the triggering user | `their` | Commands, event responses, pipelines, webhooks, viewer text |
@@ -55,14 +78,14 @@ For viewer-written text, the [Viewer Templates setting and permissions](/referen
 | `{user.subject}` | The subject-case pronoun for the triggering user | `they` | Commands, event responses, pipelines, webhooks, viewer text |
 | `{user.tense}` | Is or are while your channel is live, was or were when it is offline. The verb agrees with the person who used the command. In a shoutout it follows the live state of the person shouted out instead | `are` | Commands, event responses, pipelines, webhooks, viewer text |
 | `{user.verb:<sing\|plur>}` | A singular/plural verb agreeing with the triggering user (e.g. `{user.verb:plays\|play}`) | `{user.verb:has\|have}` gives `has` | Commands, event responses, pipelines, webhooks |
-| `{verb:<sing\|plur>}` | The first form when the person takes is (he, she, any other single pronoun, or a name), and the second form for they. The person is the one the command names, or the one who used the command when it names nobody (e.g. `{verb:plays\|play}`) | `{subject} {verb:plays\|play}` gives `he plays` | Commands, event responses, pipelines, webhooks |
+| `{verb:<sing\|plur>}` | The first form when the person takes is (he, she, any other single pronoun, or a name), and the second form for they. The person is the one the command names, or the one who used the command when nothing is typed after the command (e.g. `{verb:plays\|play}`) | `{subject} {verb:plays\|play}` gives `he plays` | Commands, event responses, pipelines, webhooks |
 
 ## Names and links
 
 | Helper | What it gives | Example | Use in |
 | --- | --- | --- | --- |
-| `{link}` | A profile link for the person the command names, or for the person who used the command when it names nobody | `twitch.tv/example_viewer` | Commands, event responses, pipelines, webhooks |
-| `{name}` | The display name of the person the command names, or of the person who used the command when it names nobody. If the bot does not know the named person yet, it asks Twitch and shows that person's Twitch display name. It shows the word as typed only when no Twitch account has that name or the lookup fails | `Example_Viewer` | Commands, event responses, pipelines, webhooks |
+| `{link}` | A profile link for the person the command names, or for the person who used the command when nothing is typed after the command | `twitch.tv/example_viewer` | Commands, event responses, pipelines, webhooks |
+| `{name}` | The display name of the person the command names, or of the person who used the command when nothing is typed after the command. If the bot does not know the named person yet, it asks Twitch and shows that person's Twitch display name. It shows the word as typed only when no Twitch account has that name or the lookup fails | `Example_Viewer` | Commands, event responses, pipelines, webhooks |
 | `{user}` | The name of the person who used the command, as they write it (the display name). A chat reply uses the login when the two differ by more than letter case | `Example_Viewer` | Commands, event responses, pipelines, webhooks, viewer text, Discord |
 | `{user.avatar}` | The link to the profile picture of the viewer | `https://static-cdn.jtvnw.net/jtv_user_pictures/viewerone.png` | Commands, event responses, pipelines, webhooks |
 | `{user.bio}` | The profile description of the viewer | `I like bots` | Commands, event responses, pipelines, webhooks |
@@ -98,13 +121,13 @@ For viewer-written text, the [Viewer Templates setting and permissions](/referen
 | Helper | What it gives | Example | Use in |
 | --- | --- | --- | --- |
 | `{user.data.<key>}` | A value stored for the viewer, with an optional default after a colon | `{user.data.color}` gives `blue` | Commands, event responses, pipelines, webhooks |
-| `{user.points}` | The channel points of the viewer, with a thousands separator | `2,500` | Commands, event responses, pipelines, webhooks |
-| `{user.points.name}` | The name of the points currency of the channel | `nomz` | Commands, event responses, pipelines, webhooks |
-| `{user.points.nextRank.gap}` | How many points the viewer needs to pass the next place | `300` | Commands, event responses, pipelines, webhooks |
-| `{user.points.nextRank.name}` | The viewer one place above on the points ranking | `ViewerThree` | Commands, event responses, pipelines, webhooks |
-| `{user.points.rank}` | The place of the viewer on the channel points ranking | `4` | Commands, event responses, pipelines, webhooks |
-| `{user.points.rank.ordinal}` | The place of the viewer on the points ranking as an ordinal: 4th | `4th` | Commands, event responses, pipelines, webhooks |
-| `{user.points.raw}` | The channel points of the viewer as a plain number | `2500` | Commands, event responses, pipelines, webhooks |
+| `{user.points}` | The currency balance of the viewer, with a thousands separator | `2,500` | Commands, event responses, pipelines, webhooks |
+| `{user.points.name}` | The name of the currency of the channel | `nomz` | Commands, event responses, pipelines, webhooks |
+| `{user.points.nextRank.gap}` | The balance difference to the viewer one place above. That balance only ties that place | `300` | Commands, event responses, pipelines, webhooks |
+| `{user.points.nextRank.name}` | The Twitch user id of the viewer one place above on the currency ranking | `123456789` | Commands, event responses, pipelines, webhooks |
+| `{user.points.rank}` | The place of the viewer on the currency ranking | `4` | Commands, event responses, pipelines, webhooks |
+| `{user.points.rank.ordinal}` | The place of the viewer on the currency ranking as an ordinal: 4th | `4th` | Commands, event responses, pipelines, webhooks |
+| `{user.points.raw}` | The currency balance of the viewer as a plain number | `2500` | Commands, event responses, pipelines, webhooks |
 | `{user.quotes.count}` | How many quotes the viewer said | `3` | Commands, event responses, pipelines, webhooks |
 | `{viewer.data.<key>}` | A per-viewer data field for the triggering user (e.g. `{viewer.data.key}`) | `{viewer.data.deaths}` gives `12` | Commands, event responses, pipelines, webhooks |
 
@@ -123,8 +146,8 @@ For viewer-written text, the [Viewer Templates setting and permissions](/referen
 | `{user.stats.firstSeen.relative}` | How long ago the viewer was first seen in the channel | `one year ago` | Commands, event responses, pipelines, webhooks |
 | `{user.stats.lastSeen}` | The date the viewer was last seen in the channel | `2026-10-24` | Commands, event responses, pipelines, webhooks |
 | `{user.stats.lastSeen.relative}` | How long ago the viewer was last seen in the channel | `2 days ago` | Commands, event responses, pipelines, webhooks |
-| `{user.stats.streak}` | The current attendance streak of the viewer, in streams | `5` | Commands, event responses, pipelines, webhooks |
-| `{user.stats.streak.best}` | The best attendance streak of the viewer, in streams | `9` | Commands, event responses, pipelines, webhooks |
+| `{user.stats.streak}` | The current watch streak of the viewer, as Twitch reports it | `5` | Commands, event responses, pipelines, webhooks |
+| `{user.stats.streak.best}` | The best watch streak of the viewer, as Twitch reported it | `9` | Commands, event responses, pipelines, webhooks |
 | `{user.stats.watchTime.hours}` | The watch time of the viewer in hours | `12.5` | Commands, event responses, pipelines, webhooks |
 | `{user.stats.watchTime.long}` | The watch time of the viewer in words | `12 hours, 30 minutes` | Commands, event responses, pipelines, webhooks |
 | `{viewer.avgperday}` | The triggering user average chat messages per day since first seen | `8` | Commands, event responses, pipelines, webhooks |

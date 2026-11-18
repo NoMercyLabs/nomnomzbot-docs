@@ -1,0 +1,55 @@
+{
+  "fingerprint": "26ad53a560039e06260a8d648d74d724bde7bd86d14201b3d7cc5a9e81ce231c",
+  "verdict": "PASS",
+  "answers": [
+    {
+      "question": 1,
+      "answer": "To reuse a value, name it once with {set:name=value} and read it later in the same reply with {var.name}. To reuse another reply, use {include.cmd:name} for a channel command, {include.list:name|position} for one pick-list entry, or {include.builtin:<key>} for a read-only built-in command such as uptime.",
+      "quote": "Use {set:mood=happy}I feel {var.mood}. when you want to name a value once and read it later in the same reply."
+    },
+    {
+      "question": 2,
+      "answer": "You must set the value before you read it. The name has to follow the naming rule, and it must not be a name the trigger already supplies. All of this is stated in the 'Reuse a value inside one reply' section. The page assumes you already know how to edit a command reply; the reader line says so.",
+      "quote": "Set the value before you read it. A read before the set stays in the reply as written."
+    },
+    {
+      "question": 3,
+      "answer": "It worked if the {set:...} part prints nothing and the read shows the stored value. It failed if the {set} or the read stays in the reply as written: that happens with a read before the set, or a name the trigger supplies. {set} keeps a value only for this reply, while {include.*} prints another command's reply text without running its actions.",
+      "quote": "The assignment produces no visible text, so the result is I feel happy."
+    },
+    {
+      "question": 4,
+      "answer": "Store the calculated value once, for example {set:total={some helper}}. The inner helper runs first and {set} keeps its text. Then write {var.total} at both places in the reply. Use {var.total} rather than {total}, because a helper or trigger value with the same name would win over the bare form. The value is gone on the next command use, so anything that must last needs a stored feature such as a named counter.",
+      "quote": "It lasts only for this rendering; the next command use does not remember it."
+    },
+    {
+      "question": 5,
+      "answer": "The table row for {set} says to read it with {name} or {var.name} and leaves out the name-clash caveat. I had to go back to the prose to see that only {var.name} is safe. The page also does not list which names a trigger already supplies, so I would guess whether my name is refused. That costs one test run: a refused {set} shows up as written.",
+      "quote": "When a helper or a trigger value has the same name, {name} gives that value, not the set one."
+    },
+    {
+      "question": 6,
+      "answer": "The opening line is a run of five brace codes, which is hard to follow read aloud. The 'Custom data' section and the negative line about pipelines do not help with the reuse request and add listening time.",
+      "quote": "It does not turn a template into a pipeline of actions."
+    }
+  ],
+  "findings": [],
+  "warnings_released": true,
+  "warning_review": [
+    {
+      "id": "paragraph-3",
+      "decision": "keep",
+      "reason": "Reference page. The paragraph lists the rules for one helper, which the reader takes as a set. The reader answered questions 1 to 4 from it with exact quotes, so its length did not cost the reader anything. Splitting it would not change what the reader can do."
+    },
+    {
+      "id": "paragraph-5",
+      "decision": "keep",
+      "reason": "The limits of an include are facts the reader needs to avoid a surprise: a missing command, no permission or cooldown check, and the depth limit. Each is one plain sentence with no jargon, and the reader used the section without difficulty. Sentence count alone is not a defect."
+    },
+    {
+      "id": "sentence-5-7",
+      "decision": "keep",
+      "reason": "The 38-word count joins two separate rules, each a plain full sentence: a failed include stays as written, and include.builtin runs only read-only built-in commands. The wording is clear when heard. A word count alone is not a defect."
+    }
+  ]
+}
