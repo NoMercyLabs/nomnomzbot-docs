@@ -5,7 +5,9 @@ description: The 25 platform template helpers that give the link, live state, vi
 
 Platform helpers read each platform the streamer [connected](/reference/getting-started/connect-platforms) separately, so one reply can name Twitch, Kick and YouTube side by side. You type them in a reply field that takes template braces, like the other [template helpers](/reference/templates/overview).
 
-A platform that is not connected, or not live, gives an empty text. It never gives a 0 as if nobody were watching. Plan the words around the helper for that empty case, for example with `{default}`.
+A helper gives an empty text when it has nothing true to show. A link helper is empty for a platform that is not connected. A viewer helper is empty for a platform that is not live or not connected. A viewer helper never gives a 0 as if nobody were watching.
+
+Two helpers are different. `{platform.isLive}` gives `false` instead of an empty text. `{platform.live.count}` gives `0` when platforms are connected and none is live. Each section below says what its helpers give. Plan the words around the helper for the empty case, for example with `{default}`.
 
 ## Where they work
 

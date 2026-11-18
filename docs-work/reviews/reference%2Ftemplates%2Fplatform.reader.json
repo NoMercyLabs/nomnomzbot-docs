@@ -1,0 +1,50 @@
+{
+  "fingerprint": "2c1645ac1b6bc41103a9d59b54de735a10339d1a84d51bf2070f56d10bf808f6",
+  "verdict": "PASS",
+  "answers": [
+    {
+      "question": 1,
+      "answer": "To get one platform's value, use a helper that names the platform. The name goes either after a dot ({platform.link.kick}, {platform.viewers.kick}, {platform.followers.twitch}) or after a colon ({platform.isLive:kick}, {platform.title:youtube}, {platform.viewers.share:kick}, {platform.messages.stream:kick}, {platform.chatters.stream:youtube}). After the colon you can write twitch, kick or youtube in any mix of capitals.",
+      "quote": "Write twitch, kick or youtube, or the names Twitch, Kick or YouTube, in any mix of capitals."
+    },
+    {
+      "question": 2,
+      "answer": "You need to know how to type helpers into a reply field that takes template braces. The platform must also be connected, and for viewer, title and live-link helpers it must be live. The first two paragraphs say this. Where each helper works (commands, event responses, timers, pipelines, Discord posts, webhook bodies) is stated under Where they work.",
+      "quote": "You type them in a reply field that takes template braces, like the other template helpers."
+    },
+    {
+      "question": 3,
+      "answer": "On success the reply shows the value, for example 42 viewers or the channel link. An empty text means there was nothing true to show: the platform is not connected, not live, or has no count. Only {platform.isLive} gives false instead, and {platform.live.count} gives 0 when platforms are connected and none is live. A helper given an unknown name, or no name, stays in the reply exactly as written.",
+      "quote": "A helper gives an empty text when it has nothing true to show."
+    },
+    {
+      "question": 4,
+      "answer": "Use {platform.link.kick} for the link and {platform.viewers.kick} for the count, not {platform.viewers.total}. Kick can be live without a readable count, and then the viewer helper is empty. So wrap the count in {default:...|...} with fallback words. The page's own example does exactly this.",
+      "quote": "Watch on Kick: {platform.link.kick} · Viewers there: {default:{platform.viewers.kick}|not available right now}"
+    },
+    {
+      "question": 5,
+      "answer": "The tables list colon-input helpers bare, for example {platform.isLive} and {platform.title}. Only the Example column and the words 'that platform' show that they need :name. I had to reread Name a platform and the examples to see that the bare form stays in the reply as written. A reader who copies the Helper column as-is gets literal braces in chat.",
+      "quote": "Some helpers take the platform as their input, after a colon, as Variables and templates explains."
+    },
+    {
+      "question": 6,
+      "answer": "Read aloud, the chat-total window is hard to follow. 'From the start of the day the stream went live' makes a listener stop to work out whether it means the stream start or midnight. The cost is a short reread, not a blocked action.",
+      "quote": "The two chat totals count from the start of the day the stream went live until now."
+    }
+  ],
+  "findings": [],
+  "warnings_released": true,
+  "warning_review": [
+    {
+      "id": "sentence-11-1",
+      "decision": "keep",
+      "reason": "The sentence is long, but it carries the one distinction this reader needs: isLive gives false when a platform is not connected, while live.count gives 0 only when platforms are connected and none is live. Splitting it would not make it easier to follow, and the length alone is not a defect."
+    },
+    {
+      "id": "sentence-22-1",
+      "decision": "keep",
+      "reason": "The sentence answers the application case directly: passing {platform.user} as the input gives the viewer's own platform share. Read aloud the code example is awkward, but the listener gets the one pattern needed for a per-platform count, and the sentence is not a defect by length alone."
+    }
+  ]
+}
