@@ -36,6 +36,7 @@ No part of the bot acts on this word.
 The bot refuses a second item with the same name in the channel.
 It compares names without case and without spaces at the start or end.
 A negative cost is refused.
+For a first test, save an item with **Cost** 0 and **Who can buy** set to **Moderator**, so only moderators can buy it and nobody pays.
 
 | Label | What it sets | Default |
 | --- | --- | --- |
@@ -66,16 +67,17 @@ A negative cost is refused.
 There is a current mismatch between this list and the store's purchase check.
 The check recognizes **Everyone**, **Subscriber**, **Vip**, **Artist** and **Moderator**.
 Choosing **LeadModerator**, **Editor** or **Broadcaster** currently falls back to **Everyone** for the item's role requirement; do not use those three choices to restrict purchases.
-The integration still has to pass the bot's separate permission to submit a purchase.
+The integration still has to pass the bot's separate `economy:catalog:purchase` permission, which every signed-in viewer has by default.
 
 The **Command or pipeline to run** list holds commands, bot actions and [pipelines](/reference/commands/pipelines).
 For example, an item can run a pipeline that plays a sound after the purchase succeeds.
 The binding is what makes that happen; the required **Effect kind** text does not choose the action.
-The linked action gets the purchase details as variables a pipeline can use: `\{catalog.item.name\}`, `\{catalog.item.cost\}`, `\{catalog.item.id\}` and `\{catalog.purchase.id\}`.
+The linked action gets the purchase details as variables a pipeline can use: `{catalog.item.name}`, `{catalog.item.cost}`, `{catalog.item.id}` and `{catalog.purchase.id}`.
 
 ## Connect purchases to an integration
 
 An integration submits each purchase for the viewer who is signed in.
+It does this by sending `POST /api/v1/channels/{channelId}/economy/catalog/{itemId}/purchase`, where `{itemId}` is the store item's ID.
 The bot resolves that viewer's permissions itself, then applies the item's price and purchase limits.
 Configuring an item in **Store** prepares those rules; your integration still needs to give viewers a way to submit the purchase.
 
@@ -83,6 +85,7 @@ Configuring an item in **Store** prepares those rules; your integration still ne
 
 When a purchase comes in, these checks run in order.
 The first check that fails stops the purchase, and the viewer pays nothing.
+The channel currency must also be switched on with **Currency on** in [Currency and balances](/reference/economy/currency-and-balances); while it is off, every purchase and refund is refused.
 
 1. The item exists and is switched on.
 2. The buyer's role is at least **Who can buy**.
@@ -108,8 +111,10 @@ If the linked action fails, the purchase still stands and the cost is not automa
 The dashboard has no button to refund a purchase.
 An authorized integration can submit a refund through the API, which credits the paid amount and restores one unit of limited stock.
 A refund does not undo a sound, command or other linked action that already ran.
+
 The current refund path leaves the original purchase marked completed and adds a separate refund record.
 The original purchase still counts toward its cooldown and per-stream limit.
+
 The endpoint does not prevent another refund of that original purchase: a repeat call can credit the amount and restore stock again.
 If a response is lost, check the balance and purchase history before retrying through an integration.
 
