@@ -1,6 +1,6 @@
 # Documentation checkpoint
 
-Accepted: 2 of 113.
+Accepted: 3 of 113.
 
 Resume: /reference/overview
 
@@ -60,7 +60,7 @@ Resume: /reference/overview
 | /reference/overlays/set-up-overlays | reference%2Foverlays%2Fset-up-overlays.reader.json: invalid or missing JSON: [Errno 2] No such file or directory: 'C:\\Projects\\NoMercyLabs\\nomnomzbot-docs\\.claude\\worktrees\\final-c04\\docs-work\\reviews\\reference%2Foverlays%2Fset-up-overlays.reader.json' |
 | /reference/overlays/obs-browser-source | reference%2Foverlays%2Fobs-browser-source.reader.json: invalid or missing JSON: [Errno 2] No such file or directory: 'C:\\Projects\\NoMercyLabs\\nomnomzbot-docs\\.claude\\worktrees\\final-c04\\docs-work\\reviews\\reference%2Foverlays%2Fobs-browser-source.reader.json' |
 | /reference/overlays/widgets-and-alerts | reference%2Foverlays%2Fwidgets-and-alerts.reader.json: invalid or missing JSON: [Errno 2] No such file or directory: 'C:\\Projects\\NoMercyLabs\\nomnomzbot-docs\\.claude\\worktrees\\final-c04\\docs-work\\reviews\\reference%2Foverlays%2Fwidgets-and-alerts.reader.json' |
-| /reference/music/music-player | reference%2Fmusic%2Fmusic-player.reader.json: stale fingerprint; page, card or rendered article changed |
+| /reference/music/music-player | accepted |
 | /reference/music/song-requests | accepted |
 | /reference/audio/text-to-speech | accepted |
 | /reference/audio/voice-triggers | reference%2Faudio%2Fvoice-triggers.reader.json: invalid or missing JSON: [Errno 2] No such file or directory: 'C:\\Projects\\NoMercyLabs\\nomnomzbot-docs\\.claude\\worktrees\\final-c04\\docs-work\\reviews\\reference%2Faudio%2Fvoice-triggers.reader.json' |

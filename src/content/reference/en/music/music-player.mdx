@@ -9,20 +9,69 @@ The music can come from [Spotify](/reference/integrations/spotify) or [YouTube](
 
 YouTube requests play through the **Music Player** browser source in OBS.
 Spotify plays on the active playback device in your connected Spotify account.
-The **Music Player** can also register as a Spotify device, which lets you put that audio in its own OBS source; the bot never picks that device for you; you choose it yourself, in Spotify or with the device button in the **Request queue** header.
-When Spotify has no active device, the bot first tries the last device that played during this stream.
-If that fails, the **Request queue** shows the "Spotify has no active device" line and you pick a device yourself.
+[Pick the Spotify device](#pick-the-spotify-device) explains how to choose that device.
+
+## Add the Music Player to your streaming software
+
+The **Music Player** holds a hidden YouTube player and can add a Spotify playback device named "NomNomzBot" followed by the widget name.
+Select it in Spotify, or with the device button on the Music page, when you want Spotify audio to play through this browser source.
+Until a Spotify song plays, the device is not in the list.
+
+1. In the dashboard, open the **OBS** page, choose **Overlays in OBS**, and find **Music Player** under **Required overlays**.
+2. Choose **Connect**. A dialog opens with a **Copy address** button. Choose it, then paste the address into a **Browser** source in the OBS app, as shown on [Add an overlay to OBS](/reference/overlays/obs-browser-source).
+3. Follow the dialog: size the source 1 by 1 pixel, keep **Control audio via OBS** on, and leave **Shutdown source when not visible** off.
+   This gives the source its own audio channel in the OBS mixer.
+4. Check the status line at the top of the same dialog. **Loaded in OBS** confirms the player connected. **Not loaded in OBS** means OBS has not loaded the source yet.
+
+The browser source shows nothing while the music plays well.
+It shows a short message only when audio needs a click or the Spotify device has a problem (see the table below).
+
+| Message in the browser source | What to do |
+| --- | --- |
+| "Click to enable audio playback" | Click the message in the browser source, so it may play sound. |
+| "Reconnect Spotify with streaming permission to enable this device (Integrations page)." | The Music Player device cannot start. Either the Spotify connection lacks streaming permission, or the Spotify account does not have Premium. Choose **Reconnect** on the **Spotify** row of the Integrations page once. If the message stays, play Spotify on a regular Spotify device and capture that device in OBS, as shown on [Spotify](/reference/integrations/spotify#spotify-audio-in-an-obs-browser-source). |
+| "Couldn't start playback — check Spotify Premium and try reloading this source." | Check that the Spotify account has Premium, then reload the browser source. |
+
+A YouTube request that waits for this browser source shows "Waiting for the Music Player in OBS" in the **Request queue**.
+Its row has a button that opens the same setup steps.
+When the **Music Player** loads in OBS and nothing else is playing, the first song in the queue starts.
+
+### Silent stream
+
+**Control audio via OBS** is an OBS setting that routes the browser source's sound through the OBS mixer.
+Check that mixer channel when the browser source is playing but your stream is silent.
 
 ## Get your first song playing
 
-Connect Spotify if you want to use it, then open Spotify on the device where you want the audio to play.
-For YouTube, add **Music Player** from **Required overlays** on the **OBS** page before testing a request.
-In **Request rules**, open **Sources**, turn on **Allow YouTube songs** and choose **Save**; YouTube requests start disabled.
+Connect Spotify if you want to use it; the **Music Player** device needs Spotify Premium and a connection with streaming permission.
+Then open Spotify on the device where you want the audio to play.
+
+For YouTube, do these steps once:
+
+1. Add the **Music Player** to OBS, as shown in [Add the Music Player to your streaming software](#add-the-music-player-to-your-streaming-software).
+2. On the **Music** page, choose **Request rules** in the page header and open the **Sources** tab.
+3. Turn on **Allow YouTube songs** and choose **Save**.
+
+YouTube requests start disabled, and are restricted to the broadcaster by default.
 You do not need to connect a YouTube channel account just to request YouTube music.
 
-Open **Music**, check that **Playback** is on and the request queue is open, then request a song in chat with `!sr` followed by a single-track link or song name.
-The [Song requests](/reference/music/song-requests) guide explains the source permissions and limits; YouTube requests are restricted to the broadcaster by default.
+Open **Music**, check that the **Playback** switch in the **Now playing** header is on, then request a song in chat with `!sr` followed by a single-track link or song name.
+The [Song requests](/reference/music/song-requests) guide explains the source permissions and limits.
 Check both **Now playing** and the OBS audio mixer to confirm that the sound is reaching your stream.
+
+## Who can use this page
+
+| Role | What they may do |
+| --- | --- |
+| **Moderator**, **Lead moderator**, **Editor**, **Broadcaster** | Open the page, play, pause and skip, add and edit player buttons, switch **Playback**, and open **Request rules** to change the rules. |
+| **VIP** | Open the page when the **Broadcaster** allows it. |
+
+The **Broadcaster** lets a VIP in on the **Permissions** settings page.
+A VIP can only view the page. The playback controls need the **Moderator** role or higher.
+The roles are explained on [Permissions](/reference/settings/permissions).
+A YouTube song request in chat works only for the **Broadcaster** until the rules allow more roles.
+
+## What the Music page shows
 
 | Panel | What it holds |
 | --- | --- |
@@ -36,61 +85,8 @@ The badge next to the page title shows the Spotify connection.
 | Badge | Meaning |
 | --- | --- |
 | **Spotify connected** | The bot can use your Spotify account. |
-| **Spotify needs a new sign-in** | Spotify no longer accepts the saved login. The **Spotify** row on the Integrations page shows **Sign in again**. Choose **Reconnect** there, as shown on [Spotify](/reference/integrations/spotify). |
+| **Spotify needs a new sign-in** | Spotify no longer accepts the saved login. On the Integrations page, the **Spotify** row shows the status **Sign in again**. That text is a status, not a button. Choose the **Reconnect** button on that row, as shown on [Spotify](/reference/integrations/spotify). |
 | **Spotify not connected** | No Spotify account is connected. |
-
-## Who can use this page
-
-| Role | What they may do |
-| --- | --- |
-| **Moderator**, **Lead moderator**, **Editor**, **Broadcaster** | Open the page, play, pause and skip, add and edit player buttons, and switch **Playback**. |
-| **VIP** | Open the page when the **Broadcaster** allows it. |
-
-The **Broadcaster** lets a VIP in on the **Permissions** settings page.
-The roles are explained on [Permissions](/reference/settings/permissions).
-
-## Add the Music Player to your streaming software
-
-The **Music Player** holds a hidden YouTube player and can add a Spotify playback device named "NomNomzBot" followed by the widget name.
-That device needs Spotify Premium and a connection with streaming permission.
-Select it in Spotify, or with the device button on the Music page, when you want Spotify audio to play through this browser source.
-
-The page shows nothing while the music plays well.
-It shows something in two cases:
-
-- The status dot, when you turn on **Show a status dot (setup only)**.
-- A short Spotify message, when the Spotify device has a problem (see the table below).
-
-| Message on the page | What to do |
-| --- | --- |
-| "Click to enable audio playback" | Click the message in the browser source, so the page may play sound. |
-| "Reconnect Spotify with streaming permission to enable this device (Integrations page)." | The extra browser-playback permission is missing. See the current dashboard limitation on [Spotify](/reference/integrations/spotify#spotify-audio-in-an-obs-browser-source). |
-| "Couldn't start playback — check Spotify Premium and try reloading this source." | Check that the Spotify account has Premium, then reload the browser source. |
-
-1. Open **OBS**, choose **Overlays in OBS**, and find **Music Player** under **Required overlays**.
-2. Choose **Connect** and copy its address into an OBS **Browser** source, as shown on [Add an overlay to OBS](/reference/overlays/obs-browser-source).
-3. Follow the dialog: size the source 1 by 1 pixel, keep **Control audio via OBS** on, and leave **Shutdown source when not visible** off.
-   This gives the source its own audio channel in the OBS mixer.
-
-A YouTube request that waits for this page shows "Waiting for the Music Player in OBS" in the **Request queue**.
-Its row has a button that opens the same setup steps.
-
-### Music Player settings
-
-These are the settings supported by the player widget.
-The required **Music Player** source is currently excluded from the custom **Overlays** list, and its OBS connection dialog does not expose this settings form.
-Treat this table as reference for an existing customized player, rather than a dashboard setup step.
-**Play audio on this page** is the widget's own switch: with it off, the page plays no music at all.
-**Control audio via OBS** is an OBS setting that routes the browser source's sound through the OBS mixer.
-Check that mixer channel when the page is playing but your stream is silent.
-
-| Setting | Default | What it does |
-| --- | --- | --- |
-| **Volume (0-100)** | 100 | The page's own level for both players. |
-| **Mute the music on this page** | Off | Silences both players. |
-| **Play audio on this page** | On | Lets this page play the music. |
-| **Show a status dot (setup only)** | Off | Shows a dot that proves the source is alive. |
-| **Accent color** | The theme accent (`#9146ff` unless your theme changes it) | The color of the status dot and the page's own status messages. |
 
 ## Control the song that plays now
 
@@ -103,26 +99,38 @@ When nothing plays, it shows "Nothing is playing right now."
 | **Pause** | Pauses the song. |
 | **Next song** | Skips to the next song. |
 
-The card also shows **Previous song**, **Shuffle**, **Repeat**, a **Song position** bar and a **Music volume** slider, to people who may use them.
-These controls show but are not active on this page yet, so use the player buttons below for those actions.
+On this panel, **Play**, **Pause** and **Next song** are the controls that act.
+For previous song, shuffle, repeat, seeking and volume, pin a player button, as shown in [Keep useful controls close](#keep-useful-controls-close).
+**Previous Song**, the shuffle and repeat buttons and **Switch Playback Device** work only with Spotify.
+With only YouTube, these buttons do nothing.
 
 A badge under the song name shows a special state.
 
 | Badge | Meaning |
 | --- | --- |
 | **Paused by you** | You paused the song. |
-| **Blocked: the player cannot start** | The player cannot start the song. |
+| **Blocked: the player cannot start** | The player cannot start the song. For a Spotify song, open Spotify on a device, or pick one as shown in [Pick the Spotify device](#pick-the-spotify-device). If it stays, choose **Reconnect** on the **Spotify** row of the Integrations page, and check that the Spotify account has Premium. For a YouTube song, add or refresh the **Music Player** in OBS. |
 | **Starting** | The song is starting. |
 | **Music muted** | The music is muted. |
 
 ### Pick the Spotify device
 
-When Spotify has a device you can move playback to, a button in the **Request queue** header shows the active device by name, or **Choose a device** when no device is active.
+The device button sits in the **Request queue** header when Spotify has a device you can move playback to.
+It shows the active device by name, or **Choose a device** when no device is active.
 Open it and choose another device to move playback there.
 When a request waits because Spotify has no active device, the **Request queue** shows "Spotify has no active device. Open Spotify on a device to play requests."
 Choosing a device then also starts the music on it.
 In every other case, choosing a device only moves playback there.
-The button is hidden when there is no device to move to, and it shows only to people who may control the remote player.
+The button is hidden when there is no device to move to.
+Only people who can control playback see it: the **Moderator** role or higher.
+
+The **Music Player** can also register as a Spotify device, which lets that audio have its own OBS source.
+It registers only after the bot reports a Spotify song as now playing.
+The bot never makes the **Music Player** your Spotify device on its own.
+You choose it in Spotify or with the device button.
+When Spotify has no active device, the bot first tries the last Spotify device that played during this stream.
+That is the **Music Player** only if you chose it before.
+If that fails, the **Request queue** shows the "Spotify has no active device" line and you pick a device yourself.
 
 ### Turn song requests off
 
@@ -140,22 +148,27 @@ They use the same actions as the Stream Deck music plugin, and you can keep up t
    The **Add a player button** dialog opens.
 2. Pick one of the buttons in the list.
    The dialog shows what it does, and the fields it needs.
-3. Choose an **Icon**.
+3. Fill in the fields the button needs.
+   For **Set Volume**, enter the fixed level from 0 (silent) to 100 (full volume).
+   For **Seek**, enter the position in seconds from the start of the track.
+   For **Set Repeat Mode**, pick Off, Track or Context. Context repeats the current playlist or album.
+   Buttons such as **Play** or **Pause** need no fields.
+4. Choose an **Icon**.
    An icon is required.
-4. Change the **Label** if you want, at most 24 characters.
+5. Change the **Label** if you want, at most 24 characters.
    It starts as the button's name.
    Clear it for a button with only an icon.
-5. Choose **Add button**.
+6. Choose **Add button**.
    The dialog closes and the new button shows under the song.
 
-With 12 buttons, **Add button** is off and says "A channel can pin at most 12 buttons."
+A channel can pin at most 12 buttons. With 12 buttons, **Add button** is off.
 
 | Button | What it does |
 | --- | --- |
 | **Play** | Resumes playback. |
 | **Pause** | Pauses playback. |
-| **Play/Pause** | Toggles playback. |
-| **Now Playing** | Toggles playback of the current track. |
+| **Play/Pause** | Toggles playback: pauses when a song plays, plays when it is paused. |
+| **Now Playing** | Does the same as **Play/Pause**. Only the starting icon differs, and you can change the icon. |
 | **Next Song** | Skips to the next track. |
 | **Previous Song** | Goes back to the previous track. |
 | **Set Volume** | Sets playback volume to a fixed level. |
@@ -163,10 +176,10 @@ With 12 buttons, **Add button** is off and says "A channel can pin at most 12 bu
 | **Volume Down** | Lowers playback volume by a step. |
 | **Volume Mute/Unmute** | Mutes if audible, or unmutes to a set level if muted. |
 | **Seek** | Jumps to a set point in the current track. |
-| **Set Shuffle** | Turns shuffle on or off. |
-| **Toggle Shuffle** | Switches shuffle on or off. |
-| **Set Repeat Mode** | Sets repeat to Off, Track, or Playlist/Album. |
-| **Cycle Repeat Mode** | Cycles repeat Off, Track, Playlist/Album. |
+| **Set Shuffle** | Sets shuffle to a fixed state that you choose: on or off. |
+| **Toggle Shuffle** | Flips shuffle from its current state: on becomes off, and off becomes on. |
+| **Set Repeat Mode** | Sets repeat to Off, Track or Context. Context repeats the current playlist or album. |
+| **Cycle Repeat Mode** | Moves repeat to the next mode: Off, then Track, then Context, then Off again. |
 | **Switch Playback Device** | Moves playback to a chosen device. |
 | **Save Track** | Adds the current track to your Liked Songs. |
 | **Remove Saved Track** | Removes the current track from your Liked Songs. |
@@ -181,13 +194,12 @@ The list holds all 23 buttons.
 ### Use, move and edit a button
 
 - Choose a button to run it.
-  When it fails, a message says it did not run.
 - Drag a button to move it.
   The new order is saved at once.
 - Right-click a button to edit it.
   The **Edit player button** dialog opens.
   Choose **Save button** to keep the change, or **Remove button** to delete it.
-  The dialog closes and the strip shows the change.
+  The dialog closes and the player buttons show the change.
 
 ## Read the song history
 
@@ -201,6 +213,7 @@ A bar and a count show how many of their requests played.
 
 A newly accepted request counts when playback starts, rather than when it enters the queue.
 Removing it before it plays does not add to history or the requester ranking, and replaying an already counted request does not count it again.
+The **Songs per person per stream** limit is separate: a request removed before it plays still counted toward that limit when it was accepted.
 Imported historical requests can also appear in these totals.
 
 ## Related pages
