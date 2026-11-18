@@ -1,22 +1,22 @@
 ---
 title: Linked channels
-description: Choose what this channel shares with other trusted NomNomzBot servers, and whether mass bans and network blocks reach it.
+description: Choose what this channel accepts from other trusted NomNomzBot servers, and whether mass bans and network blocks reach it.
 ---
 
 When several communities work together, you may want a moderation decision made elsewhere to protect your own channel too.
 The **Federation** settings page controls which outside decisions your channel accepts.
 It is in the **Connections** group of **Settings**.
 
-There are three separate choices here: accepting shared bans from trusted bot servers, accepting an operator's network blocks, and participating in a moderator's mass bans.
+There are three separate choices here: accepting shared bans from trusted bot servers, accepting an admin's network blocks, and participating in a moderator's mass bans.
 Turning on one does not turn on the others.
-Other servers must already be trusted by the person who runs your bot before their shared bans can reach your channel.
+Other servers must already be trusted by an admin of your server before their shared bans can reach your channel.
 
 | Card | What it decides |
 | --- | --- |
-| **Sharing with other bots** | What this channel accepts from, or shares with, other trusted NomNomzBot servers. |
+| **Sharing with other bots** | What this channel accepts from other trusted NomNomzBot servers. |
 | **Choices for one bot** | Choices that name one other server instead of every trusted one. The card shows only when such a choice exists. |
 | **Network blocks** | Whether an admin network block also bans its blocked actor in this channel. |
-| **Moderator mass bans** | Whether a mass ban from one of your moderators also bans its accounts in this channel. |
+| **Moderator mass bans** | Whether a mass ban from one of your moderators, or from an admin of your NomNomzBot server, also bans its accounts in this channel. |
 
 Everything on the page is off until you turn it on.
 
@@ -38,37 +38,41 @@ A lead moderator or an editor sees the **Network blocks** and **Moderator mass b
 Which other servers count as trusted is not set on this page.
 An admin of your NomNomzBot server sets it.
 
-## Accept or share a kind of data
+## Accept a kind of data
 
 The **Sharing with other bots** card has one row for each kind of data.
 Each row has two switches: **Accept** and **Share**.
+**Accept** decides what your channel receives from trusted servers.
+Bans are the only kind of data accepted into your channel today.
+Use the **Shared chat bans** row: **Accept** on that row lets bans from trusted servers reach your channel.
+
+The bot does not send your channel's data to other servers today.
+Turning on **Share** keeps your choice on the row, but nothing is sent, so you can leave it off.
+
+Before you turn it on, know two things.
+An incoming ban is applied at once, with no preview and no request to approve it.
+Turning **Accept** off later does not undo the bans already placed.
 
 1. Open the **Federation** settings page.
-2. Find the row, for example **Shared chat bans**.
-3. Turn on **Accept**, **Share**, or both.
+2. Find the **Shared chat bans** row.
+3. Turn on **Accept**.
    The choice is saved at once and holds for every trusted server.
-4. To stop, turn both switches off.
-
-| Row | What the bot does with it |
-| --- | --- |
-| **Shared chat bans** | **Accept** permits incoming bans from trusted servers. The **Share** choice is stored, but outgoing sharing is not implemented. |
-| **Shared ban list** | The choice is stored; synchronization of this list is not implemented. |
-| **Shared trust list** | The choice is stored; synchronization of this list is not implemented. |
-| **Shared savings** | The choice is stored; savings sharing between servers is not implemented. |
+4. To stop, turn **Accept** off.
+   This stops later bans only.
+   A ban already placed stays until a moderator unbans the account by hand.
 
 An accepted ban is placed with your channel's own Twitch connection.
-The bot records it in the moderation history as a ban that came from another server.
+The bot records the ban in the moderation history.
 When Twitch refuses the ban, the bot tells you in the inbox of things that need your action.
 
-For example, if you want to accept shared chat bans but keep other sharing off, turn on **Accept** only on the **Shared chat bans** row.
-That permits an incoming ban to be applied in your channel; it does not provide a preview or ask you to approve each one.
 A message from an untrusted server is refused before it can affect the channel.
 
 ## Turn off a choice for one bot
 
 The **Choices for one bot** card lists choices that name one other server.
 Each row shows the kind of data, **Accept** or **Share**, and the id of that server.
-These choices are made outside this page.
+These choices are made through the bot's API, not on this page.
+This page can only list them and turn them off.
 
 1. Find the row.
 2. Choose **Turn this choice off** (the trash icon).
@@ -95,7 +99,7 @@ A moderator can ban a list of accounts in every channel they moderate at once.
 
 | Label | Default | When on |
 | --- | --- | --- |
-| **Accept moderator mass bans** (switch **Accept**) | Off | A mass ban from one of your moderators also bans its accounts in this channel. |
+| **Accept moderator mass bans** (switch **Accept**) | Off | A mass ban from one of your moderators, or from an admin of your NomNomzBot server, also bans its accounts in this channel. |
 
 For an ordinary participating channel that uses the bot, a mass ban is held while that channel is live.
 The bot posts a notice in the chat of that channel.
@@ -130,7 +134,7 @@ A channel the moderator excludes is never banned in.
 
 **The page shows "The sharing choices could not be loaded."**
 The bot did not answer.
-Choose **Try again** on the card.
+Choose **Try again** on the **Sharing with other bots** card.
 
 ::
 
