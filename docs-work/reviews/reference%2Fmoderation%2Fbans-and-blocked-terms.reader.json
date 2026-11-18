@@ -1,0 +1,60 @@
+{
+  "fingerprint": "8cc3980e6838b37304be6c433e0f763b72705076b8692340e52e170a0110342f",
+  "verdict": "PASS",
+  "answers": [
+    {
+      "question": 1,
+      "answer": "Both are in Settings, in the Access group. To remove a ban, open Banned people, find the person's row and choose Unban. To change the phrases Twitch blocks, open Blocked terms. To add a phrase, type it in the field and choose Block or press Enter. To remove one, find it in Blocked now and choose Unblock.",
+      "quote": "NomNomzBot shows Twitch’s current lists on Banned people and Blocked terms, both in the Access group of Settings."
+    },
+    {
+      "question": 2,
+      "answer": "Three things, all stated before the steps. Your own Twitch account must be a moderator of the channel, which is in 'What must be connected first'. The broadcaster's Twitch connection must be current, or the Banned people list shows an error. You need the right role, shown in the 'Who can use these pages' table: a Moderator may only unban, while blocking and unblocking need Lead moderator, Editor or Broadcaster. The Permissions page can change these defaults.",
+      "quote": "Twitch must have made that person a moderator of your channel, or Twitch refuses the action."
+    },
+    {
+      "question": 3,
+      "answer": "An unban worked when the row leaves Banned people. A block worked when the term appears in Blocked now and the field empties. An unblock worked when the term leaves Blocked now. A failure shows a named error with the reason. A ban stops a person from chatting. A blocked term is a word or phrase Twitch checks wherever it appears. Each has its own page.",
+      "quote": "The person can chat again, and the row leaves the list."
+    },
+    {
+      "question": 4,
+      "answer": "The moderator opens Blocked terms, finds the phrase in Blocked now and chooses Unblock. The viewer's ban stays, because bans live on a separate page and only Unban lifts them. One catch: a user with the default Moderator role cannot unblock. They see Blocked now without the Unblock button, so they need the Lead moderator role or a change on Permissions first.",
+      "quote": "Someone who may not block sees the Blocked now list only, without the Block a word or phrase panel and without Unblock."
+    },
+    {
+      "question": 5,
+      "answer": "A small reread comes from 'Twitch must have made that person a moderator of your channel', because the table also lists the Broadcaster. A literal reader may wonder whether the broadcaster must also be a moderator. It costs a moment of doubt, not a blocked action. A minor consequence also comes after the action it affects: 'Spaces at the start and end of the text drop out.' appears only after the Block steps, which costs nothing in practice. Navigation is stated up front ('in the Access group of Settings'), so I had to guess nowhere else.",
+      "quote": "Twitch must have made that person a moderator of your channel, or Twitch refuses the action."
+    },
+    {
+      "question": 6,
+      "answer": "The page repeats 'Banned by Stoney_Eagle 2 hours ago' twice in one step, which is long when read aloud. The placeholder in '{name} could not be unbanned.' reads awkwardly aloud. 'All of the above.' appears twice in the roles table. The opening table repeats what the introduction just said about the two pages. Each costs a few seconds of listening and blocks nothing.",
+      "quote": "When the ban has a reason, the line shows the reason, then a dot, then “Banned by Stoney_Eagle 2 hours ago”."
+    }
+  ],
+  "findings": [],
+  "warnings_released": true,
+  "warning_review": [
+    {
+      "id": "length",
+      "decision": "keep",
+      "reason": "The length comes from a reference shape with two tables and a troubleshooting section. The reader found all six answers through headings and quoted text without a detour, so the length costs no action."
+    },
+    {
+      "id": "first-numbered-step",
+      "decision": "keep",
+      "reason": "The 297 words before the first step are the connection and role requirements the reader must know before clicking. voice.md puts access requirements before the steps, and the reader used them to judge whether the action would work."
+    },
+    {
+      "id": "paragraph-14",
+      "decision": "keep",
+      "reason": "The troubleshooting paragraph names two causes and their fixes in short sentences that each start with their case (first case, second case). The reader can pick the right branch without rereading."
+    },
+    {
+      "id": "sentence-14-2",
+      "decision": "keep",
+      "reason": "The 38 words hold the error text and the Try again action, which the reader needs together. The wording is plain, the action is clear, and the length costs no step."
+    }
+  ]
+}

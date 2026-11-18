@@ -16,6 +16,14 @@ For rules that delete messages or trigger a timeout automatically, use [chat fil
 | **Banned people** | Everyone permanently banned in your channel, as Twitch holds the list. |
 | **Blocked terms** | The words and phrases Twitch holds back from your chat. |
 
+## What must be connected first
+
+**Banned people** reads the list through your own Twitch connection as broadcaster.
+When that connection is stale or missing, the panel shows an error instead of an empty list.
+
+**Unban**, **Block**, **Unblock** and the **Blocked now** list run on the Twitch account of the person who uses them.
+Twitch must have made that person a moderator of your channel, or Twitch refuses the action.
+
 ## Who can use these pages
 
 The roles below are the defaults and can be adjusted on [Permissions](/reference/settings/permissions).
@@ -88,11 +96,15 @@ If it fails, the page shows "The term could not be unblocked:" with the reason.
 
 **A list shows an error instead of rows.**
 The page shows "The banned people could not be loaded." or "The blocked terms could not be loaded."
-Choose **Try again** in the panel to load the list from Twitch again.
+Choose **Try again** in the panel to load the list from Twitch again, which helps when Twitch was briefly unreachable.
+Trying again does not help when the broadcaster's Twitch connection is stale or missing, or when the Twitch account you use is not a Twitch moderator of the channel.
+In the first case, the broadcaster signs out and signs in again with **Continue as broadcaster**, as [Sign in](/reference/getting-started/sign-in) explains.
+The **Connections** panel on **Home** shows the Twitch row for that connection, as [Connect platforms](/reference/getting-started/connect-platforms) explains.
+In the second case, have the broadcaster make that account a moderator on Twitch.
 
 ::
 
 ## Related pages
 
-- [Linked channels](/reference/moderation/linked-channels) shares bans and blocks with other channels.
+- [Linked channels](/reference/moderation/linked-channels) covers shared bans and network blocks of accounts from other servers. It does not share blocked terms.
 - [AutoMod and chat filters](/reference/moderation/automod-and-chat-filters) covers the bot's own filters, which delete messages on top of the Twitch list.
