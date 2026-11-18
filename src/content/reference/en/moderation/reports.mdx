@@ -16,23 +16,6 @@ The following roles are the channel defaults; [Permissions](/reference/settings/
 | A **Moderator** or higher | Open the page and read every report. |
 | A **Lead moderator** or higher | Also **Dismiss** or **Escalate** an open report. |
 
-## How a report arrives
-
-A report names one chatter and gives a reason.
-The dashboard currently provides the review list, but no form for a viewer to submit a report.
-Any signed-in viewer of the channel can file a report through the bot's API.
-By default the action **File a report** is open to Everyone, and [Permissions](/reference/settings/permissions) can change that.
-The bot saves the signed-in person as the reporter, so the row shows their name.
-
-| Rule | What happens |
-| --- | --- |
-| The reason is empty | The bot refuses the report: "A report needs a reason." |
-| The reason is longer than 500 characters | The bot refuses the report: "A report reason can't exceed 500 characters." |
-| No chatter is named | The bot refuses the report: "A report needs a reported user." |
-
-A new report has the status **Open**.
-The chatter in the report is saved as a user of the bot, even if they never chatted before.
-
 ## Read the reports
 
 1. Open **Viewer reports** in the **Access** group of the settings sidebar.
@@ -43,14 +26,7 @@ The chatter in the report is saved as a user of the bot, even if they never chat
 Each row shows the name of the reported chatter.
 Under the name, the row shows the reason and who filed it, for example "Filed by a viewer 5 minutes ago".
 When the bot does not know the reporter, the row says "a viewer".
-
-## Open reports as notices
-
-Each open report also shows as a notice titled "(name) was reported by a viewer", with the line "Reason: (reason)".
-The notice appears in the **Needs attention** panel on the dashboard home and in the **Action required** inbox.
-Its **Open** link goes to [People](/reference/community/people), not to **Viewer reports**.
-The notice goes away when you dismiss or escalate the report.
-You can also dismiss the notice itself.
+When a status has no reports, the list shows the text for that status.
 
 | Status | Text when the list is empty |
 | --- | --- |
@@ -58,10 +34,21 @@ You can also dismiss the notice itself.
 | **Escalated** | "No escalated reports." |
 | **Dismissed** | "No dismissed reports." |
 
+## Open reports as notices
+
+Each open report also shows as a notice titled "(name) was reported by a viewer", with the line "Reason: (reason)".
+The notice appears in the **Needs attention** panel on the dashboard home and in the **Action required** inbox.
+Its **Open** link goes to [People](/reference/community/people), not to **Viewer reports**.
+The notice goes away when you dismiss or escalate the report.
+To hide only the notice, choose **Dismiss** on it in the **Needs attention** panel.
+This does not change the report: it stays **Open** in **Viewer reports**.
+
 ## Dismiss or escalate a report
 
 Dismiss a report when it needs no further work, or escalate it when someone should investigate.
-For an escalated report, open the person's profile or the chat history to review the situation, then use the normal moderation controls if an action is needed.
+A report row has no link to the reported person.
+To review the person, open [People](/reference/community/people) or the [Chat page](/reference/community/chat-page).
+Then use the normal moderation controls if an action is needed.
 
 1. Show the **Open** reports.
 2. On the row, choose **Dismiss** for a report that needs no action.
@@ -84,9 +71,18 @@ The report stays as it was. Try again.
 
 **The page shows "The reports could not be loaded."**
 The list did not load.
-Choose **Try again** on the card to load it again.
+Choose **Try again** in the **Viewer reports** list to load it again.
 
 ::
+
+## How a report arrives
+
+A report names one chatter and gives a reason.
+Any signed-in viewer of the channel can file a report through the bot's API.
+By default the action **Report a viewer** is open to Everyone, and [Permissions](/reference/settings/permissions) can change that.
+The bot saves the signed-in person as the reporter, so the row shows their name.
+
+A new report has the status **Open**.
 
 ## Related pages
 

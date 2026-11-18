@@ -1,0 +1,45 @@
+{
+  "fingerprint": "855f8b9ef3eeb7b963887392efc174c5b7b1eb8ef983097c080808af3210773f",
+  "verdict": "PASS",
+  "answers": [
+    {
+      "question": 1,
+      "answer": "Open Viewer reports in the Access group of the settings sidebar, show the Open reports, then choose Dismiss or Escalate on the row. The page confirms the choice and the report moves to the list of its new status.",
+      "quote": "Use the Viewer reports page in the Access group of Settings to decide which concerns need follow-up."
+    },
+    {
+      "question": 2,
+      "answer": "You must be a Moderator or higher to read reports and a Lead moderator or higher to dismiss or escalate one. Permissions can change these defaults. The table under Who can use this page says this before any step.",
+      "quote": "Also Dismiss or Escalate an open report."
+    },
+    {
+      "question": 3,
+      "answer": "Success is a confirmation line naming the person, and the report leaves the Open list for the Dismissed or Escalated list. A failed save shows that the report could not be changed. Dismissing only the notice in Needs attention leaves the report Open.",
+      "quote": "The page shows “The report about (name) is dismissed.” or “The report about (name) is escalated.”"
+    },
+    {
+      "question": 4,
+      "answer": "The report row has no link to the person and does not show whether they were already moderated. So the moderator opens People, which shows the person's moderation history. If the action was already taken, they choose Dismiss, which only changes the report's status and does not punish anyone again. They do not use the moderation controls again.",
+      "quote": "To review the person, open People or the Chat page."
+    },
+    {
+      "question": 5,
+      "answer": "I had to take a detour to People to check earlier moderation, because the report row has no link to the person. I also reread how the reporter is shown. The example row reads 'Filed by a viewer', which matches the unknown-reporter wording. But How a report arrives says the row shows the reporter's name. The cost is a moment of doubt about which is the normal case. Neither stops the task.",
+      "quote": "A report row has no link to the reported person."
+    },
+    {
+      "question": 6,
+      "answer": "Read aloud, Dismiss names two different controls: one on the report row and one on the notice in Needs attention. Open also means both a status and the notice's link. The page separates them, but a listener must track which one is meant, which costs a reread of the notices section.",
+      "quote": "To hide only the notice, choose Dismiss on it in the Needs attention panel."
+    }
+  ],
+  "findings": [],
+  "warnings_released": true,
+  "warning_review": [
+    {
+      "id": "paragraph-4",
+      "decision": "keep",
+      "reason": "The paragraph has six short sentences, but each gives a fact the moderator needs to avoid a wrong action: the notice exists, where its link goes, that it clears when the report is dismissed or escalated, and that dismissing it alone leaves the report Open. The last sentence ('This does not change the report') answers the Dismiss ambiguity that reader question 6 raised, so the length carries the distinction rather than padding it. Read aloud, the cost is at most a reread, and the wording can be followed."
+    }
+  ]
+}
