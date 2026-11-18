@@ -1,0 +1,80 @@
+{
+  "fingerprint": "07da12f6c473aa6024910036e4f8d984d03accb57a2ec461ec2e859a504e3522",
+  "verdict": "PASS",
+  "answers": [
+    {
+      "question": 1,
+      "answer": "Trust and heat are context only. A low score is not a reason to act. Heat over 80 puts a viewer in the review queue on Home by default. Repeated violations go through the Escalation ladder. Each offense adds 1 to the viewer's count inside the offense window. The bot runs the step with the highest At offense number that is not above that count: Warn, Timeout or Ban. To use it, I open Escalation in the Access group of Settings, switch on Escalation ladder, edit the steps (At offense, Action, Timeout length, Add step, Remove step) and choose Save.",
+      "quote": "The bot runs the step with the highest At offense number that is not above that count."
+    },
+    {
+      "question": 2,
+      "answer": "I need the right role, which the table under Who can use these pages states. Only the Broadcaster may change Trust policy. A Lead moderator, Editor or Broadcaster may change Escalation. Others see the values but get no Save button. The Ladder section also says the ladder is off until Escalation ladder is switched on and saved. A chat filter set to Step up the escalation ladder is needed for messages to count. A chat filter ladder step also needs the channel owner's connected account.",
+      "quote": "The Save and Reset to defaults buttons show only to someone who may change the page."
+    },
+    {
+      "question": 3,
+      "answer": "The trust score (0 to 100) shows as Trust score under Bot standing. Heat (0 to 100) is recent trouble that fades by half each half-life. The Trust tier row is a separate spam defense standing that the Tier ceilings do not change. Success for the ladder: after Save, the next offense runs the matching step. A viewer keeps the offense count they already have.",
+      "quote": "It does not come from the trust score, so the Tier ceilings on this page do not change it."
+    },
+    {
+      "question": 4,
+      "answer": "A new chatter's first message is not an offense just because the ladder exists. It counts only if it trips a Twitch chat filter set to Step up the escalation ladder. It can also count if Count AutoMod holds is on and AutoMod or spam defense would time out or ban the viewer. Then it is offense 1, and with the default ladder the bot sends a Twitch warning. Offense 2 is a 1:00 timeout, and it climbs to a ban at offense 6 within the 168-hour window. The newcomer's low trust score does not itself trigger any action. The page does not say directly how spam defense treats a first message from a Newcomer; it points to the Spam defense page.",
+      "quote": "That ladder is used when a Twitch chat filter is set to Step up the escalation ladder; merely creating the ladder does not make every chat message an offense."
+    },
+    {
+      "question": 5,
+      "answer": "I learned that Count AutoMod holds needs the ladder switched on only after the Policy table introduced it. The cost is small: I would have switched it on alone. I learned that Default 600 is in seconds only at the end of Type a length of time. Before that I read the default 600 against a minutes field. The Edit the ladder steps do not include switching on Escalation ladder. It is stated just before them and in troubleshooting, so I reread to confirm it. On a channel without broadcaster setup, a chat filter ladder step fails. That sits in the action paragraph, away from the steps.",
+      "quote": "Count AutoMod holds works only while Escalation ladder is on."
+    },
+    {
+      "question": 6,
+      "answer": "Read aloud, the Other fields on the page table is a long list of twelve fields with defaults that the score does not use. A listener has to hold all of them only to learn that none of them matters. Several today and currently notes, like this one, slow the listening path.",
+      "quote": "Today this happens for every viewer."
+    }
+  ],
+  "findings": [],
+  "warnings_released": true,
+  "warning_review": [
+    {
+      "id": "length",
+      "decision": "keep",
+      "reason": "This is a reference page. The main path (change a policy, then the escalation ladder) comes first, and the field tables sit below it for lookup. The word count is a diagnostic cue, not a reader cost; the reader answered all six questions without a finding."
+    },
+    {
+      "id": "first-numbered-step",
+      "decision": "keep",
+      "reason": "The text before the first numbered step is the role table and the access rules that change what the steps do. Voice point 4 puts access requirements before the steps, so the order stays."
+    },
+    {
+      "id": "paragraph-7",
+      "decision": "keep",
+      "reason": "Six short sentences with one idea each. The sentence that the trust tier is not the trust score prevents a misreading that would change what the moderator does."
+    },
+    {
+      "id": "paragraph-15",
+      "decision": "keep",
+      "reason": "A run of short sentences that follows the ladder in order: what the page sets, how the offense count rises, which step runs, and what each action does. The reader needs each one to answer question 1."
+    },
+    {
+      "id": "paragraph-16",
+      "decision": "keep",
+      "reason": "The sentences state which connected account runs automatic steps. That decides whether a step runs at all, so the content is needed here and the length is a cue, not a defect."
+    },
+    {
+      "id": "paragraph-21",
+      "decision": "keep",
+      "reason": "Reference sentences that each state one behavior or limit a moderator checks. Splitting them would add length without making them easier to follow."
+    },
+    {
+      "id": "paragraph-22",
+      "decision": "keep",
+      "reason": "Reference sentences that each state one allowed value or behavior. The reader used them directly for question 3 and question 4."
+    },
+    {
+      "id": "paragraph-37",
+      "decision": "keep",
+      "reason": "The allowed-values block is a lookup list read when tuning, and it sits below the main path. Each sentence states one limit, so the nine-sentence count is not a reader cost."
+    }
+  ]
+}

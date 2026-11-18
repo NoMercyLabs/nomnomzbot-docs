@@ -45,6 +45,9 @@ You still choose **Save** to store the reset.
 The bot keeps two numbers for a viewer in your channel, both from 0 to 100.
 The trust score combines the information currently available to the bot, while heat reflects moderation trouble that fades over time.
 The profile shows **Trust score** under **Bot standing**, and the bot updates the calculations as moderation events arrive.
+The profile also shows a separate **Trust tier** row, such as **Untrusted**, **Newcomer**, **Known** or **Regular**.
+That tier is the viewer's spam defense standing.
+It does not come from the trust score, so the **Tier ceilings** on this page do not change it.
 
 Treat these as context for a decision rather than a complete account of a person.
 In particular, the **Account age** input in the moderation score currently means how long the bot has known the viewer, not the age of their Twitch account.
@@ -55,6 +58,175 @@ The fields sit in six panels.
 
 The moderation score currently uses how long the bot has known the viewer, their Twitch affiliate or partner status, a verified YouTube channel, and their timeout and ban counts.
 The fields listed as unused below are saved by the policy editor, but the moderation calculation does not receive the information they would need.
+
+The score arithmetic, the field tables and the allowed values sit under [Trust score reference](#trust-score-reference), after the Escalation section.
+The ladder, the offense count and the filter action come first on this page, in [Escalation](#escalation).
+
+### Heat
+
+Heat measures recent trouble.
+A ban, a timeout and a denied AutoMod message add heat.
+Heat then fades by half for each half-life that passes.
+Heat never goes above 100.
+
+These fields sit in the **Heat** panel.
+
+| Field | Default |
+| --- | --- |
+| **Heat half-life (hours)** | 24 |
+| **Heat for a ban** | 40 |
+| **Heat for a timeout** | 15 |
+| **Heat for a confirmed report** | 10 |
+| **Heat for a denied AutoMod message** | 5 |
+| **Heat for a filter hit** | 5 |
+
+By default, crossing 80 heat puts a viewer in the review queue on **Home** for a moderator's decision.
+The underlying AutoMod configuration can change that threshold or enable an automatic timeout, but the **Trust policy** page exposes neither control.
+Changing the heat amounts here does not itself switch automatic timeouts on.
+
+The half-life is above 0 and at most one year (8760 hours).
+A heat amount is between 0 and 1000.
+A denied AutoMod message is a held message that a moderator rejects.
+A filter hit would be a message that trips one of your [chat filters](/reference/moderation/automod-and-chat-filters).
+A chat filter hit does not add heat today.
+Choosing **Escalate** on [Reports](/reference/moderation/reports) changes that report's status; it does not by itself record a confirmed-report heat event.
+
+## Escalation
+
+The **Escalation** page sets the escalation ladder.
+The ladder counts each viewer's offenses.
+Each new offense raises the viewer's offense count by 1.
+The bot runs the step with the highest **At offense** number that is not above that count.
+If the count is below the lowest **At offense** number, the bot runs the first step.
+Each step takes an action: a warning, a timeout or a ban.
+
+### What counts as an offense
+
+These events count as an offense:
+
+- A Twitch message trips a [chat filter](/reference/moderation/automod-and-chat-filters) whose action is **Step up the escalation ladder**.
+- With **Count AutoMod holds** on, AutoMod or spam defense would time out or ban the viewer.
+  The ladder step takes the place of that punishment, so the viewer is punished once.
+
+This automatic ladder path applies to Twitch.
+Spam defense's high-confidence viewer-selling exception can ban directly without counting a ladder offense, and its Kick and YouTube enforcement does not use this ladder.
+See [Spam defense](/reference/moderation/spam-defense#start-in-watch-only-mode) for the watch-only exception and platform differences.
+
+A timeout or ban that a moderator gives by hand does not count.
+
+For example, a ladder can warn on the first offense, time out on the second, and ban on a later offense.
+That ladder is used when a Twitch chat filter is set to **Step up the escalation ladder**; merely creating the ladder does not make every chat message an offense.
+If you also enable **Count AutoMod holds**, qualifying automatic timeout or ban decisions use the ladder in place of their original punishment.
+
+### What each action does
+
+- **Warn** sends the viewer a Twitch warning with the reason.
+- **Timeout** times the viewer out for the step's length.
+- **Ban** bans the viewer.
+
+For a channel that has completed setup, the bot takes automatic escalation actions using the channel owner's connected account.
+For a channel that has not completed broadcaster setup, the ladder steps of AutoMod and spam defense use a moderator's connected account instead.
+That moderator must be a member of the channel's team in the bot.
+The bot then starts a chat reader for that moderator by itself, so no dashboard tab needs to stay open.
+A chat filter's ladder step always needs the channel owner's connected account, so on a channel that is not set up it fails.
+Without either account, the escalation action does not run.
+
+### Policy
+
+| Field | What it does | Default |
+| --- | --- | --- |
+| **Escalation ladder** | Punishes repeat offenders with a stronger action each time. | Off |
+| **Count AutoMod holds** | AutoMod and spam defense actions count as offenses. | Off |
+| **Offense window (hours)** | How long a run of offenses lasts, counted from the first offense of the run. | 168 (one week) |
+| **Default timeout** | The length a timeout step takes when it has no length of its own. | 10:00 (10 minutes) |
+
+The ladder ships switched off.
+Ladder steps apply only after you switch on **Escalation ladder** and choose **Save**.
+While the ladder is off, a chat filter set to **Step up the escalation ladder** still removes the message and uses the filter's own timeout length.
+Kick and YouTube messages always get that filter timeout.
+**Count AutoMod holds** works only while **Escalation ladder** is on.
+
+The offense window is 1 to 8760 hours.
+
+The window starts at a viewer's first offense.
+Each offense inside the window adds 1 to the count.
+The first offense after the window ends sets the count back to 1 and starts a new window.
+
+### Type a length of time
+
+**Default timeout** and each **Timeout length** box take minutes and seconds.
+
+- Type minutes, a colon and two digits of seconds, for example `4:30` for four and a half minutes.
+- Or type a whole number, which counts as minutes, for example `1` for one minute.
+
+The shortest length is `0:01`, one second.
+The longest is `20160:00`, which is 14 days.
+A length outside that range, or text that is not a length, marks the box as invalid.
+
+The default next to **Default timeout** shows in seconds: "Default 600" is 10:00.
+
+### Ladder
+
+Each step starts at an offense number.
+The numbers must go up from step to step.
+A step applies from its **At offense** number until the next step starts.
+For example, with steps at offense 1 and 5, offenses 1 to 4 run the first step and offense 5 runs the second.
+
+| **At offense** | **Action** | **Timeout length** |
+| --- | --- | --- |
+| 1 | **Warn** | |
+| 2 | **Timeout** | 1:00 (one minute) |
+| 3 | **Timeout** | 10:00 (ten minutes) |
+| 4 | **Timeout** | 60:00 (one hour) |
+| 5 | **Timeout** | 1440:00 (one day) |
+| 6 | **Ban** | |
+
+The table shows the default ladder.
+When a viewer's offense count is past the last step, the last step applies again.
+When the count is below the first step's **At offense** number, the first step applies.
+A ladder that starts at offense 3 runs its first step for offenses 1 and 2.
+
+### Edit the ladder
+
+1. Type a number in **At offense** to set where a step starts.
+2. Choose **Warn**, **Timeout** or **Ban** in **Action**.
+   A **Timeout** step shows a **Timeout length** box, filled with the **Default timeout**.
+3. To change the length, type it in the **Timeout length** box.
+   Use minutes and seconds, as in [Type a length of time](#type-a-length-of-time).
+4. Choose **Add step** to add a step at the bottom.
+   The new step starts one offense after the last step and is a **Warn** step.
+5. Choose **Remove step** on a row to delete that step.
+6. Choose **Save**.
+
+The ladder holds 1 to 50 steps.
+**Add step** is inactive at 50 steps.
+**Remove step** is not shown when only one step is left.
+
+The saved ladder applies from the next offense.
+A viewer keeps the offense count they already have.
+
+::Troubleshooting
+
+**The ladder steps do not happen.**
+**Escalation ladder** is off by default.
+Switch it on and choose **Save**.
+Until then, a chat filter that steps up the ladder gives its own timeout instead.
+
+::
+
+::Troubleshooting
+
+**A viewer's old offenses are not counted.**
+The window started at the viewer's first offense, and it has ended.
+The next offense sets the count back to 1, as in [Policy](#policy).
+To count offenses for longer, set a higher **Offense window (hours)** and choose **Save**.
+
+::
+
+## Trust score reference
+
+This part holds the arithmetic and the field tables behind the **Trust policy** page.
+Read it when you want to tune the trust score.
 
 ### How the score is made
 
@@ -114,161 +286,7 @@ A boost is between 0 and 100 points.
 A multiplier is between 0 and 1.
 A penalty is between 0 and 100 points.
 Each tier ceiling is between 0 and 100, and higher than the one before it.
-
-### Heat
-
-Heat measures recent trouble.
-Today a ban, a timeout and a denied AutoMod message add heat.
-**Heat for a confirmed report** and **Heat for a filter hit** are saved, but nothing feeds them yet.
-Heat then fades by half for each half-life that passes.
-Heat never goes above 100.
-
-These fields sit in the **Heat** panel.
-
-| Field | Default |
-| --- | --- |
-| **Heat half-life (hours)** | 24 |
-| **Heat for a ban** | 40 |
-| **Heat for a timeout** | 15 |
-| **Heat for a confirmed report** | 10 |
-| **Heat for a denied AutoMod message** | 5 |
-| **Heat for a filter hit** | 5 |
-
-By default, crossing 80 heat puts a viewer in the review queue on **Home** for a moderator's decision.
-The underlying AutoMod configuration can change that threshold or enable an automatic timeout, but the **Trust policy** page exposes neither control.
-Changing the heat amounts here does not itself switch automatic timeouts on.
-
-The half-life is above 0 and at most one year (8760 hours).
-A heat amount is between 0 and 1000.
-A denied AutoMod message is a held message that a moderator rejects.
-A filter hit would be a message that trips one of your [chat filters](/reference/moderation/automod-and-chat-filters).
-A chat filter hit does not add heat today.
-Choosing **Escalate** on [Reports](/reference/moderation/reports) changes that report's status; it does not by itself record a confirmed-report heat event.
-
-## Escalation
-
-The **Escalation** page sets the escalation ladder.
-The ladder counts each viewer's offenses.
-Each new offense moves the viewer one step up the ladder.
-Each step takes an action: a warning, a timeout or a ban.
-
-### What counts as an offense
-
-These events count as an offense:
-
-- A Twitch message trips a [chat filter](/reference/moderation/automod-and-chat-filters) whose action is **Step up the escalation ladder**.
-- With **Count AutoMod holds** on, AutoMod or spam defense would time out or ban the viewer.
-  The ladder step takes the place of that punishment, so the viewer is punished once.
-
-This automatic ladder path applies to Twitch.
-Spam defense's high-confidence viewer-selling exception can ban directly without counting a ladder offense, and its Kick and YouTube enforcement does not use this ladder.
-See [Spam defense](/reference/moderation/spam-defense#start-in-watch-only-mode) for the watch-only exception and platform differences.
-
-A timeout or ban that a moderator gives by hand does not count.
-
-For example, a ladder can warn on the first offense, time out on the second, and ban on a later offense.
-That ladder is used when a Twitch chat filter is set to **Step up the escalation ladder**; merely creating the ladder does not make every chat message an offense.
-If you also enable **Count AutoMod holds**, qualifying automatic timeout or ban decisions use the ladder in place of their original punishment.
-
-### What each action does
-
-- **Warn** sends the viewer a Twitch warning with the reason.
-- **Timeout** times the viewer out for the step's length.
-- **Ban** bans the viewer.
-
-For a channel that has completed setup, the bot takes automatic escalation actions using the channel owner's connected account.
-For a channel that has not completed broadcaster setup, the ladder steps of AutoMod and spam defense instead need a moderator's connected account and an active chat reader for that channel.
-A chat filter's ladder step always needs the channel owner's connected account, so on a channel that is not set up it fails.
-The bot periodically keeps those moderator readers running for enabled channels with a stored team membership; keeping a dashboard tab open is not required.
-Without either identity, the escalation action cannot run; opening a channel's chat is different from completing its broadcaster setup.
-
-### Policy
-
-| Field | What it does | Default |
-| --- | --- | --- |
-| **Escalation ladder** | Punishes repeat offenders with a stronger action each time. | Off |
-| **Count AutoMod holds** | AutoMod and spam defense actions count as offenses. | Off |
-| **Offense window (hours)** | How long a run of offenses lasts, counted from the first offense of the run. | 168 (one week) |
-| **Default timeout** | The length a timeout step takes when it has no length of its own. | 10:00 (10 minutes) |
-
-The ladder ships switched off.
-Ladder steps apply only after you switch on **Escalation ladder** and choose **Save**.
-While the ladder is off, a chat filter set to **Step up the escalation ladder** still removes the message and uses the filter's own timeout length.
-Kick and YouTube messages always get that filter timeout.
-**Count AutoMod holds** works only while **Escalation ladder** is on.
-
-The offense window is 1 to 8760 hours.
-
-The window starts at a viewer's first offense.
-Each offense inside the window adds 1 to the count.
-The first offense after the window ends sets the count back to 1 and starts a new window.
-
-### Type a length of time
-
-**Default timeout** and each **Timeout length** box take minutes and seconds.
-
-- Type minutes, a colon and two digits of seconds, for example `4:30` for four and a half minutes.
-- Or type a whole number, which counts as minutes, for example `1` for one minute.
-
-The shortest length is `0:01`, one second.
-The longest is `20160:00`, which is 14 days.
-A length outside that range, or text that is not a length, marks the box as invalid.
-
-The default next to **Default timeout** shows in seconds: "Default 600" is 10:00.
-
-### Ladder
-
-Each step starts at an offense number.
-The numbers must go up from step to step.
-
-| **At offense** | **Action** | **Timeout length** |
-| --- | --- | --- |
-| 1 | **Warn** | |
-| 2 | **Timeout** | 1:00 (one minute) |
-| 3 | **Timeout** | 10:00 (ten minutes) |
-| 4 | **Timeout** | 60:00 (one hour) |
-| 5 | **Timeout** | 1440:00 (one day) |
-| 6 | **Ban** | |
-
-The table shows the default ladder.
-When a viewer's offense count is past the last step, the last step applies again.
-
-### Edit the ladder
-
-1. Type a number in **At offense** to set where a step starts.
-2. Choose **Warn**, **Timeout** or **Ban** in **Action**.
-   A **Timeout** step shows a **Timeout length** box, filled with the **Default timeout**.
-3. To change the length, type it in the **Timeout length** box.
-   Use minutes and seconds, as in [Type a length of time](#type-a-length-of-time).
-4. Choose **Add step** to add a step at the bottom.
-   The new step starts one offense after the last step and is a **Warn** step.
-5. Choose **Remove step** on a row to delete that step.
-6. Choose **Save**.
-
-The ladder holds 1 to 50 steps.
-**Add step** is inactive at 50 steps.
-**Remove step** is inactive when only one step is left.
-
-The saved ladder applies from the next offense.
-A viewer keeps the offense count they already have.
-
-::Troubleshooting
-
-**The ladder steps do not happen.**
-**Escalation ladder** is off by default.
-Switch it on and choose **Save**.
-Until then, a chat filter that steps up the ladder gives its own timeout instead.
-
-::
-
-::Troubleshooting
-
-**A viewer's old offenses are not counted.**
-The window started at the viewer's first offense, and it has ended.
-The next offense sets the count back to 1, as in [Policy](#policy).
-To count offenses for longer, set a higher **Offense window (hours)** and choose **Save**.
-
-::
+Changing a tier ceiling does not change the **Trust tier** row on a profile, which is a separate spam defense standing.
 
 ## Related pages
 
