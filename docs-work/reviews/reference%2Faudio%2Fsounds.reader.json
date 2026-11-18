@@ -1,0 +1,55 @@
+{
+  "fingerprint": "4019507d43fd37f311d907fdf09ce4f318c67f5fe28b6a715be822e6fa005787",
+  "verdict": "PASS",
+  "answers": [
+    {
+      "question": 1,
+      "answer": "First add the clip. Open Sounds in the sidebar and choose New sound clip. Choose a file in Audio file, type a Short name such as airhorn, type a Display name, set Volume or leave it at 80, then choose Add sound clip. To play it from a command, add a Play sound step to a pipeline, pick the clip in Sound clip, then pick that pipeline in the command's Pipeline field. The page sends me to Create a command to find that field. For a reward, I either use the same pipeline or choose the Play sound action directly in the reward's Pipeline picker, so no pipeline is needed.",
+      "quote": "Add a Play sound step to a pipeline."
+    },
+    {
+      "question": 2,
+      "answer": "I need the Bot Audio overlay added from Required overlays on the OBS page as an OBS browser source, which the intro says to do before testing. I also need a role that may change clips: by default Moderator, Lead moderator, Editor or Broadcaster, and the broadcaster can raise that, as the Who can use this page section says. Finally I need an mp3, ogg or wav file of at most 10 MB and at most 3 minutes, as the field table says.",
+      "quote": "Before testing, add Bot Audio from Required overlays on the OBS page as an OBS browser source."
+    },
+    {
+      "question": 3,
+      "answer": "After Add sound clip, the dialog closes and the clip shows in the Sound clips list, switched on, with its short name, volume and length under the display name. For chat playback, I type the chat word as the whole message and listen through OBS. A refusal shows in the dialog, and nothing is saved. To tell the clip's Volume apart from the master volume: Volume belongs to one clip, and the master volume under Audio levels on the Overlays page multiplies every clip.",
+      "quote": "The dialog closes and the clip shows in the Sound clips list, switched on."
+    },
+    {
+      "question": 4,
+      "answer": "The moderator chooses Edit on that clip's row, raises its Volume (up to 100) and chooses Save sound clip. Only that clip gets louder, because each clip plays at its own volume times the master volume. The master volume, under Audio levels on the Overlays page, would change every clip, so they leave it alone. If the clip is only quiet in one command or reward, the Play sound step's own Volume field changes it for that step only.",
+      "quote": "How loud the clip plays, from 0 to 100."
+    },
+    {
+      "question": 5,
+      "answer": "In Delete a clip, step 2 tells me to check rewards, event responses, chat triggers, timers, economy catalog items and giveaways. It does not say where each of those is or what to do when one plays this clip. Step 1 says to pick another clip first, so I guessed the same applies here. The only other place I would reread is the command path: the page says Create a command shows where the Pipeline field is, so I leave this page for that step.",
+      "quote": "Check the other places that use Play sound directly: rewards, event responses, chat triggers, timers, economy catalog items and giveaways."
+    },
+    {
+      "question": 6,
+      "answer": "The field is named Cooldown in seconds, but it takes minutes and seconds, and a plain number means minutes. Read aloud, that sounds like a contradiction until the explanation is heard, and a listener may set 30 expecting seconds. The list of role names as the screen shows them (Vip, LeadModerator) also sounds odd read aloud next to VIP and Lead moderator earlier on the page. The three-row Stop sound settings table is hard to follow by ear.",
+      "quote": "A plain number counts as minutes, so 30 means 30 minutes."
+    }
+  ],
+  "findings": [],
+  "warnings_released": true,
+  "warning_review": [
+    {
+      "id": "length",
+      "decision": "keep",
+      "reason": "The 1584 words are spread over separate headed tasks (add, read, change, chat word, command or reward, stop, off, loudness, delete, troubleshooting), and the reader found the four answers that matter under their headings without rereading. Two obstacles from the blind pass sit off this request's path and are not caused by length: delete step 2 names other places but gives no action for them, and the cooldown label says seconds while a plain number means minutes. They are not findings on these IDs."
+    },
+    {
+      "id": "first-numbered-step",
+      "decision": "keep",
+      "reason": "The 200 words before step one are the access requirement (who may open the page and change clips) and the OBS overlay the page says to add before testing. voice.md says such requirements go before the steps. The VIP paragraph is an unrelated line for a moderator, a small cost that does not block the first step, which the reader reached and answered without trouble."
+    },
+    {
+      "id": "paragraph-21",
+      "decision": "keep",
+      "reason": "Paragraph 21 is the Turn a clip off text: five short sentences, each one fact the reader needs (the switch, what off blocks, turning it back on, that it affects only new playback, and that a playing clip keeps playing). A sentence count alone is not a defect."
+    }
+  ]
+}
